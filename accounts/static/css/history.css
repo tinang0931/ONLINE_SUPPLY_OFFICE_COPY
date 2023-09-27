@@ -361,7 +361,7 @@ flex-direction: row;
 .arrow_img {
   height: 20px;
   width: 20px;
-  position: center;
+  position:sticky;
 }
 .purchase-request-no-0000100,
 .purchase-request-no-0000100 * {
@@ -445,9 +445,3 @@ height: 30px;
   border: 1px solid black;
   padding: 15px;
 }
-
-
-
-
-
-
