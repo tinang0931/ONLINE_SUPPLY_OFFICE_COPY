@@ -1,0 +1,137 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing:border-box;
+    font-family: 'Hermenes-one', sans-serif;
+    overflow: hidden;
+    width: 1920px;
+    height: 1080px;
+    position:absolute;
+}
+
+.container {
+    background: url(school.png);
+    background-size: 1773px 1080px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+}
+
+.trapezoid {
+    position: absolute;
+    border-bottom: 1080px solid #003566;
+    border-left: 0px solid transparent;
+    border-right: 1250px solid transparent;
+    height: 0px;
+    width: 300px;
+    left: 0px;
+    opacity: 97%;
+}
+   
+
+
+.parallelogram1 {
+    width: 20px;
+    height: 1085px;
+    transform: skew(48deg);
+    background: #ffffff;
+    position: absolute;
+    left: 900px;
+    top: 0px;
+  
+
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 45px solid transparent;
+    border-right: 45px solid transparent;
+    border-bottom: 1083px solid #f48c06;
+    position: absolute;
+    left: 900px;
+    top: 4.5px;
+    transform: skew(49deg);
+    opacity: 95%;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 600px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 550px solid #f48c06;
+    position: absolute;
+    left: 1350px;
+    top: 0px;
+    opacity: 80%;
+}
+
+.parallelogram2 {
+    width: 15px;
+    transform: skew(48deg);
+    background: #fff;
+    height: 640px;
+    position: absolute;
+    left: 1705px;
+   
+}
+
+.triangle-down2 {
+    width: 0;
+    height: 0;
+    border-left: 35px solid transparent;
+    border-right: 40px solid transparent;
+    border-top: 550px solid #003566;
+    position: absolute;
+    left: 1600px;
+    top: 0px;
+    transform: skew(50deg);
+    opacity: 80%;
+
+}
+
+.cot {
+    position: absolute;
+    width: 685px;
+    height: 318px;
+    left: 10px;
+    top: 150px;
+    font-family: 'Hermeneus One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 85px;
+    line-height: 100px;
+    color: #ffff;
+    text-align: center;
+}
+
+.ctu {
+    position: absolute;
+    width: 822px;
+    height: 225px;
+    left: 10px;
+    top: 500px;
+    font-family: 'Hermeneus One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 58px;
+    color: #F48C06;
+    text-align: end;
+}
+
+.login {
+    position: absolute;
+    left: 1000px;
+    top: 800px;
+    width: 100px;
+    fill: #ffffff;
+    height: 37px;
+
+
+}
+
+.svg {
+    color: #ffffff;
+}

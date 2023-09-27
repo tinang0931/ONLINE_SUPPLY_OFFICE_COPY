@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=.0">
+    <link rel="stylsheet" media="screen" href="https://fontlibrary.org//face/hermenes" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <title>Landing Page</title>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="frame"></div>
+      <div class="trapezoid"></div>
+      <div class="parallelogram1"></div>
+      <div class="triangle-up"></div>
+      <div class="triangle-down"></div>
+      <div class="parallelogram2"></div>
+      <div class="triangle-down2"></div>
+      <h1 class="cot">COLLEGE<br>OF<br>TECHNOLOGY</h1>
+      <p class="ctu">Cebu Technological University<br>Argao Campus</p>
+      <div class="login">
+          <a href="{% url 'login' %}">
+          <svg xmlns="http://www.w3.org/2000/svg"
+          height="45" 
+          viewBox="0 -960 960 960" 
+          width="60">
+          <path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/>
+          </svg>
+          </a>
+        </div>
+       
+
+    </div>
+  </body>
+</html>

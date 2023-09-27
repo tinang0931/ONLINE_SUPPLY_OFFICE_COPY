@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device=width,initial-scale=1.0">
+    <script src="https://fonts.google.com/icons"></script>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+
+
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="title">Online Supply System</div>
+    <div class="wrapper">
+        <div>
+            <img class="forgot_icon" src="{% static 'images/resetlogo.png' %}" alt="">
+            <div>
+        <form action="">
+            <header></header>
+            <h1>Reset Password</h1>
+            <div class="input-box">
+                <input type="newpassword" placeholder="New Password:" required oninput="maxLengthCheck(this, 10)">
+            </div>
+            <div class="input-box">
+                <input type="confirmpassword" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 10)">
+            </div>
+            <script>
+                function maxLengthCheck(object, maxLength) {
+                    if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                }
+                </script>
+
+            <button type="reset" class="btn">Reset Password</button>
+        </form>
+    </div>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:
+        linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
+        url("/static/images/CTU-Logo.jpg");
+    background-size: 170% 1050px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logo {
+    width: 20px;
+    height: 20px;
+    align-items: center;
+}
+
+.title{
+    position: absolute;
+    top: 10%;
+    left: 120px;
+    color: white;
+    font-size: 60px;
+    margin-top: 30px;
+    margin-right: 80px;
+}
+
+.wrapper {
+    width: 380px;
+    height: 345px;
+    background: rgba(255, 255, 255, 0.486);
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.4);
+    color: #003566;
+    padding: 50px;
+    padding-right: 60px;
+    border-style: solid;
+    border-width: 2px;
+    position: absolute;
+    left: 1100px;
+    top: 350px;
+}
+
+.otp-bx{
+    display: flex;
+}
+
+.otp-bx input {
+    width: 50px;
+    height: auto;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+    border: 1px solid black;
+    margin: auto;
+    background: none;
+    font-weight: bold;
+    transition: all 0.1s;
+}
+
+.form input{
+    height: 45px;
+    width: 42px;
+}
+
+
+.wrapper .verification_icon {
+    position: relative;
+    bottom: 20px;
+    right: 20;
+    width: 18%;
+    height: 18%;
+    display: block;
+    margin: 0 auto;
+}
+
+.wrapper h1 {
+    font-size: 34px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 35px;
+}
+
+.wrapper p{
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 270px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.486);;
+    margin: 15px auto;
+}
+
+.input-box input {
+    width: 270px;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    font-size: 14px;
+    color: black;
+    padding: 10px;
+    box-shadow: 0 0 3px black;
+}
+.wrapper .btn {
+    width: 40%;
+    height: 30px;
+    background: #F48C06;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    color: black;
+    font-weight: 300;
+    font-size: 14px;
+    margin-left: 70%;
+    text-align: center;
+    line-height: 10px;
+    margin-top: 50px; 
+}
+
+.wrapper .btn:hover{
+    color: white;
+}
+
+.verify-link a {
+    font-size: 14px;
+    font-weight: 150;
+    color: black;
+    text-decoration: underline;
+    position: absolute;
+    top: 85%;
+    margin-left: 3.5%; 
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+    color: #007bff;
+}

@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device=width,initial-scale=1.0">
+    <script src="https://fonts.google.com/icons"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+   
+    
+    <div class="title"> 
+        Online Supply System
+    </div>
+    
+    <div class="wrapper">
+        <div>
+            <img class="login_icon" src="{% static 'images/loginlogo.png' %}" alt="">
+            <div>
+        <form action="" method="post">
+        
+            {%csrf_token%}
+
+            {% if messages %}
+    
+            {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+    
+            {% endif %}
+            
+            <h1>Log In</h1>
+
+            <div class="input-box">
+                <input type="number" id="username" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 10)">
+            </div>
+            <script>
+                function maxLengthCheck(object, maxLength) {
+                    if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                }
+                </script>
+
+            <div class="input-box">
+                <input type="password" id="pass1" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+            </div>
+            <script>
+                function maxLengthCheck(object, maxLength) {
+                    if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                }
+                </script>
+            
+            <div class="forgot">
+                <a href="{% url 'forgot' %}">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn"> Log In</button>
+
+            <div class="register-link">
+                <p>Don't have an Account? <a href="{% url 'register' %}">Register</a></p>
+
+            </div>
+        </form>
+    </div>
+    
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

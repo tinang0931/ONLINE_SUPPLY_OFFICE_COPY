@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device=width,initial-scale=1.0">
+    <script src="https://fonts.google.com/icons"></script>
+    <link rel="stylesheet" href="{% static 'css/verify.css' %}">
+
+
+    <title>Input Code</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="title">Online Supply System</div>
+    <div class="wrapper">
+        <div>
+            <form action=""></form>
+            <img class="verification_icon" src="{% static 'images/verificationlogo.png' %}" alt="">
+            <div>
+        <header></header>
+            <h1>Input Code</h1>
+            <p> Enter the Confirmation Code we sent to your phone.</p>
+            <div class="otp-bx">
+                <input type="number" required oninput="maxLengthCheck(this, 1)">
+                <input type="number" required oninput="maxLengthCheck(this, 1)">
+                <input type="number" required oninput="maxLengthCheck(this, 1)">
+                <input type="number" required oninput="maxLengthCheck(this, 1)">
+            </div>
+            <script>
+                function maxLengthCheck(object, maxLength) {
+                    if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                }
+                </script>
+
+            <div class="verify-link">
+                <a href="#">Resend Code:</a> <button type="submit" class="btn">Verify Code</button>
+            </div>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </body>
+        
+        </html>
+
+        
