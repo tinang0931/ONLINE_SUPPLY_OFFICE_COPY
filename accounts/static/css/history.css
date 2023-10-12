@@ -354,8 +354,44 @@ flex-direction: row;
   flex-direction: column;
   justify-content: space-around;
   visibility: visible;
-  content-visibility: auto;
-}
+
+  display: flex;
+  flex-direction: row;
+  }
+  .cart_icon{
+    height: 40px;
+    color: #000;
+  }
+  
+  
+  .dropdown-item{
+    text-align: left;
+  }
+  
+  
+  .welcome{
+    background-color: #6C757D!important;
+    color: white;
+    text-align: center !important;
+    margin: 0%;
+    font-family: serif;
+    font-size: larger;
+    height: 40px;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    visibility: visible;
+    content-visibility: auto;
+  }
+  
+  
+  .arrow_img {
+    height: 20px;
+    width: 20px;
+    position:sticky;
+  }
 
 
 .arrow_img {

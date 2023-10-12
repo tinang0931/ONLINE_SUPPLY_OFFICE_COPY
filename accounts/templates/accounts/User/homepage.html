@@ -8,7 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=.0">
     <link rel="stylsheet" media="screen" href="https://fontlibrary.org//face/hermenes" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
+
+    
     <title>Landing Page</title>
 
   </head>
@@ -25,15 +28,11 @@
       <h1 class="cot">COLLEGE<br>OF<br>TECHNOLOGY</h1>
       <p class="ctu">Cebu Technological University<br>Argao Campus</p>
       <div class="login">
-          <a href="{% url 'login' %}">
-          <svg xmlns="http://www.w3.org/2000/svg"
-          height="45" 
-          viewBox="0 -960 960 960" 
-          width="60">
-          <path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/>
-          </svg>
-          </a>
-        </div>
+        <a href="{% url 'login' %}">
+          <img class="arrow" src="{% static 'images/double_arrow.png' %}" >
+        </a>
+      </div>
+       
 
     </div>
   </body>

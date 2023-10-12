@@ -5,6 +5,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+
 body {
     display: flex;
     justify-content: center;
@@ -13,16 +14,17 @@ body {
     background:
         linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
         url("/static/images/CTU-Logo.jpg");
-    background-size: 170% 1050px;
-    background-position: center;
-    background-repeat: no-repeat;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
 }
 
-.logo {
-    width: 20px;
-    height: 20px;
-    align-items: center;
-}
 
 .title{
     position: absolute;
@@ -34,14 +36,16 @@ body {
     margin-right: 80px;
 }
 
+
 .wrapper {
-    width: 380px;
-    height: 345px;
+    width: 410px;
+    height: 380px;
     background: rgba(255, 255, 255, 0.486);
-    box-shadow: 0 0 10px rgba(128, 128, 128, 0.4);
-    color: #003566;
+    box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
+    color: rgba(0, 0, 0, 0.815);
     padding: 50px;
     padding-right: 60px;
+    border-radius: 10px;
     border-style: solid;
     border-width: 2px;
     position: absolute;
@@ -49,23 +53,31 @@ body {
     top: 350px;
 }
 
+
 .otp-bx{
     display: flex;
 }
 
+
 .otp-bx input {
     width: 50px;
     height: auto;
-    font-size: 16px;
+    font-size: 17px;
     padding: 10px;
     text-align: center;
     margin: 5px;
-    border: 1px solid black;
+    border: 2px solid black;
     margin: auto;
     background: none;
     font-weight: bold;
     transition: all 0.1s;
 }
+
+
+.otp-bx input:hover{
+    color: #003566;
+}
+
 
 .form input{
     height: 45px;
@@ -83,21 +95,25 @@ body {
     margin: 0 auto;
 }
 
+
 .wrapper h1 {
-    font-size: 34px;
+    color: #003566;
+    font-size: 45px;
     text-align: center;
     margin-top: 0;
     margin-bottom: 35px;
 }
 
+
 .wrapper p{
     color: black;
     text-align: center;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 1px;
 }
+
 
 .wrapper .input-box {
     position: relative;
@@ -107,49 +123,43 @@ body {
     margin: 15px auto;
 }
 
-.input-box input {
-    width: 270px;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    font-size: 14px;
-    color: black;
-    padding: 10px;
-    box-shadow: 0 0 3px black;
-}
+
 .wrapper .btn {
-    width: 40%;
+    width: 38%;
     height: 30px;
-    background: #F48C06;
-    border: 1px solid black;
+    background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    border: solid #df8004ad .5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
     font-weight: 300;
-    font-size: 14px;
-    margin-left: 70%;
+    font-size: 17px;
+    margin-left: 60.5%;
     text-align: center;
-    line-height: 10px;
-    margin-top: 50px; 
+    line-height: 15px;
+    margin-top: 33px; 
+    transition-duration: 0.4s;
 }
+
 
 .wrapper .btn:hover{
     color: white;
+    background-color: #ffa125e3;
 }
 
+
 .verify-link a {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 150;
     color: black;
     text-decoration: underline;
     position: absolute;
-    top: 85%;
-    margin-left: 3.5%; 
+    top: 90%;
+    margin-left: 0;
 }
+
 
 .register-link p a:hover {
     text-decoration: underline;
