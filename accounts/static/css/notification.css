@@ -6,3 +6,11 @@
     align-content: center;
 
 }
+.profile_img {
+    position: absolute;
+    left: 150px;
+    top: 50px;
+    width: 291px;
+    height: 289px;
+    border-radius: 50%; /* Use 50% for a circular shape */
+}

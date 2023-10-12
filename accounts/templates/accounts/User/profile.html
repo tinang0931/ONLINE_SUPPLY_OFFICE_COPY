@@ -59,37 +59,128 @@
         </div>   
         <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
         <div class="d-flex" id="wrapper">
-          <a href="">
-            <img class="home-icon" src="{% static 'images/home.png' %}" alt="Go back to home">
+          <a href="{% url 'notification' %}">
+            <button class="phome" onclick="window.location.href='{% url 'pro_file_html' %}'"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
           </a>
           </div>
-          <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile">
+          <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" data-toggle="modal" data-target="#profileModal" id="profile-pic-trigger">
+          
+</div>
+
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileModalLabel">Change Profile Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="pro_file-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" class="img-fluid" id="profile-pic-modal" >
+
+      </div>
+      <div class="modal-footer">
+        <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" style="display: none"  >
+      
+        <button type="button" class="btn btn-secondary" onclick="openFileSelection()">Upload Photo</button>
+
+        <button type="button" class="btn btn-primary"data-bs-dismiss="modal" onclick="saveChanges()">Save</button>
+        <div id="save-message" class="save-message"></div>
+        <script>
+          function openFileSelection() {
+            document.getElementById('input-file').click();
+        }
+        
+        let profilePicTrigger = document.getElementById("profile-pic-trigger");
+        let profilePicModal = document.getElementById("profile-pic-modal");
+        
+        const savedImageUrl = localStorage.getItem('profileImage');
+        if (savedImageUrl) {
+            profilePicTrigger.src = savedImageUrl;
+            profilePicModal.src = savedImageUrl;
+        }
+        
+        let inputFile = document.getElementById("input-file");
+        
+        inputFile.onchange = function() {
+            if (inputFile.files && inputFile.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newImageUrl = e.target.result;
+                    localStorage.setItem('profileImage', newImageUrl);
+                    profilePicTrigger.src = newImageUrl;
+                    profilePicModal.src = newImageUrl;
+                };
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+        }
+      </script>
+      <script>
+        function saveChanges() {
+          const updatedImageUrl = document.getElementById("profile-pic-modal").src;
+          
+          const saveMessage = document.getElementById("save-message");
+          saveMessage.textContent = "Changes Have Been Saved";
+          saveMessage.style.display = "block";
+      
+          setTimeout(function() {
+              saveMessage.style.display = "none";
+          }, 3000); 
+      
+          
+          const modal = new bootstrap.Modal(document.getElementById('profileModal'));
+          modal.hide();
+      }
+      
+      
+      </script>
+      </div>
+    </div>
+  </div>
+  
           </div>
         </div>
-        <div>
+        
+        <div class="edit-profile">
         <input type="text" class="fname" placeholder="Full Name">
         <input type="text" class="emmail" placeholder="Email Address">
         <input type="number" class="contact1" placeholder="Contact No.1">
         <input type="number" class="contact2" placeholder="Contact No.2">
         <input type="password" class="password" placeholder="Password">
         <input type="password" class="re-type-pass" placeholder="Confirm Password">
-        <button class="learn-more">
+        <button class="learn-more" onclick="updateContainerAndSubmit()">
           <span class="circle" aria-hidden="true">
           <span class="icon arrow"></span>
           </span>
           <span class="button-text">Submit</span>
         </button>
       </div>
+    
       <div>  
-        <div class="username">
-          <span id="username-placeholder">Guest User</span>
-        </div>
-        <div class="email">
-          <span id="email-placeholder">user@example.com</span>
-        </div>
-        <div class="account-id">
-          <span id="account-id-placeholder">Account ID: <span id="account-id">12345</span></span>
-
-        </div>
+        <div class="username-info">
+         <h1><span id="username-placeholder">Username</span></h1>
+         <p><span id="email-placeholder">user@example.com</span><br>
+            <span id="account-id-placeholder">Account ID: <span id="account-id">12345</span></span>
+        </p>
+      </div>
+    </div>
+        <script>
+          function updateContainer() {
+             
+              var fullName = document.querySelector('.fname').value;
+              var emailAddress = document.querySelector('.emmail').value;
+              var contact1 = document.querySelector('.contact1').value;
+              var contact2 = document.querySelector('.contact2').value;
+          
+              document.getElementById('username-placeholder').textContent = fullName || 'Username';
+              document.getElementById('email-placeholder').textContent = emailAddress || 'user@example.com';
+              document.getElementById('account-id').textContent = contact1 || '12345';
+              document.getElementById('account-id-placeholder').textContent = 'Account ID: ' + (contact2 || '12345');
+          }
+          function updateContainerAndSubmit() {
+            updateContainer(); 
+        }
+          </script>
         
     </html>  

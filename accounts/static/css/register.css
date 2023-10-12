@@ -5,7 +5,8 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
-body {
+
+body{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,16 +14,17 @@ body {
     background:
         linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
         url("/static/images/CTU-Logo.jpg");
-    background-size: 170% 1050px;
-    background-position: center;
-    background-repeat: no-repeat;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
 }
 
-.logo {
-    width: 20px;
-    height: 20px;
-    align-items: center;
-}
 
 .title{
     position: absolute;
@@ -34,37 +36,32 @@ body {
     margin-right: 80px;
 }
 
+
 .wrapper {
     width: 380px;
-    height: 700px;
+    height: 740px;
     background: rgba(255, 255, 255, 0.486);
-    box-shadow: 0 0 10px rgba(128, 128, 128, 0.4);
-    color: #003566;
-    padding: 80px 50px;
+    box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
+    color: rgba(0, 0, 0, 0.815);
+    padding: 50px 40px;
     padding-right: 60px;
+    border-radius: 10px;
     border-style: solid;
     border-width: 2px;
     position: absolute;
     left: 1100px;
-    top: 150px;
+    top: 160px;
 }
 
-.wrapper .register_icon {
-    position: relative;
-    bottom: 20px;
-    right: 20;
-    width: 18%;
-    height: 18%;
-    display: block;
-    margin: 0 auto;
-}
 
 .wrapper h1 {
-    font-size: 34px;
+    color: #003566;
+    font-size: 45px;
     text-align: center;
     margin-top: 0;
     margin-bottom: 35px;
 }
+
 
 .wrapper .input-box {
     position: relative;
@@ -73,6 +70,7 @@ body {
     background: rgba(255, 255, 255, 0.486);;
     margin: 15px auto;
 }
+
 
 .input-box input {
     width: 270px;
@@ -87,23 +85,70 @@ body {
     box-shadow: 0 0 3px black;
 }
 
+
+.input-box input:hover{
+    color: #003566;
+}
+
+
 .wrapper .btn {
-    width: 30%;
-    height: 20px;
-    background: #F48C06;
-    border: 0.5px solid black;
+    width: 32%;
+    height: 30px;
+    background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    border: solid #df8004ad .5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
     font-weight: 250;
-    font-size: 13px;
-    margin-left: 72%;
+    font-size: 17px;
+    margin-left: 67%;
+    margin-top: 10px;
     text-align: center;
-    line-height: 8px;
+    line-height: 5px;
+    transition-duration: 0.4s;
 }
+
 
 .wrapper .btn:hover{
     color: white;
+    background-color: #ffa125e3;
+}
+
+
+.icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.wrapper .btn:hover{
+    color: white;
+}
+
+
+.wrapper .login-link {
+    font: 17px;
+    color: black;
+    text-align: center;
+    margin-top: 10%;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 20%;
+}
+
+
+.login-link p a {
+    font-size: 17px;
+    font-weight: 200;
+    color: black;
+    text-decoration: underline;
+}
+
+
+.login-link p a:hover {
+    text-decoration: underline;
+    color: #007bff;
 }
