@@ -26,22 +26,16 @@
             <img class="login_icon" src="{% static 'images/forgot.png' %}" alt="">
         </div>
         
-        <form action="" method="post">
-            
+        <form action="{% url 'handle_reset_request' %}" method="post">
             {% csrf_token %}
-            
             <h1>Forgot Password</h1>
             <h2>We’ll email you instructions on how to reset your Password.</h2>
-
-
             <div class="input-box">
-                <input type="emailaddress" placeholder="Email Address:" required>
+                <input type="email" name="email" placeholder="Email Address:" required>
             </div>
-
-
-            <a href="{% url 'verify' %}" class="btn">Send Code</a>
-            
+            <button type="submit" class="btn">Send Code</button>
         </form>
+        
     </div>
 
 
