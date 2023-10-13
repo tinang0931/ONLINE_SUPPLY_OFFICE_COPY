@@ -114,7 +114,7 @@ def login(request):
 
 @unauthenticated_user
 def forgot(request):
-    return render(request, 'accounts/User/forgot.html')+
+    return render(request, 'accounts/User/forgot.html')
 
 
 @unauthenticated_user
@@ -274,4 +274,6 @@ def requester(request):
         return redirect('requester')  # Redirect to the same page after submissio
     return render(request, 'accounts/User/requester.html')
 
-
+@authenticated_user
+def sahomepage(request):
+    return render(request, 'accounts/Admin/sahomepage.html')

@@ -39,4 +39,5 @@ urlpatterns = [
    path('supply_office/about/', views.supply_office_about,name='supply_office_about'),
    path('supply_office/inventory/', views.supply_office_inventory,name='supply_office_inventory'),
    path('notice_of_reward/',views.notice_of_reward, name='notice_of_reward'),  
+   path('systemadmin/sahomepage/', views.sahomepage,name='sahomepage'),
 ]
