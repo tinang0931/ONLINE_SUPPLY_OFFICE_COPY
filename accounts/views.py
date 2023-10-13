@@ -90,7 +90,8 @@ def login(request):
     return render(request, 'accounts/User/login.html')
 
 def forgot(request):
-    return render(request, 'accounts/User/forgot.html')
+    return render(request, 'accounts/User/forgot.html')+
+
 
 def reset(request):
     return render(request, 'accounts/User/reset.html')
