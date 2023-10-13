@@ -18,9 +18,8 @@
 }
 
 .frame {
-    
     background-image: url("/static/images/school.png");
-    background-size: 1773px 1080px;
+    background-size: cover;
     background-repeat: no-repeat;
     width: 1773px;
     height: 1080px;
@@ -105,11 +104,11 @@
 }
 
 .cot {
-    position: absolute;
+    position: fixed;
     width: 685px;
     height: 318px;
     left: 10px;
-    top: 150px;
+    top: 250px;
     font-family: 'Hermeneus One';
     font-style: normal;
     font-weight: 400;
@@ -120,11 +119,11 @@
 }
 
 .ctu {
-    position: absolute;
+    position: fixed;
     width: 822px;
     height: 225px;
-    left: 10px;
-    top: 500px;
+    left: 50px;
+    top: 650px;
     font-family: 'Hermeneus One';
     font-style: normal;
     font-weight: 400;
@@ -135,3 +134,10 @@
 }
 
 
+.arrow {
+    position: fixed;
+    top: 960px;
+    left: 980px;
+    width: 75px;
+
+}
