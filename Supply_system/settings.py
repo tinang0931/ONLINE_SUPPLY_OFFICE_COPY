@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$0$us08g%r@266))x3tyr5_hg0c1&k6u9ak#2zaj=(!!i-d^r+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.28.20.119', '127.0.0.1']
+ALLOWED_HOSTS = ['172.28.52.158','172.28.20.119', '127.0.0.1']
 
 
 # Application definition
@@ -76,15 +76,31 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# defaultdb
 
 
 
-#shiela database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'inventorydb',
+#         'HOST': 'localhost',
+#         'PORT': 27017,
+
+
+#     }
+# }
+
+# jelyn database
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'inventorydb',
-    }
+        'NAME': 'inventory',
+        'HOST': 'localhost',
+        'PORT': 27017,
+
+
+   }
 }
 
 # # jelyn database
@@ -97,8 +113,8 @@ DATABASES = {
 #       'HOST': 'localhost',
 #       'PORT': 27017,
 #       }
-# # }
-# =======
+# }
+# # =======
 #  'default': {
 #         'ENGINE': 'djongo',
 #         'NAME': 'mydatabase',   # Use the same database name as specified when creating the MongoDB user
@@ -147,22 +163,23 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+import os
+
+static_dir = os.path.join(BASE_DIR, "static")
+
+# Check if the directory exists, and create it if not
+if not os.path.exists(static_dir):
+    os.makedirs(static_dir)
 
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ralphsample1@gmail.com'
-EMAIL_HOST_PASSWORD = 'ckqz kusp ywcp arly'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP server for Gmail
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'CodingWithMitch Team <noreply@codingwithmitch.com>'
+EMAIL_HOST_USER = 'rlphtzn@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  # Your Gmail password or app-specific password

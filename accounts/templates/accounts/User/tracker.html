@@ -1,61 +1,80 @@
+{% extends "accounts/User/main.html" %}
 
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">  
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Requesting Page</title>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-  </head>
-  <body>
-    <main class="flex-shrink">
-      <div id="page-content-wrapper ">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-            <div>
-              <h1 class="head">Online Supply Office</h1>
-              <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+{% block content %}
+
+        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+          <div class="container">
+            <h1 class="pr text-center pt-4">REQUEST STATUS</h1>  
+          </div>
+          <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+              <i class="fa fa-circle px-3" aria-hidden="true" style="color: orangered;"></i>
+              <strong>Pending Requests</strong>
             </div>
-            <div>
-              <a href="{% url 'profile' %}"> <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt=""></a>
-      
-            <div>
-              <h1 class="p1">Profie Name</h1>
+            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+              <i class="fa fa-circle px-3" aria-hidden="true" style="color: green;"></i>
+              <strong>Successful Requests</strong>
             </div>
-            </div>
-        </nav>
-      </div>
-      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-      <div class="d-flex" id="wrapper">
-        <!-- Sidebar-->
-        <div class="sidebar">
-          <div class=" bg-white" id="sidebar-wrapper">
-            <div class="list-group">
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
-              <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
-                <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
-              </a>
+            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+              <i class="fa fa-circle px-3" aria-hidden="true" style="color: red;"></i>
+              <strong>Failed Requests</strong>
             </div>
           </div>
+          <div class="row w-100 m-auto border text-start text-dark">
+            <div class="col-10">
+              <p>
+                Purchase Request No. 000001
+              </p>
+            </div>
+            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="row w-100 m-auto border text-start text-dark">
+            <div class="col-10">
+              <p>
+                Purchase Request No. 000002
+              </p>
+            </div>
+            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+          </div>  
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center">
+                      <div class="col-12 border ">
+                        <p class="form-group py-3">Purchase Request No. 000001</p>
+                      </div>
+                    </div>
+                    <div class="mt-4 ms-4">
+                      <div class="wrapper">
+                      <ul class="StepProgress">
+                        <div class="StepProgress-item is-pending"><strong>Budget Officer has approved your request.</strong>
+                          09/02/23
+                        </div>
+                        <div class="StepProgress-item is-done"><strong>Campus Director has approved your request.</strong>
+                          1 hr ago
+                        </div>
+                        <div class="StepProgress-item is-declined"><strong>Waiting for the BAC Secretariat to create a Resolution.</strong>
+                          Currently
+                        </div>
+                        <div class="StepProgress-item current"><strong>Received Item</strong></div>
+                      </ul>
+                      </div>
+                    </div>
+                </div> 
+              </div>    
+            </div>      
+          </div>       
         </div>
-
-    <div class="request-tracker">
-        <h3>REQUEST TRACKER</h3>
-    <div class="dropdown">
-            <button class="dropbtn">00000001</button>
-    <div class="dropdown-content">
-                <a href="#">Purchase Request No. 00000001 </a>
-    </div>
-    </div>
-    </div>
+      </div> 
       
+{% endblock %} 
