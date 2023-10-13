@@ -14,7 +14,7 @@ from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.http import HttpResponse  
-from django.shortcuts import render, redirect  
+from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.template.loader import render_to_string  
@@ -34,6 +34,7 @@ import random
 
 def main(request):
     return render(request, 'accounts/User/main.html')
+
 
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
@@ -85,19 +86,21 @@ def register(request):
 
     return render(request, 'accounts/User/register.html')
 
+
 def activate(request, uidb64, token):
     User = get_user_model()
     try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
+        uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):  # Use default_token_generator
+    if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse(request, 'Thank you for your email confirmation. Now you can log in to your account.')
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
 
 @unauthenticated_user
 def login(request):
@@ -116,29 +119,10 @@ def login(request):
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
-            print('fddzjkfds')
-
     return render(request, 'accounts/User/login.html')
 
-@unauthenticated_user
-def forgot(request):
-    return render(request, 'accounts/User/forgot.html')
-
-
-@unauthenticated_user
-def reset(request):
-    return render(request, 'accounts/User/reset.html')
-
-@unauthenticated_user
-def verify(request):
-    return render(request, 'accounts/User/verify.html')
-
-
-
-    return render(request, 'accounts/User/login.html')
 
 @unauthenticated_user  
-
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -165,10 +149,8 @@ def handle_reset_request(request):
 
             # Redirect the user to a page where they can enter the verification code
         return redirect('verify_code')  # You need to create a 'verify_code' URL pattern
-
-      
-
     return render(request, 'accounts/User/forgot.html')
+
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -193,12 +175,10 @@ def reset_password(request):
         # Redirect the user to a success page or login page
         messages.success(request, 'Password updated successfully.')
         return redirect('login')  # Change 'login' to the name of your login URL pattern
-
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
 @unauthenticated_user
-
 # This view should handle the verification and password reset
 def verify_code(request):
     if request.method == 'POST':
@@ -215,8 +195,8 @@ def verify_code(request):
         # If the code is valid, you can redirect to a password reset form
         if is_valid_code(verification_code):
             return redirect('reset_password')  # Create this URL pattern
-
     return render(request, 'accounts/User/verify.html')  # Adjust the template name
+
 
 # This function should be implemented to verify the code
 def is_valid_code(verification_code):
@@ -227,44 +207,130 @@ def is_valid_code(verification_code):
 # You'll also need to create a view and URL pattern for resetting the password
     pass
 
+
 @authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
 
 @authenticated_user
 def history(request):
     return render(request, 'accounts/User/history.html')
 
+
 @authenticated_user
 def tracker(request):
     return render(request, 'accounts/User/tracker.html')
+
 
 @authenticated_user
 def notification(request):
     return render(request, 'accounts/User/notification.html')
 
 
+@authenticated_user
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
 
+
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
+
+@authenticated_user
 def notification_html(request):
     return render(request, 'notification.html')
 
+
+@authenticated_user
 def pro_file_html(request):
     return render(request, 'pro_file.html')
 
+
+@authenticated_user
+def about_cash(request):
+    return render(request, 'accounts/Admin/Accounting/about_cash.html')
+
+
+@authenticated_user
+def cash_disbursement(request):
+    return render(request, 'accounts/Admin/Accounting/cash_disbursement.html')
+
+
+@authenticated_user
+def home_cash(request):
+    return render(request, 'accounts/Admin/Accounting/home_cash.html')
+
+
+@authenticated_user
+def prequest(request): # type: ignore
+    return render(request, 'accounts/Admin/Accounting/prequest.html')
+
+
+@authenticated_user
+def reward_cash(request):
+    return render(request, 'accounts/Admin/Accounting/reward_cash.html')
+
+
+@authenticated_user
+def form(request):
+    return render(request, 'accounts/Admin/Accounting/form.html')
+
+
+@authenticated_user
+def prequest(request):
+    return render(request, 'accounts/Admin/Accounting/prequest.html')
+
+
+@authenticated_user
+def campus_director_requester(request):
+    return render(request, 'accounts/Admin/campusD/requester.html')
+
+
+@authenticated_user
+def campus_director_notification(request):
+    return render(request, 'accounts/Admin/campusD/notification.html')
+
+
+@authenticated_user
+def campus_director_resolution(request):
+    return render(request, 'accounts/Admin/campusD/resolution.html')
+
+
+@authenticated_user
+def campus_director_historycd(request):
+    return render(request, 'accounts/Admin/campusD/historycd.html')
+
+
+@authenticated_user
+def campus_director_about(request):
+    return render(request, 'accounts/Admin/campusD/about.html')
+
+
+@authenticated_user
+def supply_office_home(request):
+    return render(request, 'accounts/Admin/Supply_office/home.html')
+
+
+@authenticated_user
+def home(request):
+    return render(request, 'accounts/Accounting/home.html')
+
+
+@authenticated_user
 def signout(request):
 
     pass
@@ -319,23 +385,42 @@ def home(request):
 
 def signout(request):
     pass
+
 def supply_office_notification(request):
     return render(request, 'accounts/Admin/Supply_office/notification.html')
+
 
 def supply_office_history(request):
     return render(request, 'accounts/Admin/Supply_office/history.html')
 
+
 def supply_office_about(request):
     return render(request, 'accounts/Admin/Supply_office/about.html')
+
 
 def supply_office_inventory(request):
     return render(request, 'accounts/Admin/Supply_office/inventory.html')
 
+
 def notice_of_reward(request):
     return render(request, 'accounts/Admin/Accounting/notice_of_reward.html')
 
-def bac(request):
-    return render(request, 'accounts/Admin/BAC/bac.html')
+
+def about_bac(request):
+    return render(request, 'accounts/Admin/BAC/about_bac.html')
+
+
+def home_bac(request):
+    return render(request, 'accounts/Admin/BAC/home_bac.html')
+
+
+def purchase_bac(request):
+    return render(request, 'accounts/Admin/BAC/purchase_bac.html')
+
+
+def sahomepage(request):
+    return render(request, 'accounts/Admin/BAC/sahomepage.html')
+
 
 department_mapping = {
     'option1': 'College of Arts and Sciences',
@@ -346,8 +431,7 @@ department_mapping = {
     'option6': 'College of Education',
     'option7': 'Graduate School',
 }
-
-
+@authenticated_user
 def requester(request):
     if request.method == "POST":
         name = request.POST.get('item_name[]', '')
@@ -381,9 +465,6 @@ def requester(request):
         return redirect('requester')  # Redirect to the same page after submissio
     return render(request, 'accounts/User/requester.html')
 
-@authenticated_user
-def sahomepage(request):
-    return render(request, 'accounts/Admin/sahomepage.html')
 
 
 def transaction_history(request):
