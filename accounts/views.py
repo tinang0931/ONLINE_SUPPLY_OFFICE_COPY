@@ -222,7 +222,8 @@ def about(request):
 
 @authenticated_user
 def history(request):
-    return render(request, 'accounts/User/history.html')
+   user_history = History.objects.filter(user=request.user).order_by('-timestamp')
+   return render(request, 'accounts/User/history.html')
 
 
 @authenticated_user
@@ -312,6 +313,7 @@ def campus_director_resolution(request):
 
 @authenticated_user
 def campus_director_historycd(request):
+    history_entries = CampusDirectorHistoryCD.objects.all()
     return render(request, 'accounts/Admin/campusD/historycd.html')
 
 
@@ -391,6 +393,7 @@ def supply_office_notification(request):
 
 
 def supply_office_history(request):
+    history_entries = SupplyOfficeHistory.objects.all()
     return render(request, 'accounts/Admin/Supply_office/history.html')
 
 

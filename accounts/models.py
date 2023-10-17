@@ -108,3 +108,27 @@ class VerificationCode(models.Model):
     def __str__(self):
         return f'Code: {self.code} for {self.email}'
 
+class History(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.timestamp}'
+    
+class CampusDirectorHistoryCD(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    description = models.TextField()
+
+    def __str__(self):
+        return f'Campus Director History: {self.user.username}'
+
+class SupplyOfficeHistory(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    description = models.TextField()
+
+    def __str__(self):
+        return f'Supply Office History: {self.start_date} to {self.end_date}'
