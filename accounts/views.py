@@ -230,7 +230,7 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
 
-@authenticated_user
+
 def notification(request):
     return render(request, 'accounts/User/notification.html')
 

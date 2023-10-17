@@ -157,7 +157,7 @@ DATABASES = {
 #         'HOST': 'localhost',    # MongoDB host (can be a different host if MongoDB is not on the same server)
 #         'PORT': 27017,          # MongoDB port (default is 27017)
 #  }
-# }
+# 
 
 
 # Password validation
