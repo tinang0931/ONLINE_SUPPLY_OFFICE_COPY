@@ -11,6 +11,10 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   </head>
   <body>
@@ -43,9 +47,9 @@
           <div class="d-flex flex-wrap align-content-between h-100">
             <div class="bg-white w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">History</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">About Us</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'home_bac' %}">Home</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'purchase_bac' %}">Purchase Requests</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about_bac' %}">About Us</a>
               </div>
             </div>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
@@ -56,7 +60,7 @@
 
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
-            <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>  
+            <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>  
           
           <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -210,8 +214,6 @@
   <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
 </div>
 
-
-
         </div>  
       </main>
     <footer>
@@ -220,8 +222,3 @@
       </div>
     </footer>
   </body>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!DOCTYPE html>
