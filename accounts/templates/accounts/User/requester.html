@@ -50,32 +50,7 @@
                         <h5 class="modal-title" id="staticBackdropLabel">New Request</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Item Name</label>
-                          <input type="text" class="form-control item-name" name="item_name[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Item Description</label>
-                          <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Unit</label>
-                          <input type="text" class="form-control unit" name="unit[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Quantity</label>
-                          <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Unit Cost</label>
-                          <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
-                        </div>
-                        
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Add</button>
-                      </div>
+                      <div class="modal-body"></div>
                     </div>
                   </div>
                 </div>
@@ -93,8 +68,8 @@
                         <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
                         <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
                         <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
                         <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
                         <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
                         <th class="text-center text-nowrap"></th>
                     </tr>
@@ -105,9 +80,9 @@
                     <td>System Unit</td>
                     <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
                     <td>Set</td>
-                    <td>60</td>
-                    <td>20,000</td>
-                    <td><span class="total">1,200,000</span></td>
+                    <td><span class="unit-price">10.00</span></td>
+                    <td><input type="number" class="quantity" min="1" oninput="calculateRowTotal(this)"></td>
+                    <td><span class="total">0.00</span></td>
                     <td class="text-end my-2 mt-0">
                       <div class="d-flex justify-content-evenly">
                         <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
@@ -120,9 +95,9 @@
                     <td>Camera</td>
                     <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
                     <td>piece</td>
-                    <td>60</td>
-                    <td>2,000</td>
-                    <td><span class="total">120,000</span></td>
+                   <td><span class="unit-price">10.00</span></td>
+                    <td><input type="number" class="quantity" min="1" oninput="calculateRowTotal(this)"></td>
+                    <td><span class="total">0.00</span></td>
                     <td class="text-end my-2 mt-0">
                       <div class="d-flex justify-content-evenly">
                         <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
@@ -132,9 +107,9 @@
                   </tr>
                 </tbody>
                 <tfoot>
-                  <tr class=" item-row border">
+                  <tr>
                     <td colspan="6">Total Amount</td>
-                    <td colspan="1"><span id="totalAmount">00.00</span></td>
+                    <td><span id="totalAmount">0.00</span></td>
                     <td>
                       <button type="button" class="btn btn-primary">Submit</button>
                     </td>
@@ -145,66 +120,10 @@
 
           </form>
         </div>          
-        <!-- Confirmation pop-up -->
-        <div id="confirmationPopup" class="popup">
-          <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
-          <h2>Purchase Request Confirmation</h2>
-          <!-- Add your confirmation content here -->
-          <p>Your purchase request has been submitted and is being processed.</p>
-        </div>
+
       </div>
           
-        
-      </form>
-      </div>
-    </div> 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const itemTable = document.getElementById('itemTable');
-    const addButton = document.querySelector('.add-new');
-    let itemNumber = 1; // Initialize item number
-
-  addButton.addEventListener('click', function () {
-      const newRow = create_request_table.querySelector('.item-row').cloneNode(true);
-      const itemNumberSpan = newRow.querySelector('.item-no');
-      itemNumberSpan.textContent = itemNumber;
-      itemNumber++;
-
-      create_request_table.querySelector('tbody').appendChild(newRow);
-      newRow.style.display = 'table-row'; // Show the new row
-  });
-
-  // Calculate the total amount
-  const calculateTotal = function () {
-      let totalAmount = 0;
-      const quantityInputs = document.querySelectorAll('.quantity');
-      const priceInputs = document.querySelectorAll('.unit_cost');
-
-      for (let i = 0; i < quantityInputs.length; i++) {
-          const quantity = parseFloat(quantityInputs[i].value) || 0;
-          const price = parseFloat(priceInputs[i].value) || 0;
-          totalAmount += quantity * price;
-      }
-
-      const totalAmountSpan = document.getElementById('totalAmountSpan');
-      totalAmountSpan.textContent = totalAmount.toFixed(2);
-  };
-
-  // Attach input event listeners to quantity and price inputs
-  const quantityInputs = document.querySelectorAll('.quantity');
-  const priceInputs = document.querySelectorAll('.unit_cost');
-
-  quantityInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  priceInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  // Trigger the initial calculation
-  calculateTotal();
-
   // Update department name in the hidden input field
   const departmentDropdown = document.getElementById('departmentDropdown');
   departmentDropdown.addEventListener("change", function () {
@@ -213,50 +132,29 @@ document.addEventListener('DOMContentLoaded', function () {
       const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
       selectedDepartmentNameInput.value = selectedOptionText;
   });
+</script>
 
-  // Show/hide confirmation popup functions (if needed)
-  function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
+<script>
+  function calculateRowTotal(input) {
+    const row = input.parentNode.parentNode;
+    const unitPrice = parseFloat(row.querySelector('.unit-price').textContent) || 0;
+    const quantity = parseInt(input.value) || 0;
+
+    const totalAmount = unitPrice * quantity;
+    row.querySelector('.total').textContent = totalAmount.toFixed(2);
+
+    calculateTotalAmount();
   }
 
-  function hideConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'none';
-  }
-});
+  function calculateTotalAmount() {
+    const totalElements = document.querySelectorAll('.total');
+    let totalAmount = 0;
 
-  </script>
-    
-  <script>
-    function calculateRowTotal(input) {
-      const row = input.parentNode.parentNode;
-      const unit_cost = parseFloat(row.querySelector('.unit-cost').value) || 0;
-      const quantity = parseInt(row.querySelector('.quantity').value) || 0;
-  
-      const totalAmount = unit_cost * quantity;
-      row.querySelector('.total').textContent = totalAmount.toFixed(2);
-  
-      calculateTotalAmount();
-    }
-  
-    function calculateTotalAmount() {
-      const totalElements = document.querySelectorAll('.total');
-      let totalAmount = 0;
-  
-      totalElements.forEach(element => {
-        totalAmount += parseFloat(element.textContent);
-      });
-  
-      document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-    }
-  </script>
+    totalElements.forEach(element => {
+      totalAmount += parseFloat(element.textContent);
+    });
 
-  <script>
-    function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-    }
-
-  function hideConfirmationPopup() {
-    document.getElementById('confirmationPopup').style.display = 'none';
+    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
   }
 </script>
 
