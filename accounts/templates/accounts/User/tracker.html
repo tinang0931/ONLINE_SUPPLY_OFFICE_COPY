@@ -1,34 +1,27 @@
 {% extends "accounts/User/main.html" %}
 
 
+
 {% block content %}
 
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
-            <h1 class="pr text-center pt-4">REQUEST STATUS</h1>  
-          </div>
-          <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: orangered;"></i>
-              <strong>Pending Requests</strong>
-            </div>
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: green;"></i>
-              <strong>Successful Requests</strong>
-            </div>
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: red;"></i>
-              <strong>Failed Requests</strong>
-            </div>
+            <h1 class="pr text-center pt-4">REQUEST TRACKER</h1>  
           </div>
           <div class="row w-100 m-auto border text-start text-dark">
             <div class="col-10">
               <p>
-                Purchase Request No. 000001
+                Purchase Request No. 00000
+              </p>
+            </div>
+            <div class="col-11">
+              <p >
+              Waiting for the BAC Secretariat
+              to create a Resolution.
               </p>
             </div>
             <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-eye" aria-hidden="true"></i>
+         
             </div>
           </div>
           <div class="row w-100 m-auto border text-start text-dark">
@@ -38,7 +31,7 @@
               </p>
             </div>
             <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-eye" aria-hidden="true"></i>
+           
             </div>
           </div>  
           <!-- Modal -->
