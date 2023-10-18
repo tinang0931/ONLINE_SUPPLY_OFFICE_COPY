@@ -24,23 +24,69 @@
                       <option value="option8">  Others please specify:</option>
                   </select>
                 </div>
-                
               </div>
-              
-            </div> 
+
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+                  <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+                </div>
+              </div>
             
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
-              <div class="form-group mb-3">
-                <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
-                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+            </div> 
+
+            <div class="row w-100 m-auto mb-3">
+              <div class="col-6 col-sm-6 col-md-7 col-lg-9">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Select Items
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">New Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group mb-1">
+                          <label for="exampleFormcontrolTextarea1 p-2">Item Name</label>
+                          <input type="text" class="form-control item-name" name="item_name[]">
+                        </div>
+                        <div class="form-group mb-1">
+                          <label for="exampleFormcontrolTextarea1 p-2">Item Description</label>
+                          <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
+                        </div>
+                        <div class="form-group mb-1">
+                          <label for="exampleFormcontrolTextarea1 p-2">Unit</label>
+                          <input type="text" class="form-control unit" name="unit[]">
+                        </div>
+                        <div class="form-group mb-1">
+                          <label for="exampleFormcontrolTextarea1 p-2">Quantity</label>
+                          <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
+                        </div>
+                        <div class="form-group mb-1">
+                          <label for="exampleFormcontrolTextarea1 p-2">Unit Cost</label>
+                          <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
+                        </div>
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+                <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
               </div>
             </div>
-      <div class="form-group mb-3">
-        <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
-        <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="3"></textarea>
-      </div>
-          <div class="container">
-            <table class="table table-bordered table-responsive" id="itemTable">
+            <div class="table-responsive">
+
+              <table class="table" id="create_request_table" style="border: 1px solid black;">
                 <thead>
                     <tr>
                         <th class="">Item No.</th>
