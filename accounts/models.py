@@ -96,7 +96,6 @@ class TransactionHistory(models.Model):
 
     def __str__(self):
         return f'Transaction by {self.user.username} at {self.timestamp}'
-    
 
 
 
