@@ -259,165 +259,24 @@ def pro_file_html(request):
     return render(request, 'pro_file.html')
 
 
-
-def about_cash(request):
-    return render(request, 'accounts/Admin/Accounting/about_cash.html')
-
-
-def cash_disbursement(request):
-    return render(request, 'accounts/Admin/Accounting/cash_disbursement.html')
-
-
-
-def home_cash(request):
-    return render(request, 'accounts/Admin/Accounting/home_cash.html')
-
-
-
-def prequest(request): # type: ignore
-    return render(request, 'accounts/Admin/Accounting/prequest.html')
-
-
-
-def reward_cash(request):
-    return render(request, 'accounts/Admin/Accounting/reward_cash.html')
-
-
-
-def form(request):
-    return render(request, 'accounts/Admin/Accounting/form.html')
-
-
-
-def prequest(request):
-    return render(request, 'accounts/Admin/Accounting/prequest.html')
-
-
-
-def campus_director_requester(request):
-    return render(request, 'accounts/Admin/campusD/requester.html')
-
-
-
-def campus_director_notification(request):
-    return render(request, 'accounts/Admin/campusD/notification.html')
-
-
-
-def campus_director_resolution(request):
-    return render(request, 'accounts/Admin/campusD/resolution.html')
-
-
-
-def campus_director_historycd(request):
-    return render(request, 'accounts/Admin/campusD/historycd.html')
-
-
-
-def campus_director_about(request):
-    return render(request, 'accounts/Admin/campusD/about.html')
-
-
-
-def supply_office_home(request):
-    return render(request, 'accounts/Admin/Supply_office/home.html')
-
-
-
-def home(request):
-    return render(request, 'accounts/Accounting/home.html')
+@authenticated_user
+def signout(request):
+    pass
 
 
 @authenticated_user
-def signout(request):
-
-    pass
-
-def about_cash(request):
-    return render(request, 'accounts/Admin/Accounting/about_cash.html')
-
-def cash_disbursement(request):
-    return render(request, 'accounts/Admin/Accounting/cash_disbursement.html')
-
-def home_cash(request):
-    return render(request, 'accounts/Admin/Accounting/home_cash.html')
-
-def prequest(request):
-    return render(request, 'accounts/Admin/Accounting/prequest.html')
-
-def form(request):
-    return render(request, 'accounts/Admin/Accounting/form.html')
-
-def decline(request):
-    return render(request, 'accounts/Admin/Accounting/decline.html')
-
-def notice_of_reward(request):
-    return render(request, 'accounts/Admin/Accounting/notice_of_reward.html')
-
-def prequest(request):
-    return render(request, 'accounts/Admin/Accounting/prequest.html')
-
-
-def campus_director_requester(request):
-    return render(request, 'accounts/Admin/campusD/requester.html')
-
-def campus_director_notification(request):
-    return render(request, 'accounts/Admin/campusD/notification.html')
-
-def campus_director_resolution(request):
-    return render(request, 'accounts/Admin/campusD/resolution.html')
-
-def campus_director_historycd(request):
-    return render(request, 'accounts/Admin/campusD/historycd.html')
-
-def campus_director_about(request):
-    return render(request, 'accounts/Admin/campusD/about.html')
-
-def supply_office_home(request):
-    return render(request, 'accounts/Admin/Supply_office/home.html')
-
-
-def home(request):
-    return render(request, 'accounts/Accounting/home.html')
-
-
-def signout(request):
-    pass
-
-def supply_office_notification(request):
-    return render(request, 'accounts/Admin/Supply_office/notification.html')
-
-
-def supply_office_history(request):
-    return render(request, 'accounts/Admin/Supply_office/history.html')
-
-
-def supply_office_about(request):
-    return render(request, 'accounts/Admin/Supply_office/about.html')
-
-
-def supply_office_inventory(request):
-    return render(request, 'accounts/Admin/Supply_office/inventory.html')
-
-
-def notice_of_reward(request):
-    return render(request, 'accounts/Admin/Accounting/notice_of_reward.html')
-
-
 def about_bac(request):
     return render(request, 'accounts/Admin/BAC/about_bac.html')
 
 
+@authenticated_user
 def home_bac(request):
     return render(request, 'accounts/Admin/BAC/home_bac.html')
 
 
+@authenticated_user
 def purchase_bac(request):
     return render(request, 'accounts/Admin/BAC/purchase_bac.html')
-
-
-def sahomepage(request):
-    return render(request, 'accounts/Admin/BAC/sahomepage.html')
 
 
 department_mapping = {
@@ -429,6 +288,8 @@ department_mapping = {
     'option6': 'College of Education',
     'option7': 'Graduate School',
 }
+
+
 @authenticated_user
 def requester(request):
     if request.method == "POST":
@@ -464,12 +325,8 @@ def requester(request):
     return render(request, 'accounts/User/requester.html')
 
 
-
+@authenticated_user
 def transaction_history(request):
     # Retrieve and display the transaction history
     transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
     return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
-
-
-
-
