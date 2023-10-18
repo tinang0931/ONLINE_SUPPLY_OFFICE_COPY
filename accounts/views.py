@@ -135,6 +135,14 @@ def about(request):
     return render(request, 'accounts/User/about.html')
 
 @authenticated_user
+def prof (request):
+    return render(request, 'accounts/User/prof.html')
+
+@authenticated_user
+def tracker (request):
+    return render(request, 'accounts/User/tracker.html')
+
+@authenticated_user
 def history(request):
     return render(request, 'accounts/User/history.html')
 
