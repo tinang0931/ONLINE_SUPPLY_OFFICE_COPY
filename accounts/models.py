@@ -109,9 +109,14 @@ class VerificationCode(models.Model):
         return f'Code: {self.code} for {self.email}'
 
 class History(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity = models.TextField()
+    purchase_request_id = models.CharField(max_length=20)
+    purpose = models.CharField(max_length=200)
+    quantity = models.IntegerField()
+    status = models.CharField(max_length=20)
+    status_description = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
