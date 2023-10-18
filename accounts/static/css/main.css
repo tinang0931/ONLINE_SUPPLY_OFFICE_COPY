@@ -106,7 +106,9 @@ body {
 p{
   padding: 0;
   margin: 0;
+  text-align: center;
 }
+
 
 .swal2-actions .btn{
   margin: 0 5px !important ;
@@ -3065,3 +3067,4 @@ table.dataTable {
   border-collapse: separate;
   border-radius: 5px;
 }
+

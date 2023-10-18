@@ -40,5 +40,6 @@ urlpatterns = [
    path('supply_office/about/', views.supply_office_about,name='supply_office_about'),
    path('supply_office/inventory/', views.supply_office_inventory,name='supply_office_inventory'),
    path('notice_of_reward/',views.notice_of_reward, name='notice_of_reward'),  
-   path('systemadmin/sahomepage/', views.sahomepage,name='sahomepage'),
+   path('systemadmin/home_admin/', views.home_admin,name='home_admin'),
+   path('systemadmin/user_admin/', views.user_admin,name='user_admin'),
 ]

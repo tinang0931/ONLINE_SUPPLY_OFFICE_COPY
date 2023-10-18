@@ -405,6 +405,12 @@ def supply_office_inventory(request):
 def notice_of_reward(request):
     return render(request, 'accounts/Admin/Accounting/notice_of_reward.html')
 
+def home_admin(request):
+    return render(request, 'accounts/Admin/systemadmin/home_admin.html')
+
+def user_admin(request):
+    return render(request, 'accounts/Admin/systemadmin/user_admin.html')
+
 
 def about_bac(request):
     return render(request, 'accounts/Admin/BAC/about_bac.html')
@@ -417,9 +423,6 @@ def home_bac(request):
 def purchase_bac(request):
     return render(request, 'accounts/Admin/BAC/purchase_bac.html')
 
-
-def sahomepage(request):
-    return render(request, 'accounts/Admin/BAC/sahomepage.html')
 
 
 department_mapping = {
