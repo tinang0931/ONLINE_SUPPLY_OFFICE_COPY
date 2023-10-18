@@ -9,18 +9,31 @@
           </div>
           <form action="{% url 'requester' %}" method="post">
             {% csrf_token %}
-            <div class="form-group mb-3">
-              <label for="departmentDropdown">Choose Department:</label>
-              <select class="form-control" id="departmentDropdown" name="departmentDropdown">
-                  <option value="option1">College of Arts and Sciences</option>
-                  <option value="option2">College of Agriculture</option>
-                  <option value="option3">College of Forestry</option>
-                  <option value="option4">College of Hospitality Management and Tourism</option>
-                  <option value="option5">College of Technology and Engineering</option>
-                  <option value="option6">College of Education</option>
-                  <option value="option7">Graduate School</option>
-                  <option value="option8">  Others please specify:</option>
-              </select>
+            <div class="row w-100 m-auto"> 
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="departmentDropdown">Choose Department:</label>
+                  <select class="form-control" id="departmentDropdown" name="departmentDropdown">
+                      <option value="option1">College of Arts and Sciences</option>
+                      <option value="option2">College of Agriculture</option>
+                      <option value="option3">College of Forestry</option>
+                      <option value="option4">College of Hospitality Management and Tourism</option>
+                      <option value="option5">College of Technology and Engineering</option>
+                      <option value="option6">College of Education</option>
+                      <option value="option7">Graduate School</option>
+                      <option value="option8">  Others please specify:</option>
+                  </select>
+                </div>
+                
+              </div>
+              
+            </div> 
+            
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+              <div class="form-group mb-3">
+                <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+              </div>
             </div>
       <div class="form-group mb-3">
         <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
