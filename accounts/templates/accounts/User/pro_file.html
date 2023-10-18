@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -40,11 +39,10 @@
           </div>
         </div>   
         <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-        <div class="d-flex" id="wrapper">
-          <a href="{% url 'notification' %}">
-          </a>
+        <div class="d-flex" id="wrapper"> 
           <div class="rectangle">
-            <h1 class="guest">Username</h1>
+            <div class="username-text">
+            <h1 class="guest">12345</h1>
             <p class="student">STUDENT</p>
           <img class="profile-picture" id="profile-pic" src="{% static 'images/profile-img.png' %}" alt="Profile">
           <script>
@@ -57,24 +55,39 @@
                 profilePic.src = savedImageUrl;
             }
         </script>
-         
-          <button class="submit " onclick="window.location.href='{% url 'profile_html' %}'">Update Profile</button>
-          <button class="ho_me" onclick="window.locationhref='{% url 'notification_html' %}'"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+
+  
+          <a href="{% url 'profile' %}"> 
+          <button class="submit" onclick="window.location.href='profile.html'">Update Profile</button>
+          <a href="{% url 'notification' %}">
+          <button class="ho_me" onclick="window.location.href='notification.html'">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>
+        </a>
+      </a>
         </div>
+      </div>
 
         <div class="container">
           <h1 class="user">USER'S INFO</h1>
           <p class="emel">example@gmail.com</p>
           <p class="contct1">012345678</p>
           <p class="contct2">098765432</p>
+          
         </div>
         <script>
+         
+          var fullName = localStorage.getItem('fullName') || 'Username';
+          var emailAddress = localStorage.getItem('emailAddress') || 'user@example.com';
+          var contact1 = localStorage.getItem('contact1') || '12345';
+          var contact2 = localStorage.getItem('contact2') || '12345';
+      
           
-          var fullName = localStorage.getItem('fullName');
-          var emailAddress = localStorage.getItem('emailAddress');
-        
-          document.getElementById('username-placeholder').textContent = fullName || 'Username';
-          document.getElementById('email-placeholder').textContent = emailAddress || 'user@example.com';
+          document.querySelector('.user').textContent = fullName;
+          document.querySelector('.emel').textContent = emailAddress;
+          document.querySelector('.contct1').textContent = contact1;
+          document.querySelector('.contct2').textContent = contact2;
+
+       
         </script>
-    
     </html>  

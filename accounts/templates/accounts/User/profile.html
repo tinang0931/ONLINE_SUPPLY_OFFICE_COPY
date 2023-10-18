@@ -37,7 +37,7 @@
             accountIdPlaceholder.textContent = '123456';
         }
         </script>
-        
+
       </head>
       <body>
         <div class="background">
@@ -59,8 +59,10 @@
         </div>   
         <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
         <div class="d-flex" id="wrapper">
-          <a href="{% url 'notification' %}">
-            <button class="phome" onclick="window.location.href='{% url 'pro_file_html' %}'"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+          <a href="{% url 'pro_file' %}">
+            <button class="phome" onclick="window.location.href='pro_file.html'">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
           </a>
           </div>
           <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" data-toggle="modal" data-target="#profileModal" id="profile-pic-trigger">
@@ -159,12 +161,16 @@
     
       <div>  
         <div class="username-info">
+          <div class="username-text">
          <h1><span id="username-placeholder">Username</span></h1>
          <p><span id="email-placeholder">user@example.com</span><br>
             <span id="account-id-placeholder">Account ID: <span id="account-id">12345</span></span>
         </p>
+        
       </div>
     </div>
+    </div>
+     
         <script>
           function updateContainer() {
              
@@ -177,10 +183,18 @@
               document.getElementById('email-placeholder').textContent = emailAddress || 'user@example.com';
               document.getElementById('account-id').textContent = contact1 || '12345';
               document.getElementById('account-id-placeholder').textContent = 'Account ID: ' + (contact2 || '12345');
+
+              localStorage.setItem('fullName', fullName);
+              localStorage.setItem('emailAddress', emailAddress);
+              localStorage.setItem('contact1', contact1);
+              localStorage.setItem('contact2', contact2);
+
+        
           }
           function updateContainerAndSubmit() {
             updateContainer(); 
         }
+      
           </script>
         
     </html>  
