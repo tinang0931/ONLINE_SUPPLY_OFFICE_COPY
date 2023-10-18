@@ -4,179 +4,223 @@
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Requesting Page</title>
+      <title>History</title>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
-      
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   </head>
-    <body>
-        <main class="flex-shrink">
-        <div id="page-content-wrapper ">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="row w-100 m-auto">
-                  <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-                    <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-                  </div>
-                  <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                      <h1 class="head text-white">Online Supply Office</h1>
-                      <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-                  </div>
-                  <div class="col-5 col-sm-3 col-md-3 col-lg-2">
-                    <div>
-                      <a href="{% url 'profile' %}">
-                        <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
-                      </a>
-                    <div>
-                      <h1 class="p1">Profile Name</h1>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-        </div>
-        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="sidebar">
-            <div class="d-flex flex-wrap align-content-between h-100">
-                <div class="bg-white w-100" id="sidebar-wrapper">
-                    <div class="list-group w-100">
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'supply_office_home' %}">Home</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'supply_office_inventory' %}">Inventory</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'supply_office_history' %}">History</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'supply_office_about' %}">About Us</a>
-                      </div>
-                </div>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
-                <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
+  <body>
+    <main class="flex-shrink">
+      <div id="page-content-wrapper ">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="row w-100 m-auto">
+            <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+              <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+            </div>
+            <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                <h1 class="head text-white">Online Supply Office</h1>
+                <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+            </div>
+            <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+             
+                <a href="{% url 'profile' %}">
+                  <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
                 </a>
+                <h1 class="p1">Profile Name</h1>
+            
             </div>
+          </div>
+        </nav>
+      </div>
+      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+      <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="sidebar">
+          <div class="d-flex flex-wrap align-content-between h-100">
+            <div class="bg-white w-100" id="sidebar-wrapper">
+              <div class="list-group w-100">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'home_bac' %}">Home</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'purchase_bac' %}">Purchase Requests</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about_bac' %}">Request Tracker</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about_bac' %}">History</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about_bac' %}">About Us</a>
+              </div>
             </div>
-
-            <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-                <div class="container">
-                    <h1 class="pr text-center pt-4">HISTORY</h1>  
-                </div>
-                <div class="row w-100 m-auto border text-center">
-                    <div class="col-4  text-start">
-                        <p>
-                            Purchase Request No. 000002.
-                        </p>
-                    </div>
-                    <div class="col-4  text-center">
-                        <p>
-                            27/09/2023
-                        </p>
-                    </div>
-                    <div class="col-4 text-center"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fa fa-eye" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="row w-100 m-auto text-dark text-center mb-5">
-                                        <div class="col-12">
-                                            <p>
-                                                <strong>Purchase Request No. 000001</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto text-dark text-start mb-2">
-                                        <div class="col-12">
-                                            <p>
-                                                <strong>Requester:</strong> Requester Name
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto text-dark text-start mb-2">
-                                        <div class="col-12">
-                                            <p>
-                                                <strong>Date Requested:</strong> mm/dd/yy
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto text-dark text-start mb-2">
-                                        <div class="col-12">
-                                            <p>
-                                                <strong>Date Completed:</strong> mm/dd/yy
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto border text-start p-0 text-dark ">
-                                        <div class="col-6 border">
-                                            <p>
-                                            PR ID:
-                                            </p>
-                                        </div>
-                                        <div class="col-6 border text-dark text-start">
-                                            <p>
-                                            Requester ID:
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto border text-dark text-start">
-                                        <div class="col-12">
-                                            <p>
-                                            Department:
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row w-100 m-auto border text-dark text-start">
-                                        <div class="col-12">
-                                            <p>
-                                            Purpose:
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>    
-                                <table class="table table-bordered table-responsive" id="itemTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="">Item No.</th>
-                                            <th class="">Item Name</th>
-                                            <th class="">Item Brand/Description</th>
-                                            <th class="">Unit</th>
-                                            <th class="">Quantity</th>
-                                            <th class="">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td>1</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                    </tbody>
-                                </table>
-                                <div 
-                                    class="container justify-content-end align-items-baseline">
-                                    Total Amount:_______
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </main>
-        <footer>
-        <div class="footer" style="height: 45px;">
-
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
+              <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
+            </a>
+          </div>
         </div>
-        </footer>
-     </body>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+          <div class="container">
+            <h1 class="pr text-center pt-4">ACTIVITY HISTORY</h1>  
+          
+          <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purchase Request ID</label>
+            <input type="text" class="form-control item-name" name="item_name[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Date Requested</label>
+            <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+            <input type="text" class="form-control unit" name="unit[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status</label>
+            <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status Description</label>
+            <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+    <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+  </div>
+  
+  <div class="table-responsive" style="margin: 0 auto;">
+    <table class="table" id="create_request_table" style="border: 1px solid black;">
+</div>
+<div class="table-responsive" style="margin: 0 auto;">
+  <table class="table" id="create_request_table" style="border: 1px solid black;">
+<div class="table-responsive">
+
+<table class="table" id="create_request_table" style="border: 1px solid black;">
+  <thead>
+      <tr>
+          <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Purpose</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+          <th class="text-center text-nowrap"></th>
+      </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    
+      </td>
+</tbody>
+</table>
+<div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
+  <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+</div>
+
+        </div>  
+      </main>
+    <footer>
+      <div class="footer" style="height: 45px;">
+
+      </div>
+    </footer>
+  </body>
