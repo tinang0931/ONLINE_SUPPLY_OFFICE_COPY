@@ -208,24 +208,24 @@ def is_valid_code(verification_code):
     pass
 
 
-@authenticated_user
+
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
 
-@authenticated_user
+
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-@authenticated_user
+
 def history(request):
     return render(request, 'accounts/User/history.html')
 
 
-@authenticated_user
+
 def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
@@ -235,97 +235,95 @@ def notification(request):
     return render(request, 'accounts/User/notification.html')
 
 
-@authenticated_user
+
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
 
 
-@authenticated_user
+
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-@authenticated_user
+
 def profile_html(request):
     return render(request, 'profile.html')
 
 
-@authenticated_user
+
 def notification_html(request):
     return render(request, 'notification.html')
 
 
-@authenticated_user
 def pro_file_html(request):
     return render(request, 'pro_file.html')
 
 
-@authenticated_user
+
 def about_cash(request):
     return render(request, 'accounts/Admin/Accounting/about_cash.html')
 
 
-@authenticated_user
 def cash_disbursement(request):
     return render(request, 'accounts/Admin/Accounting/cash_disbursement.html')
 
 
-@authenticated_user
+
 def home_cash(request):
     return render(request, 'accounts/Admin/Accounting/home_cash.html')
 
 
-@authenticated_user
+
 def prequest(request): # type: ignore
     return render(request, 'accounts/Admin/Accounting/prequest.html')
 
 
-@authenticated_user
+
 def reward_cash(request):
     return render(request, 'accounts/Admin/Accounting/reward_cash.html')
 
 
-@authenticated_user
+
 def form(request):
     return render(request, 'accounts/Admin/Accounting/form.html')
 
 
-@authenticated_user
+
 def prequest(request):
     return render(request, 'accounts/Admin/Accounting/prequest.html')
 
 
-@authenticated_user
+
 def campus_director_requester(request):
     return render(request, 'accounts/Admin/campusD/requester.html')
 
 
-@authenticated_user
+
 def campus_director_notification(request):
     return render(request, 'accounts/Admin/campusD/notification.html')
 
 
-@authenticated_user
+
 def campus_director_resolution(request):
     return render(request, 'accounts/Admin/campusD/resolution.html')
 
 
-@authenticated_user
+
 def campus_director_historycd(request):
     return render(request, 'accounts/Admin/campusD/historycd.html')
 
 
-@authenticated_user
+
 def campus_director_about(request):
     return render(request, 'accounts/Admin/campusD/about.html')
 
 
-@authenticated_user
+
 def supply_office_home(request):
     return render(request, 'accounts/Admin/Supply_office/home.html')
 
 
-@authenticated_user
+
 def home(request):
     return render(request, 'accounts/Accounting/home.html')
 
