@@ -19,48 +19,9 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <script>
-        const actualUsername = "Actual User's Name";
-        const usernamePlaceholder = document.getElementById('username-placeholder');
-        usernamePlaceholder.textContent = actualUsername;
-    </script>
-    <script>
-        const userEmail = "user@example.com";
-        const emailPlaceholder = document.getElementById('email-placeholder');
-        emailPlaceholder.textContent = userEmail;
-    </script>
-    <script>
-        const userIsLoggedIn = true;
-
-        if (userIsLoggedIn) {
-            const accountIdPlaceholder = document.getElementById('account-id');
-            accountIdPlaceholder.textContent = '123456';
-        }
-        </script>
-
-      </head>
-      <body>
-        <div class="background">
-          <div class="image-container">
-            <img class="background-image" src="{% static 'images/ctu_loogo.png' %}" alt="BG-logo">
-          </div>
-      
-          <div id="page-content-wrapper ">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-              <div class="container-fluid col-2 p-0px">
-                  <img src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-              </div>
-              <div class="head col-10">
-                  <h1 class="head">Online Supply Office</h1>
-                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-              </div>
-            </nav>
-          </div>
-        </div>   
-        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
         <div class="d-flex" id="wrapper">
-          <a href="{% url 'pro_file' %}">
-            <button class="phome" onclick="window.location.href='pro_file.html'">
+          <a href="{% url 'prof' %}">
+            <button class="phome" onclick="window.location.href='prof.html'">
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </button>
           </a>

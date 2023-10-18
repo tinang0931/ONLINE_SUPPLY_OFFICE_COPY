@@ -218,7 +218,6 @@ def logout_user(request):
 def about(request):
     return render(request, 'accounts/User/about.html')
 
-
 def history(request):
     return render(request, 'accounts/User/history.html')
 
@@ -240,17 +239,8 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-def profile_html(request):
-    return render(request, 'profile.html')
-
-
-def notification_html(request):
-    return render(request, 'notification.html')
-
-
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
-
+def prof(request):
+    return render(request, 'accounts/User/prof.html')
 
 @authenticated_user
 def about_cash(request):

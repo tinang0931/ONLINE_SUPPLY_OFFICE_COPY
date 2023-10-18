@@ -226,9 +226,9 @@ height: 100%;
     top: 20;
     display: -ms-flexbox!important;
     display: flex!important;
-    background-color: white;
+    background-color: rgb(13, 54, 104);
     visibility: visible;
-    content-visibility: auto;
+    content-visibility  : auto;
 }
 .phome {
   --color: #4190ED;
