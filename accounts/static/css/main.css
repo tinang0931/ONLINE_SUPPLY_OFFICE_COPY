@@ -346,6 +346,13 @@ i.bi-circle-fill {
   font-size: 20px;
   font-weight: bold;
 }
+
+.btn-custom {
+  background-color: #808080;
+  color: #ffffff;
+}
+
+
 /* xs - extra small*/
 @media (min-width: 0) {
   .w-xs-5 {
