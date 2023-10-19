@@ -40,28 +40,8 @@
         
       </head>
       <body>
-        <div class="background">
-          <div class="image-container">
-            <img class="background-image" src="{% static 'images/ctu_loogo.png' %}" alt="BG-logo">
-          </div>
-      
-          <div id="page-content-wrapper ">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-              <div class="container-fluid col-2 p-0px">
-                  <img src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-              </div>
-              <div class="head col-10">
-                  <h1 class="head">Online Supply Office</h1>
-                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-              </div>
-            </nav>
-          </div>
-        </div>   
-        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-        <div class="d-flex" id="wrapper">
-          <a href="{% url 'notification' %}">
-            <button class="phome" onclick="window.location.href='{% url 'pro_file_html' %}'"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-          </a>
+          <a href="{% url 'notification' %}"></a>
+          
           </div>
           <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" data-toggle="modal" data-target="#profileModal" id="profile-pic-trigger">
           
@@ -142,20 +122,20 @@
           </div>
         </div>
         
-        <div class="edit-profile">
+        <div class="container">
         <input type="text" class="fname" placeholder="Full Name">
         <input type="text" class="emmail" placeholder="Email Address">
         <input type="number" class="contact1" placeholder="Contact No.1">
         <input type="number" class="contact2" placeholder="Contact No.2">
         <input type="password" class="password" placeholder="Password">
         <input type="password" class="re-type-pass" placeholder="Confirm Password">
-        <button class="learn-more" onclick="updateContainerAndSubmit()">
-          <span class="circle" aria-hidden="true">
-          <span class="icon arrow"></span>
-          </span>
-          <span class="button-text">Submit</span>
-        </button>
       </div>
+      <button class="learn-more" onclick="updateContainerAndSubmit()">
+        <span class="circle" aria-hidden="true">
+        <span class="icon arrow"></span>
+        </span>
+        <span class="button-text">Submit</span>
+      </button>
     
       <div>  
         <div class="username-info">
