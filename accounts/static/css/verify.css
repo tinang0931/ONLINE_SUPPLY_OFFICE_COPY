@@ -44,7 +44,6 @@ body {
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
     padding: 50px;
-    padding-right: 60px;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
@@ -147,6 +146,7 @@ body {
     margin-top: 33px; 
     transition-duration: 0.4s;
 }
+
 
 
 .wrapper .btn:hover{

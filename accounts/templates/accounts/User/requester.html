@@ -3,192 +3,235 @@
 {% load static %}
 
 {% block content %}
+<style>
+  /* Style for the modal */
+  .modal {
+  display: none;
+  position: fixed;
+  top: 300px;
+  left: 300px;
+  width: 30%;
+  height: 55%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+
+</style>
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container" >
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
           </div>
-          <div class="row">
-            <div class="col-sm-5">
-              <div class="form-group mb-3">
-                <label for="departmentDropdown">Choose Department:</label>
-                <select class="form-control" id="departmentDropdown" name="departmentDropdown" style="width: 60%;">
-                  <option value="option1">College of Arts and Sciences</option>
-                  <option value="option2">College of Agriculture</option>
-                  <option value="option3">College of Forestry</option>
-                  <option value="option4">College of Hospitality Management and Tourism</option>
-                  <option value="option5">College of Technology and Engineering</option>
-                  <option value="option6">College of Education</option>
-                  <option value="option7">Graduate School</option>
-                  <option value="option8">Others please specify:</option>
-                </select>
+          <form action="{% url 'requester' %}" method="post">
+            {% csrf_token %}
+            <div class="row w-100 m-auto"> 
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="departmentDropdown">Choose Department:</label>
+                  <select class="form-control" id="departmentDropdown" name="departmentDropdown">
+                      <option value="option1">College of Arts and Sciences</option>
+                      <option value="option2">College of Agriculture</option>
+                      <option value="option3">College of Forestry</option>
+                      <option value="option4">College of Hospitality Management and Tourism</option>
+                      <option value="option5">College of Technology and Engineering</option>
+                      <option value="option6">College of Education</option>
+                      <option value="option7">Graduate School</option>
+                      <option value="option8">  Others please specify:</option>
+                  </select>
+                  <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control" style="display: none;">
+                </div>
               </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group mb-3">
-                <label for="exampleFormcontrolTextarea1">Purpose</label>
-                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+ 
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
+                  <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+                </div>
               </div>
+            
+            </div> 
+
+            <div class="row w-100 m-auto mb-3">
+              <div class="col-6 col-sm-6 col-md-7 col-lg-9">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" id="openModalButton">
+                  Select Items
+                </button>
+                
+                <div id="myModal" class="modal">
+                  <div class="modal-content">
+                    <span class="close" id="closeModal">&times;</span>
+                    <!-- Content for your modal goes here -->
+                    <p>This is your modal content.</p>
+                  </div>
+                </div>
+                
+
+              </div>
+                <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+                  <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
+                </div>
             </div>
-          </div>
-          
-          
-          <div class="container">
-            <table class="table table-bordered table-responsive" id="itemTable">
+            <div class="table-responsive">
+
+              <table class="table" id="create_request_table" style="border: 1px solid black;">
                 <thead>
                     <tr>
-                        <th class="">Item No.</th>
-                        <th class="">Item Name</th>
-                        <th class="">Item Brand/Description</th>
-                        <th class="">Unit</th>
-                        <th class="">Unit Cost</th>
-                        <th class="">Quantity</th>
-                        <th class="">Total Price</th>
+                        <th class="text-nowrap">Item No.</th>
+                        <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                        <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                        <th class="text-center text-nowrap"></th>
                     </tr>
                 </thead>
                 <tbody>
-                  <tr class="item-row" style="display: none;">
+                  <tr class="item-row">
                     <td style="text-align: center;"><span class="item-no">1</span></td>
-                    <td><input type="text" class="item-name" name="item_name[]"></td>
-                    <td><input type="text" class="item-description" name="item_description[]"></td>
-                    <td><input type="text" class="unit" name="unit[]"></td>
-                    <td><input type="number" class="unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)"></td>
-                    <td><input type="number" class="quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]"></td>
-                    <td><span class="total">00.00</span></td>
+                    <td>System Unit</td>
+                    <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
+                    <td>Set</td>
+                    <td>60</td>
+                    <td>20,000</td>
+                    <td><span class="total">1,200,000</span></td>
+                    <td class="text-end my-2 mt-0">
+                      <div class="d-flex justify-content-evenly">
+                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
+                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="item-row">
+                    <td style="text-align: center;"><span class="item-no">2</span></td>
+                    <td>Camera</td>
+                    <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
+                    <td>piece</td>
+                    <td>60</td>
+                    <td>2,000</td>
+                    <td><span class="total">120,000</span></td>
+                    <td class="text-end my-2 mt-0">
+                      <div class="d-flex justify-content-evenly">
+                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
+                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
-                 <tfoot>
-    <tr>
-      <td colspan="6">Total Amount</td>
-      <td><span id="totalAmount">00.00</span></td>
-    </tr>
-  </tfoot>
+                <tfoot>
+                  <tr class=" item-row border">
+                    <td colspan="6">Total Amount</td>
+                    <td colspan="1"><span id="totalAmount">00.00</span></td>
+                    <td>
+                      <button type="button" class="btn btn-primary">Submit</button>
+                    </td>
+                  </tr>
+                </tfoot>
             </table>
-          </div>
-        <div class="text-start my-2 mx-5 mt-0" style=" display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
-          <button type="button" class="btn btn-info text-white add-new"><i class="fa fa-plus"></i> Item</button>
-          
-        </div>
-        <div 
-          class="container justify-content-end align-items-baseline">
-          <input class="btn btn-primary" type="submit" value="Submit">
-          </div>
-        
-            <!-- Confirmation pop-up -->
-            <div id="confirmationPopup" class="popup">
-              <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
-              <h2>Purchase Request Confirmation</h2>
-              <!-- Add your confirmation content here -->
-              <p>Your purchase request has been submitted and is being processed.</p>
             </div>
-         </div>
-          
+
+          </form>
+        </div>          
+        <!-- Confirmation pop-up -->
+        <div id="confirmationPopup" class="popup">
+          <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
+          <h2>Purchase Request Confirmation</h2>
+          <!-- Add your confirmation content here -->
+          <p>Your purchase request has been submitted and is being processed.</p>
         </div>
+      </div>
+          
         
       </form>
       </div>
     </div> 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const itemTable = document.getElementById('itemTable');
-    const addButton = document.querySelector('.add-new');
-    let itemNumber = 1; // Initialize item number
-
-    addButton.addEventListener('click', function () {
-        const newRow = itemTable.querySelector('.item-row').cloneNode(true);
-        const itemNumberSpan = newRow.querySelector('.item-no');
-        itemNumberSpan.textContent = itemNumber;
-        itemNumber++;
-
-        itemTable.querySelector('tbody').appendChild(newRow);
-        newRow.style.display = 'table-row'; // Show the new row
-    });
-
-    // Calculate the total amount
-    const calculateTotal = function () {
-        let totalAmount = 0;
-        const quantityInputs = document.querySelectorAll('.quantity');
-        const priceInputs = document.querySelectorAll('.unit_cost');
-
-        for (let i = 0; i < quantityInputs.length; i++) {
-            const quantity = parseFloat(quantityInputs[i].value) || 0;
-            const price = parseFloat(priceInputs[i].value) || 0;
-            totalAmount += quantity * price;
+      document.getElementById("departmentDropdown").addEventListener("change", function() {
+        var selectedOption = this.value;
+        if (selectedOption === "option8") {
+          var customDepartmentInput = document.getElementById("customDepartmentInput");
+          customDepartmentInput.style.display = "block";
+      
+          customDepartmentInput.addEventListener("input", function() {
+            var customDepartmentValue = customDepartmentInput.value;
+            var select = document.getElementById("departmentDropdown");
+            var option = document.createElement("option");
+            option.value = customDepartmentValue;
+            option.text = customDepartmentValue;
+      
+            // Check if the custom department already exists in the dropdown
+            var existingOption = Array.from(select.options).find(
+              (opt) => opt.value === customDepartmentValue
+            );
+      
+            if (!existingOption) {
+              select.add(option);
+            }
+          });
+      
+          customDepartmentInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+              var customDepartmentValue = customDepartmentInput.value;
+              var select = document.getElementById("departmentDropdown");
+              var option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
+      
+              // Check if the custom department already exists in the dropdown
+              var existingOption = Array.from(select.options).find(
+                (opt) => opt.value === customDepartmentValue
+              );
+      
+              if (!existingOption) {
+                select.add(option);
+              }
+              customDepartmentInput.value = ""; // Clear the input field
+              select.value = customDepartmentValue; // Select the custom department
+              customDepartmentInput.style.display = "none"; // Hide the input field
+            }
+          });
+        } else {
+          document.getElementById("customDepartmentInput").style.display = "none";
         }
+      });     
+      
+      
+      // Get the button and the modal
+const openModalButton = document.getElementById("openModalButton");
+const modal = document.getElementById("myModal");
 
-        const totalAmountSpan = document.getElementById('totalAmountSpan');
-        totalAmountSpan.textContent = totalAmount.toFixed(2);
-    };
-
-    // Attach input event listeners to quantity and price inputs
-    const quantityInputs = document.querySelectorAll('.quantity');
-    const priceInputs = document.querySelectorAll('.unit_cost');
-
-    quantityInputs.forEach(input => {
-        input.addEventListener('input', calculateTotal);
-    });
-
-    priceInputs.forEach(input => {
-        input.addEventListener('input', calculateTotal);
-    });
-
-    // Trigger the initial calculation
-    calculateTotal();
-
-    // Update department name in the hidden input field
-    const departmentDropdown = document.getElementById('departmentDropdown');
-    departmentDropdown.addEventListener("change", function () {
-        const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-        const selectedOptionText = selectedOption.textContent;
-        const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-        selectedDepartmentNameInput.value = selectedOptionText;
-    });
-
-    // Show/hide confirmation popup functions (if needed)
-    function showConfirmationPopup() {
-        document.getElementById('confirmationPopup').style.display = 'block';
-    }
-
-    function hideConfirmationPopup() {
-        document.getElementById('confirmationPopup').style.display = 'none';
-    }
+// When the button is clicked, show the modal
+openModalButton.addEventListener("click", function () {
+  modal.style.display = "block";
 });
 
-    </script>
-    
-    
-    <script>
-      function calculateRowTotal(input) {
-        const row = input.parentNode.parentNode;
-        const unit_cost = parseFloat(row.querySelector('.unit-cost').value) || 0;
-        const quantity = parseInt(row.querySelector('.quantity').value) || 0;
-    
-        const totalAmount = unit_cost * quantity;
-        row.querySelector('.total').textContent = totalAmount.toFixed(2);
-    
-        calculateTotalAmount();
-      }
-    
-      function calculateTotalAmount() {
-        const totalElements = document.querySelectorAll('.total');
-        let totalAmount = 0;
-    
-        totalElements.forEach(element => {
-          totalAmount += parseFloat(element.textContent);
-        });
-    
-        document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-      }
-    </script>
-
-<script>
-  function showConfirmationPopup() {
-    document.getElementById('confirmationPopup').style.display = 'block';
+// When the user clicks the close button or anywhere outside the modal, close it
+const closeModal = document.getElementById("closeModal");
+window.addEventListener("click", function (event) {
+  if (event.target === modal || event.target === closeModal) {
+    modal.style.display = "none";
   }
+});
 
-  function hideConfirmationPopup() {
-    document.getElementById('confirmationPopup').style.display = 'none';
-  }
-</script>
+</script>      
 
 {% endblock %}  
   
