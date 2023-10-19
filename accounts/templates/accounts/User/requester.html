@@ -151,15 +151,49 @@
             
           
     <script>
+      document.getElementById("departmentDropdown").addEventListener("change", function() {
+        var select = document.getElementById("departmentDropdown");
+        var customDepartmentInput = document.getElementById("customDepartmentInput");
+        var originalValue = select.value;
       
-  // Update department name in the hidden input field
-  const departmentDropdown = document.getElementById('departmentDropdown');
-  departmentDropdown.addEventListener("change", function () {
-      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-      const selectedOptionText = selectedOption.textContent;
-      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-      selectedDepartmentNameInput.value = selectedOptionText;
-  });
+        if (originalValue === "option8") {
+          customDepartmentInput.style.display = "block";
+      
+          customDepartmentInput.addEventListener("input", function() {
+            var customDepartmentValue = customDepartmentInput.value;
+            var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+      
+            if (!option) {
+              option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
+              select.add(option);
+            }
+          });
+      
+          customDepartmentInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+              var customDepartmentValue = customDepartmentInput.value;
+              var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+      
+              if (!option) {
+                option = document.createElement("option");
+                option.value = customDepartmentValue;
+                option.text = customDepartmentValue;
+                select.add(option);
+              }
+      
+              select.value = customDepartmentValue;
+              customDepartmentInput.style.display = "none";
+            }
+          });
+        } else {
+          customDepartmentInput.style.display = "none";
+          customDepartmentInput.value = ""; // Clear the input field
+        }
+      });
+      </script>
+      
 </script>
 
 <script>
