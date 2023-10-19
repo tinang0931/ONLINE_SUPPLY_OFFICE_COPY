@@ -1,80 +1,50 @@
 {% extends "accounts/User/main.html" %}
 
+{% block tracker %}
+<style>
+  .custom-f{
+    display: flex;
+    justify-content: center;
+  }
 
-{% block content %}
+  .pad{
+    padding: 0px!important;
+  }
 
-        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-          <div class="container">
-            <h1 class="pr text-center pt-4">REQUEST STATUS</h1>  
-          </div>
-          <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: orangered;"></i>
-              <strong>Pending Requests</strong>
-            </div>
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: green;"></i>
-              <strong>Successful Requests</strong>
-            </div>
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: red;"></i>
-              <strong>Failed Requests</strong>
-            </div>
-          </div>
-          <div class="row w-100 m-auto border text-start text-dark">
-            <div class="col-10">
-              <p>
-                Purchase Request No. 000001
-              </p>
-            </div>
-            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="row w-100 m-auto border text-start text-dark">
-            <div class="col-10">
-              <p>
-                Purchase Request No. 000002
-              </p>
-            </div>
-            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </div>
-          </div>  
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row text-center">
-                      <div class="col-12 border ">
-                        <p class="form-group py-3">Purchase Request No. 000001</p>
-                      </div>
-                    </div>
-                    <div class="mt-4 ms-4">
-                      <div class="wrapper">
-                      <ul class="StepProgress">
-                        <div class="StepProgress-item is-pending"><strong>Budget Officer has approved your request.</strong>
-                          09/02/23
-                        </div>
-                        <div class="StepProgress-item is-done"><strong>Campus Director has approved your request.</strong>
-                          1 hr ago
-                        </div>
-                        <div class="StepProgress-item is-declined"><strong>Waiting for the BAC Secretariat to create a Resolution.</strong>
-                          Currently
-                        </div>
-                        <div class="StepProgress-item current"><strong>Received Item</strong></div>
-                      </ul>
-                      </div>
-                    </div>
-                </div> 
-              </div>    
-            </div>      
-          </div>       
-        </div>
-      </div> 
-      
-{% endblock %} 
+  .item-received {
+  margin: 20 auto;
+}
+</style>
+
+<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+  <div class="container">
+    <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
+  </div>
+  <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+    </div>
+  </div>
+  <div class="custom-f row w-100 m-auto border text-start text-dark">
+    <div class="pad col">
+        <table class="table table-bordered" style="margin: 0px!important;">
+          <thead>
+            <tr>
+              <th>Purchase Request No.</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0000001</td>
+              <td>Waiting for Campus Director Approval</td>
+              <td><a href="#"
+                  style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
+                  RECEIVED</a></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
