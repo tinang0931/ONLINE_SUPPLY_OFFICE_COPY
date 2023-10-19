@@ -221,6 +221,11 @@ def about(request):
 
 
 @authenticated_user
+def item_selection(request):
+    return render(request, 'accounts/User/item_selection.html')
+
+
+@authenticated_user
 def history(request):
     return render(request, 'accounts/User/history.html')
 

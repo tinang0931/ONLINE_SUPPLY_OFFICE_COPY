@@ -92,25 +92,25 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # }
 
 # jelyn database
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'inventory',
-        'HOST': 'localhost',
-        'PORT': 27017,
-    }
-}
-
-# #Danica database
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
-#         'NAME': 'danicadb',
-#         'CLIENT': {
-#             'host': 'mongodb://localhost:27017/',
-#         },
-#     },
+#         'NAME': 'inventory',
+#         'HOST': 'localhost',
+#         'PORT': 27017,
+#     }
 # }
+
+# #Danica database
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'danicadb',
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017/',
+        },
+    },
+}
 
 
 

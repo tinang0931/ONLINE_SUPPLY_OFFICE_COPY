@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block content %}
+{% block requester %}
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
@@ -25,16 +25,14 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
                 <div class="form-group mb-3">
                   <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
                   <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
                 </div>
               </div>
-            
-            </div> 
 
+            </div>
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
                 <!-- Button trigger modal -->
@@ -137,12 +135,13 @@
                     <td colspan="1"><span id="totalAmount">00.00</span></td>
                     <td>
                       <button type="button" class="btn btn-primary">Submit</button>
+                      <button type="butoon" class="btn btn-primary">Add Item</button>
                     </td>
                   </tr>
+                  <div>
                 </tfoot>
             </table>
             </div>
-
           </form>
         </div>          
         <!-- Confirmation pop-up -->
@@ -153,8 +152,6 @@
           <p>Your purchase request has been submitted and is being processed.</p>
         </div>
       </div>
-          
-        
       </form>
       </div>
     </div> 
@@ -224,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-  </script>
+  </>
     
   <script>
     function calculateRowTotal(input) {
@@ -248,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
     }
-  </script>
+  </>
 
   <script>
     function showConfirmationPopup() {
