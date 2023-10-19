@@ -161,24 +161,21 @@
     </div> 
     <script>
       document.getElementById("departmentDropdown").addEventListener("change", function() {
-        var selectedOption = this.value;
-        if (selectedOption === "option8") {
-          var customDepartmentInput = document.getElementById("customDepartmentInput");
+        var select = document.getElementById("departmentDropdown");
+        var customDepartmentInput = document.getElementById("customDepartmentInput");
+        var originalValue = select.value;
+      
+        if (originalValue === "option8") {
           customDepartmentInput.style.display = "block";
       
           customDepartmentInput.addEventListener("input", function() {
             var customDepartmentValue = customDepartmentInput.value;
-            var select = document.getElementById("departmentDropdown");
-            var option = document.createElement("option");
-            option.value = customDepartmentValue;
-            option.text = customDepartmentValue;
+            var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
       
-            // Check if the custom department already exists in the dropdown
-            var existingOption = Array.from(select.options).find(
-              (opt) => opt.value === customDepartmentValue
-            );
-      
-            if (!existingOption) {
+            if (!option) {
+              option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
               select.add(option);
             }
           });
@@ -186,29 +183,27 @@
           customDepartmentInput.addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
               var customDepartmentValue = customDepartmentInput.value;
-              var select = document.getElementById("departmentDropdown");
-              var option = document.createElement("option");
-              option.value = customDepartmentValue;
-              option.text = customDepartmentValue;
+              var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
       
-              // Check if the custom department already exists in the dropdown
-              var existingOption = Array.from(select.options).find(
-                (opt) => opt.value === customDepartmentValue
-              );
-      
-              if (!existingOption) {
+              if (!option) {
+                option = document.createElement("option");
+                option.value = customDepartmentValue;
+                option.text = customDepartmentValue;
                 select.add(option);
               }
-              customDepartmentInput.value = ""; // Clear the input field
-              select.value = customDepartmentValue; // Select the custom department
-              customDepartmentInput.style.display = "none"; // Hide the input field
+      
+              select.value = customDepartmentValue;
+              customDepartmentInput.style.display = "none";
             }
           });
         } else {
-          document.getElementById("customDepartmentInput").style.display = "none";
+          customDepartmentInput.style.display = "none";
+          customDepartmentInput.value = ""; // Clear the input field
         }
-      });      
-</script>      
+      });
+      </script>
+      
+       
 
 </script>
 
