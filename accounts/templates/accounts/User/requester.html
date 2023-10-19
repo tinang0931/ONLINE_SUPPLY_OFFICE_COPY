@@ -37,11 +37,23 @@
 
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Select Items
-                </button>
+                <button  type="button" class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Select Item</button>
 
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/action_page.php" method="post">
+    
+
+    <div class="container">
+      <label for="uname"><b>Item Categories</b></label>
+       <option value="category1">Category 1</option>
+       <option value="category2">Category 2</option>
+       <option value="category3">Category 3</option>
+    </div>
+
+    
+  </form>
+</div>
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -60,68 +72,85 @@
               </div>
             </div>
             <div class="table-responsive">
-
               <table class="table" id="create_request_table" style="border: 1px solid black;">
                 <thead>
-                    <tr>
-                        <th class="text-nowrap">Item No.</th>
-                        <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                        <th class="text-center text-nowrap"></th>
-                    </tr>
+                  <tr>
+                    <th class="text-nowrap">Item No.</th>
+                    <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                    <th class="text-center text-nowrap"></th>
+                    <div class="d-flex justify-content-evenly">
+                      <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
+                    </div>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">1</span></td>
-                    <td>System Unit</td>
-                    <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
-                    <td>Set</td>
-                    <td><span class="unit-price">10.00</span></td>
-                    <td><input type="number" class="quantity" min="1" oninput="calculateRowTotal(this)"></td>
-                    <td><span class="total">0.00</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">2</span></td>
-                    <td>Camera</td>
-                    <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
-                    <td>piece</td>
-                   <td><span class="unit-price">10.00</span></td>
-                    <td><input type="number" class="quantity" min="1" oninput="calculateRowTotal(this)"></td>
-                    <td><span class="total">0.00</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
+                  <!-- Rows will be added here via JavaScript -->
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="6">Total Amount</td>
-                    <td><span id="totalAmount">0.00</span></td>
+                    <td><span id="totalAmount">00.00</span></td>
                     <td>
-                      <button type="button" class="btn btn-primary">Submit</button>
+                      
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add item</button>
+                                  <button type="button" class="btn btn-primary m-2" onclick="submitForm()">Submit</button>
+                                  <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form id="addItemForm">
+                                            <div class="form-group">
+                                              <label for="Item">Item Name</label>
+                                              <input type="text" class="form-control" id="Item" name="Item" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Item_Brand_Description">Item Brand/Description</label>
+                                              <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Unit">Unit</label>
+                                              <input type="text" class="form-control" id="Unit" name="Unit" required>
+                                            </div>
+                                             <div class="form-group">
+                                              <label for="Unit">Unit Cost</label>
+                                              <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Quantity">Quantity</label>
+                                              <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                                            </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+                                    </div>
+                                  </div>
+                                </div>
                     </td>
                   </tr>
                 </tfoot>
-            </table>
+              </table>
             </div>
-
-          </form>
-        </div>          
-
-      </div>
+            
           
     <script>
+      
   // Update department name in the hidden input field
   const departmentDropdown = document.getElementById('departmentDropdown');
   departmentDropdown.addEventListener("change", function () {
@@ -138,7 +167,7 @@
     const unitPrice = parseFloat(row.querySelector('.unit-price').textContent) || 0;
     const quantity = parseInt(input.value) || 0;
 
-    const totalAmount = unitPrice * quantity;
+    const totalAmount = unitCost * quantity;
     row.querySelector('.total').textContent = totalAmount.toFixed(2);
 
     calculateTotalAmount();
@@ -155,6 +184,38 @@
     document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
   }
 </script>
+
+<script>
+  let itemCounter = 0;
+
+  function addRow() {
+    itemCounter++;
+    const tableBody = document.querySelector('#create_request_table tbody');
+    const newRow = document.createElement('tr');
+    newRow.classList.add('item-row');
+    newRow.innerHTML = `
+      <td style="text-align: center;"><span class="item-no">${itemCounter}</span></td>
+      <td><input type="text" name="item_name[]"></td>
+      <td><input type="text" name="item_description[]"></td>
+      <td><input type="text" name="item_unit[]"></td>
+      <td><input type="number" class="unit-price" min="0" name="unit_cost[]" oninput="calculateRowTotal(this)"></td>
+      <td><input type="number" class="quantity" min="1" name="quantity[]" oninput="calculateRowTotal(this)"></td>
+      <td><span class="total">0.00</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-evenly">
+          <button type="button" class="btn" onclick="removeRow(this)"><i class="fas fa-trash" style="color: red !important;"></i></button>
+        </div>
+      </td>
+    `;
+    tableBody.appendChild(newRow);
+  }
+
+  function removeRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+  }
+</script>
+
 
 {% endblock %}  
   
