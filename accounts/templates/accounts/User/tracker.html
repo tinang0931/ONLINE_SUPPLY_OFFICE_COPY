@@ -1,6 +1,6 @@
 {% extends "accounts/User/main.html" %}
 
-{% block style %}
+{% block tracker %}
 <style>
   .custom-f{
     display: flex;
@@ -12,13 +12,10 @@
   }
 
   .item-received {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-  }
+  margin: 20 auto;
+}
 </style>
-{% endblock %}
-{% block tracker %}
+
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
   <div class="container">
     <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
@@ -35,7 +32,7 @@
               <th>Purchase Request No.</th>
               <th>Status</th>
               <th></th>
-            </tr> 
+            </tr>
           </thead>
           <tbody>
             <tr>
@@ -50,4 +47,4 @@
     </div>
   </div>
 </div>
-{% endblock tracker %}
+{% endblock %}

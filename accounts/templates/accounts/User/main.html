@@ -13,7 +13,10 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
+<<<<<<< HEAD
   </head>
+=======
+>>>>>>> cd3b58ae089dbb38e557fff6c3073f5ca70997a4
   <body>
     <main class="flex-shrink">
       <div id="page-content-wrapper ">
@@ -56,7 +59,23 @@
                 </a>
             </div>
         </div>
-        {% block content %}
+        
+        {% block notification %}
+        {% endblock %}
+
+        {% block purchaserequest %}
+        {% endblock %}
+
+        {% block tracker %}
+        {% endblock %}
+
+        {% block history %}
+        {% endblock %}
+
+        {% block about %}
+        {% endblock %}
+
+        {% block requester %}
         {% endblock %}
 
     </main>
@@ -67,7 +86,6 @@
     </footer>
   </body>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>
