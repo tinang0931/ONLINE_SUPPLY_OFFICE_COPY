@@ -12,10 +12,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  </head>
 
-  {% block style %}
-  {% endblock %}
+  </head>
   <body>
     <main class="flex-shrink">
       <div id="page-content-wrapper ">
@@ -29,7 +27,7 @@
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-             
+            
                 <a href="{% url 'profile' %}">
                   <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
                 </a>
@@ -58,10 +56,10 @@
                 </a>
             </div>
         </div>
-        {% block tracker %}
+        {% block content %}
 
 
-        {% endblock tracker %}
+        {% endblock %}
 
     </main>
     <footer>
@@ -70,9 +68,8 @@
       </div>
     </footer>
   </body>
-  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>
