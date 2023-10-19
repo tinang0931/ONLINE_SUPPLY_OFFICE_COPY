@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block content %}
+{% block requester %}
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
@@ -23,12 +23,13 @@
                       <option value="option7">Graduate School</option>
                       <option value="option8">  Others please specify:</option>
                   </select>
+                  <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control" style="display: none;">
                 </div>
               </div>
-
+ 
               <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
                 <div class="form-group mb-3">
-                  <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+                  <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
                   <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
                 </div>
               </div>
@@ -159,106 +160,56 @@
       </div>
     </div> 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const itemTable = document.getElementById('itemTable');
-    const addButton = document.querySelector('.add-new');
-    let itemNumber = 1; // Initialize item number
+      document.getElementById("departmentDropdown").addEventListener("change", function() {
+        var selectedOption = this.value;
+        if (selectedOption === "option8") {
+          var customDepartmentInput = document.getElementById("customDepartmentInput");
+          customDepartmentInput.style.display = "block";
+      
+          customDepartmentInput.addEventListener("input", function() {
+            var customDepartmentValue = customDepartmentInput.value;
+            var select = document.getElementById("departmentDropdown");
+            var option = document.createElement("option");
+            option.value = customDepartmentValue;
+            option.text = customDepartmentValue;
+      
+            // Check if the custom department already exists in the dropdown
+            var existingOption = Array.from(select.options).find(
+              (opt) => opt.value === customDepartmentValue
+            );
+      
+            if (!existingOption) {
+              select.add(option);
+            }
+          });
+      
+          customDepartmentInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+              var customDepartmentValue = customDepartmentInput.value;
+              var select = document.getElementById("departmentDropdown");
+              var option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
+      
+              // Check if the custom department already exists in the dropdown
+              var existingOption = Array.from(select.options).find(
+                (opt) => opt.value === customDepartmentValue
+              );
+      
+              if (!existingOption) {
+                select.add(option);
+              }
+              customDepartmentInput.value = ""; // Clear the input field
+              select.value = customDepartmentValue; // Select the custom department
+              customDepartmentInput.style.display = "none"; // Hide the input field
+            }
+          });
+        } else {
+          document.getElementById("customDepartmentInput").style.display = "none";
+        }
+      });      
+</script>      
 
-  addButton.addEventListener('click', function () {
-      const newRow = create_request_table.querySelector('.item-row').cloneNode(true);
-      const itemNumberSpan = newRow.querySelector('.item-no');
-      itemNumberSpan.textContent = itemNumber;
-      itemNumber++;
-
-      create_request_table.querySelector('tbody').appendChild(newRow);
-      newRow.style.display = 'table-row'; // Show the new row
-  });
-
-  // Calculate the total amount
-  const calculateTotal = function () {
-      let totalAmount = 0;
-      const quantityInputs = document.querySelectorAll('.quantity');
-      const priceInputs = document.querySelectorAll('.unit_cost');
-
-      for (let i = 0; i < quantityInputs.length; i++) {
-          const quantity = parseFloat(quantityInputs[i].value) || 0;
-          const price = parseFloat(priceInputs[i].value) || 0;
-          totalAmount += quantity * price;
-      }
-
-      const totalAmountSpan = document.getElementById('totalAmountSpan');
-      totalAmountSpan.textContent = totalAmount.toFixed(2);
-  };
-
-  // Attach input event listeners to quantity and price inputs
-  const quantityInputs = document.querySelectorAll('.quantity');
-  const priceInputs = document.querySelectorAll('.unit_cost');
-
-  quantityInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  priceInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  // Trigger the initial calculation
-  calculateTotal();
-
-  // Update department name in the hidden input field
-  const departmentDropdown = document.getElementById('departmentDropdown');
-  departmentDropdown.addEventListener("change", function () {
-      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-      const selectedOptionText = selectedOption.textContent;
-      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-      selectedDepartmentNameInput.value = selectedOptionText;
-  });
-
-  // Show/hide confirmation popup functions (if needed)
-  function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-  }
-
-  function hideConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'none';
-  }
-});
-
-  </script>
-    
-  <script>
-    function calculateRowTotal(input) {
-      const row = input.parentNode.parentNode;
-      const unit_cost = parseFloat(row.querySelector('.unit-cost').value) || 0;
-      const quantity = parseInt(row.querySelector('.quantity').value) || 0;
-  
-      const totalAmount = unit_cost * quantity;
-      row.querySelector('.total').textContent = totalAmount.toFixed(2);
-  
-      calculateTotalAmount();
-    }
-  
-    function calculateTotalAmount() {
-      const totalElements = document.querySelectorAll('.total');
-      let totalAmount = 0;
-  
-      totalElements.forEach(element => {
-        totalAmount += parseFloat(element.textContent);
-      });
-  
-      document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-    }
-  </script>
-
-  <script>
-    function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-    }
-
-  function hideConfirmationPopup() {
-    document.getElementById('confirmationPopup').style.display = 'none';
-  }
 </script>
 
 {% endblock %}  
-  
