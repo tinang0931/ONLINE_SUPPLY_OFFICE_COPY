@@ -2,41 +2,9 @@
 
 {% load static %}
 
-{% block content %}
-<style>
-  /* Style for the modal */
-  .modal {
-  display: none;
-  position: fixed;
-  top: 300;
-  left: 300;
-  width: 50%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-}
-
-.close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  cursor: pointer;
-}
-
-
-
-</style>
+{% block requester %}
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-          <div class="container" >
+          <div class="container">
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
           </div>
           <form action="{% url 'requester' %}" method="post">
@@ -70,168 +38,184 @@
 
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" id="openModalButton">
-                  Select Items
-                </button>
-                
-                <div id="myModal" class="modal">
-                  <div class="modal-content">
-                    <span class="close" id="closeModal">&times;</span>
-                    <!-- Content for your modal goes here -->
-                    <p>This is your modal content.</p>
+                <button  type="button" class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Select Item</button>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/action_page.php" method="post">
+    
+
+    <div class="container">
+      <label for="uname"><b>Item Categories</b></label>
+       <option value="category1">Category 1</option>
+       <option value="category2">Category 2</option>
+       <option value="category3">Category 3</option>
+    </div>
+
+    
+  </form>
+</div>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">New Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body"></div>
+                    </div>
                   </div>
                 </div>
-                
-
               </div>
-                <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-                  <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
-                </div>
+              <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+                <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
+              </div>
             </div>
             <div class="table-responsive">
-
               <table class="table" id="create_request_table" style="border: 1px solid black;">
                 <thead>
-                    <tr>
-                        <th class="text-nowrap">Item No.</th>
-                        <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                        <th class="text-center text-nowrap"></th>
-                    </tr>
+                  <tr>
+                    <th class="text-nowrap">Item No.</th>
+                    <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                    <th class="text-center text-nowrap"></th>
+                    <div class="d-flex justify-content-evenly">
+                      <button type="button" class="btn" hidden><i class="fas fa-trash" style="color: red !important;"></i></button>
+                    </div>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">1</span></td>
-                    <td>System Unit</td>
-                    <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
-                    <td>Set</td>
-                    <td>60</td>
-                    <td>20,000</td>
-                    <td><span class="total">1,200,000</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">2</span></td>
-                    <td>Camera</td>
-                    <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
-                    <td>piece</td>
-                    <td>60</td>
-                    <td>2,000</td>
-                    <td><span class="total">120,000</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
+                  <!-- Rows will be added here via JavaScript -->
                 </tbody>
                 <tfoot>
-                  <tr class=" item-row border">
+                  <tr>
                     <td colspan="6">Total Amount</td>
-                    <td colspan="1"><span id="totalAmount">00.00</span></td>
+                    <td><span id="totalAmount">00.00</span></td>
                     <td>
-                      <button type="button" class="btn btn-primary">Submit</button>
+                      
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add item</button>
+                                  <button type="button" class="btn btn-primary m-2" onclick="submitForm()">Submit</button>
+                                  <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form id="addItemForm">
+                                            <div class="form-group">
+                                              <label for="Item">Item Name</label>
+                                              <input type="text" class="form-control" id="Item" name="Item" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Item_Brand_Description">Item Brand/Description</label>
+                                              <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Unit">Unit</label>
+                                              <input type="text" class="form-control" id="Unit" name="Unit" required>
+                                            </div>
+                                             <div class="form-group">
+                                              <label for="Unit">Unit Cost</label>
+                                              <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Quantity">Quantity</label>
+                                              <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                                            </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+                                    </div>
+                                  </div>
+                                </div>
                     </td>
                   </tr>
                 </tfoot>
-            </table>
+              </table>
             </div>
-
-          </form>
-        </div>          
-        <!-- Confirmation pop-up -->
-        <div id="confirmationPopup" class="popup">
-          <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
-          <h2>Purchase Request Confirmation</h2>
-          <!-- Add your confirmation content here -->
-          <p>Your purchase request has been submitted and is being processed.</p>
-        </div>
-      </div>
+            
           
-        
-      </form>
-      </div>
-    </div> 
     <script>
-      document.getElementById("departmentDropdown").addEventListener("change", function() {
-        var selectedOption = this.value;
-        if (selectedOption === "option8") {
-          var customDepartmentInput = document.getElementById("customDepartmentInput");
-          customDepartmentInput.style.display = "block";
       
-          customDepartmentInput.addEventListener("input", function() {
-            var customDepartmentValue = customDepartmentInput.value;
-            var select = document.getElementById("departmentDropdown");
-            var option = document.createElement("option");
-            option.value = customDepartmentValue;
-            option.text = customDepartmentValue;
-      
-            // Check if the custom department already exists in the dropdown
-            var existingOption = Array.from(select.options).find(
-              (opt) => opt.value === customDepartmentValue
-            );
-      
-            if (!existingOption) {
-              select.add(option);
-            }
-          });
-      
-          customDepartmentInput.addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-              var customDepartmentValue = customDepartmentInput.value;
-              var select = document.getElementById("departmentDropdown");
-              var option = document.createElement("option");
-              option.value = customDepartmentValue;
-              option.text = customDepartmentValue;
-      
-              // Check if the custom department already exists in the dropdown
-              var existingOption = Array.from(select.options).find(
-                (opt) => opt.value === customDepartmentValue
-              );
-      
-              if (!existingOption) {
-                select.add(option);
-              }
-              customDepartmentInput.value = ""; // Clear the input field
-              select.value = customDepartmentValue; // Select the custom department
-              customDepartmentInput.style.display = "none"; // Hide the input field
-            }
-          });
-        } else {
-          document.getElementById("customDepartmentInput").style.display = "none";
-        }
-      });     
-      
-      
-      // Get the button and the modal
-const openModalButton = document.getElementById("openModalButton");
-const modal = document.getElementById("myModal");
+  // Update department name in the hidden input field
+  const departmentDropdown = document.getElementById('departmentDropdown');
+  departmentDropdown.addEventListener("change", function () {
+      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
+      const selectedOptionText = selectedOption.textContent;
+      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
+      selectedDepartmentNameInput.value = selectedOptionText;
+  });
+</script>
 
-// When the button is clicked, show the modal
-openModalButton.addEventListener("click", function () {
-  modal.style.display = "block";
-});
+<script>
+  function calculateRowTotal(input) {
+    const row = input.parentNode.parentNode;
+    const unitPrice = parseFloat(row.querySelector('.unit-price').textContent) || 0;
+    const quantity = parseInt(input.value) || 0;
 
-// When the user clicks the close button or anywhere outside the modal, close it
-const closeModal = document.getElementById("closeModal");
-window.addEventListener("click", function (event) {
-  if (event.target === modal || event.target === closeModal) {
-    modal.style.display = "none";
+    const totalAmount = unitCost * quantity;
+    row.querySelector('.total').textContent = totalAmount.toFixed(2);
+
+    calculateTotalAmount();
   }
-});
 
-</script>      
+  function calculateTotalAmount() {
+    const totalElements = document.querySelectorAll('.total');
+    let totalAmount = 0;
 
-{% endblock %}  
-  
+    totalElements.forEach(element => {
+      totalAmount += parseFloat(element.textContent);
+    });
+
+    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+  }
+</script>
+
+<script>
+  let itemCounter = 0;
+
+  function addRow() {
+    itemCounter++;
+    const tableBody = document.querySelector('#create_request_table tbody');
+    const newRow = document.createElement('tr');
+    newRow.classList.add('item-row');
+    newRow.innerHTML = `
+      <td style="text-align: center;"><span class="item-no">${itemCounter}</span></td>
+      <td><input type="text" name="item_name[]"></td>
+      <td><input type="text" name="item_description[]"></td>
+      <td><input type="text" name="item_unit[]"></td>
+      <td><input type="number" class="unit-price" min="0" name="unit_cost[]" oninput="calculateRowTotal(this)"></td>
+      <td><input type="number" class="quantity" min="1" name="quantity[]" oninput="calculateRowTotal(this)"></td>
+      <td><span class="total">0.00</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-evenly">
+          <button type="button" class="btn" onclick="removeRow(this)"><i class="fas fa-trash" style="color: red !important;"></i></button>
+        </div>
+      </td>
+    `;
+    tableBody.appendChild(newRow);
+  }
+
+  function removeRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+  }
+</script>
+
+
+{% endblock %}
