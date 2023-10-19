@@ -36,6 +36,10 @@ def main(request):
     return render(request, 'accounts/User/main.html')
 
 
+def bac(request):
+    return render(request, 'accounts/User/bac.html')
+
+
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
