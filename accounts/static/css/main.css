@@ -3124,8 +3124,6 @@ table.dataTable {
   border-radius: 5px;
 }
 
-<<<<<<< HEAD
-=======
 
 /* The Modal (background) */
 .modal {
@@ -3149,4 +3147,19 @@ table.dataTable {
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 }
->>>>>>> 6efeb87bde1190a2e277e83e59949f74195613c9
+.modal {
+  background-color: white;
+  color: black;
+}
+
+.modal-header {
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 15px solid #ccc;
+}
