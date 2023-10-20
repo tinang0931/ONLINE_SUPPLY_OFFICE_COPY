@@ -1,15 +1,17 @@
 {% extends "accounts/User/main.html" %}
 
+
 {% load static %}
 
-{% block content %}
+
+{% block requester %}
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
           </div>
           <form action="{% url 'requester' %}" method="post">
             {% csrf_token %}
-            <div class="row w-100 m-auto"> 
+            <div class="row w-100 m-auto">
               <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
                 <div class="form-group mb-3">
                   <label for="departmentDropdown">Choose Department:</label>
@@ -23,25 +25,52 @@
                       <option value="option7">Graduate School</option>
                       <option value="option8">  Others please specify:</option>
                   </select>
+                  <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control" style="display: none;">
                 </div>
-                
               </div>
-              
-            </div> 
-            
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
-              <div class="form-group mb-3">
-                <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
-                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+ 
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
+                  <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+                </div>
               </div>
+           
             </div>
+
+
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Create new Request
-                </button>
+                <button type="button" onclick="openModal()">Select Items</button>
 
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">CATEGORIES</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>Alcohol or Acetone Based Antiseptics</li>
+          <li>Cleaning Equipment and Supplies</li>
+          <li>Personal Protective Equipment</li>
+          <li>ICT Equipment, Devices and Accessories</li>  
+          <li>Office Equipment, Accessories and Supplies</li>
+          <li>Furniture and Furnishing</li>
+          <li>Electrical and Hardware Supplies</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>     
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -50,32 +79,7 @@
                         <h5 class="modal-title" id="staticBackdropLabel">New Request</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Item Name</label>
-                          <input type="text" class="form-control item-name" name="item_name[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Item Description</label>
-                          <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Unit</label>
-                          <input type="text" class="form-control unit" name="unit[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Quantity</label>
-                          <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
-                        </div>
-                        <div class="form-group mb-1">
-                          <label for="exampleFormcontrolTextarea1 p-2">Unit Cost</label>
-                          <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
-                        </div>
-                        
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Add</button>
-                      </div>
+                      <div class="modal-body"></div>
                     </div>
                   </div>
                 </div>
@@ -85,180 +89,208 @@
               </div>
             </div>
             <div class="table-responsive">
-
               <table class="table" id="create_request_table" style="border: 1px solid black;">
                 <thead>
-                    <tr>
-                        <th class="text-nowrap">Item No.</th>
-                        <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                        <th class="text-center text-nowrap"></th>
-                    </tr>
+                  <tr>
+                    <th class="text-nowrap">Item No.</th>
+                    <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                    <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                    <th class="text-center text-nowrap"></th>
+                    <div class="d-flex justify-content-evenly">
+                    </div>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">1</span></td>
-                    <td>System Unit</td>
-                    <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
-                    <td>Set</td>
-                    <td>60</td>
-                    <td>20,000</td>
-                    <td><span class="total">1,200,000</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="item-row">
-                    <td style="text-align: center;"><span class="item-no">2</span></td>
-                    <td>Camera</td>
-                    <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
-                    <td>piece</td>
-                    <td>60</td>
-                    <td>2,000</td>
-                    <td><span class="total">120,000</span></td>
-                    <td class="text-end my-2 mt-0">
-                      <div class="d-flex justify-content-evenly">
-                        <button type="button" class="btn"><i class="fas fa-pencil" style="color: black !important; "></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
-                      </div>
-                    </td>
-                  </tr>
+                  <!-- Rows will be added here via JavaScript -->
                 </tbody>
                 <tfoot>
-                  <tr class=" item-row border">
+                  <tr>
                     <td colspan="6">Total Amount</td>
-                    <td colspan="1"><span id="totalAmount">00.00</span></td>
+                    <td><span id="totalAmount">00.00</span></td>
                     <td>
-                      <button type="button" class="btn btn-primary">Submit</button>
+                     
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add item</button>
+                                  <button type="button" class="btn btn-primary m-2" onclick="submitForm()">Submit</button>
+                                  <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form id="addItemForm">
+                                            <div class="form-group">
+                                              <label for="Item">Item Name</label>
+                                              <input type="text" class="form-control" id="Item" name="Item" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Item_Brand_Description">Item Brand/Description</label>
+                                              <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Unit">Unit</label>
+                                              <input type="text" class="form-control" id="Unit" name="Unit" required>
+                                            </div>
+                                             <div class="form-group">
+                                              <label for="Unit">Unit Cost</label>
+                                              <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="Quantity">Quantity</label>
+                                              <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                                            </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                               
+                                    </div>
+                                  </div>
+                                </div>
                     </td>
                   </tr>
                 </tfoot>
-            </table>
+              </table>
             </div>
-
-          </form>
-        </div>          
-        <!-- Confirmation pop-up -->
-        <div id="confirmationPopup" class="popup">
-          <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
-          <h2>Purchase Request Confirmation</h2>
-          <!-- Add your confirmation content here -->
-          <p>Your purchase request has been submitted and is being processed.</p>
-        </div>
-      </div>
-          
-        
-      </form>
-      </div>
-    </div> 
+           
+         
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const itemTable = document.getElementById('itemTable');
-    const addButton = document.querySelector('.add-new');
-    let itemNumber = 1; // Initialize item number
-
-  addButton.addEventListener('click', function () {
-      const newRow = create_request_table.querySelector('.item-row').cloneNode(true);
-      const itemNumberSpan = newRow.querySelector('.item-no');
-      itemNumberSpan.textContent = itemNumber;
-      itemNumber++;
-
-      create_request_table.querySelector('tbody').appendChild(newRow);
-      newRow.style.display = 'table-row'; // Show the new row
-  });
-
-  // Calculate the total amount
-  const calculateTotal = function () {
-      let totalAmount = 0;
-      const quantityInputs = document.querySelectorAll('.quantity');
-      const priceInputs = document.querySelectorAll('.unit_cost');
-
-      for (let i = 0; i < quantityInputs.length; i++) {
-          const quantity = parseFloat(quantityInputs[i].value) || 0;
-          const price = parseFloat(priceInputs[i].value) || 0;
-          totalAmount += quantity * price;
-      }
-
-      const totalAmountSpan = document.getElementById('totalAmountSpan');
-      totalAmountSpan.textContent = totalAmount.toFixed(2);
-  };
-
-  // Attach input event listeners to quantity and price inputs
-  const quantityInputs = document.querySelectorAll('.quantity');
-  const priceInputs = document.querySelectorAll('.unit_cost');
-
-  quantityInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  priceInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  // Trigger the initial calculation
-  calculateTotal();
-
-  // Update department name in the hidden input field
-  const departmentDropdown = document.getElementById('departmentDropdown');
-  departmentDropdown.addEventListener("change", function () {
-      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-      const selectedOptionText = selectedOption.textContent;
-      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-      selectedDepartmentNameInput.value = selectedOptionText;
-  });
-
-  // Show/hide confirmation popup functions (if needed)
-  function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-  }
-
-  function hideConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'none';
-  }
-});
-
-  </script>
-    
-  <script>
-    function calculateRowTotal(input) {
-      const row = input.parentNode.parentNode;
-      const unit_cost = parseFloat(row.querySelector('.unit-cost').value) || 0;
-      const quantity = parseInt(row.querySelector('.quantity').value) || 0;
-  
-      const totalAmount = unit_cost * quantity;
-      row.querySelector('.total').textContent = totalAmount.toFixed(2);
-  
-      calculateTotalAmount();
-    }
-  
-    function calculateTotalAmount() {
-      const totalElements = document.querySelectorAll('.total');
-      let totalAmount = 0;
-  
-      totalElements.forEach(element => {
-        totalAmount += parseFloat(element.textContent);
+      document.getElementById("departmentDropdown").addEventListener("change", function() {
+        var select = document.getElementById("departmentDropdown");
+        var customDepartmentInput = document.getElementById("customDepartmentInput");
+        var originalValue = select.value;
+     
+        if (originalValue === "option8") {
+          customDepartmentInput.style.display = "block";
+     
+          customDepartmentInput.addEventListener("input", function() {
+            var customDepartmentValue = customDepartmentInput.value;
+            var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+     
+            if (!option) {
+              option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
+              select.add(option);
+            }
+          });
+     
+          customDepartmentInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+              var customDepartmentValue = customDepartmentInput.value;
+              var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+     
+              if (!option) {
+                option = document.createElement("option");
+                option.value = customDepartmentValue;
+                option.text = customDepartmentValue;
+                select.add(option);
+              }
+     
+              select.value = customDepartmentValue;
+              customDepartmentInput.style.display = "none";
+            }
+          });
+        } else {
+          customDepartmentInput.style.display = "none";
+          customDepartmentInput.value = ""; // Clear the input field
+        }
       });
-  
-      document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-    }
-  </script>
+      </script>
+     
+</script>
 
-  <script>
-    function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-    }
 
-  function hideConfirmationPopup() {
-    document.getElementById('confirmationPopup').style.display = 'none';
+<script>
+  function calculateRowTotal(input) {
+    const row = input.parentNode.parentNode;
+    const unitPrice = parseFloat(row.querySelector('.unit-price').textContent) || 0;
+    const quantity = parseInt(input.value) || 0;
+
+
+    const totalAmount = unitCost * quantity;
+    row.querySelector('.total').textContent = totalAmount.toFixed(2);
+
+
+    calculateTotalAmount();
+  }
+
+
+  function calculateTotalAmount() {
+    const totalElements = document.querySelectorAll('.total');
+    let totalAmount = 0;
+
+
+    totalElements.forEach(element => {
+      totalAmount += parseFloat(element.textContent);
+    });
+
+
+    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
   }
 </script>
 
+
+<script>
+  let itemCounter = 0;
+
+
+  function addRow() {
+    itemCounter++;
+    const tableBody = document.querySelector('#create_request_table tbody');
+    const newRow = document.createElement('tr');
+    newRow.classList.add('item-row');
+    newRow.innerHTML = `
+      <td style="text-align: center;"><span class="item-no">${itemCounter}</span></td>
+      <td><input type="text" name="item_name[]"></td>
+      <td><input type="text" name="item_description[]"></td>
+      <td><input type="text" name="item_unit[]"></td>
+      <td><input type="number" class="unit-price" min="0" name="unit_cost[]" oninput="calculateRowTotal(this)"></td>
+      <td><input type="number" class="quantity" min="1" name="quantity[]" oninput="calculateRowTotal(this)"></td>
+      <td><span class="total">0.00</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-evenly">
+          <button type="button" class="btn" onclick="removeRow(this)"><i class="fas fa-trash" style="color: red !important;"></i></button>
+        </div>
+      </td>
+    `;
+    tableBody.appendChild(newRow);
+  }
+
+
+  function removeRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+  }
+</script>
+
+<script>
+  function openModal() {
+    $('#myModal').modal('show');
+  }
+  </script>
+  <script>
+    $(document).ready(function() {
+      $("#myModal ul li").click(function() {
+        var category = $(this).text();
+        window.location.href = "alcohol-or-acetone-based-antiseptics.php?category=" + category;
+      });
+    });
+    </script>
+
+
 {% endblock %}  
-  
+ 
+
+
