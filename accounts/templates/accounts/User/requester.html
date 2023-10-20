@@ -38,23 +38,20 @@
 
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-                <button  type="button" class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Select Item</button>
-
-<div id="id01" class="modal">
-  
-  <form class="modal-content animate" action="/action_page.php" method="post">
-    
-
-    <div class="container">
-      <label for="uname"><b>Item Categories</b></label>
-       <option value="category1">Category 1</option>
-       <option value="category2">Category 2</option>
-       <option value="category3">Category 3</option>
-    </div>
-
-    
-  </form>
-</div>
+                <button <button type="button" class="btn btn-primary m-2" id="openPopupButton">Select Item</button>
+                <div id="categoryPopup" class="popup">
+                  <div class="popup-content">
+                    <button id="closePopupButton" class="close-button">X</button>
+                    <h2>Select a Category</h2>
+                    <ul>
+                      <li><a href="#">Category 1</a></li>
+                      <li><a href="#">Category 2</a></li>
+                      <li><a href="#">Category 3</a></li>
+                      <!-- Add more categories here -->
+                    </ul>
+                </div>
+              </div>
+              
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -85,7 +82,7 @@
                     <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
                     <th class="text-center text-nowrap"></th>
                     <div class="d-flex justify-content-evenly">
-                      <button type="button" class="btn"><i class="fas fa-trash" style="color: red !important;"></i></button>
+                      
                     </div>
                   </tr>
                 </thead>
@@ -216,6 +213,24 @@
     row.remove();
   }
 </script>
+
+<script>
+
+  document.getElementById("openPopupButton").addEventListener("click", function () {
+      document.getElementById("categoryPopup").style.display = "block";
+  });
+
+  document.getElementById("closePopupButton").addEventListener("click", function () {
+    document.getElementById("categoryPopup").style.display = "none";
+});
+
+  document.getElementById("categoryPopup").addEventListener("click", function (event) {
+      if (event.target === this) {
+          this.style.display = "none";
+      }
+  });
+  
+  </script>
 
 
 {% endblock %}  
