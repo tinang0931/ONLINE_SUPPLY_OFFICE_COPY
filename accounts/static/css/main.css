@@ -3124,9 +3124,13 @@ table.dataTable {
   border-radius: 5px;
 }
 
-.popup {
-  display: none;
-  position: fixed;
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
   top: 0;
   left: 0;
   width: 100%;
@@ -3172,4 +3176,20 @@ table.dataTable {
 
 button {
   margin: 10px;
+}
+.modal {
+  background-color: white;
+  color: black;
+}
+
+.modal-header {
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 15px solid #ccc;
 }
