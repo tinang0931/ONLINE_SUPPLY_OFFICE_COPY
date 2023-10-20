@@ -222,7 +222,7 @@ def about(request):
 
 @authenticated_user
 def history(request):
-   user_history = History.objects.filter(user=request.user).order_by('-timestamp')
+   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
    return render(request, 'accounts/User/history.html')
 
 
@@ -327,8 +327,3 @@ def requester(request):
     return render(request, 'accounts/User/requester.html')
 
 
-@authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
