@@ -1,8 +1,9 @@
 {% extends "accounts/User/main.html" %}
 
-
+{% load static %}
 
 {% block about %}
+
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
             <h1 class="pr text-center pt-4">ABOUT THE SYSTEM</h1> 
@@ -42,11 +43,20 @@
           </div>
           <div class="col-md-4">
             <h5>Follow Us:</h5>
-              <i class="fa fa-facebook"></i>
-              <i class="fa fa-twitter"></i>
-              <i class="fa fa-instagram"></i>
-              <i class="fa fa-youtube"></i>
-          </div>    
+            <a href="https://www.facebook.com/your-facebook-profile" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com/your-twitter-profile" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/your-instagram-profile" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/your-youtube-channel" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        
 
           <p></p>
           <p></p>
