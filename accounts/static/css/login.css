@@ -12,7 +12,7 @@ body {
     align-items: center;
     min-height: 100vh;
     background:
-        linear-gradient(128.43deg, rgba(0, 53, 102, 0.322) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
+        linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
         url("/static/images/CTU-Logo.jpg");
         background-size: cover;
         background-repeat: no-repeat;
@@ -71,7 +71,7 @@ body {
 
 .wrapper .input-box {
     position: relative;
-    width: 270px;
+    width: 300px;
     height: 40px;
     background: rgba(255, 255, 255, 0.486);
     margin: 15px auto;
@@ -79,12 +79,11 @@ body {
 
 
 .input-box input {
-    width: 270px;
+    width: 300px;
     height: 100%;
     background: transparent;
     border: none;
-    outline: none;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 14px;
     color: black;
     padding: 10px;
@@ -138,7 +137,7 @@ body {
     margin-left: 56%;
     text-align: center;
     line-height: 14px;
-    transition-duration: 0.4s;
+    transition-duration: 0.5s;
 }
 
 
