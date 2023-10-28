@@ -98,20 +98,18 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
-        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
         # Authenticate the user
         user = authenticate(request, username=username, password=pass1)
-        if user is not None and user.is_active:
-    # User is valid and active, log them in
-           auth_login(request, user)
-           messages.success(request, "You are now logged in.")
-           return redirect('notification')
+        if user is not None:
+                # Redirect regular users to the notification page
+                return redirect('notification')
         else:
-            # Authentication failed, show an error message
-            messages.error(request, "Invalid login credentials. Please try again.")
+            # Authentication failed, display an error message
+            messages.error(request, 'Invalid login credentials. Please try again.')
+    
     return render(request, 'accounts/User/login.html')
 
 def get_random_string(length, allowed_chars='0123456789'):

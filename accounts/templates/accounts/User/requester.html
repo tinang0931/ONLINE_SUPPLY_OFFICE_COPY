@@ -3,6 +3,38 @@
 {% load static %}
 
 {% block requester %}
+<style>
+  /* Style for the modal */
+  .modal {
+  display: none;
+  position: fixed;
+  top: 300px;
+  left: 300px;
+  width: 20%;
+  height: 55%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+
+</style>
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
             <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>  
@@ -35,26 +67,19 @@
               </div>
             
             </div> 
-
+            <button type="button" class="btn btn-primary" id="openModalButton">
+              Select Items
+            </button>
+            
+            <div id="myModal" class="modal">
+              <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <!-- Content for your modal goes here -->
+                <p>This is your modal content.</p>
+              </div>
+            </div>
             <div class="row w-100 m-auto mb-3">
               <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-                <button  type="button" class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Select Item</button>
-
-<div id="id01" class="modal">
-  
-  <form class="modal-content animate" action="/action_page.php" method="post">
-    
-
-    <div class="container">
-      <label for="uname"><b>Item Categories</b></label>
-       <option value="category1">Category 1</option>
-       <option value="category2">Category 2</option>
-       <option value="category3">Category 3</option>
-    </div>
-
-    
-  </form>
-</div>
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -151,15 +176,49 @@
             
           
     <script>
+      document.getElementById("departmentDropdown").addEventListener("change", function() {
+        var select = document.getElementById("departmentDropdown");
+        var customDepartmentInput = document.getElementById("customDepartmentInput");
+        var originalValue = select.value;
       
-  // Update department name in the hidden input field
-  const departmentDropdown = document.getElementById('departmentDropdown');
-  departmentDropdown.addEventListener("change", function () {
-      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-      const selectedOptionText = selectedOption.textContent;
-      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-      selectedDepartmentNameInput.value = selectedOptionText;
-  });
+        if (originalValue === "option8") {
+          customDepartmentInput.style.display = "block";
+      
+          customDepartmentInput.addEventListener("input", function() {
+            var customDepartmentValue = customDepartmentInput.value;
+            var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+      
+            if (!option) {
+              option = document.createElement("option");
+              option.value = customDepartmentValue;
+              option.text = customDepartmentValue;
+              select.add(option);
+            }
+          });
+      
+          customDepartmentInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+              var customDepartmentValue = customDepartmentInput.value;
+              var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+      
+              if (!option) {
+                option = document.createElement("option");
+                option.value = customDepartmentValue;
+                option.text = customDepartmentValue;
+                select.add(option);
+              }
+      
+              select.value = customDepartmentValue;
+              customDepartmentInput.style.display = "none";
+            }
+          });
+        } else {
+          customDepartmentInput.style.display = "none";
+          customDepartmentInput.value = ""; // Clear the input field
+        }
+      });
+      </script>
+      
 </script>
 
 <script>
@@ -215,6 +274,24 @@
     const row = button.closest('tr');
     row.remove();
   }
+
+  
+      // Get the button and the modal
+const openModalButton = document.getElementById("openModalButton");
+const modal = document.getElementById("myModal");
+
+// When the button is clicked, show the modal
+openModalButton.addEventListener("click", function () {
+  modal.style.display = "block";
+});
+
+// When the user clicks the close button or anywhere outside the modal, close it
+const closeModal = document.getElementById("closeModal");
+window.addEventListener("click", function (event) {
+  if (event.target === modal || event.target === closeModal) {
+    modal.style.display = "none";
+  }
+});
 </script>
 
 
