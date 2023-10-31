@@ -43,8 +43,7 @@
         <div class="sidebar">
             <div class="d-flex flex-wrap align-content-between h-100">
                 <div class="bg-white w-100" id="sidebar-wrapper">
-                  <div class="list-group w-100">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
+                  <div class="list-group w-100 ">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
@@ -76,11 +75,41 @@
         {% endblock %}
 
     </main>
-    <footer>
-      <div class="footer" style="height: 35px;">
+    <footer class=" footer ">
+      <div class="container text-white">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Contact Us:</h5>
+            <p>Cellphone # :093456738652</p>
+            <p>Telephone # : (02) 123-4567</p>
+      
+          </div>
+          <div class="col-md-4">
+            <h5>Mail Us:</h5>
+            <p>inventory@gmail.com</p>
+            
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us:</h5>
+            <a href="https://www.facebook.com/your-facebook-profile" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com/your-twitter-profile" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/your-instagram-profile" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/your-youtube-channel" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        
 
+          <p></p>
+          <p></p>
+          <p>&copy; All Rights Reserved 2023-2024 Online Supply System</p>
       </div>
-    </footer>
   </body>
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

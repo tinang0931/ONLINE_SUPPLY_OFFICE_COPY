@@ -121,7 +121,7 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('notification')
+           return redirect('requester')
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
@@ -237,10 +237,6 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
 
-@authenticated_user
-def notification(request):
-    return render(request, 'accounts/User/notification.html')
-
 
 @authenticated_user
 def pro_file(request):
@@ -253,13 +249,23 @@ def profile(request):
 
 
 @authenticated_user
-def profile_html(request):
-    return render(request, 'profile.html')
+def bac_about(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
 @authenticated_user
-def notification_html(request):
-    return render(request, 'notification.html')
+def bac_history(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
+
+@authenticated_user
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+
+
+@authenticated_user
+def profile_html(request):
+    return render(request, 'profile.html')
 
 
 @authenticated_user
@@ -270,50 +276,6 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
-
-
-@authenticated_user
-def about_bac(request):
-    return render(request, 'accounts/Admin/BAC/about_bac.html')
-
-
-@authenticated_user
-def home_bac(request):
-    return render(request, 'accounts/Admin/BAC/home_bac.html')
-
-
-@authenticated_user
-def purchase_bac(request):
-    # Check if a new request has been submitted
-    if request.method == 'POST':
-        item_name = request.POST.get('item_name')
-        description = request.POST.get('description')
-        quantity = request.POST.get('quantity')
-        user = request.user  # Assuming you're using user authentication
-
-        # Create a new purchase request
-        PurchaseRequest.objects.create(
-            user=user,
-            item_name=item_name,
-            description=description,
-            quantity=quantity,
-        )
-
-    # Get all purchase requests
-    requests = PurchaseRequest.objects.all()
-    return render(request, 'accounts/Admin/BAC/purchase_bac.html')
-def approve_request(request, request_id):
-    purchase_request = PurchaseRequest.objects.get(id=request_id)
-    purchase_request.approved = True
-    purchase_request.save()
-    return redirect('purchase_bac')
-
-def disapprove_request(request, request_id):
-    purchase_request = PurchaseRequest.objects.get(id=request_id)
-    purchase_request.disapproved = True
-    purchase_request.save()
-    return redirect('purchase_bac')
-
 
 
 department_mapping = {
