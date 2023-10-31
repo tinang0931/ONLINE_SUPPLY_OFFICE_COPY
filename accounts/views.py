@@ -31,6 +31,8 @@ from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 import random
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PurchaseRequest
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -226,7 +228,8 @@ def about(request):
 
 @authenticated_user
 def history(request):
-    return render(request, 'accounts/User/history.html')
+   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
+   return render(request, 'accounts/User/history.html')
 
 
 @authenticated_user
@@ -234,10 +237,10 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
 
-
 @authenticated_user
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
+
 
 @authenticated_user
 def prof(request):
@@ -325,8 +328,3 @@ def requester(request):
     return render(request, 'accounts/User/requester.html')
 
 
-@authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})

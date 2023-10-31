@@ -10,7 +10,6 @@ urlpatterns = [
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/',views.requester, name='requester'),
-   path('transaction_history/', views.transaction_history, name='transaction_history'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
