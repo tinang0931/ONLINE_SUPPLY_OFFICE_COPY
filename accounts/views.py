@@ -33,6 +33,7 @@ from .models import VerificationCode
 import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PurchaseRequest
+from django.http import JsonResponse
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -327,4 +328,27 @@ def requester(request):
         return redirect('requester')  # Redirect to the same page after submissio
     return render(request, 'accounts/User/requester.html')
 
+def approve_purchase_request(request, request_id):
+    purchase_request = get_object_or_404(PurchaseRequest, pk=request_id)
+    purchase_request.is_approved = True
+    purchase_request.save()
+    
+    PurchaseRequestHistory.objects.create(
+        purchase_request=purchase_request,
+        action='APPROVED'
+    )
+    
+    return JsonResponse({'message': 'Purchase request approved'})
+
+def disapprove_purchase_request(request, request_id):
+    purchase_request = get_object_or_404(PurchaseRequest, pk=request_id)
+    purchase_request.is_approved = False
+    purchase_request.save()
+    
+    PurchaseRequestHistory.objects.create(
+        purchase_request=purchase_request,
+        action='DISAPPROVED'
+    )
+    
+    return JsonResponse({'message': 'Purchase request disapproved'})
 

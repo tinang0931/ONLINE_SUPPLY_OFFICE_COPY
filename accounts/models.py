@@ -150,3 +150,8 @@ class PurchaseRequest(models.Model):
 
     def __str__(self):
         return self.item_name
+    
+class PurchaseRequestHistory(models.Model):
+    purchase_request = models.ForeignKey(PurchaseRequest, on_delete=models.CASCADE)
+    action = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)
