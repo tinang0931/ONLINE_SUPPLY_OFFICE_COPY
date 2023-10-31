@@ -239,6 +239,10 @@ def tracker(request):
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
 
+@authenticated_user
+def prof(request):
+    return render(request, 'accounts/User/prof.html')
+
 
 @authenticated_user
 def profile(request):

@@ -22,4 +22,5 @@ urlpatterns = [
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
+   path('prof/',views.prof, name='prof'),
 ]
