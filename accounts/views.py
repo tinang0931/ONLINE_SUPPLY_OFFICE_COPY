@@ -104,10 +104,10 @@ def login(request):
         # Authenticate the user
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
-                auth_login(request, user)
-                messages.success(request, "You are now log in.")
-                # Redirect regular users to the notification page
-                return redirect('notification')
+    # User is valid and active, log them in
+           auth_login(request, user)
+           messages.success(request, "You are now logged in.")
+           return redirect('requester')
         else:
             # Authentication failed, display an error message
             messages.error(request, 'Invalid login credentials. Please try again.')
@@ -219,10 +219,6 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
 
-@authenticated_user
-def notification(request):
-    return render(request, 'accounts/User/notification.html')
-
 
 @authenticated_user
 def pro_file(request):
@@ -253,13 +249,6 @@ def bac_home(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
-
-@authenticated_user
-def notification_html(request):
-    return render(request, 'notification.html')
-
-def select(request):
-    return render(request, 'accounts/User/select.html')
 
 @authenticated_user
 def pro_file_html(request):
