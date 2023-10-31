@@ -1,5 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import  User
+
+# class User(AbstractUser):
+#     is_admin = models.BooleanField(default= False)
+#     is_regularuser = models.BooleanField(default= False)
+
+
 
 
 class Item(models.Model):

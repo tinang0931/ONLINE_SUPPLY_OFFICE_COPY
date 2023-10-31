@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import *
-from django.contrib.auth.models import User
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -103,7 +103,9 @@ def login(request):
         
         # Authenticate the user
         user = authenticate(request, username=username, password=pass1)
-        if user is not None:
+        if user is not None and user.is_active:
+                auth_login(request, user)
+                messages.success(request, "You are now log in.")
                 # Redirect regular users to the notification page
                 return redirect('notification')
         else:
@@ -233,6 +235,21 @@ def profile(request):
 
 
 @authenticated_user
+def bac_about(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
+
+
+@authenticated_user
+def bac_history(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
+
+@authenticated_user
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -241,6 +258,8 @@ def profile_html(request):
 def notification_html(request):
     return render(request, 'notification.html')
 
+def select(request):
+    return render(request, 'accounts/User/select.html')
 
 @authenticated_user
 def pro_file_html(request):
@@ -250,21 +269,6 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
-
-
-@authenticated_user
-def about_bac(request):
-    return render(request, 'accounts/Admin/BAC/about_bac.html')
-
-
-@authenticated_user
-def home_bac(request):
-    return render(request, 'accounts/Admin/BAC/home_bac.html')
-
-
-@authenticated_user
-def purchase_bac(request):
-    return render(request, 'accounts/Admin/BAC/purchase_bac.html')
 
 
 department_mapping = {
