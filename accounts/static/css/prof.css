@@ -17,7 +17,7 @@
 .profile-box {
     background: #ffa125e3;
     text-align: center;
-    padding: 40px 90px;
+   padding: 40px 90px;
     color: #fff;
     position: relative;
     border-radius: 20px;
@@ -40,6 +40,7 @@
     right: 40px;
     top: 40px;
     cursor: pointer;
+    transition: transform 4.3s; 
     
 }
 
@@ -85,7 +86,7 @@
     border-radius: 20px;
     height: 200px
  
-}
+}    
 .mail_icon {
     position: relative;
     top: -135px;

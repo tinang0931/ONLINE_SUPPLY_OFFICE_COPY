@@ -20,11 +20,8 @@
         });
     </script>
         <div class="d-flex" id="wrapper">
-          <a href="{% url 'prof' %}">
-            <button class="phome" onclick="window.location.href='prof.html'">
-              <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            </button>
-          </a>
+          
+            
           </div>
           <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" data-toggle="modal" data-target="#profileModal" id="profile-pic-trigger">
           
@@ -106,6 +103,8 @@
         </div>
         
         <div class="edit-profile">
+          <a href="{% url 'prof' %}">
+        <img src="{% static 'images/back.png' %}" class="back"></a>
         <input type="text" class="fname" placeholder="Full Name">
         <input type="text" class="emmail" placeholder="Email Address">
         <input type="number" class="contact1" placeholder="Contact No.1">
@@ -131,6 +130,7 @@
       </div>
     </div>
     </div>
+  
      
         <script>
           function updateContainer() {
