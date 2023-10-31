@@ -31,6 +31,8 @@ from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 import random
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PurchaseRequest
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -282,7 +284,36 @@ def home_bac(request):
 
 @authenticated_user
 def purchase_bac(request):
+    # Check if a new request has been submitted
+    if request.method == 'POST':
+        item_name = request.POST.get('item_name')
+        description = request.POST.get('description')
+        quantity = request.POST.get('quantity')
+        user = request.user  # Assuming you're using user authentication
+
+        # Create a new purchase request
+        PurchaseRequest.objects.create(
+            user=user,
+            item_name=item_name,
+            description=description,
+            quantity=quantity,
+        )
+
+    # Get all purchase requests
+    requests = PurchaseRequest.objects.all()
     return render(request, 'accounts/Admin/BAC/purchase_bac.html')
+def approve_request(request, request_id):
+    purchase_request = PurchaseRequest.objects.get(id=request_id)
+    purchase_request.approved = True
+    purchase_request.save()
+    return redirect('purchase_bac')
+
+def disapprove_request(request, request_id):
+    purchase_request = PurchaseRequest.objects.get(id=request_id)
+    purchase_request.disapproved = True
+    purchase_request.save()
+    return redirect('purchase_bac')
+
 
 
 department_mapping = {

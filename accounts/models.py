@@ -138,3 +138,15 @@ class History(models.Model):
  #   description = models.TextField()
   #  link = models.URLField()
    # created_at = models.DateTimeField(default=timezone.now)
+
+
+class PurchaseRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=100)
+    description = models.TextField()
+    quantity = models.IntegerField()
+    approved = models.BooleanField(default=False)
+    disapproved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.item_name

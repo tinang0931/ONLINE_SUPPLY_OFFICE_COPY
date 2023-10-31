@@ -23,4 +23,7 @@ urlpatterns = [
    path('BAC_about/',views.about_bac, name='about_bac'),
    path('BAC_home/',views.home_bac, name='home_bac'),
    path('BAC_purchase_request/',views.purchase_bac, name='purchase_bac'),
+   path('approve_request/<int:request_id>/', views.approve_request, name='approve_request'),
+   path('disapprove_request/<int:request_id/', views.disapprove_request, name='disapprove_request'),
+  
 ]
