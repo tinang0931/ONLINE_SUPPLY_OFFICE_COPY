@@ -19,49 +19,9 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <script>
-        const actualUsername = "Actual User's Name";
-        const usernamePlaceholder = document.getElementById('username-placeholder');
-        usernamePlaceholder.textContent = actualUsername;
-    </script>
-    <script>
-        const userEmail = "user@example.com";
-        const emailPlaceholder = document.getElementById('email-placeholder');
-        emailPlaceholder.textContent = userEmail;
-    </script>
-    <script>
-        const userIsLoggedIn = true;
-
-        if (userIsLoggedIn) {
-            const accountIdPlaceholder = document.getElementById('account-id');
-            accountIdPlaceholder.textContent = '123456';
-        }
-        </script>
-        
-      </head>
-      <body>
-        <div class="background">
-          <div class="image-container">
-            <img class="background-image" src="{% static 'images/ctu_loogo.png' %}" alt="BG-logo">
-          </div>
-      
-          <div id="page-content-wrapper ">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-              <div class="container-fluid col-2 p-0px">
-                  <img src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-              </div>
-              <div class="head col-10">
-                  <h1 class="head">Online Supply Office</h1>
-                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-              </div>
-            </nav>
-          </div>
-        </div>   
-        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
         <div class="d-flex" id="wrapper">
-          <a href="{% url 'notification' %}">
-            <button class="phome" onclick="window.location.href='{% url 'pro_file_html' %}'"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-          </a>
+          
+            
           </div>
           <img class="profile-picture" src="{% static 'images/profile-img.png' %}" alt="Profile" data-toggle="modal" data-target="#profileModal" id="profile-pic-trigger">
           
@@ -143,6 +103,8 @@
         </div>
         
         <div class="edit-profile">
+          <a href="{% url 'prof' %}">
+        <img src="{% static 'images/back.png' %}" class="back"></a>
         <input type="text" class="fname" placeholder="Full Name">
         <input type="text" class="emmail" placeholder="Email Address">
         <input type="number" class="contact1" placeholder="Contact No.1">
@@ -159,12 +121,17 @@
     
       <div>  
         <div class="username-info">
+          <div class="username-text">
          <h1><span id="username-placeholder">Username</span></h1>
          <p><span id="email-placeholder">user@example.com</span><br>
             <span id="account-id-placeholder">Account ID: <span id="account-id">12345</span></span>
         </p>
+        
       </div>
     </div>
+    </div>
+  
+     
         <script>
           function updateContainer() {
              
@@ -177,10 +144,18 @@
               document.getElementById('email-placeholder').textContent = emailAddress || 'user@example.com';
               document.getElementById('account-id').textContent = contact1 || '12345';
               document.getElementById('account-id-placeholder').textContent = 'Account ID: ' + (contact2 || '12345');
+
+              localStorage.setItem('fullName', fullName);
+              localStorage.setItem('emailAddress', emailAddress);
+              localStorage.setItem('contact1', contact1);
+              localStorage.setItem('contact2', contact2);
+
+        
           }
           function updateContainerAndSubmit() {
             updateContainer(); 
         }
+      
           </script>
         
     </html>  
