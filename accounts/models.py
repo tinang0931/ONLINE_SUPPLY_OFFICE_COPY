@@ -107,3 +107,4 @@ class VerificationCode(models.Model):
     def __str__(self):
         return f'Code: {self.code} for {self.email}'
 
+
