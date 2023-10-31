@@ -36,6 +36,10 @@ def main(request):
     return render(request, 'accounts/User/main.html')
 
 
+def bac(request):
+    return render(request, 'accounts/User/bac.html')
+
+
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
@@ -115,7 +119,7 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('notification')
+           return redirect('requester')
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
@@ -215,47 +219,60 @@ def logout_user(request):
     return redirect('homepage')
 
 
+@authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
+
+@authenticated_user
 def history(request):
     return render(request, 'accounts/User/history.html')
 
 
+@authenticated_user
 def tracker(request):
     return render(request, 'accounts/User/tracker.html')
 
 
-def notification(request):
-    return render(request, 'accounts/User/notification.html')
+
+@authenticated_user
+def pro_file(request):
+    return render(request, 'accounts/User/pro_file.html')
 
 
-
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-def prof(request):
-    return render(request, 'accounts/User/prof.html')
+@authenticated_user
+def bac_about(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
+
+
+@authenticated_user
+def bac_history(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
+
+@authenticated_user
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+
+
+@authenticated_user
+def profile_html(request):
+    return render(request, 'profile.html')
+
+
+@authenticated_user
+def pro_file_html(request):
+    return render(request, 'pro_file.html')
+
 
 @authenticated_user
 def signout(request):
     pass
-
-
-@authenticated_user
-def about_bac(request):
-    return render(request, 'accounts/Admin/BAC/about_bac.html')
-
-
-@authenticated_user
-def home_bac(request):
-    return render(request, 'accounts/Admin/BAC/home_bac.html')
-
-
-@authenticated_user
-def purchase_bac(request):
-    return render(request, 'accounts/Admin/BAC/purchase_bac.html')
 
 
 department_mapping = {
