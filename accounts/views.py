@@ -235,6 +235,8 @@ def history(request):
 
 @authenticated_user
 def tracker(request):
+    purchase_requests = PurchaseRequest.objects.all()
+    data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
 
@@ -328,6 +330,24 @@ def requester(request):
         return redirect('requester')  # Redirect to the same page after submissio
     return render(request, 'accounts/User/requester.html')
 
+def submit_purchase_request(request):
+    if request.method == 'POST':
+        user = request.user
+        item_name = request.POST['item_name']
+        quantity = request.POST['quantity']
+
+        purchase_request = PurchaseRequest(user=user, item_name=item_name, quantity=quantity)
+        purchase_request.save()
+
+        # Redirect to history view after submission
+        return redirect('purchase_request_history')
+
+    return render(request, 'submit_purchase_request.html')
+
+def purchase_request_history(request):
+    purchase_requests = PurchaseRequest.objects.all()
+    return render(request, 'purchase_request_history.html', {'purchase_requests': purchase_requests})
+
 def approve_purchase_request(request, request_id):
     purchase_request = get_object_or_404(PurchaseRequest, pk=request_id)
     purchase_request.is_approved = True
@@ -351,4 +371,14 @@ def disapprove_purchase_request(request, request_id):
     )
     
     return JsonResponse({'message': 'Purchase request disapproved'})
+
+def purchase_request_history_search(request): 
+    if 'query' in request.GET: 
+        query = request.GET['query']
+        history_entries = PurchaseRequestHistory.objects.filter( 
+            action__icontains=query
+        ) 
+    else:
+        history_entries = [] 
+        return render(request, 'history_search_results.html', {'history_entries': history_entries})
 
