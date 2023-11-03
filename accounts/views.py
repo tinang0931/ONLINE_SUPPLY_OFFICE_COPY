@@ -1,39 +1,28 @@
 from django.shortcuts import redirect, render
 from .models import *
-from django.contrib.auth.models import User
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.models import User
-from django.http import HttpResponse  
-from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
-from django.core.mail import EmailMessage 
-from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
-from .models import VerificationCode
+from django.core.cache import cache
+from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PurchaseRequest
 from django.http import JsonResponse
+
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -112,7 +101,6 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
-        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
@@ -124,40 +112,66 @@ def login(request):
            messages.success(request, "You are now logged in.")
            return redirect('requester')
         else:
-            # Authentication failed, show an error message
-            messages.error(request, "Invalid login credentials. Please try again.")
+            # Authentication failed, display an error message
+            messages.error(request, 'Invalid login credentials. Please try again.')
+    
     return render(request, 'accounts/User/login.html')
 
+def get_random_string(length, allowed_chars='0123456789'):
+    return ''.join(random.choice(allowed_chars) for _ in range(length))
 
-@unauthenticated_user  
+@unauthenticated_user
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print('sfsdfsdgfdfgf')
-
-        # Check if the email exists in the database (you need to implement this)
-      
-            # Generate a random 4-digit verification code
+        
+        # Generate a random 4-digit verification code
         verification_code = get_random_string(4, '0123456789')
-        print('sfsdfsdgfdfgf')
-
-            # Save the verification code and link it to the user's email in the database
-        VerificationCode.objects.create(email=email, code=verification_code)
-        print('sfsdfsdgfdfgf')
-
-            # Send the verification code to the user's email
+        
+        # Store the verification code in the cache
+        cache_key = f'verification_code_{email}'
+        cache.set(cache_key, verification_code, 600)  # Store for 10 minutes (adjust as needed)
+        
+        # Send the verification code to the user's email
         subject = 'Password Reset Verification Code'
         message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'  # Replace with your email address
+        from_email = 'rlphtzn@gmail.com'
         recipient_list = [email]
 
         send_mail(subject, message, from_email, recipient_list)
-        print('sfsdfsdgfdfgf')
-
-            # Redirect the user to a page where they can enter the verification code
-        return redirect('verify_code')  # You need to create a 'verify_code' URL pattern
+        
+        # Redirect the user to a page where they can enter the verification code
+        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
 
+@unauthenticated_user
+def verify_code(request):
+    if request.method == 'POST':
+        code1 = request.POST.get('code1')
+        code2 = request.POST.get('code2')
+        code3 = request.POST.get('code3')
+        code4 = request.POST.get('code4')
+
+        verification_code = f"{code1}{code2}{code3}{code4}"
+        user_email = request.POST.get('email')
+        print('dsfsdfsdfdsfds')
+        if is_valid_code(verification_code, user_email):
+            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
+    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
+
+
+def is_valid_code(verification_code, user_email):
+    # Construct the cache key based on the user's email
+    cache_key = f'verification_code_{user_email}'
+    
+    # Retrieve the stored verification code from the cache
+    stored_code = cache.get(cache_key)
+    
+    if stored_code and verification_code == stored_code:
+        # Codes match, and the code exists in the cache
+        return True
+
+    return False
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -184,35 +198,6 @@ def reset_password(request):
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
-
-@unauthenticated_user
-# This view should handle the verification and password reset
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-
-        # Combine the 4 input fields into a single code
-        verification_code = f"{code1}{code2}{code3}{code4}"
-
-        # Perform code verification here (compare with the one sent to the user's email)
-
-        # If the code is valid, you can redirect to a password reset form
-        if is_valid_code(verification_code):
-            return redirect('reset_password')  # Create this URL pattern
-    return render(request, 'accounts/User/verify.html')  # Adjust the template name
-
-
-# This function should be implemented to verify the code
-def is_valid_code(verification_code):
-    # You need to implement your code verification logic here
-    # Verify the code against the code you sent via email
-    # Return True if the code is valid, or False otherwise
-
-# You'll also need to create a view and URL pattern for resetting the password
-    pass
 
 
 @authenticated_user
