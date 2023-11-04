@@ -88,6 +88,7 @@ class PurchaseRequest(models.Model):
     item_name = models.CharField(max_length=100)
     description = models.TextField()
     quantity = models.IntegerField()
+    is_submitted = models.BooleanField(default=False)
     approved = models.BooleanField(default=False)
     disapproved = models.BooleanField(default=False)
 

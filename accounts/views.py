@@ -300,85 +300,36 @@ def requester(request):
         print("dfsdffsdfs")
 
         # Create an Item object and populate its fields with form data
-        item = Item(
+        
+        department=department_name,
+        item_number=request.POST.get('item_number'),
+        item_name=request.POST.get('item_name'),
+        item_description=request.POST.get('item_description'),
+        unit=request.POST.get('unit'),
+        unit_cost=request.POST.get('unit_cost'),
+        quantity=request.POST.get('quantity'),
+        total_cost=request.POST.get('total_cost')
+        
+            # Create a new PurchaseRequest object and populate its fields
+        purchase_request = PurchaseRequest(
             department=department_name,
-            item_number=request.POST.get('item_number'),
-            item_name=request.POST.get('item_name'),
-            item_description=request.POST.get('item_description'),
-            unit=request.POST.get('unit'),
-            unit_cost=request.POST.get('unit_cost'),
-            quantity=request.POST.get('quantity'),
-            total_cost=request.POST.get('total_cost')
+            item_number=item_number,
+            item_name=item_name,
+            item_description=item_description,
+            unit=unit,
+            unit_cost=unit_cost,
+            quantity=quantity,
+            total_cost=total_cost,
+           
         
         )
-        print("dfsdffsdfs")
-        item.save() 
-        print("dfsdffsdfs") # Save the Item object to the database
-
-        # Handle the purpose field if needed
-        purpose_text = request.POST.get('item_purpose')
-        if purpose_text:
-            purpose = Purpose(item=item, description=purpose_text)
-            purpose.save()
-        print("dfsdffsdfs")
-        # You can return a success message or redirect to another page
-        return JsonResponse({'message': 'Data saved to the database'})
-
-    # Handle GET requests or other cases as needed
-    # ...
-
-    return render(request, 'accounts/User/requester.html' )
-
-
-def submit_purchase_request(request):
-    if request.method == 'POST':
-        user = request.user
-        item_name = request.POST['item_name']
-        quantity = request.POST['quantity']
-
-        purchase_request = PurchaseRequest(user=user, item_name=item_name, quantity=quantity)
+   
+        # Save the PurchaseRequest object to the database
         purchase_request.save()
+       
+       
 
-        # Redirect to history view after submission
-        return redirect('purchase_request_history')
-
-    return render(request, 'submit_purchase_request.html')
-
-def purchase_request_history(request):
-    purchase_requests = PurchaseRequest.objects.all()
-    return render(request, 'purchase_request_history.html', {'purchase_requests': purchase_requests})
-
-def approve_purchase_request(request, request_id):
-    purchase_request = get_object_or_404(PurchaseRequest, pk=request_id)
-    purchase_request.is_approved = True
-    purchase_request.save()
-    
-    PurchaseRequestHistory.objects.create(
-        purchase_request=purchase_request,
-        action='APPROVED'
-    )
-    
-    return JsonResponse({'message': 'Purchase request approved'})
-
-def disapprove_purchase_request(request, request_id):
-    purchase_request = get_object_or_404(PurchaseRequest, pk=request_id)
-    purchase_request.is_approved = False
-    purchase_request.save()
-    
-    PurchaseRequestHistory.objects.create(
-        purchase_request=purchase_request,
-        action='DISAPPROVED'
-    )
-    
-    return JsonResponse({'message': 'Purchase request disapproved'})
-
-def purchase_request_history_search(request): 
-    if 'query' in request.GET: 
-        query = request.GET['query']
-        history_entries = PurchaseRequestHistory.objects.filter( 
-            action__icontains=query
-        ) 
-    else:
-        history_entries = [] 
-        return render(request, 'history_search_results.html', {'history_entries': history_entries})
+        # Redirect to the success page or display a success message
+        return redirect('bac_history_page')  # Replace 'success_page' with the actual URL
+    return render(request, 'accounts/User/requester.html' )
 

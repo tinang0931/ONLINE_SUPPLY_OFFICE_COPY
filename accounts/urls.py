@@ -21,10 +21,5 @@ urlpatterns = [
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
-   path('prof/',views.prof, name='prof'),
-   path('submit-request/', views.submit_purchase_request, name='submit_purchase_request'),
-   path('purchase-history/', views.purchase_request_history, name='purchase_request_history'),
-   path('approve/<int:request_id>/', views.approve_purchase_request, name='approve_purchase_request'),
-   path('disapprove/<int:request_id>/', views.disapprove_purchase_request, name='disapprove_purchase_request'),
-   
+   path('prof/',views.prof, name='prof'),  
 ]
