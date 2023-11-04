@@ -1,3 +1,4 @@
+import collections
 from django.shortcuts import redirect, render
 from .models import *
 
@@ -20,9 +21,11 @@ from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PurchaseRequest
+from flask import Flask, render_template, request
+from pymongo import MongoClient
+import pandas as pd 
 
-
-
+app = Flask(__name__)
 def main(request):
     return render(request, 'accounts/User/main.html')
 
@@ -313,3 +316,15 @@ def requester(request):
     return render(request, 'accounts/User/requester.html')
 
 
+def get_data_from_db():
+    client = MongoClient('mongodb://localhost:27017')
+    db = client ['inventorydb']
+    colllection =db ['accounst_item']
+    data = pd.DataFrame(list(collections.find()))
+    return data
+
+@app.route('/')
+def index():
+    return render_template('accounts/User/requester.html', data=get_data_from_db().to_html(index=False))
+if __name__ == '__main__':
+    app.run(debug=True)
