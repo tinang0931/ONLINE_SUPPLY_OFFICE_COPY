@@ -3,7 +3,6 @@ from .models import *
 from django.contrib import messages
 from django.shortcuts import render
 from .models import Item
-from .models import Department, Item, Purpose
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -22,9 +21,8 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import PurchaseRequest
 from django.http import JsonResponse
-
+from django.core.mail import send_mail
 
 
 def main(request):
@@ -223,8 +221,8 @@ def history(request):
 
 @authenticated_user
 def tracker(request):
-    purchase_requests = PurchaseRequest.objects.all()
-    data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
+    # purchase_requests = PurchaseRequest.objects.all()
+    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
 
@@ -287,49 +285,71 @@ department_mapping = {
 @authenticated_user
 def requester(request):
     if request.method == 'POST':
-        print("dfsdffsdfs")
-        # Handle department selection
-        department_id = request.POST.get('departmentDropdown')
-        if department_id == 'option8':
-            # If "Others" department is selected, use the custom department input
-            department_name = request.POST.get('customDepartment')
-        else:
-            # Use the selected department from the dropdown
-            department = Department.objects.get(pk=department_id)
-            department_name = department.name
-        print("dfsdffsdfs")
+        item_number=request.POST('item_number'),
+        item_name=request.POST('item_name'),
+        item_description=request.POST('item_description'),
+        unit=request.POST('unit'),
+        unit_cost=request.POST('unit_cost'),
+        quantity=request.POST('quantity'),
+        total_cost=request.POST('total_cost')
+        # print("dfsdffsdfs")
+        # # Handle department selection
+        # department_id = request.POST('departmentDropdown')
+        # if department_id == 'option8':
+        #     # If "Others" department is selected, use the custom department input
+        #     department_name = request.POST.get('customDepartment')
+        # else:
+        #     # Use the selected department from the dropdown
+        #     department = Department.objects.get(pk=department_id)
+        #     department_name = department.name
+        # print("dfsdffsdfs")
 
         # Create an Item object and populate its fields with form data
-        
-        department=department_name,
-        item_number=request.POST.get('item_number'),
-        item_name=request.POST.get('item_name'),
-        item_description=request.POST.get('item_description'),
-        unit=request.POST.get('unit'),
-        unit_cost=request.POST.get('unit_cost'),
-        quantity=request.POST.get('quantity'),
-        total_cost=request.POST.get('total_cost')
+        item = Item(
+        item_number=item_number,
+        item_name=item_name,
+        item_description=item_description,
+        unit=unit,
+        unit_cost=unit_cost,
+        quantity=quantity,
+        total_cost=total_cost
+        )
+        item.save()
         
             # Create a new PurchaseRequest object and populate its fields
-        purchase_request = PurchaseRequest(
-            department=department_name,
-            item_number=item_number,
-            item_name=item_name,
-            item_description=item_description,
-            unit=unit,
-            unit_cost=unit_cost,
-            quantity=quantity,
-            total_cost=total_cost,
-           
-        
-        )
+#         purchase_request = PurchaseRequest(
+#         # department=department_name,  # This line should be inside PurchaseRequest
+#         item_number=request.POST.get('item_number'),
+#         item_name=request.POST.get('item_name'),
+#         item_description=request.POST.get('item_description'),
+#         unit=request.POST.get('unit'),
+#         unit_cost=request.POST.get('unit_cost'),
+#         quantity=request.POST.get('quantity'),
+#         total_cost=request.POST.get('total_cost')
+# )
    
-        # Save the PurchaseRequest object to the database
-        purchase_request.save()
+#         # Save the PurchaseRequest object to the database
+#         purchase_request.save()
        
-       
+         # Get the BAC email address from the database or settings
+        bac_email = '@ctu.edu.ph' # Replace this with the actual BAC email address
 
+        # Send an email to the BAC with the request details
+        subject = 'New Purchase Request'
+        message = 'A new purchase request has been submitted.'
+        from_email = 'jhake.dugaduga@ctu.edu.ph' # Replace this with the actual noreply email address
+        recipient_list = [bac_email]
+        send_mail(subject, message, from_email, recipient_list)
+        context = {'success_message': 'Your purchase request has been successfully submitted.'}
         # Redirect to the success page or display a success message
         return redirect('bac_history_page')  # Replace 'success_page' with the actual URL
-    return render(request, 'accounts/User/requester.html' )
+    
+    return render(request, 'accounts/User/requester.html', {'request': request})
 
+
+
+
+@authenticated_user
+def bac_history_purchase_request(request):
+    # purchase_request = PurchaseRequest.objects.all()
+    return render(request,'accounts/User/bac_history.html')
