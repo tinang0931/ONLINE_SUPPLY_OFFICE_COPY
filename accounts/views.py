@@ -1,36 +1,30 @@
 from django.shortcuts import redirect, render
 from .models import *
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.shortcuts import render
+from .models import Item
+from .models import Department, Item, Purpose
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.models import User
-from django.http import HttpResponse  
-from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
-from django.core.mail import EmailMessage 
-from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
-from .models import VerificationCode
+from django.core.cache import cache
+from django.core.mail import send_mail
 import random
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PurchaseRequest
+
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -109,7 +103,6 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
-        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
@@ -119,42 +112,68 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('notification')
+           return redirect('requester')
         else:
-            # Authentication failed, show an error message
-            messages.error(request, "Invalid login credentials. Please try again.")
+            # Authentication failed, display an error message
+            messages.error(request, 'Invalid login credentials. Please try again.')
+    
     return render(request, 'accounts/User/login.html')
 
+def get_random_string(length, allowed_chars='0123456789'):
+    return ''.join(random.choice(allowed_chars) for _ in range(length))
 
-@unauthenticated_user  
+@unauthenticated_user
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print('sfsdfsdgfdfgf')
-
-        # Check if the email exists in the database (you need to implement this)
-      
-            # Generate a random 4-digit verification code
+        
+        # Generate a random 4-digit verification code
         verification_code = get_random_string(4, '0123456789')
-        print('sfsdfsdgfdfgf')
-
-            # Save the verification code and link it to the user's email in the database
-        VerificationCode.objects.create(email=email, code=verification_code)
-        print('sfsdfsdgfdfgf')
-
-            # Send the verification code to the user's email
+        
+        # Store the verification code in the cache
+        cache_key = f'verification_code_{email}'
+        cache.set(cache_key, verification_code, 600)  # Store for 10 minutes (adjust as needed)
+        
+        # Send the verification code to the user's email
         subject = 'Password Reset Verification Code'
         message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'  # Replace with your email address
+        from_email = 'rlphtzn@gmail.com'
         recipient_list = [email]
 
         send_mail(subject, message, from_email, recipient_list)
-        print('sfsdfsdgfdfgf')
-
-            # Redirect the user to a page where they can enter the verification code
-        return redirect('verify_code')  # You need to create a 'verify_code' URL pattern
+        
+        # Redirect the user to a page where they can enter the verification code
+        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
 
+@unauthenticated_user
+def verify_code(request):
+    if request.method == 'POST':
+        code1 = request.POST.get('code1')
+        code2 = request.POST.get('code2')
+        code3 = request.POST.get('code3')
+        code4 = request.POST.get('code4')
+
+        verification_code = f"{code1}{code2}{code3}{code4}"
+        user_email = request.POST.get('email')
+        print('dsfsdfsdfdsfds')
+        if is_valid_code(verification_code, user_email):
+            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
+    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
+
+
+def is_valid_code(verification_code, user_email):
+    # Construct the cache key based on the user's email
+    cache_key = f'verification_code_{user_email}'
+    
+    # Retrieve the stored verification code from the cache
+    stored_code = cache.get(cache_key)
+    
+    if stored_code and verification_code == stored_code:
+        # Codes match, and the code exists in the cache
+        return True
+
+    return False
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -182,35 +201,6 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
-@unauthenticated_user
-# This view should handle the verification and password reset
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-
-        # Combine the 4 input fields into a single code
-        verification_code = f"{code1}{code2}{code3}{code4}"
-
-        # Perform code verification here (compare with the one sent to the user's email)
-
-        # If the code is valid, you can redirect to a password reset form
-        if is_valid_code(verification_code):
-            return redirect('reset_password')  # Create this URL pattern
-    return render(request, 'accounts/User/verify.html')  # Adjust the template name
-
-
-# This function should be implemented to verify the code
-def is_valid_code(verification_code):
-    # You need to implement your code verification logic here
-    # Verify the code against the code you sent via email
-    # Return True if the code is valid, or False otherwise
-
-# You'll also need to create a view and URL pattern for resetting the password
-    pass
-
 
 
 def logout_user(request):
@@ -226,7 +216,8 @@ def about(request):
 
 
 def history(request):
-    return render(request, 'accounts/User/history.html')
+   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
+   return render(request, 'accounts/User/history.html')
 
 
 
@@ -299,11 +290,7 @@ def profile_html(request):
     return render(request, 'profile.html')
 
 
-
-def notification_html(request):
-    return render(request, 'notification.html')
-
-
+@authenticated_user
 def pro_file_html(request):
     return render(request, 'pro_file.html')
 
@@ -326,41 +313,48 @@ department_mapping = {
 
 
 def requester(request):
-    if request.method == "POST":
-        name = request.POST.get('item_name[]', '')
-        description = request.POST.get('item_description[]', '')
-        quantity = int(request.POST.get('quantity[]', 0))
-        unit = request.POST.get('unit[]', '')
-        unit_cost = float(request.POST.get('unit_cost[]', 0))
-        purpose = request.POST.get('item_purpose', '')
-        department_option = request.POST.get('departmentDropdown', '')  # Get the selected department option
+    if request.method == 'POST':
+        print("dfsdffsdfs")
+        # Handle department selection
+        department_id = request.POST.get('departmentDropdown')
+        if department_id == 'option8':
+            # If "Others" department is selected, use the custom department input
+            department_name = request.POST.get('customDepartment')
+        else:
+            # Use the selected department from the dropdown
+            department = Department.objects.get(pk=department_id)
+            department_name = department.name
+        print("dfsdffsdfs")
 
-        # Map the selected option to the department name
-        department_name = department_mapping.get(department_option, '')
-
-        # Get the user's ID from the logged-in user
-        user_id = request.user.id
-
-        # Create and save the item with the user_id
+        # Create an Item object and populate its fields with form data
         item = Item(
-            name=name,
-            description=description,
-            quantity=quantity,
-            unit=unit,
-            unit_cost=unit_cost,
             department=department_name,
-            purpose=purpose,
-            user_id=user_id  # Include the user_id in the item
+            item_number=request.POST.get('item_number'),
+            item_name=request.POST.get('item_name'),
+            item_description=request.POST.get('item_description'),
+            unit=request.POST.get('unit'),
+            unit_cost=request.POST.get('unit_cost'),
+            quantity=request.POST.get('quantity'),
+            total_cost=request.POST.get('total_cost')
+        
         )
-        item.save()
+        print("dfsdffsdfs")
+        item.save() 
+        print("dfsdffsdfs") # Save the Item object to the database
 
-        messages.success(request, "Item added successfully.")
-        return redirect('requester')  # Redirect to the same page after submissio
-    return render(request, 'accounts/User/requester.html')
+        # Handle the purpose field if needed
+        purpose_text = request.POST.get('item_purpose')
+        if purpose_text:
+            purpose = Purpose(item=item, description=purpose_text)
+            purpose.save()
+        print("dfsdffsdfs")
+        # You can return a success message or redirect to another page
+        return JsonResponse({'message': 'Data saved to the database'})
+
+    # Handle GET requests or other cases as needed
+    # ...
+
+    return render(request, 'accounts/User/requester.html' )
 
 
-@authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
+
