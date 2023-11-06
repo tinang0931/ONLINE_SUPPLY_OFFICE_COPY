@@ -31,6 +31,8 @@ from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 import random
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PurchaseRequest
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -119,7 +121,7 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('notification')
+           return redirect('requester')
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
@@ -231,7 +233,8 @@ def item_selection(request):
 
 @authenticated_user
 def history(request):
-    return render(request, 'accounts/User/history.html')
+   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
+   return render(request, 'accounts/User/history.html')
 
 
 @authenticated_user
@@ -240,13 +243,13 @@ def tracker(request):
 
 
 @authenticated_user
-def notification(request):
-    return render(request, 'accounts/User/notification.html')
+def pro_file(request):
+    return render(request, 'accounts/User/pro_file.html')
 
 
 @authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
+def prof(request):
+    return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
@@ -272,11 +275,6 @@ def bac_home(request):
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-@authenticated_user
-def notification_html(request):
-    return render(request, 'notification.html')
 
 
 @authenticated_user
@@ -333,12 +331,5 @@ def requester(request):
         messages.success(request, "Item added successfully.")
         return redirect('requester')  # Redirect to the same page after submissio
     return render(request, 'accounts/User/requester.html')
-
-
-@authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
 
 
