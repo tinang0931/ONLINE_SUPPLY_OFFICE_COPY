@@ -96,3 +96,14 @@ class TransactionHistory(models.Model):
 
     def __str__(self):
         return f'Transaction by {self.user.username} at {self.timestamp}'
+
+
+
+class VerificationCode(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=4)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Code: {self.code} for {self.email}'
+

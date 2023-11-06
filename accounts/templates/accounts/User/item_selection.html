@@ -84,7 +84,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-8 ps-0">
                 <div class="form-group mb-3">
                   <label for="departmentDropdown">Choose Category:</label>
                   <select class="form-control" id="departmentDropdown" name="departmentDropdown">
@@ -104,65 +104,137 @@
                     <option value="option15">Furniture and Furnishing</option>
                     <option value="option16">Arts and Crafts, Eqipment, Accesories and Supplies</option>
                   </select>
+                  <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+                  <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="3"></textarea>
                 </div>
               </div>
             </div> 
-            
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
-              <div class="form-group mb-3">
-                <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
-                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="3"></textarea>
-              </div>
-            </div>
-            <div class="row w-100 m-auto mb-3" style="display: flex; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; justify-content: flex-end; align-items: flex-end;">
+            <div class="row w-100 m-auto mt-4" style="display: flex; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; justify-content: flex-end; align-items: flex-end;">
               <div class="col-6 col-sm-6 col-md-5 col-lg-3">
                 <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
               </div>
             </div>
-            <div class="table-responsive">
-
-              <table class="table" id="item_selection_table" style="border: 1px solid black;">
-                <thead>
-                    <tr>
-                        <th class="text-nowrap">Select</th>
-                        <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                        <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                        <th class="text-center text-nowrap"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr class="item-row">
-                    <td style="text-align: center;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        </div>
-                    </td>
-                    <td>System Unit</td>
-                    <td>3310 - A "system unit" is the main body or housing of a desktop computer where all the key internal components are housed.</td>
-                    <td>20,000</td>
-                  </tr>
-                  <tr class="item-row">
-                    <td style="text-align: center;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        </div>
-                    </td>
-                    <td>Camera</td>
-                    <td>Logitech - Common features include HD or even 4K resolution, autofocus, built-in microphones, and software enhancements for video quality.</td>
-                    <td>2,000</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr class=" item-row border">
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <a type="button" class="btn btn-primary" href="{% url 'requester' %}">Add</a>
-                        </div>
-                    </td>
-                  </tr>
-                </tfoot>
-            </table>
+            <div class="row m-auto w-100 mt-2">
+              <div class="col-12 col-sm-12 col-md-10 col-lg-11" style="background-color: #0035661a; border-radius: 10px; padding-bottom: 30px; padding-left: 30px;">
+                <div class=" mt-3" style="font-size: 20px;">
+                    <strong>Categories</strong> 
+                </div>
+                <div class="text-center p-3 mb-4">
+                    <ul class="nav nav-tabs py-3 scroll_style small_scroll_style" role="tablist" style=" flex-wrap: nowrap; border: 0px !important; overflow-x: auto; overflow-y: hidden; display: flex;">
+                        <li class="nav-item col-auto mx-2 active" style="width: fit-content;">
+                            <a class="purch-link  m-0"  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">All</a>
+                        </li>
+                    
+                      <li class="nav-item col-auto mx-2"  style="width: fit-content;">
+                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PESTICIDES OR PEST REPELLENTS</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2 " style="width: fit-content;">
+                          <a class="purch-link  m-0 "  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PERFUMES OR COLOGNES OR FRAGRANCES</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2"  style="width: fit-content;">
+                          <a class="purch-link  m-0 "   data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">ALCOHOLL OR ACETONE BASED ANTISEPTICS</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
+                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">COLOR COMPOUNDS AND DISPERSIONS</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
+                          <a class="purch-link  m-0 "  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PAPER MATERIALS AND PRODUCTS</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
+                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">BATTERIES AND CELLS AND ACCESSORIES</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2"style="width: fit-content;">
+                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">MANUFACTURING COMPONENTS AND SUPPLIES</a>
+                      </li>
+                    
+                      <li class="nav-item col-auto mx-2"style="width: fit-content;">
+                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">HEATING AND VENTILATION AND AIR CIRCULATION</a>
+                      </li>
+                    </ul>
+                </div>
+                <div class="row m-auto w-100">
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
+                    <input type="checkbox" class="btn-check" id="btn-check-1" checked autocomplete="off">
+                    <label class="btn " for="btn-check-1">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 ">
+                    <input type="checkbox" class="btn-check" id="btn-check-2" checked autocomplete="off">
+                    <label class="btn " for="btn-check-2">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-3" checked autocomplete="off">
+                    <label class="btn " for="btn-check-3">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-4" checked autocomplete="off">
+                    <label class="btn " for="btn-check-4">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-5" checked autocomplete="off">
+                    <label class="btn " for="btn-check-5">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
+                    <input type="checkbox" class="btn-check" id="btn-check-6" checked autocomplete="off">
+                    <label class="btn " for="btn-check-6">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
+                    <input type="checkbox" class="btn-check" id="btn-check-7" checked autocomplete="off">
+                    <label class="btn " for="btn-check-7">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-8" checked autocomplete="off">
+                    <label class="btn " for="btn-check-8">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-9" checked autocomplete="off">
+                    <label class="btn " for="btn-check-9">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-10" checked autocomplete="off">
+                    <label class="btn " for="btn-check-10">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-11" checked autocomplete="off">
+                    <label class="btn " for="btn-check-11">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-12" checked autocomplete="off">
+                    <label class="btn " for="btn-check-12">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-13" checked autocomplete="off">
+                    <label class="btn " for="btn-check-13">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-14" checked autocomplete="off">
+                    <label class="btn " for="btn-check-14">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-15" checked autocomplete="off">
+                    <label class="btn " for="btn-check-15">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-16" checked autocomplete="off">
+                    <label class="btn " for="btn-check-16">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-17" checked autocomplete="off">
+                    <label class="btn " for="btn-check-17">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+                    <input type="checkbox" class="btn-check" id="btn-check-18" checked autocomplete="off">
+                    <label class="btn " for="btn-check-18">INSECTICIDE, aerosol type, net content: 600ml min</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-2 col-lg-1" style="display: flex; flex-direction: column; flex-wrap: nowrap; align-content: flex-end; justify-content: flex-end; align-items: flex-end;">
+                <button type="submit" class="btn text-white" style="background-color: #093A68;">Add</button></div>
             </div>
 
           </form>
@@ -192,6 +264,25 @@
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
   <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
 
+  <script>
+    function increaseCount(a, b) {
+    var input = b.previousElementSibling;
+    var value = parseInt(input.value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    input.value = value;
+  }
+
+  function decreaseCount(a, b) {
+  var input = b.nextElementSibling;
+  var value = parseInt(input.value, 10);
+  if (value > 1) {
+    value = isNaN(value) ? 0 : value;
+    value--;
+    input.value = value;
+  }
+  }
+  </script>
   <script>
     $(document).ready(function() {
       var table = $('#item_selection_table').DataTable( {

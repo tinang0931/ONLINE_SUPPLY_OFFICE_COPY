@@ -34,6 +34,7 @@
             {%csrf_token%}
             
             <h1>Reset Password</h1>
+            <h2>Enter the Confirmation Code we sent to your phone.</h2>
 
 
             <div class="input-box">
@@ -57,7 +58,7 @@
                 }
             </script>
 
-            <a href="{% url 'login' %}" class="btn">Reset Password
+            <a href="{% url 'reset_password' %}" class="btn">Reset Password
 
         </form>
     </div>

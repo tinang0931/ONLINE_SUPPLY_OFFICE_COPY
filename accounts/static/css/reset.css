@@ -39,12 +39,11 @@ body{
 
 .wrapper {
     width: 420px;
-    height: 370px;
+    height: 350px;
     background: rgba(255, 255, 255, 0.486);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
-    padding: 50px;
-    padding-right: 60px;
+    padding: 30px;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
@@ -110,7 +109,7 @@ body{
 
 
 .wrapper .btn {
-    width: 45%;
+    width: 38%;
     height: 30px;
     background: #fc8f01;
     outline: none;
@@ -121,7 +120,7 @@ body{
     color: black;
     font-weight: 300;
     font-size: 17px;
-    margin-left: 50%;
+    margin-left: 50.5%;
     text-align: center;
     line-height: 13px;
     margin-top: 10px; 

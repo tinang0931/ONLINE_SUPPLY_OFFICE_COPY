@@ -22,15 +22,26 @@
 
 <body>
     <div class="title">Online Supply System</div>
+
     
     <div class="wrapper">
+        <div class="center-text">
+
+            {% if messages %}
+    
+            {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+    
+            {% endif %}
+        </div>
+
         <div class="icon-container">
             <img class="login_icon" src="{% static 'images/register.png' %}" alt="">
         </div>
 
             
         <form action="" method="post">
-            
             {%csrf_token%}
         
             <h1>Register</h1>
