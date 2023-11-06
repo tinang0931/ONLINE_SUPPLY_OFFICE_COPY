@@ -70,41 +70,15 @@
               </div>
            
             </div>
-
-
-        <div class="row w-100 m-auto mb-3">
-        <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-          <button type="button" onclick="openModal()">Select Items</button>
-
-
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">CATEGORIES</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-       <div class="modal-body">
-         <ul>
-            <button type="button" onclick="openModal()">Alcohol or Acetone Based Antiseptics</button>
-            <button type="button" onclick="openModal()">Cleaning Equipment and Supplies</button>
-            <button type="button" onclick="openModal()">Personal Protective Equipment</button>
-            <button type="button" onclick="openModal()">ICT Equipment, Devices and Accessories</button>
-            <button type="button" onclick="openModal()">Office Equipment, Accessories and Supplies</button>
-            <button type="button" onclick="openModal()">Furniture and Furnishing</button>
-            <button type="button" onclick="openModal()">Electrical and Hardware Supplies</button>
-         </ul>
-       </div>
-    </div>
-  </div>
-</div>     
-  
-              
-                <!-- Modal -->
-                <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
+              <div class="row w-100 m-auto mb-3">
+                <div class="col-6 col-sm-6 col-md-7 col-lg-9">
+                    <button type="button" data-toggle="modal" data-target="#categorySelectionModal">Select Items</button>
+                </div>
+            
+            
+            <!-- Outer Modal for Category Selection -->
+            <div class="modal fade" id="categorySelectionModal" tabindex="-1" role="dialog" aria-labelledby="categorySelectionModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="categorySelectionModalLabel">Select a Category</h5>
@@ -389,39 +363,48 @@
                                <label for="Item">Item Name</label>
                                  <input type="text" class="form-control" id="Item" name="Item" required>
                                   </div>
-                                   <div class="form-group">
-                                    <label for="Item_Brand_Description">Item Brand/Description</label>
-                                     <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
-                                     </div>
-                                      <div class="form-group">
-                                      <label for="Unit">Unit</label>
-                                        <input type="text" class="form-control" id="Unit" name="Unit" required>
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="Unit">Unit Cost</label>
-                                        <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
-                                        </div>
-                                       <div class="form-group">
-                                       <label for="Quantity">Quantity</label>
-                                      <input type="text" class="form-control" id="Quantity" name="Quantity" required>
-                                    </div>
-                                    <div class="modal-footer">
-                               <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
-                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </td>
                               </div>
-                            </div>
-                          </div>
-                       </div>
-                     </td>
-                               
-                                    </div>
-                                  </div>
-                                </div>
+                           </div>
+                        </div>
                     </td>
                   </tr>
                 </tfoot>
               </table>
             </div>
+
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    You have successfully submitted the form.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            
+            
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+              // Function to handle form submission
+              function submitForm() {
+              
+                $('#successModal').modal('show');
+              }
+            </script>
            
          
     <script>
