@@ -76,6 +76,11 @@ body {
 .otp-bx input:hover{
     color: #003566;
 }
+.otp-bx input[type="number"]::-webkit-outer-spin-button,
+    .otp-bx input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
 
 .form input{

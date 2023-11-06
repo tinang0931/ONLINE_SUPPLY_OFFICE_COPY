@@ -30,7 +30,7 @@ body {
 
 
 #wrapper{
-  background-color: black;
+  background-color: #ffffff;
 }
 
 
@@ -99,6 +99,7 @@ padding: 0px !important;
 }
 
 
+
 .ctu_logo{
   vertical-align: middle;
   height: 220px;
@@ -124,6 +125,7 @@ height: 100%;
 
 .profile_img {
 height: 170px !important;  
+
 }
 
 
@@ -265,7 +267,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 .text-container {
-            display: inline-block;
+            display: flex;
             flex-direction: column;
             align-items: flex-start; 
             color: white;
@@ -334,3 +336,4 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
         }
     }
+

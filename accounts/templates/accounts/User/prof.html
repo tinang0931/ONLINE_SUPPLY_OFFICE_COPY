@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requesting Page</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -32,10 +32,29 @@ $(document).ready(function () {
     <body>
         <div class="container">
             <div class="profile-box">
-                <img src="{% static 'images/back.png' %}" class="back-icon">
+                <a href="{% url 'requester' %}">
+                <img src="{% static 'images/back.png' %}" class="back-icon"></a>
                 <img src="{% static 'images/setting.png' %}" class="setting-icon">
-                <img class="profile-pic" id="expand-image" src="{% static 'images/profile.png' %}" alt="Profile Picture">
-                <h3 class="user-name">Sigma Men Yel</h3>
+                <img class="profile-pic" id="profile-pic" src="{% static 'images/profile-img.png' %}" alt="Profile Picture">
+                <script>
+                  const savedImageUrl = localStorage.getItem('profileImage');
+                  
+                 
+                  if (savedImageUrl) {
+                      const profilePic = document.getElementById('profile-pic');
+                      profilePic.src = savedImageUrl;
+                  }
+              </script> 
+            
+
+                <h3 class="user">Username</h3>
+                <script>
+         
+                    var fullName = localStorage.getItem('fullName') || 'Username';
+
+                    document.querySelector('.user').textContent = fullName;
+
+                </script>
                 <p class="type-of-user">Student User</p>
                 <button type="button">Edit Profile</button>
                 <div class="profile-bottom"
