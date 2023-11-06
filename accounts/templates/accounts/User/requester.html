@@ -54,6 +54,7 @@
   </div>
   <form action="{% url 'requester' %}" method="post">
     {% csrf_token %}
+    {{ form.as_p }}
     <div class="row w-100 m-auto">
       <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
         <div class="form-group mb-3">
@@ -86,278 +87,11 @@
         <button type="button" data-toggle="modal" data-target="#categorySelectionModal">Select Items</button>
       </div>
 
-
-      <!-- Outer Modal for Category Selection -->
-      <div class="modal fade" id="categorySelectionModal" tabindex="-1" role="dialog"
-        aria-labelledby="categorySelectionModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="categorySelectionModalLabel">Select a Category</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="d-flex flex-column">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category1ButtonModal">Antiseptics</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category2ButtonModal">Cleaning Equipment and Supplies</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category3ButtonModal">Personal Protective Equipment</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category4ButtonModal">ICT Equipment, Devices and Accessories</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category5ButtonModal">Office Equipment, Accessories and Supplies</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category6ButtonModal">Furniture and Furnishing</button>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                  data-target="#category7ButtonModal">Electrical and Hardware Supplies</button>
-                <!-- Add more category buttons as needed -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Inner Modal for Category 1 -->
-      <div class="modal fade" id="category1ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category1ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category1ButtonModalLabel">Antiseptics</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Select</th>
-                    <th>Item</th>
-                    <th>Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox" class="selectRow"></td>
-                    <td>Alcohol</td>
-                    <td>ethyl 68%-72%, scented, 500ml(-5ml)</td>
-                    <td>bottle</td>
-                    <td><input type="number" id="quantityInput" value="1"></td>
-                    <td>200</td>
-                  </tr>
-                  <!-- Add more rows as needed -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-      <!-- Inner Modal for Category 2 -->
-      <div class="modal fade" id="category2ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category2ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category2ButtonModalLabel">Cleaning Equipment and Supplies</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category2Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Inner Modal for Category 1 -->
-      <div class="modal fade" id="category3ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category3ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category3ButtonModalLabel">Personal Protective Equipment</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="category4ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category4ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category4ButtonModalLabel">ICT Equipment, Devices and Accessories</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="modal fade" id="category5ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category5ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category5ButtonModalLabel">Office Equipment, Accessories and Supplies</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="category6ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category6ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category6ButtonModalLabel">Furniture and Furnishing</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="category7ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category7ButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category7ButtonModalLabel">Electrical and Hardware Supplies</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Data will be populated here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
       <div class="col-6 col-sm-6 col-md-5 col-lg-3">
         <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
       </div>
     </div>
-    <div class=" table table-responsive">
+    <div class="table-responsive">
       <table class="table" id="create_request_table" style="border: 1px solid black;">
         <thead>
           <tr>
@@ -369,67 +103,68 @@
             <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
             <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
             <th class="text-center text-nowrap"></th>
-            <div class="d-flex justify-content-evenly">
-            </div>
           </tr>
         </thead>
         <tbody id="itemTableBody">
           <!-- Rows will be added here via JavaScript -->
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
           <tr>
             <td colspan="6">Total Amount</td>
             <td><span id="totalAmount">00.00</span></td>
             <td>
-
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add
                 item</button>
-                <button type="submit" class="btn btn-primary m-2">Submit</button>
-
             </td>
-              <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form id="addItemForm">
-                        <div class="form-group">
-                          <label for="Item">Item Name</label>
-                          <input type="text" class="form-control" id="Item" name="Item" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="Item_Brand_Description">Item Brand/Description</label>
-                          <input type="text" class="form-control" id="Item_Brand_Description"
-                            name="Item_Brand_Description" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="Unit">Unit</label>
-                          <input type="text" class="form-control" id="Unit" name="Unit" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="Unit">Unit Cost</label>
-                          <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="Quantity">Quantity</label>
-                          <input type="text" class="form-control" id="Quantity" name="Quantity" required>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                  </div>
-                </div>
           </tr>
-        </tfoot>
+        </tfoot> -->
       </table>
+    </div>
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addItemForm">
+              <div class="form-group">
+                <label for="Item">Item Name</label>
+                <input type="text" class="form-control" id="Item" name="Item" required>
+              </div>
+              <div class="form-group">
+                <label for="Item_Brand_Description">Item Brand/Description</label>
+                <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description"
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="Unit">Unit</label>
+                <input type="text" class="form-control" id="Unit" name="Unit" required>
+              </div>
+              <div class="form-group">
+                <label for="Unit">Unit Cost</label>
+                <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+              </div>
+              <div class="form-group">
+                <label for="Quantity">Quantity</label>
+                <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right mr-5">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+      <button type="submit" class="btn btn-success">Submit</button>
     </div>
   </form>
 </div>
@@ -438,10 +173,6 @@
 
 
 <script>
-
-
-
-
   document.getElementById("departmentDropdown").addEventListener("change", function () {
     var select = document.getElementById("departmentDropdown");
     var customDepartmentInput = document.getElementById("customDepartmentInput");
