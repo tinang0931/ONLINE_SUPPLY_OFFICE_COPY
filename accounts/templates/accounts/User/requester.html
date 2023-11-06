@@ -124,45 +124,45 @@
       </div>
 
       <!-- Inner Modal for Category 1 -->
-      <div class="modal fade" id="category1ButtonModal" tabindex="-1" role="dialog"
-        aria-labelledby="category1ButtonModalLabel" aria-hidden="true">
+      <div class="modal fade" id="category1ButtonModal" tabindex="-1" role="dialog" aria-labelledby="category1ButtonModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="category1ButtonModalLabel">Antiseptics</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="category1ButtonModalLabel">Antiseptics</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="category1Table">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Unit</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in csv_data %}
+                            <tr>
+                                <td>{{ row.Select }}</td>
+                                <td>{{ row.Item }}</td>
+                                <td>{{ row.Description }}</td>
+                                <td>{{ row.Unit }}</td>
+                                <td>{{ row.Quantity }}</td>
+                                <td>{{ row.Price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="modal-body">
-              <table class="table" id="category1Table">
-                <thead>
-                  <tr>
-                    <th>Select</th>
-                    <th>Item</th>
-                    <th>Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox" class="selectRow"></td>
-                    <td>Alcohol</td>
-                    <td>ethyl 68%-72%, scented, 500ml(-5ml)</td>
-                    <td>bottle</td>
-                    <td><input type="number" id="quantityInput" value="1"></td>
-                    <td>200</td>
-                  </tr>
-                  <!-- Add more rows as needed -->
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
-
+    </div>
+    
 
 
 
