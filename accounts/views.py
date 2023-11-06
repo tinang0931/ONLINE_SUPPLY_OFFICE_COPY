@@ -20,7 +20,9 @@ from django.utils.crypto import get_random_string
 from django.core.cache import cache
 from django.core.mail import send_mail
 import random
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.core.mail import send_mail
 
 
 def main(request):
@@ -218,13 +220,19 @@ def history(request):
 
 @authenticated_user
 def tracker(request):
+    # purchase_requests = PurchaseRequest.objects.all()
+    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
-
 
 
 @authenticated_user
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
+
+
+@authenticated_user
+def prof(request):
+    return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
@@ -262,55 +270,65 @@ def signout(request):
     pass
 
 
+department_mapping = {
+    'option1': 'College of Arts and Sciences',
+    'option2': 'College of Agriculture',
+    'option3': 'College of Forestry',
+    'option4': 'College of Hospitality Management and Tourism',
+    'option5': 'College of Technology and Engineering',
+    'option6': 'College of Education',
+    'option7': 'Graduate School',
+}
+
+
 @authenticated_user
 def requester(request):
     if request.method == 'POST':
-        # Process the submitted form data
-        item_number = int(request.POST('itemNumber', ''))
-        name = request.POST('itemName', '')
-        description = request.POST('itemDescription', '')
-        unit = request.POST('unit', '')
-        unit_cost = float(request.POST('unitCost', ''))
-        quantity = int(request.POST('quantity', ''))
-        total_cost = float(request.POST('total', ''))
-        purpose = request.POST('item_purpose', '')
-        department_option = request.POST('departmentDropdown', '')
+        print("dfsdffsdfs")
+        # Handle department selection
+        department_id = request.POST.get('departmentDropdown')
+        if department_id == 'option8':
+            # If "Others" department is selected, use the custom department input
+            department_name = request.POST.get('customDepartment')
+        else:
+            # Use the selected department from the dropdown
+            department = Department.objects.get(pk=department_id)
+            department_name = department.name
+        print("dfsdffsdfs")
 
-        # You should have a department mapping based on your HTML form
-        department_mapping = {
-            'option1': 'College of Arts and Sciences',
-            'option2': 'College of Agriculture',
-            'option3': 'College of Forestry',
-            'option4': 'College of Hospitality Management and Tourism',
-            'option5': 'College of Technology and Engineering',
-            'option6': 'College of Education',
-            'option7': 'Graduate School',
-            'option8': request.POST('customDepartment', ''),  # Use the custom department input if needed
-        }
-        department_name = department_mapping.get(department_option, '')
-
-        # Create an Item object and save it to the database
+        # Create an Item object and populate its fields with form data
         item = Item(
-            item_number=item_number,
-            name=name,
-            description=description,
-            unit=unit,
-            unit_cost=unit_cost,
-            quantity=quantity,
-            total_cost=total_cost,
             department=department_name,
-            purpose=purpose,
+            item_number=request.POST.get('item_number'),
+            item_name=request.POST.get('item_name'),
+            item_description=request.POST.get('item_description'),
+            unit=request.POST.get('unit'),
+            unit_cost=request.POST.get('unit_cost'),
+            quantity=request.POST.get('quantity'),
+            total_cost=request.POST.get('total_cost')
+        
         )
-        item.save()
+        print("dfsdffsdfs")
+        item.save() 
+        print("dfsdffsdfs") # Save the Item object to the database
 
+        # Handle the purpose field if needed
+        purpose_text = request.POST.get('item_purpose')
+        if purpose_text:
+            purpose = Purpose(item=item, description=purpose_text)
+            purpose.save()
+        print("dfsdffsdfs")
+        # You can return a success message or redirect to another page
         return JsonResponse({'message': 'Data saved to the database'})
+
+    # Handle GET requests or other cases as needed
+    # ...
 
     return render(request, 'accounts/User/requester.html' )
 
 
 
 @authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
+def bac_history_purchase_request(request):
+    # purchase_request = PurchaseRequest.objects.all()
+    return render(request,'accounts/User/bac_history.html')

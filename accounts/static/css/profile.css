@@ -226,61 +226,23 @@ height: 100%;
     top: 20;
     display: -ms-flexbox!important;
     display: flex!important;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     visibility: visible;
-    content-visibility: auto;
-}
-.phome {
-  --color: #4190ED;
-  font-family: inherit;
-  display: inline-block;
-  width: 4em;
-  height: 2.6em;
-  line-height: 2.5em;
-  overflow: hidden;
-  margin: 20px;
-  font-size: 17px;
-  z-index: 1;
-  color: var(--color);
-  border: 2px solid var(--color);
-  border-radius: 6px;
-  position: relative;
-  left: 5px;
-  top: 5px;
-  }
-
-.phome::before {
-  position: absolute;
-  content: "";
-  background: var(--color);
-  width: 150px;
-  height: 200px;
-  z-index: -1;
-  border-radius: 50%;
+    content-visibility  : auto;
 }
 
-.phome:hover {
-  color: white;
-}
-
-.phome:before {
-  top: 100px;
-  left: 100px;
-  transition: .3s all;
-}
-
-.phome:hover::before {
-  top: -30px;
-  left: -30px;
-}
 .profile-picture {
   position: absolute;
-  left: 1100px;
-  top: 450px;
+  right: 552px;
+  top: 190px;
   width: 178px;
   height: 180px;
   border-radius: 50%;
   z-index: 1;
+  background: #fff;
+  padding: 3px;
+  margin-top: 40px;
+  cursor: pointer;
 }
 
 .username {
@@ -319,6 +281,20 @@ color: #000000;
 #account-id {
 color: #4190ED;
 }
+.back {
+  height: auto;
+  width: 40px;
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.back:hover {
+  transform: scale(1.2); /* Make the icon 50% smaller */
+}
+
 .fname {
 border: 2px solid #4190ED;
 width: 420px;
@@ -330,8 +306,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 400px;
+left: 75px;
+top: 110px;
 color: black;
 }
 .fname:hover,
@@ -344,7 +320,7 @@ color: black;
 .emmail {
 border: 2px solid #4190ED;
 width: 420px;
-height: 53px;
+height: 46px;
 padding-left: 0.8em;
 outline: none;
 overflow: hidden;
@@ -352,8 +328,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 500px;
+left: 75px;
+top: 180px;
 color: black;
 }
 
@@ -376,8 +352,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 600px;
+left: 75px;
+top: 250px;
 color: black;
 }
 
@@ -399,8 +375,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 700px;
+left: 75px;
+top: 320px;
 color: black;
 }
 
@@ -422,8 +398,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 800px;
+left: 75px;
+top: 390px;
 color: black;
 }
 .password:hover,
@@ -445,8 +421,8 @@ background-color: #F3F3F3;
 border-radius: 10px;
 transition: all 0.5s;
 position: absolute;
-left: 300px;
-top: 900px;
+left: 75px;
+top: 460px;
 color: black;
 }
 .re-type-pass:hover,
@@ -457,39 +433,44 @@ background-color: white;
 color: black;
 }
 button.learn-more {
-position: absolute;
-right: 300px;
-top:1000px;
-width: 201px;
-height: 45px;
-transition: all 0.3s ease;
-background-color: transparent;
-border: 2px solid #4190ED;
-border-radius: 10px;
-font-family: "Source Sans Pro", sans-serif;
-cursor: pointer;
+  position: absolute;
+   right: 855px;
+   top: 560px;
+   background: rgba(0, 0, 0, 0.846);
+   color: #ffa125e3;
+   border: none;
+   outline: none;
+   box-shadow: 0 5px 10px rgba(224, 67, 54, 0.5);
+   padding: 10.5px 42px;
+   cursor: pointer;
+   border-radius: 30px;
+   margin-bottom: 10px;
+   font-weight: 600;
+   font-size: 10.5px;
+   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 button.learn-more .circle {
-width: 100%;
-height: 100%;
-}
-
-button.learn-more .circle .icon.arrow {
-transform: translate(1rem, 0);
+  background-color: #ffe2bde3;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(224, 67, 54, 0.7);
 }
 
 button.learn-more .button-text {
-padding: 0;
-margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 button.learn-more.clicked {
-width: 100%;
-background-color: #fff;
-color: #282936;
+  width: 100%;
+  background-color: #fff;
+  color: #282936;
 }
 
+button.learn-more:hover {
+  background-color: #ffe2bde3; /* Change to the desired hover color */
+  color: #ffffff; /* Text color on hover */
+}
 .pro_file-picture {
   
   width: 178px;
@@ -511,12 +492,13 @@ color: #282936;
 }
 .username-info{
   position: absolute;
-  top: 400px;
-  width: 700px;
-  height: 570px;
-  background-color: #BEBEBE;
-  border-radius: 1%;
-  right: 300px;
+  top:50%;
+  width: 600px;
+  height: 650px;
+  background-color: rgba(0, 53, 102, 0.845939);
+  border-radius: 20px;
+ left: 66%;
+ transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -525,8 +507,20 @@ color: #282936;
 }
 .username-info h1 {
   margin: 0;
+  color: #fff;
 }
 
 .username-info p {
   margin: 0;
+  color: #fff;
+}
+.edit-profile {
+  width: 1200px;
+  height: 650px;
+  background-color: #ffa125e3;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
 }

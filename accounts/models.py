@@ -5,11 +5,16 @@ from django.contrib.auth.models import  User
 #     is_admin = models.BooleanField(default= False)
 #     is_regularuser = models.BooleanField(default= False)
 
+
+   
+
 class Item(models.Model):
-    item_number = models.IntegerField()
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    unit = models.CharField(max_length=50)
+    department = models.CharField(max_length=255)
+    purpose = models.TextField()
+    item_number = models.CharField(max_length=255)
+    item_name = models.CharField(max_length=255)
+    item_description = models.TextField()
+    unit = models.CharField(max_length=255)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
@@ -17,17 +22,11 @@ class Item(models.Model):
     purpose = models.TextField()
 
     def __str__(self):
-        return self.name  # Display the item name as the string representation
+        return self.item_name  # Customize this to display the item name or number
 
 
 
-class TransactionHistory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    description = models.TextField()
 
-    def __str__(self):
-        return f'Transaction by {self.user.username} at {self.timestamp}'
 
 
 
@@ -39,3 +38,65 @@ class VerificationCode(models.Model):
     def __str__(self):
         return f'Code: {self.code} for {self.email}'
 
+class History(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    purchase_request_id = models.CharField(max_length=20)
+    date_requested = models.DateField()
+    purpose = models.CharField(max_length=200)
+    quantity = models.IntegerField()
+    status = models.CharField(max_length=20)
+    status_description = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+  
+
+
+    def __str__(self):
+        return f'{self.user.username} - {self.timestamp}'
+    
+
+
+
+# class PurchaseRequest(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     item_name = models.CharField(max_length=100)
+#     description = models.TextField()
+#     quantity = models.IntegerField()
+#     is_submitted = models.BooleanField(default=False)
+#     approved = models.BooleanField(default=False)
+#     disapproved = models.BooleanField(default=False)
+    
+#     def __str__(self):
+#         return self.item_name
+    
+# class PurchaseRequestHistory(models.Model):
+#     purchase_request = models.ForeignKey(PurchaseRequest, on_delete=models.CASCADE)
+#     action = models.CharField(max_length=20)
+#     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+
+
+
+
+    #class CampusDirectorHistoryCD(models.Model):
+   # user = models.ForeignKey(User, on_delete=models.CASCADE)
+   # start_date = models.DateField()
+   # end_date = models.DateField()
+   # description = models.TextField()
+
+    #def __str__(self):
+     #   return f'Campus Director History: {self.user.username}'
+
+#class SupplyOfficeHistory(models.Model):
+ #   start_date = models.DateField()
+  #  end_date = models.DateField()
+   # description = models.TextField()
+
+    #def __str__(self):
+     #   return f'Supply Office History: {self.start_date} to {self.end_date}'
+
+#class SearchItem(models.Model):
+#    title = models.CharField(max_length=200)
+ #   description = models.TextField()
+  #  link = models.URLField()
+   # created_at = models.DateTimeField(default=timezone.now)
