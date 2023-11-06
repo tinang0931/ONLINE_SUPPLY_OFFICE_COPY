@@ -250,6 +250,21 @@ def profile(request):
 
 
 @authenticated_user
+def bac_about(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
+
+
+@authenticated_user
+def bac_history(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
+
+@authenticated_user
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -267,21 +282,6 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
-
-
-@authenticated_user
-def about_bac(request):
-    return render(request, 'accounts/Admin/BAC/about_bac.html')
-
-
-@authenticated_user
-def home_bac(request):
-    return render(request, 'accounts/Admin/BAC/home_bac.html')
-
-
-@authenticated_user
-def purchase_bac(request):
-    return render(request, 'accounts/Admin/BAC/purchase_bac.html')
 
 
 department_mapping = {
