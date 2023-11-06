@@ -1,7 +1,10 @@
 from django.shortcuts import redirect, render
 from .models import *
-
 from django.contrib import messages
+from django.shortcuts import render
+from .models import Item
+from .models import Department, Item, Purpose
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -280,36 +283,48 @@ department_mapping = {
 
 @authenticated_user
 def requester(request):
-    if request.method == "POST":
-        name = request.POST.get('item_name[]', '')
-        description = request.POST.get('item_description[]', '')
-        quantity = int(request.POST.get('quantity[]', 0))
-        unit = request.POST.get('unit[]', '')
-        unit_cost = float(request.POST.get('unit_cost[]', 0))
-        purpose = request.POST.get('item_purpose', '')
-        department_option = request.POST.get('departmentDropdown', '')  # Get the selected department option
+    if request.method == 'POST':
+        print("dfsdffsdfs")
+        # Handle department selection
+        department_id = request.POST.get('departmentDropdown')
+        if department_id == 'option8':
+            # If "Others" department is selected, use the custom department input
+            department_name = request.POST.get('customDepartment')
+        else:
+            # Use the selected department from the dropdown
+            department = Department.objects.get(pk=department_id)
+            department_name = department.name
+        print("dfsdffsdfs")
 
-        # Map the selected option to the department name
-        department_name = department_mapping.get(department_option, '')
-
-        # Get the user's ID from the logged-in user
-        user_id = request.user.id
-
-        # Create and save the item with the user_id
+        # Create an Item object and populate its fields with form data
         item = Item(
-            name=name,
-            description=description,
-            quantity=quantity,
-            unit=unit,
-            unit_cost=unit_cost,
             department=department_name,
-            purpose=purpose,
-            user_id=user_id  # Include the user_id in the item
+            item_number=request.POST.get('item_number'),
+            item_name=request.POST.get('item_name'),
+            item_description=request.POST.get('item_description'),
+            unit=request.POST.get('unit'),
+            unit_cost=request.POST.get('unit_cost'),
+            quantity=request.POST.get('quantity'),
+            total_cost=request.POST.get('total_cost')
+        
         )
-        item.save()
+        print("dfsdffsdfs")
+        item.save() 
+        print("dfsdffsdfs") # Save the Item object to the database
 
-        messages.success(request, "Item added successfully.")
-        return redirect('requester')  # Redirect to the same page after submissio
-    return render(request, 'accounts/User/requester.html')
+        # Handle the purpose field if needed
+        purpose_text = request.POST.get('item_purpose')
+        if purpose_text:
+            purpose = Purpose(item=item, description=purpose_text)
+            purpose.save()
+        print("dfsdffsdfs")
+        # You can return a success message or redirect to another page
+        return JsonResponse({'message': 'Data saved to the database'})
+
+    # Handle GET requests or other cases as needed
+    # ...
+
+    return render(request, 'accounts/User/requester.html' )
+
 
 
