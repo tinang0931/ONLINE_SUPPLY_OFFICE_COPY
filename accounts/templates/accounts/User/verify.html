@@ -24,7 +24,8 @@
         <div>
             <img class="verification_icon" src="{% static 'images/verify.png' %}" alt="">
         <div>
-            <form action="">
+            <form action="{% url 'verify_code' %}" method="post">
+                {%csrf_token%}
                 <header></header>
                 <h1>Input Code</h1>
                 <p>
@@ -34,7 +35,7 @@
                 
                 
                 <div class="otp-bx">
-                    <input type="number" required oninput="maxLengthCheck(this, 1)">
+                    <input type="number" required oninput="maxLengthCheck(this, 1) ">
                     <input type="number" required oninput="maxLengthCheck(this, 1)">
                     <input type="number" required oninput="maxLengthCheck(this, 1)">
                     <input type="number" required oninput="maxLengthCheck(this, 1)">
@@ -51,7 +52,7 @@
                 </div>
 
                 <div>
-                    <a href="{% url 'reset' %}" class="btn">Verify Code</a>
+                    <button type="submit" class="btn">Verify Code</button>
                 </div>
 
             </form>
