@@ -324,7 +324,7 @@ department_mapping = {
 }
 
 
-@authenticated_user
+
 def requester(request):
     if request.method == "POST":
         name = request.POST.get('item_name[]', '')
