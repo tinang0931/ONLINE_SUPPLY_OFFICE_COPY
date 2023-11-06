@@ -3193,3 +3193,15 @@ button {
 .modal-footer {
   border-top: 15px solid #ccc;
 }
+a.category-link {
+  display: block;
+  padding: 10px;
+  background-color: #ccc;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+}
+
+a.category-link:hover {
+  background-color: #ddd;
+}
