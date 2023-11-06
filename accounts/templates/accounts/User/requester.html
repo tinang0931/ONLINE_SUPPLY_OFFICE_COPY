@@ -50,6 +50,7 @@
     cursor: pointer;
   }
 </style>
+
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
   <div class="container">
     <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
@@ -335,159 +336,157 @@
               <table class="table" id="category1Table">
                 <thead>
                   <tr>
-                    <th class="text-nowrap">Item No.</th>
-                    <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
-                    <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                    <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
-                    <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                    <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                    <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                    <th class="text-center text-nowrap"></th>
-                    <div class="d-flex justify-content-evenly">
-                    </div>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Rows will be added here via JavaScript -->
+                  <!-- Data will be populated here -->
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="6">Total Amount</td>
-                    <td><span id="totalAmount">00.00</span></td>
-                    <td>
-                     
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add item</button>
-                                  <button type="button" class="btn btn-primary m-2" onclick="submitForm()">Submit</button>
-                                  <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <form id="addItemForm">
-                                            <div class="form-group">
-                                              <label for="Item">Item Name</label>
-                                              <input type="text" class="form-control" id="Item" name="Item" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="Item_Brand_Description">Item Brand/Description</label>
-                                              <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="Unit">Unit</label>
-                                              <input type="text" class="form-control" id="Unit" name="Unit" required>
-                                            </div>
-                                             <div class="form-group">
-                                              <label for="Unit">Unit Cost</label>
-                                              <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="Quantity">Quantity</label>
-                                              <input type="text" class="form-control" id="Quantity" name="Quantity" required>
-                                            </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                               
-                                    </div>
-                                  </div>
-                                </div>
-                    </td>
-                  </tr>
-                </tfoot>
               </table>
             </div>
-           
-         
-    <script>
-      document.getElementById("departmentDropdown").addEventListener("change", function() {
-        var select = document.getElementById("departmentDropdown");
-        var customDepartmentInput = document.getElementById("customDepartmentInput");
-        var originalValue = select.value;
-     
-        if (originalValue === "option8") {
-          customDepartmentInput.style.display = "block";
-     
-          customDepartmentInput.addEventListener("input", function() {
-            var customDepartmentValue = customDepartmentInput.value;
-            var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
-     
-            if (!option) {
-              option = document.createElement("option");
-              option.value = customDepartmentValue;
-              option.text = customDepartmentValue;
-              select.add(option);
-            }
-          });
-     
-          customDepartmentInput.addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-              var customDepartmentValue = customDepartmentInput.value;
-              var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
-     
-              if (!option) {
-                option = document.createElement("option");
-                option.value = customDepartmentValue;
-                option.text = customDepartmentValue;
-                select.add(option);
-              }
-     
-              select.value = customDepartmentValue;
-              customDepartmentInput.style.display = "none";
-            }
-          });
-        } else {
-          customDepartmentInput.style.display = "none";
-          customDepartmentInput.value = ""; // Clear the input field
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+        <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+      </div>
+    </div>
+    <div class=" table table-responsive">
+      <table class="table" id="create_request_table" style="border: 1px solid black;">
+        <thead>
+          <tr>
+            <th class="text-nowrap">Item Number</th>
+            <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+            <th class="text-center text-nowrap"></th>
+            <div class="d-flex justify-content-evenly">
+            </div>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody">
+          <!-- Rows will be added here via JavaScript -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">Total Amount</td>
+            <td><span id="totalAmount">00.00</span></td>
+            <td>
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add
+                item</button>
+                <button type="submit" class="btn btn-primary m-2">Submit</button>
+
+            </td>
+              <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addItemForm">
+                        <div class="form-group">
+                          <label for="Item">Item Name</label>
+                          <input type="text" class="form-control" id="Item" name="Item" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Item_Brand_Description">Item Brand/Description</label>
+                          <input type="text" class="form-control" id="Item_Brand_Description"
+                            name="Item_Brand_Description" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Unit">Unit</label>
+                          <input type="text" class="form-control" id="Unit" name="Unit" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Unit">Unit Cost</label>
+                          <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Quantity">Quantity</label>
+                          <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </form>
+</div>
+
+
+
+
+<script>
+
+
+
+
+  document.getElementById("departmentDropdown").addEventListener("change", function () {
+    var select = document.getElementById("departmentDropdown");
+    var customDepartmentInput = document.getElementById("customDepartmentInput");
+    var originalValue = select.value;
+
+    if (originalValue === "option8") {
+      customDepartmentInput.style.display = "block";
+
+      customDepartmentInput.addEventListener("input", function () {
+        var customDepartmentValue = customDepartmentInput.value;
+        var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+
+        if (!option) {
+          option = document.createElement("option");
+          option.value = customDepartmentValue;
+          option.text = customDepartmentValue;
+          select.add(option);
         }
       });
-      </script>
-     
-</script>
 
+      customDepartmentInput.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          var customDepartmentValue = customDepartmentInput.value;
+          var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
 
-<script>
-  function calculateRowTotal(input) {
-    const row = input.parentNode.parentNode;
-    const unitPrice = parseFloat(row.querySelector('.unit-price').textContent) || 0;
-    const quantity = parseInt(input.value) || 0;
+          if (!option) {
+            option = document.createElement("option");
+            option.value = customDepartmentValue;
+            option.text = customDepartmentValue;
+            select.add(option);
+          }
 
+          select.value = customDepartmentValue;
+          customDepartmentInput.style.display = "none";
+        }
+      });
+    } else {
+      customDepartmentInput.style.display = "none";
+      customDepartmentInput.value = ""; // Clear the input field
+    }
+  });
 
-    const totalAmount = unitCost * quantity;
-    row.querySelector('.total').textContent = totalAmount.toFixed(2);
-
-
-    calculateTotalAmount();
-  }
-
-
-  function calculateTotalAmount() {
-    const totalElements = document.querySelectorAll('.total');
-    let totalAmount = 0;
-
-
-    totalElements.forEach(element => {
-      totalAmount += parseFloat(element.textContent);
-    });
-
-
-    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-  }
-</script>
-
-
-<script>
-  let itemCounter = 0;
-
+  let itemNumber = 1;
 
   function addRow() {
     // Get the form input values
@@ -520,14 +519,19 @@
             <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
             <button class="btn btn-primary" onclick="editRow(this)">Edit</button>
         </td>
-    `;
-    itemNumber++;
+        `;
+    itemNumber++; // Increment itemNumber
 
     // Add the new row to the table
     document.getElementById("itemTableBody").appendChild(newRow);
 
 
+   // Close the "Add Item" modal
+   $('#addItemModal').modal('hide');
 
+   
+    // Hide the modal backdrop
+    $('.modal-backdrop').remove();
 
     // Clear the form inputs
     document.getElementById("Item").value = "";
@@ -590,20 +594,7 @@
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
