@@ -6,7 +6,7 @@ def unauthenticated_user(view_func):
     """
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('notification')  # Redirect to the home page if the user is already authenticated
+            return redirect('requester')  # Redirect to the home page if the user is already authenticated
         else:
             return view_func(request, *args, **kwargs)
     
