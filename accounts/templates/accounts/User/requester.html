@@ -50,6 +50,7 @@
     cursor: pointer;
   }
 </style>
+
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
   <div class="container">
     <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
@@ -68,7 +69,7 @@
             <option value="option5">College of Technology and Engineering</option>
             <option value="option6">College of Education</option>
             <option value="option7">Graduate School</option>
-            <option value="option8"> Others please specify:</option>
+            <option value="option8">Others please specify:</option>
           </select>
           <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control"
             style="display: none;">
@@ -424,7 +425,6 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                   </div>
@@ -519,14 +519,19 @@
             <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
             <button class="btn btn-primary" onclick="editRow(this)">Edit</button>
         </td>
-    `;
-    itemNumber++;
+        `;
+    itemNumber++; // Increment itemNumber
 
     // Add the new row to the table
     document.getElementById("itemTableBody").appendChild(newRow);
 
 
+   // Close the "Add Item" modal
+   $('#addItemModal').modal('hide');
 
+   
+    // Hide the modal backdrop
+    $('.modal-backdrop').remove();
 
     // Clear the form inputs
     document.getElementById("Item").value = "";
@@ -589,20 +594,7 @@
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
