@@ -1,35 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import  User
+from django.contrib.auth.models import AbstractUser
 
-# class User(AbstractUser):
-#     is_admin = models.BooleanField(default= False)
-#     is_regularuser = models.BooleanField(default= False)
 
-class Department(models.Model):
-    name = models.CharField(max_length=255)
-    
-    def __str__(self):
-        return self.name
+
+#class User(AbstractUser):
+    #is_admin = models.BooleanField(default= False)
+   # is_regularuser = models.BooleanField(default= False)
+
+
+   
 
 class Item(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    item_number = models.CharField(max_length=255)
-    item_name = models.CharField(max_length=255)
-    item_description = models.TextField()
-    unit = models.CharField(max_length=255)
-    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.IntegerField()
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    # item_purpose = models.TextField()
+    Item = models.CharField(max_length=255)
+    Item_Brand_Description = models.TextField()
+    Unit = models.CharField(max_length=255)
+    Unit_Cost = models.DecimalField(max_digits=10, decimal_places=2)
+    Quantity = models.IntegerField()
 
-    def __str__(self):
-        return self.item_name  # Customize this to display the item name or number
 
-class Purpose(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    description = models.TextField()
 
-    def __str__(self):
-        return self.description
 
 
 
@@ -50,7 +41,6 @@ class History(models.Model):
     date_requested = models.DateField()
     purpose = models.CharField(max_length=200)
     quantity = models.IntegerField()
-    status = models.CharField(max_length=20)
     status_description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
   
@@ -59,7 +49,46 @@ class History(models.Model):
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
     
-#class CampusDirectorHistoryCD(models.Model):
+
+
+
+
+class PurchaseRequestForm(models.Model):
+     user = models.ForeignKey(User, on_delete=models.CASCADE)
+     item_name = models.CharField(max_length=100)
+     description = models.TextField()
+     quantity = models.IntegerField()
+     is_submitted = models.BooleanField(default=False)
+     approved = models.BooleanField(default=False)
+     disapproved = models.BooleanField(default=False)
+    
+def __str__(self):
+         return self.item_name
+
+
+class User(AbstractUser):
+    # Add your additional fields here
+
+    # Define the 'groups' and 'user_permissions' fields with a 'related_name'
+    groups = models.ManyToManyField(
+        'auth.Group',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_name='accounts_user_set',   # Add this line
+        related_query_name='accounts_user', # Add this line
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name='accounts_user_set',   # Add this line
+        related_query_name='accounts_user', # Add this line
+
+    )
+
+
+
+    #class CampusDirectorHistoryCD(models.Model):
    # user = models.ForeignKey(User, on_delete=models.CASCADE)
    # start_date = models.DateField()
    # end_date = models.DateField()
@@ -81,15 +110,3 @@ class History(models.Model):
  #   description = models.TextField()
   #  link = models.URLField()
    # created_at = models.DateTimeField(default=timezone.now)
-
-
-class PurchaseRequest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item_name = models.CharField(max_length=100)
-    description = models.TextField()
-    quantity = models.IntegerField()
-    approved = models.BooleanField(default=False)
-    disapproved = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.item_name
