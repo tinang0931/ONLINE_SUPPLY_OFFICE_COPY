@@ -334,65 +334,45 @@ def requester(request):
 
 
 
-# def tracker(request):
-#     def __init__(request, product_id, department, purpose, item, date_requested, ctu_id, campus_director_approval, bac_secretariat_resolution, budget_officer_approval, date_status_update, status):
-#         request.product_id = product_id
-#         request.department = department
-#         request.purpose = purpose
-#         request.item = item
-#         request.date_requested = date_requested
-#         request.ctu_id = ctu_id
-#         request.campus_director_approval = campus_director_approval
-#         request.bac_secretariat_resolution = bac_secretariat_resolution
-#         request.budget_officer_approval = budget_officer_approval
-#         request.date_status_update = date_status_update
-#         request.status = status
+def tracker(request):
+    def __init__(request, product_id, department, purpose, item, date_requested, ctu_id, campus_director_approval, bac_secretariat_resolution, budget_officer_approval, date_status_update, status):
+        request.product_id = product_id
+        request.department = department
+        request.purpose = purpose
+        request.item = item
+        request.date_requested = date_requested
+        request.ctu_id = ctu_id
+        request.campus_director_approval = campus_director_approval
+        request.bac_secretariat_resolution = bac_secretariat_resolution
+        request.budget_officer_approval = budget_officer_approval
+        request.date_status_update = date_status_update
+        request.status = status
         
-#     def get_product_id(request):
-#         return request.product_id
+    def get_product_id(request):
+        return request.product_id
     
-#     def set_product_id(request, product_id):
-#         request.product_id = product_id
+    def set_product_id(request, product_id):
+        request.product_id = product_id
         
-#     def get_status(request):
-#         return request.status
+    def get_status(request):
+        return request.status
     
-#     def set_status(self, status):
-#         self.status = status
+    def set_status(self, status):
+        self.status = status
         
-        # Create an instance of the Tracker class
-        # tracker = tracker(
-        #     product_id=1,
-        #     department="finance",
-        #     purpose="Budget allocation",
-        #     item="Office Supply",
-        #     date_requested="2023-11-10",
-        #     ctu_id=7210859,
-        #     campus_director_approval="Approved",
-        #     bac_secretariat_resolution="Resolution 123",
-        #     budget_officer_approval="Approved",
-        #     date_status_update="2023-11-15",
-        #     status="pending",
-            
-        # )
-        
-        # return HttpResponse(request, 'accounts/User/tracker.html' )
-    
-         
-        
-    # tracker = tracker.objects.all()
-    # context = {
-    #         'product_id' : request.product_id,
-    #         'department' : request.department,
-    #         'purpose' : request.purpose,
-    #         'item' : request.item,
-    #         'date_requested': request.date_requested.strftime('%Y-%m-%d'),  # Format date as a string
-    #         'ctu_id': request.ctu_id,
-    #         'campus_director_approval': request.campus_director_approval,
-    #         'bac_secretariat_resolution': request.bac_secretariat_resolution,
-    #         'budget_officer_approval': request.budget_officer_approval,
-    #         'date_status_update': request.date_status_update.strftime('%Y-%m-%d'),  # Format date as a string
-    #         'status': request.status,
-    #     }
-    # return render(request, 'accounts/User/tracker.html')
+    tracker = tracker.objects.all()
+    context = {
+            'product_id' : request.product_id,
+            'department' : request.department,
+            'purpose' : request.purpose,
+            'item' : request.item,
+            'date_requested': request.date_requested.strftime('%Y-%m-%d'),  # Format date as a string
+            'ctu_id': request.ctu_id,
+            'campus_director_approval': request.campus_director_approval,
+            'bac_secretariat_resolution': request.bac_secretariat_resolution,
+            'budget_officer_approval': request.budget_officer_approval,
+            'date_status_update': request.date_status_update.strftime('%Y-%m-%d'),  # Format date as a string
+            'status': request.status,
+        }
+    return render(request, 'accounts/User/tracker.html')
 
