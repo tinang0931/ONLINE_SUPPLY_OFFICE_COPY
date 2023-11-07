@@ -26,13 +26,15 @@ from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PurchaseRequest
-from flask import Flask, get_template_attribute, render_template, request
+from flask import Flask, get_template_attribute, logging, render_template, request
 from pymongo import MongoClient
 import pandas as pd 
 from flask import Flask, render_template
 from pymongo import MongoClient
 import csv
 from django import template
+from django.shortcuts import render
+from django.http import HttpResponse
 
 app = Flask(__name__)
 def main(request):
@@ -339,7 +341,7 @@ def requester(request):
 
 def get_data_from_db():
     client = MongoClient('mongodb://localhost:27017')
-    db = client ['inventorydb']
+    db = client ['inventory']
     colllection =db ['accounst_item']
     data = pd.DataFrame(list(collections.find()))
     return data
@@ -350,21 +352,6 @@ def index():
 if __name__ == '__main__':
     app.run(debug=True)
 
-def get_data_from_db():
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['inventorydb']
-    collection = db['existing_items']
-    cursor = collection.find({})
-    csv_data = pd.DataFrame(list(cursor))
-    print(csv_data)
-    
-    csv_data_list = csv_data.to_dict(orient='records')
 
-    template = get_template_attribute('accounts/User/requester.html')  
-    context = {'csv_data': csv_data_list}
-    output = template.render(context)
-    
-    with open(settings.BASE_DIR / 'accounts' / 'User' / 'requester.html', 'w') as f:
-        f.write(output)
-    
-    return csv_data
+
+

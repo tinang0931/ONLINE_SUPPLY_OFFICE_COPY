@@ -125,6 +125,16 @@
 
       <!-- Inner Modal for Category 1 -->
       <div class="modal fade" id="category1ButtonModal" tabindex="-1" role="dialog" aria-labelledby="category1ButtonModalLabel" aria-hidden="true">
+        <script>
+          $(document).ready(function(){
+           $.ajax({
+              url: '/requester/', // make sure to update this with the actual URL of your function
+              success: function(data){
+                $('#category1Table tbody').html(data);
+              }
+           });
+          });
+          </script>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,30 +144,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table" id="category1Table">
-                        <thead>
-                            <tr>
-                                <th>Select</th>
-                                <th>Item</th>
-                                <th>Description</th>
-                                <th>Unit</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in csv_data %}
-                            <tr>
-                                <td>{{ row.Select }}</td>
-                                <td>{{ row.Item }}</td>
-                                <td>{{ row.Description }}</td>
-                                <td>{{ row.Unit }}</td>
-                                <td>{{ row.Quantity }}</td>
-                                <td>{{ row.Price }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                  <table class="table" id="category1Table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Unit</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in csv_data %}
+                        <tr>
+                            <td>{{ row.Select }}</td>
+                            <td>{{ row.ITEM }}</td>
+                            <td>{{ row.DESCRIPTION }}</td>
+                            <td>{{ row.UNIT }}</td>
+                            <td>{{ row.QUANTITY }}</td>
+                            <td>{{ row.PRICE }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
                 </div>
             </div>
         </div>

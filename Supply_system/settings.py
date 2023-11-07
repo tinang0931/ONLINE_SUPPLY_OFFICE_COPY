@@ -158,6 +158,17 @@ DATABASES = {
 #         'PORT': 27017,          # MongoDB port (default is 27017)
 #  }
 # }
+# # =======
+#  'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'inventory',   # Use the same database name as specified when creating the MongoDB user
+#         'USER': 'khen',   # MongoDB username
+#         'PASSWORD': 'khen123',   # MongoDB password
+#         'HOST': 'localhost',    # MongoDB host (can be a different host if MongoDB is not on the same server)
+#         'PORT': 27017,          # MongoDB port (default is 27017)
+#  }
+# }
+
 
 
 # Password validation

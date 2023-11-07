@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views 
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
    path('',views.homepage, name='homepage'),
@@ -22,4 +24,8 @@ urlpatterns = [
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
+   path('requester/', views.get_data_from_db, name='requester'),
 ]
+
+
+
