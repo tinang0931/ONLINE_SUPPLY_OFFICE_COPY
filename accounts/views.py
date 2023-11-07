@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Item
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -23,7 +22,6 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.core.mail import send_mail
-from .models import Item
 from decimal import Decimal
 from decimal import InvalidOperation
 from .models import PurchaseRequestForm
@@ -287,36 +285,85 @@ department_mapping = {
     'option7': 'Graduate School',
 }
 
+# from django.http import HttpResponse
+# from django.shortcuts import render
+# from .models import Item  # Import your Item model here
+
+# def requester(request):
+#     if request.method == 'POST':
+#         if 'item' in request.POST:  # Check if this is the modal form submission
+#             item_data = request.POST.get('item')
+#             # Extract and save the other item details here
+#             try:
+#                 item = Item.objects.create(
+#                     item=item_data,
+#                     # Set other item attributes
+#                 )
+#                 return HttpResponse("Item saved successfully.")
+#             except Exception as e:
+#                 return HttpResponse(f"An error occurred: {str(e)}")
+#         else:
+#             # This is the main form submission
+#             # Handle it as needed, e.g., saving other data to a different model
+#             pass
+
+#     return render(request, 'accounts/User/request.html')
+
+
+from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Item  # Import your Item model here
+import logging
+logger = logging.getLogger(__name__)
+
 def requester(request):
     if request.method == 'POST':
-        print(request.POST) 
-        # purpose = request.POST.get('purpose', '')  # Provide a default value ('') if the key is not present
-        Item = request.POST.get('item', '')
-        Item_Brand_Description = request.POST.get('item_Brand_Description', '')
-        Unit = request.POST.get('init', '')
-        Unit_Cost = request.POST.get('unit_Cost', '')
-        Quantity = request.POST.get('quantity', '')
-        try:
-            # Convert Unit_Cost and Quantity to Decimal
-            Unit_Cost = Decimal(Unit_Cost)
-            Quantity = Decimal(Quantity)
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('Item_Brand_Description')
+        unit = request.POST.get('Unit')
+        unit_cost = request.POST.get('Unit_Cost')
+        quantity = request.POST.get('Quantity')
 
+        logger.info(f"item_data: {item_data}, item_brand_description: {item_brand_description}, unit: {unit}, unit_cost: {unit_cost}, quantity: {quantity}")
+
+        try:
+            # Create a new Item instance and set its attributes
             item = Item.objects.create(
-                # purpose=purpose,
-                Item=Item,
-                Item_Brand_Description=Item_Brand_Description,
-                Unit=Unit,
-                Unit_Cost=Unit_Cost,
-                Quantity=Quantity,
+                item=item_data,
+                item_brand_description=item_brand_description,
+                unit=unit,
+                unit_cost=unit_cost,
+                quantity=quantity,
             )
-            # Save the item to the database
-            item.save()
+            
             return HttpResponse("Item saved successfully.")
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
 
     return render(request, 'accounts/User/request.html')
+
+
+
+# from .forms import RequestItemForm
+
+# def requester(request):
+#     if request.method == 'POST':
+#         print(request.POST)
+#         form = RequestItemForm(request.POST)
+#         print('hdgfsdhf1')
+#         if form.is_valid():
+#             print('hdgfsdhf3')
+#             form.save()
+#             print('hdgfsdhf4')
+#             # You can add any additional logic or redirection here
+#             return redirect('requester')
+#     else:
+#         form = RequestItemForm()
+
+#     context = {'form': form}
+#     return render(request, 'accounts/User/request.html', context)
+
 
 @authenticated_user
 def bac_history(request):

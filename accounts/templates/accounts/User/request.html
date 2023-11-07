@@ -178,6 +178,7 @@
 
 
         <form action="{% url 'requester' %}" method="post">
+            {% csrf_token %}
             <div class=" table table-responsive">
                 <table class="table" id="create_request_table" style="border: 1px solid black;">
                     <thead>
@@ -205,59 +206,59 @@
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
                             </td>
-
-                            <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <form id="addItemForm">
-                                                <div class="form-group">
-                                                    <label for="Item">Item</label>
-                                                    <input type="text" class="form-control" id="Item" name="item" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="Item_Brand_Description">Item Brand/Description</label>
-                                                    <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="Unit">Unit</label>
-                                                    <input type="text" class="form-control" id="Unit" name="unit" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="Unit">Unit Cost</label>
-                                                    <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                                                </div>
-                                                
-                                                <div class="form-group">
-                                                    <label for="Quantity">Quantity</label>
-                                                    <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <button type="submit" class="btn btn-primary" onclick="submitForm()" >Submit</button>
         </form>
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="addItemForm" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="Item">Item</label>
+                                <input type="text" class="form-control" id="Item" name="item" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Item_Brand_Description">Item Brand/Description</label>
+                                <input type="text" class="form-control" id="Item_Brand_Description" name="Item_Brand_Description" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Unit">Unit</label>
+                                <input type="text" class="form-control" id="Unit" name="Unit" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Unit">Unit Cost</label>
+                                <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="Quantity">Quantity</label>
+                                <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
