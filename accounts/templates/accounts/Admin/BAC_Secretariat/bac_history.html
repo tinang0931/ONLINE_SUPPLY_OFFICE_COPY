@@ -178,8 +178,8 @@
     // You can add some additional code here if needed, like form validation.
 
     $.ajax({
-        url: 'your_url_here',
-        type: 'POST',
+        url: 'requester',
+        type: 'get',
         data: $(this).serialize(),
         success: function(response) {
             console.log('Success:', response);

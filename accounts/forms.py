@@ -1,7 +1,9 @@
 from django import forms
 from .models import Item
 
-class PurchaseRequestForm(forms.ModelForm):
+
+class RequesterForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('_all_')  # You can specify the fields you want to include
+        fields = ['item_name', 'item_description', 'unit', 'unit_cost', 'quantity', 'total_cost']
+

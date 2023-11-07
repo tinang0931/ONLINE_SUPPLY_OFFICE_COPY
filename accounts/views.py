@@ -23,6 +23,12 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.core.mail import send_mail
+from .models import Item
+from decimal import Decimal
+from decimal import InvalidOperation
+from .models import PurchaseRequestForm
+from decimal import Decimal, InvalidOperation
+from django.http import HttpResponseRedirect
 
 
 def main(request):
@@ -281,75 +287,69 @@ department_mapping = {
     'option7': 'Graduate School',
 }
 
-
-@authenticated_user
 def requester(request):
     if request.method == 'POST':
-        item_number=request.POST('item_number'),
-        item_name=request.POST('item_name'),
-        item_description=request.POST('item_description'),
-        unit=request.POST('unit'),
-        unit_cost=request.POST('unit_cost'),
-        quantity=request.POST('quantity'),
-        total_cost=request.POST('total_cost')
-        # print("dfsdffsdfs")
-        # # Handle department selection
-        # department_id = request.POST('departmentDropdown')
-        # if department_id == 'option8':
-        #     # If "Others" department is selected, use the custom department input
-        #     department_name = request.POST.get('customDepartment')
-        # else:
-        #     # Use the selected department from the dropdown
-        #     department = Department.objects.get(pk=department_id)
-        #     department_name = department.name
-        # print("dfsdffsdfs")
+        print(request.POST) 
+        # purpose = request.POST.get('purpose', '')  # Provide a default value ('') if the key is not present
+        Item = request.POST.get('item', '')
+        Item_Brand_Description = request.POST.get('item_Brand_Description', '')
+        Unit = request.POST.get('init', '')
+        Unit_Cost = request.POST.get('unit_Cost', '')
+        Quantity = request.POST.get('quantity', '')
+        try:
+            # Convert Unit_Cost and Quantity to Decimal
+            Unit_Cost = Decimal(Unit_Cost)
+            Quantity = Decimal(Quantity)
 
-        # Create an Item object and populate its fields with form data
-        item = Item(
-        item_number=item_number,
-        item_name=item_name,
-        item_description=item_description,
-        unit=unit,
-        unit_cost=unit_cost,
-        quantity=quantity,
-        total_cost=total_cost
-        )
-        item.save()
-        
-            # Create a new PurchaseRequest object and populate its fields
-#         purchase_request = PurchaseRequest(
-#         # department=department_name,  # This line should be inside PurchaseRequest
-#         item_number=request.POST.get('item_number'),
-#         item_name=request.POST.get('item_name'),
-#         item_description=request.POST.get('item_description'),
-#         unit=request.POST.get('unit'),
-#         unit_cost=request.POST.get('unit_cost'),
-#         quantity=request.POST.get('quantity'),
-#         total_cost=request.POST.get('total_cost')
-# )
-   
-#         # Save the PurchaseRequest object to the database
-#         purchase_request.save()
-       
-         # Get the BAC email address from the database or settings
-        bac_email = '@ctu.edu.ph' # Replace this with the actual BAC email address
+            item = Item.objects.create(
+                # purpose=purpose,
+                Item=Item,
+                Item_Brand_Description=Item_Brand_Description,
+                Unit=Unit,
+                Unit_Cost=Unit_Cost,
+                Quantity=Quantity,
+            )
+            # Save the item to the database
+            item.save()
+            return HttpResponse("Item saved successfully.")
+        except Exception as e:
+            # Handle exceptions (e.g., database errors)
+            return HttpResponse(f"An error occurred: {str(e)}")
 
-        # Send an email to the BAC with the request details
-        subject = 'New Purchase Request'
-        message = 'A new purchase request has been submitted.'
-        from_email = 'jhake.dugaduga@ctu.edu.ph' # Replace this with the actual noreply email address
-        recipient_list = [bac_email]
-        send_mail(subject, message, from_email, recipient_list)
-        context = {'success_message': 'Your purchase request has been successfully submitted.'}
-        # Redirect to the success page or display a success message
-        return redirect('bac_history_page')  # Replace 'success_page' with the actual URL
-    
-    return render(request, 'accounts/User/requester.html', {'request': request})
-
-
-
+    return render(request, 'accounts/User/request.html')
 
 @authenticated_user
-def bac_history_purchase_request(request):
-    # purchase_request = PurchaseRequest.objects.all()
-    return render(request,'accounts/User/bac_history.html')
+def bac_history(request):
+    # Fetch all PurchaseRequest objects linked to the logged-in user
+    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+    if request.method == 'POST':
+        action = request.POST.get('Action')
+        purchase_request_id = request.POST.get('Purchase_Request_ID')
+
+        # Check if the 'Purchase_Request_ID' field is present
+        if not purchase_request_id:
+            return HttpResponse('Please fill in all the required fields.')
+
+        # Fetch the PurchaseRequest object from the database
+        try:
+            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+        except PurchaseRequestForm.DoesNotExist:
+            return HttpResponse('Purchase request not found.')
+
+        # Update the PurchaseRequest object based on the submitted action
+        if action == 'approve':
+            purchase_request.is_approved = True
+        elif action == 'disapprove':
+            purchase_request.is_disapproved = False
+        else:
+            return HttpResponse('Invalid action.')
+
+        # Save the updated PurchaseRequest object to the database
+        purchase_request.save()
+
+        # Redirect to the bac_history page
+        return render(request('bac_history'))
+
+    # Render the bac_history page with the list of PurchaseRequest objects
+    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
