@@ -31,11 +31,6 @@ class Purpose(models.Model):
     def __str__(self):
         return self.description
 
-
-
-
-
-
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
@@ -53,9 +48,7 @@ class History(models.Model):
     status = models.CharField(max_length=20)
     status_description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-  
-
-
+    
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
     
@@ -93,6 +86,21 @@ class PurchaseRequest(models.Model):
 
     def __str__(self):
         return self.item_name
+
+# class tracker(models.Model):
+#     product_id = models.IntegerField()
+#     department = models.CharField(max_length=100)
+#     purpose = models.CharField(max_length=100) 
+#     item = models.CharField(max_length=100)
+#     date_requested = models.DateField()
+#     ctu_id = models.IntegerField() 
+#     campus_director_approval =models.CharField(max_length=100)
+#     bac_secretariat_resolution = models.CharField(max_length=100)
+#     budget_officer_approval = models.CharField(max_length=100)
+#     date_status_update = models.DateField()
+#     status = models.CharField(max_length=100)
+    
+     
 
 
   
