@@ -3263,13 +3263,3 @@ button {
 .modal-footer {
   border-top: 15px solid #ccc;
 }
-ul {
-    list-style-type: none;
-  }
-
-  .modal-body ul {
-    margin: 0 auto;
-  }
-  
-
-
