@@ -3,13 +3,9 @@ from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
 
 
-
 #class User(AbstractUser):
     #is_admin = models.BooleanField(default= False)
    # is_regularuser = models.BooleanField(default= False)
-
-
-   
 
 
 class Item(models.Model):
@@ -18,12 +14,6 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-
-
-
-
-
-
 
 
 
