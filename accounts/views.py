@@ -313,18 +313,19 @@ department_mapping = {
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Item  # Import your Item model here
-import logging
-logger = logging.getLogger(__name__)
 
 def requester(request):
+
+    
     if request.method == 'POST':
         item_data = request.POST.get('item')
-        item_brand_description = request.POST.get('Item_Brand_Description')
-        unit = request.POST.get('Unit')
-        unit_cost = request.POST.get('Unit_Cost')
-        quantity = request.POST.get('Quantity')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        logger.info(f"item_data: {item_data}, item_brand_description: {item_brand_description}, unit: {unit}, unit_cost: {unit_cost}, quantity: {quantity}")
+    
+
 
         try:
             # Create a new Item instance and set its attributes
@@ -342,27 +343,6 @@ def requester(request):
             return HttpResponse(f"An error occurred: {str(e)}")
 
     return render(request, 'accounts/User/request.html')
-
-
-
-# from .forms import RequestItemForm
-
-# def requester(request):
-#     if request.method == 'POST':
-#         print(request.POST)
-#         form = RequestItemForm(request.POST)
-#         print('hdgfsdhf1')
-#         if form.is_valid():
-#             print('hdgfsdhf3')
-#             form.save()
-#             print('hdgfsdhf4')
-#             # You can add any additional logic or redirection here
-#             return redirect('requester')
-#     else:
-#         form = RequestItemForm()
-
-#     context = {'form': form}
-#     return render(request, 'accounts/User/request.html', context)
 
 
 @authenticated_user
