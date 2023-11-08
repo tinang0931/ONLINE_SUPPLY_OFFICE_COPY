@@ -123,11 +123,13 @@
                             <td><span id="totalAmount">00.00</span></td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+                                
                             </td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
+            <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
             <button type="submit" class="btn btn-primary" onclick="submitForm()" >Submit</button>
         </form>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
@@ -141,7 +143,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form id="addItemForm" method="POST" action="">
+                        <form id="addItemForm" method="POST" action="{% url 'requester' %}" onsubmit="submitForm(event)">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="Item">Item</label>
@@ -169,11 +171,13 @@
                             </div>
 
                             <div class="modal-footer">
+                               
                                 <button type="submit" value ="submit" class="btn btn-primary" >Submit</button>
                                 
                             </div>
-
+                               
                         </form>
+                       
                     </div>
                 </div>
             </div>
@@ -374,8 +378,12 @@
   
       // Initial calculation when the page loads
       calculateTotalCost();
-  </script>
+
+   
   
+</script>
+  </script>
+
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

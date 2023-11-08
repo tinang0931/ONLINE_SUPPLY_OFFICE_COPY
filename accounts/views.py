@@ -341,7 +341,10 @@ def requester(request):
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
-
+        
+        # Retrieve all items from the database
+    items = Item.objects.all()
+    
     return render(request, 'accounts/User/request.html')
 
 
