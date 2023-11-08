@@ -57,9 +57,7 @@
     </div>
 
     <div class="row">
-        <div class="col-6 col-sm-6 col-md-7 col-lg-9">
-            <button type="button" data-toggle="modal" data-target="#categorySelectionModal">Category</button>
-        </div>
+       
     
         <div class="col-6 col-sm-6 col-md-5 col-lg-3">
             <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
@@ -178,6 +176,31 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="select_item">
+      <table>
+        <thead>
+            <tr>
+             <th>Category</th>
+             <th>Item</th>
+             <th>Item Brand/Description</th>
+             <th>Unit</th>
+             <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.category }}</td>
+            <td>{{ item.item }}</td>
+            <td>{{ item.item_brand_description }}</td>
+            <td>{{ item.unit }}</td>
+            <td>{{ item.price }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>  
+
     </div>
 </div>
 
@@ -375,8 +398,8 @@
       // Initial calculation when the page loads
       calculateTotalCost();
   </script>
-  
-  
+
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

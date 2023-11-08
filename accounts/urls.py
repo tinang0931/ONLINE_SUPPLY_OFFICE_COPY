@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views 
 from django.contrib import admin
+from .views import item_list
+
 
 urlpatterns = [
    path('admin/', admin.site.urls), 
@@ -24,6 +26,9 @@ urlpatterns = [
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
+   path('items/', views.item_list, name='item_list'),
+   path('select_item/', views.SelectItem, name='select_item'),
+
 
    
 ]

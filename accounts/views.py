@@ -380,3 +380,13 @@ def bac_history(request):
 
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+from .models import SelectItem
+
+def item_list(request):
+    items = SelectItem.objects.all()
+    return render(request, 'accounts/templates/accounts/User/request.html', {'items': items})
+
+
+
+
