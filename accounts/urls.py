@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views 
+from django.contrib import admin
 
 urlpatterns = [
+   path('admin/', admin.site.urls), 
    path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
@@ -9,7 +11,8 @@ urlpatterns = [
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('requester/',views.requester, name='requester'),
+   path('requester/' , views.requester, name="requester"),
+   path('addItem/',views.addItem, name='addItem'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
@@ -22,4 +25,6 @@ urlpatterns = [
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
+
+   
 ]
