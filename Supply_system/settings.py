@@ -78,8 +78,6 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # defaultdb
 
-
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',

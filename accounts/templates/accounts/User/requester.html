@@ -150,11 +150,36 @@
                 <tbody>
                   <tr>
                     <td><input type="checkbox" class="selectRow"></td>
-                    <td>Alcohol</td>
-                    <td>ethyl 68%-72%, scented, 500ml(-5ml)</td>
-                    <td>bottle</td>
-                    <td><input type="number" id="quantityInput" value="1"></td>
-                    <td>200</td>
+                    <td class="item_name">{{name}}</td>
+                    <td class="Item_brand_description">{{description}}</td>
+                    <td class="item_unit">{{unit}}</td>
+                    <td class="item_price"><input type="number" id="quantityInput" value="1"></td>
+                    <td>{{00}}</td>
+<script>
+                    const { MongoClient } = require('mongodb');
+
+                    async function getDocumentsByCategory(category) {
+                     const uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority";
+                     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+                    
+                     try {
+                        await client.connect();
+                        const database = client.db('inventory');
+                        const collection = database.collection('items');
+                    
+                        const query = { category: category };
+                        const documents = await collection.find(query).toArray();
+                    
+                        console.log('Documents:', documents);
+                     } catch (error) {
+                        console.error('Error:', error);
+                     } finally {
+                        await client.close();
+                     }
+                    }
+                    
+                    getDocumentsByCategory('ANTISEPTIC');
+                  </script>
                   </tr>
                   <!-- Add more rows as needed -->
                 </tbody>
@@ -163,10 +188,7 @@
           </div>
         </div>
       </div>
-
-
-
-
+      
 
       <!-- Inner Modal for Category 2 -->
       <div class="modal fade" id="category2ButtonModal" tabindex="-1" role="dialog"
