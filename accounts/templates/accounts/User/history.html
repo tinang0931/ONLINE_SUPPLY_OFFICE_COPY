@@ -1,223 +1,157 @@
 {% extends "accounts/User/main.html" %}
 
+{% load static %}
 
+{% block history %}
 
-{% block content %}
-
-        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-          <div class="row m-auto w-auto">
-            <div class="col-md-3 col-lg-3 d-block d-sm-block d-md-none d-lg-none">
-              <div class="dropdown m-3">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-bars" aria-hidden="true"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Home</a></li>
-                  <li><a class="dropdown-item" href="#">Purchase Request</a></li>
-                  <li><a class="dropdown-item" href="#">Request Tracker</a></li>
-                  <li><a class="dropdown-item" href="#">History</a></li>
-                  <li><a class="dropdown-item" href="#">About Us</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
-            <h1 class="pr text-center pt-4">HISTORY ON REQUEST PURCHASES</h1>  
-          </div>
-          <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: green;"></i>
-              <strong>Successful Requests</strong>
-            </div>
-            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-              <i class="fa fa-circle px-3" aria-hidden="true" style="color: red;"></i>
-              <strong>Failed Requests</strong>
-            </div>
-          </div>
-          <div class="row w-100 m-auto border text-center text-danger">
-            <div class="col-4">
-              <p>
-                Purchase Request No. 000001
-              </p>
-            </div>
-            <div class="col-3">
-              <p>
-                John Doe
-              </p>
-            </div>
-            <div class="col-3">
-              <p>
-                27/09/2023
-              </p>
-            </div>
-            <div class="col-2" onclick="red()">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </div>
-            
-          </div>
-          <div class="row w-100 m-auto border text-center text-success">
-            <div class="col-4">
-              <p>
-                Purchase Request No. 000002
-              </p>
-            </div>
-            <div class="col-3">
-              <p>
-                John Doe
-              </p>
-            </div>
-            <div class="col-3">
-              <p>
-                28/09/2023
-              </p>
-            </div>
-            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </div>
+            <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>  
+          
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="row w-100 m-auto text-dark text-start mb-3">
-                      <div class="col-12">
-                        <p>
-                         <strong>Approved on:</strong> mm/dd/yy
-                        </p>
-                      </div>
-                    </div>
-                    <div class="row w-100 m-auto border text-start p-0 text-dark ">
-                      <div class="col-6 border">
-                        <p>
-                          Office/ Section:
-                        </p>
-                      </div>
-                      <div class="col-6 border text-dark text-start">
-                        <p>
-                          PR No.: 0000002
-                        </p>
-                      </div>
-                  </div>
-                    <div class="row w-100 m-auto border text-dark text-start">
-                      <div class="col-12">
-                        <p>
-                          Department:
-                        </p>
-                      </div>
-                    </div>
-                    <div class="row w-100 m-auto border text-dark text-start">
-                      <div class="col-12">
-                        <p>
-                          Purpose:
-                        </p>
-                      </div>
-                  </div>
-                  <table class="table table-bordered table-responsive" id="itemTable">
-                    <thead>
-                        <tr>
-                            <th class="">Stock/ Property No.</th>
-                            <th class="">Unit</th>
-                            <th class="">Item Brand/Description</th>
-                            <th class="">Quantity</th>
-                            <th class="">Unit Cost</th>
-                            <th class="">Total Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-              
-                    </tbody>
-                </table>
-                <div 
-                  class="container justify-content-end align-items-baseline">
-                  Total Amount:_______
-                </div>
-            </div>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purchase Request ID</label>
+            <input type="text" class="form-control item-name" name="item_name[]">
           </div>
-       </div>
-      </div> 
-  <script>
-    function red() {
-      Swal.fire({
-          title: 'Your request has been declined',
-          text: "Reason of Disapproval: "
-        })
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Date Requested</label>
+            <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+            <input type="text" class="form-control unit" name="unit[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status</label>
+            <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status Description</label>
+            <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        if (text) {
-          Swal.fire(text)
-        }
-    }
+  
+  <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+    <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+  </div>
+  
+  <div class="table-responsive" style="margin: 0 auto;">
+    <table class="table" id="create_request_table" style="border: 1px solid black;">
+</div>
+<div class="table-responsive" style="margin: 0 auto;">
+  <table class="table" id="create_request_table" style="border: 1px solid black;">
+<div class="table-responsive">
 
-    const MongoClient = require('mongodb').MongoClient;
+<table class="table" id="create_request_table" style="border: 1px solid black;">
+  <thead>
+      <tr>
+          <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Purpose</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+          <th class="text-center text-nowrap"></th>
+      </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          
+      </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000101</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          
+      </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000102</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          
+      </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+          </button>
+        </div>
+      </td>
+    </tr>
+    
+      </td>
+</tbody>
+</table>
+<div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
+  <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+</div>
 
-const url = 'mongodb://localhost:27017'; // Replace with your MongoDB connection string
-const dbName = 'inventorydb';
-
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-  if (err) throw err;
-
-  const db = client.db(dbName);
-
-  // Now you can query the database and retrieve the data.
-});
-
-
-    // Assuming you have a collection named "requests" in your database
-const requestsCollection = db.collection('items');
-
-requestsCollection.findOne({ /* Your query criteria here */ }, (err, request) => {
-  if (err) throw err;
-
-  // Once you have the data from MongoDB, populate your HTML template
-  const modalBody = document.querySelector('.modal-body');
-  const approvedOn = document.querySelector('.modal-body strong');
-  const prId = document.querySelector('.col-6.border p');
-  const requesterId = document.querySelector('.col-6.border.text-dark.text-start p');
-  const department = document.querySelector('.row.w-100.m-auto.border.text-dark.text-start p');
-  const purpose = document.querySelector('.row.w-100.m-auto.border.text-dark.text-start p');
-  const itemTable = document.getElementById('itemTable').getElementsByTagName('tbody')[0];
-  const totalAmount = document.querySelector('.container.justify-content-end.align-items-baseline');
-
-  // Populate HTML elements with data from MongoDB
-  approvedOn.textContent = `Approved on: ${request.approvedDate}`;
-  prId.textContent = `PR ID: ${request.prId}`;
-  requesterId.textContent = `Requester ID: ${request.requesterId}`;
-  department.textContent = `Department: ${request.department}`;
-  purpose.textContent = `Purpose: ${request.purpose}`;
-
-  // Create a table row for the retrieved data
-  const newRow = itemTable.insertRow();
-  newRow.insertCell(0).textContent = request.itemNo;
-  newRow.insertCell(1).textContent = request.itemName;
-  newRow.insertCell(2).textContent = request.itemDescription;
-  newRow.insertCell(3).textContent = request.unit;
-  newRow.insertCell(4).textContent = request.quantity;
-  newRow.insertCell(5).textContent = request.price;
-
-  // Calculate and populate the total amount (you'll need to compute this)
-  totalAmount.textContent = `Total Amount: ${calculateTotalAmount(requests)}`;
-});
-
-// Define a function to calculate the total amount
-function calculateTotalAmount(requests) {
-  // Calculate and return the total amount based on the data
-  // You'll need to implement your own logic here
-  // Example: Loop through requests and sum the prices
-}
-
-    </script>
-
-
-
-{% endblock %} 
-
+  {% endblock %} 
