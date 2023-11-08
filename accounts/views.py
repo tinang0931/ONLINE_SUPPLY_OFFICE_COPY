@@ -84,7 +84,6 @@ def register(request):
 
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')  # Redirect to the login page upon successful registration
-
     return render(request, 'accounts/User/register.html')
 
 
@@ -122,8 +121,10 @@ def login(request):
     
     return render(request, 'accounts/User/login.html')
 
+
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
+
 
 @unauthenticated_user
 def handle_reset_request(request):
@@ -148,6 +149,7 @@ def handle_reset_request(request):
         # Redirect the user to a page where they can enter the verification code
         return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
+
 
 @unauthenticated_user
 def verify_code(request):
@@ -175,8 +177,8 @@ def is_valid_code(verification_code, user_email):
     if stored_code and verification_code == stored_code:
         # Codes match, and the code exists in the cache
         return True
-
     return False
+
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -196,7 +198,6 @@ def reset_password(request):
         
         # To maintain the user's session after changing the password, you can use the following:
         update_session_auth_hash(request, user)
-
         
         # Redirect the user to a success page or login page
         messages.success(request, 'Password updated successfully.')
@@ -312,13 +313,12 @@ def addItem(request):
                 unit_cost=unit_cost,
                 quantity=quantity,
             )
-            
             return HttpResponse("Item saved successfully.")
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
-
     return render(request, 'accounts/User/request.html')
+
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
@@ -362,6 +362,5 @@ def bac_history(request):
 
         # Redirect to the bac_history page
         return render(request('bac_history'))
-
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})

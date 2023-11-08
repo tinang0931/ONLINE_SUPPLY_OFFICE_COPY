@@ -1,14 +1,16 @@
 from django.urls import path
 from . import views 
 
-urlpatterns = [path('',views.homepage, name='homepage'),
+urlpatterns = [
+   path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
    path('login/',views.login, name='login'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('requester/',views.requester, name='requester'),
+   path('requester/' , views.requester, name="requester"),
+   path('addItem/',views.addItem, name='addItem'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
