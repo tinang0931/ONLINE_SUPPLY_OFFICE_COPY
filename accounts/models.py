@@ -18,7 +18,7 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-
+    
 
 
 
