@@ -90,14 +90,14 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # }
 
 # jelyn database
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'inventory',
-        'HOST': 'localhost',
-        'PORT': 27017,
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'inventory',
+#         'HOST': 'localhost',
+#         'PORT': 27017,
+#     }
+# }
 
 # #Danica database
 # DATABASES = {
@@ -109,6 +109,17 @@ DATABASES = {
 #         },
 #     },
 # }
+
+
+# jhake database
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'inventory',
+        'HOST': 'localhost',
+        'PORT': 27017,
+    },
+}
 
 
 

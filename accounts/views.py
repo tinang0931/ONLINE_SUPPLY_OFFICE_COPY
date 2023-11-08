@@ -2,8 +2,6 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Item
-from .models import Department, Item, Purpose
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -22,8 +20,13 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import PurchaseRequest
-
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from decimal import Decimal
+from decimal import InvalidOperation
+from .models import PurchaseRequestForm
+from decimal import Decimal, InvalidOperation
+from django.http import HttpResponseRedirect
 
 
 def main(request):
@@ -222,6 +225,8 @@ def history(request):
 
 
 def tracker(request):
+    # purchase_requests = PurchaseRequest.objects.all()
+    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
 
@@ -295,51 +300,98 @@ department_mapping = {
     'option7': 'Graduate School',
 }
 
+# from django.http import HttpResponse
+# from django.shortcuts import render
+# from .models import Item  # Import your Item model here
 
+# def requester(request):
+#     if request.method == 'POST':
+#         if 'item' in request.POST:  # Check if this is the modal form submission
+#             item_data = request.POST.get('item')
+#             # Extract and save the other item details here
+#             try:
+#                 item = Item.objects.create(
+#                     item=item_data,
+#                     # Set other item attributes
+#                 )
+#                 return HttpResponse("Item saved successfully.")
+#             except Exception as e:
+#                 return HttpResponse(f"An error occurred: {str(e)}")
+#         else:
+#             # This is the main form submission
+#             # Handle it as needed, e.g., saving other data to a different model
+#             pass
+
+#     return render(request, 'accounts/User/request.html')
+
+
+from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Item  # Import your Item model here
 
 def requester(request):
+
+    
     if request.method == 'POST':
-        print("dfsdffsdfs")
-        # Handle department selection
-        department_id = request.POST.get('departmentDropdown')
-        if department_id == 'option8':
-            # If "Others" department is selected, use the custom department input
-            department_name = request.POST.get('customDepartment')
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
+
+    
+
+
+        try:
+            # Create a new Item instance and set its attributes
+            item = Item.objects.create(
+                item=item_data,
+                item_brand_description=item_brand_description,
+                unit=unit,
+                unit_cost=unit_cost,
+                quantity=quantity,
+            )
+            
+            return HttpResponse("Item saved successfully.")
+        except Exception as e:
+            # Handle exceptions (e.g., database errors)
+            return HttpResponse(f"An error occurred: {str(e)}")
+
+    return render(request, 'accounts/User/request.html')
+
+
+@authenticated_user
+def bac_history(request):
+    # Fetch all PurchaseRequest objects linked to the logged-in user
+    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+    if request.method == 'POST':
+        action = request.POST.get('Action')
+        purchase_request_id = request.POST.get('Purchase_Request_ID')
+
+        # Check if the 'Purchase_Request_ID' field is present
+        if not purchase_request_id:
+            return HttpResponse('Please fill in all the required fields.')
+
+        # Fetch the PurchaseRequest object from the database
+        try:
+            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+        except PurchaseRequestForm.DoesNotExist:
+            return HttpResponse('Purchase request not found.')
+
+        # Update the PurchaseRequest object based on the submitted action
+        if action == 'approve':
+            purchase_request.is_approved = True
+        elif action == 'disapprove':
+            purchase_request.is_disapproved = False
         else:
-            # Use the selected department from the dropdown
-            department = Department.objects.get(pk=department_id)
-            department_name = department.name
-        print("dfsdffsdfs")
+            return HttpResponse('Invalid action.')
 
-        # Create an Item object and populate its fields with form data
-        item = Item(
-            department=department_name,
-            item_number=request.POST.get('item_number'),
-            item_name=request.POST.get('item_name'),
-            item_description=request.POST.get('item_description'),
-            unit=request.POST.get('unit'),
-            unit_cost=request.POST.get('unit_cost'),
-            quantity=request.POST.get('quantity'),
-            total_cost=request.POST.get('total_cost')
-        
-        )
-        print("dfsdffsdfs")
-        item.save() 
-        print("dfsdffsdfs") # Save the Item object to the database
+        # Save the updated PurchaseRequest object to the database
+        purchase_request.save()
 
-        # Handle the purpose field if needed
-        purpose_text = request.POST.get('item_purpose')
-        if purpose_text:
-            purpose = Purpose(item=item, description=purpose_text)
-            purpose.save()
-        print("dfsdffsdfs")
-        # You can return a success message or redirect to another page
-        return JsonResponse({'message': 'Data saved to the database'})
+        # Redirect to the bac_history page
+        return render(request('bac_history'))
 
-    # Handle GET requests or other cases as needed
-    # ...
-
-    return render(request, 'accounts/User/requester.html' )
-
-
-
+    # Render the bac_history page with the list of PurchaseRequest objects
+    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
