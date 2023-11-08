@@ -11,13 +11,13 @@ from django.contrib.auth.models import AbstractUser
 
    
 
+
 class Item(models.Model):
-    # item_purpose = models.TextField()
-    Item = models.CharField(max_length=255)
-    Item_Brand_Description = models.TextField()
-    Unit = models.CharField(max_length=255)
-    Unit_Cost = models.DecimalField(max_digits=10, decimal_places=2)
-    Quantity = models.IntegerField()
+    item = models.CharField(max_length=255)
+    item_brand_description = models.CharField(max_length=255)
+    unit = models.CharField(max_length=50)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.IntegerField()
 
 
 
