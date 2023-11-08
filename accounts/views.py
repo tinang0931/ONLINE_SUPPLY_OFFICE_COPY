@@ -355,3 +355,7 @@ if __name__ == '__main__':
 
 
 
+
+@authenticated_user
+def bac_pr(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_pr.html')

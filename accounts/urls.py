@@ -25,6 +25,7 @@ urlpatterns = [
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
    path('requester/', views.get_data_from_db, name='requester'),
+   path('bac_pr/',views.bac_pr, name='bac_pr')
 ]
 
 
