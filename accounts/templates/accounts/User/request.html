@@ -209,6 +209,49 @@
             <button type="submit" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
       </div>
     </form>
+
+    <br>
+    <br>
+
+    <div>
+      <div class=" table table-responsive">
+        <table class="table" id="create_request_table" style="border: 1px solid black;">
+          <thead>
+            <tr>
+                <th class="text-center text-nowrap">ANTISEPTICS</th>
+                <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+                <th class="text-center text-nowrap"></th>
+                <div class="d-flex justify-content-evenly"></div>
+            </tr>
+        </thead>
+        
+            <tbody>
+              {% for item in items %}
+              <tr>
+                  <td class="item_number text-center">{{ forloop.counter }}</td>
+                  <td class="item_name text-center">{{ item.item }}</td>
+                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
+                  <td class="item_unit text-center">{{ item.unit }}</td>
+                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                  <td class="item_quantity text-center">{{ item.quantity }}</td>
+
+              </tr>
+              {% endfor %}
+          </tbody>
+          
+
+              <tfoot>
+                  <tr>
+                    <td colspan="6" >Total Amount</td>
+                    <td class="text-center"><span id="totalAmount">00.00</span></td>
+                  </tr>
+              </tfoot>
+        </table>
+      </div>
   </div>
 
 
