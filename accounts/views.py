@@ -27,7 +27,7 @@ from decimal import InvalidOperation
 from .models import PurchaseRequestForm
 from decimal import Decimal, InvalidOperation
 from django.http import HttpResponseRedirect
-
+from .models import Item
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -395,3 +395,7 @@ def bac_history(request):
 
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'accounts/request.html', {'items': items})
