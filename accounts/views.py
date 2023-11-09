@@ -276,79 +276,32 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
-
-
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
-
-# from django.http import HttpResponse
-# from django.shortcuts import render
-# from .models import Item  # Import your Item model here
-
-# def requester(request):
-#     if request.method == 'POST':
-#         if 'item' in request.POST:  # Check if this is the modal form submission
-#             item_data = request.POST.get('item')
-#             # Extract and save the other item details here
-#             try:
-#                 item = Item.objects.create(
-#                     item=item_data,
-#                     # Set other item attributes
-#                 )
-#                 return HttpResponse("Item saved successfully.")
-#             except Exception as e:
-#                 return HttpResponse(f"An error occurred: {str(e)}")
-#         else:
-#             # This is the main form submission
-#             # Handle it as needed, e.g., saving other data to a different model
-#             pass
-
-#     return render(request, 'accounts/User/request.html')
-
-
-from django.http import HttpResponse
-from django.shortcuts import render
-from .models import Item  # Import your Item model here
-
+@authenticated_user
 def addItem(request):
     if request.method == 'POST':
+        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
-        try:
+       
             # Create a new Item instance and set its attributes
-            item = Item.objects.create(
+        item = Item.objects.create(
+                purpose=purpose,
                 item=item_data,
                 item_brand_description=item_brand_description,
                 unit=unit,
                 unit_cost=unit_cost,
                 quantity=quantity,
-            )
-            
-            return HttpResponse("Item saved successfully.")
-        except Exception as e:
-            # Handle exceptions (e.g., database errors)
-            return HttpResponse(f"An error occurred: {str(e)}")
-
-    return render(request, 'accounts/User/request.html')
+        )
+        return redirect('addItem')
+    return render(request, 'accounts/User/request.html', {'item': item})
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
-    # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
-    return render(request, 'accounts/User/request.html', {'items': items})
+    return render(request, 'accounts/User/cart.html', {'items': items})
+
 
 @authenticated_user
 def bac_history(request):
