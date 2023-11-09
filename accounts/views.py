@@ -1,8 +1,11 @@
 from django.shortcuts import redirect, render
+from .decorators import unauthenticated_user, authenticated_user
 from .models import *
 from django.contrib import messages
 from django.shortcuts import render
-from django.http import JsonResponse
+from .models import Item
+from .models import Item
+import pymongo
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -20,14 +23,11 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from django.core.mail import send_mail
-from decimal import Decimal
-from decimal import InvalidOperation
 from .models import PurchaseRequestForm
-from decimal import Decimal, InvalidOperation
-from django.http import HttpResponseRedirect
-from .models import Item
+
+
+
 def main(request):
     return render(request, 'accounts/User/main.html')
 
@@ -255,8 +255,13 @@ def bac_home(request):
 
 
 @authenticated_user
-def bac_about(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
+def preqform(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
+@authenticated_user
+def profile_html(request):
+    return render(request, 'profile.html')
 
 
 @authenticated_user
@@ -289,59 +294,58 @@ def signout(request):
     pass
 
 
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
+def category(request):
+    # Connect to MongoDB
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client['inventory']
+    collection = db['inventcol']
 
+    # Fetch all documents from the 'inventcol' collection
+    cursor = collection.find()
 
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
+    # Prepare data by category
+    categories = {}
+    for document in cursor:
+        category_name = document['Category']
+        if category_name not in categories:
+            categories[category_name] = []
 
+        categories[category_name].append({
+            "Item_brand_description": document.get('Item_Brand_Description', ''),
+            "Items": document['Items'],
+            "Unit": document['Unit'],
+            "Price": document['Price']
+        })
 
+    # Render the HTML template with categorized data
+    return render(request, 'accounts/User/request.html', {'categories': categories})
+
+@authenticated_user
 def addItem(request):
     if request.method == 'POST':
+        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
-        try:
+       
             # Create a new Item instance and set its attributes
-            item = Item.objects.create(
+        item = Item.objects.create(
+                purpose=purpose,
                 item=item_data,
                 item_brand_description=item_brand_description,
                 unit=unit,
                 unit_cost=unit_cost,
                 quantity=quantity,
-            )
-            return HttpResponse("Item saved successfully.")
-        except Exception as e:
-            # Handle exceptions (e.g., database errors)
-            return HttpResponse(f"An error occurred: {str(e)}")
+        )
+        return redirect('addItem')
     return render(request, 'accounts/User/request.html')
-
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
-    # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
-    return render(request, 'accounts/User/request.html', {'items': items})
+    return render(request, 'accounts/User/cart.html', {'items': items})
+
 
 
 @authenticated_user

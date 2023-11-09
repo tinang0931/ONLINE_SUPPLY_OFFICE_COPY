@@ -9,12 +9,14 @@ from pymongo import MongoClient
 
 
 class Item(models.Model):
+    purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
     item_brand_description = models.CharField(max_length=255)
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     
+
 
 class VerificationCode(models.Model):
     email = models.EmailField()
