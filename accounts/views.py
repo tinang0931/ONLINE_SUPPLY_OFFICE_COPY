@@ -1,10 +1,7 @@
 from django.shortcuts import redirect, render
-from .decorators import unauthenticated_user, authenticated_user
 from .models import *
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Item
-from .models import Item
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -264,11 +261,6 @@ def bac_home(request):
 
 
 @authenticated_user
-def preqform(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
-
-
-@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -281,31 +273,51 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
-@authenticated_user
+
+
+department_mapping = {
+    'option1': 'College of Arts and Sciences',
+    'option2': 'College of Agriculture',
+    'option3': 'College of Forestry',
+    'option4': 'College of Hospitality Management and Tourism',
+    'option5': 'College of Technology and Engineering',
+    'option6': 'College of Education',
+    'option7': 'Graduate School',
+}
+
+
+department_mapping = {
+    'option1': 'College of Arts and Sciences',
+    'option2': 'College of Agriculture',
+    'option3': 'College of Forestry',
+    'option4': 'College of Hospitality Management and Tourism',
+    'option5': 'College of Technology and Engineering',
+    'option6': 'College of Education',
+    'option7': 'Graduate School',
+}
+
+
 def addItem(request):
     if request.method == 'POST':
-        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
-       
+        try:
             # Create a new Item instance and set its attributes
-        item = Item.objects.create(
-                purpose=purpose,
+            item = Item.objects.create(
                 item=item_data,
                 item_brand_description=item_brand_description,
                 unit=unit,
                 unit_cost=unit_cost,
                 quantity=quantity,
-        )
-        return redirect('addItem')
-    return render(request, 'accounts/User/request.html', {'item': item})
-
-def requester(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
-    return render(request, 'accounts/User/cart.html', {'items': items})
+            )
+            return HttpResponse("Item saved successfully.")
+        except Exception as e:
+            # Handle exceptions (e.g., database errors)
+            return HttpResponse(f"An error occurred: {str(e)}")
+    return render(request, 'accounts/User/request.html')
 
 
 def requester(request):
