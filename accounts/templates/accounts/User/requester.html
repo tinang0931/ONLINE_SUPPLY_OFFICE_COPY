@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+s{% extends "accounts/User/main.html" %}
 
 
 {% load static %}
@@ -50,7 +50,6 @@
     cursor: pointer;
   }
 </style>
-
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
   <div class="container">
     <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
@@ -425,6 +424,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                          <button type="button" class="btn btn-primary" id="updateButton" onclick="updateRow()">Update</button>
                         </div>
                     </div>
                   </div>
@@ -569,36 +569,94 @@
       itemNumberCell.textContent = i + 1;
     }
   }
-
   function editRow(button) {
-    // Get the row to edit
-    const rowToEdit = button.parentNode.parentNode;
+  // Get the row to edit
+  const rowToEdit = button.parentNode.parentNode;
 
-    if (rowToEdit) {
-      // Get all the cells in the row
-      const cells = rowToEdit.getElementsByTagName("td");
+  if (rowToEdit) {
+    // Get all the cells in the row
+    const cells = rowToEdit.getElementsByTagName("td");
 
-      // Start from the second cell (index 1) to exclude the item number cell
-      for (let i = 1; i < cells.length - 1; i++) {
-        const cell = cells[i];
-        const originalContent = cell.textContent;
-        cell.contentEditable = true;
-        cell.classList.add("editable-cell"); // Add a class to style the editable cells
+    // Populate the form fields with the data from the selected row, including item number
+    itemNumber = parseInt(cells[0].textContent); // Update item number
+    document.getElementById("Item").value = cells[1].textContent;
+    document.getElementById("Item_Brand_Description").value = cells[2].textContent;
+    document.getElementById("Unit").value = cells[3].textContent;
+    document.getElementById("Unit_Cost").value = parseFloat(cells[4].textContent);
+    document.getElementById("Quantity").value = parseFloat(cells[5].textContent);
 
-        // Attach an event listener to save the edited data when the cell loses focus
-        cell.addEventListener("blur", function () {
-          const editedContent = cell.textContent;
-          cell.contentEditable = false;
-          cell.classList.remove("editable-cell");
+    // Delete the row from the table after populating the form fields (optional)
+    deleteRow(button);
 
-          // You can add your own logic here to save the edited data or update it in the table.
-          // In this example, we'll just alert the edited content.
-          alert(`Edited content: ${originalContent} -> ${editedContent}`);
-        });
-      }
-    }
+    // Open the "Add Item" modal for editing
+    $('#addItemModal').modal('show');
   }
+}
+
+  
+function updateRow() {
+    // Get the edited values from the form fields
+    const itemName = document.getElementById("Item").value;
+    const itemDescription = document.getElementById("Item_Brand_Description").value;
+    const unit = document.getElementById("Unit").value;
+    const unitCost = parseFloat(document.getElementById("Unit_Cost").value);
+    const quantity = parseFloat(document.getElementById("Quantity").value);
+
+    // Check if any of the required fields are empty or invalid
+    if (!itemName || !unit || isNaN(unitCost) || isNaN(quantity)) {
+      alert("Please fill in all required fields with valid data.");
+      return;
+    }
+
+    // Calculate the total for the updated row
+    const total = unitCost * quantity;
+
+    // Create a new row with the updated data
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+      <td>${itemNumber}</td>
+      <td>${itemName}</td>
+      <td>${itemDescription}</td>
+      <td>${unit}</td>
+      <td>${unitCost}</td>
+      <td>${quantity}</td>
+      <td>${total}</td>
+      <td>
+        <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+        <button class="btn btn-primary" onclick="editRow(this)">Edit</button>
+      </td>
+    `;
+
+    // Add the updated row to the table
+    document.getElementById("itemTableBody").appendChild(newRow);
+
+    // Increment itemNumber
+    itemNumber++;
+
+    // Close the "Add Item" modal
+    $('#addItemModal').modal('hide');
+
+    // Clear the form inputs
+    clearFormInputs();
+  }
+
+  function clearFormInputs() {
+    document.getElementById("Item").value = "";
+    document.getElementById("Item_Brand_Description").value = "";
+    document.getElementById("Unit").value = "";
+    document.getElementById("Unit_Cost").value = "";
+    document.getElementById("Quantity").value = "";
+  }
+
+
+
+
 </script>
+
+
+  
+  
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
