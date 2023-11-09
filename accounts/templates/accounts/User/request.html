@@ -208,7 +208,64 @@
         </div>
             <button type="submit" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
       </div>
-    </form>
+      <ul>
+        {% for item in data %}
+            <li>
+                
+                <strong>Category:</strong> {{ item.category }}<br>
+                <strong>Item:</strong> {{ item.item }}<br>
+                <strong>Description:</strong> {{ item.item_description }}<br>
+                <strong>Unit:</strong> {{ item.unit }}<br>
+                <strong>Price:</strong> {{ item.price }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+      <br>
+      <ul>
+
+        <table>
+          <thead>
+              <tr>
+                  <th>Category</th>
+                  <th>Item</th>
+                  <th>Item Brand/Description</th>
+                  <th>Unit</th>
+                  <th>Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for item in items %}
+              <tr>
+                  <td>{{ item.category }}</td>
+                  <td>{{ item.item }}</td>
+                  <td>{{ item.item_description }}</td>
+                  <td>{{ item.unit }}</td>
+                  <td>{{ item.price }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+      
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+      
+        th {
+            background-color: #f2f2f2;
+        }
+      </style>
+   
+      
+ 
+
   </div>
 
 
