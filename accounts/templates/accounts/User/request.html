@@ -1,0 +1,224 @@
+{% extends "accounts/User/main.html" %}
+
+
+{% load static %}
+
+
+{% block requester %}
+
+<style>
+    .input-group {
+      display: flex;
+    }
+  
+    #quantityInput {
+      flex: 1;
+      width: 30px;
+    }
+  
+    .btn-inc-dec {
+      flex: 0;
+    }
+  
+    /* Style for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 300px;
+      left: 300px;
+      width: 20%;
+      height: 55%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  
+    .modal-content {
+      position: absolute;
+      top: 325px;
+      left: 50%;
+      width: 1000px;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 5px;
+    }
+  
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+</style>
+
+<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+    <div class="container">
+        <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
+    </div>
+
+      <br>
+
+
+      <div class="row">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+          <select class="form-control" id="categoryDropdown" name="categoryDropdown">
+            <option value="" disabled selected>Choose Category</option>
+            <option value="option1">ANTISEPTICS</option>
+            <option value="option2">APPLIANCES</option>
+            <option value="option3">CLEANING EQUIPMENT AND SUPPLIES </option>
+            <option value="option4">ELECTRICAL AND HARDWARE  SUPPLIES </option>
+            <option value="option5">FURNITURE AND FURNISHINGS</option>
+            <option value="option6">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</option>
+            <option value="option7">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</option>
+            <option value="option8">PERSONAL PROTECTIVE EQUIPMENT</option>
+        </select>
+        </div>
+      
+        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+          <button type="button" class="btn" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+      </div>
+
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+
+                  <div class="modal-body">
+                      <form id="addItemForm" method="POST" action="{% url 'addItem' %}">
+                          {% csrf_token %}
+                          <div class="form-group">
+                              <label for="Item">Item</label>
+                              <input type="text" class="form-control" id="Item" name="item" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label for="Item_Brand_Description">Item Brand/Description</label>
+                              <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label for="Unit">Unit</label>
+                              <input type="text" class="form-control" id="Unit" name="unit" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label for="Unit">Unit Cost</label>
+                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="Quantity">Quantity</label>
+                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                          </div>
+
+                          <div class="modal-footer">
+                              <button type="submit" value ="submit" class="btn btn-primary" >Submit</button>
+                              
+                          </div>
+
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    
+        <div class="col-6 col-sm-6 col-md-5 col-lg-4">
+            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+        </div>
+    </div>
+
+    <br>
+
+    <div class="border border-dark"></div>
+
+    <br>
+    <br>
+    <form action="{% url 'requester' %}" method="post">
+      {% csrf_token %}
+    <div class="row w-100 m-auto">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0 mb-3">
+            <div class="form-group mb-3">
+                <label for="departmentDropdown">Choose Department:</label>
+                    <select class="form-control" id="departmentDropdown" name="departmentDropdown">
+                        <option value="option1">College of Arts and Sciences</option>
+                        <option value="option2">College of Agriculture</option>
+                        <option value="option3">College of Forestry</option>
+                        <option value="option4">College of Hospitality Management and Tourism</option>
+                        <option value="option5">College of Technology and Engineering</option>
+                        <option value="option6">College of Education</option>
+                        <option value="option7">Graduate School</option>
+                        <option value="option8"> Others please specify:</option>
+                    </select>
+                <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control" style="display: none;">
+            </div>
+        </div>
+  
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0 mb-3">
+            <div class="form-group mb-3">
+                <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
+                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+            </div>
+        </div>
+    </div>
+        
+      <div>
+        <div class=" table table-responsive">
+          <table class="table" id="create_request_table" style="border: 1px solid black;">
+            <thead>
+              <tr>
+                  <th class="text-center text-nowrap">Item Number</th>
+                  <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+                  <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                  <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+                  <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                  <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+                  <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                  <th class="text-center text-nowrap"></th>
+                  <div class="d-flex justify-content-evenly"></div>
+              </tr>
+          </thead>
+          
+              <tbody>
+                {% for item in items %}
+                <tr>
+                    <td class="item_number text-center">{{ forloop.counter }}</td>
+                    <td class="item_name text-center">{{ item.item }}</td>
+                    <td class="item_description text-center">{{ item.item_brand_description }}</td>
+                    <td class="item_unit text-center">{{ item.unit }}</td>
+                    <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                    <td class="item_quantity text-center">{{ item.quantity }}</td>
+                    <td class="item_total_cost text-center">0.00</td> <!-- Total Cost field -->
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+
+                <tfoot>
+                    <tr>
+                      <td colspan="6" >Total Amount</td>
+                      <td class="text-center"><span id="totalAmount">00.00</span></td>
+                    </tr>
+                </tfoot>
+          </table>
+        </div>
+            <button type="submit" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
+      </div>
+    </form>
+  </div>
+
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+{% endblock %}
