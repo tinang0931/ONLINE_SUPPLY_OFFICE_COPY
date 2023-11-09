@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import JsonResponse
+from .models import tracker
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -20,7 +21,6 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from django.core.mail import send_mail
 from decimal import Decimal
 from decimal import InvalidOperation
@@ -352,3 +352,36 @@ def bac_history(request):
 
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+
+# def tracker(request):
+#     def get(self, request):
+#         # Retrieve a list of trackers objects from the data
+#         trackers = tracker.objects.all()
+        
+#         # Create a context dictionary to pass data to the template
+#         tracker_data = []
+        
+#         for item in trackers:
+#          data = {
+#             'user': item.user.username,
+#             'item_name': item.item_name,
+#             'description': item.description,
+#             'quantity' : item.quantity,
+#             'is_submitted' : item.is_submmitted,
+#             'approved': item.approved,
+#             'disapproved' : item.disapproved,
+#             'campus_director_approval': item.campus_director_appproval,
+#             'bac_secretariat_resolution': item.bac_secretariat_resolution,
+#             'date_update_status': item.date_update_status,
+#             'status': item.status,
+#         }
+#          tracker_data.append(data)
+         
+#         # Prepare the context dictionary to pass data to the template
+#         context = {
+#             'trackers' : tracker_data
+#         }
+        
+#         # Render a template with the data
+#         return render(request, 'accounts/User/request.html',)
