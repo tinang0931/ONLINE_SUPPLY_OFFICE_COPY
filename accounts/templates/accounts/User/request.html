@@ -244,7 +244,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                                                    <button type="button" class="btn btn-primary" id="addItemButton" data-toggle="modal" data-target="#addItemModal">Add Item</button>
                                                 </div>
 
                                             </form>
@@ -298,13 +298,16 @@
               <button class="btn btn-primary" onclick="editRow(this)">Edit</button>
           </td>
       `;
-      itemNumber++;
+      itemNumber++; // Increment itemNumber
   
       // Add the new row to the table
       document.getElementById("itemTableBody").appendChild(newRow);
-  
-  
-  
+      
+       // Close the "Add Item" modal programmatically
+    $(addItemModal).modal('hide');
+      
+      // Hide the modal backdrop
+      $('.modal-backdrop').remove()
   
       // Clear the form inputs
       document.getElementById("Item").value = "";
