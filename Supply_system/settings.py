@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['172.28.52.158','172.28.20.119', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'djongo',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,7 +53,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'Supply_system.urls'
+
 
 TEMPLATES = [
     {
@@ -71,6 +73,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'Supply_system.wsgi.application'
 
 
@@ -79,41 +82,6 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # defaultdb
 
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'inventorydb',
-#         'HOST': 'localhost',
-#         'PORT': 27017,
-
-
-#     }
-# }
-
-# jelyn database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'inventory',
-#         'HOST': 'localhost',
-#         'PORT': 27017,
-#     }
-# }
-
-# #Danica database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'danicadb',
-#         'CLIENT': {
-#             'host': 'mongodb://localhost:27017/',
-#         },
-#     },
-# }
-
-
-# jhake database
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -122,53 +90,6 @@ DATABASES = {
         'PORT': 27017,
     },
 }
-
-
-
-# # jelyn database
-# DATABASES = {
-# 'default': {
-#       'ENGINE': 'djongo',
-#       'NAME':  'mydatabase',  
-#       'USERNAME': 'lalyang',
-#       'PASSWORD': 'lalyang123',
-#       'HOST': 'localhost',
-#       'PORT': 27017,
-#       }
-# # }
-# jelyn database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'inventory',
-#         'HOST': 'localhost',
-#         'PORT': 27017,
-
-
-#    }
-# }
-
-# # jelyn database
-# DATABASES = {
-# 'default': {
-#       'ENGINE': 'djongo',
-#       'NAME':  'mydatabase',  
-#       'USERNAME': 'lalyang',
-#       'PASSWORD': 'lalyang123',
-#       'HOST': 'localhost',
-#       'PORT': 27017,
-#       }
-# }
-# # =======
-#  'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'mydatabase',   # Use the same database name as specified when creating the MongoDB user
-#         'USER': 'ralphii',   # MongoDB username
-#         'PASSWORD': 'ralph123',   # MongoDB password
-#         'HOST': 'localhost',    # MongoDB host (can be a different host if MongoDB is not on the same server)
-#         'PORT': 27017,          # MongoDB port (default is 27017)
-#  }
-# }
 
 
 # Password validation
@@ -208,6 +129,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 import os
 
 static_dir = os.path.join(BASE_DIR, "static")
