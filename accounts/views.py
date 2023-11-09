@@ -299,6 +299,7 @@ def addItem(request):
                 unit=unit,
                 unit_cost=unit_cost,
                 quantity=quantity,
+                total_cost =  unit_cost * quantity
         )
         return redirect('addItem')
     return render(request, 'accounts/User/request.html', {'item': item})
@@ -352,6 +353,10 @@ def bac_history(request):
         return render(request('bac_history'))
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+@authenticated_user
+def cart(request):
+    return render(request, 'accounts/User/cart.html')
 
 from .models import SelectItem
 
