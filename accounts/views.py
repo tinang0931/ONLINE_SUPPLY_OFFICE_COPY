@@ -3,7 +3,6 @@ from .models import *
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import tracker
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -126,7 +125,7 @@ def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
 
-@unauthenticated_user
+
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -151,7 +150,7 @@ def handle_reset_request(request):
     return render(request, 'accounts/User/forgot.html')
 
 
-@unauthenticated_user
+
 def verify_code(request):
     if request.method == 'POST':
         code1 = request.POST.get('code1')
@@ -180,7 +179,7 @@ def is_valid_code(verification_code, user_email):
     return False
 
 
-@unauthenticated_user
+
  # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
@@ -296,15 +295,15 @@ def addItem(request):
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
-    # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
+#     # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
+#     # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
+#     # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
+#     # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
+#     # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
     return render(request, 'accounts/User/request.html', {'items': items})
 
 
-@authenticated_user
+
 def bac_history(request):
     # Fetch all PurchaseRequest objects linked to the logged-in user
     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
@@ -340,34 +339,44 @@ def bac_history(request):
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-def tracker(request):
-    def get(self, request):
-        # Retrieve a list of trackers objects from the data
-        trackers = tracker.objects.all()
+# def tracker(request):
+#     if request.method == 'GET':
+#         # Retrieve a list of trackers objects from the data
+#         tracker = Item.objects.all().prefetch_related('user')
         
-        # Create a context dictionary to pass data to the template
-        tracker_data = []
+#         # Create a context dictionary to pass data to the template
+#         tracker_data = []
         
-        for item in trackers:
-         data = {
-            'user': item.user.username,
-            'item_name': item.item_name,
-            'description': item.description,
-            'quantity' : item.quantity,
-            'is_submitted' : item.is_submmitted,
-            'approved': item.approved,
-            'disapproved' : item.disapproved,
-            'campus_director_approval': item.campus_director_appproval,
-            'bac_secretariat_resolution': item.bac_secretariat_resolution,
-            'date_update_status': item.date_update_status,
-            'status': item.status,
-        }
-         tracker_data.append(data)
+#         # Initialize on empty list to store tracker data
+#         for item in tracker:
+#         # Create a dictionary to store individual tracker information
+#          data = {
+#             'item_user' : item.user,
+#             'item_name': item.item_name,
+#             'description': item.description,
+#             'quantity' : item.quantity,
+#             'is_submitted' : item.is_submitted,
+#             'approved': item.approved,
+#             'disapproved' : item.disapproved,
+#             'campus_director_approval': item.campus_director_approval,
+#             'bac_secretariat_resolution': item.bac_secretariat_resolution,
+#             'date_update_status': item.date_update_status,
+#             'status': item.status,
+#         }
          
-        # Prepare the context dictionary to pass data to the template
-        context = {
-            'trackers' : tracker_data
-        }
-        
-        # Render a template with the data
-        return render(request, 'accounts/User/request.html',)
+#         # Append the individual tracker data dictionary to the tracker_data list
+#         tracker_data.append(data)
+         
+#         # Prepare the context dictionary to pass data to the template
+#         context = {
+#             'trackers' : tracker_data
+#         }
+#         # Return the context of dictionary  as a JSON response
+#         return JsonResponse(request, 'accounts/User/request.html', context)
+    
+#     # Handle other request methods
+#     else: 
+#     # Return a JSON response with an error message for invalid request methods
+#       return JsonResponse({'message': 'Invalid request methods'}, status=405)
+  
+  
