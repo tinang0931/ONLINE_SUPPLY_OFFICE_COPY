@@ -3,29 +3,18 @@ from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
 
 
-
 #class User(AbstractUser):
     #is_admin = models.BooleanField(default= False)
    # is_regularuser = models.BooleanField(default= False)
 
 
-   
-
 class Item(models.Model):
-    # item_purpose = models.TextField()
-    Item = models.CharField(max_length=255)
-    Item_Brand_Description = models.TextField()
-    Unit = models.CharField(max_length=255)
-    Unit_Cost = models.DecimalField(max_digits=10, decimal_places=2)
-    Quantity = models.IntegerField()
-
-
-
-
-
-
-
-
+    item = models.CharField(max_length=255)
+    item_brand_description = models.CharField(max_length=255)
+    unit = models.CharField(max_length=50)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.IntegerField()
+    
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -50,9 +39,6 @@ class History(models.Model):
         return f'{self.user.username} - {self.timestamp}'
     
 
-
-
-
 class PurchaseRequestForm(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
      item_name = models.CharField(max_length=100)
@@ -61,6 +47,7 @@ class PurchaseRequestForm(models.Model):
      is_submitted = models.BooleanField(default=False)
      approved = models.BooleanField(default=False)
      disapproved = models.BooleanField(default=False)
+
     
 def __str__(self):
          return self.item_name
@@ -85,7 +72,6 @@ class User(AbstractUser):
         related_query_name='accounts_user', # Add this line
 
     )
-
 
 
     #class CampusDirectorHistoryCD(models.Model):

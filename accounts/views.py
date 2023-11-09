@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.contrib import messages
 from django.shortcuts import render
-from .models import Item
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
@@ -23,7 +22,6 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.core.mail import send_mail
-from .models import Item
 from decimal import Decimal
 from decimal import InvalidOperation
 from .models import PurchaseRequestForm
@@ -86,7 +84,6 @@ def register(request):
 
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')  # Redirect to the login page upon successful registration
-
     return render(request, 'accounts/User/register.html')
 
 
@@ -124,8 +121,10 @@ def login(request):
     
     return render(request, 'accounts/User/login.html')
 
+
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
+
 
 @unauthenticated_user
 def handle_reset_request(request):
@@ -150,6 +149,7 @@ def handle_reset_request(request):
         # Redirect the user to a page where they can enter the verification code
         return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
+
 
 @unauthenticated_user
 def verify_code(request):
@@ -177,8 +177,8 @@ def is_valid_code(verification_code, user_email):
     if stored_code and verification_code == stored_code:
         # Codes match, and the code exists in the cache
         return True
-
     return False
+
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -198,7 +198,6 @@ def reset_password(request):
         
         # To maintain the user's session after changing the password, you can use the following:
         update_session_auth_hash(request, user)
-
         
         # Redirect the user to a success page or login page
         messages.success(request, 'Password updated successfully.')
@@ -221,8 +220,7 @@ def about(request):
 
 @authenticated_user
 def history(request):
-   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
-   return render(request, 'accounts/User/history.html')
+    return render(request, 'accounts/User/history.html')
 
 
 @authenticated_user
@@ -287,36 +285,50 @@ department_mapping = {
     'option7': 'Graduate School',
 }
 
-def requester(request):
-    if request.method == 'POST':
-        print(request.POST) 
-        # purpose = request.POST.get('purpose', '')  # Provide a default value ('') if the key is not present
-        Item = request.POST.get('item', '')
-        Item_Brand_Description = request.POST.get('item_Brand_Description', '')
-        Unit = request.POST.get('init', '')
-        Unit_Cost = request.POST.get('unit_Cost', '')
-        Quantity = request.POST.get('quantity', '')
-        try:
-            # Convert Unit_Cost and Quantity to Decimal
-            Unit_Cost = Decimal(Unit_Cost)
-            Quantity = Decimal(Quantity)
 
+department_mapping = {
+    'option1': 'College of Arts and Sciences',
+    'option2': 'College of Agriculture',
+    'option3': 'College of Forestry',
+    'option4': 'College of Hospitality Management and Tourism',
+    'option5': 'College of Technology and Engineering',
+    'option6': 'College of Education',
+    'option7': 'Graduate School',
+}
+
+
+def addItem(request):
+    if request.method == 'POST':
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
+        try:
+            # Create a new Item instance and set its attributes
             item = Item.objects.create(
-                # purpose=purpose,
-                Item=Item,
-                Item_Brand_Description=Item_Brand_Description,
-                Unit=Unit,
-                Unit_Cost=Unit_Cost,
-                Quantity=Quantity,
+                item=item_data,
+                item_brand_description=item_brand_description,
+                unit=unit,
+                unit_cost=unit_cost,
+                quantity=quantity,
             )
-            # Save the item to the database
-            item.save()
             return HttpResponse("Item saved successfully.")
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
-
     return render(request, 'accounts/User/request.html')
+
+
+def requester(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
+    # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
+    # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
+    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
+    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
+    return render(request, 'accounts/User/request.html', {'items': items})
+
 
 @authenticated_user
 def bac_history(request):
@@ -350,6 +362,5 @@ def bac_history(request):
 
         # Redirect to the bac_history page
         return render(request('bac_history'))
-
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
