@@ -28,6 +28,7 @@ class Item(models.Model):
 
 
 
+
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)

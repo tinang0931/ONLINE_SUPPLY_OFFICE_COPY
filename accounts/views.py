@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.shortcuts import render
 from .models import Item
 from .models import Item
-from django.http import JsonResponse
+import pymongo
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -23,13 +23,9 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from django.core.mail import send_mail
-from decimal import Decimal
-from decimal import InvalidOperation
 from .models import PurchaseRequestForm
-from decimal import Decimal, InvalidOperation
-from django.http import HttpResponseRedirect
+
 
 
 def main(request):
@@ -276,6 +272,34 @@ def pro_file_html(request):
 @authenticated_user
 def signout(request):
     pass
+
+
+def category(request):
+    # Connect to MongoDB
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client['inventory']
+    collection = db['inventcol']
+
+    # Fetch all documents from the 'inventcol' collection
+    cursor = collection.find()
+
+    # Prepare data by category
+    categories = {}
+    for document in cursor:
+        category_name = document['Category']
+        if category_name not in categories:
+            categories[category_name] = []
+
+        categories[category_name].append({
+            "Item_brand_description": document.get('Item_Brand_Description', ''),
+            "Items": document['Items'],
+            "Unit": document['Unit'],
+            "Price": document['Price']
+        })
+
+    # Render the HTML template with categorized data
+    return render(request, 'accounts/User/request.html', {'categories': categories})
+
 @authenticated_user
 def addItem(request):
     if request.method == 'POST':
@@ -296,7 +320,7 @@ def addItem(request):
                 quantity=quantity,
         )
         return redirect('addItem')
-    return render(request, 'accounts/User/request.html', {'item': item})
+    return render(request, 'accounts/User/request.html')
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
