@@ -14,8 +14,7 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-
-
+    
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -40,9 +39,6 @@ class History(models.Model):
         return f'{self.user.username} - {self.timestamp}'
     
 
-
-
-
 class PurchaseRequestForm(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
      item_name = models.CharField(max_length=100)
@@ -51,6 +47,7 @@ class PurchaseRequestForm(models.Model):
      is_submitted = models.BooleanField(default=False)
      approved = models.BooleanField(default=False)
      disapproved = models.BooleanField(default=False)
+
     
 def __str__(self):
          return self.item_name
@@ -77,29 +74,29 @@ class User(AbstractUser):
     )
     
 
-# class tracker(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     item_name = models.CharField(max_length=100)
-#     description = models.TextField()
-#     quantity = models.IntegerField()
-#     is_submitted = models.BooleanField(default=False)
-#     approved = models.BooleanField(default=False)
-#     disapproved = models.BooleanField(default=False)
-#     budget_officer_approval = models.CharField(max_length=100)
-#     campus_director_approval = models.CharField(max_length=100)
-#     bac_secretariat_resolution = models.CharField(max_length=100)
-#     date_update_status = models.DateField()
-#     status = models.CharField(max_length=100)
+class tracker(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=100)
+    description = models.TextField()
+    quantity = models.IntegerField()
+    is_submitted = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
+    disapproved = models.BooleanField(default=False)
+    budget_officer_approval = models.CharField(max_length=100)
+    campus_director_approval = models.CharField(max_length=100)
+    bac_secretariat_resolution = models.CharField(max_length=100)
+    date_update_status = models.DateField()
+    status = models.CharField(max_length=100)
     
 
-#class CampusDirectorHistoryCD(models.Model):
-# user = models.ForeignKey(User, on_delete=models.CASCADE)
-# start_date = models.DateField()
-# end_date = models.DateField()
-# description = models.TextField()
+    #class CampusDirectorHistoryCD(models.Model):
+   # user = models.ForeignKey(User, on_delete=models.CASCADE)
+   # start_date = models.DateField()
+   # end_date = models.DateField()
+   # description = models.TextField()
 
-#def __str__(self):
-#   return f'Campus Director History: {self.user.username}'
+    #def __str__(self):
+     #   return f'Campus Director History: {self.user.username}'
 
 #class SupplyOfficeHistory(models.Model):
 #   start_date = models.DateField()
