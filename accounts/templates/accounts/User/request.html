@@ -56,90 +56,67 @@
         <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
     </div>
 
-    <br>
-    <br>
-    <br>
-
-      <form id="addItemForm" method="POST" action="{% url 'addItem' %}">
-        {% csrf_token %}
-        
-        <div class="row">
-          <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-              <select class="form-control" id="categoryDropdown" name="categoryDropdown">
-                  <option value="" disabled selected>Choose Category</option>
-                  <option value="option1">ANTISEPTICS</option>
-                  <option value="option2">APPLIANCES</option>
-                  <!-- ... more options ... -->
-                  <option value="option8">PERSONAL PROTECTIVE EQUIPMENT</option>
-              </select>
-          </div>
-      
-          <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-              <p>----- or ------</p>
-          </div>
-      
-          <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
-          </div>
-      
-          <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-              <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
-          </div>
-      
-          <div class="col-2 col-sm-2 col-md-1 col-lg-1">
-            <a href="{% url 'cart' %}">
-                <i>
-                    <img src="{% static 'images/cart.png' %}" alt="Icon Description">
-                </i>
-            </a>
-        </div>
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-1 col-lg-4">
+          <select class="form-control mb-3" id="dropdownMenuSelect">
+              <option value="all">All Categories</option>
+              <option value="category1">Category 1</option>
+              <option value="category2">Category 2</option>
+              <option value="category3">Category 3</option>
+          </select>
       </div>
-      
-          
+  
+      <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+      </div>
+  
+      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+          <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+      </div>
+  
+      <div class="col-2 col-sm-2 col-md-1 col-lg-1">
+          <a href="{% url 'requester' %}">
+              <i>
+                  <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+              </i>
+          </a>
+      </div>
+  </div>
+  
 
-           
-
-
-            <br>
-            <br>
-            <br>
-            <br>
-
-
-            <div class=" table table-responsive">
-                 <table class="table" id="create_request_table" style="border: 1px solid black;">
+      <form action="{% url 'category' %}">
+        {% csrf_token %}
+    
+        {% for category_name, products in categories.items %}
+            <div class="table table-responsive">
+                <h3>{{ category_name }}</h3>
+                <table class="table" id="create_request_table" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                            <th class="text-center text-nowrap" style="min-width: 15rem;">Purpose</th>
-                            <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
-                            <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                            <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
-                            <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                            <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                            <th class="text-center text-nowrap"></th>
+                            <th class="text-center text-nowrap">Item Name</th>
+                            <th class="text-center text-nowrap">Item Description</th>
+                            <th class="text-center text-nowrap">Unit</th>
+                            <th class="text-center text-nowrap">Unit Cost</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {% for item in items_from_database %}
-                        <tr>
-                            <td class="text-center text-nowrap">
-                                <!-- Input text for Purpose -->
-                                <input type="text" name="purpose" value="{{ item.purpose }}">
-                            </td>
-                            <td class="text-center text-nowrap">{{ item.item_name }}</td>
-                            <td class="text-center text-nowrap">{{ item.item_description }}</td>
-                            <td class="text-center text-nowrap">{{ item.unit }}</td>
-                            <td class="text-center text-nowrap">{{ item.unit_cost }}</td>
-                            <td class="text-center text-nowrap">{{ item.quantity }}</td>
-                            <td class="text-center text-nowrap">
-                                <!-- Add any additional actions or buttons here -->
-                            </td>
-                        </tr>
+                        {% for product in products %}
+                            <tr>
+                                <td class="text-center text-nowrap">{{ product.Items }}</td>
+                                <td class="text-center text-nowrap">{{ product.Item_brand_description }}</td>
+                                <td class="text-center text-nowrap">{{ product.Unit }}</td>
+                                <td class="text-center text-nowrap">{{ product.Price }}</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-              </div>
+            </div>
+        {% endfor %}
 
+  
+  </form>
+  
             
 
 
@@ -202,6 +179,76 @@
         </div>
       </form>
 </div>
+
+<script>
+  const categoryFilter = document.getElementById('category_filter');
+  const productTables = document.querySelectorAll('.table table');
+
+  categoryFilter.addEventListener('change', (event) => {
+      const selectedCategory = event.target.value;
+      const filteredProducts = {};
+
+      if (selectedCategory !== 'all') {
+          for (const productTable of productTables) {
+              const categoryName = productTable.querySelector('h3').textContent;
+              if (categoryName === selectedCategory) {
+                  const products = productTable.querySelectorAll('tbody tr');
+                  for (const product of products) {
+                      const itemName = product.querySelector('td:nth-child(2)').textContent;
+                      const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                      const unit = product.querySelector('td:nth-child(4)').textContent;
+                      const price = product.querySelector('td:nth-child(5)').textContent;
+
+                      if (!filteredProducts[categoryName]) {
+                          filteredProducts[categoryName] = [];
+                      }
+
+                      filteredProducts[categoryName].push({
+                          itemName,
+                          itemDescription,
+                          unit,
+                          price
+                      });
+                  }
+              }
+          }
+      }
+
+      // Update the displayed items based on the filtered products
+      updateProductTables(filteredProducts);
+  });
+
+  function updateProductTables(filteredProducts) {
+      for (const productTable of productTables) {
+          productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
+
+          const categoryName = productTable.querySelector('h3').textContent;
+          const products = filteredProducts[categoryName] || [];
+
+          for (const product of products) {
+              const row = document.createElement('tr');
+
+              const itemNameCell = document.createElement('td');
+              itemNameCell.textContent = product.itemName;
+              row.appendChild(itemNameCell);
+
+              const itemDescriptionCell = document.createElement('td');
+              itemDescriptionCell.textContent = product.itemDescription;
+              row.appendChild(itemDescriptionCell);
+
+              const unitCell = document.createElement('td');
+              unitCell.textContent = product.unit;
+              row.appendChild(unitCell);
+
+              const priceCell = document.createElement('td');
+              priceCell.textContent = product.price;
+              row.appendChild(priceCell);
+
+              productTable.querySelector('tbody').appendChild(row);
+          }
+      }
+  }
+</script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
