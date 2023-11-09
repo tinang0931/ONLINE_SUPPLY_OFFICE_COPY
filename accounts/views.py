@@ -261,6 +261,11 @@ def bac_home(request):
 
 
 @authenticated_user
+def preqform(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
