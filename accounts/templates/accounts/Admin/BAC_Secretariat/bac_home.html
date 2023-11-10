@@ -4,15 +4,163 @@
 {% load static %}
 
 
-{% block bac_home %}
+{% block bac_history %}
 
 
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+          <div class="container">
+            <h1 class="pr text-center pt-4">HISTORY</h1>  
+          
+          <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      </main>
-      <footer>
-        <div class="footer" style="height: 35px;">
-  
+        <div class="modal-body">
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purchase Request ID</label>
+            <input type="text" class="form-control item-name" name="item_name[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Date Requested</label>
+            <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
+            <input type="text" class="form-control unit" name="unit[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status</label>
+            <input type="number" class="form-control quantity" min="1" oninput="calculateRowTotal(this)" name="quantity[]">
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleFormcontrolTextarea1 p-2">Status Description</label>
+            <input type="number" class="form-control unit-cost" name="unit_cost[]" min="00.00" step="00.00" oninput="calculateRowTotal(this)">
+          </div>
+          
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  {% endblock %}
+  
+  <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+    <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+  </div>
+  
+  <div class="table-responsive" style="margin: 0 auto;">
+    <table class="table" id="create_request_table" style="border: 1px solid black;">
+</div>
+<div class="table-responsive" style="margin: 0 auto;">
+  <table class="table" id="create_request_table" style="border: 1px solid black;">
+<div class="table-responsive">
+
+<table class="table" id="create_request_table" style="border: 1px solid black;">
+  <thead>
+      <tr>
+          <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Purpose</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
+          <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+          <th class="text-center text-nowrap"></th>
+      </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="item-row">
+      <td style="text-align: center;">
+        <span class="item-no">0000100</span>
+      </td>
+      <td>09-30-2023</td>
+      <td>Purchase Dell Laptop Order</td>
+      <td>1 unit</td>
+      <td>pending approval</td>
+      <td>Verify Papers submitted</td>
+      <td><span class="total">1,200,000</span></td>
+      <td class="text-end my-2 mt-0">
+        <div class="d-flex justify-content-start align-items-center">
+          <button type="button" class="btn btn-success me-2">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+        </div>
+        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
+          <button type="button" class="btn btn-link btn-sm">
+            <i class="fas fa-comment"></i> Add Comment
+          </button>
+        </div>
+      </td>
+    </tr>
+    
+      </td>
+</tbody>
+</table>
+<div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
+  <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+</div>
+
+{% endblock %}  
