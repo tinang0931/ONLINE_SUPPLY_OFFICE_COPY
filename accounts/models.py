@@ -1,12 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
-from decimal import Decimal 
+import uuid
+from decimal import Decimal
 
 
-#class User(AbstractUser):
-    #is_admin = models.BooleanField(default= False)
-   # is_regularuser = models.BooleanField(default= False)
 
 
 class Item(models.Model):
@@ -16,11 +14,19 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
+    submission_date = models.DateField(auto_now_add=True)
+    request_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, max_length=8)
 
     @property
-    def total_cost(self):
-         return Decimal(str(self.unit_cost)) * self.quantity
-    
+    def total_price(self):
+        return Decimal(str(self.unit_cost)) * self.quantity
+
+
+
+
+
+
+
 
 
 class VerificationCode(models.Model):
@@ -103,35 +109,3 @@ class User(AbstractUser):
  #   description = models.TextField()
   #  link = models.URLField()
    # created_at = models.DateTimeField(default=timezone.now)
-
-# models.py
-
-# models.py
-
-class SelectItem(models.Model):
-
-    category = models.CharField(max_length=50, default='Uncategorized')
-    item = models.CharField(max_length=100)
-    item_brand_description= models.CharField(max_length=100)
-    unit= models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10,decimal_places=2)
-
-    def fetch_data_from_mongo(cls):
-        client = MongoClient('mongodb://localhost:27017') 
-        db = client['inventory']  # Replace with your MongoDB database name
-        collection = db['select_item']  # Replace with your MongoDB collection name
-
-        data_from_mongo = collection.find()
-
-        for item_data in data_from_mongo:
-            item = cls(
-                category=item_data['CATEGORY'],
-                item=item_data['ITEM'],
-                item_brand_description=item_data['ITEM BRAND/DESCRIPTION'],
-                unit=item_data['UNIT'],
-                price=float(item_data['PRICE']),
-            )
-            item.save()
-
-    def __str__(self):
-        return f"{self.item} ({self.category})"

@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block requester %}
+{% block request %}
 
 <style>
     .input-group {
@@ -84,7 +84,7 @@
   </div>
   
 
-      <form action="{% url 'category' %}">
+      <form action="{% url 'request' %}">
         {% csrf_token %}
     
         {% for category_name, products in categories.items %}
@@ -137,7 +137,7 @@
 
                   <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
+                    <form action="{% url 'request' %}" method="post">
                         {% csrf_token %}
 
                           
