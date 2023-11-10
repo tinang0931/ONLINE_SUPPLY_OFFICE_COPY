@@ -9,6 +9,7 @@ urlpatterns = [
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
+   path('category/',views.category, name='category'),
    path('requester/' , views.requester, name="requester"),
    path('addItem/',views.addItem, name='addItem'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
@@ -24,7 +25,4 @@ urlpatterns = [
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
-   path('category/',views.category, name='category'),
-
-   
 ]

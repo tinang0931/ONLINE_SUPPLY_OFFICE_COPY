@@ -333,37 +333,37 @@ def requester(request):
 
 
 
-@authenticated_user
-def bac_history(request):
-    # Fetch all PurchaseRequest objects linked to the logged-in user
-    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+# @authenticated_user
+# def bac_history(request):
+#     # Fetch all PurchaseRequest objects linked to the logged-in user
+#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
 
-    if request.method == 'POST':
-        action = request.POST.get('Action')
-        purchase_request_id = request.POST.get('Purchase_Request_ID')
+#     if request.method == 'POST':
+#         action = request.POST.get('Action')
+#         purchase_request_id = request.POST.get('Purchase_Request_ID')
 
-        # Check if the 'Purchase_Request_ID' field is present
-        if not purchase_request_id:
-            return HttpResponse('Please fill in all the required fields.')
+#         # Check if the 'Purchase_Request_ID' field is present
+#         if not purchase_request_id:
+#             return HttpResponse('Please fill in all the required fields.')
 
-        # Fetch the PurchaseRequest object from the database
-        try:
-            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-        except PurchaseRequestForm.DoesNotExist:
-            return HttpResponse('Purchase request not found.')
+#         # Fetch the PurchaseRequest object from the database
+#         try:
+#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+#         except PurchaseRequestForm.DoesNotExist:
+#             return HttpResponse('Purchase request not found.')
 
-        # Update the PurchaseRequest object based on the submitted action
-        if action == 'approve':
-            purchase_request.is_approved = True
-        elif action == 'disapprove':
-            purchase_request.is_disapproved = False
-        else:
-            return HttpResponse('Invalid action.')
+#         # Update the PurchaseRequest object based on the submitted action
+#         if action == 'approve':
+#             purchase_request.is_approved = True
+#         elif action == 'disapprove':
+#             purchase_request.is_disapproved = False
+#         else:
+#             return HttpResponse('Invalid action.')
 
-        # Save the updated PurchaseRequest object to the database
-        purchase_request.save()
+#         # Save the updated PurchaseRequest object to the database
+#         purchase_request.save()
 
-        # Redirect to the bac_history page
-        return render(request('bac_history'))
-    # Render the bac_history page with the list of PurchaseRequest objects
-    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+#         # Redirect to the bac_history page
+#         return render(request('bac_history'))
+#     # Render the bac_history page with the list of PurchaseRequest objects
+#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
