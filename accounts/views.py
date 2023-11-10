@@ -120,7 +120,7 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('category')
+           return redirect('request')
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
