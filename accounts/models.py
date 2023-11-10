@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
+from decimal import Decimal 
 
 
 #class User(AbstractUser):
@@ -15,6 +16,10 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
+
+    @property
+    def total_cost(self):
+         return Decimal(str(self.unit_cost)) * self.quantity
     
 
 

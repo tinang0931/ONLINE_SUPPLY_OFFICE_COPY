@@ -323,7 +323,8 @@ def addItem(request):
                 unit=unit,
                 unit_cost=unit_cost,
                 quantity=quantity,
-                total_cost =  unit_cost * quantity
+               
+                
         )
         return redirect('addItem')
     return render(request, 'accounts/User/request.html')
