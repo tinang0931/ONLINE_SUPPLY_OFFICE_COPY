@@ -17,6 +17,7 @@ class Item(models.Model):
     quantity = models.IntegerField()
     
 
+
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
