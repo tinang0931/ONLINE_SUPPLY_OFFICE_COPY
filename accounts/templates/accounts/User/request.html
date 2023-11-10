@@ -137,6 +137,9 @@
 
                   <div class="modal-body">
 
+                    <form id="addItemForm" method="POST" action="{% url 'addItem' %}">
+                        {% csrf_token %}
+
                           
                           <div class="form-group">
                               <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
@@ -173,6 +176,8 @@
                               <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
                               
                           </div>
+
+                    </form>
                   </div>
               </div>
           </div>
