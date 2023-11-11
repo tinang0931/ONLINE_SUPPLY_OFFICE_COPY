@@ -211,24 +211,24 @@ def reset_password(request):
 
 
 
-@authenticated_user
+
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
 
-@authenticated_user
+
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-@authenticated_user
+
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
 
-@authenticated_user
+
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
@@ -236,16 +236,11 @@ def tracker(request):
 
 
 @authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
-
-
-@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-@authenticated_user
+
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -265,6 +260,7 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
@@ -273,11 +269,6 @@ def preqform(request):
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-@authenticated_user
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
 
 
 @authenticated_user
