@@ -313,7 +313,6 @@ def request(request):
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
