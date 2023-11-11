@@ -202,7 +202,6 @@ height: 100%;
 
 .list-group-item-light {
   color:black;
-  background-color: #ffa125e3;
 }
 
 
@@ -231,10 +230,10 @@ height: 100%;
 
 
 .sidebar{
- 
+  
   transition: all 1s;
   -webkit-transition: all 1s;
-  background-color: #ffa125e3;
+  border-right: 2px solid black;
 }
 
 
