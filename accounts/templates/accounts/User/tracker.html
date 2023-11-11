@@ -2,31 +2,35 @@
 
 {% block tracker %}
 <style>
-  .custom-f{
+  .custom-f {
     display: flex;
     justify-content: center;
   }
 
-  .pad{
-    padding: 0px!important;
+  .pad {
+    padding: 0px !important;
   }
 
   .item-received {
-  margin: 20 auto;
-}
+    margin: 20px auto;
+  }
+
+  
+  .center-text {
+    text-align: center;
+  }
 </style>
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
     <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
   </div>
-  <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
-    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
-    </div>
+  <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
+    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
-      <table class="table table-bordered" style="margin: 0px!important; border: none;">
+      <table class="table table-bordered" style="margin: 0px !important; border: none;">
         <thead>
           <tr>
             <th class="text-center">Purchase Request No.</th>
@@ -36,16 +40,16 @@
         </thead>
         <tbody>
           <tr>
-            <td>0000001</td>
-            <td>Waiting for Campus Director Approval</td>
-            <td><a href="#"
-                style="background-color: gray; color: white; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
-                RECEIVED</a></td>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <td class="text-center">0000001</td>
+            <td class="text-center">Waiting for Campus Director Approval</td>
+            <td class="center-text">
+              <a href="#"
+                style="background-color: gray; color: white; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM RECEIVED</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  {% endblock %}  
+</div>
+{% endblock %}
