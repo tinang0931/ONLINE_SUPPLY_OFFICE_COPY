@@ -32,6 +32,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
+from .models import Item
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 import random
 
 def main(request):
@@ -406,5 +409,4 @@ def requester(request):
 #     else: 
 #     # Return a JSON response with an error message for invalid request methods
 #       return JsonResponse({'message': 'Invalid request methods'}, status=405)
-  
   
