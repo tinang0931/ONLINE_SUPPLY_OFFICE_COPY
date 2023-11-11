@@ -142,51 +142,6 @@
     {% endfor %}
 </form>
 
-<form action="{% url 'category' %}" method="post">
-    {% csrf_token %}
-
-    {% for category, items in categories.items %}
-    <h2 id="{{ category }}">{{ category }}</h2>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Items</th>
-                        <th scope="col">Item Brand Description</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items %}
-                        <tr>
-                            <td>{{ item.Items }}</td>
-                            <td>{{ item.Item_brand_description }}</td>
-                            <td>{{ item.Unit }}</td>
-                            <td>{{ item.Price }}</td>
-                            <td>{{ item.Quantity }}</td>
-                            <td class="custom-checkbox">
-                                <input type="checkbox" name="selected_items" id="checkbox{{ item.id }}" value="{{ item.id }}">
-                                <label for="checkbox{{ item.id }}">Select</label>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-            <button type="submit" class="btn btn-primary btn-sm" >Add to Cart</button>
-    </div>
-    <br><br><br>
-    {% endfor %}
-</form>
-
-
-
     <script>
         function scrollToCategory() {
             console.log("scrollToCategory function called!");
