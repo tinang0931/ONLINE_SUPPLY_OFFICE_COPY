@@ -202,7 +202,7 @@ height: 100%;
 
 .list-group-item-light {
   color:black;
-  background-color: #fefefe;
+  background-color: #ffa125e3;
 }
 
 
@@ -211,16 +211,16 @@ height: 100%;
   border-bottom: 0px !important;
   border-radius: 0% !important;
   text-align: left;
-  font-family: Source Sans Pro;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 600;
   font-size: 20px;
-  font-weight: 300;
   line-height: 30px;
   letter-spacing: 0.1em;
 }
 
 
 .pr{
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -231,16 +231,17 @@ height: 100%;
 
 
 .sidebar{
-  border-right: 2px solid black;
+ 
   transition: all 1s;
   -webkit-transition: all 1s;
+  background-color: #ffa125e3;
 }
 
 
 #sidebar-wrapper {
   min-height: auto;
   margin-left: -15rem;
-  transition: margin 0.25s ease-out;
+  transition: margin 3s ease-out;
 }
 
 
@@ -281,7 +282,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .p1 {
   color: white;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 25px;
   text-align: center;
 }
@@ -289,7 +290,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .head {
   color: white;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
   margin-left: 0%;
   font-size: 60px;
 }
@@ -311,7 +312,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   color: white;
   text-align: center !important;
   margin: 0%;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: larger;
   height: 40px;
   display: flex;
@@ -349,7 +350,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 .form-group{
-  font-family: sans-serif ;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -387,7 +388,7 @@ label {
 
 .row {
   font-size: 16px;
-  font-family: sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -398,7 +399,7 @@ i.bi-circle-fill {
 
 
 .btn-custom {
-  background-color: #808080;
+  background-color: #808080;;
   color: #ffffff;
 }
 

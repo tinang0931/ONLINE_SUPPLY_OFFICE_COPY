@@ -236,11 +236,6 @@ def tracker(request):
 
 
 @authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
-
-
-@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
@@ -265,6 +260,7 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
@@ -273,11 +269,6 @@ def preqform(request):
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-@authenticated_user
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
 
 
 @authenticated_user
