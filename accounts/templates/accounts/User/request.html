@@ -48,6 +48,11 @@
       padding: 10px;
       cursor: pointer;
     }
+    
+    .custom-checkbox input:checked + label {
+        color: green;
+    }
+
 
 </style>
 
@@ -91,46 +96,8 @@
   </div>
   
 <br><br>
-<style>
-    .custom-checkbox input:checked + label {
-        color: green;
-    }
-</style>
 
-      <form action="{% url 'request' %}">
-        {% csrf_token %}
-    
-        {% for category_name, products in categories.items %}
-            <div class="table table-responsive">
-                <h3>{{ category_name }}</h3>
-                <table class="table" id="create_request_table" style="border: 1px solid black;">
-                    <thead>
-                        <tr>
-                            <td>{{ item.Items }}</td>
-                            <td>{{ item.Item_brand_description }}</td>
-                            <td>{{ item.Unit }}</td>
-                            <td>{{ item.Price }}</td>
-                            <td>{{ item.Quantity }}</td>
-                            <td class="custom-checkbox">
-                                <input type="checkbox" name="selected_items" id="checkbox{{ item.id }}" value="{{ item.id }}">
-                                <label for="checkbox{{ item.id }}">Select</label>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-right">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addItemModal">Add to Cart</button>
-        </div>
-    </div>
-    <br><br><br>
-    {% endfor %}
-</form>
-
-<form action="{% url 'category' %}" method="post">
+<form action="{% url 'request' %}" method="post">
     {% csrf_token %}
 
     {% for category, items in categories.items %}
@@ -166,34 +133,12 @@
             </table>
         </div>
     </div>
-    <div class="row">
+    
             <button type="submit" class="btn btn-primary btn-sm" >Add to Cart</button>
-    </div>
+   
     <br><br><br>
     {% endfor %}
 </form>
-
-
-
-    <script>
-        function scrollToCategory() {
-            console.log("scrollToCategory function called!");
-            
-            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-            console.log("Selected Category:", selectedCategory);
-            
-            var categoryElement = document.getElementById(selectedCategory);
-            console.log("Category Element:", categoryElement);
-    
-            if (categoryElement) {
-                categoryElement.scrollIntoView({ behavior: "smooth" });
-                console.log("Scrolling to category:", selectedCategory);
-            }
-        }
-    </script>
-     
-
-
     </form>        
         </div>
 
@@ -325,6 +270,22 @@
           }
       }
   }
+
+ 
+        function scrollToCategory() {
+            console.log("scrollToCategory function called!");
+            
+            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
+            console.log("Selected Category:", selectedCategory);
+            
+            var categoryElement = document.getElementById(selectedCategory);
+            console.log("Category Element:", categoryElement);
+    
+            if (categoryElement) {
+                categoryElement.scrollIntoView({ behavior: "smooth" });
+                console.log("Scrolling to category:", selectedCategory);
+            }
+        }
 </script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
