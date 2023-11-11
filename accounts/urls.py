@@ -17,10 +17,10 @@ urlpatterns = [
    path('about/',views.about, name='about'),
    path('history/',views.history, name='history'),
    path('profile/',views.profile, name='profile'),
-   path('pro_file/',views.pro_file, name='pro_file'),
-   path('profile_html/', views.profile_html, name='profile_html'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
+   path('preqform/',views.preqform, name='preqform'),
+
 ]
