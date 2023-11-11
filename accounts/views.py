@@ -14,7 +14,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .tokens import account_activation_token
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash

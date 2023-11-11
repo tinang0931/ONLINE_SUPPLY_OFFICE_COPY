@@ -74,7 +74,9 @@ class User(AbstractUser):
         related_query_name='accounts_user', # Add this line
 
     )
-    
+
+# class Item(models.Model):
+#     user = 
 
 # class tracker(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
