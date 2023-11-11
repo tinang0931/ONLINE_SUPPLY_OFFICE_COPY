@@ -183,87 +183,76 @@
       </form>
 </div>
 
-    <br>
+<script>
+  const categoryFilter = document.getElementById('category_filter');
+  const productTables = document.querySelectorAll('.table table');
 
-    <div class="border border-dark"></div>
+  categoryFilter.addEventListener('change', (event) => {
+      const selectedCategory = event.target.value;
+      const filteredProducts = {};
 
-    <br>
-    <br>
-    <form action="{% url 'requester' %}" method="post">
-      {% csrf_token %}
-    <div class="row w-100 m-auto">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0 mb-3">
-            <div class="form-group mb-3">
-                <label for="departmentDropdown">Choose Department:</label>
-                    <select class="form-control" id="departmentDropdown" name="departmentDropdown">
-                        <option value="option1">College of Arts and Sciences</option>
-                        <option value="option2">College of Agriculture</option>
-                        <option value="option3">College of Forestry</option>
-                        <option value="option4">College of Hospitality Management and Tourism</option>
-                        <option value="option5">College of Technology and Engineering</option>
-                        <option value="option6">College of Education</option>
-                        <option value="option7">Graduate School</option>
-                        <option value="option8"> Others please specify:</option>
-                    </select>
-                <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control" style="display: none;">
-            </div>
-        </div>
-  
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0 mb-3">
-            <div class="form-group mb-3">
-                <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
-                <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
-            </div>
-        </div>
-    </div>
-        
-      <div>
-        <div class=" table table-responsive">
-          <table class="table" id="create_request_table" style="border: 1px solid black;">
-            <thead>
-              <tr>
-                  <th class="text-center text-nowrap">Item Number</th>
-                  <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
-                  <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                  <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
-                  <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                  <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                  <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                  <th class="text-center text-nowrap"></th>
-                  <div class="d-flex justify-content-evenly"></div>
-              </tr>
-          </thead>
-          
-              <tbody>
-                {% for item in items %}
-                <tr>
-                    <td class="item_number text-center">{{ forloop.counter }}</td>
-                    <td class="item_name text-center">{{ item.item }}</td>
-                    <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                    <td class="item_unit text-center">{{ item.unit }}</td>
-                    <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                    <td class="item_quantity text-center">{{ item.quantity }}</td>
-                    <td class="item_total_cost text-center">0.00</td> <!-- Total Cost field -->
-                </tr>
-                {% endfor %}
-            </tbody>
-            
+      if (selectedCategory !== 'all') {
+          for (const productTable of productTables) {
+              const categoryName = productTable.querySelector('h3').textContent;
+              if (categoryName === selectedCategory) {
+                  const products = productTable.querySelectorAll('tbody tr');
+                  for (const product of products) {
+                      const itemName = product.querySelector('td:nth-child(2)').textContent;
+                      const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                      const unit = product.querySelector('td:nth-child(4)').textContent;
+                      const price = product.querySelector('td:nth-child(5)').textContent;
 
-                <tfoot>
-                    <tr>
-                      <td colspan="6" >Total Amount</td>
-                      <td class="text-center"><span id="totalAmount">00.00</span></td>
-                    </tr>
-                </tfoot>
-          </table>
-        </div>
-            <button type="submit" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
-      </div>
-    </form>
-  </div>
+                      if (!filteredProducts[categoryName]) {
+                          filteredProducts[categoryName] = [];
+                      }
 
+                      filteredProducts[categoryName].push({
+                          itemName,
+                          itemDescription,
+                          unit,
+                          price
+                      });
+                  }
+              }
+          }
+      }
 
-  
+      // Update the displayed items based on the filtered products
+      updateProductTables(filteredProducts);
+  });
+
+  function updateProductTables(filteredProducts) {
+      for (const productTable of productTables) {
+          productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
+
+          const categoryName = productTable.querySelector('h3').textContent;
+          const products = filteredProducts[categoryName] || [];
+
+          for (const product of products) {
+              const row = document.createElement('tr');
+
+              const itemNameCell = document.createElement('td');
+              itemNameCell.textContent = product.itemName;
+              row.appendChild(itemNameCell);
+
+              const itemDescriptionCell = document.createElement('td');
+              itemDescriptionCell.textContent = product.itemDescription;
+              row.appendChild(itemDescriptionCell);
+
+              const unitCell = document.createElement('td');
+              unitCell.textContent = product.unit;
+              row.appendChild(unitCell);
+
+              const priceCell = document.createElement('td');
+              priceCell.textContent = product.price;
+              row.appendChild(priceCell);
+
+              productTable.querySelector('tbody').appendChild(row);
+          }
+      }
+  }
+</script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 {% endblock %}
