@@ -1,0 +1,70 @@
+{% extends "accounts/Admin/BAC_Secretariat/header.html" %}
+
+{% load static %}
+
+
+
+{% block preqform %}
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>PURCHASE REQUEST</h3>
+        <div class="d-flex justify-content-between" style="margin-top: 5px;">
+            <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+            <h4 style="margin-left: 60px;"contenteditable="true">Fund Cluster:________________</h4>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="d-flex justify-content-center">
+                    <table class="table-bordered" style="width: 200%">
+                        <tr>
+                            <th colspan="2">Office Section: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
+                            <th colspan="2" contenteditable="true">PR No.: _______<br>Responsibility Center Code: ______</th>
+                            <th colspan="2" contenteditable="true">Date: _________</th>
+                        </tr>
+                        <tr>
+                            <td>Stock/Property</td>
+                            <td>Unit</td>
+                            <td>Item Description</td>
+                            <td>Quantity</td>
+                            <td>Unit Cost</td>
+                            <td>Total Cost</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        
+                        <tr>
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                                </td>
+                            </tr>
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" colspan="6">Purpose: ___________</td>
+                            
+                        </tr>
+                        <tr>
+                            <tr>
+                                <td contenteditable="true" colspan="5">Requested by: _________</td>
+    <td style="text-align: left;">Approved by: Juan Juan</td>
+                            </tr>
+                            
+                </table>
+            </div>
+        </div>
+    </div>
+     {% endblock %}

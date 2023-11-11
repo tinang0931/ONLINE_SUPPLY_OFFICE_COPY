@@ -1,30 +1,38 @@
 from django.shortcuts import redirect, render
+from django.core.cache import cache
 from .models import *
+import pymongo
+from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render
-from .models import Item
-from .models import Department, Item, Purpose
-from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.models import User
+from django.http import HttpResponse  
+from django.shortcuts import render, redirect   
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage 
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.contrib.auth import get_user_model
-from django.contrib.auth import update_session_auth_hash
-from django.utils.crypto import get_random_string
-from django.core.cache import cache
 from django.core.mail import send_mail
+from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.utils.crypto import get_random_string
+from .models import VerificationCode
 import random
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import PurchaseRequest
-
-
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -81,7 +89,6 @@ def register(request):
 
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')  # Redirect to the login page upon successful registration
-
     return render(request, 'accounts/User/register.html')
 
 
@@ -103,6 +110,7 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
+        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
@@ -112,15 +120,16 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('requester')
+           return redirect('request')
         else:
-            # Authentication failed, display an error message
-            messages.error(request, 'Invalid login credentials. Please try again.')
-    
+            # Authentication failed, show an error message
+            messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
+
 
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
+
 
 @unauthenticated_user
 def handle_reset_request(request):
@@ -145,6 +154,7 @@ def handle_reset_request(request):
         # Redirect the user to a page where they can enter the verification code
         return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
+
 
 @unauthenticated_user
 def verify_code(request):
@@ -172,8 +182,8 @@ def is_valid_code(verification_code, user_email):
     if stored_code and verification_code == stored_code:
         # Codes match, and the code exists in the cache
         return True
-
     return False
+
 
 @unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
@@ -193,7 +203,6 @@ def reset_password(request):
         
         # To maintain the user's session after changing the password, you can use the following:
         update_session_auth_hash(request, user)
-
         
         # Redirect the user to a success page or login page
         messages.success(request, 'Password updated successfully.')
@@ -216,18 +225,14 @@ def about(request):
 
 @authenticated_user
 def history(request):
-   user_history = History.objects.filter(user=request.user).order_by('-date_requested')
-   return render(request, 'accounts/User/history.html')
-
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/history.html', {'items': items})
 
 @authenticated_user
 def tracker(request):
+    # purchase_requests = PurchaseRequest.objects.all()
+    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
-
-
-@authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
 
 
 @authenticated_user
@@ -255,14 +260,15 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
+@authenticated_user
+def preqform(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-@authenticated_user
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
 
 
 @authenticated_user
@@ -270,61 +276,116 @@ def signout(request):
     pass
 
 
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
-
 
 @authenticated_user
-def requester(request):
+def request(request):
     if request.method == 'POST':
-        print("dfsdffsdfs")
-        # Handle department selection
-        department_id = request.POST.get('departmentDropdown')
-        if department_id == 'option8':
-            # If "Others" department is selected, use the custom department input
-            department_name = request.POST.get('customDepartment')
-        else:
-            # Use the selected department from the dropdown
-            department = Department.objects.get(pk=department_id)
-            department_name = department.name
-        print("dfsdffsdfs")
+        # Handle form submission
+        purpose = request.POST.get('item_purpose')
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        # Create an Item object and populate its fields with form data
-        item = Item(
-            department=department_name,
-            item_number=request.POST.get('item_number'),
-            item_name=request.POST.get('item_name'),
-            item_description=request.POST.get('item_description'),
-            unit=request.POST.get('unit'),
-            unit_cost=request.POST.get('unit_cost'),
-            quantity=request.POST.get('quantity'),
-            total_cost=request.POST.get('total_cost')
-        
+        # MongoDB section
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client['inventory']
+        collection = db['inventcol']
+
+        # Save data to MongoDB
+        document = {
+            'Category': purpose,
+            'Items': item_data,
+            'Item_Brand_Description': item_brand_description,
+            'Unit': unit,
+            'Price': unit_cost,
+            'Quantity': quantity,
+        }
+        collection.insert_one(document)
+
+        # Django model section
+        # Create a new Item instance and set its attributes
+        item = Item.objects.create(
+            purpose=purpose,
+            item=item_data,
+            item_brand_description=item_brand_description,
+            unit=unit,
+            unit_cost=unit_cost,
+            quantity=quantity,
+            
         )
-        print("dfsdffsdfs")
-        item.save() 
-        print("dfsdffsdfs") # Save the Item object to the database
 
-        # Handle the purpose field if needed
-        purpose_text = request.POST.get('item_purpose')
-        if purpose_text:
-            purpose = Purpose(item=item, description=purpose_text)
-            purpose.save()
-        print("dfsdffsdfs")
-        # You can return a success message or redirect to another page
-        return JsonResponse({'message': 'Data saved to the database'})
+        return redirect('request')  # Redirect to the same page after adding the item
 
-    # Handle GET requests or other cases as needed
-    # ...
+    else:
+        # Handle data fetching for GET request
+        # Connect to MongoDB
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client['inventory']
+        collection = db['inventcol']
 
-    return render(request, 'accounts/User/requester.html' )
+        # Fetch all documents from the 'inventcol' collection
+        cursor = collection.find()
+
+        # Prepare data by category
+        categories = {}
+        for document in cursor:
+            category_name = document['Category']
+            if category_name not in categories:
+                categories[category_name] = []
+
+            categories[category_name].append({
+                "Item_brand_description": document.get('Item_Brand_Description', ''),
+                "Items": document['Items'],
+                "Unit": document['Unit'],
+                "Price": document['Price']
+            })
+
+        # Render the HTML template with categorized data
+        return render(request, 'accounts/User/request.html', {'categories': categories})
 
 
 
+def requester(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/cart.html', {'items': items})
+
+
+
+
+
+# @authenticated_user
+# def bac_history(request):
+#     # Fetch all PurchaseRequest objects linked to the logged-in user
+#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+#     if request.method == 'POST':
+#         action = request.POST.get('Action')
+#         purchase_request_id = request.POST.get('Purchase_Request_ID')
+
+#         # Check if the 'Purchase_Request_ID' field is present
+#         if not purchase_request_id:
+#             return HttpResponse('Please fill in all the required fields.')
+
+#         # Fetch the PurchaseRequest object from the database
+#         try:
+#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+#         except PurchaseRequestForm.DoesNotExist:
+#             return HttpResponse('Purchase request not found.')
+
+#         # Update the PurchaseRequest object based on the submitted action
+#         if action == 'approve':
+#             purchase_request.is_approved = True
+#         elif action == 'disapprove':
+#             purchase_request.is_disapproved = False
+#         else:
+#             return HttpResponse('Invalid action.')
+
+#         # Save the updated PurchaseRequest object to the database
+#         purchase_request.save()
+
+#         # Redirect to the bac_history page
+#         return render(request('bac_history'))
+#     # Render the bac_history page with the list of PurchaseRequest objects
+#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
