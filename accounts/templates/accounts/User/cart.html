@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/User/nav.html" %}
 
 
 {% load static %}
@@ -6,44 +6,77 @@
 
 {% block cart %}
 
+<style>
+  .cart_table tbody tr td {
+    vertical-align: middle;
+  }
+</style>
+
 
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
+
+    
     <div>
-      <div class=" table table-responsive">
-        <table class="table" id="create_request_table" style="border: 1px solid black;">
-          <thead>
+      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
+        <table class="cart_table" id="create_request_table" style="background-color: none; ">
+          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
             <tr>
-                <th class="text-center text-nowrap">Purpose</th>
                 <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Action</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
                 <th class="text-center text-nowrap"></th>
-                <div class="d-flex justify-content-evenly"></div>
+                
             </tr>
         </thead>
         
             <tbody>
               {% for item in items %}
-              <tr>
-                  <td class="item_purpose text-center">{{ item.purpose }}</td>
-                  <td class="item_name text-center">{{ item.item }}</td>
+              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+                  <td class="item_name text-center">  {{ item.item }} </td>
                   <td class="item_description text-center">{{ item.item_brand_description }}</td>
                   <td class="item_unit text-center">{{ item.unit }}</td>
                   <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                   <td class="item_quantity text-center">{{ item.quantity }}</td>
+                  <td class="item_total_cost text-center">{{item.total_cost}}</td> <td class="text-center">
                   <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}">Edit</button>
-                    <button class="delete-button" data-item-id="{{ item.id }}">Delete</button>
+                    <button class="edit-button" data-item-id="{{ item.id }}"  onclick="editRow(this)" style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(1, 154, 72);" >
+                      <i class="fa fa-edit"></i>
+                    </button>                
+                    <button class="delete-button" data-item-id="{{ item.id }}"  style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    
                 </td>
               </tr>
               {% endfor %}
           </tbody>
         </table>
+
+
+    
+
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose">
+            <textarea class="purpose_box" id="exampleFormcontrolTextarea1" name="item_purpose" placeholder="Purpose"></textarea>
+          </div>
+          <div class="total_amount">
+            <span>Total Amount: {{total_cost}}</span>
+          </div>
+          <div class="submit">
+            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+          </div>
+        </div>
+      
       </div>
+      </div>
+  
   </form>
+
+
 
   {% endblock %}
