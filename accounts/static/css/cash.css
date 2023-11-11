@@ -5,11 +5,15 @@
 }
 
 
+
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;
   }
 }
+
+
 
 
 body {
@@ -29,15 +33,21 @@ body {
 }
 
 
+
+
 #wrapper{
   background-color: #ffffff;
 }
+
+
 
 
 .column,
 .column * {
   box-sizing: border-box;
 }
+
+
 
 
 .column {
@@ -53,6 +63,8 @@ body {
 }
 
 
+
+
 .p {
   text-align: left;
   font: 400 24px/130% "Inter", sans-serif;
@@ -63,15 +75,21 @@ body {
 }
 
 
+
+
 .p{
   color: #003566;
   font: 16 20px/80% "Inter", sans-serif;
 }
 
 
+
+
 .swal2-actions .btn{
   margin: 0 5px !important ;
 }
+
+
 
 
 .navbar {
@@ -87,9 +105,13 @@ body {
 }
 
 
+
+
 .container-fluid col-2 {
 padding: 0px !important;
 }
+
+
 
 
 .container h1 {
@@ -97,6 +119,9 @@ padding: 0px !important;
   font-family: source sans pro;
   padding: 30px;
 }
+
+
+
 
 
 
@@ -108,10 +133,14 @@ padding: 0px !important;
 }
 
 
+
+
 .background{
   position: relative;
   background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
 }
+
+
 
 
 .image-container {
@@ -123,10 +152,15 @@ height: 100%;
 }
 
 
+
+
 .profile_img {
 height: 170px !important;  
 
+
 }
+
+
 
 
 list-group-flush {
@@ -134,10 +168,14 @@ list-group-flush {
 }
 
 
+
+
 .list-group-item-light {
   color:black;
   background-color: #fefefe;
 }
+
+
 
 
 .list-group-item{
@@ -153,16 +191,22 @@ list-group-flush {
 }
 
 
+
+
 .bg-light {
   --bs-bg-opacity: 1;
   background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%) !important;
-} 
+}
+
+
 
 
 .sidebar{
   height: auto;
   border-right: 2px solid black;
 }
+
+
 
 
 #sidebar-wrapper {
@@ -172,10 +216,14 @@ list-group-flush {
 }
 
 
+
+
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
 }
+
+
 
 
 #sidebar-wrapper .list-group {
@@ -183,9 +231,13 @@ list-group-flush {
 }
 
 
+
+
 #page-content-wrapper {
   min-width: 100vw;
 }
+
+
 
 
 body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
@@ -193,15 +245,19 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
+
+
 @media (min-width: 800px) {
   #sidebar-wrapper {
     margin-left: 0;
   }
 
+
   #page-content-wrapper {
     min-width: 0;
     width: 100%;
   }
+
 
   .head {
     color: white;
@@ -210,12 +266,14 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     font-size: 60px;
   }
 
+
   .p1 {
     color: white;
     font-family: serif;
     font-size: 25px;
     text-align: center;
   }
+
 
   .d-flex {
       display: -ms-flexbox!important;
@@ -225,12 +283,14 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
       content-visibility: auto;
   }
 
+
   .pr {
       font-size: 4opx;
       font-family: serif;
       display: flex;
       align-content: center;
   }
+
 
   .container {
       display: flex;
@@ -240,6 +300,8 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
       justify-content: space-evenly;
       padding: 4px !important;
   }
+
+
 
 
 .welcome{
@@ -260,20 +322,25 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
+
+
 .arrow_img {
   height: 20px;
   width: 20px;
 }
 
 
+
+
 .text-container {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; 
+            align-items: flex-start;
             color: white;
             margin-left: 20px;
             font-family: sans-serif
         }
+
 
         p {
             font-size: 16px;
@@ -282,10 +349,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
             font-size: 20px;
             font-family: serif;
         }
-        
+       
         ul {
             margin-top: 20px;
         }
+
 
         ul li {
             list-style: disc;
@@ -296,6 +364,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
             font-family: serif;
         }
 
+
         h3 {
             font-size: 18px;
             margin-top: 20px;
@@ -303,14 +372,17 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
             font-family: serif;
         }
 
+
         p {
           text-align: center;
         }
+
 
         footer {
           padding-top: 50px;
           box-sizing: border-box;
         }
+
 
         .container {
           width: 1140px;
@@ -318,9 +390,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
           display: flex;
         }
 
+
         .footer {
           width: 33..3%;
         }
+
 
         h3{
           font-size: 20px;
@@ -329,11 +403,12 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
           color: white;
         }
 
+
         .footer-content p{
           width: 190px;
           margin: auto;
           padding: 7px;
 
+
         }
     }
-
