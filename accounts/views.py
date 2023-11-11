@@ -382,10 +382,3 @@ def bac_history(request):
         return render(request('bac_history'))
     # Render the bac_history page with the list of PurchaseRequest objects
     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
-
-def all_items(request):
-    # Retrieve data from the database
-    data = Item.objects.all()
-    
-    # Render the data in the 'request.html' template
-    return render(request, 'request.html', {'data': data})

@@ -101,12 +101,12 @@ class User(AbstractUser):
 
 
 # models.py
-from django.db import models
+#from django.db import models
 
-class Item(models.Model):
-    _id = models.CharField(max_length=24)
-    category = models.CharField(max_length=100)
-    item = models.CharField(max_length=100)
-    item_description = models.CharField(max_length=255)
-    unit = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+##class Item(models.Model):
+   # _id = models.CharField(max_length=24)
+   # category = models.CharField(max_length=100)
+   # item = models.CharField(max_length=100)
+   # item_description = models.CharField(max_length=255)
+   # unit = models.CharField(max_length=50)
+   # price = models.DecimalField(max_digits=10, decimal_places=2)
