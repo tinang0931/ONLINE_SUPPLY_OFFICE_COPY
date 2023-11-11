@@ -264,15 +264,6 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
-@authenticated_user
-def profile_html(request):
-    return render(request, 'profile.html')
-
-
-@authenticated_user
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
-
 
 @authenticated_user
 def signout(request):
