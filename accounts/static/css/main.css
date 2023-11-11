@@ -105,6 +105,7 @@ body {
 
 #wrapper{
   background-color: #ffffff;
+
 }
 
 
@@ -255,6 +256,7 @@ height: 100%;
 
 
 #page-content-wrapper {
+  
   min-width: 100vw;
 }
 
@@ -341,7 +343,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   height: auto;
   bottom: 0;
   -webkit-user-modify: read-only;
-  position: relative;
+  position: fixed;
   z-index: 2;
 }
 
@@ -3262,4 +3264,48 @@ button {
 
 .modal-footer {
   border-top: 15px solid #ccc;
+}
+
+
+
+table-responsive {
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 100%;
+ }
+
+
+ 
+ .cart_table thead tr {
+  background-color: rgba(0, 50, 102, 0.5);
+  font-weight: bold;
+}
+
+
+ 
+ 
+ 
+ .row-at-bottom {
+  position: fixed;
+  bottom: 150px;
+  width: 80%;
+  left: 200px
+}
+
+.purpose_box {
+  width: 500px;
+  height: 45px;
+}
+
+.total_amount {
+  width: 90px;
+  height: 45px;
+}
+
+.submit {
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 90px;
+  height: 45px;
 }
