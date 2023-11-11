@@ -1,33 +1,38 @@
 from django.shortcuts import redirect, render
+from django.core.cache import cache
 from .models import *
+import pymongo
+from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render
-from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.models import User
+from django.http import HttpResponse  
+from django.shortcuts import render, redirect   
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage 
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
-from django.core.cache import cache
-from django.core.mail import send_mail
+from .models import VerificationCode
 import random
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
-from django.core.mail import send_mail
-from decimal import Decimal
-from decimal import InvalidOperation
-from .models import PurchaseRequestForm
-from decimal import Decimal, InvalidOperation
-from django.http import HttpResponseRedirect
-
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -105,6 +110,7 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
+        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
@@ -114,11 +120,10 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('requester')
+           return redirect('request')
         else:
-            # Authentication failed, display an error message
-            messages.error(request, 'Invalid login credentials. Please try again.')
-    
+            # Authentication failed, show an error message
+            messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
 
@@ -220,8 +225,8 @@ def about(request):
 
 @authenticated_user
 def history(request):
-    return render(request, 'accounts/User/history.html')
-
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/history.html', {'items': items})
 
 @authenticated_user
 def tracker(request):
@@ -261,6 +266,11 @@ def bac_home(request):
 
 
 @authenticated_user
+def preqform(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -275,30 +285,12 @@ def signout(request):
     pass
 
 
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
 
-
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
-
-
-def addItem(request):
+@authenticated_user
+def request(request):
     if request.method == 'POST':
+        # Handle form submission
+        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -313,115 +305,49 @@ def addItem(request):
                 unit_cost=unit_cost,
                 quantity=quantity,
             )
-
-            
             return HttpResponse("Item saved successfully.")
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
-        
-        # Retrieve all items from the database
-        
-    items = Item.objects.all()
-
     return render(request, 'accounts/User/request.html')
 
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
-    # items = Item.objects.filter(user=request.user)  # Fetch all Item instances from the database linked to the logged-in user
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested')[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()  # Fetch all Item instances from the database linked to the logged-in user, ordered by date requested in reverse order
-    # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
-    return render(request, 'accounts/User/request.html', {'items': items})
+    return render(request, 'accounts/User/cart.html', {'items': items})
 
-def tracker(request):
-    if request.method == 'GET':
-        request_id = request.GET.get('request_id')
-        if request_id is not None:
-            try:
-                purchase_request = PurchaseRequest.objects.get(pk=request_id)
-            except PurchaseRequest.DoesNotExist:
-                return render(request, 'error_template.html', {'error_message': 'Request not found'})
 
-            return render(request, 'accounts/User/tracker.html', {'purchase_request': purchase_request})
-        else:
-            return render(request, 'accounts/User/tracker.html', {'error_message': 'Request ID not provided'})
-    elif request.method == 'POST':
-        # Handle the POST request when the "ITEM RECEIVED" button is clicked
-        request_id = request.POST.get('request_id')
-        if request_id is not None:
-            try:
-                purchase_request = PurchaseRequest.objects.get(pk=request_id)
-                # You can add your logic here to mark the item as received and notify the BAC
+@authenticated_user
+def bac_history(request):
+    # Fetch all PurchaseRequest objects linked to the logged-in user
+    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
 
-                # For demonstration purposes, let's send a JSON response
-                response_data = {'message': 'Received message sent to BAC successfully'}
-                return JsonResponse(response_data)
-            except PurchaseRequest.DoesNotExist:
-                response_data = {'error_message': 'Request not found'}
-                return JsonResponse(response_data, status=400)
-        else:
-            response_data = {'error_message': 'Request ID not provided'}
-            return JsonResponse(response_data, status=400)
-
-from django.shortcuts import render
-
-def history(request):
-   # You can fetch the purchase request data from your database and pass it to the template.
-    # Replace this dummy data with actual data retrieval from your models.
-    requests = [
-        {
-            'purchase_request_id': '0000100',
-            'date_requested': '09-30-2023',
-            'purpose': 'Purchase Dell Laptop Order',
-            'quantity': '1 unit',
-            'status': 'pending approval',
-            'status_description': 'Verify Papers submitted',
-            'amount': '1,200,000',
-        },
-        {
-            'purchase_request_id': '0000101',
-            'date_requested': '09-30-2023',
-            'purpose': 'Purchase Dell Laptop Order',
-            'quantity': '1 unit',
-            'status': 'pending approval',
-            'status_description': 'Verify Papers submitted',
-            'amount': '1,200,000',
-        },
-        {
-            'purchase_request_id': '0000102',
-            'date_requested': '09-30-2023',
-            'purpose': 'Purchase Dell Laptop Order',
-            'quantity': '1 unit',
-            'status': 'pending approval',
-            'status_description': 'Verify Papers submitted',
-            'amount': '1,200,000',
-        },
-    ]
-
-    return render(request, 'accounts/User/history.html', {'request': request})
-
-def show_more_details(request):
     if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        if request_id is not None:
-            try:
-                purchase_request = PurchaseRequest.objects.get(pk=request_id)
-                # Fetch additional details or perform any other necessary actions
-                additional_details = purchase_request.additional_details  # Adjust this based on your model
+        action = request.POST.get('Action')
+        purchase_request_id = request.POST.get('Purchase_Request_ID')
 
-                # For demonstration purposes, let's send a JSON response with the additional details
-                response_data = {
-                    'purchase_request_id': purchase_request.id,
-                    'additional_details': additional_details,
-                }
-                return JsonResponse(response_data)
-            except PurchaseRequest.DoesNotExist:
-                response_data = {'error_message': 'Request not found'}
-                return JsonResponse(response_data, status=400)
+        # Check if the 'Purchase_Request_ID' field is present
+        if not purchase_request_id:
+            return HttpResponse('Please fill in all the required fields.')
+
+        # Fetch the PurchaseRequest object from the database
+        try:
+            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+        except PurchaseRequestForm.DoesNotExist:
+            return HttpResponse('Purchase request not found.')
+
+        # Update the PurchaseRequest object based on the submitted action
+        if action == 'approve':
+            purchase_request.is_approved = True
+        elif action == 'disapprove':
+            purchase_request.is_disapproved = False
         else:
-            response_data = {'error_message': 'Request ID not provided'}
-            return JsonResponse(response_data, status=400)
+            return HttpResponse('Invalid action.')
 
+        # Save the updated PurchaseRequest object to the database
+        purchase_request.save()
+
+        # Redirect to the bac_history page
+        return render(request('bac_history'))
+    # Render the bac_history page with the list of PurchaseRequest objects
+    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})

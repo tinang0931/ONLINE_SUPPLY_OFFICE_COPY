@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block requester %}
+{% block request %}
 
 <style>
     .input-group {
@@ -24,7 +24,7 @@
     .modal {
       display: none;
       position: fixed;
-      top: 300px;
+      top: 456px;
       left: 300px;
       width: 20%;
       height: 55%;
@@ -33,7 +33,7 @@
   
     .modal-content {
       position: absolute;
-      top: 325px;
+      top: 456px;
       left: 50%;
       width: 1000px;
       transform: translate(-50%, -50%);
@@ -56,27 +56,74 @@
         <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
     </div>
 
-      <br>
-
-
-      <div class="row">
-        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-          <select class="form-control" id="categoryDropdown" name="categoryDropdown">
-            <option value="" disabled selected>Choose Category</option>
-            <option value="option1">ANTISEPTICS</option>
-            <option value="option2">APPLIANCES</option>
-            <option value="option3">CLEANING EQUIPMENT AND SUPPLIES </option>
-            <option value="option4">ELECTRICAL AND HARDWARE  SUPPLIES </option>
-            <option value="option5">FURNITURE AND FURNISHINGS</option>
-            <option value="option6">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</option>
-            <option value="option7">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</option>
-            <option value="option8">PERSONAL PROTECTIVE EQUIPMENT</option>
-        </select>
-        </div>
-      
-        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-          <button type="button" class="btn" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-1 col-lg-4">
+          <select class="form-control mb-3" id="dropdownMenuSelect">
+              <option value="all">All Categories</option>
+              <option value="category1">Category 1</option>
+              <option value="category2">Category 2</option>
+              <option value="category3">Category 3</option>
+          </select>
       </div>
+  
+      <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+      </div>
+  
+      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+          <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+      </div>
+  
+      <div class="col-2 col-sm-2 col-md-1 col-lg-1">
+          <a href="{% url 'requester' %}">
+              <i>
+                  <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+              </i>
+          </a>
+      </div>
+  </div>
+  
+
+      <form action="{% url 'request' %}">
+        {% csrf_token %}
+    
+        {% for category_name, products in categories.items %}
+            <div class="table table-responsive">
+                <h3>{{ category_name }}</h3>
+                <table class="table" id="create_request_table" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th class="text-center text-nowrap">Item Name</th>
+                            <th class="text-center text-nowrap">Item Description</th>
+                            <th class="text-center text-nowrap">Unit</th>
+                            <th class="text-center text-nowrap">Unit Cost</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td class="text-center text-nowrap">{{ product.Items }}</td>
+                                <td class="text-center text-nowrap">{{ product.Item_brand_description }}</td>
+                                <td class="text-center text-nowrap">{{ product.Unit }}</td>
+                                <td class="text-center text-nowrap">{{ product.Price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+
+  
+  </form>
+  
+            
+
+
+            
+        </div>
+        
+        
 
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -89,8 +136,17 @@
                   </div>
 
                   <div class="modal-body">
-                      <form id="addItemForm" method="POST" action="{% url 'addItem' %}">
-                          {% csrf_token %}
+
+                    <form action="{% url 'request' %}" method="post">
+                        {% csrf_token %}
+
+                          
+                          <div class="form-group">
+                              <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
+                              <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" ></textarea>
+                          </div>
+                          
+
                           <div class="form-group">
                               <label for="Item">Item</label>
                               <input type="text" class="form-control" id="Item" name="item" required>
@@ -117,20 +173,15 @@
                           </div>
 
                           <div class="modal-footer">
-                              <button type="submit" value ="submit" class="btn btn-primary" >Submit</button>
+                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
                               
                           </div>
-
-                      </form>
                   </div>
               </div>
           </div>
-      </div>
-    
-        <div class="col-6 col-sm-6 col-md-5 col-lg-4">
-            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
         </div>
-    </div>
+      </form>
+</div>
 
     <br>
 
@@ -206,7 +257,7 @@
                 </tfoot>
           </table>
         </div>
-            <button type="submit" value ="CheckOut" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
+            <button type="submit" class="btn btn-primary" onclick="submitForm()" > CheckOut</button>
       </div>
     </form>
   </div>
@@ -214,11 +265,5 @@
 
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
 {% endblock %}
