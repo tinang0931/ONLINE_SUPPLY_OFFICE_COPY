@@ -1,0 +1,627 @@
+{% extends "accounts/User/main.html" %}
+
+
+{% load static %}
+
+
+{% block requester %}
+
+
+<style>
+  .input-group {
+    display: flex;
+  }
+
+  #quantityInput {
+    flex: 1;
+    width: 30px;
+  }
+
+  .btn-inc-dec {
+    flex: 0;
+  }
+
+  /* Style for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 300px;
+    left: 300px;
+    width: 20%;
+    height: 55%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    position: absolute;
+    top: 325px;
+    left: 50%;
+    width: 1000px;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 5px;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+</style>
+
+<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+  <div class="container">
+    <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
+  </div>
+  <form action="{% url 'requester' %}" method="post">
+    {% csrf_token %}
+    <div class="row w-100 m-auto">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+        <div class="form-group mb-3">
+          <label for="departmentDropdown">Choose Department:</label>
+          <select class="form-control" id="departmentDropdown" name="departmentDropdown">
+            <option value="option1">College of Arts and Sciences</option>
+            <option value="option2">College of Agriculture</option>
+            <option value="option3">College of Forestry</option>
+            <option value="option4">College of Hospitality Management and Tourism</option>
+            <option value="option5">College of Technology and Engineering</option>
+            <option value="option6">College of Education</option>
+            <option value="option7">Graduate School</option>
+            <option value="option8">Others please specify:</option>
+          </select>
+          <input type="text" id="customDepartmentInput" name="customDepartment" class="form-control"
+            style="display: none;">
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+        <div class="form-group mb-3">
+          <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
+          <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="1"></textarea>
+        </div>
+      </div>
+
+    </div>
+    <div class="row w-100 m-auto mb-3">
+      <div class="col-6 col-sm-6 col-md-7 col-lg-9">
+        <button type="button" data-toggle="modal" data-target="#categorySelectionModal">Select Items</button>
+      </div>
+
+
+      <!-- Outer Modal for Category Selection -->
+      <div class="modal fade" id="categorySelectionModal" tabindex="-1" role="dialog"
+        aria-labelledby="categorySelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="categorySelectionModalLabel">Select a Category</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="d-flex flex-column">
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category1ButtonModal">Antiseptics</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category2ButtonModal">Cleaning Equipment and Supplies</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category3ButtonModal">Personal Protective Equipment</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category4ButtonModal">ICT Equipment, Devices and Accessories</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category5ButtonModal">Office Equipment, Accessories and Supplies</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category6ButtonModal">Furniture and Furnishing</button>
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                  data-target="#category7ButtonModal">Electrical and Hardware Supplies</button>
+                <!-- Add more category buttons as needed -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inner Modal for Category 1 -->
+      <div class="modal fade" id="category1ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category1ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category1ButtonModalLabel">Antiseptics</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" class="selectRow"></td>
+                    <td class="item_name">{{name}}</td>
+                    <td class="Item_brand_description">{{description}}</td>
+                    <td class="item_unit">{{unit}}</td>
+                    <td class="item_price"><input type="number" id="quantityInput" value="1"></td>
+                    <td>{{00}}</td>
+<script>
+                    const { MongoClient } = require('mongodb');
+
+                    async function getDocumentsByCategory(category) {
+                     const uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority";
+                     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+                    
+                     try {
+                        await client.connect();
+                        const database = client.db('inventory');
+                        const collection = database.collection('items');
+                    
+                        const query = { category: category };
+                        const documents = await collection.find(query).toArray();
+                    
+                        console.log('Documents:', documents);
+                     } catch (error) {
+                        console.error('Error:', error);
+                     } finally {
+                        await client.close();
+                     }
+                    }
+                    
+                    getDocumentsByCategory('ANTISEPTIC');
+                  </script>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Inner Modal for Category 2 -->
+      <div class="modal fade" id="category2ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category2ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category2ButtonModalLabel">Cleaning Equipment and Supplies</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category2Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Inner Modal for Category 1 -->
+      <div class="modal fade" id="category3ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category3ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category3ButtonModalLabel">Personal Protective Equipment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="category4ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category4ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category4ButtonModalLabel">ICT Equipment, Devices and Accessories</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="category5ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category5ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category5ButtonModalLabel">Office Equipment, Accessories and Supplies</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="category6ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category6ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category6ButtonModalLabel">Furniture and Furnishing</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="category7ButtonModal" tabindex="-1" role="dialog"
+        aria-labelledby="category7ButtonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="category7ButtonModalLabel">Electrical and Hardware Supplies</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="category1Table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+        <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+      </div>
+    </div>
+    <div class=" table table-responsive">
+      <table class="table" id="create_request_table" style="border: 1px solid black;">
+        <thead>
+          <tr>
+            <th class="text-nowrap">Item Number</th>
+            <th class="text-nowrap" style="min-width: 15rem;">Item Name</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Unit</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
+            <th class="text-center text-nowrap"></th>
+            <div class="d-flex justify-content-evenly">
+            </div>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody">
+          <!-- Rows will be added here via JavaScript -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">Total Amount</td>
+            <td><span id="totalAmount">00.00</span></td>
+            <td>
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add
+                item</button>
+                <button type="submit" class="btn btn-primary m-2">Submit</button>
+
+            </td>
+              <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addItemForm">
+                        <div class="form-group">
+                          <label for="Item">Item Name</label>
+                          <input type="text" class="form-control" id="Item" name="Item" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Item_Brand_Description">Item Brand/Description</label>
+                          <input type="text" class="form-control" id="Item_Brand_Description"
+                            name="Item_Brand_Description" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Unit">Unit</label>
+                          <input type="text" class="form-control" id="Unit" name="Unit" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Unit">Unit Cost</label>
+                          <input type="text" class="form-control" id="Unit_Cost" name="Unit_Cost" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="Quantity">Quantity</label>
+                          <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" onclick="addRow()">Add Item</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </form>
+</div>
+
+
+
+
+<script>
+
+
+
+
+  document.getElementById("departmentDropdown").addEventListener("change", function () {
+    var select = document.getElementById("departmentDropdown");
+    var customDepartmentInput = document.getElementById("customDepartmentInput");
+    var originalValue = select.value;
+
+    if (originalValue === "option8") {
+      customDepartmentInput.style.display = "block";
+
+      customDepartmentInput.addEventListener("input", function () {
+        var customDepartmentValue = customDepartmentInput.value;
+        var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+
+        if (!option) {
+          option = document.createElement("option");
+          option.value = customDepartmentValue;
+          option.text = customDepartmentValue;
+          select.add(option);
+        }
+      });
+
+      customDepartmentInput.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          var customDepartmentValue = customDepartmentInput.value;
+          var option = Array.from(select.options).find(opt => opt.value === customDepartmentValue);
+
+          if (!option) {
+            option = document.createElement("option");
+            option.value = customDepartmentValue;
+            option.text = customDepartmentValue;
+            select.add(option);
+          }
+
+          select.value = customDepartmentValue;
+          customDepartmentInput.style.display = "none";
+        }
+      });
+    } else {
+      customDepartmentInput.style.display = "none";
+      customDepartmentInput.value = ""; // Clear the input field
+    }
+  });
+
+  let itemNumber = 1;
+
+  function addRow() {
+    // Get the form input values
+    const itemName = document.getElementById("Item").value;
+    const itemDescription = document.getElementById("Item_Brand_Description").value;
+    const unit = document.getElementById("Unit").value;
+    const unitCost = parseFloat(document.getElementById("Unit_Cost").value);
+    const quantity = parseFloat(document.getElementById("Quantity").value);
+
+    // Check if any of the required fields are empty or invalid
+    if (!itemName || !unit || isNaN(unitCost) || isNaN(quantity)) {
+      alert("Please fill in all required fields with valid data.");
+      return;
+    }
+
+    // Calculate the total for this row
+    const total = unitCost * quantity;
+
+    // Create a new row for the table
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td>${itemNumber}</td>
+        <td>${itemName}</td>
+        <td>${itemDescription}</td>
+        <td>${unit}</td>
+        <td>${unitCost}</td>
+        <td>${quantity}</td>
+        <td>${total}</td>
+        <td>
+            <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+            <button class="btn btn-primary" onclick="editRow(this)">Edit</button>
+        </td>
+        `;
+    itemNumber++; // Increment itemNumber
+
+    // Add the new row to the table
+    document.getElementById("itemTableBody").appendChild(newRow);
+
+
+   // Close the "Add Item" modal
+   $('#addItemModal').modal('hide');
+
+   
+    // Hide the modal backdrop
+    $('.modal-backdrop').remove();
+
+    // Clear the form inputs
+    document.getElementById("Item").value = "";
+    document.getElementById("Item_Brand_Description").value = "";
+    document.getElementById("Unit").value = "";
+    document.getElementById("Unit_Cost").value = "";
+    document.getElementById("Quantity").value = "";
+  }
+
+  function deleteRow(button) {
+    // Get the row to delete
+    const rowToDelete = button.parentNode.parentNode;
+
+    // Check if the row exists and then remove it
+    if (rowToDelete) {
+      rowToDelete.remove();
+
+      // Reassign item numbers to the remaining rows
+      updateItemNumbers();
+    }
+  }
+
+  function updateItemNumbers() {
+    // Get all rows in the table
+    const rows = document.querySelectorAll("#itemTableBody tr");
+
+    // Iterate through the rows and update their item numbers
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const itemNumberCell = row.querySelector("td:first-child");
+      itemNumberCell.textContent = i + 1;
+    }
+  }
+
+  function editRow(button) {
+    // Get the row to edit
+    const rowToEdit = button.parentNode.parentNode;
+
+    if (rowToEdit) {
+      // Get all the cells in the row
+      const cells = rowToEdit.getElementsByTagName("td");
+
+      // Start from the second cell (index 1) to exclude the item number cell
+      for (let i = 1; i < cells.length - 1; i++) {
+        const cell = cells[i];
+        const originalContent = cell.textContent;
+        cell.contentEditable = true;
+        cell.classList.add("editable-cell"); // Add a class to style the editable cells
+
+        // Attach an event listener to save the edited data when the cell loses focus
+        cell.addEventListener("blur", function () {
+          const editedContent = cell.textContent;
+          cell.contentEditable = false;
+          cell.classList.remove("editable-cell");
+
+          // You can add your own logic here to save the edited data or update it in the table.
+          // In this example, we'll just alert the edited content.
+          alert(`Edited content: ${originalContent} -> ${editedContent}`);
+        });
+      }
+    }
+  }
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{% endblock %}
