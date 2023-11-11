@@ -213,30 +213,42 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
+
+@authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+
+@authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
+
+@authenticated_user
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
 
-@authenticated_user
+
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
+
+@authenticated_user
 def pro_file(request):
     return render(request, 'accounts/User/pro_file.html')
 
+
+@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
+
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -250,6 +262,7 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
@@ -259,9 +272,13 @@ def preqform(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
+
+@authenticated_user
 def pro_file_html(request):
     return render(request, 'pro_file.html')
 
+
+@authenticated_user
 def signout(request):
     pass
 
@@ -364,49 +381,18 @@ def requester(request):
 #         except PurchaseRequestForm.DoesNotExist:
 #             return HttpResponse('Purchase request not found.')
 
-        # Redirect to the bac_history page
-    return render(request('bac_history'))
-    # Render the bac_history page with the list of PurchaseRequest objects
-    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+#         # Update the PurchaseRequest object based on the submitted action
+#         if action == 'approve':
+#             purchase_request.is_approved = True
+#         elif action == 'disapprove':
+#             purchase_request.is_disapproved = False
+#         else:
+#             return HttpResponse('Invalid action.')
 
+#         # Save the updated PurchaseRequest object to the database
+#         purchase_request.save()
 
-# def tracker(request):
-#     if request.method == 'GET':
-#         # Retrieve a list of trackers objects from the data
-#         tracker = Item.objects.all().prefetch_related('user')
-        
-#         # Create a context dictionary to pass data to the template
-#         tracker_data = []
-        
-#         # Initialize on empty list to store tracker data
-#         for item in tracker:
-#         # Create a dictionary to store individual tracker information
-#          data = {
-#             'item_user' : item.user,
-#             'item_name': item.item_name,
-#             'description': item.description,
-#             'quantity' : item.quantity,
-#             'is_submitted' : item.is_submitted,
-#             'approved': item.approved,
-#             'disapproved' : item.disapproved,
-#             'campus_director_approval': item.campus_director_approval,
-#             'bac_secretariat_resolution': item.bac_secretariat_resolution,
-#             'date_update_status': item.date_update_status,
-#             'status': item.status,
-#         }
-         
-#         # Append the individual tracker data dictionary to the tracker_data list
-#         tracker_data.append(data)
-         
-#         # Prepare the context dictionary to pass data to the template
-#         context = {
-#             'trackers' : tracker_data
-#         }
-#         # Return the context of dictionary  as a JSON response
-#         return JsonResponse(request, 'accounts/User/request.html', context)
-    
-#     # Handle other request methods
-#     else: 
-#     # Return a JSON response with an error message for invalid request methods
-#       return JsonResponse({'message': 'Invalid request methods'}, status=405)
-  
+#         # Redirect to the bac_history page
+#         return render(request('bac_history'))
+#     # Render the bac_history page with the list of PurchaseRequest objects
+#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})

@@ -4,11 +4,6 @@
 
 {% block cart %}
 
-<style>
-  .cart_table tbody tr td {
-    vertical-align: middle;
-  }
-</style>
 
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
@@ -55,15 +50,30 @@
   </div>
 </form>
 
-<!-- Add this modal section where you want to display the edit form -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+
+    
+
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" style="">
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="total_amount">
+            <span>Total Amount: {{total_cost}}</span>
+          </div>
+          <div class="submit">
+            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+          </div>
+        </div>
+      
       </div>
       <div class="modal-body" id="editModalContent">
         <!-- Content loaded dynamically by JavaScript -->

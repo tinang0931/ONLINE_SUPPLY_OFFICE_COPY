@@ -20,10 +20,10 @@ class Item(models.Model):
 
     @property
     def total_cost(self):
-        return Decimal(str(self.unit_cost)) *Decimal(self.quantity)
-    
-    
-    
+        return Decimal(str(self.unit_cost)) * self.quantity
+
+
+
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
@@ -82,27 +82,3 @@ class User(AbstractUser):
     )
 
 
-    #class CampusDirectorHistoryCD(models.Model):
-   # user = models.ForeignKey(User, on_delete=models.CASCADE)
-   # start_date = models.DateField()
-   # end_date = models.DateField()
-   # description = models.TextField()
-
-    #def __str__(self):
-     #   return f'Campus Director History: {self.user.username}'
-
-#class SupplyOfficeHistory(models.Model):
- #   start_date = models.DateField()
-  #  end_date = models.DateField()
-   # description = models.TextField()
-
-    #def __str__(self):
-     #   return f'Supply Office History: {self.start_date} to {self.end_date}'
-
-#class SearchItem(models.Model):
-#    title = models.CharField(max_length=200)
- #   description = models.TextField()
-  #  link = models.URLField()
-   # created_at = models.DateTimeField(default=timezone.now)
-   
-    
