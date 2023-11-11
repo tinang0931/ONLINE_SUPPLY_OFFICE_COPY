@@ -4,11 +4,6 @@
 
 {% block cart %}
 
-<style>
-  .cart_table tbody tr td {
-    vertical-align: middle;
-  }
-</style>
 
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
@@ -54,61 +49,6 @@
     </div>
   </div>
 </form>
-
-<!-- Add this modal section where you want to display the edit form -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="editModalContent">
-        <!-- Content loaded dynamically by JavaScript -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-  function editRow(button) {
-    var itemId = $(button).data('item-id');
-    // Send an AJAX request to the edit_item view
-    $.ajax({
-      type: 'GET',
-      url: `/edit_item/${itemId}/`,
-      success: function(response) {
-        // Display the edit_item form in the modal
-        $('#editModalContent').html(response);
-        $('#editModal').modal('show');
-      }
-    });
-  }
-
-  // Example edit form submission logic
-  $('#editModalContent').on('submit', 'form', function(e) {
-    e.preventDefault();
-    var formData = $(this).serialize();
-    // Send an AJAX request to update the item
-    $.ajax({
-      type: 'POST',
-      url: `/edit_item/${itemId}/`, // Update the URL with your actual endpoint
-      data: formData,
-      success: function(response) {
-        // Optionally, update the UI or provide feedback to the user
-        console.log('Item updated successfully');
-        $('#editModal').modal('hide');
-      },
-      error: function(error) {
-        // Optionally, handle errors and display them to the user
-        console.error('Error updating item:', error);
-      }
-    });
-  });
-</script>
 
 {% endblock %}
 
