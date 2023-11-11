@@ -313,14 +313,17 @@ def addItem(request):
                 unit_cost=unit_cost,
                 quantity=quantity,
             )
+
+            
             return HttpResponse("Item saved successfully.")
         except Exception as e:
             # Handle exceptions (e.g., database errors)
             return HttpResponse(f"An error occurred: {str(e)}")
         
         # Retrieve all items from the database
+        
     items = Item.objects.all()
-    
+
     return render(request, 'accounts/User/request.html')
 
 
@@ -333,38 +336,92 @@ def requester(request):
     # items = Item.objects.filter(user=request.user).order_by('-date_requested').reverse()[:10]  # Fetch the first 10 Item instances from the database linked to the logged-in user, ordered by date requested in reverse orde
     return render(request, 'accounts/User/request.html', {'items': items})
 
+def tracker(request):
+    if request.method == 'GET':
+        request_id = request.GET.get('request_id')
+        if request_id is not None:
+            try:
+                purchase_request = PurchaseRequest.objects.get(pk=request_id)
+            except PurchaseRequest.DoesNotExist:
+                return render(request, 'error_template.html', {'error_message': 'Request not found'})
 
-@authenticated_user
-def bac_history(request):
-    # Fetch all PurchaseRequest objects linked to the logged-in user
-    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
-
-    if request.method == 'POST':
-        action = request.POST.get('Action')
-        purchase_request_id = request.POST.get('Purchase_Request_ID')
-
-        # Check if the 'Purchase_Request_ID' field is present
-        if not purchase_request_id:
-            return HttpResponse('Please fill in all the required fields.')
-
-        # Fetch the PurchaseRequest object from the database
-        try:
-            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-        except PurchaseRequestForm.DoesNotExist:
-            return HttpResponse('Purchase request not found.')
-
-        # Update the PurchaseRequest object based on the submitted action
-        if action == 'approve':
-            purchase_request.is_approved = True
-        elif action == 'disapprove':
-            purchase_request.is_disapproved = False
+            return render(request, 'accounts/User/tracker.html', {'purchase_request': purchase_request})
         else:
-            return HttpResponse('Invalid action.')
+            return render(request, 'accounts/User/tracker.html', {'error_message': 'Request ID not provided'})
+    elif request.method == 'POST':
+        # Handle the POST request when the "ITEM RECEIVED" button is clicked
+        request_id = request.POST.get('request_id')
+        if request_id is not None:
+            try:
+                purchase_request = PurchaseRequest.objects.get(pk=request_id)
+                # You can add your logic here to mark the item as received and notify the BAC
 
-        # Save the updated PurchaseRequest object to the database
-        purchase_request.save()
+                # For demonstration purposes, let's send a JSON response
+                response_data = {'message': 'Received message sent to BAC successfully'}
+                return JsonResponse(response_data)
+            except PurchaseRequest.DoesNotExist:
+                response_data = {'error_message': 'Request not found'}
+                return JsonResponse(response_data, status=400)
+        else:
+            response_data = {'error_message': 'Request ID not provided'}
+            return JsonResponse(response_data, status=400)
 
-        # Redirect to the bac_history page
-        return render(request('bac_history'))
-    # Render the bac_history page with the list of PurchaseRequest objects
-    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+from django.shortcuts import render
+
+def history(request):
+   # You can fetch the purchase request data from your database and pass it to the template.
+    # Replace this dummy data with actual data retrieval from your models.
+    requests = [
+        {
+            'purchase_request_id': '0000100',
+            'date_requested': '09-30-2023',
+            'purpose': 'Purchase Dell Laptop Order',
+            'quantity': '1 unit',
+            'status': 'pending approval',
+            'status_description': 'Verify Papers submitted',
+            'amount': '1,200,000',
+        },
+        {
+            'purchase_request_id': '0000101',
+            'date_requested': '09-30-2023',
+            'purpose': 'Purchase Dell Laptop Order',
+            'quantity': '1 unit',
+            'status': 'pending approval',
+            'status_description': 'Verify Papers submitted',
+            'amount': '1,200,000',
+        },
+        {
+            'purchase_request_id': '0000102',
+            'date_requested': '09-30-2023',
+            'purpose': 'Purchase Dell Laptop Order',
+            'quantity': '1 unit',
+            'status': 'pending approval',
+            'status_description': 'Verify Papers submitted',
+            'amount': '1,200,000',
+        },
+    ]
+
+    return render(request, 'accounts/User/history.html', {'request': request})
+
+def show_more_details(request):
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        if request_id is not None:
+            try:
+                purchase_request = PurchaseRequest.objects.get(pk=request_id)
+                # Fetch additional details or perform any other necessary actions
+                additional_details = purchase_request.additional_details  # Adjust this based on your model
+
+                # For demonstration purposes, let's send a JSON response with the additional details
+                response_data = {
+                    'purchase_request_id': purchase_request.id,
+                    'additional_details': additional_details,
+                }
+                return JsonResponse(response_data)
+            except PurchaseRequest.DoesNotExist:
+                response_data = {'error_message': 'Request not found'}
+                return JsonResponse(response_data, status=400)
+        else:
+            response_data = {'error_message': 'Request ID not provided'}
+            return JsonResponse(response_data, status=400)
+

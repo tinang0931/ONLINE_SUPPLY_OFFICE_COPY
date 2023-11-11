@@ -23,6 +23,18 @@ class VerificationCode(models.Model):
 
     def __str__(self):
         return f'Code: {self.code} for {self.email}'
+    
+class PurchaseRequest(models.Model):
+    purchase_request_id = models.CharField(max_length=10)
+    date_requested = models.DateField()
+    purpose = models.CharField(max_length=255)
+    quantity = models.CharField(max_length=20)
+    status = models.CharField(max_length=50)
+    status_description = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Purchase Request {self.purchase_request_id}"
 
 class History(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

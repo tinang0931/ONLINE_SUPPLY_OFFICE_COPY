@@ -38,9 +38,49 @@
             <tr>
               <td>0000001</td>
               <td>Waiting for Campus Director Approval</td>
-              <td><a href="#"
-                  style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
-                  RECEIVED</a></td>
+              <td>
+                <button id="item-received-btn" style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;" onclick="itemReceivedClicked()">
+                  ITEM RECEIVED
+                </button>
+              </td>
+              <script>
+                function itemReceivedClicked() {
+                  if (confirm('Are you sure you received the item?')) {
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+                    
+                    // Define the request method, URL, and whether it should be asynchronous
+                    xhr.open('POST', '/your-server-endpoint/', true);
+                    
+                    // Set the request header (optional)
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    
+                    // Define the data to send (if needed)
+                    var data = {
+                      request_id: 'your_request_id'  // Replace with the actual request ID
+                    };
+                    
+                    // Define the callback function to handle the response
+                    xhr.onload = function() {
+                      if (xhr.status >= 200 && xhr.status < 300) {
+                        // Request was successful, handle the response here
+                        var response = JSON.parse(xhr.responseText);
+                        // Update the user interface as needed
+                        alert('Received message sent to BAC.');
+                      } else {
+                        // Request failed, handle errors here
+                        alert('Error: ' + xhr.statusText);
+                      }
+                    };
+                    
+                    // Convert the data to JSON (if needed)
+                    var jsonData = JSON.stringify(data);
+                    
+                    // Send the request
+                    xhr.send(jsonData);
+                  }
+                }
+              </script>
             </tr>
           </tbody>
         </table>
