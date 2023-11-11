@@ -54,46 +54,49 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper">
 
-        <!-- Sidebar-->
-        <div class="sidebar">
-            <div class="d-flex flex-wrap align-content-between h-100">
-                <div class="bg-white w-100" id="sidebar-wrapper">
-                  <div class="list-group w-100 ">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'request' %}">Purchase Request</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About</a>
-                  </div>
-                </div>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'logout_user' %}">
-                  <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
-                </a>
-            </div>
-        </div>
-        
-        {% block notification %}
-        {% endblock %}
-
-        {% block purchaserequest %}
-        {% endblock %}
-
-        {% block tracker %}
-        {% endblock %}
-
-        {% block history %}
-        {% endblock %}
-
-        {% block about %}
-        {% endblock %}
-
-        {% block request %}
-        {% endblock %}
-
         {% block cart %}
+        {% endblock %}
+
+        {% block preqform %}
         {% endblock %}
 
 
     </main>
+    <footer class=" footer ">
+      <div class="container text-white">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Contact Us:</h5>
+            <p>Cellphone # :093456738652</p>
+            <p>Telephone # : (02) 123-4567</p>
+      
+          </div>
+          <div class="col-md-4">
+            <h5>Mail Us:</h5>
+            <p>inventory@gmail.com</p>
+            
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us:</h5>
+            <a href="https://www.facebook.com/your-facebook-profile" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com/your-twitter-profile" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/your-instagram-profile" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/your-youtube-channel" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        
+
+          <p></p>
+          <p></p>
+          <p>&copy; All Rights Reserved 2023-2024 Online Supply System</p>
+      </div>
       
   </body>
   
@@ -101,4 +104,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Get the table body element.
+    const tableBody = document.querySelector('.cart_table tbody');
+
+    // Iterate over the table rows and set the background color dynamically.
+    tableBody.querySelectorAll('tr').forEach((row, index) => {
+      const backgroundColor = `rgba(30, 150, 255, ${0.2 + index * 0.09})`;
+      row.style.backgroundColor = backgroundColor;
+    });
+  </script>
 </html>

@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block requester %}
+{% block request %}
 
 <style>
     .input-group {
@@ -48,6 +48,11 @@
       padding: 10px;
       cursor: pointer;
     }
+    
+    .custom-checkbox input:checked + label {
+        color: green;
+    }
+
 
 </style>
 
@@ -91,13 +96,8 @@
   </div>
   
 <br><br>
-<style>
-    .custom-checkbox input:checked + label {
-        color: green;
-    }
-</style>
 
-<form action="{% url 'category' %}" method="post">
+<form action="{% url 'request' %}" method="post">
     {% csrf_token %}
 
     {% for category, items in categories.items %}
@@ -133,34 +133,12 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 text-right">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addItemModal">Add to Cart</button>
-        </div>
-    </div>
+    
+            <button type="submit" class="btn btn-primary btn-sm" >Add to Cart</button>
+   
     <br><br><br>
     {% endfor %}
 </form>
-
-    <script>
-        function scrollToCategory() {
-            console.log("scrollToCategory function called!");
-            
-            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-            console.log("Selected Category:", selectedCategory);
-            
-            var categoryElement = document.getElementById(selectedCategory);
-            console.log("Category Element:", categoryElement);
-    
-            if (categoryElement) {
-                categoryElement.scrollIntoView({ behavior: "smooth" });
-                console.log("Scrolling to category:", selectedCategory);
-            }
-        }
-    </script>
-     
-
-
     </form>        
         </div>
 
@@ -175,6 +153,9 @@
                   </div>
 
                   <div class="modal-body">
+
+                    <form action="{% url 'request' %}" method="post">
+                        {% csrf_token %}
 
                           
                           <div class="form-group">
@@ -212,6 +193,8 @@
                               <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
                               
                           </div>
+
+                    </form>
                   </div>
               </div>
           </div>
@@ -287,6 +270,22 @@
           }
       }
   }
+
+ 
+        function scrollToCategory() {
+            console.log("scrollToCategory function called!");
+            
+            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
+            console.log("Selected Category:", selectedCategory);
+            
+            var categoryElement = document.getElementById(selectedCategory);
+            console.log("Category Element:", categoryElement);
+    
+            if (categoryElement) {
+                categoryElement.scrollIntoView({ behavior: "smooth" });
+                console.log("Scrolling to category:", selectedCategory);
+            }
+        }
 </script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
