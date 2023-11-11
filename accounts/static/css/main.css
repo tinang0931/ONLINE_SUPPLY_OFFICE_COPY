@@ -230,10 +230,10 @@ height: 100%;
 
 
 .sidebar{
- 
+  border-right: 2px soli;
   transition: all 1s;
   -webkit-transition: all 1s;
-  background-color: #ffa125e3;
+ 
 }
 
 
