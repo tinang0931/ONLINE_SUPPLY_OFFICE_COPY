@@ -56,15 +56,28 @@ $(document).ready(function () {
 
                 </script>
                 <p class="type-of-user">Student User</p>
-                <button type="button">Edit Profile</button>
-                <div class="profile-bottom"
-                    <p class="email">example@email.com</p>
-                    <br>
-                    <p class="contacts">09123456789 / 091323646562</p>
+                <a href="{% url 'profile' %}"> 
+                <button type="button">Edit Profile</button></a>
+                  
+
+                <div class="profile-bottom">
+                    <p class="email">example@gmail.com</p>
+                    <p class="contact1">12345</p>
+                    <p class="contact2">54321</p>
+                    <script>
+         
+                        var emailAddress = localStorage.getItem('emailAddress') || 'example@gmail.com';
+                        var contact1 = localStorage.getItem('contact1') || '12345';
+                        var contact2 = localStorage.getItem('contact2') || '54321';
+                
+                        document.querySelector('.email').textContent = emailAddress;
+                        document.querySelector('.contact1').textContent = contact1;
+                        document.querySelector('.contact2').textContent = contact2;
+              
+                      </script>     
                     <div class="icons">
                         <img src="{% static 'images/mail.png' %}" class="mail_icon">
                     </div>
-                    <img src="{% static 'images/contact-us.png' %}" class="contact">
                 </div>
                 </div>
             </div>
