@@ -293,16 +293,16 @@ def request(request):
         db = client['inventory']
         collection = db['inventcol']
 
-        # Save data to MongoDB
-        document = {
-            'Category': purpose,
-            'Items': item_data,
-            'Item_Brand_Description': item_brand_description,
-            'Unit': unit,
-            'Price': unit_cost,
-            'Quantity': quantity,
-        }
-        collection.insert_one(document)
+        # # Save data to MongoDB
+        # document = {
+        #     'Category': purpose,
+        #     'Items': item_data,
+        #     'Item_Brand_Description': item_brand_description,
+        #     'Unit': unit,
+        #     'Price': unit_cost,
+        #     'Quantity': quantity,
+        # }
+        # collection.insert_one(document)
 
         # Django model section
         # Create a new Item instance and set its attributes
