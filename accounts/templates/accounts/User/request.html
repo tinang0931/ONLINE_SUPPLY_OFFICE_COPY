@@ -137,7 +137,7 @@
 
                   <div class="modal-body">
 
-                    <form id="addItemForm" method="POST" action="{% url 'addItem' %}">
+                    <form action="{% url 'request' %}" method="post">
                         {% csrf_token %}
 
                           
