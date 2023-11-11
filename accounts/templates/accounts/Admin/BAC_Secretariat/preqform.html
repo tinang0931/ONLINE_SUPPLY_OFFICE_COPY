@@ -1,46 +1,11 @@
+{% extends "accounts/Admin/BAC_Secretariat/header.html" %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/reward_cash.css' %}">
-    <style>
-        table {
-            font-weight: bold;
-            border: 2px solid;
-        }
 
-        td,
-        th {
-            border: 1px solid;
-        }
-    </style>
-</head>
 
-<body>
-    <nav>
-        <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
-        <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="logo">
+{% block preqform %}
 
-        <div class="container text-center">
-            <h3>Republic of the Philippines</h3>
-            <h3><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h3>
-            <h3>ARGAO CAMPUS</h3>
-            <h3>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h3>
-            <div>
-                <h1>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h1>
-                <h1>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h1>
-            </div>
-    </nav>
         <br>
         <br>
         <br>
@@ -80,48 +45,46 @@
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                         </tr>
-
+                        
                         <tr>
-                            <td colspan="6" style="text-align: center;">
-                                <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
-                            </td>
-                        </tr>
-
-
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                                </td>
+                            </tr>
+                            
+                            
                         </tr>
                         <tr>
                             <td contenteditable="true" colspan="6">Purpose: ___________</td>
 
                         </tr>
                         <tr>
-                        <tr>
-                            <td contenteditable="true" colspan="5">Requested by: _________</td>
-                            <td style="text-align: left;">Approved by: Juan Juan</td>
-                        </tr>
-
-                    </table>
-                </div>
+                            <tr>
+                                <td contenteditable="true" colspan="5">Requested by: _________</td>
+    <td style="text-align: left;">Approved by: Juan Juan</td>
+                            </tr>
+                            
+                </table>
             </div>
         </div>
+    </div>
 
-        <div class="container-fluid" style="margin-top: 20px !important;">
-            <div style="margin-top: 5rem;">
-                <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
-                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="logo">
-            </div>
-            <div class="container"
-                style="margin-bottom: 3rem;display: flex;  margin-top: 5rem; flex-wrap: wrap; align-content: flex-start;">
-                <h1>Republic of the Philippines</h1>
-                <h1><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h1>
-                <h1>ARGAO CAMPUS</h1>
-                <h1>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h1>
-                <div>
-                    <h1>Website: <a href="http://www.argao.ctu.edu.ph" target="_blank">http://www.argao.ctu.edu.ph</a>
-                    </h1>
-                    <h1>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h1>
-                </div>
+    <div class="container-fluid" style="margin-top: 20px !important;">
+        <div style="margin-top: 5rem;">
+            <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
+            <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="logo">
+        </div>
+        <div class="container" style="margin-bottom: 3rem;display: flex;  margin-top: 5rem; flex-wrap: wrap; align-content: flex-start;">
+            <h>Republic of the Philippines</h>
+            <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+            <h>ARGAO CAMPUS</h>
+            <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+            <div>
+                <h>Website: <a href="http://www.argao.ctu.edu.ph" target="_blank">http://www.argao.ctu.edu.ph</a></h>
+                <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
             </div>
         </div>
+    </div>
 </body>
-
 </html>
