@@ -4,6 +4,8 @@
     box-sizing: border-box;
     font-family: 'poppins', sans-serif;
 }
+
+
 .container {
     width: 100%;
     height: 100vh;
@@ -22,6 +24,8 @@
     position: relative;
     border-radius: 20px;
 }
+
+
 .back-icon {
     width: 25px;
     position: absolute;
@@ -31,22 +35,27 @@
     transition: transform 0.3s; /* Add a transition for the transform property */
 }
 
+
 .back-icon:hover {
     transform: scale(1.2);
 }
+
+
 .setting-icon {
     width: 25px;
     position: absolute;
     right: 40px;
     top: 40px;
     cursor: pointer;
-    transition: transform 4.3s; 
-    
+    transition: transform 0.5s; 
 }
+
 
 .setting-icon:hover {
     transform: scale(1.2);
 }
+
+
 .profile-pic {
     width: 150px; 
     height: 150px; 
@@ -57,6 +66,8 @@
     cursor: pointer;
     object-fit: cover;
 }
+
+
 .profile-box button {
     background: rgba(0, 0, 0, 0.846);
     color: #ffa125e3;
@@ -72,11 +83,13 @@
     transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
+
 .profile-box button:hover {
     background-color: #ffe2bde3;
     color: #fff;
     box-shadow: 0 5px 15px rgba(224, 67, 54, 0.7);
 }
+
 
 .profile-bottom {
     background:rgba(0, 53, 102, 0.845939);
@@ -87,8 +100,9 @@
     margin-bottom: -40px;
     border-radius: 20px;
     height: 200px
- 
 }    
+
+
 .mail_icon {
     position: relative;
     top: -135px;
@@ -97,5 +111,3 @@
     height: auto;
     left: -125px;
 }
-
-

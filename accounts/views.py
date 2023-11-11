@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
+from django.core.cache import cache
 from .models import *
+import pymongo
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -87,7 +89,6 @@ def register(request):
 
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')  # Redirect to the login page upon successful registration
-
     return render(request, 'accounts/User/register.html')
 
 
@@ -119,41 +120,69 @@ def login(request):
     # User is valid and active, log them in
            auth_login(request, user)
            messages.success(request, "You are now logged in.")
-           return redirect('requester')
+           return redirect('request')
         else:
             # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
 
-@unauthenticated_user  
+def get_random_string(length, allowed_chars='0123456789'):
+    return ''.join(random.choice(allowed_chars) for _ in range(length))
+
+
+@unauthenticated_user
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print('sfsdfsdgfdfgf')
-
-        # Check if the email exists in the database (you need to implement this)
-      
-            # Generate a random 4-digit verification code
+        
+        # Generate a random 4-digit verification code
         verification_code = get_random_string(4, '0123456789')
-        print('sfsdfsdgfdfgf')
-
-            # Save the verification code and link it to the user's email in the database
-        VerificationCode.objects.create(email=email, code=verification_code)
-        print('sfsdfsdgfdfgf')
-
-            # Send the verification code to the user's email
+        
+        # Store the verification code in the cache
+        cache_key = f'verification_code_{email}'
+        cache.set(cache_key, verification_code, 600)  # Store for 10 minutes (adjust as needed)
+        
+        # Send the verification code to the user's email
         subject = 'Password Reset Verification Code'
         message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'  # Replace with your email address
+        from_email = 'rlphtzn@gmail.com'
         recipient_list = [email]
 
         send_mail(subject, message, from_email, recipient_list)
-        print('sfsdfsdgfdfgf')
-
-            # Redirect the user to a page where they can enter the verification code
-        return redirect('verify_code')  # You need to create a 'verify_code' URL pattern
+        
+        # Redirect the user to a page where they can enter the verification code
+        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
+
+
+@unauthenticated_user
+def verify_code(request):
+    if request.method == 'POST':
+        code1 = request.POST.get('code1')
+        code2 = request.POST.get('code2')
+        code3 = request.POST.get('code3')
+        code4 = request.POST.get('code4')
+
+        verification_code = f"{code1}{code2}{code3}{code4}"
+        user_email = request.POST.get('email')
+        print('dsfsdfsdfdsfds')
+        if is_valid_code(verification_code, user_email):
+            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
+    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
+
+
+def is_valid_code(verification_code, user_email):
+    # Construct the cache key based on the user's email
+    cache_key = f'verification_code_{user_email}'
+    
+    # Retrieve the stored verification code from the cache
+    stored_code = cache.get(cache_key)
+    
+    if stored_code and verification_code == stored_code:
+        # Codes match, and the code exists in the cache
+        return True
+    return False
 
 
 @unauthenticated_user
@@ -174,42 +203,12 @@ def reset_password(request):
         
         # To maintain the user's session after changing the password, you can use the following:
         update_session_auth_hash(request, user)
-
         
         # Redirect the user to a success page or login page
         messages.success(request, 'Password updated successfully.')
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
-
-@unauthenticated_user
-# This view should handle the verification and password reset
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-
-        # Combine the 4 input fields into a single code
-        verification_code = f"{code1}{code2}{code3}{code4}"
-
-        # Perform code verification here (compare with the one sent to the user's email)
-
-        # If the code is valid, you can redirect to a password reset form
-        if is_valid_code(verification_code):
-            return redirect('reset_password')  # Create this URL pattern
-    return render(request, 'accounts/User/verify.html')  # Adjust the template name
-
-
-# This function should be implemented to verify the code
-def is_valid_code(verification_code):
-    # You need to implement your code verification logic here
-    # Verify the code against the code you sent via email
-    # Return True if the code is valid, or False otherwise
-
-# You'll also need to create a view and URL pattern for resetting the password
-    pass
 
 
 @authenticated_user
@@ -226,18 +225,15 @@ def about(request):
 
 @authenticated_user
 def history(request):
-    return render(request, 'accounts/User/history.html')
-
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/history.html', {'items': items})
 
 @authenticated_user
 def tracker(request):
+    # purchase_requests = PurchaseRequest.objects.all()
+    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
-
-
-@authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
 
 @authenticated_user
 def prof(request):
@@ -266,58 +262,130 @@ def bac_home(request):
 
 
 @authenticated_user
+def preqform(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
+@authenticated_user
+def profile_html(request):
+    return render(request, 'profile.html')
+
+
+@authenticated_user
 def signout(request):
     pass
 
 
-department_mapping = {
-    'option1': 'College of Arts and Sciences',
-    'option2': 'College of Agriculture',
-    'option3': 'College of Forestry',
-    'option4': 'College of Hospitality Management and Tourism',
-    'option5': 'College of Technology and Engineering',
-    'option6': 'College of Education',
-    'option7': 'Graduate School',
-}
-
 
 @authenticated_user
-def requester(request):
-    if request.method == "POST":
-        name = request.POST.get('item_name[]', '')
-        description = request.POST.get('item_description[]', '')
-        quantity = int(request.POST.get('quantity[]', 0))
-        unit = request.POST.get('unit[]', '')
-        unit_cost = float(request.POST.get('unit_cost[]', 0))
-        purpose = request.POST.get('item_purpose', '')
-        department_option = request.POST.get('departmentDropdown', '')  # Get the selected department option
+def request(request):
+    if request.method == 'POST':
+        # Handle form submission
+        purpose = request.POST.get('item_purpose')
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        # Map the selected option to the department name
-        department_name = department_mapping.get(department_option, '')
+        # MongoDB section
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client['inventory']
+        collection = db['inventcol']
 
-        # Get the user's ID from the logged-in user
-        user_id = request.user.id
+        # Save data to MongoDB
+        document = {
+            'Category': purpose,
+            'Items': item_data,
+            'Item_Brand_Description': item_brand_description,
+            'Unit': unit,
+            'Price': unit_cost,
+            'Quantity': quantity,
+        }
+        collection.insert_one(document)
 
-        # Create and save the item with the user_id
-        item = Item(
-            name=name,
-            description=description,
-            quantity=quantity,
+        # Django model section
+        # Create a new Item instance and set its attributes
+        item = Item.objects.create(
+            purpose=purpose,
+            item=item_data,
+            item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            department=department_name,
-            purpose=purpose,
-            user_id=user_id  # Include the user_id in the item
+            quantity=quantity,
+            
         )
-        item.save()
 
-        messages.success(request, "Item added successfully.")
-        return redirect('requester')  # Redirect to the same page after submissio
-    return render(request, 'accounts/User/requester.html')
+        return redirect('request')  # Redirect to the same page after adding the item
+
+    else:
+        # Handle data fetching for GET request
+        # Connect to MongoDB
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client['inventory']
+        collection = db['inventcol']
+
+        # Fetch all documents from the 'inventcol' collection
+        cursor = collection.find()
+
+        # Prepare data by category
+        categories = {}
+        for document in cursor:
+            category_name = document['Category']
+            if category_name not in categories:
+                categories[category_name] = []
+
+            categories[category_name].append({
+                "Item_brand_description": document.get('Item_Brand_Description', ''),
+                "Items": document['Items'],
+                "Unit": document['Unit'],
+                "Price": document['Price']
+            })
+
+        # Render the HTML template with categorized data
+        return render(request, 'accounts/User/request.html', {'categories': categories})
 
 
-@authenticated_user
-def transaction_history(request):
-    # Retrieve and display the transaction history
-    transaction_history = TransactionHistory.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'accounts/User/History.html', {'transaction_history': transaction_history})
+
+def requester(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/cart.html', {'items': items})
+
+
+
+
+
+# @authenticated_user
+# def bac_history(request):
+#     # Fetch all PurchaseRequest objects linked to the logged-in user
+#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+#     if request.method == 'POST':
+#         action = request.POST.get('Action')
+#         purchase_request_id = request.POST.get('Purchase_Request_ID')
+
+#         # Check if the 'Purchase_Request_ID' field is present
+#         if not purchase_request_id:
+#             return HttpResponse('Please fill in all the required fields.')
+
+#         # Fetch the PurchaseRequest object from the database
+#         try:
+#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+#         except PurchaseRequestForm.DoesNotExist:
+#             return HttpResponse('Purchase request not found.')
+
+#         # Update the PurchaseRequest object based on the submitted action
+#         if action == 'approve':
+#             purchase_request.is_approved = True
+#         elif action == 'disapprove':
+#             purchase_request.is_disapproved = False
+#         else:
+#             return HttpResponse('Invalid action.')
+
+#         # Save the updated PurchaseRequest object to the database
+#         purchase_request.save()
+
+#         # Redirect to the bac_history page
+#         return render(request('bac_history'))
+#     # Render the bac_history page with the list of PurchaseRequest objects
+#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
