@@ -10,8 +10,8 @@
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
             <h1 class="pr text-center pt-4">HISTORY</h1>  
-          
-          <!-- Modal -->
+   
+</form>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -28,6 +28,7 @@
             <label for="exampleFormcontrolTextarea1 p-2">Date Requested</label>
             <textarea class="form-control item-description" name="item_description[]" rows="1"></textarea>
           </div>
+         
           <div class="form-group mb-1">
             <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
             <input type="text" class="form-control unit" name="unit[]">
@@ -43,7 +44,8 @@
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Add</button>
+          <button type="submit" class="btn btn-primary m-2">Submit</button>
+        </form>
         </div>
       </div>
     </div>
@@ -76,6 +78,7 @@
       </tr>
   </thead>
   <tbody>
+  
     
     <tr class="item-row">
       <td style="text-align: center;">
@@ -162,5 +165,25 @@
 <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
   <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
 </div>
+<script>
+  $("#add-item-form").submit(function(e){
+    e.preventDefault();
 
+    // You can add some additional code here if needed, like form validation.
+
+    $.ajax({
+        url: 'requester',
+        type: 'get',
+        data: $(this).serialize(),
+        success: function(response) {
+            console.log('Success:', response);
+            // You can add some code here to handle the server response.
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('Error:', textStatus, errorThrown);
+            // You can add some code here to handle errors.
+        }
+    });
+});
+</script>
 {% endblock %}  

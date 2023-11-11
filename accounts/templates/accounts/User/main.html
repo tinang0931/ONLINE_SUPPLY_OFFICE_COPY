@@ -30,6 +30,8 @@
              <div class="profile-container">
               <a href="{% url 'prof' %}">
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
+
+                
                 <script>
             
                   const savedImageUrl = localStorage.getItem('profileImage');
@@ -51,12 +53,13 @@
       </div>
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper">
+
         <!-- Sidebar-->
         <div class="sidebar">
             <div class="d-flex flex-wrap align-content-between h-100">
                 <div class="bg-white w-100" id="sidebar-wrapper">
                   <div class="list-group w-100 ">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'request' %}">Purchase Request</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
@@ -83,8 +86,12 @@
         {% block about %}
         {% endblock %}
 
-        {% block requester %}
+        {% block request %}
         {% endblock %}
+
+        {% block cart %}
+        {% endblock %}
+
 
     </main>
     <footer class=" footer ">
@@ -122,6 +129,7 @@
           <p></p>
           <p>&copy; All Rights Reserved 2023-2024 Online Supply System</p>
       </div>
+      
   </body>
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

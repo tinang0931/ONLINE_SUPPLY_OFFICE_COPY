@@ -322,6 +322,7 @@ flex-direction: row;
         }
 
         footer {
+          position: fixed;
           padding-top: 50px;
           box-sizing: border-box;
         }
