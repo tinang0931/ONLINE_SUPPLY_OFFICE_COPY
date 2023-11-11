@@ -18,7 +18,7 @@ class Item(models.Model):
     request_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, max_length=8)
 
     @property
-    def total_price(self):
+    def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
 
 

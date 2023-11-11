@@ -44,13 +44,21 @@
                   <td class="item_quantity text-center">{{ item.quantity }}</td>
                   <td class="item_total_cost text-center">{{item.total_cost}}</td> <td class="text-center">
                   <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}">Edit</button>
-                    <button class="delete-button" data-item-id="{{ item.id }}">Delete</button>
+                    <button class="edit-button" data-item-id="{{ item.id }}"  onclick="editRow(this)" style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(1, 154, 72);" >
+                      <i class="fa fa-edit"></i>
+                    </button>                
+                    <button class="delete-button" data-item-id="{{ item.id }}"  style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    
                 </td>
               </tr>
               {% endfor %}
           </tbody>
         </table>
+
+
+    
 
         <div class="row-at-bottom d-flex justify-content-between">
           <div class="purpose">
