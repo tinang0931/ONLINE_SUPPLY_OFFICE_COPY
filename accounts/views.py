@@ -330,7 +330,7 @@ def request(request):
         # Connect to MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client['inventory']
-        collection = db['inventcol']
+        collection = db['Inventcol']
 
         # Fetch all documents from the 'inventcol' collection
         cursor = collection.find()
