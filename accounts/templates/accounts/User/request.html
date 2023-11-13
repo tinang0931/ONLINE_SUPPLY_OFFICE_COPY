@@ -55,12 +55,12 @@
 
 
 </style>
-<br><br>
+
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
     <div class="container">
         <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
     </div>
-<br><br>
+
     <div class="row">
       <div class="col-2 col-sm-2 col-md-1 col-lg-4">
         <select class="form-control mb-3" id="dropdownMenuSelect" onchange="scrollToCategory()">
@@ -79,7 +79,7 @@
       </div>
   
       <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-         
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
       </div>
   
       <div class="col-6 col-sm-6 col-md-5 col-lg-3">
@@ -96,6 +96,7 @@
   </div>
   
 <br><br>
+
 <form action="{% url 'request' %}" method="post">
     {% csrf_token %}
 
