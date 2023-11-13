@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Reset some default styles */
-        body, h, p {
-            margin: 0;
-            padding: 0;
-        }
 
         /* Apply some styling to the header */
         header {
@@ -52,11 +47,13 @@
         }
 
         p {
-            font-size: 16px; /* Adjust the font size for paragraphs */
-            text-align: center; /* Center-align paragraphs */
+            font-size: 30px; /* Adjust the font size for paragraphs */
+            text-align: center;
+            
+           
+    
         }
-
-        /* Style the links */
+    
         a {
             color: #007acc; /* Change link color to your preference */
             text-decoration: underline; /* Add underline to links */
@@ -66,28 +63,34 @@
             text-decoration: none; /* Remove underline on hover */
         }
         .management {
-    float: right;
-    width: 167px;
-    height: auto;
-    margin-right: 20px; /* Adjust the margin as needed */
-}
+            float: right;
+            width: 167px;
+           height: auto;
+         margin-right: 20px; /* Adjust the margin as needed */
+        }
 
-.stars {
-    float: right;
-    margin-right: 10px;
-    height: 250px;
-}
-   
-   
+        .stars {
+            float: right;
+             margin-right: 10px;
+            height: 250px;
+        }
+        .br {
+            margin-bottom: 20px;
+        }
+        .content p{
+            text-align: left;
+            margin-right: 1000px;
+        }
+      
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     
-        <img class="ctu_logo" src="ctu.png" alt="logo">
-        <img class="asean_logo" src="pngwing.com.png" alt="logo">
-        <img class="management" src="ISO-9001-2015-Certification.jpg" alt="logo">
-        <img class="stars" src="R.png" alt="logo">
+      <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+      <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+      <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+      <img class="stars_logo" src="{% static 'images/stars.png' %}"  alt="logo">
     
     <div class="container">
         <h>Republic of the Philippines</h>
@@ -103,9 +106,51 @@
 
 
     <div class="text">
-        <h>OFFICE OF THE BIDS AND AWARDS COMMITTE</h>
+        <h><b>OFFICE OF THE BIDS AND AWARDS COMMITTE</b></h>
         ___________________________________________________________________________________________________________________________________
-        <h>RESOLUTION</h>
+        <div> &nbsp</div> 
+        <h><b>RESOLUTION</b></h>  
+    </div>
+    <ul>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+      
+    </ul>
+    <div class="content">
+        <p>Recommending Approval:</p>
+        <h><b>BIDS AND AWARDS COMMITTEE</b></h>
+    </div>
+
+    <div class="name">
+        <p>Juan Juan<br>Member</p>
+        <p>Juan JUan<br>Member</p>
+        <p>Juan Juan<br>Member</p>
+        <p>Jeykie Rose<br>Vice Chairman</p>
+        <p>Jeykie<br>Chairman</p>
     </div>
     </div>
 </body>
