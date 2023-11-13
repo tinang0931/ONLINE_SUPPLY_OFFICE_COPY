@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # defaultdb
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -129,6 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 import os
 
 static_dir = os.path.join(BASE_DIR, "static")

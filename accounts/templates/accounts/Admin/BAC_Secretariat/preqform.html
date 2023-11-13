@@ -1,163 +1,155 @@
+{% extends "accounts/User/nav.html" %}
+
 {% load static %}
+
+
+
+{% block preqform %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/reward_cash.css' %}">
     <style>
-        table {
-            font-weight: bold;
-            border: 2px solid;
-            margin: 0 auto;
-            /* Center the table */
+        /* Reset some default styles */
+        body,
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
         }
 
-        td,
-        th {
-            border: 1px solid;
+        /* Apply some styling to the header */
+        header {
+            background-color: #007acc;
+            /* Change to your preferred background color */
+            color: white;
+            padding: 10px;
         }
+
+        /* Style the logo */
+        .ctu_logo {
+            width: 150px;
+            /* Adjust the size as needed */
+            height: 240px;
+            margin-right: -50px;
+            padding-left: 0%;
+            float: left;
+        }
+
+        .asean_logo {
+            width: 115px;
+            margin-right: -100px;
+            float: left;
+        }
+
+        /* Style the container */
+        .container {
+            max-width: 800px;
+            /* Adjust the maximum width as needed */
+            padding: 20px;
+            text-align: center;
+            /* Center-align the text within the container */
+            display: flex;
+            /* Use flexbox to align items vertically and horizontally */
+            flex-direction: column;
+            /* Stack items vertically */
+            justify-content: center;
+            /* Center-align items vertically */
+            align-items: center;
+            /* Center-align items horizontally */
+            margin: 0 auto;
+            /* Center the container horizontally on the page */
+        }
+
+
+        a:hover {
+            text-decoration: none;
+            /* Remove underline on hover */
+        }
+
+        .iso_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-right: 300px;
+
+        }
+
+        .stars_logo {
+            float: right;
+            height: 200px;
+        }
+
+        .container-fluid {
+            height: 68vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px; /* Adjust as needed */
+            width: 100%;
+        }
+
+        .logo-container img {
+            max-width: 20%; /* Adjust the logo size as needed */
+            height: auto;
+        }
+
+        .text-container {
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Adjust as needed */
+        }
+
+        .contact-info p {
+            margin: 0 10px; /* Add space on the left and right of each paragraph */
+        }
+        
     </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <nav>
-        <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
-        <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="logo">
-    </nav>
-    <div class="container text-center">
-        <h>Republic of the Philippines</h>
-        <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
-        <h>ARGAO CAMPUS</h>
-        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-        <div>
-            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
-            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h3>PURCHASE REQUEST</h3>
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-6 text-left" style="margin-bottom: 10px;">
-                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
-            </div>
-            <div class="col-6 text-right" style="margin-bottom: 10px;">
-                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
-            </div>
-        </div>
 
-    </div>
-
-
-    <div class="container-fluid" style="margin-top: 40px !important; margin-bottom: 80px;">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="d-flex justify-content-center">
-                    <table class="table-bordered" style="width: 100%; position: sticky; top: 0;">
-                        <tr>
-                            <th colspan="2">Office Section: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
-                            <th colspan="2">PR No.: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
-                            <th colspan="2">Date: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
-                        </tr>
-                        <tr>
-                            <td>Stock/Property</td>
-                            <td>Unit</td>
-                            <td>Item Description</td>
-                            <td>Quantity</td>
-                            <td>Unit Cost</td>
-                            <td>Total Cost</td>
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable 
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                        <tr>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                        <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
-                                </td>
-                            </tr>
-                            
-                            
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td colspan="2">Purpose: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></td>
-                            <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
-                        </tr>
-                    </table>
+    <div class="container-fluid">
+        <div class="logo-container">
+            <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
+            <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
+            <div class="text-container">
+                <p>Republic of the Philippines</p>
+                <h5><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h5>
+                <h5>ARGAO CAMPUS</h5>
+                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
+                <div class="contact-info">
+                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
                 </div>
+                <p>Phone: +6332 402 4060 loc. 1150</p>
             </div>
+            <img class="iso_logo" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
+            <img class="stars_logo" src="{% static 'images/stars.png' %}" alt="STARS Logo">
         </div>
     </div>
-
-    <div class="container-fluid" style="margin-top: 20px !important;">
-        <div style="margin-top: 5rem;">
-            <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
-            <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="logo">
-        </div>
-        <div class="container" style="margin-bottom: 3rem;display: flex;  margin-top: 5rem; flex-wrap: wrap; align-content: flex-start;">
-            <h>Republic of the Philippines</h>
-            <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
-            <h>ARGAO CAMPUS</h>
-            <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-            <div>
-                <h>Website: <a href="http://www.argao.ctu.edu.ph" target="_blank">http://www.argao.ctu.edu.ph</a></h>
-                <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-            </div>
-        </div>
-    </div>
+    
+        
+        
+        
 </body>
 
 </html>
+
+
+{% endblock %}

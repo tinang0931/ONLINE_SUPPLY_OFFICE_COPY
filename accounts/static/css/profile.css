@@ -233,8 +233,8 @@ height: 100%;
 
 .profile-picture {
   position: absolute;
-  right: 552px;
-  top: 190px;
+  right: 211px;
+  top: 30px;
   width: 178px;
   height: 180px;
   border-radius: 50%;
@@ -497,7 +497,7 @@ button.learn-more:hover {
   height: 650px;
   background-color: rgba(0, 53, 102, 0.845939);
   border-radius: 20px;
- left: 66%;
+ left: 75%;
  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -523,4 +523,21 @@ button.learn-more:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
+}
+/* Button styles */
+button[type="button"] {
+  background-color: #282936;
+  color: #fff;
+  border: none;
+  padding: 5px 10px; /* Adjust the padding to make the button smaller */
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px; /* Reduce the font size to make the text smaller */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Button hover effect */
+button[type="button"]:hover {
+  background-color: #ffa125e3;
+  transform: scale(0.9); /* Reduce the scale to make it 10% smaller on hover */
 }

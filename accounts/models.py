@@ -1,11 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
+import uuid
+from decimal import Decimal
 
 
-#class User(AbstractUser):
-    #is_admin = models.BooleanField(default= False)
-   # is_regularuser = models.BooleanField(default= False)
 
 
 class Item(models.Model):
@@ -14,7 +13,14 @@ class Item(models.Model):
     unit = models.CharField(max_length=50)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    
+    submission_date = models.DateField(auto_now_add=True)
+    request_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, max_length=8)
+
+    @property
+    def total_cost(self):
+        return Decimal(str(self.unit_cost)) * self.quantity
+
+
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -96,3 +102,15 @@ class User(AbstractUser):
  #   description = models.TextField()
   #  link = models.URLField()
    # created_at = models.DateTimeField(default=timezone.now)
+
+
+# models.py
+#from django.db import models
+
+##class Item(models.Model):
+   # _id = models.CharField(max_length=24)
+   # category = models.CharField(max_length=100)
+   # item = models.CharField(max_length=100)
+   # item_description = models.CharField(max_length=255)
+   # unit = models.CharField(max_length=50)
+   # price = models.DecimalField(max_digits=10, decimal_places=2)

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views 
 
+
 urlpatterns = [
    path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
@@ -10,15 +11,13 @@ urlpatterns = [
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/' , views.requester, name="requester"),
-   path('addItem/',views.addItem, name='addItem'),
+   path('request/',views.request, name='request'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
    path('history/',views.history, name='history'),
    path('profile/',views.profile, name='profile'),
-   path('pro_file/',views.pro_file, name='pro_file'),
-   path('profile_html/', views.profile_html, name='profile_html'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
