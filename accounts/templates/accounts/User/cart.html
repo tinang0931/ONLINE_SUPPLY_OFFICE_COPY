@@ -49,5 +49,59 @@
     </div>
   </div>
 </form>
-{% endblock %}
 
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="total_amount">
+            <span>Total Amount: {{total_cost}}</span>
+          </div>
+          <div class="submit">
+            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+          </div>
+        </div>
+      
+      </div>
+      </div>
+  
+  </form>
+
+
+  <script>
+    // Function to open the modal
+    function openModal() {
+      document.getElementById('myModal').style.display = 'block';
+    }
+  
+    // Function to close the modal
+    function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
+    }
+  
+    // Function to update the display box with the inputted text
+    function updateDisplayBox() {
+      var inputText = document.getElementById('inputText').value;
+      document.getElementById('displayBox').innerText = inputText;
+      closeModal();
+    }
+  
+    // Function to dynamically resize the display box based on content
+    function resizeDisplayBox() {
+      var displayBox = document.getElementById('displayBox');
+      displayBox.style.height = 'auto'; // Reset height to auto to calculate actual height
+      displayBox.style.height = (displayBox.scrollHeight) + 'px'; // Set the height to the calculated value
+    }
+  </script>
+
+
+  {% endblock %}
