@@ -32,9 +32,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
-from .models import Item
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
 import random
 
 def main(request):
@@ -49,7 +46,7 @@ def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 
-
+@unauthenticated_user
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -110,7 +107,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-
+@unauthenticated_user
 def login(request):
     if request.method == "POST":
         print('fddzjkfds')
@@ -134,7 +131,7 @@ def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
 
-
+@unauthenticated_user
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -159,7 +156,7 @@ def handle_reset_request(request):
     return render(request, 'accounts/User/forgot.html')
 
 
-
+@unauthenticated_user
 def verify_code(request):
     if request.method == 'POST':
         code1 = request.POST.get('code1')
@@ -188,7 +185,7 @@ def is_valid_code(verification_code, user_email):
     return False
 
 
-
+@unauthenticated_user
  # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
@@ -213,13 +210,19 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
+
+
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+
+
 def about(request):
     return render(request, 'accounts/User/about.html')
+
+
 
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
@@ -231,38 +234,50 @@ def tracker(request):
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
 
+@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
+
+
 
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
+
+@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
+
+@authenticated_user
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
+
+@authenticated_user
 def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
+@authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
 
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
 
+@authenticated_user
 def signout(request):
     pass
 
 
+
+@authenticated_user
 def request(request):
     if request.method == 'POST':
         # Handle form submission
@@ -325,7 +340,7 @@ def requester(request):
 
 
 
-
+# @authenticated_user
 # def bac_history(request):
 #     # Fetch all PurchaseRequest objects linked to the logged-in user
 #     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
