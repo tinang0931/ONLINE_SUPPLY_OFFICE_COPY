@@ -12,11 +12,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
-<<<<<<< HEAD
   </head>
-=======
->>>>>>> cd3b58ae089dbb38e557fff6c3073f5ca70997a4
+
   <body>
     <main class="flex-shrink">
       <div id="page-content-wrapper ">
@@ -30,13 +27,6 @@
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-<<<<<<< HEAD
-            
-                <a href="{% url 'profile' %}">
-                  <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
-                </a>
-                <h1 class="p1">Profile Name</h1>
-=======
              <div class="profile-container">
               <a href="{% url 'prof' %}">
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
@@ -56,7 +46,6 @@
                   var fullName = localStorage.getItem('fullName') || 'Username';
                   document.querySelector('.user').textContent = fullName;
               </script>
->>>>>>> 57048155e0d4296a857e9869ae28300441b3ee8c
             
             </div>
           </div>
@@ -64,41 +53,6 @@
       </div>
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper">
-
-        <!-- Sidebar-->
-        <div class="sidebar">
-            <div class="d-flex flex-wrap align-content-between h-100">
-                <div class="bg-white w-100" id="sidebar-wrapper">
-                  <div class="list-group w-100 ">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'request' %}">Purchase Request</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About</a>
-                  </div>
-                </div>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'logout_user' %}">
-                  <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
-                </a>
-            </div>
-        </div>
-        
-        {% block notification %}
-        {% endblock %}
-
-        {% block purchaserequest %}
-        {% endblock %}
-
-        {% block tracker %}
-        {% endblock %}
-
-        {% block history %}
-        {% endblock %}
-
-        {% block about %}
-        {% endblock %}
-
-        {% block request %}
-        {% endblock %}
 
         {% block cart %}
         {% endblock %}
@@ -142,8 +96,19 @@
       </div>
       
   </body>
+  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Get the table body element.
+    const tableBody = document.querySelector('.cart_table tbody');
+
+    // Iterate over the table rows and set the background color dynamically.
+    tableBody.querySelectorAll('tr').forEach((row, index) => {
+      const backgroundColor = `rgba(30, 150, 255, ${0.2 + index * 0.09})`;
+      row.style.backgroundColor = backgroundColor;
+    });
+  </script>
 </html>

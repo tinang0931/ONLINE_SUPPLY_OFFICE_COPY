@@ -105,6 +105,7 @@ body {
 
 #wrapper{
   background-color: #ffffff;
+
 }
 
 
@@ -201,7 +202,6 @@ height: 100%;
 
 .list-group-item-light {
   color:black;
-  background-color: #fefefe;
 }
 
 
@@ -210,16 +210,16 @@ height: 100%;
   border-bottom: 0px !important;
   border-radius: 0% !important;
   text-align: left;
-  font-family: Source Sans Pro;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 600;
   font-size: 20px;
-  font-weight: 300;
   line-height: 30px;
   letter-spacing: 0.1em;
 }
 
 
 .pr{
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -230,16 +230,17 @@ height: 100%;
 
 
 .sidebar{
-  border-right: 2px solid black;
+  
   transition: all 1s;
   -webkit-transition: all 1s;
+  border-right: 2px solid black;
 }
 
 
 #sidebar-wrapper {
   min-height: auto;
   margin-left: -15rem;
-  transition: margin 0.25s ease-out;
+  transition: margin 3s ease-out;
 }
 
 
@@ -255,6 +256,7 @@ height: 100%;
 
 
 #page-content-wrapper {
+  
   min-width: 100vw;
 }
 
@@ -279,7 +281,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .p1 {
   color: white;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 25px;
   text-align: center;
 }
@@ -287,7 +289,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .head {
   color: white;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
   margin-left: 0%;
   font-size: 60px;
 }
@@ -309,7 +311,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   color: white;
   text-align: center !important;
   margin: 0%;
-  font-family: serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: larger;
   height: 40px;
   display: flex;
@@ -341,13 +343,13 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   height: auto;
   bottom: 0;
   -webkit-user-modify: read-only;
-  position: relative;
+  position: fixed;
   z-index: 2;
 }
 
 
 .form-group{
-  font-family: sans-serif ;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -385,7 +387,7 @@ label {
 
 .row {
   font-size: 16px;
-  font-family: sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
@@ -396,7 +398,7 @@ i.bi-circle-fill {
 
 
 .btn-custom {
-  background-color: #808080;
+  background-color: #808080;;
   color: #ffffff;
 }
 
@@ -3259,6 +3261,51 @@ button {
   padding: 20px;
 }
 
+
 .modal-footer {
   border-top: 15px solid #ccc;
+}
+
+
+
+table-responsive {
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 100%;
+ }
+
+
+ 
+ .cart_table thead tr {
+  background-color: rgba(0, 50, 102, 0.5);
+  font-weight: bold;
+}
+
+
+ 
+ 
+ 
+ .row-at-bottom {
+  position: fixed;
+  bottom: 150px;
+  width: 80%;
+  left: 200px
+}
+
+.purpose_box {
+  width: 500px;
+  height: 45px;
+}
+
+.total_amount {
+  width: 90px;
+  height: 45px;
+}
+
+.submit {
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 90px;
+  height: 45px;
 }
