@@ -37,64 +37,29 @@
               <td>Verify Papers submitted</td>
               <td><span class="total">{{ item.total_price }}</span></td>
               <td class="text-end my-2 mt-0">
-                <div class="d-flex justify-content-start align-items-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="fas fa-print"></i> View
-                  </button>
+                <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'print.css' %}" media="print">
+    <title>Your Page Title</title>
+</head>
+<body>
+    <!-- Your form with the ID 'requestForm' -->
+    <form id="requestForm">
+       
+    </form>
 
-                </div>
-                <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-                  <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-                  <button type="button" class="btn btn-link btn-sm">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-          <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
-        </div>
-        </table>
-    </div>
-  </div>
-</div>
-
-
-<table class="table" id="create_request_table" style="border: 1px solid black;">
-  <thead>
-      <tr>
-          <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Purpose</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Status</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
-          <th class="text-center text-nowrap"></th>
-      </tr>
-  </thead>
-  <tbody>
-    
-    <tr class="item-row">
-      <td style="text-align: center;">
-        <span class="item-no">0000100</span>
-      </td>
-      <td>09-30-2023</td>
-      <td>Purchase Dell Laptop Order</td>
-      <td>1 unit</td>
-      <td>pending approval</td>
-      <td>Verify Papers submitted</td>
-      <td><span class="total">1,200,000</span></td>
-      <td class="text-end my-2 mt-0">
-        <link rel="stylesheet" type="text/css" href="{% static 'print.css' %}" media="print">
-
+    <!-- Button to trigger printing -->
+    <div class="d-flex justify-content-start align-items-center">
         <button type="button" class="btn btn-success me-2" onclick="printRequestForm()">
-          <i class="fas fa-print"></i> View
+            <i class="fas fa-print"></i> View
         </button>
-        
-        <script>
-          function printRequestForm() {
+    </div>
+
+    <!-- JavaScript for printing -->
+    <script>
+        function printRequestForm() {
             // Get the form element by ID
             var requestForm = document.getElementById('requestForm');
         
@@ -108,39 +73,45 @@
         
             // Print the new window
             printWindow.print();
-          }
-        </script>
-        
-    <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
-        Show More Details
-    </button>
-    <script>
-document.querySelectorAll('.show-details-btn').forEach(function(button) {
-    button.addEventListener('click', function() {
-        var request_id = this.getAttribute('data-request-id');
-        if (request_id) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/show_more_details/', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    // Update the user interface with the additional details
-                    alert('Additional Details for Request ' + response.purchase_request_id + ':\n' + response.additional_details);
-                } else {
-                    alert('Error: ' + xhr.statusText);
-                }
-            };
-            xhr.send('request_id=' + request_id);
         }
-    });
-});
-</script>
-      </td>
-    </tr>
-    
-      </td>
-</tbody>
-</table>
+    </script>
+</body>
+</html>
 
-  {% endblock %} 
+                </div>
+                <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
+                  Show More Details
+              </button>
+              <script>
+          document.querySelectorAll('.show-details-btn').forEach(function(button) {
+              button.addEventListener('click', function() {
+                  var request_id = this.getAttribute('data-request-id');
+                  if (request_id) {
+                      var xhr = new XMLHttpRequest();
+                      xhr.open('POST', '/show_more_details/', true);
+                      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                      xhr.onreadystatechange = function () {
+                          if (xhr.readyState === 4 && xhr.status === 200) {
+                              var response = JSON.parse(xhr.responseText);
+                              // Update the user interface with the additional details
+                              alert('Additional Details for Request ' + response.purchase_request_id + ':\n' + response.additional_details);
+                          } else {
+                              alert('Error: ' + xhr.statusText);
+                          }
+                      };
+                      xhr.send('request_id=' + request_id);
+                  }
+              });
+          });
+          </script>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        
+        </table>
+    </div>
+  </div>
+</div>
+{% endblock %} 

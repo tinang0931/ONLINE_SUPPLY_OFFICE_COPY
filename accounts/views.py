@@ -33,6 +33,10 @@ from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 import random
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -356,42 +360,87 @@ def request(request):
 
 
 
+
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
-@authenticated_user
-def bac_history(request):
-    # Fetch all PurchaseRequest objects linked to the logged-in user
-    purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+def submit_request(request):
+    # Handle the submission of the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        # Assuming you have a PurchaseRequest model
+        purchase_request = PurchaseRequest.objects.create(request_number=request_id, status='Waiting for Campus Director Approval')
+        return JsonResponse({'message': 'Request submitted successfully.'})
+    else:
+        # Handle GET requests or render a form for submission
+        return render(request, 'submit_request.html')
+    
+
+    
+def submit_form(request):
+    if request.method == 'POST':
+        form = request(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_page')  # Redirect to a success page
+    else:
+        form = request()
+
+    return render(request, 'submit_request.html', {'form': form})
+
+def receive_request(request):
+    # Handle the BAC receiving the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
+        purchase_request.status = 'Request Received by BAC'
+        purchase_request.save()
+        return JsonResponse({'message': 'BAC received the request.'})
+    else:
+        # Handle GET requests or render a form for receiving the request
+        return render(request, 'receive_request.html')
+
+def approve_disapprove_request(request):
+    # Handle the BAC approving or disapproving the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        approval_status = request.POST.get('approval_status')  # 'approve' or 'disapprove'
+
+        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
+        if approval_status == 'approve':
+            purchase_request.status = 'Request Approved'
+        else:
+            purchase_request.status = 'Request Disapproved'
+
+        purchase_request.save()
+        return JsonResponse({'message': f'BAC {approval_status}d the request.'})
+    else:
+        # Handle GET requests or render a form for approval/disapproval
+        return render(request, 'approve_disapprove_request.html')
+    
+    
+(["GET", "POST"])
+def edit_record(request, item_id):
+    # Retrieve the record using the item_id
+    record = get_object_or_404(request, id=item_id)
 
     if request.method == 'POST':
-        action = request.POST.get('Action')
-        purchase_request_id = request.POST.get('Purchase_Request_ID')
+        # Process the form submission
+        form = request(request.POST, instance=record)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Record updated successfully'})
+    else:
+        # Render the form for editing
+        form = request(instance=record)
 
-        # Check if the 'Purchase_Request_ID' field is present
-        if not purchase_request_id:
-            return HttpResponse('Please fill in all the required fields.')
+    return render(request, 'edit_record.html', {'form': form})
 
-        # Fetch the PurchaseRequest object from the database
-        try:
-            purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-        except PurchaseRequestForm.DoesNotExist:
-            return HttpResponse('Purchase request not found.')
 
-        # Update the PurchaseRequest object based on the submitted action
-        if action == 'approve':
-            purchase_request.is_approved = True
-        elif action == 'disapprove':
-            purchase_request.is_disapproved = False
-        else:
-            return HttpResponse('Invalid action.')
-
-        # Save the updated PurchaseRequest object to the database
-        purchase_request.save()
-
-        # Redirect to the bac_history page
-        return render(request('bac_history'))
-    # Render the bac_history page with the list of PurchaseRequest objects
-    return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+def delete_item(request, item_id):
+    item = get_object_or_404(request, pk=item_id)
+    item.delete()
+    return JsonResponse({'message': 'Record deleted successfully'})

@@ -10,6 +10,12 @@
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
             <h1 class="pr text-center pt-4">HISTORY</h1>  
+          
+          <!-- Modal -->
+          <button type="button" class="btn btn-primary" id="add-item-button">Add item</button>
+
+<form id="add-item-form" style="display: none;">
+    <!-- Your form inputs go here -->
    
 </form>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -92,13 +98,29 @@
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
         <div class="d-flex justify-content-start align-items-center">
-          <link rel="stylesheet" type="text/css" href="{% static 'print.css' %}" media="print">
-        <button type="button" class="btn btn-success me-2" onclick="window.print()">
-          <i class="fas fa-print"></i> View
-         </button>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
+          <link rel="stylesheet" type="text/css" href="{% static 'print-form.css' %}" media="print">
+          <button type="button" class="btn btn-success me-2" onclick="window.print()">
+            <i class="fas fa-print"></i> View
+          </button>
+          <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="disapprove()">Disapprove</button>
         </div>
+        
+        <script>
+          function approve() {
+         // Add your logic for approval here
+         // For example, update a status message
+         document.getElementById('approval-status').innerText = 'Approval status: Approved';
+          }
+        
+          function disapprove() {
+    // Add your logic for disapproval here
+    // For example, update a status message
+    document.getElementById('approval-status').innerText = 'Approval status: Disapproved';
+  }
+  </script>
+
+
         <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
           Show More Details
       </button>
@@ -185,9 +207,7 @@
       </td>
 </tbody>
 </table>
-<div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-  <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
-</div>
+
 <script>
   $("#add-item-form").submit(function(e){
     e.preventDefault();

@@ -42,14 +42,77 @@
                   <td class="item_unit text-center">{{ item.unit }}</td>
                   <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                   <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_total_cost text-center">{{item.total_cost}}</td> <td class="text-center">
+                  <td class="item_total_cost text-center">{{total_cost}}</td> <td class="text-center">
                   <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}"  onclick="editRow(this)" style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(1, 154, 72);" >
+                    <button class="edit-button" data-item-id="{{ item.id }}" onclick="editRow(this)" style="background-color: transparent; border: none; size: 50%; border-radius: 50%; color: rgb(1, 154, 72);">
                       <i class="fa fa-edit"></i>
-                    </button>                
-                    <button class="delete-button" data-item-id="{{ item.id }}"  style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
+                    </button>
+                    
+                    <script>
+                      // Your JavaScript function
+                      function editRow(button) {
+                        // Retrieve the data-item-id attribute value
+                        var itemId = button.getAttribute('data-item-id');
+                    
+                        // Now you can use itemId as needed, for example, log it to the console
+                        console.log('Clicked edit for item with ID:', itemId);
+                    
+                        // Add your additional logic here, such as opening a modal for editing
+                        // or redirecting to an edit page with the item ID in the URL
+                      }
+                    </script>
+                    </button> 
+                                
+                    <!-- Your HTML button -->
+                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size: 50%; border-radius: 50%; color: rgb(157, 2, 2);">
                       <i class="fa fa-trash"></i>
                     </button>
+                    
+                    <script>
+                      // Your JavaScript function
+                      function deleteRow(button) {
+    var itemId = button.getAttribute('data-item-id');
+
+    if (confirm('Are you sure you want to delete this record?')) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE', '/delete_item/' + itemId + '/', true);
+        xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));  // Add this line for CSRF protection
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                var response = JSON.parse(xhr.responseText);
+                console.log('Record deleted successfully');
+            } else {
+                console.error('Error deleting record:', xhr.statusText);
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error('Network error while attempting to delete record');
+        };
+
+        xhr.send();
+    }
+}
+
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+                    </script>
+
                     
                 </td>
               </tr>
