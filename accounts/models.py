@@ -8,7 +8,6 @@ from decimal import Decimal
 
 
 class Item(models.Model):
-    purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
     item_brand_description = models.CharField(max_length=255)
     unit = models.CharField(max_length=50)
