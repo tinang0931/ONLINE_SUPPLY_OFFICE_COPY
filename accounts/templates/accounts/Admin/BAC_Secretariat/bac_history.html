@@ -12,9 +12,7 @@
             <h1 class="pr text-center pt-4">HISTORY</h1>  
           
           <!-- Modal -->
-          <button type="button" class="btn btn-primary" id="add-item-button">Add item</button>
-
-<form id="add-item-form" style="display: none;">
+      
     <!-- Your form inputs go here -->
    
 </form>
@@ -102,23 +100,36 @@
           <button type="button" class="btn btn-success me-2" onclick="window.print()">
             <i class="fas fa-print"></i> View
           </button>
-          <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="disapprove()">Disapprove</button>
+          <div class="d-flex justify-content-start align-items-center">
+            <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
+            <button type="button" class="btn btn-danger" onclick="disapprove()">Disapprove</button>
         </div>
         
         <script>
-          function approve() {
-         // Add your logic for approval here
-         // For example, update a status message
-         document.getElementById('approval-status').innerText = 'Approval status: Approved';
-          }
+            // This variable will track the approval status
+            var isApproved = false;
         
-          function disapprove() {
-    // Add your logic for disapproval here
-    // For example, update a status message
-    document.getElementById('approval-status').innerText = 'Approval status: Disapproved';
-  }
-  </script>
+            function approve() {
+                if (!isApproved) {
+                    // Add your logic for approval here
+                    // For example, update a status message
+                    document.getElementById('approval-status').innerText = 'Approval status: Approved';
+                    isApproved = true;  // Update the approval status
+                } else {
+                    // Display a message if already approved
+                    alert('This request has already been approved.');
+                }
+            }
+        
+            function disapprove() {
+                // Add your logic for disapproval here
+                // For example, update a status message
+                document.getElementById('approval-status').innerText = 'Approval status: Disapproved';
+                isApproved = false;  // Reset the approval status
+            }
+        </script>
+        
+        
 
 
         <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
