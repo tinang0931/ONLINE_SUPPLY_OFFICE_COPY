@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,12 +16,17 @@
         table {
             font-weight: bold;
             border: 2px solid;
+            margin: 0 auto;
+            /* Center the table */
         }
-        td, th {
+
+        td,
+        th {
             border: 1px solid;
         }
     </style>
 </head>
+
 <body>
     <nav>
         <img class="ctu_logo" src="{% static 'images/logo.png' %}" alt="logo">
@@ -40,20 +46,26 @@
         <br>
         <br>
         <h3>PURCHASE REQUEST</h3>
-        <div class="d-flex justify-content-between" style="margin-top: 5px;">
-            <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
-            <h4 style="margin-left: 60px;"contenteditable="true">Fund Cluster:________________</h4>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-6 text-left" style="margin-bottom: 10px;">
+                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+            </div>
+            <div class="col-6 text-right" style="margin-bottom: 10px;">
+                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
+            </div>
         </div>
+
     </div>
 
-    <div class="container">
+
+    <div class="container-fluid" style="margin-top: 40px !important; margin-bottom: 80px;">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="d-flex justify-content-center">
-                    <table class="table-bordered" style="width: 200%">
+                    <table class="table-bordered" style="width: 100%; position: sticky; top: 0;">
                         <tr>
                             <th colspan="2">Office Section: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
-                            <th colspan="2">PR No.:<br>Responsibility Center Code: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
+                            <th colspan="2">PR No.: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
                             <th colspan="2">Date: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></th>
                         </tr>
                         <tr>
@@ -112,7 +124,6 @@
                             <td contenteditable="true"></td>
                         </tr>
                         <tr>
-                            <tr>
                                 <td colspan="6" style="text-align: center;">
                                     <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
                                 </td>
@@ -121,16 +132,12 @@
                             
                         </tr>
                         <tr>
-                            <td contenteditable="true" colspan="6">Purpose: ___________</td>
-                            
-                        </tr>
                         <tr>
-                            <tr>
-                                <td contenteditable="true" colspan="5">Requested by: _________</td>
-    <td style="text-align: left;">Approved by: Juan Juan</td>
-                            </tr>
-                            
-                </table>
+                            <td colspan="2">Purpose: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></td>
+                            <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -152,4 +159,5 @@
         </div>
     </div>
 </body>
+
 </html>
