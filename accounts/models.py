@@ -8,6 +8,9 @@ from decimal import Decimal
 
 
 
+
+
+
 class Item(models.Model):
     item = models.CharField(max_length=255)
     item_brand_description = models.CharField(max_length=255)
@@ -79,5 +82,4 @@ class User(AbstractUser):
         related_query_name='accounts_user', # Add this line
 
     )
-
-
+    
