@@ -36,13 +36,15 @@
             </tr>
           </thead>
           <tbody>
+            {% for item in items %}
             <tr>
-              <td>0000001</td>
+              <td>{{item.request_id}}</td>
               <td>Waiting for Campus Director Approval</td>
               <td><a href="#"
                   style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
                   RECEIVED</a></td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
     </div>

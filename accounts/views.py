@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.core.cache import cache
 from .models import *
-import pymongo
+import csv
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -285,8 +285,6 @@ def signout(request):
 @authenticated_user
 def request(request):
     if request.method == 'POST':
-        # Handle form submission
-        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -296,43 +294,25 @@ def request(request):
         # Django model section
         # Create a new Item instance and set its attributes
         Item.objects.create(
-            purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
-
+    
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['Inventcol']
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
-        # Fetch all documents from the 'inventcol' collection
-        cursor = collection.find()
-
-        # Prepare data by category
-        categories = {}
-        for document in cursor:
-            category_name = document['CATEGORY']
-            if category_name not in categories:
-                categories[category_name] = []
-
-            categories[category_name].append({
-                "ITEM_BRAND_DESCRIPTION": document.get('ITEM_BRAND_DESCRIPTION', ''),
-                "ITEMS": document['ITEMS'],
-                "UNIT": document['UNIT'],
-                "PRICE": document['PRICE']
-            })
-
-        # Render the HTML template with categorized data
-        return render(request, 'accounts/User/request.html', {'categories': categories})
+        with open(csv_file_path, 'r') as file:
+            reader = csv.DictReader(file)
+            csv_data = list(reader)
+    # Pas data to the template
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 
@@ -353,6 +333,7 @@ def delete_item(request, item_id):
         status = "error"
 
     return JsonResponse({"status": status, "message": message})
+
 
 
 # @authenticated_user
