@@ -267,6 +267,11 @@ def preqform(request):
 
 
 @authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -330,13 +335,22 @@ def request(request):
         return render(request, 'accounts/User/request.html', {'categories': categories})
 
 
-
-
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
+def delete_item(request, item_id):
+    try:
+        item = get_object_or_404(Item, id=item_id)
+        item.delete()
+        message = f"{item_id} will be deleted."
+        status = "success"
+    except Exception as e:
+        message = f"Error deleting item: {str(e)}"
+        status = "error"
+
+    return JsonResponse({"status": status, "message": message})
 
 
 
