@@ -215,24 +215,24 @@ def reset_password(request):
 
 
 
-@authenticated_user
+
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
 
-@authenticated_user
+
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-@authenticated_user
+
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
 
-@authenticated_user
+
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
@@ -240,16 +240,11 @@ def tracker(request):
 
 
 @authenticated_user
-def pro_file(request):
-    return render(request, 'accounts/User/pro_file.html')
-
-
-@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-@authenticated_user
+
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -269,6 +264,7 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
@@ -277,11 +273,6 @@ def preqform(request):
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-@authenticated_user
-def pro_file_html(request):
-    return render(request, 'pro_file.html')
 
 
 @authenticated_user
@@ -301,25 +292,9 @@ def request(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
-        # MongoDB section
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['inventcol']
-
-        # Save data to MongoDB
-        document = {
-            'Category': purpose,
-            'Items': item_data,
-            'Item_Brand_Description': item_brand_description,
-            'Unit': unit,
-            'Price': unit_cost,
-            'Quantity': quantity,
-        }
-        collection.insert_one(document)
-
         # Django model section
         # Create a new Item instance and set its attributes
-        item = Item.objects.create(
+        Item.objects.create(
             purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
@@ -336,7 +311,7 @@ def request(request):
         # Connect to MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client['inventory']
-        collection = db['inventcol']
+        collection = db['Inventcol']
 
         # Fetch all documents from the 'inventcol' collection
         cursor = collection.find()
@@ -344,15 +319,15 @@ def request(request):
         # Prepare data by category
         categories = {}
         for document in cursor:
-            category_name = document['Category']
+            category_name = document['CATEGORY']
             if category_name not in categories:
                 categories[category_name] = []
 
             categories[category_name].append({
-                "Item_brand_description": document.get('Item_Brand_Description', ''),
-                "Items": document['Items'],
-                "Unit": document['Unit'],
-                "Price": document['Price']
+                "ITEM_BRAND": document.get('ITEM_BRAND', ''),
+                "ITEMS": document['ITEMS'],
+                "UNIT": document['UNIT'],
+                "PRICE": document['PRICE']
             })
 
         # Render the HTML template with categorized data
