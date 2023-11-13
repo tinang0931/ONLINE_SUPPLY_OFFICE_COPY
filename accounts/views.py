@@ -319,15 +319,15 @@ def request(request):
         # Prepare data by category
         categories = {}
         for document in cursor:
-            category_name = document['CATEGORY']
+            category_name = document['Category']
             if category_name not in categories:
                 categories[category_name] = []
 
             categories[category_name].append({
-                "ITEM_BRAND": document.get('ITEM_BRAND', ''),
-                "ITEMS": document['ITEMS'],
-                "UNIT": document['UNIT'],
-                "PRICE": document['PRICE']
+                "Item_brand_description": document.get('Item_Brand_Description', ''),
+                "Items": document['Items'],
+                "Unit": document['Unit'],
+                "Price": document['Price']
             })
 
         # Render the HTML template with categorized data
