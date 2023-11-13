@@ -189,9 +189,29 @@
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
         <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2">
-            <i class="fas fa-print"></i> View
+          <button type="button" class="btn btn-success me-2" onclick="printRequesterForm()">
+              <i class="fas fa-print"></i> View
           </button>
+      </div>
+  
+      <!-- JavaScript for printing -->
+      <script>
+          function printRequesterForm() {
+              // Get the form element by ID
+              var requestForm = document.getElementById('requesterForm');
+          
+              // Open a new window and write the form HTML into it
+              var printWindow = window.open('', '_blank');
+              printWindow.document.write('<html><head><title>Print</title>');
+              printWindow.document.write('</head><body>');
+              printWindow.document.write(requesterForm.outerHTML);
+              printWindow.document.write('</body></html>');
+              printWindow.document.close();
+          
+              // Print the new window
+              printWindow.print();
+          }
+      </script>
           <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
           <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
         </div>
@@ -228,5 +248,40 @@
         }
     });
 });
+</script>
+
+<script>
+  function submitFormAndRefreshTable() {
+      // Get form data
+      var formData = {
+          purchaseRequestId: document.getElementById('purchaseRequestId').value,
+          // Add other form fields here
+      };
+
+      // Add the form data to the table
+      updateTable(formData);
+
+      // Close the modal
+      $('#staticBackdrop').modal('hide');
+
+      // Optional: You can submit the form data to the server using AJAX if needed
+      // Example: You can use fetch or jQuery.ajax to send the data to the server
+  }
+
+  function updateTable(formData) {
+      // Get the table body
+      var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+
+      // Create a new row
+      var newRow = tableBody.insertRow();
+
+      // Add cells to the row
+      for (var key in formData) {
+          var cell = newRow.insertCell();
+          cell.appendChild(document.createTextNode(formData[key]));
+      }
+
+      // Optional: You can add more customization or validation here
+  }
 </script>
 {% endblock %}  
