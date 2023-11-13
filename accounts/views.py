@@ -288,25 +288,9 @@ def request(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
-        # MongoDB section
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['inventcol']
-
-        # Save data to MongoDB
-        document = {
-            'Category': purpose,
-            'Items': item_data,
-            'Item_Brand_Description': item_brand_description,
-            'Unit': unit,
-            'Price': unit_cost,
-            'Quantity': quantity,
-        }
-        collection.insert_one(document)
-
         # Django model section
         # Create a new Item instance and set its attributes
-        item = Item.objects.create(
+        Item.objects.create(
             purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
@@ -322,7 +306,7 @@ def request(request):
         # Connect to MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client['inventory']
-        collection = db['inventcol']
+        collection = db['Inventcol']
 
         # Fetch all documents from the 'inventcol' collection
         cursor = collection.find()
@@ -343,6 +327,7 @@ def request(request):
 
         # Render the HTML template with categorized data
         return render(request, 'accounts/User/request.html', {'categories': categories})
+
 
 
 
