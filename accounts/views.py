@@ -320,7 +320,7 @@ def request(request):
                 categories[category_name] = []
 
             categories[category_name].append({
-                "ITEM_BRAND": document.get('ITEM_BRAND', ''),
+                "ITEM_BRAND_DESCRIPTION": document.get('ITEM_BRAND_DESCRIPTION', ''),
                 "ITEMS": document['ITEMS'],
                 "UNIT": document['UNIT'],
                 "PRICE": document['PRICE']
