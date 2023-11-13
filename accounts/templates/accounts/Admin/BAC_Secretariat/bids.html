@@ -1,9 +1,19 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
 
         /* Apply some styling to the header */
         header {
@@ -47,7 +57,7 @@
         }
 
         p {
-            font-size: 30px; /* Adjust the font size for paragraphs */
+            font-size: 25px; /* Adjust the font size for paragraphs */
             text-align: center;
             
            
@@ -62,17 +72,18 @@
         a:hover {
             text-decoration: none; /* Remove underline on hover */
         }
-        .iso_logo {
+        .management {
             float: right;
             width: 167px;
            height: auto;
          margin-right: 20px; /* Adjust the margin as needed */
         }
 
-        .stars_logo {
+        .stars {
             float: right;
              margin-right: 10px;
-            height: 250px;
+            width: 167px;
+            height: auto;
         }
         .br {
             margin-bottom: 20px;
@@ -88,37 +99,56 @@
             padding: 5px;
         }
         .committee-member {
-            border-radius: 5px;
-            margin: 15px;
-            padding: 15px;
-            text-align: center;
-            width: 200px;
-            align-self: flex-start;
+    border-radius: 5px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+    align-self: flex-start;
     
-         }
-        .committee {
-           display: inline;
-           align-self: flex-end;
-         }
+}
+.committee {
+    display: inline;
+    align-self: flex-end;
+}
 
-        h2 {
-           color: #333;
-           margin-bottom: 10px;
-        }
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
 
-        p {
-            color: #666;
-        }
+p {
+    color: #666;
+}
+ul {
+        list-style-type: none; /* Remove default list styles */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+    }
+
+    li {
+        margin: 5px 0; /* Add some spacing between list items */
+    }
+
+    li:before {
+        content: "\00a0"; /* Add non-breaking space before each list item content */
+    }
+
+    ul[contenteditable="true"]:focus {
+        outline: none; /* Remove the default focus outline */
+    }
+
+        
       
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     
-      <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
-      <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-      <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
-      <img class="stars_logo" src="{% static 'images/stars.png' %}"  alt="logo">
+        <img class="ctu_logo" src="ctu.png" alt="logo">
+        <img class="asean_logo" src="pngwing.com.png" alt="logo">
+        <img class="management" src="ISO-9001-2015-Certification.jpg" alt="logo">
+        <img class="stars" src="uni.png" alt="logo">
     
     <div class="container">
         <h>Republic of the Philippines</h>
@@ -139,25 +169,7 @@
         <div> &nbsp</div> 
         <h><b>RESOLUTION</b></h>  
     </div>
-    <ul>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
+    <ul contenteditable="true">
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -170,6 +182,8 @@
     </ul>
     <div class="content">
         <p>Recommending Approval:</p>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
         <h><b>BIDS AND AWARDS COMMITTEE</b></h>
     </div>
     <div> &nbsp</div>
@@ -196,8 +210,6 @@
         <h2>Juan Juan</h2>
         <p>Vice-Chairman</p>
     </div>
-
-
     </div>
 </body>
 </html>
