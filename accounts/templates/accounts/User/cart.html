@@ -31,20 +31,25 @@
             <tbody>
               {% for item in items %}
               <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                  <td class="item_name text-center">  {{ item.item }} </td>
-                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                  <td class="item_unit text-center">{{ item.unit }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost|default:"0.00"|floatformat:2 }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity|default:"0" }}</td>
-                  <td class="text-center">           
-                  <button class="edit-button" data-item-id="{{ item.id }}" onclick="editItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(1, 154, 72);">
-                  <i class="fa fa-edit"></i>
-                  </button>
-                  <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
-                  <i class="fa fa-trash"></i>
-                  </button>
+                <td class="item_name text-center">  {{ item.item }} </td>
+                <td class="item_description text-center">
+                  <span id="item_description_{{ item.id }}_display">
+                    {{ item.item_brand_description }}
+                  </span>
+                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                </td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td></td>
+                  <td class="text-center">
+                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)"
+                    style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                    <i class="fa fa-trash"></i>
+                    </button>
                 </td>
               </tr>
               {% endfor %}
@@ -63,6 +68,40 @@
                 <button onclick="updateDisplayBox()">Submit</button>
               </div>
             </div>
+        
+  
+        <div class="editmodal" style="display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5)" id="editModal" >
+          <div class="modal-content" style=" position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: white;
+              padding: 20px;
+              border-radius: 10px;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="editForm">
+              <input type="text" name="item" id="editItem">
+              <input type="text" name="item_brand_description" id="editItemBrandDescription">
+              <input type="text" name="unit" id="editUnit">
+              <input type="text" name="unit_cost" id="editUnitCost">
+              <input type="text" name="quantity" id="editQuantity">
+              <button type="button" onclick="submitEditForm()">Save</button>
+            </form>
+          </div>
+        </div>
+    
+
+        <div class="row-at-bottom d-flex justify-content-between" >
+          <div class="purpose">
+            <label>Purpose:</label>
+            <textarea id="purpose" placeholder="Purpose" required style="">
+            </textarea>
           </div>
           <div class="total_amount">
             <span>Total Amount: {{total_cost}}</span>
@@ -71,103 +110,57 @@
             <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
           </div>
         </div>
-      </div>
+      
+     
       </div>
   </form>
 
-  <!-- Sa imong template -->
-<script>
-  function editItem(itemId) {
-      // Send AJAX request para sa pag-edit
-      fetch(`/item/${itemId}/edit/`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': getCookie('csrftoken'),
-          },
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.status === 'success') {
-              // Redirect o display og modal alang sa pag-edit
-              alert('Successfully edited item!');
-          } else {
-              // Handle errors
-              alert('Error editing item: ' + JSON.stringify(data.errors));
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  }
-
-  function deleteItem(itemId) {
-      // Display confirmation modal
-      const confirmation = confirm('Are you sure you want to delete this item?');
-      if (confirmation) {
-          // Send AJAX request para sa pag-delete
-          fetch(`/item/${itemId}/delete/`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': getCookie('csrftoken'),
-              },
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.status === 'success') {
-                  // Redirect o display og confirmation modal alang sa pag-delete
-                  alert('Successfully deleted item!');
-              } else {
-                  // Handle errors
-                  alert('Error deleting item');
-              }
-          })
-          .catch(error => console.error('Error:', error));
-      }
-  }
-
-  // Kini para sa CSRF token
-  function getCookie(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          var cookies = document.cookie.split(';');
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = cookies[i].trim();
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
-</script>
-
   <script>
-   
-    // Function to open the modal
-    function openModal() {
-      document.getElementById('myModal').style.display = 'block';
-    }
-  
-    // Function to close the modal
-    function closeModal() {
-      document.getElementById('myModal').style.display = 'none';
-    }
-  
-    // Function to update the display box with the inputted text
-    function updateDisplayBox() {
-      var inputText = document.getElementById('inputText').value;
-      document.getElementById('displayBox').innerText = inputText;
-      closeModal();
-    }
-  
-    // Function to dynamically resize the display box based on content
-    function resizeDisplayBox() {
-      var displayBox = document.getElementById('displayBox');
-      displayBox.style.height = 'auto'; // Reset height to auto to calculate actual height
-      displayBox.style.height = (displayBox.scrollHeight) + 'px'; // Set the height to the calculated value
-    }
-  </script>
+
+      function openModal() {
+          var editModal = document.getElementById('editModal');
+
+          if (editModal && editModal.style.display !== 'block') {
+            editModal.style.display = 'block';
+          }
+        }
+
+      function closeModal() {
+          var editModal = document.getElementById('editModal');
+
+          if (editModal) {
+            editModal.style.display = 'none';
+          }
+        }
+
+
+    function deleteRow(button) {
+      var itemId = button.getAttribute('data-item-id');
+
+// Call a server-side function to handle the delete
+        fetch(`/delete_item/${itemId}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // Implement further actions if needed
+            } else {
+                alert('Failed to delete item');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        }
+    
+</script
+
 
 
 {% endblock %}

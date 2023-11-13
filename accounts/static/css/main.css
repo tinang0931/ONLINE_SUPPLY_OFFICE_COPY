@@ -147,6 +147,44 @@ padding: 0px !important;
 }
 
 
+.ctulogo {
+  width: 220px; 
+  height: auto;
+  margin-right: 30px;
+  float: left;
+}
+
+.aseanlogo{
+  width: 167px; 
+  height: auto;
+  margin-right: 10px;
+  margin-top: 38px;
+  float: left;
+}
+
+
+.miso{
+  vertical-align: middle;
+  height: 120px;
+  padding: 3px;
+  display: inline-flex;
+  margin-left: 100%;
+}
+
+
+.star{
+  width: 250px; 
+  height: auto;
+  margin-top: 115px;
+  float: right;
+}
+
+
+.context{
+  text-align: center;
+}
+
+
 .background{
   position: relative;
   background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
