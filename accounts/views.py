@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.core.cache import cache
 from .models import *
 import pymongo
@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
-from django.http import HttpResponse  
+from django.http import HttpResponse, JsonResponse  
 from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -288,16 +288,31 @@ def request(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
+        # MongoDB section
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client['inventory']
+        collection = db['inventcol']
+
+        # Save data to MongoDB
+        document = {
+            'Category': purpose,
+            'Items': item_data,
+            'Item_Brand_Description': item_brand_description,
+            'Unit': unit,
+            'Price': unit_cost,
+            'Quantity': quantity,
+        }
+        collection.insert_one(document)
+
         # Django model section
         # Create a new Item instance and set its attributes
-        Item.objects.create(
+        item = Item.objects.create(
             purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
@@ -307,7 +322,7 @@ def request(request):
         # Connect to MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client['inventory']
-        collection = db['Inventcol']
+        collection = db['inventcol']
 
         # Fetch all documents from the 'inventcol' collection
         cursor = collection.find()
@@ -320,7 +335,7 @@ def request(request):
                 categories[category_name] = []
 
             categories[category_name].append({
-                "ITEM_BRAND": document.get('ITEM_BRAND'),
+                "ITEM_BRAND_DESCRIPTION": document.get('ITEM_BRAND_DESCRIPTION', ''),
                 "ITEMS": document['ITEMS'],
                 "UNIT": document['UNIT'],
                 "PRICE": document['PRICE']
@@ -331,7 +346,6 @@ def request(request):
 
 
 
-
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
@@ -339,6 +353,17 @@ def requester(request):
 
 
 
+def delete_item(request, item_id):
+    try:
+        item = get_object_or_404(Item, id=item_id)
+        item.delete()
+        message = f"{item_id} will be deleted."
+        status = "success"
+    except Exception as e:
+        message = f"Error deleting item: {str(e)}"
+        status = "error"
+
+    return JsonResponse({"status": status, "message": message})
 
 # @authenticated_user
 # def bac_history(request):
