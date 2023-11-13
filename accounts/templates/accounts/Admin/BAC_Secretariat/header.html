@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset some default styles */
+        body, h, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Apply some styling to the header */
+        header {
+            background-color: #007acc; /* Change to your preferred background color */
+            color: white;
+            padding: 10px;
+        }
+
+        /* Style the logo */
+        .ctu_logo {
+            width: 167px; /* Adjust the size as needed */
+            height: auto;
+            margin-right: 200px;
+            float: left;
+        }
+        
+        .asean_logo{
+            width: 167px; /* Adjust the size as needed */
+            height: auto;
+            margin-right: 200px;
+            float: left;
+        }
+
+        /* Style the container */
+        .container {
+            max-width: 800px; /* Adjust the maximum width as needed */
+            padding: 20px;
+            text-align: center; /* Center-align the text within the container */
+            display: flex; /* Use flexbox to align items vertically and horizontally */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center-align items vertically */
+            align-items: center; /* Center-align items horizontally */
+            margin: 0 auto; /* Center the container horizontally on the page */
+        }
+
+        /* Style the headings and paragraphs */
+        h {
+            font-size: 25px; /* Adjust the font size for h1 */
+            text-align: center; /* Center-align headings */
+        }
+
+        p {
+            font-size: 16px; /* Adjust the font size for paragraphs */
+            text-align: center; /* Center-align paragraphs */
+        }
+
+        /* Style the links */
+        a {
+            color: #007acc; /* Change link color to your preference */
+            text-decoration: underline; /* Add underline to links */
+        }
+
+        a:hover {
+            text-decoration: none; /* Remove underline on hover */
+        }
+        .iso_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-right: 300px ;
+           
+        }
+        .stars_logo {
+            float: right
+        }
+    </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/stars.png' %}"  alt="logo">
+    </nav>
+    <div class="container">
+        <h>Republic of the Philippines</h>
+        <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h>ARGAO CAMPUS</h>
+        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+        <div><h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h> &nbsp; <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+</body>
+</html>
