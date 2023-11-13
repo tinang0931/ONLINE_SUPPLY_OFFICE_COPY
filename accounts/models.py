@@ -19,9 +19,10 @@ class Item(models.Model):
 
     @property
     def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
-
-
+        return int(self.unit_cost) * self.quantity
+    
+    
+   
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -79,6 +80,8 @@ class User(AbstractUser):
         related_query_name='accounts_user', # Add this line
 
     )
+
+
 
 
     #class CampusDirectorHistoryCD(models.Model):
