@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.core.cache import cache
 from .models import *
 import pymongo
@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
-from django.http import HttpResponse, JsonResponse  
+from django.http import HttpResponse  
 from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -267,6 +267,11 @@ def preqform(request):
 
 
 @authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -288,31 +293,16 @@ def request(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
-        # MongoDB section
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['inventcol']
-
-        # Save data to MongoDB
-        document = {
-            'Category': purpose,
-            'Items': item_data,
-            'Item_Brand_Description': item_brand_description,
-            'Unit': unit,
-            'Price': unit_cost,
-            'Quantity': quantity,
-        }
-        collection.insert_one(document)
-
         # Django model section
         # Create a new Item instance and set its attributes
-        item = Item.objects.create(
+        Item.objects.create(
             purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
@@ -322,7 +312,7 @@ def request(request):
         # Connect to MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client['inventory']
-        collection = db['inventcol']
+        collection = db['Inventcol']
 
         # Fetch all documents from the 'inventcol' collection
         cursor = collection.find()
@@ -346,11 +336,10 @@ def request(request):
 
 
 
+
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
-
-
 
 
 def delete_item(request, item_id):
@@ -364,6 +353,7 @@ def delete_item(request, item_id):
         status = "error"
 
     return JsonResponse({"status": status, "message": message})
+
 
 # @authenticated_user
 # def bac_history(request):
