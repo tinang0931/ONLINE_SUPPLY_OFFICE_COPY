@@ -53,6 +53,12 @@
         color: green;
     }
 
+ 
+        .selected {
+            background-color: #e0e0e0;  /* Change this to the desired background color */
+        }
+
+
 
 </style>
 
@@ -62,46 +68,34 @@
     </div>
 
     <div class="row">
-      <div class="col-2 col-sm-2 col-md-1 col-lg-4">
-        <select class="form-control mb-3" id="dropdownMenuSelect" onchange="scrollToCategory()">
-              <option value="all">All Categories</option>
-              <option value="category1" id="category1">ANTISEPTICS</option>
-              <option value="category2" id="category2">APPLIANCES</option>
-              <option value="category3" id="category3">CLEANING EQUIPMENT AND SUPPLIES</option>
-              <option value="category4" id="category4">ELECTRICAL AND HARDWARE SUPPLIES</option>
-              <option value="category5" id="category5">FURNITURE AND FURNISHINGS</option>
-              <option value="category6" id="category6">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</option>
-              <option value="category7" id="category7">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</option>
-              <option value="category8" id="category8">PERSONAL PROTECTIVE EQUIPMENT</option>
-              <option value="category9" id="category9">PESTICIDES OR PEST REPELLENTS</option>
-          </select>
-          
-      </div>
+
+        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+        </div>
   
       <div class="col-4 col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
       </div>
   
-      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-          <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
-      </div>
+    
   
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1">
-          <a href="{% url 'requester' %}">
-              <i>
-                  <img src="{% static 'images/cart.png' %}" alt="Icon Description">
-              </i>
-          </a>
-      </div>
+      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-0">
+        <a href="{% url 'requester' %}">
+            <i>
+                <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+            </i>
+        </a>
+    </div>
   </div>
   
 <br><br>
 
-<form action="{% url 'request' %}" method="post">
+<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {% for category, items in categories.items %}
-    <h2 id="{{ category }}">{{ category }}</h2>
+    <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+    <br>
+    <br>
     <div class="row">
         <div class="col-12">
             <table class="table table-striped">
@@ -116,16 +110,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in items %}
+                    {% for row in csv_data %}
                         <tr>
-                            <td>{{ item.ITEMS }}</td>
-                            <td>{{ item.ITEM_BRAND }}</td>
-                            <td>{{ item.UNIT }}</td>
-                            <td>{{ item.PRICE }}</td>
-                            <td>{{ item.Quantity }}</td>
-                            <td class="custom-checkbox">
-                                <input type="checkbox" name="selected_items" id="checkbox{{ item.ITEMS }}" value="{{ item.ITEMS }}">
-                                <label for="checkbox{{ item.ITEMS }}">Select</label>
+                            <td>{{ row.ITEMS }}</td>
+                            <td>{{ row.ITEM_BRAND }}</td>
+                            <td>{{ row.UNIT }}</td>
+                            <td>{{ row.PRICE }}</td>
+                            <td>
+                                <input type="number" name="quantity_{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 50px;">
+                            </td>
+                            <td>
+                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
                             </td>
                         </tr>
                     {% endfor %}
@@ -133,11 +128,8 @@
             </table>
         </div>
     </div>
-    
-    <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-    <br><br><br>
-    {% endfor %}
 </form>
+
 
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -194,7 +186,18 @@
       </form>
 </div>
 
-<script>
+<!-- <script>
+
+
+    $(document).ready(function () {
+        // Add click event to checkboxes
+        $('.row-checkbox').on('click', function () {
+            // Find the closest tr and toggle the 'selected' class
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
+
+
   const categoryFilter = document.getElementById('category_filter');
   const productTables = document.querySelectorAll('.table table');
 
@@ -278,7 +281,7 @@
                 console.log("Scrolling to category:", selectedCategory);
             }
         }
-</script>
+</script> -->
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

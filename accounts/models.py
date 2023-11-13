@@ -14,13 +14,18 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
-    request_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, max_length=8)
+    request_id = models.UUIDField(editable=False, unique=True)
 
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
-
-
+    
+class CsvFile(models.Model):
+    CATEGORY = models.CharField(max_length=255)
+    ITEM_BRAND = models.CharField(max_length=255)
+    ITEMS = models.CharField(max_length=255)
+    UNIT = models.CharField(max_length=50)
+    PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 class VerificationCode(models.Model):
     email = models.EmailField()
