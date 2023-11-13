@@ -3265,3 +3265,11 @@ button {
 .modal-footer {
   border-top: 15px solid #ccc;
 }
+  #sidebarToggle img {
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+}
+
+#sidebarToggle.minimized .text {
+    display: none;
+  }

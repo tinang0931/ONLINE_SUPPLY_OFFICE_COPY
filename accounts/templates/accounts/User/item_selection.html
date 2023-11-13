@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">  
@@ -42,24 +41,32 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       
       <div class="d-flex" id="wrapper">
+        <button id="sidebarToggle" class="btn btn-secondary">
+          <img src="{% static 'images/lines.png' %}" alt="Toggle Sidebar">
+      </button>
+      
         <div class="sidebar" id="sidebar" style="z-index:1; opacity: 1; left: 0 !important; position: relative; height: auto;">
             <div class="d-flex flex-wrap align-content-between h-100">
                 <div class="bg-white w-100" id="sidebar-wrapper">
-                  <div class="list-group w-100">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
-                  </div>
+                    <div class="list-group w-100">
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
             
                 <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
                   <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
                 </a>
             </div>
         </div>
-        <button id="sidebarToggle" class="btn btn-secondary border m-2"  style="position:relative; height: 2rem !important; width: 2rem; display: flex; justify-content: center;">
+        <button id="sidebarToggle" class="btn btn-secondary border m-2" style="position:relative; height: 2rem !important; width: 2rem; display: none;">
           <i class="fa fa-bars" aria-hidden="true"></i>
         </button>
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
@@ -84,161 +91,68 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-8 ps-0">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="form-group mb-3">
-                  <label for="departmentDropdown">Choose Category:</label>
-                  <select class="form-control" id="departmentDropdown" name="departmentDropdown">
-                    <option value="option1">Pesticides or Pest Repellents</option>
-                    <option value="option2">Perfumes/Colognes/Fragrance</option>
-                    <option value="option3">Alcohol or Acetone based Antiseptics</option>
-                    <option value="option4">Color Compounds and Dispersions</option>
-                    <option value="option5">Paper Materials and Products</option>
-                    <option value="option6">Batteries, Cells and Accesories</option>
-                    <option value="option7">Manufacturing Components and Supplies</option>
-                    <option value="option9">Heating, Ventilation and Air Condition</option>
-                    <option value="option10">Measuring, Observing and Testing Equipments</option>
-                    <option value="option11">Cleaning Equipment and Supplies</option>
-                    <option value="option12">Personal Protective Equipment</option>
-                    <option value="option13">Information and Communication Technology (ICT) Eqipment, Devices and Accesories</option>
-                    <option value="option14">Office Eqipment, Accesories And Supplies</option>
-                    <option value="option15">Furniture and Furnishing</option>
-                    <option value="option16">Arts and Crafts, Eqipment, Accesories and Supplies</option>
+                  <label for="officeDropdown">Choose Office:</label>
+                  <select class="form-control" id="officeDropdown" name="officeDropdown">
+                      <option value="option1">Office 1</option>
+                      <option value="option2">Office 2</option>
+                      <option value="option3">Office 3</option>
+                      <option value="option4">Office 4</option>
                   </select>
-                  <label for="exampleFormcontrolTextarea1 p-2">Purpose</label>
-                  <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" rows="3"></textarea>
                 </div>
               </div>
-            </div> 
-            <div class="row w-100 m-auto mt-4" style="display: flex; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; justify-content: flex-end; align-items: flex-end;">
-              <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-                <input class="form-control" type="text" placeholder="Search"  id="search_bar_request">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 pe-0">
+                <div class="form-group mb-3">
+                  <label for="date">Date Needed:</label>
+                  <input type="date" class="form-control" id="date" name="date" required>
+                </div>
               </div>
             </div>
-            <div class="row m-auto w-100 mt-2">
-              <div class="col-12 col-sm-12 col-md-10 col-lg-11" style="background-color: #0035661a; border-radius: 10px; padding-bottom: 30px; padding-left: 30px;">
-                <div class=" mt-3" style="font-size: 20px;">
-                    <strong>Categories</strong> 
+            <div class="container"> 
+              <h2 class="ps-3 text-white pt-3">Select items to request:</h2>
+              <table id="itemsTable" class="table table-bordered table-hover ">
+                <thead class="table-light">
+                  <tr>
+                    <th class="text-center">Select</th>
+                    <th>Item Code</th>
+                    <th>Item Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Your table data goes here -->
+                  <tr>
+                    <td class="text-center"><input type="checkbox" name="itemCheckbox" value="item1"></td>
+                    <td>001</td>
+                    <td>Item 1</td>
+                    <td>Each</td>
+                    <td><input type="number" class="form-control" name="itemQuantity" value="1" min="1"></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="checkbox" name="itemCheckbox" value="item2"></td>
+                    <td>002</td>
+                    <td>Item 2</td>
+                    <td>Each</td>
+                    <td><input type="number" class="form-control" name="itemQuantity" value="1" min="1"></td>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+            </div>
+            <div class="container mt-4 mb-4">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 ps-0">
+                  <button type="button" class="btn btn-primary" id="submitRequestButton">Submit Request</button>
                 </div>
-                <div class="text-center p-3 mb-4">
-                    <ul class="nav nav-tabs py-3 scroll_style small_scroll_style" role="tablist" style=" flex-wrap: nowrap; border: 0px !important; overflow-x: auto; overflow-y: hidden; display: flex;">
-                        <li class="nav-item col-auto mx-2 active" style="width: fit-content;">
-                            <a class="purch-link  m-0"  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">All</a>
-                        </li>
-                    
-                      <li class="nav-item col-auto mx-2"  style="width: fit-content;">
-                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PESTICIDES OR PEST REPELLENTS</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2 " style="width: fit-content;">
-                          <a class="purch-link  m-0 "  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PERFUMES OR COLOGNES OR FRAGRANCES</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2"  style="width: fit-content;">
-                          <a class="purch-link  m-0 "   data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">ALCOHOLL OR ACETONE BASED ANTISEPTICS</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
-                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">COLOR COMPOUNDS AND DISPERSIONS</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
-                          <a class="purch-link  m-0 "  data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">PAPER MATERIALS AND PRODUCTS</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2" style="width: fit-content;">
-                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">BATTERIES AND CELLS AND ACCESSORIES</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2"style="width: fit-content;">
-                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">MANUFACTURING COMPONENTS AND SUPPLIES</a>
-                      </li>
-                    
-                      <li class="nav-item col-auto mx-2"style="width: fit-content;">
-                          <a class="purch-link  m-0 " data-toggle="tab" role="tab" aria-controls="product_category" aria-selected="true">HEATING AND VENTILATION AND AIR CIRCULATION</a>
-                      </li>
-                    </ul>
-                </div>
-                <div class="row m-auto w-100">
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
-                    <input type="checkbox" class="btn-check" id="btn-check-1" checked autocomplete="off">
-                    <label class="btn " for="btn-check-1">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 ">
-                    <input type="checkbox" class="btn-check" id="btn-check-2" checked autocomplete="off">
-                    <label class="btn " for="btn-check-2">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-3" checked autocomplete="off">
-                    <label class="btn " for="btn-check-3">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-4" checked autocomplete="off">
-                    <label class="btn " for="btn-check-4">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-5" checked autocomplete="off">
-                    <label class="btn " for="btn-check-5">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
-                    <input type="checkbox" class="btn-check" id="btn-check-6" checked autocomplete="off">
-                    <label class="btn " for="btn-check-6">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4">
-                    <input type="checkbox" class="btn-check" id="btn-check-7" checked autocomplete="off">
-                    <label class="btn " for="btn-check-7">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-8" checked autocomplete="off">
-                    <label class="btn " for="btn-check-8">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-9" checked autocomplete="off">
-                    <label class="btn " for="btn-check-9">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-10" checked autocomplete="off">
-                    <label class="btn " for="btn-check-10">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-11" checked autocomplete="off">
-                    <label class="btn " for="btn-check-11">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-12" checked autocomplete="off">
-                    <label class="btn " for="btn-check-12">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-13" checked autocomplete="off">
-                    <label class="btn " for="btn-check-13">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-14" checked autocomplete="off">
-                    <label class="btn " for="btn-check-14">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-15" checked autocomplete="off">
-                    <label class="btn " for="btn-check-15">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-16" checked autocomplete="off">
-                    <label class="btn " for="btn-check-16">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-17" checked autocomplete="off">
-                    <label class="btn " for="btn-check-17">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-2">
-                    <input type="checkbox" class="btn-check" id="btn-check-18" checked autocomplete="off">
-                    <label class="btn " for="btn-check-18">INSECTICIDE, aerosol type, net content: 600ml min</label>
-                  </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 pe-0">
+                  <button type="reset" class="btn btn-secondary">Clear Selection</button>
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-2 col-lg-1" style="display: flex; flex-direction: column; flex-wrap: nowrap; align-content: flex-end; justify-content: flex-end; align-items: flex-end;">
-                <button type="submit" class="btn text-white" style="background-color: #093A68;">Add</button></div>
             </div>
-
           </form>
-        </div>          
+        </div>
         <!-- Confirmation pop-up -->
         <div id="confirmationPopup" class="popup">
           <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
@@ -247,8 +161,6 @@
           <p>Your purchase request has been submitted and is being processed.</p>
         </div>
       </div>
-          
-        
     </main>
     <footer>
       <div class="footer" style="height: 60px;">
@@ -257,184 +169,44 @@
     </footer>
   </body>
 
-  <!-- Datatables -->
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
-
-  <script>
-    function increaseCount(a, b) {
-    var input = b.previousElementSibling;
-    var value = parseInt(input.value, 10);
-    value = isNaN(value) ? 0 : value;
-    value++;
-    input.value = value;
-  }
-
-  function decreaseCount(a, b) {
-  var input = b.nextElementSibling;
-  var value = parseInt(input.value, 10);
-  if (value > 1) {
-    value = isNaN(value) ? 0 : value;
-    value--;
-    input.value = value;
-  }
-  }
-  </script>
-  <script>
-    $(document).ready(function() {
-      var table = $('#item_selection_table').DataTable( {
-        stateSave: false,
-        "ordering": true,
-        "bLengthChange": false,
-        order: [],
-  
-      } );
-      $('#search_bar_request').keyup(function(){
-        table.search($(this).val()).draw() ;
-      })
-    });
-  </script>
-
-  <script>
-  const textareas = document.querySelectorAll('.form-control');
-
-    // Add an event listener to each textarea
-    textareas.forEach(textarea => {
-        textarea.addEventListener('input', () => {
-            // Calculate the new height of the textarea based on its content
-            textarea.style.height = 'auto';
-            textarea.style.height = (textarea.scrollHeight) + 'px';
-        });
-    });
-  </script>
-
+  <!-- Datatables and other scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const sidebar = document.getElementById('sidebar'); // Get sidebar element
-    const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const wrapper = document.getElementById('wrapper');
 
-    // Function to toggle the sidebar
-    function toggleSidebar() {
-        sidebar.classList.toggle('sidebar-hidden'); // Toggle the 'sidebar-hidden' class
-    }
+        function toggleSidebar() {
+            wrapper.classList.toggle('sidebar-hidden');
+            sidebarToggle.classList.toggle('minimized', wrapper.classList.contains('sidebar-hidden'));
+        }
 
-    // Event listener for the sidebar toggle button (You need to create a button with an ID of 'sidebarToggle' in your HTML)
-    sidebarToggle.addEventListener('click', function() {
-      // Toggle the sidebar visibility
-      sidebar.style.opacity = (sidebar.style.opacity === '1' || sidebar.style.opacity === '') ? '0' : '1';
-      sidebar.style.left = (sidebar.style.left === '0px' || sidebar.style.left === '') ? '-400px' : '0px';
-      sidebar.style.position = (sidebar.style.position === 'absolute' || sidebar.style.position === '') ? 'relative' : 'absolute';
-      sidebar.style.height = (sidebar.style.height === 'auto' || sidebar.style.height === '') ? '100%' : 'auto';
-      sidebarToggle.style.position = (sidebarToggle.style.position === 'relative' || sidebarToggle.style.position === '') ? 'absolute' : 'relative';
-  });
-    
-});
+        sidebarToggle.addEventListener('click', toggleSidebar);
+    });
+</script>
 
-  </script>
 
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-  const item_selection_table = document.getElementById('item_selection_table');
-  const addButton = document.querySelector('.add-new');
-  let itemNumber = 2; // Initialize item number
+      // DataTable initialization
+      $('#itemsTable').DataTable();
 
-  addButton.addEventListener('click', function () {
-      const newRow = item_selection_table.querySelector('.item-row').cloneNode(true);
-      const itemNumberSpan = newRow.querySelector('.item-no');
-      itemNumberSpan.textContent = itemNumber;
-      itemNumber++;
+      // Submit request button click event
+      document.getElementById('submitRequestButton').addEventListener('click', function () {
+        // Show confirmation popup
+        showConfirmationPopup();
+      });
 
-      item_selection_table.querySelector('tbody').appendChild(newRow);
-      newRow.style.display = 'table-row'; // Show the new row
-  });
-
-  // Calculate the total amount
-  const calculateTotal = function () {
-      let totalAmount = 0;
-      const quantityInputs = document.querySelectorAll('.quantity');
-      const priceInputs = document.querySelectorAll('.unit_cost');
-
-      for (let i = 0; i < quantityInputs.length; i++) {
-          const quantity = parseFloat(quantityInputs[i].value) || 0;
-          const price = parseFloat(priceInputs[i].value) || 0;
-          totalAmount += quantity * price;
+      // Function to show the confirmation popup
+      function showConfirmationPopup() {
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        confirmationPopup.style.display = 'block';
       }
 
-      const totalAmountSpan = document.getElementById('totalAmountSpan');
-      totalAmountSpan.textContent = totalAmount.toFixed(2);
-  };
-
-  // Attach input event listeners to quantity and price inputs
-  const quantityInputs = document.querySelectorAll('.quantity');
-  const priceInputs = document.querySelectorAll('.unit_cost');
-
-  quantityInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  priceInputs.forEach(input => {
-      input.addEventListener('input', calculateTotal);
-  });
-
-  // Trigger the initial calculation
-  calculateTotal();
-
-  // Update department name in the hidden input field
-  const departmentDropdown = document.getElementById('departmentDropdown');
-  departmentDropdown.addEventListener("change", function () {
-      const selectedOption = departmentDropdown.options[departmentDropdown.selectedIndex];
-      const selectedOptionText = selectedOption.textContent;
-      const selectedDepartmentNameInput = document.getElementById('selectedDepartmentName');
-      selectedDepartmentNameInput.value = selectedOptionText;
-  });
-
-  // Show/hide confirmation popup functions (if needed)
-  function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-  }
-
-  function hideConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'none';
-  }
-});
-
-  </script>
-    
-  <script>
-    function calculateRowTotal(input) {
-      const row = input.parentNode.parentNode;
-      const unit_cost = parseFloat(row.querySelector('.unit-cost').value) || 0;
-      const quantity = parseInt(row.querySelector('.quantity').value) || 0;
-  
-      const totalAmount = unit_cost * quantity;
-      row.querySelector('.total').textContent = totalAmount.toFixed(2);
-  
-      calculateTotalAmount();
-    }
-  
-    function calculateTotalAmount() {
-      const totalElements = document.querySelectorAll('.total');
-      let totalAmount = 0;
-  
-      totalElements.forEach(element => {
-        totalAmount += parseFloat(element.textContent);
-      });
-  
-      document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-    }
-  </script>
-
-  <script>
-    function showConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'block';
-    }
-
-    function hideConfirmationPopup() {
-      document.getElementById('confirmationPopup').style.display = 'none';
-    }
-  </script>
-  
+      // Function to hide the confirmation popup
+      window.hideConfirmationPopup = function () {
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        confirmationPopup.style.display = 'none';
+      };
+ </script>
 </html>
