@@ -48,21 +48,18 @@
       padding: 10px;
       cursor: pointer;
     }
-    .sticky-row {
-        position: sticky;
-        top: 0; /* Stick to the top of the viewport */
-        background-color: #ffffff; /* Add a background color if needed */
-        z-index: 100; /* Ensure the dropdown is above other elements */
-    }
-       
     
-    .smaller-image {
-        width: 50%;
+    .custom-checkbox input:checked + label {
+        color: green;
     }
-    .custom-checkbox   {
-      background-color: green;
-    }
-    
+
+ 
+        .selected {
+            background-color: #e0e0e0;  /* Change this to the desired background color */
+        }
+
+
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -80,51 +77,38 @@
         }
     </style>
 
-    <br><br>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
-     <div class="row sticky-row"> 
-        <div class="col-2 col-sm-2 col-md-1 col-lg-4">
-            <select class="form-control mb-3" id="dropdownMenuSelect" onchange="scrollToCategory()">
-                <option value="all">All Categories</option>
-                <option value="ANTISEPTICS">ANTISEPTICS</option>
-                <option value="APPLIANCES">APPLIANCES</option>
-                <option value="CLEANING EQUIPMENT AND SUPPLIES">CLEANING EQUIPMENT AND SUPPLIES</option>
-                <option value="ELECTRICAL AND HARDWARE SUPPLIES">ELECTRICAL AND HARDWARE SUPPLIES</option>
-                <option value="FURNITURE AND FURNISHINGS">FURNITURE AND FURNISHINGS</option>
-                <option value="INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</option>
-                <option value="OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</option>
-                <option value="PERSONAL PROTECTIVE EQUIPMENT">PERSONAL PROTECTIVE EQUIPMENT</option>
-                <option value="PESTICIDES OR PEST REPELLENTS">PESTICIDES OR PEST REPELLENTS</option>
-            </select>
+    <div class="row">
+
+        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
         </div>
   
       <div class="col-4 col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
       </div>
   
-      <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-          <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
-      </div>
+    
   
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1">
-          <a href="{% url 'requester' %}">
-              <i>
-                <img src="{% static 'images/cart.png' %}" alt="Icon Description" class="smaller-image">
-              </i>
-          </a>
-      </div>
+      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-0">
+        <a href="{% url 'requester' %}">
+            <i>
+                <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+            </i>
+        </a>
+    </div>
   </div>
-  <br><br>
+  
+<br><br>
 
-  <form action="{% url 'request' %}" method="post">
+<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {% for category, items in categories.items %}
-    <h2 id="{{ category }}">{{ category }}</h2>
+    <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+    <br>
+    <br>
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped" >
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Items</th>
@@ -136,27 +120,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in items %}
+                    {% for row in csv_data %}
                         <tr>
-                            <td>{{ item.Items }}</td>
-                            <td>{{ item.Item_brand_description }}</td>
-                            <td>{{ item.Unit }}</td>
-                            <td>{{ item.Price }}</td>
+                            <td>{{ row.ITEMS }}</td>
+                            <td>{{ row.ITEM_BRAND }}</td>
+                            <td>{{ row.UNIT }}</td>
+                            <td>{{ row.PRICE }}</td>
                             <td>
-                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                               
-                                <script>
-                                    function highlightInput(input) {
-                                      input.select();
-                                    }
-                                  </script>
+                                <input type="number" name="quantity_{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 50px;">
                             </td>
-                            <td class="custom-checkbox">
-                                <input type="checkbox" name="selected_items" id="checkbox{{ item.id }}" value="{{ item.id }}">
-                                <label for="checkbox{{ item.id }}">Select</label>
-                            </td>
-                            <td class="filter-data" style="display: none;">
-                                {{ item.Items }} {{ item.Item_brand_description }} {{ item.Unit }} {{ item.Price }} {{ item.Quantity }}
+                            <td>
+                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
                             </td>
                         </tr>
                     {% endfor %}
@@ -164,6 +138,8 @@
             </table>
         </div>
     </div>
+</form>
+
 
     <div class="row">
         <div class="col-12 text-right">
@@ -202,11 +178,6 @@
                         {% csrf_token %}
 
                           
-                          <div class="form-group">
-                              <label for="exampleFormcontrolTextarea1 p-2">Purpose:</label>
-                              <textarea class="form-control" id="exampleFormcontrolTextarea1" name="item_purpose" ></textarea>
-                          </div>
-                          
 
                           <div class="form-group">
                               <label for="Item">Item</label>
@@ -223,7 +194,7 @@
                               <input type="text" class="form-control" id="Unit" name="unit" required>
                           </div>
 
-                          <div class="form-group">
+                          <div class="form-group"> 
                               <label for="Unit">Unit Cost</label>
                               <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
                           </div>
@@ -246,7 +217,18 @@
       </form>
 </div>
 
-<script>
+<!-- <script>
+
+
+    $(document).ready(function () {
+        // Add click event to checkboxes
+        $('.row-checkbox').on('click', function () {
+            // Find the closest tr and toggle the 'selected' class
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
+
+
   const categoryFilter = document.getElementById('category_filter');
   const productTables = document.querySelectorAll('.table table');
 
@@ -314,8 +296,25 @@
           }
       }
   }
-</script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ 
+        function scrollToCategory() {
+            console.log("scrollToCategory function called!");
+            
+            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
+            console.log("Selected Category:", selectedCategory);
+            
+            var categoryElement = document.getElementById(selectedCategory);
+            console.log("Category Element:", categoryElement);
+    
+            if (categoryElement) {
+                categoryElement.scrollIntoView({ behavior: "smooth" });
+                console.log("Scrolling to category:", selectedCategory);
+            }
+        }
+</script> -->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 {% endblock %}

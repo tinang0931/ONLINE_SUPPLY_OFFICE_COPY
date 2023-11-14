@@ -5,12 +5,6 @@
 
 {% block cart %}
 
-<style>
-  .cart_table tbody tr td {
-    vertical-align: middle;
-  }
-</style>
-
 
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
@@ -36,131 +30,77 @@
             <tbody>
               {% for item in items %}
               <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                  <td class="item_name text-center">  {{ item.item }} </td>
-                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                  <td class="item_unit text-center">{{ item.unit }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_total_cost text-center">{{total_cost}}</td> <td class="text-center">
+                <td class="item_name text-center">  {{ item.item }} </td>
+                <td class="item_description text-center">
+                  <span id="item_description_{{ item.id }}_display">
+                    {{ item.item_brand_description }}
+                  </span>
+                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                </td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td></td>
                   <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}" onclick="editRow(this)" style="background-color: transparent; border: none; size: 50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
                       <i class="fa fa-edit"></i>
-                  </button>
-<script>
-                      // Your JavaScript function
-                      function editRow(button) {
-                          // Retrieve the data-item-id attribute value
-                          var itemId = button.getAttribute('data-item-id');
-                  
-                          // Make an AJAX request to the Django view
-                          var xhr = new XMLHttpRequest();
-                          xhr.open('GET', '/your_app/edit_item/' + itemId + '/', true);
-                  
-                          xhr.onload = function () {
-                              if (xhr.status >= 200 && xhr.status < 300) {
-                                  // Request was successful, handle the response here
-                                  var response = JSON.parse(xhr.responseText);
-                                  console.log(response.message);
-                  
-                                  // Now you can use response.item_data as needed
-                                  // For example, open a modal for editing the form
-                                  openEditFormModal(response.item_data);
-                              } else {
-                                  // Request failed, handle errors here
-                                  console.error('Error editing item:', xhr.statusText);
-                              }
-                          };
-                  
-                          xhr.send();
-                      }
-                  
-                      function openEditFormModal(itemData) {
-                          // Implement this function to open a modal for editing the form
-                          // You can use itemData to populate the form fields in the modal
-                          // You may want to use a library like Bootstrap or another modal library
-                          // to create a modal for editing the form
-                          console.log('Open modal for editing:', itemData);
-                      }
-                  </script>
-                  
                     </button>
-<!-- Your HTML button -->
-                    <button class="delete-button" data-form-id="{{ form.id }}" onclick="deleteAndSave(this)" style="background-color: transparent; border: none; size: 50%; border-radius: 50%; color: rgb(157, 2, 2);">
-                      <i class="fa fa-trash"></i>
+                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)"
+                    style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                    <i class="fa fa-trash"></i>
                     </button>
-                    
-                    <script>
-                      // Your JavaScript functions
-                      function deleteForm(button) {
-                        // Retrieve the data-form-id attribute value
-                        var formId = button.getAttribute('data-form-id');
-                    
-                        // Find the parent <tr> element and remove it
-                        var row = button.closest('tr');
-                        row.parentNode.removeChild(row);
-                    
-                        // Make an AJAX request to delete the form and update server-side data
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('DELETE', '/your-server-endpoint/forms/' + formId, true);
-                        xhr.setRequestHeader('Content-Type', 'application/json');
-                    
-                        xhr.onload = function () {
-                          if (xhr.status >= 200 && xhr.status < 300) {
-                            // Request was successful, handle the response here
-                            var response = JSON.parse(xhr.responseText);
-                            console.log('Form deleted successfully');
-                    
-                            // Call the saveChanges function after successful deletion
-                            saveChanges();
-                          } else {
-                            // Request failed, handle errors here
-                            console.error('Error deleting form:', xhr.statusText);
-                          }
-                        };
-                    
-                        xhr.send();
-                      }
-                    
-                      function saveChanges() {
-                        // Make an AJAX request to save the changes
-                        var saveXhr = new XMLHttpRequest();
-                        saveXhr.open('POST', '/your-server-endpoint/save-changes', true);
-                        saveXhr.setRequestHeader('Content-Type', 'application/json');
-                    
-                        saveXhr.onload = function () {
-                          if (saveXhr.status >= 200 && saveXhr.status < 300) {
-                            // Save changes successful, handle the response here
-                            var saveResponse = JSON.parse(saveXhr.responseText);
-                            console.log('Changes saved successfully');
-                          } else {
-                            // Save changes failed, handle errors here
-                            console.error('Error saving changes:', saveXhr.statusText);
-                          }
-                        };
-saveXhr.send();
-                      }
-                    
-                      function deleteAndSave(button) {
-                        // Ask for confirmation before deleting
-                        if (confirm('Are you sure you want to delete this form?')) {
-                          deleteForm(button);
-                        }
-                      }
-
-                     </script>
-            
                 </td>
               </tr>
               {% endfor %}
           </tbody>
         </table>
 
-
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
+        
+  
+        <div class="editmodal" style="display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5)" id="editModal" >
+          <div class="modal-content" style=" position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: white;
+              padding: 20px;
+              border-radius: 10px;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="editForm">
+              <input type="text" name="item" id="editItem">
+              <input type="text" name="item_brand_description" id="editItemBrandDescription">
+              <input type="text" name="unit" id="editUnit">
+              <input type="text" name="unit_cost" id="editUnitCost">
+              <input type="text" name="quantity" id="editQuantity">
+              <button type="button" onclick="submitEditForm()">Save</button>
+            </form>
+          </div>
+        </div>
     
 
-        <div class="row-at-bottom d-flex justify-content-between">
+        <div class="row-at-bottom d-flex justify-content-between" >
           <div class="purpose">
-            <textarea class="purpose_box" id="exampleFormcontrolTextarea1" name="item_purpose" placeholder="Purpose"></textarea>
+            <label>Purpose:</label>
+            <textarea id="purpose" placeholder="Purpose" required style="">
+            </textarea>
           </div>
           <div class="total_amount">
             <span>Total Amount: {{total_cost}}</span>
@@ -168,107 +108,57 @@ saveXhr.send();
           <div class="submit">
             <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
         </div>
-    </form>
-    
-    <!-- Success message container -->
-    <div id="successMessage" style="display: none; color: green; margin-top: 10px;">
-        Form submitted successfully!
-    </div>
-    
-    <!-- JavaScript to handle form submission and show success message -->
-    <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-    
-            // Make an AJAX request to submit the form
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/your-submit-endpoint/', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-    
-            // Additional headers or data can be added if needed
-    
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // Request was successful, show the success message
-                    document.getElementById('successMessage').style.display = 'block';
-                } else {
-                    // Request failed, handle errors here
-                    console.error('Error submitting form:', xhr.statusText);
-                }
-            };
-    
-            xhr.onerror = function() {
-                // Handle network errors here
-                console.error('Network error while attempting to submit form');
-            };
-    
-            // Serialize the form data and send the request
-            var formData = new FormData(document.getElementById('myForm'));
-            xhr.send(formData);
-        });
-    </script>
-</div>
+      
+     
       </div>
-  
   </form>
-<script>
-  function deleteForm(button) {
-    // Retrieve the data-form-id attribute value
-    var formId = button.getAttribute('data-form-id');
-  
-    // Find the parent <tr> element and remove it
-    var row = button.closest('tr');
-    row.parentNode.removeChild(row);
-  
-    // Make an AJAX request to delete the form and update server-side data
-    var xhr = new XMLHttpRequest();
-    xhr.open('DELETE', '/your-server-endpoint/forms/' + formId, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-  
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        // Request was successful, handle the response here
-        var response = JSON.parse(xhr.responseText);
-        console.log('Form deleted successfully');
-  
-        // Fetch and update the forms after successful deletion
-        fetchAndUpdateForms();
-      } else {
-        // Request failed, handle errors here
-        console.error('Error deleting form:', xhr.statusText);
-      }
-    };
-  
-    xhr.send();
-  }
-  
-  function fetchAndUpdateForms() {
-    // Make an AJAX request to fetch the updated forms data
-    var fetchXhr = new XMLHttpRequest();
-    fetchXhr.open('GET', '/your-server-endpoint/get-forms', true);
-  
-    fetchXhr.onload = function () {
-      if (fetchXhr.status >= 200 && fetchXhr.status < 300) {
-        // Request was successful, handle the updated forms data
-        var formsData = JSON.parse(fetchXhr.responseText);
-  
-        // Update the page with the new forms data (you'll need to implement this part)
-        updatePageWithForms(formsData);
-  
-        // Call the saveChanges function after successful deletion and update
-        saveChanges();
-      } else {
-        // Request failed, handle errors here
-        console.error('Error fetching forms:', fetchXhr.statusText);
-      }
-    };
-  
-    fetchXhr.send();
-  }
-  
-  function updatePageWithForms(formsData) {
-    // Implement this function to update the page with the new forms data
-    // You may need to manipulate the DOM to add or remove elements based on the updated data
-  }
-</script>
-  {% endblock %}
+
+  <script>
+
+      function openModal() {
+          var editModal = document.getElementById('editModal');
+
+          if (editModal && editModal.style.display !== 'block') {
+            editModal.style.display = 'block';
+          }
+        }
+
+      function closeModal() {
+          var editModal = document.getElementById('editModal');
+
+          if (editModal) {
+            editModal.style.display = 'none';
+          }
+        }
+
+
+    function deleteRow(button) {
+      var itemId = button.getAttribute('data-item-id');
+
+// Call a server-side function to handle the delete
+        fetch(`/delete_item/${itemId}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // Implement further actions if needed
+            } else {
+                alert('Failed to delete item');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        }
+    
+</script
+
+
+
+{% endblock %}
