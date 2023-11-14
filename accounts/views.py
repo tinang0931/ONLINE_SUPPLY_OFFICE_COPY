@@ -1,4 +1,7 @@
-from django.shortcuts import redirect, render
+from audioop import reverse
+from django.http import HttpResponseRedirect, JsonResponse
+from typing import ItemsView
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
@@ -15,7 +18,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
-from django.http import HttpResponse, JsonResponse  
+from django.http import HttpResponse  
 from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -36,7 +39,6 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .forms import ItemForm
-
 
 import random
 
@@ -276,6 +278,10 @@ def preqform(request):
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
 
 @authenticated_user
 def profile_html(request):
@@ -312,8 +318,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -326,9 +331,6 @@ def request(request):
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
-
-
-
 
 
 def delete_item(request, item_id):
@@ -386,18 +388,19 @@ def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
-
-def edit_item(request, item_id):
-    item = get_object_or_404(Item, pk=item_id)
-    form = ItemForm(instance=item)
+def item_edit(request, pk):
+    item = get_object_or_404(Item, pk=pk)
 
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return JsonResponse({'success': True})
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-    return render(request, 'accounts/User/cart.html', {'form': form, 'item_id': item_id})
+    return render(request, 'cart.html', {'item': item})
+
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
