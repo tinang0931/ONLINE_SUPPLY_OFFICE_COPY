@@ -72,14 +72,14 @@
         a:hover {
             text-decoration: none; /* Remove underline on hover */
         }
-        .management {
+        .iso_logo {
             float: right;
             width: 167px;
            height: auto;
          margin-right: 20px; /* Adjust the margin as needed */
         }
 
-        .stars {
+        .stars_logo {
             float: right;
              margin-right: 10px;
             width: 167px;
@@ -90,7 +90,7 @@
         }
         .content p{
             text-align: left;
-            margin-right: 1000px;
+            margin-right: 800px;
         }
         .name p {
             font-size: 25px;
@@ -145,10 +145,12 @@ ul {
 </head>
 <body>
     
-        <img class="ctu_logo" src="ctu.png" alt="logo">
-        <img class="asean_logo" src="pngwing.com.png" alt="logo">
-        <img class="management" src="ISO-9001-2015-Certification.jpg" alt="logo">
-        <img class="stars" src="uni.png" alt="logo">
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
     
     <div class="container">
         <h>Republic of the Philippines</h>
