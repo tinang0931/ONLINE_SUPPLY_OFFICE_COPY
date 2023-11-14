@@ -38,7 +38,7 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-from .forms import ItemForm
+
 
 import random
 from django.shortcuts import render, get_object_or_404
@@ -403,7 +403,7 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 def request(request): 
-    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
     if request.method == 'POST':
         # Handle the form submission logic here
