@@ -132,36 +132,10 @@
                             <td>{{ row.ITEM_BRAND }}</td>
                             <td>{{ row.UNIT }}</td>
                             <td>{{ row.PRICE }}</td>
-                            <script>
-                                function filterTable() {
-                                    var input, filter, table, tr, td, i, txtValue;
-                                    input = document.getElementById("search_bar_request");
-                                    filter = input.value.toUpperCase();
-                                    table = document.querySelector(".table-striped");
-                                    tr = table.getElementsByTagName("tr");
-                            
-                                    for (i = 0; i < tr.length; i++) {
-                                        td = tr[i].getElementsByTagName("td")[0]; 
-                                        if (td) {
-                                            txtValue = td.textContent || td.innerText;
-                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                tr[i].style.display = "";
-                                            } else {
-                                                tr[i].style.display = "none";
-                                            }
-                                        }
-                                    }
-                                }
-                            </script>
                             <td>
                                 
-                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                               
-                                <script>
-                                    function highlightInput(input) {
-                                      input.select();
-                                    }
-                                  </script>
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                            
                             </td>
                             
                             <td>
@@ -342,7 +316,27 @@
             }
         }
 </script> -->
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search_bar_request");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".table-striped");
+        tr = table.getElementsByTagName("tr");
 
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; 
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 

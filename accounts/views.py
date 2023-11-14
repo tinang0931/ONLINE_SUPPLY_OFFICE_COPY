@@ -403,7 +403,7 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 def request(request): 
-    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
     if request.method == 'POST':
         # Handle the form submission logic here
