@@ -167,7 +167,14 @@ height: 100%;
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+	padding: 7px;
 }
+.user {
+  font-size: 30px;
+}
+
 
 
 .list-group {
