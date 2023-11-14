@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.core.cache import cache
 from .models import *
 import csv
@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
-from django.http import HttpResponse  
+from django.http import HttpResponse, JsonResponse  
 from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -306,7 +306,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
