@@ -1,7 +1,10 @@
-from django.shortcuts import redirect, render
+from audioop import reverse
+from django.http import HttpResponseRedirect, JsonResponse
+from typing import ItemsView
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
-import pymongo
+import csv
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -32,6 +35,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
+from django.views.decorators.http import require_POST
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Item
+from .forms import ItemForm
+
 import random
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -271,6 +279,11 @@ def preqform(request):
 
 
 @authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -284,8 +297,6 @@ def signout(request):
 @authenticated_user
 def request(request):
     if request.method == 'POST':
-        # Handle form submission
-        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -295,43 +306,25 @@ def request(request):
         # Django model section
         # Create a new Item instance and set its attributes
         Item.objects.create(
-            purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
-
+    
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['Inventcol']
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
-        # Fetch all documents from the 'inventcol' collection
-        cursor = collection.find()
-
-        # Prepare data by category
-        categories = {}
-        for document in cursor:
-            category_name = document['CATEGORY']
-            if category_name not in categories:
-                categories[category_name] = []
-
-            categories[category_name].append({
-                "ITEM_BRAND_DESCRIPTION": document.get('ITEM_BRAND_DESCRIPTION', ''),
-                "ITEMS": document['ITEMS'],
-                "UNIT": document['UNIT'],
-                "PRICE": document['PRICE']
-            })
-
-        # Render the HTML template with categorized data
-        return render(request, 'accounts/User/request.html', {'categories': categories})
+        with open(csv_file_path, 'r') as file:
+            reader = csv.DictReader(file)
+            csv_data = list(reader)
+    # Pas data to the template
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 
@@ -341,88 +334,51 @@ def requester(request):
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
-
-def submit_request(request):
-    # Handle the submission of the request
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        # Assuming you have a PurchaseRequest model
-        purchase_request = PurchaseRequest.objects.create(request_number=request_id, status='Waiting for Campus Director Approval')
-        return JsonResponse({'message': 'Request submitted successfully.'})
-    else:
-        # Handle GET requests or render a form for submission
-        return render(request, 'submit_request.html')
-    
-
-    
-def submit_form(request):
-    if request.method == 'POST':
-        form = request(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success_page')  # Redirect to a success page
-    else:
-        form = request()
-
-    return render(request, 'submit_request.html', {'form': form})
-
-def receive_request(request):
-    # Handle the BAC receiving the request
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
-        purchase_request.status = 'Request Received by BAC'
-        purchase_request.save()
-        return JsonResponse({'message': 'BAC received the request.'})
-    else:
-        # Handle GET requests or render a form for receiving the request
-        return render(request, 'receive_request.html')
-
-
-
-def approve(request):
-    request_id = request.POST.get('request_id')
-    instance = get_object_or_404(PurchaseRequest, pk=request_id)
-
-    if not instance.is_approved:
-        instance.is_approved = True
-        instance.save()
-        response_data = {'status': 'Approved'}
-    else:
-        response_data = {'status': 'Already approved'}
-
-    return JsonResponse(response_data)
-
-
-def disapprove(request):
-    request_id = request.POST.get('request_id')
-    instance = get_object_or_404(PurchaseRequest, pk=request_id)
-
-    instance.is_approved = False
-    instance.save()
-
-    response_data = {'status': 'Disapproved'}
-
-    return JsonResponse(response_data)
-    
-def edit_item(request, item_id):
-    # Assuming YourModel has a field named 'id'
-    item = get_object_or_404(request, id=item_id)
-
-    # Perform any additional logic here, such as preparing data for editing
-
-    # You can customize this response based on your needs
-    response_data = {
-        'message': 'Editing item with ID {}'.format(item_id),
-        'item_data': {
-            'id': item.id,
-            # Add other fields as needed
-        }
-    }
-
-    return JsonResponse(response_data)
-
 def delete_item(request, item_id):
-    item = get_object_or_404(request, pk=item_id)
-    item.delete()
-    return JsonResponse({'message': 'Record deleted successfully'})
+    try:
+        item = get_object_or_404(Item, id=item_id)
+        item.delete()
+        message = f"{item_id} will be deleted."
+        status = "success"
+    except Exception as e:
+        message = f"Error deleting item: {str(e)}"
+        status = "error"
+
+    return JsonResponse({"status": status, "message": message})
+
+
+
+# @authenticated_user
+# def bac_history(request):
+#     # Fetch all PurchaseRequest objects linked to the logged-in user
+#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
+
+#     if request.method == 'POST':
+#         action = request.POST.get('Action')
+#         purchase_request_id = request.POST.get('Purchase_Request_ID')
+
+#         # Check if the 'Purchase_Request_ID' field is present
+#         if not purchase_request_id:
+#             return HttpResponse('Please fill in all the required fields.')
+
+#         # Fetch the PurchaseRequest object from the database
+#         try:
+#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
+#         except PurchaseRequestForm.DoesNotExist:
+#             return HttpResponse('Purchase request not found.')
+
+#         # Update the PurchaseRequest object based on the submitted action
+#         if action == 'approve':
+#             purchase_request.is_approved = True
+#         elif action == 'disapprove':
+#             purchase_request.is_disapproved = False
+#         else:
+#             return HttpResponse('Invalid action.')
+
+#         # Save the updated PurchaseRequest object to the database
+#         purchase_request.save()
+
+#         # Redirect to the bac_history page
+#         return render(request('bac_history'))
+#     # Render the bac_history page with the list of PurchaseRequest objects
+#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
