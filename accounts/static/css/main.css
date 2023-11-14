@@ -3303,3 +3303,6 @@ button {
 .modal-footer {
   border-top: 15px solid #ccc;
 }
+.cart_icon {
+  float: right;
+}
