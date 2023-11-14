@@ -57,34 +57,45 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
-        
-
+        .cart {
+            width: 50%; 
+            float: right; 
+            margin-right: 20px; 
+        }
 
 
 </style>
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-    <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+    <div class="row sticky-row">
+        <div class="col-12">
+            <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
+        </div>
     </div>
+    <style>
+        .sticky-row {
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 100;
+        }
+    </style>
 
     <div class="row">
 
         <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
         </div>
-  
       <div class="col-4 col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
       </div>
   
     
   
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-0">
+      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-20">
         <a href="{% url 'requester' %}">
             <i>
-                <img class="cart_icon float-right" src="{% static 'images/cart.png' %}" alt="Icon Description">
-
+                <img src="{% static 'images/cart.png' %}" alt="Icon Description" class="cart">
             </i>
         </a>
     </div>
@@ -103,6 +114,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                      
                         <th scope="col">Items</th>
                         <th scope="col">Item Brand Description</th>
                         <th scope="col">Unit</th>
@@ -113,14 +125,47 @@
                 </thead>
                 <tbody>
                     {% for row in csv_data %}
+                    <tr class="table-row" id="{{ row.ITEMS }}">
                         <tr>
+                          
                             <td>{{ row.ITEMS }}</td>
                             <td>{{ row.ITEM_BRAND }}</td>
                             <td>{{ row.UNIT }}</td>
                             <td>{{ row.PRICE }}</td>
+                            <script>
+                                function filterTable() {
+                                    var input, filter, table, tr, td, i, txtValue;
+                                    input = document.getElementById("search_bar_request");
+                                    filter = input.value.toUpperCase();
+                                    table = document.querySelector(".table-striped");
+                                    tr = table.getElementsByTagName("tr");
+                            
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0]; // Change the index based on the column you want to search
+                                        if (td) {
+                                            txtValue = td.textContent || td.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
+                            
+                           
                             <td>
-                                <input type="number" name="quantity_{{ row.ITEMS }}" value="0" min="1" class="form-control form-control-sm" style="width: 50px;">
+                                
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                               
+                                <script>
+                                    function highlightInput(input) {
+                                      input.select();
+                                    }
+                                  </script>
                             </td>
+                            
                             <td>
                                 <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
                             </td>
@@ -133,6 +178,27 @@
 </form>
 
 
+    <div class="row">
+        <div class="col-12 text-right">
+            <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+        </div>
+    </div>
+
+    <br><br><br>
+   
+</form>
+<script>
+    function scrollToCategory() {
+        var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+        var table = document.getElementById(selectedCategory);
+        if (table) {
+           table.scrollIntoView({behavior: 'smooth'});
+        }
+       }
+</script>
+
+</div>
+        </div>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
