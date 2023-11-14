@@ -1,8 +1,7 @@
-from audioop import reverse
-from django.http import HttpResponseRedirect, JsonResponse
-from typing import ItemsView
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.core.cache import cache
+
+from accounts.forms import ItemForm
 from .models import *
 import csv
 from django.contrib.auth.models import User
@@ -18,7 +17,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
-from django.http import HttpResponse  
+from django.http import HttpResponse, JsonResponse  
 from django.shortcuts import render, redirect   
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -35,11 +34,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
-from django.views.decorators.http import require_POST
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Item
-from .forms import ItemForm
-
 import random
 
 def main(request):
@@ -396,7 +390,7 @@ def item_edit(request, pk):
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-    return render(request, 'cart.html', {'item': item})
+    return render(request, 'item_edit.html', {'item': item})
 
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
@@ -405,6 +399,4 @@ def item_delete(request, pk):
         item.delete()
         return JsonResponse({'status': 'success'})
     
-    return JsonResponse({'status': 'serror'}, status=400)
-
-
+    return JsonResponse({'status': 'error'}, status=400)

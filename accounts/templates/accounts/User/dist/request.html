@@ -186,6 +186,31 @@
       </form>
 </div>
 
+
+<script>
+    document.getElementById('search_bar_request').addEventListener('input', function () {
+        var searchTerm = this.value.toLowerCase();
+        var rows = document.getElementById('table_body').getElementsByTagName('tr');
+
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var found = false;
+
+            for (var j = 0; j < cells.length; j++) {
+                var cellText = cells[j].innerText.toLowerCase();
+
+                if (cellText.indexOf(searchTerm) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            rows[i].style.display = found ? '' : 'none';
+        }
+    });
+</script>
+
+
 <!-- <script>
 
 
