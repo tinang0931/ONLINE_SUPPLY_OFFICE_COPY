@@ -1,7 +1,10 @@
-from django.shortcuts import redirect, render
+from audioop import reverse
+from django.http import HttpResponseRedirect, JsonResponse
+from typing import ItemsView
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
-import pymongo
+import csv
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -32,6 +35,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
+from django.views.decorators.http import require_POST
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Item
+from .forms import ItemForm
+
 import random
 
 def main(request):
@@ -267,6 +275,11 @@ def preqform(request):
 
 
 @authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -280,8 +293,6 @@ def signout(request):
 @authenticated_user
 def request(request):
     if request.method == 'POST':
-        # Handle form submission
-        purpose = request.POST.get('item_purpose')
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -291,43 +302,25 @@ def request(request):
         # Django model section
         # Create a new Item instance and set its attributes
         Item.objects.create(
-            purpose=purpose,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-            
         )
 
         return redirect('request')  # Redirect to the same page after adding the item
-
+    
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client['inventory']
-        collection = db['Inventcol']
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
-        # Fetch all documents from the 'inventcol' collection
-        cursor = collection.find()
-
-        # Prepare data by category
-        categories = {}
-        for document in cursor:
-            category_name = document['CATEGORY']
-            if category_name not in categories:
-                categories[category_name] = []
-
-            categories[category_name].append({
-                "ITEM_BRAND_DESCRIPTION": document.get('ITEM_BRAND_DESCRIPTION', ''),
-                "ITEMS": document['ITEMS'],
-                "UNIT": document['UNIT'],
-                "PRICE": document['PRICE']
-            })
-
-        # Render the HTML template with categorized data
-        return render(request, 'accounts/User/request.html', {'categories': categories})
+        with open(csv_file_path, 'r') as file:
+            reader = csv.DictReader(file)
+            csv_data = list(reader)
+    # Pas data to the template
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 
@@ -337,6 +330,17 @@ def requester(request):
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
+def delete_item(request, item_id):
+    try:
+        item = get_object_or_404(Item, id=item_id)
+        item.delete()
+        message = f"{item_id} will be deleted."
+        status = "success"
+    except Exception as e:
+        message = f"Error deleting item: {str(e)}"
+        status = "error"
+
+    return JsonResponse({"status": status, "message": message})
 
 
 
@@ -374,3 +378,33 @@ def requester(request):
 #         return render(request('bac_history'))
 #     # Render the bac_history page with the list of PurchaseRequest objects
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+
+
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
+
+def item_edit(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+
+    return render(request, 'cart.html', {'item': item})
+
+def item_delete(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'serror'}, status=400)
+
+
