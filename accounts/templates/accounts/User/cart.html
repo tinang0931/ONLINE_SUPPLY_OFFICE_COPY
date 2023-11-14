@@ -56,6 +56,18 @@
           </tbody>
         </table>
 
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
         
   
         <div class="editmodal" style="display: none;
@@ -101,7 +113,6 @@
       
      
       </div>
-  
   </form>
 
   <script>
@@ -152,4 +163,4 @@
 
 
 
-  {% endblock %}
+{% endblock %}
