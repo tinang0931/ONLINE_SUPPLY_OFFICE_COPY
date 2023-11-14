@@ -268,7 +268,6 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
-
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
@@ -278,6 +277,14 @@ def preqform(request):
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
+
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+@authenticated_user
+def notice_of_award(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notice_of_award.html')
 
 @authenticated_user
 def profile_html(request):
@@ -314,8 +321,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'D:/tinang repository/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-    
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
