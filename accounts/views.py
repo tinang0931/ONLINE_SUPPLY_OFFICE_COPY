@@ -283,8 +283,8 @@ def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
 @authenticated_user
-def notice_of_award(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/notice_of_award.html')
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
 def profile_html(request):
@@ -321,7 +321,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'D:/tinang repository/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/duhig.jeykierose/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)

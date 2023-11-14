@@ -10,29 +10,31 @@
         body, h, p {
             margin: 0;
             padding: 0;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         header {
-            background-color: #007acc;
+            background-color: #007acc; 
             color: white;
             padding: 10px;
         }
 
         .ctu_logo {
-            width: 167px; 
+            width: 190px;
             height: auto;
             margin-right: 20px;
             float: left;
+            margin-top: 30px;
         }
         
         .asean_logo{
-            width: 167px; 
+            width: 167px;
             height: auto;
             margin-right: 20px;
+            margin-top: 55px;
             float: left;
         }
         
-    
         .container {
             max-width: 800px; 
             padding: 20px;
@@ -66,15 +68,15 @@
         .iso_logo {
             float: right;
             width: 167px;
-           height: auto;
-         margin-right: 20px; 
+            height: auto;
+            margin-top: 50px;
         }
 
         .stars_logo {
             float: right;
-             margin-right: 10px;
             width: 167px;
             height: auto;
+            margin-top: 145px;
         }
 
         body {
@@ -186,9 +188,13 @@
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
         <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
         <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
     </nav>
+
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+    </nav>
+
     <div class="container">
         <h>Republic of the Philippines</h>
         <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
