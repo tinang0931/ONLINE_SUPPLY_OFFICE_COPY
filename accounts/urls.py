@@ -27,5 +27,7 @@ urlpatterns = [
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
+   path('bids/',views.bids, name='bids'),
+   path('noa/',views.noa, name='noa'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
 ]
