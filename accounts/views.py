@@ -282,6 +282,9 @@ def np(request):
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
+@authenticated_user
+def notice_of_award(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notice_of_award.html')
 
 @authenticated_user
 def profile_html(request):
