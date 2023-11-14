@@ -275,6 +275,11 @@ def preqform(request):
 
 
 @authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+
+@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
