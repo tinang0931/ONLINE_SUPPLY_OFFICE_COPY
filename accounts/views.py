@@ -161,8 +161,7 @@ def handle_reset_request(request):
 
         send_mail(subject, message, from_email, recipient_list)
         
-        # Redirect the user to a page where they can enter the verification code
-        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
+       
     return render(request, 'accounts/User/forgot.html')
 
 
@@ -178,8 +177,8 @@ def verify_code(request):
         user_email = request.POST.get('email')
         print('dsfsdfsdfdsfds')
         if is_valid_code(verification_code, user_email):
-            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
-    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
+            return redirect('reset_password') 
+    return render(request, 'accounts/User/verify.html') 
 
 
 def is_valid_code(verification_code, user_email):
@@ -196,11 +195,11 @@ def is_valid_code(verification_code, user_email):
 
 
 @unauthenticated_user
- # You can use this decorator to ensure the user is logged in to reset their password
+
 def reset_password(request):
     if request.method == 'POST':
-        # Handle the password reset form submission here
-        new_password = request.POST.get('new_password')  # Assuming you have a form field with name="new_password"
+       
+        new_password = request.POST.get('new_password')  
         
         # Update the user's password securely
         user = request.user  # Get the current logged-in user
@@ -300,31 +299,27 @@ def request(request):
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
+       
 
-        # Django model section
-        # Create a new Item instance and set its attributes
+       
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+         
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
+        return redirect('request')  
     
     else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
+       
+        csv_file_path = 'C:/Users/jomuad.johnlester/Desktop/SUPPLY SYSTEM/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    # Pas data to the template
     return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
-
 
 
 def requester(request):
