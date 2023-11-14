@@ -7,6 +7,10 @@ from decimal import Decimal
 
 
 
+
+
+
+
 class Item(models.Model):
     purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
@@ -84,41 +88,4 @@ class User(AbstractUser):
         related_query_name='accounts_user', # Add this line
 
     )
-
-
-
-
-    #class CampusDirectorHistoryCD(models.Model):
-   # user = models.ForeignKey(User, on_delete=models.CASCADE)
-   # start_date = models.DateField()
-   # end_date = models.DateField()
-   # description = models.TextField()
-
-    #def __str__(self):
-     #   return f'Campus Director History: {self.user.username}'
-
-#class SupplyOfficeHistory(models.Model):
- #   start_date = models.DateField()
-  #  end_date = models.DateField()
-   # description = models.TextField()
-
-    #def __str__(self):
-     #   return f'Supply Office History: {self.start_date} to {self.end_date}'
-
-#class SearchItem(models.Model):
-#    title = models.CharField(max_length=200)
- #   description = models.TextField()
-  #  link = models.URLField()
-   # created_at = models.DateTimeField(default=timezone.now)
-
-
-# models.py
-#from django.db import models
-
-##class Item(models.Model):
-   # _id = models.CharField(max_length=24)
-   # category = models.CharField(max_length=100)
-   # item = models.CharField(max_length=100)
-   # item_description = models.CharField(max_length=255)
-   # unit = models.CharField(max_length=50)
-   # price = models.DecimalField(max_digits=10, decimal_places=2)
+    
