@@ -96,40 +96,57 @@
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
         <div class="d-flex justify-content-start align-items-center">
-          <link rel="stylesheet" type="text/css" href="{% static 'print-form.css' %}" media="print">
-          <button type="button" class="btn btn-success me-2" onclick="window.print()">
+          <button type="button" class="btn btn-success me-2" onclick="window.location.href='your-form-url'">
             <i class="fas fa-print"></i> View
-          </button>
+           </button>
           <div class="d-flex justify-content-start align-items-center">
-            <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
-            <button type="button" class="btn btn-danger" onclick="disapprove()">Disapprove</button>
-        </div>
-        
-        <script>
-            // This variable will track the approval status
-            var isApproved = false;
-        
-            function approve() {
-                if (!isApproved) {
-                    // Add your logic for approval here
-                    // For example, update a status message
-                    document.getElementById('approval-status').innerText = 'Approval status: Approved';
-                    isApproved = true;  // Update the approval status
-                } else {
-                    // Display a message if already approved
-                    alert('This request has already been approved.');
-                }
+            <div class="d-flex justify-content-start align-items-center">
+              <button type="button" class="btn btn-primary" onclick="handleAction('approve')">Approve</button>
+              <button type="button" class="btn btn-danger" onclick="handleAction('disapprove')">Disapprove</button>
+          </div>
+          <script>
+          function handleAction(action) {
+    // Mocking a request_id for demonstration purposes
+    var request_id = 1;
+
+    // Make an AJAX request to the corresponding endpoint based on the action
+    fetch('/approve/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
+    },
+     
+        body: JSON.stringify({ request_id: request_id }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response here
+        document.getElementById('status').innerText = data.status;
+    })
+    .catch(error => {
+        console.error('Error ' + action + 'ing instance:', error);
+    });
+}
+
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
-        
-            function disapprove() {
-                // Add your logic for disapproval here
-                // For example, update a status message
-                document.getElementById('approval-status').innerText = 'Approval status: Disapproved';
-                isApproved = false;  // Reset the approval status
-            }
+        }
+    }
+    return cookieValue;
+}
         </script>
-        
-        
+    </body>
+    </html>
 
 
         <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
@@ -162,78 +179,8 @@
         </div>
       </td>
     </tr>
-    <tr class="item-row">
-      <td style="text-align: center;">
-        <span class="item-no">0000100</span>
-      </td>
-      <td>09-30-2023</td>
-      <td>Purchase Dell Laptop Order</td>
-      <td>1 unit</td>
-      <td>pending approval</td>
-      <td>Verify Papers submitted</td>
-      <td><span class="total">1,200,000</span></td>
-      <td class="text-end my-2 mt-0">
-        <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2">
-            <i class="fas fa-print"></i> View
-          </button>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-          <button type="button" class="btn btn-link btn-sm">
-            <i class="fas fa-comment"></i> Add Comment
-          </button>
-        </div>
-      </td>
-    </tr>
-    <tr class="item-row">
-      <td style="text-align: center;">
-        <span class="item-no">0000100</span>
-      </td>
-      <td>09-30-2023</td>
-      <td>Purchase Dell Laptop Order</td>
-      <td>1 unit</td>
-      <td>pending approval</td>
-      <td>Verify Papers submitted</td>
-      <td><span class="total">1,200,000</span></td>
-      <td class="text-end my-2 mt-0">
-        <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2" onclick="printRequesterForm()">
-              <i class="fas fa-print"></i> View
-          </button>
-      </div>
-  
-      <!-- JavaScript for printing -->
-      <script>
-          function printRequesterForm() {
-              // Get the form element by ID
-              var requestForm = document.getElementById('requesterForm');
-          
-              // Open a new window and write the form HTML into it
-              var printWindow = window.open('', '_blank');
-              printWindow.document.write('<html><head><title>Print</title>');
-              printWindow.document.write('</head><body>');
-              printWindow.document.write(requesterForm.outerHTML);
-              printWindow.document.write('</body></html>');
-              printWindow.document.close();
-          
-              // Print the new window
-              printWindow.print();
-          }
-      </script>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-          <button type="button" class="btn btn-link btn-sm">
-            <i class="fas fa-comment"></i> Add Comment
-          </button>
-        </div>
-      </td>
-    </tr>
+    
+    
     
       </td>
 </tbody>
@@ -293,6 +240,46 @@
       }
 
       // Optional: You can add more customization or validation here
+  }
+</script>
+
+<script>
+  // Function to update the history table with data from the server
+  function updatebac_historyTable() {
+    $.ajax({
+      url: '/get_bac_history_data/',  // Replace with the actual URL for fetching history data
+      type: 'get',
+      success: function (response) {
+        // Update the history table with the new data
+        updateTable(response);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        console.log('Error:', textStatus, errorThrown);
+        // Handle errors if needed
+      },
+    });
+  }
+
+  // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
+  setInterval(updatebac_historyTable, 10000);
+
+  // Initial call to populate the history table
+  updatebac_historyTable();
+
+  // Function to update the history table with new data
+  function updateTable(newData) {
+    // Clear existing rows in the table body
+    var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+
+    // Iterate over the newData array and add rows to the table
+    newData.forEach(function (data) {
+      var newRow = tableBody.insertRow();
+      for (var key in data) {
+        var cell = newRow.insertCell();
+        cell.appendChild(document.createTextNode(data[key]));
+      }
+    });
   }
 </script>
 {% endblock %}  

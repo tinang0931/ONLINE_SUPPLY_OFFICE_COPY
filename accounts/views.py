@@ -378,42 +378,49 @@ def receive_request(request):
         # Handle GET requests or render a form for receiving the request
         return render(request, 'receive_request.html')
 
-def approve_disapprove_request(request):
-    # Handle the BAC approving or disapproving the request
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        approval_status = request.POST.get('approval_status')  # 'approve' or 'disapprove'
 
-        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
-        if approval_status == 'approve':
-            purchase_request.status = 'Request Approved'
-        else:
-            purchase_request.status = 'Request Disapproved'
 
-        purchase_request.save()
-        return JsonResponse({'message': f'BAC {approval_status}d the request.'})
+def approve(request):
+    request_id = request.POST.get('request_id')
+    instance = get_object_or_404(PurchaseRequest, pk=request_id)
+
+    if not instance.is_approved:
+        instance.is_approved = True
+        instance.save()
+        response_data = {'status': 'Approved'}
     else:
-        # Handle GET requests or render a form for approval/disapproval
-        return render(request, 'approve_disapprove_request.html')
+        response_data = {'status': 'Already approved'}
+
+    return JsonResponse(response_data)
+
+
+def disapprove(request):
+    request_id = request.POST.get('request_id')
+    instance = get_object_or_404(PurchaseRequest, pk=request_id)
+
+    instance.is_approved = False
+    instance.save()
+
+    response_data = {'status': 'Disapproved'}
+
+    return JsonResponse(response_data)
     
-    
-(["GET", "POST"])
-def edit_record(request, item_id):
-    # Retrieve the record using the item_id
-    record = get_object_or_404(request, id=item_id)
+def edit_item(request, item_id):
+    # Assuming YourModel has a field named 'id'
+    item = get_object_or_404(request, id=item_id)
 
-    if request.method == 'POST':
-        # Process the form submission
-        form = request(request.POST, instance=record)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Record updated successfully'})
-    else:
-        # Render the form for editing
-        form = request(instance=record)
+    # Perform any additional logic here, such as preparing data for editing
 
-    return render(request, 'edit_record.html', {'form': form})
+    # You can customize this response based on your needs
+    response_data = {
+        'message': 'Editing item with ID {}'.format(item_id),
+        'item_data': {
+            'id': item.id,
+            # Add other fields as needed
+        }
+    }
 
+    return JsonResponse(response_data)
 
 def delete_item(request, item_id):
     item = get_object_or_404(request, pk=item_id)

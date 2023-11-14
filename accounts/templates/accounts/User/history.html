@@ -41,41 +41,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'print.css' %}" media="print">
-    <title>Your Page Title</title>
-</head>
-<body>
-    <!-- Your form with the ID 'requestForm' -->
-    <form id="requestForm">
-       
-    </form>
+    <button type="button" class="btn btn-success me-2" onclick="window.location.href='request-url'">
+      <i class="fas fa-print"></i> View
+     </button>
 
-    <!-- Button to trigger printing -->
-    <div class="d-flex justify-content-start align-items-center">
-        <button type="button" class="btn btn-success me-2" onclick="printRequestForm()">
-            <i class="fas fa-print"></i> View
-        </button>
-    </div>
-
-    <!-- JavaScript for printing -->
-    <script>
-        function printRequestForm() {
-            // Get the form element by ID
-            var requestForm = document.getElementById('requestForm');
-        
-            // Open a new window and write the form HTML into it
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html><head><title>Print</title>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(requestForm.outerHTML);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-        
-            // Print the new window
-            printWindow.print();
-        }
-    </script>
-</body>
 </html>
 
                 </div>

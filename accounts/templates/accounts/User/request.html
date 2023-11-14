@@ -124,9 +124,11 @@
                             <td>{{ item.PRICE }}</td>
                             <td>{{ item.Quantity }}</td>
                             <td class="custom-checkbox">
+                                
                                 <input type="checkbox" name="selected_items" id="checkbox{{ item.ITEMS }}" value="{{ item.ITEMS }}">
                                 <label for="checkbox{{ item.ITEMS }}">Select</label>
                             </td>
+                            
                         </tr>
                     {% endfor %}
                 </tbody>
