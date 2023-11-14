@@ -23,6 +23,8 @@ from django.views.decorators.http import require_POST
 from .models import Item
 from .forms import ItemForm
 import random
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -219,8 +221,7 @@ def handle_reset_request(request):
 
         send_mail(subject, message, from_email, recipient_list)
         
-        # Redirect the user to a page where they can enter the verification code
-        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
+       
     return render(request, 'accounts/User/forgot.html')
 
 
@@ -236,8 +237,8 @@ def verify_code(request):
         user_email = request.POST.get('email')
         print('dsfsdfsdfdsfds')
         if is_valid_code(verification_code, user_email):
-            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
-    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
+            return redirect('reset_password') 
+    return render(request, 'accounts/User/verify.html') 
 
 
 def is_valid_code(verification_code, user_email):
@@ -254,11 +255,11 @@ def is_valid_code(verification_code, user_email):
 
 
 @unauthenticated_user
- # You can use this decorator to ensure the user is logged in to reset their password
+
 def reset_password(request):
     if request.method == 'POST':
-        # Handle the password reset form submission here
-        new_password = request.POST.get('new_password')  # Assuming you have a form field with name="new_password"
+       
+        new_password = request.POST.get('new_password')  
         
         # Update the user's password securely
         user = request.user  # Get the current logged-in user
@@ -327,8 +328,6 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
-
-
 def preqform(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
@@ -338,6 +337,14 @@ def preqform(request):
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
+
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+@authenticated_user
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
 def profile_html(request):
@@ -357,73 +364,71 @@ def addItem(request):
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
-        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        # Compute the total cost
-    
-
+        # Django model section
+        # Create a new Item instance and set its attributes
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,  # Add the total_cost field in your Item model
+            quantity=quantity,
         )
 
-        return redirect('requester')
-
-    return render(request, 'accounts/User/request.html')
-
-def request(request): 
-    csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
-    if request.method == 'POST':
-        # Handle the form submission logic here
-        selected_items = []
-
-        # Iterate through form data to get selected items
-        for key, value in request.POST.items():
-            if key.startswith('selected_item_id') and value:
-                item_id = value
-                quantity = request.POST.get(f'quantity_{item_id}', 0)
-
-                # Create a dictionary with item details
-                item_details = {
-                    'item': request.POST.get(f'item_{item_id}', ''),
-                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
-                    'unit': request.POST.get(f'unit_{item_id}', ''),
-                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
-                    'quantity': quantity,
-                }
-
-                selected_items.append(item_details)
-
-                # Save the selected items to the database (Item model)
-                Item.objects.create(
-                    item=item_details['item'],
-                    item_brand_description=item_details['item_brand_description'],
-                    unit=item_details['unit'],
-                    unit_cost=item_details['unit_cost'],
-                    quantity=item_details['quantity'],
-                )
-
-        # Redirect after processing all selected items
-        messages.success(request, 'Items added to the cart successfully!')
-        return redirect('request')
-
+        return redirect('request')  # Redirect to the same page after adding the item
+    
     else:
+        # Handle data fetching for GET request
+        # Connect to MongoDB
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+    # Pas data to the template
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
+def submit_request(request):
+    # Handle the submission of the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        # Assuming you have a PurchaseRequest model
+        purchase_request = PurchaseRequest.objects.create(request_number=request_id, status='Waiting for Campus Director Approval')
+        return JsonResponse({'message': 'Request submitted successfully.'})
+    else:
+        # Handle GET requests or render a form for submission
+        return render(request, 'submit_request.html')
+    
+
+    
+def submit_form(request):
+    if request.method == 'POST':
+        form = request(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_page')  # Redirect to a success page
+    else:
+        form = request()
+
+    return render(request, 'submit_request.html', {'form': form})
+
+def receive_request(request):
+    # Handle the BAC receiving the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
+        purchase_request.status = 'Request Received by BAC'
+        purchase_request.save()
+        return JsonResponse({'message': 'BAC received the request.'})
+    else:
+        # Handle GET requests or render a form for receiving the request
+        return render(request, 'receive_request.html')
 
 
 def delete_item(request, item_id):
@@ -437,6 +442,55 @@ def delete_item(request, item_id):
         status = "error"
 
     return JsonResponse({"status": status, "message": message})
+
+def approve(request):
+    # Assuming you have a model with a primary key 'pk'
+    instance = get_object_or_404('request_id')
+
+    if not instance.is_approved:
+        # Add your logic for approval here
+        instance.is_approved = True
+        instance.save()
+        response_data = {'status': 'Approved'}
+    else:
+        response_data = {'status': 'Already approved'}
+
+    return JsonResponse(response_data)
+
+def disapprove(request):
+    # Assuming you have a model with a primary key 'pk'
+    instance = get_object_or_404('request_id')
+
+    # Add your logic for disapproval here
+    instance.is_approved = False
+    instance.save()
+
+    response_data = {'status': 'Disapproved'}
+
+    return JsonResponse(response_data)
+    
+    
+def edit_item(request, item_id):
+    # Assuming YourModel has a field named 'id'
+    item = get_object_or_404(request, id=item_id)
+
+    # Perform any additional logic here, such as preparing data for editing
+
+    # You can customize this response based on your needs
+    response_data = {
+        'message': 'Editing item with ID {}'.format(item_id),
+        'item_data': {
+            'id': item.id,
+            # Add other fields as needed
+        }
+    }
+
+    return JsonResponse(response_data)
+
+def delete_item(request, item_id):
+    item = get_object_or_404(request, pk=item_id)
+    item.delete()
+    return JsonResponse({'message': 'Record deleted successfully'})
 
 
 
