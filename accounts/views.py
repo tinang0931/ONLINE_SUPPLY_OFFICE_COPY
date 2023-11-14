@@ -38,7 +38,6 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-from .forms import ItemForm
 
 import random
 
@@ -318,7 +317,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -387,19 +386,6 @@ def delete_item(request, item_id):
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
-
-def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-
-    return render(request, 'cart.html', {'item': item})
 
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)

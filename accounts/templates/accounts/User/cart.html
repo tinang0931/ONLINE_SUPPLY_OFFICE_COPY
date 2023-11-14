@@ -100,27 +100,8 @@
 
 
 
-    function openEditModal(itemId) {
-        // Populate the modal fields with the item details (if needed)
-        // Optionally, you can use AJAX to fetch detailed item information and populate the modal fields dynamically
-        // Example: $.get('/get_item_details/' + itemId, function(data) { /* Populate modal fields here */ });
-
-        // Open the modal
-        $('#editModal').modal('show');
-    }
-
-    function saveChanges(itemId) {
-        // Get the edited values from the modal fields
-        var editedItemName = $('#editedItemName').val();
-        // Get other edited values similarly
-
-        // Perform logic to save changes (e.g., send AJAX request to update the item in the backend)
-        // Example: $.post('/update_item/' + itemId, { itemName: editedItemName, /* other properties */ }, function(response) { /* Handle response */ });
-
-        // Close the modal after saving changes
-        $('#editModal').modal('hide');
-    }
-
+   
+    
    
 
     function deleteRow(button) {
