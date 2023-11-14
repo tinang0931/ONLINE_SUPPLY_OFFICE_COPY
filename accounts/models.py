@@ -2,17 +2,11 @@ from django import forms
 from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
-import uuid
 from decimal import Decimal
-
-
-
-
-
-
-
+import uuid
 
 class Item(models.Model):
+    request_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
     item_brand_description = models.CharField(max_length=255)
@@ -20,8 +14,6 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
-    request_id = models.UUIDField(editable=False, unique=True)
-
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity

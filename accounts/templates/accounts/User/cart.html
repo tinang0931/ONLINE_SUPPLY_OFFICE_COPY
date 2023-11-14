@@ -27,27 +27,33 @@
             </tr>
         </thead>
         
-        <tbody>
-          {% for item in items %}
-          <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-              <td class="item_name text-center">{{ item.item }}</td>
-              <td class="item_description text-center">{{ item.item_brand_description }}</td>
-              <td class="item_unit text-center">{{ item.unit }}</td>
-              <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-              <td class="item_quantity text-center">{{ item.quantity }}</td>
-              <td></td>
-              <td class="text-center">
-                  <button  style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
-                      <i class="fa fa-edit"></i>
-                  </button>
-                  <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
-                      <i class="fa fa-trash"></i>
-                  </button>
-              </td>
-          </tr>
-          {% endfor %}
-      </tbody>
-      </table>
+            <tbody>
+                    {% for item in items %}
+                  <tr style="background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+                      <td class="item_name text-center">{{ item.item }}</td>
+                      <td class="item_description text-center">
+                          <span id="item_description_{{ item.id }}_display">
+                              {{ item.item_brand_description }}
+                          </span>
+                          <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                      </td>
+                      <td class="item_unit text-center">{{ item.unit }}</td>
+                      <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                      <td class="item_quantity text-center">{{ item.quantity }}</td>
+                      <td class="totalcost text-center">{{ item.total_cost }}</td> {# Assuming you have a total_cost field in your Item model #}
+                      <td class="text-center">
+                          <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                              <i class="fa fa-edit"></i>
+                          </button>
+                          <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              {% endfor %}
+
+          </tbody>
+        </table>
 
           <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -80,7 +86,7 @@
         <div class="row-at-bottom" style="position:fixed; ">
           <div class="purpose">
             <label>Purpose:</label>
-            <textarea id="purpose" placeholder="Purpose" required style="">
+            <textarea id="purpose" placeholder="Purpose" >
             </textarea>
           </div>
           <div class="total_amount">
