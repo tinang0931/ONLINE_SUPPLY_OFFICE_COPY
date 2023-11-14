@@ -57,8 +57,7 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
-
-    .subheader {
+        .subheader {
         position: fixed;
         z-index: 1000;
         background-color: #fff;
@@ -122,7 +121,6 @@
        
     }
 
-    
 
 
 </style>
@@ -130,23 +128,35 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="subheader">
-
-        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+        
+        <div class="container">
+            <h1 class="title">CREATE PURCHASE REQUEST</h1>
+            <div class="cart">
+                <a href="{% url 'requester' %}">
+                    <i>
+                        <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+                    </i>
+                </a>
+            </div>
         </div>
-      <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
-      </div>
-  
+
+
+
+        <div class="row  align-items-center">
     
-  
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-20">
-        <a href="{% url 'requester' %}">
-            <i>
-                <img src="{% static 'images/cart.png' %}" alt="Icon Description" class="cart">
-            </i>
-        </a>
-    </div>
+            <div class="search">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+            </div>
+      
+          <div class="additem">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+          </div>
+
+
+          <div class="addtocart">
+            <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+          </div>
+       </div>
     
         
     </div>
@@ -193,7 +203,7 @@
                                     tr = table.getElementsByTagName("tr");
                             
                                     for (i = 0; i < tr.length; i++) {
-                                        td = tr[i].getElementsByTagName("td")[0]; // Change the index based on the column you want to search
+                                        td = tr[i].getElementsByTagName("td")[0]; 
                                         if (td) {
                                             txtValue = td.textContent || td.innerText;
                                             if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -230,11 +240,7 @@
 </form>
 
 
-    <div class="row">
-        <div class="col-12 text-right">
-            <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-        </div>
-    </div>
+
 
     <br><br><br>
    
@@ -291,11 +297,6 @@
                           <div class="form-group">
                               <label for="Quantity">Quantity</label>
                               <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                          </div>
-
-                          <div class="modal-footer">
-                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
-                              
                           </div>
 
                     </form>
