@@ -1,45 +1,27 @@
 from audioop import reverse
-from django.http import HttpResponseRedirect, JsonResponse
+from .decorators import admin_required, unauthenticated_user, authenticated_user
 from typing import ItemsView
-from django.shortcuts import redirect, render, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user
+from django.contrib.auth import authenticate, login as auth_login, logout, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage, send_mail
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.models import User
-from django.http import HttpResponse  
-from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
-from django.core.mail import EmailMessage 
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
-from django.contrib.auth import update_session_auth_hash
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
-from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .forms import ItemForm
-
 import random
 
 def main(request):
@@ -55,7 +37,7 @@ def homepage(request):
 
 
 @unauthenticated_user
-def register(request):
+def register_user(request):
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
@@ -113,7 +95,85 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+    
+@unauthenticated_user   
+def register_admin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
 
+        # Check if passwords match
+        if pass1 != pass2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')  # Assuming you have a separate template for admin registration
+
+        # Check if the username or email is already in use
+        if get_user_model().objects.filter(username=username).exists() or get_user_model().objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
+
+        # Create a new admin account
+        admin = get_user_model().objects.create_user(username=username, email=email, password=pass1, is_active=True, is_staff=True, is_superuser=True)
+        admin.first_name = fname
+        admin.last_name = lname
+        admin.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'admin': admin,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(admin.pk)),
+            'token': account_activation_token.make_token(admin),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+
+        messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
+        return redirect('admin_login')  # Redirect to the login page upon successful registration
+    return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
+
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+    
+
+@unauthenticated_user
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+    
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None and user.is_active and user.is_staff and user.is_superuser:
+            auth_login(request, user)
+            messages.success(request, "Admin login successful.")
+            return redirect('bac_home')  # Redirect to the admin dashboard or any other admin-specific page
+        else:
+            messages.error(request, "Invalid admin credentials.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
 
 @unauthenticated_user
 def login(request):
@@ -253,28 +313,28 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@authenticated_user
+
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
 
-@authenticated_user
+
 def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
 
-@authenticated_user
+
 def preqform(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
 
 
-@authenticated_user
+
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
@@ -291,38 +351,74 @@ def signout(request):
 
 
 @authenticated_user
-def request(request):
+def addItem(request):
     if request.method == 'POST':
+        # Handle the form for adding a single item
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
+        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
+        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
 
-        # Django model section
-        # Create a new Item instance and set its attributes
+        # Compute the total cost
+    
+
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
+            quantity=quantity,  # Add the total_cost field in your Item model
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
-    
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        return redirect('requester')
 
+    return render(request, 'accounts/User/request.html')
+
+def request(request): 
+    csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+
+    if request.method == 'POST':
+        # Handle the form submission logic here
+        selected_items = []
+
+        # Iterate through form data to get selected items
+        for key, value in request.POST.items():
+            if key.startswith('selected_item_id') and value:
+                item_id = value
+                quantity = request.POST.get(f'quantity_{item_id}', 0)
+
+                # Create a dictionary with item details
+                item_details = {
+                    'item': request.POST.get(f'item_{item_id}', ''),
+                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
+                    'unit': request.POST.get(f'unit_{item_id}', ''),
+                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
+                    'quantity': quantity,
+                }
+
+                selected_items.append(item_details)
+
+                # Save the selected items to the database (Item model)
+                Item.objects.create(
+                    item=item_details['item'],
+                    item_brand_description=item_details['item_brand_description'],
+                    unit=item_details['unit'],
+                    unit_cost=item_details['unit_cost'],
+                    quantity=item_details['quantity'],
+                )
+
+        # Redirect after processing all selected items
+        messages.success(request, 'Items added to the cart successfully!')
+        return redirect('request')
+
+    else:
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    # Pas data to the template
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
-
+        
+        # Pass data to the template
+        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 def requester(request):
