@@ -37,6 +37,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .forms import ItemForm
 
+
 import random
 
 def main(request):
@@ -327,6 +328,9 @@ def requester(request):
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
+
+
+
 def delete_item(request, item_id):
     try:
         item = get_object_or_404(Item, id=item_id)
@@ -382,19 +386,18 @@ def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
-def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
+
+def edit_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    form = ItemForm(instance=item)
 
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+            return JsonResponse({'success': True})
 
-    return render(request, 'cart.html', {'item': item})
-
+    return render(request, 'accounts/User/cart.html', {'form': form, 'item_id': item_id})
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
 

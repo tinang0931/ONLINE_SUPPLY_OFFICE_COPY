@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views 
+from .views import edit_item
 
 
 urlpatterns = [
@@ -7,7 +8,6 @@ urlpatterns = [
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
    path('login/',views.login, name='login'),
-   path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
    path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -28,4 +28,6 @@ urlpatterns = [
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   path('edit_item/<int:item_id>/', edit_item, name='edit_item'),
 ]
+
