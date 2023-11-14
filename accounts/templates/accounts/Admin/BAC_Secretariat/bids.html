@@ -21,17 +21,20 @@
             padding: 10px;
         }
 
+        /* Style the logo */
         .ctu_logo {
-            width: 167px; 
+            width: 190px;
             height: auto;
             margin-right: 20px;
             float: left;
+            margin-top: 30px;
         }
         
         .asean_logo{
-            width: 167px; 
+            width: 167px;
             height: auto;
             margin-right: 20px;
+            margin-top: 55px;
             float: left;
         }
         
@@ -54,8 +57,6 @@
         p {
             font-size: 25px; 
             text-align: center;
-            
-           
         }
     
         a {
@@ -70,15 +71,15 @@
         .iso_logo {
             float: right;
             width: 167px;
-           height: auto;
-         margin-right: 20px; 
+            height: auto;
+            margin-top: 50px;
         }
 
         .stars_logo {
             float: right;
-             margin-right: 10px;
             width: 167px;
             height: auto;
+            margin-top: 145px;
         }
 
         .br {
@@ -147,8 +148,11 @@
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
         <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
         <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
+
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
     </nav>
     
     <div class="container">
