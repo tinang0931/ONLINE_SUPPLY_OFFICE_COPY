@@ -33,6 +33,8 @@ from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 import random
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -350,8 +352,92 @@ def request(request):
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
+def submit_request(request):
+    # Handle the submission of the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        # Assuming you have a PurchaseRequest model
+        purchase_request = PurchaseRequest.objects.create(request_number=request_id, status='Waiting for Campus Director Approval')
+        return JsonResponse({'message': 'Request submitted successfully.'})
+    else:
+        # Handle GET requests or render a form for submission
+        return render(request, 'submit_request.html')
+    
+
+    
+def submit_form(request):
+    if request.method == 'POST':
+        form = request(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_page')  # Redirect to a success page
+    else:
+        form = request()
+
+    return render(request, 'submit_request.html', {'form': form})
+
+def receive_request(request):
+    # Handle the BAC receiving the request
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
+        purchase_request.status = 'Request Received by BAC'
+        purchase_request.save()
+        return JsonResponse({'message': 'BAC received the request.'})
+    else:
+        # Handle GET requests or render a form for receiving the request
+        return render(request, 'receive_request.html')
 
 
+
+def approve(request):
+    # Assuming you have a model with a primary key 'pk'
+    instance = get_object_or_404('request_id')
+
+    if not instance.is_approved:
+        # Add your logic for approval here
+        instance.is_approved = True
+        instance.save()
+        response_data = {'status': 'Approved'}
+    else:
+        response_data = {'status': 'Already approved'}
+
+    return JsonResponse(response_data)
+
+def disapprove(request):
+    # Assuming you have a model with a primary key 'pk'
+    instance = get_object_or_404('request_id')
+
+    # Add your logic for disapproval here
+    instance.is_approved = False
+    instance.save()
+
+    response_data = {'status': 'Disapproved'}
+
+    return JsonResponse(response_data)
+    
+    
+def edit_item(request, item_id):
+    # Assuming YourModel has a field named 'id'
+    item = get_object_or_404(request, id=item_id)
+
+    # Perform any additional logic here, such as preparing data for editing
+
+    # You can customize this response based on your needs
+    response_data = {
+        'message': 'Editing item with ID {}'.format(item_id),
+        'item_data': {
+            'id': item.id,
+            # Add other fields as needed
+        }
+    }
+
+    return JsonResponse(response_data)
+
+def delete_item(request, item_id):
+    item = get_object_or_404(request, pk=item_id)
+    item.delete()
+    return JsonResponse({'message': 'Record deleted successfully'})
 
 
 
