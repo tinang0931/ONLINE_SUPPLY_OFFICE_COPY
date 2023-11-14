@@ -1,4 +1,7 @@
-from django.shortcuts import redirect, render
+from audioop import reverse
+from django.http import HttpResponseRedirect, JsonResponse
+from typing import ItemsView
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
@@ -32,6 +35,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
+from django.views.decorators.http import require_POST
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Item
+from .forms import ItemForm
+
 import random
 
 def main(request):
@@ -270,6 +278,10 @@ def preqform(request):
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
 
 @authenticated_user
 def profile_html(request):
@@ -370,3 +382,33 @@ def delete_item(request, item_id):
 #         return render(request('bac_history'))
 #     # Render the bac_history page with the list of PurchaseRequest objects
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+
+
+
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
+
+def item_edit(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+
+    return render(request, 'cart.html', {'item': item})
+
+def item_delete(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'serror'}, status=400)
+
+
