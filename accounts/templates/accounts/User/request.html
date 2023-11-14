@@ -8,48 +8,48 @@
 
 <style>
     .input-group {
-        display: flex;
+      display: flex;
     }
-
+  
     #quantityInput {
-        flex: 1;
-        width: 30px;
+      flex: 1;
+      width: 30px;
     }
-
+  
     .btn-inc-dec {
-        flex: 0;
+      flex: 0;
     }
-
+  
     /* Style for the modal */
     .modal {
-        display: none;
-        position: fixed;
-        top: 456px;
-        left: 300px;
-        width: 20%;
-        height: 55%;
-        background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      position: fixed;
+      top: 456px;
+      left: 300px;
+      width: 20%;
+      height: 55%;
+      background-color: rgba(0, 0, 0, 0.7);
     }
-
+  
     .modal-content {
-        position: absolute;
-        top: 456px;
-        left: 50%;
-        width: 1000px;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 5px;
+      position: absolute;
+      top: 456px;
+      left: 50%;
+      width: 1000px;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 5px;
     }
-
+  
     .close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 10px;
-        cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      cursor: pointer;
     }
-
-    .custom-checkbox input:checked+label {
+    
+    .custom-checkbox input:checked + label {
         color: green;
     }
 
@@ -82,6 +82,7 @@
     </style>
 
     <div class="row">
+
         <div class="col-6 col-sm-6 col-md-5 col-lg-3">
             <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
         </div>
@@ -102,8 +103,8 @@
   
 <br><br>
 
-    <form action="{% url 'request' %}" method="post" enctype="multipart/form-data" id="itemForm">
-        {% csrf_token %}
+<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 
     <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
     <br>
@@ -113,6 +114,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                      
                         <th scope="col">Items</th>
                         <th scope="col">Item Brand Description</th>
                         <th scope="col">Unit</th>
@@ -123,34 +125,72 @@
                 </thead>
                 <tbody>
                     {% for row in csv_data %}
+                    <tr class="table-row" id="{{ row.ITEMS }}">
                         <tr>
                           
                             <td>{{ row.ITEMS }}</td>
                             <td>{{ row.ITEM_BRAND }}</td>
                             <td>{{ row.UNIT }}</td>
                             <td>{{ row.PRICE }}</td>
+                            <script>
+                                function filterTable() {
+                                    var input, filter, table, tr, td, i, txtValue;
+                                    input = document.getElementById("search_bar_request");
+                                    filter = input.value.toUpperCase();
+                                    table = document.querySelector(".table-striped");
+                                    tr = table.getElementsByTagName("tr");
+                            
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0]; 
+                                        if (td) {
+                                            txtValue = td.textContent || td.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
                             <td>
-                                <input type="number" name="quantity_{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 50px;">
+                                
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                               
+                                <script>
+                                    function highlightInput(input) {
+                                      input.select();
+                                    }
+                                  </script>
                             </td>
                             
                             <td>
-                                <input type="checkbox" class="select-row" name="selected_item_id_{{ row.ITEMS }}"
-                                    value="{{ row.ITEMS }}">
-                                <!-- Add hidden fields for other item details -->
-                                <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
-                                <input type="hidden" name="item_brand_{{ row.ITEMS }}" value="{{ row.ITEM_BRAND }}">
-                                <input type="hidden" name="unit_{{ row.ITEMS }}" value="{{ row.UNIT }}">
-                                <input type="hidden" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
+                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
                             </td>
                         </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </form>
+    </div>
+</form>
 
 
+    <br><br><br>
+   
+</form>
+<script>
+    function scrollToCategory() {
+        var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+        var table = document.getElementById(selectedCategory);
+        if (table) {
+           table.scrollIntoView({behavior: 'smooth'});
+        }
+       }
+</script>
+
+</div>
+        </div>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -161,50 +201,49 @@
                       </button>
                   </div>
 
-                <div class="modal-body">
+                  <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
+                    <form action="{% url 'request' %}" method="post">
                         {% csrf_token %}
 
+                          
 
+                          <div class="form-group">
+                              <label for="Item">Item</label>
+                              <input type="text" class="form-control" id="Item" name="item" required>
+                          </div>
 
-                        <div class="form-group">
-                            <label for="Item">Item</label>
-                            <input type="text" class="form-control" id="Item" name="item" required>
-                        </div>
+                          <div class="form-group">
+                              <label for="Item_Brand_Description">Item Brand/Description</label>
+                              <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
+                          </div>
 
-                        <div class="form-group">
-                            <label for="Item_Brand_Description">Item Brand/Description</label>
-                            <input type="text" class="form-control" id="Item_Brand_Description"
-                                name="item_Brand_Description" required>
-                        </div>
+                          <div class="form-group">
+                              <label for="Unit">Unit</label>
+                              <input type="text" class="form-control" id="Unit" name="unit" required>
+                          </div>
 
-                        <div class="form-group">
-                            <label for="Unit">Unit</label>
-                            <input type="text" class="form-control" id="Unit" name="unit" required>
-                        </div>
+                          <div class="form-group"> 
+                              <label for="Unit">Unit Cost</label>
+                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="Quantity">Quantity</label>
+                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                          </div>
 
-                        <div class="form-group">
-                            <label for="Unit">Unit Cost</label>
-                            <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Quantity">Quantity</label>
-                            <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                        </div>
+                          <div class="modal-footer">
+                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+                              
+                          </div>
 
                     </form>
-                </div>
-            </div>
+                  </div>
+              </div>
+          </div>
         </div>
-    </div>
-    </form>
+      </form>
 </div>
 
 <!-- <script>
@@ -305,7 +344,6 @@
 </script> -->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
 {% endblock %}
