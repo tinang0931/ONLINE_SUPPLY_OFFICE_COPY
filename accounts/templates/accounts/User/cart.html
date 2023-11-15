@@ -11,9 +11,18 @@
 
     
     <div>
-      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
+
+       
+      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%; position: sticky;" >
+        <div class="cart">
+            <a href="{% url 'request' %}">
+                <i>
+                    <img src="{% static 'images/left-arrow-square.png.png' %}" alt="Icon Description">
+                </i>
+            </a>
+        </div>
         <table class="cart_table" id="create_request_table" style="background-color: none; ">
-          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000;">
+          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000; position: sticky; ">
             <tr>
                 <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
