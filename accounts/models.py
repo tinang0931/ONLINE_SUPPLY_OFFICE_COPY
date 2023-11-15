@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
@@ -17,6 +18,10 @@ class Item(models.Model):
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
     
+
+
+
+
 class CsvFile(models.Model):
     CATEGORY = models.CharField(max_length=255)
     ITEM_BRAND = models.CharField(max_length=255)
