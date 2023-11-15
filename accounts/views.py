@@ -396,5 +396,4 @@ def item_delete(request, pk):
     if request.method == 'POST':
         item.delete()
         return JsonResponse({'status': 'success'})
-    
     return JsonResponse({'status': 'serror'}, status=400)
