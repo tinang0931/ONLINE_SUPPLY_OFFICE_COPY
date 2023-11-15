@@ -33,118 +33,107 @@
             </tr>
         </thead>
         
-            <tbody>
-              {% for item in items %}
-              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                  <td class="item_name text-center">  {{ item.item }} </td>
-                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                  <td class="item_unit text-center">{{ item.unit }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_total_cost text-center"><td class="text-center">
-                  <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}"  onclick="editRow(this)" style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(1, 154, 72);" >
-                      <i class="fa fa-edit"></i>
-                    </button>                
-                    <button class="delete-button" data-item-id="{{ item.id }}"  style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
-                      <i class="fa fa-trash"></i>
-                    </button>
-                    
-                </td>
-              </tr>
-              {% endfor %}
-          </tbody>
+        <tbody>
+          {% for item in items %}
+          <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+            <td class="item_name text-center">{{ item.item }}</td>
+            <td class="item_description text-center">{{ item.item_brand_description }}</td>
+            <td class="item_unit text-center">{{ item.unit }}</td>
+            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+            <td class="item_quantity text-center">{{ item.quantity }}</td>
+            <td class="item_total_cost text-center" id="totalCost"></td>
+            <td class="text-center">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal"
+              data-item-id="{{ item.id }}"  
+              onclick="openEditModal('{{ item.item }}', '{{ item.item_brand_description }}', '{{ item.unit }}', '{{ item.unit_cost }}', '{{ item.quantity }}')">Edit</button>
+              <button class="delete-button" data-item-id="{{ item.id }}"
+                style="background-color: transparent; border: none; size: 50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
         </table>
-
-        <div class="row-at-bottom d-flex justify-content-between">
-          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
-                border: 2px solid #0a0168;">
-           
-           <div id="myModal" class="modal" >
-              <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <label for="inputText">Input Text:</label>
-                <textarea id="inputText"></textarea>
-                <button onclick="updateDisplayBox()">Submit</button>
+       
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <label for="editItem">Item:</label>
+                <input type="text" class="form-control" id="editItem">
+        
+                <label for="editDescription">Item Description:</label>
+                <input type="text" class="form-control" id="editDescription">
+        
+                <label for="editUnit">Unit:</label>
+                <input type="text" class="form-control" id="editUnit">
+        
+                <label for="editUnitCost">Unit Cost:</label>
+                <input type="text" class="form-control" id="editUnitCost">
+        
+                <label for="editQuantity">Quantity:</label>
+                <input type="text" class="form-control" id="editQuantity">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateItem()">Save changes</button>
               </div>
             </div>
           </div>
-          <div class="total_amount">
-            <span>Total Amount: {{total_cost}}</span>
-          </div>
-          <div class="submit">
-            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
         </div>
-    </form>
+        
+        <script>
+               function updateItem() {
+    var itemId = $('#addItemModal').data('item-id');  // Retrieve the item ID
+    var newItem = document.getElementById('editItem').value;
+    var newDescription = document.getElementById('editDescription').value;
+    var newUnit = document.getElementById('editUnit').value;
+    var newUnitCost = parseFloat(document.getElementById('editUnitCost').value);
+    var newQuantity = parseFloat(document.getElementById('editQuantity').value);
+
+    $.ajax({
+        type: 'POST',
+        url: '/update_item/' + itemId + '/',  // Adjust the URL based on your project's structure
+        data: {
+            item: newItem,
+            item_brand_description: newDescription,
+            unit: newUnit,
+            unit_cost: newUnitCost,
+            quantity: newQuantity,
+            csrfmiddlewaretoken: '{{ csrf_token }}'  // Include the CSRF token
+        },
+        success: function (response) {
+            if (response.success) {
+                // Close the modal
+                $('#addItemModal').modal('hide');
+
+                // Update the total cost in the corresponding td
+                updateTotalCost();
+            } else {
+                // Handle errors if needed
+                console.error(response.errors);
+            }
+        },
+        error: function () {
+            // Handle errors if needed
+            console.error('Failed to update item.');
+        }
+    });
+}
+          
+        </script>
     
-    <!-- Success message container -->
-    <div id="successMessage" style="display: none; color: green; margin-top: 10px;">
-        Form submitted successfully!
-    </div>
-    
-    <!-- JavaScript to handle form submission and show success message -->
-    <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-    
-            // Make an AJAX request to submit the form
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/your-submit-endpoint/', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-    
-            // Additional headers or data can be added if needed
-    
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // Request was successful, show the success message
-                    document.getElementById('successMessage').style.display = 'block';
-                } else {
-                    // Request failed, handle errors here
-                    console.error('Error submitting form:', xhr.statusText);
-                }
-            };
-    
-            xhr.onerror = function() {
-                // Handle network errors here
-                console.error('Network error while attempting to submit form');
-            };
-    
-            // Serialize the form data and send the request
-            var formData = new FormData(document.getElementById('myForm'));
-            xhr.send(formData);
-        });
-    </script>
-      
-     
-      </div>
-  </form>
 
 
-  <script>
-    // Function to open the modal
-    function openModal() {
-      document.getElementById('myModal').style.display = 'block';
-    }
-  
-    // Function to close the modal
-    function closeModal() {
-      document.getElementById('myModal').style.display = 'none';
-    }
-  
-    // Function to update the display box with the inputted text
-    function updateDisplayBox() {
-      var inputText = document.getElementById('inputText').value;
-      document.getElementById('displayBox').innerText = inputText;
-      closeModal();
-    }
-  
-    // Function to dynamically resize the display box based on content
-    function resizeDisplayBox() {
-      var displayBox = document.getElementById('displayBox');
-      displayBox.style.height = 'auto'; // Reset height to auto to calculate actual height
-      displayBox.style.height = (displayBox.scrollHeight) + 'px'; // Set the height to the calculated value
-    }
-  </script>
+
+   
 
 
-  {% endblock %}
+{% endblock %}

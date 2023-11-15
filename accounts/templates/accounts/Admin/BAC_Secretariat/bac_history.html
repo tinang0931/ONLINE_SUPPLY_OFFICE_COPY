@@ -96,9 +96,10 @@
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
         <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2" onclick="window.location.href='your-form-url'">
+          <link rel="stylesheet" type="text/css" href="{% static 'print-form.css' %}" media="print">
+          <button type="button" class="btn btn-success me-2" onclick="window.print()">
             <i class="fas fa-print"></i> View
-           </button>
+          </button>
           <div class="d-flex justify-content-start align-items-center">
             <div class="d-flex justify-content-start align-items-center">
               <button type="button" class="btn btn-primary" onclick="handleAction('approve')">Approve</button>
@@ -264,7 +265,7 @@ function getCookie(name) {
   setInterval(updatebac_historyTable, 10000);
 
   // Initial call to populate the history table
-  updatebac_historyTable();
+  updateHistoryTable();
 
   // Function to update the history table with new data
   function updateTable(newData) {

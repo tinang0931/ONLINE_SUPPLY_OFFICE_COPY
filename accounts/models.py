@@ -3,7 +3,7 @@ from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
 import uuid
 from decimal import Decimal
-
+from django import forms
 
 
 
@@ -12,6 +12,7 @@ from decimal import Decimal
 
 
 class Item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
     item_brand_description = models.CharField(max_length=255)
@@ -101,3 +102,7 @@ class User(AbstractUser):
 
     )
     
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['item', 'item_brand_description', 'unit', 'unit_cost', 'quantity']

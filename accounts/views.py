@@ -39,7 +39,6 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .forms import ItemForm
-
 import random
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -297,6 +296,7 @@ def signout(request):
 @authenticated_user
 def request(request):
     if request.method == 'POST':
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -306,6 +306,7 @@ def request(request):
         # Django model section
         # Create a new Item instance and set its attributes
         Item.objects.create(
+            user_id=request.user.id,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
@@ -318,7 +319,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/dugaduga.jhake/Desktop/SUPPLY SYSTEM\ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
@@ -346,7 +347,17 @@ def delete_item(request, item_id):
 
     return JsonResponse({"status": status, "message": message})
 
+def preqform(request):
+    return render(request, 'preqform.html')
 
+def your_view(request):
+    items = request.objects.all()
+
+    context = {
+        'items': items,
+    }
+
+    return render(request, 'accounts/User/cart.html', context)
 
 # @authenticated_user
 # def bac_history(request):
@@ -382,3 +393,15 @@ def delete_item(request, item_id):
 #         return render(request('bac_history'))
 #     # Render the bac_history page with the list of PurchaseRequest objects
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
+def update_item(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})

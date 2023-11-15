@@ -58,7 +58,16 @@
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
 
+.modal {
+z-index: 1050;
+}
 
+.modal-backdrop {
+    z-index: 1040;
+}
+.modal-backdrop {
+    backdrop-filter: none;  /* or adjust as needed */
+}
 
 </style>
 
@@ -186,7 +195,7 @@
       </form>
 </div>
 
-<!-- <script>
+<script>
 
 
     $(document).ready(function () {
@@ -281,7 +290,7 @@
                 console.log("Scrolling to category:", selectedCategory);
             }
         }
-</script> -->
+</script> 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
