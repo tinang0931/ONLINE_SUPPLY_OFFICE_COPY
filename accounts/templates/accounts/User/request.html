@@ -57,59 +57,121 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
-        .cart {
-            width: 50%; 
-            float: right; 
-            margin-right: 20px; 
-        }
+        .subheader {
+        position: fixed;
+        z-index: 1000;
+        background-color: #fff;
+        width: 100%;
+        height: 20vh;
+    }
+
+  
+    
+    .row2 {
+        margin-top: 10%;
+    }
+
+    .container {
+        margin-top: 1%;
+        display: flex;
+    }
+
+    .title {
+        flex-grow: 1;
+        text-align: center;
+        font-family: 'Trebuchet MS', san-serif;
+    }
+
+    .cart {
+        margin-left: 60%;
+      
+
+    }
+
+    .row {
+        margin-top: 1%;
+        
+    }
+
+    .search,
+    .additem,
+    .addtocart {
+        margin: 0;
+        width: 200px;
+        height: 100px;
+      
+    }
+    .search input {
+        width: 300px;
+    }
+
+    .search,    
+    .additem {
+        align-items: normal;
+        
+      
+    }
+
+    .additem {
+        margin-left: 6%
+    }
+
+    .addtocart{
+        margin-left: 43%;
+       
+    }
+
 
 
 </style>
 
-<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-    <div class="row sticky-row">
-        <div class="col-12">
-            <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
-        </div>
-    </div>
-    <style>
-        .sticky-row {
-            position: sticky;
-            top: 0;
-            background-color: #ffffff;
-            z-index: 100;
-        }
-    </style>
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
-    <div class="row">
-
-        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+    <div class="subheader">
+        
+        <div class="container">
+            <h1 class="title">CREATE PURCHASE REQUEST</h1>
+            <div class="cart">
+                <a href="{% url 'requester' %}">
+                    <i>
+                        <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+                    </i>
+                </a>
+            </div>
         </div>
-      <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
-      </div>
-  
+
+
+
+        <div class="row  align-items-center">
     
-  
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-20">
-        <a href="{% url 'requester' %}">
-            <i>
-                <img src="{% static 'images/cart.png' %}" alt="Icon Description" class="cart">
-            </i>
-        </a>
+            <div class="search">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+            </div>
+      
+          <div class="additem">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+          </div>
+
+
+          <div class="addtocart">
+            <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+          </div>
+       </div>
+    
+        
     </div>
-  </div>
+
+
   
 <br><br>
 
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+    
     <br>
     <br>
-    <div class="row">
+    <div class="row2">
         <div class="col-12">
             <table class="table table-striped">
                 <thead>
@@ -141,7 +203,7 @@
                                     tr = table.getElementsByTagName("tr");
                             
                                     for (i = 0; i < tr.length; i++) {
-                                        td = tr[i].getElementsByTagName("td")[0]; // Change the index based on the column you want to search
+                                        td = tr[i].getElementsByTagName("td")[0]; 
                                         if (td) {
                                             txtValue = td.textContent || td.innerText;
                                             if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -153,8 +215,6 @@
                                     }
                                 }
                             </script>
-                            
-                           
                             <td>
                                 
                                 <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
@@ -178,11 +238,7 @@
 </form>
 
 
-    <div class="row">
-        <div class="col-12 text-right">
-            <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-        </div>
-    </div>
+
 
     <br><br><br>
    
@@ -241,11 +297,6 @@
                               <input type="text" class="form-control" id="Quantity" name="quantity" required>
                           </div>
 
-                          <div class="modal-footer">
-                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
-                              
-                          </div>
-
                     </form>
                   </div>
               </div>
@@ -254,7 +305,7 @@
       </form>
 </div>
 
-<!-- <script>
+<script>
 
 
     $(document).ready(function () {
@@ -349,7 +400,7 @@
                 console.log("Scrolling to category:", selectedCategory);
             }
         }
-</script> -->
+</script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

@@ -1,5 +1,9 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
 {% load static %}
 
+{% block preqform %}
+     
 
 <!DOCTYPE html>
 <html lang="en">
@@ -263,6 +267,12 @@
     table {
         width:60%;
     }
+   
+        /* Add this style to your CSS file or in the head of your HTML file */
+        table td {
+            font-weight: normal;
+        }
+ 
 </style>
 
 <body>
@@ -307,6 +317,7 @@
                 <div class="col-md-12">
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
+                            <thead>
                             <tr>
                                 <th colspan="2">Office Section: <span contenteditable="true" ;
                                         id="editableField"></span></th>
@@ -316,62 +327,27 @@
                                 <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
                             </tr>
                             <tr>
-                                <td>Stock/Property</td>
-                                <td>Unit</td>
-                                <td>Item Description</td>
-                                <td>Quantity</td>
-                                <td>Unit Cost</td>
-                                <td>Total Cost</td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
+                                    <th>Stock/Property</th>
+                                    <th>Unit</th>
+                                    <th>Item Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Cost</th>
+                                    <th>Total Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td class="text-center">{{ forloop.counter }}</td>
+                                    <td class="text-center">{{ item.unit }}</td>
+                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
+                                    <td class="text-center">{{ item.quantity }}</td>
+                                    <td class="text-center">{{ item.unit_cost }}</td>
+                                    <td class="text-center">{{item.total_cost}}</td>
+                                </tr>
+                            {% endfor %}
+                            
+                            
                             <tr>
                                 <td colspan="6" style="text-align: center;">
                                     <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
@@ -379,8 +355,7 @@
                             </tr>
 
 
-                            </tr>
-                            <tr>
+                           
                             <tr>
                                 <td colspan="2">Purpose: <span contenteditable="true"
                                     style="border: none; outline: none;" id="editableField"></span></td></tr>
@@ -416,3 +391,4 @@
 </head>
 
 </html>
+{% endblock %}

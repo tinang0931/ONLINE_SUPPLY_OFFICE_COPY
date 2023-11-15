@@ -38,11 +38,12 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-from .forms import ItemForm
+
 
 import random
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -57,7 +58,7 @@ def homepage(request):
 
 
 @unauthenticated_user
-def register(request):
+def register_user(request):
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
@@ -115,7 +116,85 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+    
+@unauthenticated_user   
+def register_admin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
 
+        # Check if passwords match
+        if pass1 != pass2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')  # Assuming you have a separate template for admin registration
+
+        # Check if the username or email is already in use
+        if get_user_model().objects.filter(username=username).exists() or get_user_model().objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
+
+        # Create a new admin account
+        admin = get_user_model().objects.create_user(username=username, email=email, password=pass1, is_active=True, is_staff=True, is_superuser=True)
+        admin.first_name = fname
+        admin.last_name = lname
+        admin.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'admin': admin,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(admin.pk)),
+            'token': account_activation_token.make_token(admin),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+
+        messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
+        return redirect('admin_login')  # Redirect to the login page upon successful registration
+    return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
+
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+    
+
+@unauthenticated_user
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+    
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None and user.is_active and user.is_staff and user.is_superuser:
+            auth_login(request, user)
+            messages.success(request, "Admin login successful.")
+            return redirect('bac_home')  # Redirect to the admin dashboard or any other admin-specific page
+        else:
+            messages.error(request, "Invalid admin credentials.")
+            return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
 
 @unauthenticated_user
 def login(request):
@@ -161,7 +240,8 @@ def handle_reset_request(request):
 
         send_mail(subject, message, from_email, recipient_list)
         
-       
+        # Redirect the user to a page where they can enter the verification code
+        return redirect('verify_code')  # Make sure 'verify_code' is a valid URL pattern
     return render(request, 'accounts/User/forgot.html')
 
 
@@ -177,8 +257,8 @@ def verify_code(request):
         user_email = request.POST.get('email')
         print('dsfsdfsdfdsfds')
         if is_valid_code(verification_code, user_email):
-            return redirect('reset_password') 
-    return render(request, 'accounts/User/verify.html') 
+            return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
+    return render(request, 'accounts/User/verify.html')  # Make sure the template exists
 
 
 def is_valid_code(verification_code, user_email):
@@ -195,11 +275,11 @@ def is_valid_code(verification_code, user_email):
 
 
 @unauthenticated_user
-
+ # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
-       
-        new_password = request.POST.get('new_password')  
+        # Handle the password reset form submission here
+        new_password = request.POST.get('new_password')  # Assuming you have a form field with name="new_password"
         
         # Update the user's password securely
         user = request.user  # Get the current logged-in user
@@ -219,18 +299,14 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
-
-
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
 
-
 def about(request):
     return render(request, 'accounts/User/about.html')
-
 
 
 def history(request):
@@ -249,7 +325,7 @@ def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -270,22 +346,25 @@ def bac_home(request):
 
 
 @authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+
+@authenticated_user
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
+
+@authenticated_user
 def preqform(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
 
 
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
-
-@authenticated_user
-def bids(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
-
-@authenticated_user
-def noa(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
 def profile_html(request):
@@ -297,78 +376,85 @@ def signout(request):
     pass
 
 
-
 @authenticated_user
-def request(request):
+def addItem(request):
     if request.method == 'POST':
+        # Handle the form for adding a single item
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
-       
+        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
+        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
 
-       
+        # Compute the total cost
+    
+
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
-         
+            quantity=quantity,  # Add the total_cost field in your Item model
         )
 
-        return redirect('request')  
-    
+        return redirect('requester')
+
+    return render(request, 'accounts/User/request.html')
+
+
+@authenticated_user
+def request(request): 
+    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    if request.method == 'POST':
+        # Handle the form submission logic here
+        selected_items = []
+
+        # Iterate through form data to get selected items
+        for key, value in request.POST.items():
+            if key.startswith('selected_item_id') and value:
+                item_id = value
+                quantity = request.POST.get(f'quantity_{item_id}', 0)
+
+                # Create a dictionary with item details
+                item_details = {
+                    'item': request.POST.get(f'item_{item_id}', ''),
+                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
+                    'unit': request.POST.get(f'unit_{item_id}', ''),
+                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
+                    'quantity': quantity,
+                }
+
+                selected_items.append(item_details)
+
+                # Save the selected items to the database (Item model)
+                Item.objects.create(
+                    item=item_details['item'],
+                    item_brand_description=item_details['item_brand_description'],
+                    unit=item_details['unit'],
+                    unit_cost=item_details['unit_cost'],
+                    quantity=item_details['quantity'],
+                )
+
+        # Redirect after processing all selected items
+        messages.success(request, 'Items added to the cart successfully!')
+        return redirect('request')
+
     else:
-       
-        csv_file_path = 'D:/tinang repository/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+        
+        # Pass data to the template
+        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
+@authenticated_user
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
-def submit_request(request):
-    # Handle the submission of the request
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        # Assuming you have a PurchaseRequest model
-        purchase_request = PurchaseRequest.objects.create(request_number=request_id, status='Waiting for Campus Director Approval')
-        return JsonResponse({'message': 'Request submitted successfully.'})
-    else:
-        # Handle GET requests or render a form for submission
-        return render(request, 'submit_request.html')
-    
-
-    
-def submit_form(request):
-    if request.method == 'POST':
-        form = request(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success_page')  # Redirect to a success page
-    else:
-        form = request()
-
-    return render(request, 'submit_request.html', {'form': form})
-
-def receive_request(request):
-    # Handle the BAC receiving the request
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        purchase_request = get_object_or_404(PurchaseRequest, request_number=request_id)
-        purchase_request.status = 'Request Received by BAC'
-        purchase_request.save()
-        return JsonResponse({'message': 'BAC received the request.'})
-    else:
-        # Handle GET requests or render a form for receiving the request
-        return render(request, 'receive_request.html')
 
 
+@authenticated_user
 def delete_item(request, item_id):
     try:
         item = get_object_or_404(Item, id=item_id)
@@ -380,55 +466,6 @@ def delete_item(request, item_id):
         status = "error"
 
     return JsonResponse({"status": status, "message": message})
-
-def approve(request):
-    # Assuming you have a model with a primary key 'pk'
-    instance = get_object_or_404('request_id')
-
-    if not instance.is_approved:
-        # Add your logic for approval here
-        instance.is_approved = True
-        instance.save()
-        response_data = {'status': 'Approved'}
-    else:
-        response_data = {'status': 'Already approved'}
-
-    return JsonResponse(response_data)
-
-def disapprove(request):
-    # Assuming you have a model with a primary key 'pk'
-    instance = get_object_or_404('request_id')
-
-    # Add your logic for disapproval here
-    instance.is_approved = False
-    instance.save()
-
-    response_data = {'status': 'Disapproved'}
-
-    return JsonResponse(response_data)
-    
-    
-def edit_item(request, item_id):
-    # Assuming YourModel has a field named 'id'
-    item = get_object_or_404(request, id=item_id)
-
-    # Perform any additional logic here, such as preparing data for editing
-
-    # You can customize this response based on your needs
-    response_data = {
-        'message': 'Editing item with ID {}'.format(item_id),
-        'item_data': {
-            'id': item.id,
-            # Add other fields as needed
-        }
-    }
-
-    return JsonResponse(response_data)
-
-def delete_item(request, item_id):
-    item = get_object_or_404(request, pk=item_id)
-    item.delete()
-    return JsonResponse({'message': 'Record deleted successfully'})
 
 
 
@@ -469,6 +506,7 @@ def delete_item(request, item_id):
 
 
 
+@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -486,6 +524,8 @@ def item_edit(request, pk):
 
     return render(request, 'cart.html', {'item': item})
 
+
+@authenticated_user
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
@@ -494,5 +534,3 @@ def item_delete(request, pk):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'serror'}, status=400)
-
-
