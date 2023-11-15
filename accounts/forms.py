@@ -9,8 +9,3 @@ class RequestItemForm(forms.ModelForm):
         model = Item
         fields = '__all__'
         
-
-class ItemForm(forms.ModelForm):
-    class Meta:
-        model = Item
-        fields = '__all__'

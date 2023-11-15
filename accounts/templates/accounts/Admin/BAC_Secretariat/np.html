@@ -17,73 +17,75 @@
 
         /* Apply some styling to the header */
         header {
-            background-color: #007acc; /* Change to your preferred background color */
+            background-color: #007acc;
             color: white;
             padding: 10px;
         }
 
         /* Style the logo */
         .ctu_logo {
-            width: 167px; /* Adjust the size as needed */
+            width: 190px;
             height: auto;
             margin-right: 20px;
             float: left;
+            margin-top: 30px;
         }
         
         .asean_logo{
-            width: 167px; /* Adjust the size as needed */
+            width: 167px;
             height: auto;
             margin-right: 20px;
+            margin-top: 55px;
             float: left;
         }
         
 
         /* Style the container */
         .container {
-            max-width: 800px; /* Adjust the maximum width as needed */
+            max-width: 800px;
             padding: 20px;
-            text-align: center; /* Center-align the text within the container */
-            display: flex; /* Use flexbox to align items vertically and horizontally */
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center-align items vertically */
-            align-items: center; /* Center-align items horizontally */
-            margin: 0 auto; /* Center the container horizontally on the page */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
 
         /* Style the headings and paragraphs */
         h {
-            font-size: 25px; /* Adjust the font size for h1 */
-            text-align: center; /* Center-align headings */
+            font-size: 25px; 
+            text-align: center; 
         }
 
         p {
-            font-size: 25px; /* Adjust the font size for paragraphs */
+            font-size: 25px; 
             text-align: center;
             
-           
         }
     
         a {
-            color: #007acc; /* Change link color to your preference */
-            text-decoration: underline; /* Add underline to links */
+            color: #007acc; 
+            text-decoration: underline; 
         }
 
         a:hover {
-            text-decoration: none; /* Remove underline on hover */
+            text-decoration: none; 
         }
+
 
         .iso_logo {
             float: right;
             width: 167px;
-           height: auto;
-         margin-right: 20px; /* Adjust the margin as needed */
+            height: auto;
+            margin-top: 50px;
         }
 
         .stars_logo {
             float: right;
-             margin-right: 10px;
             width: 167px;
             height: auto;
+            margin-top: 145px;
         }
 
         .br {
@@ -127,25 +129,123 @@ p {
 }
 
 ul {
-        list-style-type: none; /* Remove default list styles */
-        padding: 0; /* Remove default padding */
-        margin: 0; /* Remove default margin */
+        list-style-type: none; 
+        padding: 0; 
+        margin: 0; 
     }
 
     li {
-        margin: 5px 0; /* Add some spacing between list items */
+        margin: 5px 0; 
     }
 
     li:before {
-        content: "\00a0"; /* Add non-breaking space before each list item content */
+        content: "\00a0"; 
     }
 
     ul[contenteditable="true"]:focus {
-        outline: none; /* Remove the default focus outline */
+        outline: none; 
     }
 
+    .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
 
-    
+        .content h,
+        .text h {
+            margin: 0; 
+            padding: 0;
+            display: inline; 
+        }
+
+        .content h span,
+        .text h span,
+        .content h1 span,
+        .text h1 span {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+            display: inline; 
+            background-color: transparent; 
+            white-space: pre-wrap; 
+        }
+        
+        .content, .text, .text.closing, .committee-member {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: left;
+        }
+
+        h {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .content h,
+        .text h {
+            margin: 0; 
+            padding: 0;
+            display: inline; 
+        }
+
+        .content h span,
+        .text h span,
+        .content h1 span,
+        .text h1 span {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+            display: inline; 
+            background-color: transparent; 
+            white-space: pre-wrap; 
+        }
+        
+        .content, .text, .text.closing, .committee-member {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: left;
+        }
+
+        h {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+        
     </style>
 
 <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -155,8 +255,11 @@ ul {
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
         <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
         <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
+
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
     </nav>
     
     <div class="container">
@@ -166,19 +269,40 @@ ul {
         <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
         <div><h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h> &nbsp; <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-
 
     <div class="text">
-        <h><b>PROCUREMENT OFFICE</b></h>
-        ___________________________________________________________________________________________________________________________________
+        <h3><b>PROCUREMENT OFFICE</b></h3>
+        <hr>
         <div> &nbsp</div> 
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <h><b>NOTICE TO PROCEED</b></h>  
+    </div>
+
+    <div class="content">
+        <h>Date: <span contenteditable="true"></span></h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+    </div>
+
+    <div class="text">
+        <h>Dear, Ma'am/Sir: <span contenteditable="true"></span></h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
     </div>
