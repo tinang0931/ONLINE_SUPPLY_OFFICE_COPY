@@ -388,7 +388,7 @@ def addItem(request):
 
 @authenticated_user
 def request(request): 
-    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    csv_file_path = 'C:/Users/ambos.maryann/Desktop/SUPPLY SYSTEM/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
     if request.method == 'POST':
         # Handle the form submission logic here
         selected_items = []
