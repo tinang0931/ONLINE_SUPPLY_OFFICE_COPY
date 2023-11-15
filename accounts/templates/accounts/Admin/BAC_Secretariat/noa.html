@@ -176,9 +176,29 @@
             border-top: 2px solid black;
             width: 10%
         }
-        .member h2,.member h{
+        .member h2{
             margin: 8px 0;
-        }    
+        }
+
+        h{
+            font-family: Arial, sans-serif;
+            margin: 10px 0;
+        } 
+
+        span{
+            display: inline-block;
+            min-width: 100px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        span[contenteditable="true"]:empty::before{
+            color:#999;
+        }
+           
+       
     </style>
 
 
@@ -261,7 +281,7 @@
                 <h2>(Signature over printed)</h2>
                 <br>
                 <br>
-                <h>Date: ______________</h>
+                <h>Date: <span contenteditable="true"></span></h>
             </div>
         </div>
         
