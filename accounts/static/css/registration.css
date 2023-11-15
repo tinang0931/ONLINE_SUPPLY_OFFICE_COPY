@@ -5,6 +5,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+
 body{
     display: flex;
     height: 100vh;
@@ -25,10 +26,46 @@ body{
         z-index: -1;
 }
 
+
 .container{
     max-width: 700px;
     width: 100%;
     background:  rgba(255, 255, 255, 0.486);
     padding: 25px 30px;
     border-radius: 5px;
+}
+
+
+.container .title{
+    color: #003566;
+    font-size: 45px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 35px;
+}
+
+
+.container form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+form .user-details .input-box{
+    margin: 20px 0 aspx 0;
+    width: calc(100% / 2 - 20px);
+
+}
+
+
+.user-details .input-box .details{
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+
+.user-details .input-box input{
+    height: 45px;
+    width: 100%;
 }
