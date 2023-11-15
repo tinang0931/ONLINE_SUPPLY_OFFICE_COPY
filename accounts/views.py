@@ -413,5 +413,3 @@ def item_delete(request, pk):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'serror'}, status=400)
-
-
