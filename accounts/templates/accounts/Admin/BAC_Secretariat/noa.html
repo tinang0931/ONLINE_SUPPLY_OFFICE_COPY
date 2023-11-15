@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
     
     <style>
         body, h, p {
@@ -197,6 +199,45 @@
         span[contenteditable="true"]:empty::before{
             color:#999;
         }
+        .icons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px; 
+}
+
+.icon-link {
+    text-decoration: none;
+    color: #007acc;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    font-family: Arial, sans-serif; 
+}
+
+.icon-link i {
+    margin-right: 5px;
+}
+
+@media print {
+    .icons-container {
+        display: none;
+    }
+}
+
+.comment-box {
+            margin-top: 20px;
+            width: 60%;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        .comment-box textarea {
+            width: 160%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
            
        
     </style>
@@ -284,6 +325,21 @@
                 <h>Date: <span contenteditable="true"></span></h>
             </div>
         </div>
+
+        <div class="comment-box">
+  
+            <textarea placeholder="Update the purchase request status..."></textarea>
+    
+        </div>    
+            <div class="icons-container">
+                <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a href="javascript:window.print()" title="Print" class="icon-link">
+                    <i class="fas fa-print"></i> Print
+                </a>
+            </div>
+        
         
 </body>
 </html>
