@@ -6,8 +6,6 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
-from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -15,33 +13,24 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.http import HttpResponse  
 from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
 from django.core.mail import EmailMessage 
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-
-
 import random
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -219,8 +208,6 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
-
-
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
@@ -245,7 +232,6 @@ def tracker(request):
 @authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
-
 
 
 def profile(request):
@@ -281,9 +267,11 @@ def np(request):
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
+
 @authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
 
 @authenticated_user
 def profile_html(request):
@@ -320,15 +308,13 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path ='C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
     # Pas data to the template
     return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
-
 
 
 def requester(request):
@@ -386,7 +372,6 @@ def delete_item(request, item_id):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -413,5 +398,3 @@ def item_delete(request, pk):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'serror'}, status=400)
-
-
