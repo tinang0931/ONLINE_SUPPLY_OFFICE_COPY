@@ -18,6 +18,8 @@ class Item(models.Model):
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
     
+    
+    
 
 
 
