@@ -281,18 +281,15 @@ def logout_user(request):
     return redirect('homepage')
 
 
-@unauthenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-@unauthenticated_user
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
 
 
-@unauthenticated_user
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
@@ -424,6 +421,7 @@ def request(request):
         return redirect('request')
 
     else:
+
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
