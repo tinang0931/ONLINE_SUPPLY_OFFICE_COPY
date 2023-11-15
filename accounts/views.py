@@ -299,18 +299,14 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
-
-
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
 
-
 def about(request):
     return render(request, 'accounts/User/about.html')
-
 
 
 def history(request):
@@ -329,39 +325,43 @@ def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
+@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-
+@authenticated_user
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
 
-
+@authenticated_user
 def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
+
+@authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
+
+@authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
-
-
+@authenticated_user
 def preqform(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
 
 
-
+@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
@@ -374,7 +374,6 @@ def profile_html(request):
 @authenticated_user
 def signout(request):
     pass
-
 
 
 @authenticated_user
@@ -402,9 +401,10 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-def request(request): 
-    csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
+@authenticated_user
+def request(request): 
+    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
     if request.method == 'POST':
         # Handle the form submission logic here
         selected_items = []
@@ -448,11 +448,13 @@ def request(request):
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
+@authenticated_user
 def requester(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
+@authenticated_user
 def delete_item(request, item_id):
     try:
         item = get_object_or_404(Item, id=item_id)
@@ -504,6 +506,7 @@ def delete_item(request, item_id):
 
 
 
+@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -521,6 +524,8 @@ def item_edit(request, pk):
 
     return render(request, 'cart.html', {'item': item})
 
+
+@authenticated_user
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
@@ -529,5 +534,3 @@ def item_delete(request, pk):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'serror'}, status=400)
-
-
