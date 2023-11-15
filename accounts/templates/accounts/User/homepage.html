@@ -39,6 +39,27 @@
         font-size: 20px; /* Adjust the font size as needed */
         padding: 10px 20px; /* Adjust padding for better appearance */
     }
+    button {
+    color: white;
+    background-color: rgba(1, 53, 101, 0.5); /* Use rgba for transparency */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #3498db;
+}
+.u_ser {
+    text-decoration: none;
+    color: white;
+}
+.ad_min {
+  text-decoration: none;
+  color: white;
+}
 </style>
   <body>
 
@@ -54,10 +75,10 @@
       <p class="ctu">Cebu Technological University<br>Argao Campus</p>
       <div class="login">
         <button>
-          <a href="{% url 'login' %}">USER</a>
+          <a class="u_ser" href="{% url 'login' %}">USER</a>
         </button>
         <button>
-          <a href="{% url 'admin_login' %}">ADMIN</a>
+          <a class="ad_min" href="{% url 'admin_login' %}">ADMIN</a>
         </button>
           
       </div>

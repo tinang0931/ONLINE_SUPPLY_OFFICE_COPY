@@ -173,6 +173,7 @@ height: 100%;
 }
 .user {
   font-size: 25px;
+  margin-right: 30px;
 }
 
 
@@ -223,6 +224,13 @@ height: 100%;
   line-height: 30px;
   letter-spacing: 0.1em;
   color: #000;
+}
+.list-group-item list-group-item-action list-group-item-light p-3 border-0 {
+  .list-group-item:hover {
+    background-color: #e2e2e2; /* Change to the desired hover background color */
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
 }
 
 
@@ -409,8 +417,40 @@ i.bi-circle-fill {
   background-color: #808080;;
   color: #ffffff;
 }
+.fab.fa-facebook {
+  color: white;
+  transition: color 0.3s ease;
+}
 
+.fab.fa-facebook:hover {
+  color: #1877f2; /* Facebook logo color on hover */
+}
+.fab.fa-twitter {
+  color: white;
+  transition: color 0.3s ease;
+}
 
+.fab.fa-twitter:hover {
+  color: #1da1f2; /* Twitter logo color on hover */
+}
+.fab.fa-instagram {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e4405f, #ec5e6f, #a6495a);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.fab.fa-youtube {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-youtube:hover {
+  color: #ff0000; /* Change to the desired color on hover */
+}
 @media (min-width: 0) {
   .w-xs-5 {
     width: 5% !important;
