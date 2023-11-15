@@ -12,6 +12,7 @@ urlpatterns = [
    path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register_user/',views.register_user, name='register_user'),
+   path('registration/',views.registration, name='registration'),
    path('register_admin/',views.register_admin, name='register_admin'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
