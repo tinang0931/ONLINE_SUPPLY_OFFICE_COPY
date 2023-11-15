@@ -17,22 +17,12 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.models import User
-from django.http import HttpResponse  
-from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
-from django.core.mail import EmailMessage 
+from django.http import HttpResponse      
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode      
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 from .tokens import account_activation_token
 from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
@@ -162,21 +152,6 @@ def register_admin(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
 
 
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
-    
-
 @unauthenticated_user
 def admin_login(request):
     if request.method == 'POST':
@@ -261,6 +236,7 @@ def verify_code(request):
     return render(request, 'accounts/User/verify.html')  # Make sure the template exists
 
 
+
 def is_valid_code(verification_code, user_email):
     # Construct the cache key based on the user's email
     cache_key = f'verification_code_{user_email}'
@@ -305,15 +281,18 @@ def logout_user(request):
     return redirect('homepage')
 
 
+@unauthenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
+@unauthenticated_user
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
 
 
+@unauthenticated_user
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
     # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
@@ -409,7 +388,7 @@ def addItem(request):
 
 @authenticated_user
 def request(request): 
-    csv_file_path = 'C:/Users/sumauay.jay-anne/Desktop/onlinesystemcopy/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
     if request.method == 'POST':
         # Handle the form submission logic here
         selected_items = []
