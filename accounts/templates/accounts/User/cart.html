@@ -1,5 +1,6 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
+
 {% load static %}
 
 
@@ -13,7 +14,7 @@
     <div>
       <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
         <table class="cart_table" id="create_request_table" style="background-color: none; ">
-          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000;">
+          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
             <tr>
                 <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
                 <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
@@ -28,85 +29,53 @@
         </thead>
         
             <tbody>
-                    {% for item in items %}
-                  <tr style="background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                      <td class="item_name text-center">{{ item.item }}</td>
-                      <td class="item_description text-center">
-                          <span id="item_description_{{ item.id }}_display">
-                              {{ item.item_brand_description }}
-                          </span>
-                          <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
-                      </td>
-                      <td class="item_unit text-center">{{ item.unit }}</td>
-                      <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                      <td class="item_quantity text-center">{{ item.quantity }}</td>
-                      <td class="totalcost text-center">{{ item.total_cost }}</td> {# Assuming you have a total_cost field in your Item model #}
-                      <td class="text-center">
-                          <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
-                              <i class="fa fa-edit"></i>
-                          </button>
-                          <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
-                              <i class="fa fa-trash"></i>
-                          </button>
-                      </td>
-                  </tr>
+              {% for item in items %}
+              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+                  <td class="item_name text-center">  {{ item.item }} </td>
+                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
+                  <td class="item_unit text-center">{{ item.unit }}</td>
+                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                  <td class="item_quantity text-center">{{ item.quantity }}</td>
+                  <td class="item_unit_cost text-center">{{ item.unit_cost|default:"0.00"|floatformat:2 }}</td>
+                  <td class="item_quantity text-center">{{ item.quantity|default:"0" }}</td>
+                  <td class="text-center">           
+                  <button class="edit-button" data-item-id="{{ item.id }}" onclick="editItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(1, 154, 72);">
+                  <i class="fa fa-edit"></i>
+                  </button>
+                  <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
+                  <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
               {% endfor %}
-
           </tbody>
         </table>
 
-          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Add your form fields for editing here -->
-                        <label for="editedItemName">Item Name:</label>
-                        <input type="text" id="editedItemName" class="form-control" value="{{ item.item }}">
-                        <!-- Repeat similar fields for other item properties -->
-        
-                        <!-- You can customize this form based on your item properties -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="saveChanges('{{ item.id }}')">Save Changes</button>
-                    </div>
-                </div>
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
             </div>
-        </div>
-
-
-    
-
-        <div class="row-at-bottom" style="position:fixed; ">
-          <div class="purpose">
-            <label>Purpose:</label>
-            <textarea id="purpose" placeholder="Purpose" >
-            </textarea>
           </div>
           <div class="total_amount">
             <span>Total Amount: {{total_cost}}</span>
           </div>
           <div class="submit">
             <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+          </div>
         </div>
-      
-     
+      </div>
       </div>
   </form>
 
   <script>
-
-
-
-   
-    
-   
 
     function deleteRow(button) {
       var itemId = button.getAttribute('data-item-id');
@@ -134,7 +103,6 @@
         }
     
 </script>
-
 
 
 {% endblock %}

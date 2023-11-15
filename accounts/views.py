@@ -3,8 +3,6 @@ from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
-
-from accounts.forms import ItemForm
 from .models import *
 import csv
 from django.contrib.auth.models import User
@@ -491,8 +489,6 @@ def delete_item(request, item_id):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-
-@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -501,7 +497,7 @@ def item_edit(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
     if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
+        form = Item(request.POST, instance=item)
         if form.is_valid():
             form.save()
             return JsonResponse({'status': 'success'})
@@ -510,8 +506,6 @@ def item_edit(request, pk):
 
     return render(request, 'cart.html', {'item': item})
 
-
-@authenticated_user
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
 

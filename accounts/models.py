@@ -19,9 +19,6 @@ class Item(models.Model):
         return Decimal(str(self.unit_cost)) * self.quantity
     
 
-
-
-
 class CsvFile(models.Model):
     CATEGORY = models.CharField(max_length=255)
     ITEM_BRAND = models.CharField(max_length=255)
