@@ -4,13 +4,6 @@ from django.contrib.auth.models import AbstractUser
 import uuid
 from decimal import Decimal
 
-
-
-
-
-
-
-
 class Item(models.Model):
     purpose = models.CharField(max_length=255)
     item = models.CharField(max_length=255)
@@ -19,7 +12,7 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
-    request_id = models.UUIDField(editable=False, unique=True)
+    request_id = models.UUIDField(primary_key=True, default=uuid.uuid1, editable=False)
 
     @property
     def total_cost(self):

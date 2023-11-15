@@ -1,0 +1,153 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
+{% load static %}
+
+{% block cart %}
+
+<form action="{% url 'requester' %}" method="post">
+    {% csrf_token %}
+
+    <div>
+        <div class="cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;">
+            <table class="cart_table" id="create_request_table" style="background-color: none;">
+                <thead style="background-color: rgba(0, 50, 102, 0.8); font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
+                    <tr>
+                        <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                        <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
+                        <th class="text-center text-nowrap"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in items %}
+                    <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+                        <td class="item_name text-center"> {{ item.item }} </td>
+                        <td class="item_description text-center">
+                            <span id="item_description_{{ item.id }}_display">
+                                {{ item.item_brand_description }}
+                            </span>
+                            <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                        </td>
+                        <td class="item_unit text-center">{{ item.unit }}</td>
+                        <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                        <td class="item_quantity text-center">{{ item.quantity }}</td>
+                        <td></td>
+                        <td class="text-center">
+                            <button onclick="openEditModal('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <label for="new_item_name">Item Name:</label>
+        <input type="text" id="new_item_name" class="form-control">
+        <label for="new_item_description">Item Brand/Description:</label>
+        <input type="text" id="new_item_description" class="form-control">
+        <label for="new_unit">Unit:</label>
+        <input type="text" id="new_unit" class="form-control">
+        <label for="new_unit_cost">Unit Cost:</label>
+        <input type="text" id="new_unit_cost" class="form-control">
+        <label for="new_quantity">Quantity:</label>
+        <input type="text" id="new_quantity" class="form-control">
+        <button onclick="updateItem()">Save</button>
+    </div>
+</div>
+
+<script>
+  function openEditModal(itemId) {
+    var displaySpan = document.getElementById('item_description_' + itemId + '_display');
+    var inputField = document.getElementById('item_description_' + itemId + '_input');
+    var editedDescriptionField = document.getElementById('editedDescription');
+    var editModal = document.getElementById('editModal');
+
+    // Display the input field and set its value to the current description
+    inputField.style.display = 'block';
+    inputField.value = displaySpan.innerText;
+
+    // Set focus on the input field
+    inputField.focus();
+
+    // Display the edit modal
+    editModal.style.display = 'block';
+
+    // Save the edited description when the user clicks "Save"
+    document.getElementById('saveEditButton').addEventListener('click', function () {
+      fetch(`/item/${itemId}/edit/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({
+          newDescription: editedDescriptionField.value,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            displaySpan.innerText = editedDescriptionField.value;
+            inputField.style.display = 'none';
+            editModal.style.display = 'none';
+          } else {
+            alert('Error editing item: ' + JSON.stringify(data.errors));
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  }
+
+  function deleteItem(itemId) {
+    var deleteModal = document.getElementById('deleteModal');
+
+    // Display the delete modal
+    deleteModal.style.display = 'block';
+
+    // Handle delete confirmation
+    document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+      fetch(`/item/${itemId}/delete/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Item deleted successfully');
+            // Implement further actions if needed
+          } else {
+            alert('Failed to delete item');
+          }
+          deleteModal.style.display = 'none';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    // Handle cancel delete
+    document.getElementById('cancelDeleteButton').addEventListener('click', function () {
+      deleteModal.style.display = 'none';
+    });
+  }
+</script>
+
+
+{% endblock %}
