@@ -293,8 +293,7 @@ def request(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
-        # Django model section
-        # Create a new Item instance and set its attributes
+    
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
@@ -303,22 +302,19 @@ def request(request):
             quantity=quantity,
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
+        return redirect('request') 
     
     else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
         csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    # Pas data to the template
     return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 def requester(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
+    items = Item.objects.all() 
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
