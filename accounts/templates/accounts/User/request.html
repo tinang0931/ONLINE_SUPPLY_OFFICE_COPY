@@ -57,48 +57,123 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
+        .subheader {
+        position: fixed;
+        z-index: 1000;
+        background-color: #fff;
+        width: 100%;
+        height: 20vh;
+    }
+
+  
+    
+    .row2 {
+        margin-top: 10%;
+    }
+
+    .container {
+        margin-top: 1%;
+        display: flex;
+    }
+
+    .title {
+        flex-grow: 1;
+        text-align: center;
+        font-family: 'Trebuchet MS', san-serif;
+    }
+
+    .cart {
+        margin-left: 60%;
+      
+
+    }
+
+    .row {
+        margin-top: 1%;
+        
+    }
+
+    .search,
+    .additem,
+    .addtocart {
+        margin: 0;
+        width: 200px;
+        height: 100px;
+      
+    }
+    .search input {
+        width: 300px;
+    }
+
+    .search,    
+    .additem {
+        align-items: normal;
+        
+      
+    }
+
+    .additem {
+        margin-left: 6%
+    }
+
+    .addtocart{
+        margin-left: 43%;
+       
+    }
+
+
+
 </style>
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
-    <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
-    </div>
-<br><br>
-    <div class="row">
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
-        <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-            <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request">
+    <div class="subheader">
+        
+        <div class="container">
+            <h1 class="title">CREATE PURCHASE REQUEST</h1>
+            <div class="cart">
+                <a href="{% url 'requester' %}">
+                    <i>
+                        <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+                    </i>
+                </a>
+            </div>
         </div>
-  
-      <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
-      </div>
-  
+
+
+
+        <div class="row  align-items-center">
     
-  
-      <div class="row justify-content-end" style="margin-right: 10px; margin-top: 10px;">
-        <div class="col-2 col-sm-2 col-md-1 col-lg-1 margin-right-0">
-            <a href="{% url 'requester' %}">
-                <i>
-                    <img src="{% static 'images/cart.png' %}" alt="Icon Description">
-                </i>
-            </a>
-        </div>
+            <div class="search">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+            </div>
+      
+          <div class="additem">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+          </div>
+
+
+          
+       </div>
+    
+        
     </div>
-    
+
+
   
 <br><br>
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
+    
     <br>
     <br>
-    <div class="row">
+    <div class="row2">
         <div class="col-12">
             <table class="table table-striped">
                 <thead>
                     <tr>
+                      
                         <th scope="col">Items</th>
                         <th scope="col">Item Brand Description</th>
                         <th scope="col">Unit</th>
@@ -109,14 +184,45 @@
                 </thead>
                 <tbody>
                     {% for row in csv_data %}
+                    <tr class="table-row" id="{{ row.ITEMS }}">
                         <tr>
+                          
                             <td>{{ row.ITEMS }}</td>
                             <td>{{ row.ITEM_BRAND }}</td>
                             <td>{{ row.UNIT }}</td>
                             <td>{{ row.PRICE }}</td>
+                            <script>
+                                function filterTable() {
+                                    var input, filter, table, tr, td, i, txtValue;
+                                    input = document.getElementById("search_bar_request");
+                                    filter = input.value.toUpperCase();
+                                    table = document.querySelector(".table-striped");
+                                    tr = table.getElementsByTagName("tr");
+                            
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0]; 
+                                        if (td) {
+                                            txtValue = td.textContent || td.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
                             <td>
-                                <input type="number" name="quantity_{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 50px;">
+                                
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                               
+                                <script>
+                                    function highlightInput(input) {
+                                      input.select();
+                                    }
+                                  </script>
                             </td>
+                            
                             <td>
                                 <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
                             </td>
@@ -129,156 +235,172 @@
 </form>
 
 
-        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
 
-                  <div class="modal-body">
 
-                    <form action="{% url 'request' %}" method="post">
-                        {% csrf_token %}
+    <br><br><br>
+   
+</form>
+<script>
+    function scrollToCategory() {
+        var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+        var table = document.getElementById(selectedCategory);
+        if (table) {
+           table.scrollIntoView({behavior: 'smooth'});
+        }
+       }
+</script>
 
-                          
+</div>
+<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                          <div class="form-group">
-                              <label for="Item">Item</label>
-                              <input type="text" class="form-control" id="Item" name="item" required>
-                          </div>
+            <div class="modal-body">
 
-                          <div class="form-group">
-                              <label for="Item_Brand_Description">Item Brand/Description</label>
-                              <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
-                          </div>
+              <form action="{% url 'request' %}" method="post">
+                  {% csrf_token %}
 
-                          <div class="form-group">
-                              <label for="Unit">Unit</label>
-                              <input type="text" class="form-control" id="Unit" name="unit" required>
-                          </div>
+                    
 
-                          <div class="form-group"> 
-                              <label for="Unit">Unit Cost</label>
-                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                          </div>
-                          
-                          <div class="form-group">
-                              <label for="Quantity">Quantity</label>
-                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                          </div>
+                    <div class="form-group">
+                        <label for="Item">Item</label>
+                        <input type="text" class="form-control" id="Item" name="item" required>
+                    </div>
 
-                          <div class="modal-footer">
-                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
-                              
-                          </div>
+                    <div class="form-group">
+                        <label for="Item_Brand_Description">Item Brand/Description</label>
+                        <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
+                    </div>
 
-                    </form>
-                  </div>
-              </div>
-          </div>
+                    <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <input type="text" class="form-control" id="Unit" name="unit" required>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label for="Unit">Unit Cost</label>
+                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Quantity">Quantity</label>
+                        <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+                        
+                    </div>
+
+              </form>
+            </div>
         </div>
-      </form>
+    </div>
+  </div>
+</form>
 </div>
 <script>
 
 
-    $(document).ready(function () {
-        // Add click event to checkboxes
-        $('.row-checkbox').on('click', function () {
-            // Find the closest tr and toggle the 'selected' class
-            $(this).closest('tr').toggleClass('selected');
-        });
-    });
-
-
-  const categoryFilter = document.getElementById('category_filter');
-  const productTables = document.querySelectorAll('.table table');
-
-  categoryFilter.addEventListener('change', (event) => {
-      const selectedCategory = event.target.value;
-      const filteredProducts = {};
-
-      if (selectedCategory !== 'all') {
-          for (const productTable of productTables) {
-              const categoryName = productTable.querySelector('h3').textContent;
-              if (categoryName === selectedCategory) {
-                  const products = productTable.querySelectorAll('tbody tr');
-                  for (const product of products) {
-                      const itemName = product.querySelector('td:nth-child(2)').textContent;
-                      const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                      const unit = product.querySelector('td:nth-child(4)').textContent;
-                      const price = product.querySelector('td:nth-child(5)').textContent;
-
-                      if (!filteredProducts[categoryName]) {
-                          filteredProducts[categoryName] = [];
-                      }
-
-                      filteredProducts[categoryName].push({
-                          itemName,
-                          itemDescription,
-                          unit,
-                          price
-                      });
-                  }
-              }
-          }
-      }
-
-      // Update the displayed items based on the filtered products
-      updateProductTables(filteredProducts);
+$(document).ready(function () {
+  // Add click event to checkboxes
+  $('.row-checkbox').on('click', function () {
+      // Find the closest tr and toggle the 'selected' class
+      $(this).closest('tr').toggleClass('selected');
   });
+});
 
-  function updateProductTables(filteredProducts) {
-      for (const productTable of productTables) {
-          productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
 
-          const categoryName = productTable.querySelector('h3').textContent;
-          const products = filteredProducts[categoryName] || [];
+const categoryFilter = document.getElementById('category_filter');
+const productTables = document.querySelectorAll('.table table');
 
-          for (const product of products) {
-              const row = document.createElement('tr');
+categoryFilter.addEventListener('change', (event) => {
+const selectedCategory = event.target.value;
+const filteredProducts = {};
 
-              const itemNameCell = document.createElement('td');
-              itemNameCell.textContent = product.itemName;
-              row.appendChild(itemNameCell);
+if (selectedCategory !== 'all') {
+    for (const productTable of productTables) {
+        const categoryName = productTable.querySelector('h3').textContent;
+        if (categoryName === selectedCategory) {
+            const products = productTable.querySelectorAll('tbody tr');
+            for (const product of products) {
+                const itemName = product.querySelector('td:nth-child(2)').textContent;
+                const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                const unit = product.querySelector('td:nth-child(4)').textContent;
+                const price = product.querySelector('td:nth-child(5)').textContent;
 
-              const itemDescriptionCell = document.createElement('td');
-              itemDescriptionCell.textContent = product.itemDescription;
-              row.appendChild(itemDescriptionCell);
+                if (!filteredProducts[categoryName]) {
+                    filteredProducts[categoryName] = [];
+                }
 
-              const unitCell = document.createElement('td');
-              unitCell.textContent = product.unit;
-              row.appendChild(unitCell);
-
-              const priceCell = document.createElement('td');
-              priceCell.textContent = product.price;
-              row.appendChild(priceCell);
-
-              productTable.querySelector('tbody').appendChild(row);
-          }
-      }
-  }
-
- 
-        function scrollToCategory() {
-            console.log("scrollToCategory function called!");
-            
-            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-            console.log("Selected Category:", selectedCategory);
-            
-            var categoryElement = document.getElementById(selectedCategory);
-            console.log("Category Element:", categoryElement);
-    
-            if (categoryElement) {
-                categoryElement.scrollIntoView({ behavior: "smooth" });
-                console.log("Scrolling to category:", selectedCategory);
+                filteredProducts[categoryName].push({
+                    itemName,
+                    itemDescription,
+                    unit,
+                    price
+                });
             }
         }
-</script>
+    }
+}
+
+// Update the displayed items based on the filtered products
+updateProductTables(filteredProducts);
+});
+
+function updateProductTables(filteredProducts) {
+for (const productTable of productTables) {
+    productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
+
+    const categoryName = productTable.querySelector('h3').textContent;
+    const products = filteredProducts[categoryName] || [];
+
+    for (const product of products) {
+        const row = document.createElement('tr');
+
+        const itemNameCell = document.createElement('td');
+        itemNameCell.textContent = product.itemName;
+        row.appendChild(itemNameCell);
+
+        const itemDescriptionCell = document.createElement('td');
+        itemDescriptionCell.textContent = product.itemDescription;
+        row.appendChild(itemDescriptionCell);
+
+        const unitCell = document.createElement('td');
+        unitCell.textContent = product.unit;
+        row.appendChild(unitCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = product.price;
+        row.appendChild(priceCell);
+
+        productTable.querySelector('tbody').appendChild(row);
+    }
+}
+}
+
+
+  function scrollToCategory() {
+      console.log("scrollToCategory function called!");
+      
+      var selectedCategory = document.getElementById("dropdownMenuSelect").value;
+      console.log("Selected Category:", selectedCategory);
+      
+      var categoryElement = document.getElementById(selectedCategory);
+      console.log("Category Element:", categoryElement);
+
+      if (categoryElement) {
+          categoryElement.scrollIntoView({ behavior: "smooth" });
+          console.log("Scrolling to category:", selectedCategory);
+      }
+  }
+</script> -->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

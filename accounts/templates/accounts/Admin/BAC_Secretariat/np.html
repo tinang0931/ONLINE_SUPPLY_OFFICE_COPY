@@ -1,61 +1,308 @@
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
-
 {% load static %}
 
-{% block np %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
 
+
+        /* Apply some styling to the header */
+        header {
+            background-color: #007acc;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Style the logo */
+        .ctu_logo {
+            width: 190px;
+            height: auto;
+            margin-right: 20px;
+            float: left;
+            margin-top: 30px;
+        }
+        
+        .asean_logo{
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+            margin-top: 55px;
+            float: left;
+        }
+        
+
+        /* Style the container */
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        /* Style the headings and paragraphs */
+        h {
+            font-size: 25px; 
+            text-align: center; 
+        }
+
+        p {
+            font-size: 25px; 
+            text-align: center;
+            
+        }
+    
+        a {
+            color: #007acc; 
+            text-decoration: underline; 
+        }
+
+        a:hover {
+            text-decoration: none; 
+        }
+
+
+        .iso_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-top: 50px;
+        }
+
+        .stars_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-top: 145px;
+        }
+
+        .br {
+            margin-bottom: 20px;
+        }
+
+        .content p{
+            text-align: left;
+            margin-right: 800px;
+        }
+
+        .name p {
+            font-size: 25px;
+            display: grid;
+            margin: 0;
+            padding: 5px;
+        }
+
+        .committee-member {
+    border-radius: 5px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+    align-self: flex-start;
+    
+}
+.committee {
+    display: inline;
+    align-self: flex-end;
+}
+
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+}
+
+ul {
+        list-style-type: none; 
+        padding: 0; 
+        margin: 0; 
+    }
+
+    li {
+        margin: 5px 0; 
+    }
+
+    li:before {
+        content: "\00a0"; 
+    }
+
+    ul[contenteditable="true"]:focus {
+        outline: none; 
+    }
+
+    .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .content h,
+        .text h {
+            margin: 0; 
+            padding: 0;
+            display: inline; 
+        }
+
+        .content h span,
+        .text h span,
+        .content h1 span,
+        .text h1 span {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+            display: inline; 
+            background-color: transparent; 
+            white-space: pre-wrap; 
+        }
+        
+        .content, .text, .text.closing, .committee-member {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: left;
+        }
+
+        h {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .content h,
+        .text h {
+            margin: 0; 
+            padding: 0;
+            display: inline; 
+        }
+
+        .content h span,
+        .text h span,
+        .content h1 span,
+        .text h1 span {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+            display: inline; 
+            background-color: transparent; 
+            white-space: pre-wrap; 
+        }
+        
+        .content, .text, .text.closing, .committee-member {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: left;
+        }
+
+        h {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+        
+    </style>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
 <body>
+    
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
 
-    <div>
-        <img class="ctulogo" src="{% static 'images/logo.png' %}" alt="logo">
-    </div>
-    <div>
-        <img class="aseanlogo" src="{% static 'images/asean.png' %}" alt="logo">
-    </div>
-
-    <div class="context">
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+    </nav>
+    
+    <div class="container">
         <h>Republic of the Philippines</h>
-        <br>
         <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
-        <br>
         <h>ARGAO CAMPUS</h>
-        <br>
         <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-        <br>
         <div><h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h> &nbsp; <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
         </div>
-        <br>
-        <br>
-        <br>
-        <h4>PROCUREMENT OFFICE</h4>
-        <br>
-        <br>
-        <br>
-        <h2>NOTICE TO PROCEED</h2>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h1>WA PA NI NAHOMAN . TIWASON NON PA.. HMPP😒</h1>
-        <br>
-        <br>
+
+    <div class="text">
+        <h3><b>PROCUREMENT OFFICE</b></h3>
+        <hr>
+        <div> &nbsp</div> 
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <h><b>NOTICE TO PROCEED</b></h>  
     </div>
 
-    <div>
-        <img class="miso" src="{% static 'images/iso.jpg' %}" alt="logo">
-    </div>
-    <div>
-        <img class="star" src="{% static 'images/uni.png' %}" alt="logo">
+    <div class="content">
+        <h>Date: <span contenteditable="true"></span></h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
     </div>
 
-</body>
-
-{% endblock %}
+    <div class="text">
+        <h>Dear, Ma'am/Sir: <span contenteditable="true"></span></h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+    </div>
