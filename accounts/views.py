@@ -227,10 +227,8 @@ def logout_user(request):
     return redirect('homepage')
 
 
-
 def about(request):
     return render(request, 'accounts/User/about.html')
-
 
 
 def history(request):
