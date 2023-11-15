@@ -57,16 +57,13 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
-
-
-
 </style>
 
 <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
     <div class="container">
         <h1 class="pr text-center pt-4">CREATE PURCHASE REQUEST</h1>
     </div>
-
+<br><br>
     <div class="row">
 
         <div class="col-6 col-sm-6 col-md-5 col-lg-3">
@@ -79,17 +76,18 @@
   
     
   
-      <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-0">
-        <a href="{% url 'requester' %}">
-            <i>
-                <img src="{% static 'images/cart.png' %}" alt="Icon Description">
-            </i>
-        </a>
+      <div class="row justify-content-end" style="margin-right: 10px; margin-top: 10px;">
+        <div class="col-2 col-sm-2 col-md-1 col-lg-1 margin-right-0">
+            <a href="{% url 'requester' %}">
+                <i>
+                    <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+                </i>
+            </a>
+        </div>
     </div>
-  </div>
+    
   
 <br><br>
-
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -185,8 +183,7 @@
         </div>
       </form>
 </div>
-
-<!-- <script>
+<script>
 
 
     $(document).ready(function () {
@@ -281,7 +278,7 @@
                 console.log("Scrolling to category:", selectedCategory);
             }
         }
-</script> -->
+</script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
