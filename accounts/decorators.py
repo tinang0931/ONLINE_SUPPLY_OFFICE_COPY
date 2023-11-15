@@ -1,4 +1,6 @@
 from django.shortcuts import redirect
+from functools import wraps
+
 
 def unauthenticated_user(view_func):
     """
@@ -23,3 +25,16 @@ def authenticated_user(view_func):
             return view_func(request, *args, **kwargs)
     
     return wrapper_func
+
+
+
+
+def admin_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.role == 'admin':
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('bac_home')  # Redirect to login page if not authenticated or not an admin
+
+    return _wrapped_view
