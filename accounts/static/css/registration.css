@@ -55,11 +55,11 @@ body{
 form .user-details .input-box{
     margin: 20px 0 aspx 0;
     width: calc(100% / 2 - 20px);
-
 }
 
 
 .user-details .input-box .details{
+    display: block;
     font-weight: 500;
     margin-bottom: 5px;
 }
@@ -68,4 +68,6 @@ form .user-details .input-box{
 .user-details .input-box input{
     height: 45px;
     width: 100%;
+    outline: none;
+    border-radius: 5px;
 }
