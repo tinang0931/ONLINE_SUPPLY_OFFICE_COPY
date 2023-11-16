@@ -57,132 +57,210 @@
         .selected {
             background-color: #e0e0e0;  /* Change this to the desired background color */
         }
+        .subheader {
+        position: fixed;
+        z-index: 1000;
+        background-color: #fff;
+        width: 100%;
+        height: 20vh;
+    }
+
+  
+    
+    .row2 {
+        margin-top: 10%;
+    }
+
+    .container {
+        margin-top: 1%;
+        display: flex;
+    }
+
+    .title {
+        flex-grow: 1;
+        text-align: center;
+        font-family: 'Trebuchet MS', san-serif;
+    }
+
+    .cart {
+        margin-left: 60%;
+      
+
+    }
+
+    .row {
+        margin-top: 1%;
+        
+    }
+
+    .search,
+    .additem,
+    .addtocart {
+        margin: 0;
+        width: 200px;
+        height: 100px;
+      
+    }
+    .search input {
+        width: 300px;
+    }
+
+    .search,    
+    .additem {
+        align-items: normal;
+        
+      
+    }
+
+    .additem {
+        margin-left: 6%
+    }
+
+    .addtocart{
+        margin-left: 43%;
+       
+    }
 
 
 
 </style>
 
-<div class="row">
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
-    <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-        <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+    <div class="subheader">
+        
+        <div class="container">
+            <h1 class="title">CREATE PURCHASE REQUEST</h1>
+            <div class="cart">
+                <a href="{% url 'requester' %}">
+                    <i>
+                        <img src="{% static 'images/cart.png' %}" alt="Icon Description">
+                    </i>
+                </a>
+            </div>
+        </div>
+
+
+
+        <div class="row  align-items-center">
+    
+            <div class="search">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+            </div>
+      
+          <div class="additem">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+          </div>
+
+
+          
+       </div>
+    
+        
     </div>
-  <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
-  </div>
 
 
-
-  <div class="col-2 col-sm-2 col-md-1 col-lg-1 float-right margin-right-20">
-    <a href="{% url 'requester' %}">
-        <i>
-            <img src="{% static 'images/cart.png' %}" alt="Icon Description" class="cart">
-        </i>
-    </a>
-</div>
-</div>
-
+  
 <br><br>
 
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 
-
-<br>
-<br>
-<div class="row">
-    <div class="col-12">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                  
-                    <th scope="col">Items</th>
-                    <th scope="col">Item Brand Description</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in csv_data %}
-                <tr class="table-row" id="{{ row.ITEMS }}">
+    
+    <br>
+    <br>
+    <div class="row2">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
                     <tr>
                       
-                        <td>{{ row.ITEMS }}</td>
-                        <td>{{ row.ITEM_BRAND }}</td>
-                        <td>{{ row.UNIT }}</td>
-                        <td>{{ row.PRICE }}</td>
-                        <script>
-                            function filterTable() {
-                                var input, filter, table, tr, td, i, txtValue;
-                                input = document.getElementById("search_bar_request");
-                                filter = input.value.toUpperCase();
-                                table = document.querySelector(".table-striped");
-                                tr = table.getElementsByTagName("tr");
-                        
-                                for (i = 0; i < tr.length; i++) {
-                                    td = tr[i].getElementsByTagName("td")[0]; 
-                                    if (td) {
-                                        txtValue = td.textContent || td.innerText;
-                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                            tr[i].style.display = "";
-                                        } else {
-                                            tr[i].style.display = "none";
+                        <th scope="col">Items</th>
+                        <th scope="col">Item Brand Description</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in csv_data %}
+                    <tr class="table-row" id="{{ row.ITEMS }}">
+                        <tr>
+                          
+                            <td>{{ row.ITEMS }}</td>
+                            <td>{{ row.ITEM_BRAND }}</td>
+                            <td>{{ row.UNIT }}</td>
+                            <td>{{ row.PRICE }}</td>
+                            <script>
+                                function filterTable() {
+                                    var input, filter, table, tr, td, i, txtValue;
+                                    input = document.getElementById("search_bar_request");
+                                    filter = input.value.toUpperCase();
+                                    table = document.querySelector(".table-striped");
+                                    tr = table.getElementsByTagName("tr");
+                            
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0]; 
+                                        if (td) {
+                                            txtValue = td.textContent || td.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        </script>
-                        <td>
+                            </script>
+                            <td>
+                                
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                               
+                                <script>
+                                    function highlightInput(input) {
+                                      input.select();
+                                    }
+                                  </script>
+                            </td>
                             
-                            <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}"  value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                           
-                            <script>
-                                function highlightInput(input) {
-                                  input.select();
-                                }
-                              </script>
-                        </td>
-                        
-                        <td>
-                            <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                            <td>
+                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </form>
-  <div class="row">
-     <div class="col-12 text-right">
-     <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-   </div>
- </div>
 
-<br><br><br>
+
+
+
+    <br><br><br>
+   
 </form>
 <script>
-     function scrollToCategory() {
-         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
-         var table = document.getElementById(selectedCategory);
-         if (table) {
+    function scrollToCategory() {
+        var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+        var table = document.getElementById(selectedCategory);
+        if (table) {
            table.scrollIntoView({behavior: 'smooth'});
+        }
        }
-     }
 </script>
+
 </div>
-         </div>
-        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
+<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
                   <div class="modal-body">
 
@@ -229,7 +307,7 @@
       </form>
 </div>
 
-<!--<script>
+<!-- <script>
 
 
     $(document).ready(function () {
@@ -274,9 +352,9 @@
           }
       }
 
-      // Update the displayed items based on the filtered products
-      updateProductTables(filteredProducts);
-  });
+// Update the displayed items based on the filtered products
+updateProductTables(filteredProducts);
+});
 
   function updateProductTables(filteredProducts) {
       for (const productTable of productTables) {
@@ -309,22 +387,22 @@
       }
   }
 
- 
-        function scrollToCategory() {
-            console.log("scrollToCategory function called!");
-            
-            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-            console.log("Selected Category:", selectedCategory);
-            
-            var categoryElement = document.getElementById(selectedCategory);
-            console.log("Category Element:", categoryElement);
-    
-            if (categoryElement) {
-                categoryElement.scrollIntoView({ behavior: "smooth" });
-                console.log("Scrolling to category:", selectedCategory);
-            }
-        }
-</script> 
+
+  function scrollToCategory() {
+      console.log("scrollToCategory function called!");
+      
+      var selectedCategory = document.getElementById("dropdownMenuSelect").value;
+      console.log("Selected Category:", selectedCategory);
+      
+      var categoryElement = document.getElementById(selectedCategory);
+      console.log("Category Element:", categoryElement);
+
+      if (categoryElement) {
+          categoryElement.scrollIntoView({ behavior: "smooth" });
+          console.log("Scrolling to category:", selectedCategory);
+      }
+  }
+</script> -->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

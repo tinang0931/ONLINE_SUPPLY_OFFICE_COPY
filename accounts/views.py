@@ -1,12 +1,11 @@
 from audioop import reverse
+import json
 from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
-from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -14,35 +13,23 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.models import User
-from django.http import HttpResponse  
-from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
-from django.core.mail import EmailMessage 
+from django.http import HttpResponse      
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode      
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 
+
 import random
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-
 
 
 def main(request):
@@ -229,12 +216,12 @@ def logout_user(request):
     return redirect('homepage')
 
 
-
+@unauthenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-
+@unauthenticated_user
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
@@ -251,7 +238,7 @@ def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -271,10 +258,35 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
-
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
+
+@authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+
+@authenticated_user
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
+
+@authenticated_user
+def preqform(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
+
+
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
 @authenticated_user
@@ -299,49 +311,79 @@ def request(request):
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
+        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
+        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
 
-         # Get user ID
-        user_id = None
-        if request.user.is_authenticated:
-            user_id = request.user.id
+        # Compute the total cost
+    
 
-
-        # Django model section
-        # Create a new Item instance and set its attributes
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
-            user=request.user,
-            request_id=uuid.uuid4(),
+            quantity=quantity,  # Add the total_cost field in your Item model
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
-    
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/dugaduga.jhake/Desktop/SUPPLY SYSTEM\ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        return redirect('requester')
 
+    return render(request, 'accounts/User/request.html')
+
+
+@authenticated_user
+def request(request): 
+    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    if request.method == 'POST':
+        # Handle the form submission logic here
+        selected_items = []
+
+        # Iterate through form data to get selected items
+        for key, value in request.POST.items():
+            if key.startswith('selected_item_id') and value:
+                item_id = value
+                quantity = request.POST.get(f'quantity_{item_id}', 0)
+
+                # Create a dictionary with item details
+                item_details = {
+                    'item': request.POST.get(f'item_{item_id}', ''),
+                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
+                    'unit': request.POST.get(f'unit_{item_id}', ''),
+                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
+                    'quantity': quantity,
+                }
+
+                selected_items.append(item_details)
+
+                # Save the selected items to the database (Item model)
+                Item.objects.create(
+                    item=item_details['item'],
+                    item_brand_description=item_details['item_brand_description'],
+                    unit=item_details['unit'],
+                    unit_cost=item_details['unit_cost'],
+                    quantity=item_details['quantity'],
+                )
+
+        # Redirect after processing all selected items
+        messages.success(request, 'Items added to the cart successfully!')
+        return redirect('request')
+
+    else:
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    # Pas data to the template
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+        
+        # Pass data to the template
+        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
-
-
+@authenticated_user
 def requester(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
+    items = Item.objects.all() 
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
-def item_delete(request, item_id):
+@authenticated_user
+def delete_item(request, item_id):
     try:
         item = get_object_or_404(Item, id=item_id)
         item.delete()
@@ -399,52 +441,34 @@ def your_view(request):
 #         return render(request('bac_history'))
 #     # Render the bac_history page with the list of PurchaseRequest objects
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
-def update_item(request, item_name):
+
+
+
+@authenticated_user
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
+
+def item_edit(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
     if request.method == 'POST':
-        try:
-            # Retrieve data from the POST request
-            edited_item = request.POST.get('item')
-            edited_item_brand_description = request.POST.get('item_brand_description')
-            edited_unit = request.POST.get('unit')
-            edited_unit_cost = float(request.POST.get('unit_cost'))
-            edited_quantity = float(request.POST.get('quantity'))
-            edited_total_cost = edited_unit_cost * edited_quantity
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-            # Retrieve the item from the database
-            item = Item.objects.get(item=edited_item)
+    return render(request, 'cart.html', {'item': item})
 
-            # Update the item with the new values
-            item.item_brand_description = edited_item_brand_description
-            item.unit = edited_unit
-            item.unit_cost = edited_unit_cost
-            item.quantity = edited_quantity
-            item.total_cost = edited_total_cost
 
-            # Save the changes to the database
-            item.save()
+@authenticated_user
+def item_delete(request, pk):
+    item = get_object_or_404(Item, pk=pk)
 
-            # Return a success response
-            return JsonResponse({'success': True})
-
-        except Exception as e:
-            # Handle exceptions and return an error response
-            return JsonResponse({'success': False, 'errors': str(e)})
-
-    # Handle non-POST requests
-    return redirect('accounts/User/cart.html') 
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'status': 'success'})
     
-from pymongo import MongoClient
-
-def get_bac_history_data(request):
-    # Connect to MongoDB
-    client = MongoClient('mongodb://localhost:27017')  # Replace with your MongoDB connection string
-    db = client['jhakedbdb']  # Replace with your MongoDB database name
-    collection = db['inventory']  # Replace with your MongoDB collection name
-
-    # Fetch data from MongoDB
-    history_data = list(collection.find())  # Adjust the query as per your data structure
-
-    # Close the MongoDB connection
-    client.close()
-
-    return render(request, 'accounts/User/bac_history .html', {'history_data': history_data})
+    return JsonResponse({'status': 'serror'}, status=400)

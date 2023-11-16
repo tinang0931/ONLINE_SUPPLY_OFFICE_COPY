@@ -1,4 +1,9 @@
+
+
+
+
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
 
 {% load static %}
 
@@ -38,140 +43,112 @@
             </tr>
         </thead>
         
-        <tbody>
-          {% for item in items %}
-          <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
-            <td class="item_name text-center">{{ item.item }}</td>
-            <td class="item_description text-center">{{ item.item_brand_description }}</td>
-            <td class="item_unit text-center">{{ item.unit }}</td>
-            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-            <td class="item_quantity text-center">{{ item.quantity }}</td>
-            <td class="item_total_cost text-center" id="totalCost"></td>
-            <td class="text-center">
-              <button type="button" class="btn btn-primary" onclick="openEditModal('{{ item.id }}', '{{ item.item }}', '{{ item.item_brand_description }}', '{{ item.unit }}', '{{ item.unit_cost }}', '{{ item.quantity }}')">Edit</button>
-          </td>
-          
-          <form id="editForm" method="POST" action="{% url 'request' %}">
-          {% endfor %}
-        </tbody>
+            <tbody>
+                    {% for item in items %}
+                  <tr style="background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+                      <td class="item_name text-center">{{ item.item }}</td>
+                      <td class="item_description text-center">
+                          <span id="item_description_{{ item.id }}_display">
+                              {{ item.item_brand_description }}
+                          </span>
+                          <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                      </td>
+                      <td class="item_unit text-center">{{ item.unit }}</td>
+                      <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                      <td class="item_quantity text-center">{{ item.quantity }}</td>
+                      <td class="totalcost text-center">{{ item.total_cost }}</td> {# Assuming you have a total_cost field in your Item model #}
+                      <td class="text-center">
+                          <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                              <i class="fa fa-edit"></i>
+                          </button>
+                          <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              {% endfor %}
 
-        <!-- Modal container -->
-        <div id="editItemModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content -->
+          </tbody>
+        </table>
+
+          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Edit Item</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Your form inputs for editing -->
-                        <label for="editItem">Item:</label>
-                        <input type="text" class="form-control" id="editItem">
-                        
-                        <label for="editItemBrandDescription">Item Brand Description:</label>
-                        <input type="text" class="form-control" id="editItemBrandDescription">
-                        
-                        <label for="editUnit">Unit:</label>
-                        <input type="text" class="form-control" id="editUnit">
-                        
-                        <label for="editUnitCost">Unit Cost:</label>
-                        <input type="text" class="form-control" id="editUnitCost">
-                        
-                        <label for="editQuantity">Quantity:</label>
-                        <input type="text" class="form-control" id="editQuantity">
+                        <!-- Add your form fields for editing here -->
+                        <label for="editedItemName">Item Name:</label>
+                        <input type="text" id="editedItemName" class="form-control" value="{{ item.item }}">
+                        <!-- Repeat similar fields for other item properties -->
         
-                        <!-- Add other input fields as needed -->
+                        <!-- You can customize this form based on your item properties -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <div class="modal-footer">
-                          <button type="submit" value ="submit" class="btn btn-primary" >Save</button>
+                        <button type="button" class="btn btn-primary" onclick="saveChanges('{{ item.id }}')">Save Changes</button>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-         $('#editItemModal').on('hidden.bs.modal', function () {
-    // Reset any modal-related changes or perform additional actions
-});
 
 
-         function openEditModal(itemId, item, itemBrandDescription, unit, unitCost, quantity) {
-    // Set values in the modal inputs
-    $('#editItem').val(item);
-    // Set other values as needed
-
-    // Show the modal
-    $('#editItemModal').modal('show');
     
-    // Remove the backdrop element manually
-    $('.modal-backdrop').remove();
-}
 
-function saveEdits() {
-    // Retrieve edited values from modal inputs
-    var editedItem = $('#editItem').val();
-    var editedItemBrandDescription = $('#editItemBrandDescription').val();
-    var editedUnit = $('#editUnit').val();
-    var editedUnitCost = parseFloat($('#editUnitCost').val());
-    var editedQuantity = parseFloat($('#editQuantity').val());
+        <div class="row-at-bottom" style="position:fixed; ">
+          <div class="purpose">
+            <label>Purpose:</label>
+            <textarea id="purpose" placeholder="Purpose" >
+            </textarea>
+          </div>
+          <div class="total_amount">
+            <span>Total Amount: {{total_cost}}</span>
+          </div>
+          <div class="submit">
+            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+        </div>
+      
+     
+      </div>
+  </form>
 
-    // Calculate total cost
-    var editedTotalCost = editedUnitCost * editedQuantity;
+  <script>
 
-    // Send updated data to server using AJAX
-    $.ajax({
-        type: 'POST',
-        url: '/update_item/' + itemId + '/',  // Replace with your Django URL for updating items
-        data: {
-            item: editedItem,
-            item_brand_description: editedItemBrandDescription,
-            unit: editedUnit,
-            unit_cost: editedUnitCost,
-            quantity: editedQuantity,
-            total_cost: editedTotalCost,  // Include total cost in the update
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function (response) {
-            if (response.success) {
-                // Close the modal
-                $('#editItemModal').modal('hide');
 
-                 // Update the corresponding row in the table with the edited values
-                 var editedRow = $('#create_request_table').find('td:contains("' + editedItem + '")').closest('tr');
-                editedRow.find('.item_name').text(editedItem);
-                editedRow.find('.item_description').text(editedItemBrandDescription);
-                editedRow.find('.item_unit').text(editedUnit);
-                editedRow.find('.item_unit_cost').text(editedUnitCost);
-                editedRow.find('.item_quantity').text(editedQuantity);
-                editedRow.find('.item_total_cost').text(editedTotalCost);
 
-                // Optionally, you can update the total cost in the footer or perform other actions
+   
+    
+   
 
-                // Display the cart table
-                $('.cart').show();
-            
-                // Handle errors if needed
-                console.error(response.errors)
+    function deleteRow(button) {
+      var itemId = button.getAttribute('data-item-id');
 
-                // Optionally, update the item details in the table without refreshing the page
-                // Update the corresponding row in the table with the edited values
-
-                // Alternatively, you can redirect the user to a new page or refresh the current page
-                // window.location.href = '/your_redirect_url/';
+// Call a server-side function to handle the delete
+        fetch(`/delete_item/${itemId}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // Implement further actions if needed
             } else {
-                // Handle errors if needed
-                console.error(response.errors);
+                alert('Failed to delete item');
             }
-        },
-        error: function () {
-            // Handle errors if needed
-            console.error('Failed to save edits.');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
         }
-    });
-}
-
+    
 </script>
 
 {% endblock %}
