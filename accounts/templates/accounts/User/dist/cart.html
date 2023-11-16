@@ -1,3 +1,7 @@
+
+
+
+
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
@@ -31,20 +35,25 @@
             <tbody>
               {% for item in items %}
               <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                  <td class="item_name text-center">  {{ item.item }} </td>
-                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                  <td class="item_unit text-center">{{ item.unit }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost|default:"0.00"|floatformat:2 }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity|default:"0" }}</td>
-                  <td class="text-center">           
-                  <button class="edit-button" data-item-id="{{ item.id }}" onclick="editItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(1, 154, 72);">
-                  <i class="fa fa-edit"></i>
-                  </button>
-                  <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteItem('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
-                  <i class="fa fa-trash"></i>
-                  </button>
+                <td class="item_name text-center">  {{ item.item }} </td>
+                <td class="item_description text-center">
+                  <span id="item_description_{{ item.id }}_display">
+                    {{ item.item_brand_description }}
+                  </span>
+                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                </td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td></td>
+                  <td class="text-center">
+                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)"
+                    style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                    <i class="fa fa-trash"></i>
+                    </button>
                 </td>
               </tr>
               {% endfor %}
@@ -63,6 +72,40 @@
                 <button onclick="updateDisplayBox()">Submit</button>
               </div>
             </div>
+        
+  
+        <div class="editmodal" style="display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5)" id="editModal" >
+          <div class="modal-content" style=" position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: white;
+              padding: 20px;
+              border-radius: 10px;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="editForm">
+              <input type="text" name="item" id="editItem">
+              <input type="text" name="item_brand_description" id="editItemBrandDescription">
+              <input type="text" name="unit" id="editUnit">
+              <input type="text" name="unit_cost" id="editUnitCost">
+              <input type="text" name="quantity" id="editQuantity">
+              <button type="button" onclick="submitEditForm()">Save</button>
+            </form>
+          </div>
+        </div>
+    
+
+        <div class="row-at-bottom d-flex justify-content-between" >
+          <div class="purpose">
+            <label>Purpose:</label>
+            <textarea id="purpose" placeholder="Purpose" required style="">
+            </textarea>
           </div>
           <div class="total_amount">
             <span>Total Amount: {{total_cost}}</span>
@@ -75,34 +118,71 @@
       </div>
   </form>
 
+  
   <script>
+    $('#editItemModal').on('hidden.bs.modal', function () {
+// Reset any modal-related changes or perform additional actions
+});
 
-    function deleteRow(button) {
-      var itemId = button.getAttribute('data-item-id');
 
-// Call a server-side function to handle the delete
-        fetch(`/delete_item/${itemId}/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert(data.message);
-                // Implement further actions if needed
-            } else {
-                alert('Failed to delete item');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        }
-    
+    function openEditModal(itemId, item, itemBrandDescription, unit, unitCost, quantity) {
+// Set values in the modal inputs
+$('#editItem').val(item);
+// Set other values as needed
+
+// Show the modal
+$('#editItemModal').modal('show');
+
+// Remove the backdrop element manually
+$('.modal-backdrop').remove();
+}
+
+function saveEdits() {
+// Retrieve edited values from modal inputs
+var editedItem = $('#editItem').val();
+var editedItemBrandDescription = $('#editItemBrandDescription').val();
+var editedUnit = $('#editUnit').val();
+var editedUnitCost = parseFloat($('#editUnitCost').val());
+var editedQuantity = parseFloat($('#editQuantity').val());
+
+// Calculate total cost
+var editedTotalCost = editedUnitCost * editedQuantity;
+
+// Send updated data to server using AJAX
+$.ajax({
+   type: 'POST',
+   url: '/update_item/' + itemId + '/',  // Replace with your Django URL for updating items
+   data: {
+       item: editedItem,
+       item_brand_description: editedItemBrandDescription,
+       unit: editedUnit,
+       unit_cost: editedUnitCost,
+       quantity: editedQuantity,
+       total_cost: editedTotalCost,  // Include total cost in the update
+       csrfmiddlewaretoken: '{{ csrf_token }}'
+   },
+   success: function (response) {
+       if (response.success) {
+           // Close the modal
+           $('#editItemModal').modal('hide');
+
+           // Optionally, update the item details in the table without refreshing the page
+           // Update the corresponding row in the table with the edited values
+
+           // Alternatively, you can redirect the user to a new page or refresh the current page
+           // window.location.href = '/your_redirect_url/';
+       } else {
+           // Handle errors if needed
+           console.error(response.errors);
+       }
+   },
+   error: function () {
+       // Handle errors if needed
+       console.error('Failed to save edits.');
+   }
+});
+}
+
 </script>
-
 
 {% endblock %}

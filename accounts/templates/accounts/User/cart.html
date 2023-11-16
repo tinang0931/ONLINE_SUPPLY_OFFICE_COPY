@@ -117,11 +117,72 @@
       </div>
       </div>
   </form>
-<script>
-    
-    
+
+  
+  <script>
+    $('#editItemModal').on('hidden.bs.modal', function () {
+// Reset any modal-related changes or perform additional actions
+});
+
+
+    function openEditModal(itemId, item, itemBrandDescription, unit, unitCost, quantity) {
+// Set values in the modal inputs
+$('#editItem').val(item);
+// Set other values as needed
+
+// Show the modal
+$('#editItemModal').modal('show');
+
+// Remove the backdrop element manually
+$('.modal-backdrop').remove();
+}
+
+function saveEdits() {
+// Retrieve edited values from modal inputs
+var editedItem = $('#editItem').val();
+var editedItemBrandDescription = $('#editItemBrandDescription').val();
+var editedUnit = $('#editUnit').val();
+var editedUnitCost = parseFloat($('#editUnitCost').val());
+var editedQuantity = parseFloat($('#editQuantity').val());
+
+// Calculate total cost
+var editedTotalCost = editedUnitCost * editedQuantity;
+
+// Send updated data to server using AJAX
+$.ajax({
+   type: 'POST',
+   url: '/update_item/' + itemId + '/',  // Replace with your Django URL for updating items
+   data: {
+       item: editedItem,
+       item_brand_description: editedItemBrandDescription,
+       unit: editedUnit,
+       unit_cost: editedUnitCost,
+       quantity: editedQuantity,
+       total_cost: editedTotalCost,  // Include total cost in the update
+       csrfmiddlewaretoken: '{{ csrf_token }}'
+   },
+   success: function (response) {
+       if (response.success) {
+           // Close the modal
+           $('#editItemModal').modal('hide');
+
+           // Optionally, update the item details in the table without refreshing the page
+           // Update the corresponding row in the table with the edited values
+
+           // Alternatively, you can redirect the user to a new page or refresh the current page
+           // window.location.href = '/your_redirect_url/';
+       } else {
+           // Handle errors if needed
+           console.error(response.errors);
+       }
+   },
+   error: function () {
+       // Handle errors if needed
+       console.error('Failed to save edits.');
+   }
+});
+}
 
 </script>
-
 
 {% endblock %}
