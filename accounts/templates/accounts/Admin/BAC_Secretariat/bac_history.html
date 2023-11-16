@@ -102,8 +102,9 @@
           </button>
           <div class="d-flex justify-content-start align-items-center">
             <div class="d-flex justify-content-start align-items-center">
-              <button type="button" class="btn btn-primary" onclick="handleAction('approve')">Approve</button>
-              <button type="button" class="btn btn-danger" onclick="handleAction('disapprove')">Disapprove</button>
+              <button type="button" class="btn btn-primary" onclick="handleAction('approve', '0000100')">Approve</button>
+              <button type="button" class="btn btn-danger" onclick="handleAction('disapprove', '0000100')">Disapprove</button>
+              
           </div>
           <script>
           function handleAction(action) {
@@ -283,4 +284,122 @@ function getCookie(name) {
     });
   }
 </script>
+
+<script>
+  // Function to update the history table with data from the server
+  function updatebac_historyTable() {
+      $.ajax({
+          url: '/get_bac_history_data/',
+          type: 'get',
+          success: function (response) {
+              // Update the history table with the new data
+              updateTable(response);
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              console.log('Error:', textStatus, errorThrown);
+              // Handle errors if needed
+          },
+      });
+  }
+
+  // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
+  setInterval(updatebac_historyTable, 10000);
+
+  // Initial call to populate the history table
+  updatebac_historyTable();
+
+  // Function to update the history table with new data
+  function updateTable(newData) {
+      // Clear existing rows in the table body
+      var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = '';
+
+      // Iterate over the newData array and add rows to the table
+      newData.forEach(function (data) {
+          var newRow = tableBody.insertRow();
+          for (var key in data) {
+              var cell = newRow.insertCell();
+              cell.appendChild(document.createTextNode(data[key]));
+          }
+      });
+  }
+</script>
+<script>
+  function handleAction(action, request_id) {
+      // Make an AJAX request to the corresponding endpoint based on the action
+      fetch('/update_approval/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
+          },
+          body: JSON.stringify({ action: action, request_id: request_id }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Handle the response here
+          if (data.success) {
+              // Show a message in the tracker and history pages
+              alert('Request ' + request_id + ' has been ' + action + 'd.');
+              updateTracker(request_id, action);
+              updateHistory(request_id, action);
+          } else {
+              alert('Failed to ' + action + ' request ' + request_id + '.');
+          }
+      })
+      .catch(error => {
+          console.error('Error ' + action + 'ing instance:', error);
+      });
+  }
+  
+  // Function to get CSRF token from cookies
+  function getCookie(name) {
+      // ... (same as before)
+  }
+  </script>
+  <script>
+    function updateTracker(request_id, action) {
+        // Find the corresponding row in the tracker table and update its status
+        var trackerRow = $('#tracker_table').find('td:contains("' + request_id + '")').closest('tr');
+        trackerRow.find('.status').text(action.toUpperCase());
+    
+        // Optionally, you can update other details in the tracker table as needed
+    }
+    
+    function updateHistory(request_id, action) {
+        // Make an AJAX request to get the latest history data
+        $.ajax({
+            url: '/get_history_data/',  // Replace with the actual URL for fetching history data
+            type: 'get',
+            success: function (response) {
+                // Update the history table with the new data
+                updateHistoryTable(response);
+    
+                // Show a message in the history page
+                alert('Request ' + request_id + ' has been ' + action + 'd.');
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error:', textStatus, errorThrown);
+                // Handle errors if needed
+            },
+        });
+    }
+    
+    function updateHistoryTable(newData) {
+        // Clear existing rows in the history table body
+        var historyTableBody = document.getElementById('history_table').getElementsByTagName('tbody')[0];
+        historyTableBody.innerHTML = '';
+    
+        // Iterate over the newData array and add rows to the history table
+        newData.forEach(function (data) {
+            var newRow = historyTableBody.insertRow();
+            for (var key in data) {
+                var cell = newRow.insertCell();
+                cell.appendChild(document.createTextNode(data[key]));
+            }
+        });
+    }
+    </script>
+    
+
 {% endblock %}  

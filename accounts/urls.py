@@ -7,9 +7,6 @@ urlpatterns = [
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
    path('login/',views.login, name='login'),
-   path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
-   path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
-   path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
@@ -17,7 +14,7 @@ urlpatterns = [
    path('request/',views.request, name='request'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
-   path('tracker',views.tracker, name='tracker'),
+   path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
    path('history/',views.history, name='history'),
    path('profile/',views.profile, name='profile'),
@@ -27,5 +24,5 @@ urlpatterns = [
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
-   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+  
 ]
