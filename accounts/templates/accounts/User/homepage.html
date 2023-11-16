@@ -12,6 +12,34 @@
     <title>Landing Page</title>
 
   </head>
+  <style>
+    body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        position: relative;
+        text-align: center;
+    }
+
+    .login {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+    }
+
+    .login button {
+        margin: 5px;
+        font-size: 20px; /* Adjust the font size as needed */
+        padding: 10px 20px; /* Adjust padding for better appearance */
+    }
+</style>
   <body>
 
     <div class="container">
@@ -25,10 +53,12 @@
       <h1 class="cot">COLLEGE<br>OF<br>TECHNOLOGY</h1>
       <p class="ctu">Cebu Technological University<br>Argao Campus</p>
       <div class="login">
-          <a href="{% url 'login' %}">
-            <img class="arrow" src="{% static 'images/double_arrow.png' %}" >
-          </a>
-        </div>
+        <button>
+          <a href="{% url 'login' %}">USER</a>
+        </button>
+        
+          
+      </div>
        
 
     </div>

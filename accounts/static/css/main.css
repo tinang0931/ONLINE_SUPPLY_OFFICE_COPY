@@ -215,6 +215,7 @@ height: 100%;
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 0.1em;
+  color: #000;
 }
 
 
@@ -3264,4 +3265,9 @@ button {
 
 .modal-footer {
   border-top: 15px solid #ccc;
+}
+
+.table-striped thead {
+  background-color: blue;
+  color: white; 
 }

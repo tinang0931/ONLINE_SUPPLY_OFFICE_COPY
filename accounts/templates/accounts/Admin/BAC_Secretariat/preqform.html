@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block preqform %}
+     
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,145 +11,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Reset some default styles */
-        body,
-        h3,
-        p {
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-        /* Apply some styling to the header */
+    <style>
+  
         header {
             background-color: #007acc;
-            /* Change to your preferred background color */
+      
             color: white;
             padding: 10px;
         }
 
-        /* Style the logo */
+    
         .ctu_logo {
-            width: 150px;
-            /* Adjust the size as needed */
-            height: 240px;
-            margin-right: -50px;
-            padding-left: 0%;
+            width: 167px;
+    
+            height: auto;
+            margin-right: 20px;
             float: left;
         }
 
         .asean_logo {
-            width: 115px;
-            margin-right: -100px;
+            width: 167px;
+          
+            height: auto;
+            margin-right: 20px;
             float: left;
         }
 
-        /* Style the container */
-        .container {
-            max-width: 800px;
-            /* Adjust the maximum width as needed */
-            padding: 20px;
-            text-align: center;
-            /* Center-align the text within the container */
-            display: flex;
-            /* Use flexbox to align items vertically and horizontally */
-            flex-direction: column;
-            /* Stack items vertically */
-            justify-content: center;
-            /* Center-align items vertically */
-            align-items: center;
-            /* Center-align items horizontally */
-            margin: 0 auto;
-            /* Center the container horizontally on the page */
-        }
-
-
-        a:hover {
-            text-decoration: none;
-            /* Remove underline on hover */
-        }
-
-        .iso_logo {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-right: 300px;
-
-        }
-
-        .stars_logo {
-            float: right;
-            height: 200px;
-        }
-
         .container-fluid {
-            height: 68vh;
+            height: 150vh;
             overflow-y: auto;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-size: 15px;
+            margin-right: 150px;
         }
 
-        .logo-container {
+
+    
+        .container {
+            max-width: 800px;
+          
+            padding: 15px;
+            text-align: center;
+           
             display: flex;
-            justify-content: space-between;
+           
+            flex-direction: column;
+         
+            justify-content: center;
+            
             align-items: center;
-            margin-bottom: 20px; /* Adjust as needed */
-            width: 100%;
+          
+            margin: 0 auto;
+           
         }
 
-        .logo-container img {
-            max-width: 20%; /* Adjust the logo size as needed */
+       
+        h {
+            font-size: 25px;
+          
+            text-align: center;
+          
+        }
+
+        p {
+            font-size: 25px;
+         
+            text-align: center;
+
+
+
+        }
+
+        a {
+            color: #007acc;
+            text-decoration: underline;
+         
+        }
+
+        a:hover {
+            text-decoration: none;
+            
+        }
+
+        .management {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+ 
+        }
+
+        .stars {
+            float: right;
+            margin-right: 10px;
+            width: 167px;
             height: auto;
         }
 
-        .text-container {
-            text-align: center;
+        .br {
+            margin-bottom: 20px;
         }
 
-        .contact-info {
+        .content p {
+            text-align: left;
+            margin-right: 1000px;
+        }
+
+        table {
+            font-weight: bold;
+            border: 2px solid;
+            width: 100%;
+            margin-top: 20px;
+   
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            padding: 10px;
+           
+            text-align: left;
+        }
+
+        th {
+            position: center;
+            top: 0;
+            background-color: #f2f2f2;
+        }
+
+        body,
+    h3,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    table {
+            width: 100%;
+            table-layout: fixed; /* Prevent table from resizing columns based on content */
+        }
+    .table-and-comment {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px; /* Adjust as needed */
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        .table-container {
+            width: 60%; /* Adjust the width as needed */
+            margin-top: -500px;
         }
 
-        .contact-info p {
-            margin: 0 10px; /* Add space on the left and right of each paragraph */
+        .comment-box {
+            width: 60%; /* Adjust the width as needed */
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
-        
-    </style>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-</head>
+        .comment-box {
+            width: 60%; /* Adjust the width as needed */
+            margin-top: -20px; /* Adjust the negative margin to move it up */
+            margin-bottom: 20px;
+        }
+
+        .comment-box textarea {
+            width: 100%;
+            height: 80px; /* Adjust the height as needed */
+            margin-top: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+    .logo-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        width: 80%;
+    }
+
+    .logo-container img {
+        max-width: 20%;
+        height: auto;
+        margin: 0 10px;
+    }
+
+    .logo-container-left,
+    .logo-container-right {
+        width: 48%; 
+    }
+
+    .logo-container-left img,
+    .logo-container-right img {
+        width: 100%; 
+    }
+
+    .heading-container {
+    text-align: center;
+    font-size: 10;
+}
+
+.heading-container h3 {
+    font-size: 1.5em; 
+}
+
+.heading-container h2 {
+    font-size: 2em; 
+}
+
+.heading-container p {
+    font-size: 1em; 
+}
+
+.heading-container a {
+    font-size: 1em; 
+}
+
+
+.table-container {
+        margin-top: 20px;
+        width: 60%;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .icons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.icon-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #007acc; /* Adjust the color as needed */
+}
+.comment-box {
+            margin-top: 20px;
+            width: 60%;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        .comment-box textarea {
+            width: 100%;
+            height: 50px;
+            margin-top: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    table {
+        width:60%;
+    }
+   
+        /* Add this style to your CSS file or in the head of your HTML file */
+        table td {
+            font-weight: normal;
+        }
+ 
+</style>
 
 <body>
 
     <div class="container-fluid">
         <div class="logo-container">
-            <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
-            <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
-            <div class="text-container">
-                <p>Republic of the Philippines</p>
-                <h5><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h5>
-                <h5>ARGAO CAMPUS</h5>
+            <div class="logo-container-left">
+                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
+                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
+            </div>
+            <div class="heading-container" style="text-align: center;"> 
+                <h3>Republic of the Philippines</h3>
+                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
+                <h3>ARGAO CAMPUS</h3>
                 <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                <div class="contact-info">
+                <div>
                     <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                    &nbsp;
                     <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
                 </div>
-                <p>Phone: +6332 402 4060 loc. 1150</p>
             </div>
-            <img class="iso_logo" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-            <img class="stars_logo" src="{% static 'images/stars.png' %}" alt="STARS Logo">
+            <div class="logo-container-right">
+                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
+                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
+            </div>
         </div>
+        <br>
+        <br>
+        
+        <h1>PURCHASE REQUEST</h1>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-6 text-left" style="margin-bottom: 10px;">
+                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+            </div>
+            <div class="col-6 text-right" style="margin-bottom: 10px;">
+                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;"
+                        id="editableField"></span></h4>
+            </div>
+        </div>
+        <div class="table-container">
+            <div class="justify-content">
+                <div class="col-md-12">
+                    <div class="mx-auto">
+                        <table class="table-bordered" style="width: 120%">
+                            <thead>
+                            <tr>
+                                <th colspan="2">Office Section: <span contenteditable="true" ;
+                                        id="editableField"></span></th>
+                                <th colspan="2">PR No.: <span contenteditable="true" ;
+                                        id="editableField"></span><br>Responsibility Center Code: <span
+                                        contenteditable="true" ; id="editableField"></span></th>
+                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
+                            </tr>
+                            <tr>
+                                    <th>Stock/Property</th>
+                                    <th>Unit</th>
+                                    <th>Item Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Cost</th>
+                                    <th>Total Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td class="text-center">{{ forloop.counter }}</td>
+                                    <td class="text-center">{{ item.unit }}</td>
+                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
+                                    <td class="text-center">{{ item.quantity }}</td>
+                                    <td class="text-center">{{ item.unit_cost }}</td>
+                                    <td class="text-center">{{item.total_cost}}</td>
+                                </tr>
+                            {% endfor %}
+                            
+                            
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                                </td>
+                            </tr>
+
+
+                           
+                            <tr>
+                                <td colspan="2">Purpose: <span contenteditable="true"
+                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
+                            <tr>
+                                <td colspan="2">Requested by: <span contenteditable="true"
+                                        style="border: none; outline: none;" id="requestedByField"></span></td>
+                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-box">
+  
+            <textarea placeholder="Update the purchase request status..."></textarea>
+            <div class="icons-container">
+                <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a href="javascript:window.print()" title="Print" class="icon-link">
+                    <i class="fas fa-print"></i> Print
+                </a>
+            </div>
+        </div>
+        
     </div>
+
     
-        
-        
-        
+    
 </body>
+</head>
 
 </html>
-
-
 {% endblock %}

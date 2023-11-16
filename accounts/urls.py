@@ -1,3 +1,5 @@
+
+
 from django.urls import path
 from . import views 
 
@@ -6,7 +8,11 @@ urlpatterns = [
    path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
+   path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
+   path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
+   path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
+   path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
@@ -23,4 +29,9 @@ urlpatterns = [
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
+   path('np/',views.np, name='np'),
+   path('bids/',views.bids, name='bids'),
+   path('noa/',views.noa, name='noa'),
+   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   
 ]
