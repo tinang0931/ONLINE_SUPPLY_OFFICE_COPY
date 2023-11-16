@@ -403,54 +403,40 @@ def addItem(request):
 
 
 @authenticated_user
-def request(request): 
-<<<<<<< HEAD
-    csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
-=======
-    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
->>>>>>> f5cf85828bc5d768a01aed2050c50452501578fc
+def request(request):
     if request.method == 'POST':
-        # Handle the form submission logic here
-        selected_items = []
+        # Retrieve selected rows from the form
+        selected_rows = request.POST.getlist('selectRow')
 
-        # Iterate through form data to get selected items
-        for key, value in request.POST.items():
-            if key.startswith('selected_item_id') and value:
-                item_id = value
-                quantity = request.POST.get(f'quantity_{item_id}', 0)
+        # Process and save data to the database
+        for row_id in selected_rows:
+            item_name = request.POST.get(f'item_{row_id}')
+            item_brand = request.POST.get(f'item_brand_{row_id}')
+            unit = request.POST.get(f'unit_{row_id}')
+            price = request.POST.get(f'price_{row_id}')
+            quantity = request.POST.get(f'quantity_{row_id}')
 
-                # Create a dictionary with item details
-                item_details = {
-                    'item': request.POST.get(f'item_{item_id}', ''),
-                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
-                    'unit': request.POST.get(f'unit_{item_id}', ''),
-                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
-                    'quantity': quantity,
-                }
+            # Save the data to the CartItem model (update this based on your model)
+            items = Item.objects.create(
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price,
+                quantity=quantity,
+            )
+            items.save()
 
-                selected_items.append(item_details)
+        # Redirect to a success page
+        return redirect('requester')
 
-                # Save the selected items to the database (Item model)
-                Item.objects.create(
-                    item=item_details['item'],
-                    item_brand_description=item_details['item_brand_description'],
-                    unit=item_details['unit'],
-                    unit_cost=item_details['unit_cost'],
-                    quantity=item_details['quantity'],
-                )
+    # If the request method is not POST, load CSV data and render the template
+    csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'  # Replace with the actual path
+    with open(csv_file_path, 'r') as file:
+        reader = csv.DictReader(file)
+        csv_data = list(reader)
 
-        # Redirect after processing all selected items
-        messages.success(request, 'Items added to the cart successfully!')
-        return redirect('request')
-
-    else:
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+    # Pass data to the template
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 @authenticated_user
@@ -517,17 +503,17 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
+    # item = get_object_or_404(Item, pk=pk)
 
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    # if request.method == 'POST':
+    #     form = ItemForm(request.POST, instance=item)
+    #     if form.is_valid():
+    #         form.save()
+    #         return JsonResponse({'status': 'success'})
+    #     else:
+    #         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-    return render(request, 'cart.html', {'item': item})
+    return render(request, 'cart.html')
 
 
 @authenticated_user
