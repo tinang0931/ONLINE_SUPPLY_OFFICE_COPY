@@ -1,5 +1,3 @@
-
-
 from django.urls import path
 from . import views 
 
@@ -14,6 +12,7 @@ urlpatterns = [
    path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
+   path('registration/',views.registration, name='registration'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/' , views.requester, name="requester"),
@@ -33,5 +32,4 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
-   
 ]
