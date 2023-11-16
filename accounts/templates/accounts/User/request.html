@@ -174,6 +174,8 @@
 
     <div class="row2">
 
+                        
+
         <div class="col-12">
             <table class="table table-striped">
 
@@ -192,22 +194,28 @@
                 <tbody>
                     {% for row in csv_data %}
                     <tr class="table-row" id="{{ row.ITEMS }}">
-                        <td>{{ row.ITEMS }}</td>
-                        <td>{{ row.ITEM_BRAND }}</td>
-                        <td>{{ row.UNIT }}</td>
-                        <td>{{ row.PRICE|floatformat:"2" }}</td>
-                        <td>
-                            <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                        </td>
-                        <td>
-                            <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
-                        </td>
-                    </tr>
-                        {% endfor %}
-
+                        <tr>
+                          
+                            <td>{{ row.ITEMS }}</td>
+                            <td>{{ row.ITEM_BRAND }}</td>
+                            <td>{{ row.UNIT }}</td>
+                            <td>{{ row.PRICE }}</td>
+                            <td>
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                            </td>
+                            <td>
+                                <input type="checkbox" name="selected_items" value="{{ row.ITEMS }}">
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <div class="addtocart">
+            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+       </div>
+             
     </div>
 </form>
 
@@ -225,7 +233,7 @@
 
                   <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
+                    <form action="{% url 'request' %}" method="post">
                         {% csrf_token %}
 
                           
@@ -270,6 +278,50 @@
 
 <script>
 
+
+
+document.getElementById('addToCartBtn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button action
+
+        // Collect selected item data
+        const selectedItems = document.querySelectorAll('input[name="selected_item_id"]:checked');
+        const formData = new FormData();
+
+        selectedItems.forEach(item => {
+            const row = item.closest('tr');
+            const itemName = row.querySelector('td:nth-child(1)').innerText;
+            const itemDescription = row.querySelector('td:nth-child(2)').innerText;
+            const unit = row.querySelector('td:nth-child(3)').innerText;
+            const unitCost = row.querySelector('td:nth-child(4)').innerText;
+
+            formData.append('item', itemName);
+            formData.append('item_Brand_Description', itemDescription);
+            formData.append('unit', unit);
+            formData.append('unit_Cost', unitCost);
+            formData.append('quantity', 1); // You can set a default quantity here
+        });
+
+        // Send form data to the view using Fetch API
+        fetch("{% url 'request' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect or perform any action upon success
+                window.location.href = "{% url 'request' %}";
+            } else {
+                // Handle errors if needed
+                console.error('Error:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
 
 
     function highlightInput(input) {
