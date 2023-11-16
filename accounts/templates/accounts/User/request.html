@@ -174,18 +174,12 @@
 
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    
-    <br>
-    <br>
     <div class="row2">
-
-        <div class="col-12">
-            <div class="addtocart" style="width: 57%;">
+        <div class="col-12">  
+            <div class="addtocart">
                 <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
-            </div>   
+            </div> 
             <table class="table table-striped">
-
-
                 <thead>
                     <tr>
                         <th scope="col">Items</th>
