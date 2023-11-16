@@ -62,13 +62,31 @@
         z-index: 1000;
         background-color: #fff;
         width: 100%;
-        height: 20vh;
+        height: 15vh;
     }
-
   
     
     .row2 {
-        margin-top: 10%;
+        margin-top: 5%;
+        display: flex;
+
+    }
+
+    .addtocart {
+        top: 38%;
+        position: fixed;
+        z-index: 1000;
+        left: 92%;
+      
+    }
+
+
+    .col-12 {
+        margin-top: 5%;
+        flex-grow: 1; 
+        overflow-y: auto;
+        
+
     }
 
     .container {
@@ -79,28 +97,27 @@
     .title {
         flex-grow: 1;
         text-align: center;
-        font-family: 'Trebuchet MS', san-serif;
+        font-family: 'Trebuchet MS', sans-serif;
+        white-space: nowrap;
     }
 
     .cart {
-        margin-left: 60%;
+        margin-left: 45%;
       
 
     }
 
     .row {
         margin-top: 1%;
-        
     }
 
     .search,
-    .additem,
-    .addtocart {
+    .additem{
         margin: 0;
         width: 200px;
         height: 100px;
-      
     }
+
     .search input {
         width: 300px;
     }
@@ -108,17 +125,10 @@
     .search,    
     .additem {
         align-items: normal;
-        
-      
     }
 
     .additem {
         margin-left: 6%
-    }
-
-    .addtocart{
-        margin-left: 43%;
-       
     }
 
 
@@ -139,7 +149,6 @@
                 </a>
             </div>
         </div>
-
 
 
         <div class="row  align-items-center">
@@ -169,11 +178,14 @@
     <br>
     <br>
     <div class="row2">
+
         <div class="col-12">
             <div class="addtocart" style="width: 57%;">
                 <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
             </div>   
             <table class="table table-striped">
+
+
                 <thead>
                     <tr>
                         <th scope="col">Items</th>
@@ -208,14 +220,9 @@
         </div>
     </div>
 </form>
+</div>
 
-
-
-
-
-    <br><br><br>
-   
-</form>
+     
 <script>
     function scrollToCategory() {
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
@@ -270,62 +277,96 @@
                               <input type="text" class="form-control" id="Quantity" name="quantity" required>
                           </div>
 
+                          <div class="modal-footer">
+                              <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+                              
+                          </div>
                     </form>
                   </div>
               </div>
           </div>
         </div>
-      </form>
-</div>
+        
+
+
 
 <script>
 
 
-    $(document).ready(function () {
-        // Add click event to checkboxes
-        $('.row-checkbox').on('click', function () {
-            // Find the closest tr and toggle the 'selected' class
-            $(this).closest('tr').toggleClass('selected');
-        });
-    });
+    function highlightInput(input) {
+                                      input.select();
+                                    }
+    
+    
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search_bar_request");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".table-striped");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 
 
-  const categoryFilter = document.getElementById('category_filter');
-  const productTables = document.querySelectorAll('.table table');
 
-  categoryFilter.addEventListener('change', (event) => {
-      const selectedCategory = event.target.value;
-      const filteredProducts = {};
 
-      if (selectedCategory !== 'all') {
-          for (const productTable of productTables) {
-              const categoryName = productTable.querySelector('h3').textContent;
-              if (categoryName === selectedCategory) {
-                  const products = productTable.querySelectorAll('tbody tr');
-                  for (const product of products) {
-                      const itemName = product.querySelector('td:nth-child(2)').textContent;
-                      const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                      const unit = product.querySelector('td:nth-child(4)').textContent;
-                      const price = product.querySelector('td:nth-child(5)').textContent;
-
-                      if (!filteredProducts[categoryName]) {
-                          filteredProducts[categoryName] = [];
-                      }
-
-                      filteredProducts[categoryName].push({
-                          itemName,
-                          itemDescription,
-                          unit,
-                          price
-                      });
-                  }
-              }
-          }
-      }
-
-      // Update the displayed items based on the filtered products
-      updateProductTables(filteredProducts);
+$(document).ready(function () {
+  // Add click event to checkboxes
+  $('.row-checkbox').on('click', function () {
+      // Find the closest tr and toggle the 'selected' class
+      $(this).closest('tr').toggleClass('selected');
   });
+});
+
+
+const categoryFilter = document.getElementById('category_filter');
+const productTables = document.querySelectorAll('.table table');
+
+categoryFilter.addEventListener('change', (event) => {
+const selectedCategory = event.target.value;
+const filteredProducts = {};
+
+if (selectedCategory !== 'all') {
+    for (const productTable of productTables) {
+        const categoryName = productTable.querySelector('h3').textContent;
+        if (categoryName === selectedCategory) {
+            const products = productTable.querySelectorAll('tbody tr');
+            for (const product of products) {
+                const itemName = product.querySelector('td:nth-child(2)').textContent;
+                const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                const unit = product.querySelector('td:nth-child(4)').textContent;
+                const price = product.querySelector('td:nth-child(5)').textContent;
+
+                if (!filteredProducts[categoryName]) {
+                    filteredProducts[categoryName] = [];
+                }
+
+                filteredProducts[categoryName].push({
+                    itemName,
+                    itemDescription,
+                    unit,
+                    price
+                });
+            }
+        }
+    }
+}
+
+// Update the displayed items based on the filtered products
+updateProductTables(filteredProducts);
+});
+
 
   function updateProductTables(filteredProducts) {
       for (const productTable of productTables) {
@@ -358,19 +399,19 @@
       }
   }
 
- 
-        function scrollToCategory() {
-            console.log("scrollToCategory function called!");
-            
-            var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-            console.log("Selected Category:", selectedCategory);
-            
-            var categoryElement = document.getElementById(selectedCategory);
-            console.log("Category Element:", categoryElement);
-    
-            if (categoryElement) {
-                categoryElement.scrollIntoView({ behavior: "smooth" });
-                console.log("Scrolling to category:", selectedCategory);
+
+    // Call a server-side function to handle the import
+
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
         }
 
