@@ -3266,3 +3266,8 @@ button {
 .modal-footer {
   border-top: 15px solid #ccc;
 }
+
+.table-striped thead {
+  background-color: blue;
+  color: white; 
+}
