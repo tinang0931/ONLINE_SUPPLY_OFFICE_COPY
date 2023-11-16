@@ -14,6 +14,7 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
+    
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity

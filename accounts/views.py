@@ -1,11 +1,13 @@
 from audioop import reverse
 import json
+from django.forms import ValidationError
 from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
+from decimal import Decimal, DecimalException
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -295,9 +297,8 @@ def signout(request):
     pass
 
 
+def addItem(request):
 
-@authenticated_user
-def request(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
@@ -315,19 +316,28 @@ def request(request):
             quantity=quantity,
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
-    
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path ='C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        return redirect('request')
+    return render(request, 'accounts/User/request.html')
 
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-    # Pas data to the template
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+@authenticated_user
+def request(request):        
+    if request.method == 'POST':
+        selected_item_ids = request.POST.getlist('selected_item_id')
+        for selected_item_id in selected_item_ids:
+            # Retrieve the item data from the database
+            item = Item.objects.get(id=selected_item_id)
 
+            # Process the item data and save it to the database
+            # ...
+
+            # Remove the item from the selected list
+            selected_item_ids.remove(selected_item_id)
+
+        # Update the selected items in the session
+        request.session['selected_item_ids'] = selected_item_ids
+
+        # Redirect to the cart page
+    return redirect('accounts/User/request.html')
 
 
 

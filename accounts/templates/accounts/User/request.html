@@ -196,20 +196,19 @@
                 <tbody>
                     {% for row in csv_data %}
                     <tr class="table-row" id="{{ row.ITEMS }}">
-                        <tr>
-                          
-                            <td>{{ row.ITEMS }}</td>
-                            <td>{{ row.ITEM_BRAND }}</td>
-                            <td>{{ row.UNIT }}</td>
-                            <td>{{ row.PRICE }}</td>
-                            <td>
-                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                            </td>
-                            <td>
-                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
-                            </td>
-                        </tr>
-                    {% endfor %}
+                        <td>{{ row.ITEMS }}</td>
+                        <td>{{ row.ITEM_BRAND }}</td>
+                        <td>{{ row.UNIT }}</td>
+                        <td>{{ row.PRICE|floatformat:"2" }}</td>
+                        <td>
+                            <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
+                        </td>
+                    </tr>
+                        {% endfor %}
+
                 </tbody>
             </table>
         </div>
@@ -230,7 +229,7 @@
 
                   <div class="modal-body">
 
-                    <form action="{% url 'request' %}" method="post">
+                    <form action="{% url 'addItem' %}" method="post">
                         {% csrf_token %}
 
                           
@@ -274,6 +273,7 @@
 </div>
 
 <script>
+
 
 
     function highlightInput(input) {

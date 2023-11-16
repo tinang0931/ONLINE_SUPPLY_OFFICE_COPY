@@ -32,5 +32,7 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   path('addItem', views.addItem, name='addItem'),
+   
    
 ]
