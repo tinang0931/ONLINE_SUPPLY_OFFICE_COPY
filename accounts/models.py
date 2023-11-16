@@ -18,6 +18,8 @@ class Item(models.Model):
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
     
+    
+    
 
 class CsvFile(models.Model):
     CATEGORY = models.CharField(max_length=255)
