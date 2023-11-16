@@ -17,33 +17,24 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.http import HttpResponse  
 from django.shortcuts import render, redirect   
-from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
-from django.template.loader import render_to_string  
-from django.contrib.auth.models import User  
 from django.core.mail import EmailMessage 
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 from .tokens import account_activation_token
-from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.contrib import messages
-from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-
-
 import random
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -221,8 +212,6 @@ def reset_password(request):
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
 
-
-
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
@@ -247,7 +236,6 @@ def tracker(request):
 @authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
-
 
 
 def profile(request):
@@ -283,9 +271,11 @@ def np(request):
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
+
 @authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
 
 @authenticated_user
 def profile_html(request):
@@ -306,8 +296,7 @@ def addItem(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
-        # Django model section
-        # Create a new Item instance and set its attributes
+    
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
@@ -339,10 +328,8 @@ def request(request):
         # Redirect to the cart page
     return redirect('accounts/User/request.html')
 
-
-
 def requester(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
+    items = Item.objects.all() 
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
@@ -396,7 +383,6 @@ def delete_item(request, item_id):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -421,7 +407,4 @@ def item_delete(request, pk):
     if request.method == 'POST':
         item.delete()
         return JsonResponse({'status': 'success'})
-    
     return JsonResponse({'status': 'serror'}, status=400)
-
-
