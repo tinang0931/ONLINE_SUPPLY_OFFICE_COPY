@@ -218,10 +218,6 @@ def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-def registration(request):
-    return render(request, 'accounts/User/registration.html')
-
-
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
