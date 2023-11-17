@@ -54,31 +54,32 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper" style="height: 74vh;">
 
-       <!-- Sidebar -->
+ <!-- Sidebar -->
 <div class="sidebar">
   <div class="d-flex flex-wrap align-content-between h-100">
       <div class="bg-#6C757D w-100" id="sidebar-wrapper">
           <div class="list-group w-100">
             <br>
               <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request' %}">
-                  <i class="fas fa-file-alt"></i> Purchase Request
+                  <i class="fas fa-file-alt"></i> <span class="d-none d-md-inline">Purchase Request</span>
               </a>
               <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker' %}">
-                  <i class="fas fa-tasks"></i> Request Tracker
+                  <i class="fas fa-tasks"></i> <span class="d-none d-md-inline">Request Tracker</span>
               </a>
               <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history' %}">
-                  <i class="fas fa-history"></i> History
+                  <i class="fas fa-history"></i> <span class="d-none d-md-inline">History</span>
               </a>
               <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about' %}">
-                  <i class="fas fa-info-circle"></i> About
+                  <i class="fas fa-info-circle"></i> <span class="d-none d-md-inline">About</span>
               </a>
           </div>
       </div>
       <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'logout_user' %}">
-          <i class="fas fa-sign-out-alt"></i> Logout
+          <i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">Logout</span>
       </a>
   </div>
 </div>
+
        
         {% block notification %}
         {% endblock %}

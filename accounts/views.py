@@ -44,7 +44,7 @@ def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 
-@unauthenticated_user
+
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -105,7 +105,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-@unauthenticated_user
+
 def login(request):
     if request.method == "POST":
         print('fddzjkfds')
@@ -341,7 +341,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/ambos.maryann/Desktop/SUPPLY SYSTEM/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
