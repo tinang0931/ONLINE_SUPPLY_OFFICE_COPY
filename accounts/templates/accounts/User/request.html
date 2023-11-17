@@ -164,17 +164,14 @@
 <br><br>
 
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
-{% csrf_token %}
+    {% csrf_token %}
 
-    
-    <br>
-    <br>
     <div class="row2">
+
         <div class="col-12">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                      
                         <th scope="col">Items</th>
                         <th scope="col">Item Brand Description</th>
                         <th scope="col">Unit</th>
@@ -192,40 +189,16 @@
                             <td>{{ row.ITEM_BRAND }}</td>
                             <td>{{ row.UNIT }}</td>
                             <td>{{ row.PRICE }}</td>
-                            <script>
-                                function filterTable() {
-                                    var input, filter, table, tr, td, i, txtValue;
-                                    input = document.getElementById("search_bar_request");
-                                    filter = input.value.toUpperCase();
-                                    table = document.querySelector(".table-striped");
-                                    tr = table.getElementsByTagName("tr");
-                            
-                                    for (i = 0; i < tr.length; i++) {
-                                        td = tr[i].getElementsByTagName("td")[0]; 
-                                        if (td) {
-                                            txtValue = td.textContent || td.innerText;
-                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                tr[i].style.display = "";
-                                            } else {
-                                                tr[i].style.display = "none";
-                                            }
-                                        }
-                                    }
-                                }
-                            </script>
                             <td>
-                                
-                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="0" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
-                               
-                                <script>
-                                    function highlightInput(input) {
-                                      input.select();
-                                    }
-                                  </script>
+                                <input type="number" name="quantity_{{ item.id }}" id="quantity{{ item.id }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
                             </td>
                             
                             <td>
-                                <input type="checkbox" name="selected_item_id" value="{{ row.ITEMS }}">
+                                <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
+                                <input type="hidden" name="item_brand_{{ row.ITEMS }}" value="{{ row.ITEM_BRAND }}">
+                                <input type="hidden" name="unit_{{ row.ITEMS }}" value="{{ row.UNIT }}">
+                                <input type="hidden" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
+                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ row.ITEMS }}">
                             </td>
                         </tr>
                     {% endfor %}
@@ -237,34 +210,19 @@
 
 
 
-
-    <br><br><br>
-   
-</form>
-<script>
-    function scrollToCategory() {
-        var selectedCategory = document.getElementById('dropdownMenuSelect').value;
-        var table = document.getElementById(selectedCategory);
-        if (table) {
-           table.scrollIntoView({behavior: 'smooth'});
-        }
-       }
-</script>
-
-</div>
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
 
                   <div class="modal-body">
 
-                    <form action="{% url 'request' %}" method="post">
+                    <form action="{% url 'addItem' %}" method="post">
                         {% csrf_token %}
 
                           
@@ -298,14 +256,14 @@
                               <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
                               
                           </div>
-
                     </form>
                   </div>
               </div>
           </div>
         </div>
-      </form>
-</div>
+        
+
+
 
 <!-- <script>
 
@@ -388,21 +346,26 @@ updateProductTables(filteredProducts);
   }
 
 
-  function scrollToCategory() {
-      console.log("scrollToCategory function called!");
-      
-      var selectedCategory = document.getElementById("dropdownMenuSelect").value;
-      console.log("Selected Category:", selectedCategory);
-      
-      var categoryElement = document.getElementById(selectedCategory);
-      console.log("Category Element:", categoryElement);
+    // Call a server-side function to handle the import
 
-      if (categoryElement) {
-          categoryElement.scrollIntoView({ behavior: "smooth" });
-          console.log("Scrolling to category:", selectedCategory);
-      }
-  }
-</script> -->
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+ 
+</script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 

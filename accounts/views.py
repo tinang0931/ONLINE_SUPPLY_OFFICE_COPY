@@ -284,7 +284,7 @@ def signout(request):
 
 
 @authenticated_user
-def request(request):
+def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
@@ -305,17 +305,17 @@ def request(request):
            
         )
 
-        return redirect('request')  # Redirect to the same page after adding the item
+        return redirect('request') 
     
     else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/dugaduga.jhake/Desktop/SUPPLY SYSTEM\ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+        
+        # Pass data to the template
+        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 def history(request):
@@ -429,58 +429,24 @@ def your_view(request):
 
     return render(request, 'cart.html', {'items': items})
 
-def update_item(request, item_id):
-    item = get_object_or_404(request, id=item_id)
+def item_edit(request, pk):
+    item = get_object_or_404(Item, pk=pk)
 
     if request.method == 'POST':
-        editedItem = request.POST.get('item')
-        editedItemBrandDescription = request.POST.get('item_brand_description')
-        editedUnit = request.POST.get('unit')
-        editedUnitCost = request.POST.get('unit_cost')
-        editedQuantity = request.POST.get('quantity')
-        editedTotalCost = request.POST.get('total_cost')
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-        # Update the item fields
-        item.item = editedItem
-        item.item_brand_description = editedItemBrandDescription
-        item.unit = editedUnit
-        item.unit_cost = editedUnitCost
-        item.quantity = editedQuantity
-        item.total_cost = editedTotalCost
-
-        # Save the changes
-        item.save()
-
-        return JsonResponse({'success': True})
-    else:
-        return JsonResponse({'success': False, 'errors': 'Invalid request method'})
+    return render(request, 'cart.html', {'item': item})
 
 
+def item_delete(request, pk):
+    item = get_object_or_404(Item, pk=pk)
 
-from pymongo import MongoClient
-
-def cart(request):
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['jhakedbdb']
-    collection = db['inventory']
-
-    # Fetch items from MongoDB
-    items = list(collection.find())
-
-    return render(request, 'cart.html', {'items': items})
-
-
-
-def get_bac_history_data(request):
-    # Connect to MongoDB
-    client = MongoClient('mongodb://localhost:27017/')  # Replace with your MongoDB connection string
-    db = client['jhakedbdb']  # Replace with your MongoDB database name
-    collection = db['inventory']  # Replace with your MongoDB collection name
-
-    # Fetch data from MongoDB
-    history_data = list(collection.find())  # Adjust the query as per your data structure
-
-    # Close the MongoDB connection
-    client.close()
-
-    return render(request, 'accounts/User/bac_history .html', {'history_data': history_data})
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'serror'}, status=400)

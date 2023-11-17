@@ -6,6 +6,7 @@ urlpatterns = [
    path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
+   path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
@@ -24,6 +25,8 @@ urlpatterns = [
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
-   path('update_item/<int:user_id>/',views.update_item, name='update_item'),
-    path('show_more_details/',views.show_more_details, name='show_more_details'),
+   path('bids/',views.bids, name='bids'),
+   path('noa/',views.noa, name='noa'),
+   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   
 ]

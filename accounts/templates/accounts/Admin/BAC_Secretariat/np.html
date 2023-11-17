@@ -8,19 +8,11 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-
-        /* Apply some styling to the header */
-        header {
-            background-color: #007acc;
-            color: white;
-            padding: 10px;
-        }
+            margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Times New Roman', Times, serif;
+    }
 
         /* Style the logo */
         .ctu_logo {
@@ -53,9 +45,25 @@
         }
 
         /* Style the headings and paragraphs */
-        h {
+        h{
             font-size: 25px; 
-            text-align: center; 
+            text-align: center;
+        }
+        
+
+        h3{
+            text-align: center;
+        }
+
+        h4 {
+            display: block;
+            font-size: 24px;
+            margin-block-start: 1.33em;
+            margin-block-end: 1.33em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: normal;
+            text-align: left;
         }
 
         p {
@@ -88,179 +96,32 @@
             margin-top: 145px;
         }
 
-        .br {
-            margin-bottom: 20px;
-        }
-
-        .content p{
+        .content {
             text-align: left;
-            margin-right: 800px;
         }
 
-        .name p {
-            font-size: 25px;
-            display: grid;
-            margin: 0;
-            padding: 5px;
-        }
-
-        .committee-member {
-    border-radius: 5px;
-    margin: 15px;
-    padding: 15px;
-    text-align: center;
-    width: 200px;
-    align-self: flex-start;
-    
-}
-.committee {
-    display: inline;
-    align-self: flex-end;
-}
-
-
-h2 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-p {
-    color: #666;
-}
-
-ul {
-        list-style-type: none; 
-        padding: 0; 
-        margin: 0; 
-    }
-
-    li {
-        margin: 5px 0; 
-    }
-
-    li:before {
-        content: "\00a0"; 
-    }
-
-    ul[contenteditable="true"]:focus {
-        outline: none; 
-    }
-
-    .content,
-        .text {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-        }
-
-        .content h,
-        .text h {
-            margin: 0; 
-            padding: 0;
-            display: inline; 
-        }
-
-        .content h span,
-        .text h span,
-        .content h1 span,
-        .text h1 span {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-            display: inline; 
-            background-color: transparent; 
-            white-space: pre-wrap; 
-        }
-        
-        .content, .text, .text.closing, .committee-member {
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: left;
-        }
-
-        h {
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 40px;
-            margin: 0;
-        }
-
-        h2 {
-            font-size: 16px;
-            margin: 0;
-        }
-
-        .content,
-        .text {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-        }
-
-        .content h,
-        .text h {
-            margin: 0; 
-            padding: 0;
-            display: inline; 
-        }
-
-        .content h span,
-        .text h span,
-        .content h1 span,
-        .text h1 span {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-            display: inline; 
-            background-color: transparent; 
-            white-space: pre-wrap; 
-        }
-        
-        .content, .text, .text.closing, .committee-member {
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: left;
-        }
-
-        h {
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 40px;
-            margin: 0;
-        }
-
-        h2 {
-            font-size: 16px;
-            margin: 0;
-        }
-        
     </style>
+
 
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     
-    <nav>
+    <div>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
-        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
-    </nav>
+    </div>
 
-    <nav>
+    <div>
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+    </div>
+
+    <div>
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </div>
+
+    <div>
         <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
-    </nav>
+    </div>
     
     <div class="container">
         <h>Republic of the Philippines</h>
@@ -268,41 +129,44 @@ ul {
         <h>ARGAO CAMPUS</h>
         <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
         <div><h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h> &nbsp; <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-        </div>
+    </div>
+
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+
+
 
     <div class="text">
         <h3><b>PROCUREMENT OFFICE</b></h3>
         <hr>
+    </div>
+
         <div> &nbsp</div> 
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-        <h><b>NOTICE TO PROCEED</b></h>  
+
+    <div>
+        <h2>NOTICE TO PROCEED</h2>  
     </div>
 
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+
+
     <div class="content">
-        <h>Date: <span contenteditable="true"></span></h>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
+        <h4>Date: <span contenteditable="true"></span></h4>
     </div>
 
     <div class="text">
-        <h>Dear, Ma'am/Sir: <span contenteditable="true"></span></h>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
+        <p>Dear, Ma'am/Sir: <span contenteditable="true"></span></p>
     </div>
