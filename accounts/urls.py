@@ -6,13 +6,12 @@ urlpatterns = [
    path('',views.homepage, name='homepage'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
+   path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
-   path('admin_login/',views.admin_login, name="admin_login"),
    path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
    path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
-   path('register_user/',views.register_user, name='register_user'),
-   path('register_admin/',views.register_admin, name='register_admin'),
+   path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/' , views.requester, name="requester"),
@@ -30,10 +29,15 @@ urlpatterns = [
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
-   path('noa/',views.noa, name='noa'),
+   path('noa/', views.noa, name='noa'),
+    path('notif/',views.notif, name='notif'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+<<<<<<< HEAD
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('inspection/',views.inspection, name='inspection'),
     path('property/',views.property, name='property'),
    path('addItem/', views.addItem, name='addItem'),
 ]
+=======
+]
+>>>>>>> d291d153722483bce523a560c592e775a252d389
