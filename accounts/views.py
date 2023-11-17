@@ -305,8 +305,7 @@ def request(request):
         return redirect('request') 
     
     else:
-        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
+        csv_file_path = 'C:/Users/duhig.jeykierose/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -376,7 +375,7 @@ def item_edit(request, pk):
     item = get_object_or_404(Item, pk=pk)
 
     if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
+        form = Item(request.POST, instance=item)
         if form.is_valid():
             form.save()
             return JsonResponse({'status': 'success'})
