@@ -272,6 +272,9 @@ def bids(request):
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
+@authenticated_user
+def notif(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
 
 @authenticated_user
 def profile_html(request):
@@ -406,15 +409,6 @@ def item_list(request):
 def item_edit(request, pk):
     # item = get_object_or_404(Item, pk=pk)
 
-<<<<<<< HEAD
-    if request.method == 'POST':
-        form = Item(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-=======
     # if request.method == 'POST':
     #     form = ItemForm(request.POST, instance=item)
     #     if form.is_valid():
@@ -422,7 +416,6 @@ def item_edit(request, pk):
     #         return JsonResponse({'status': 'success'})
     #     else:
     #         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
->>>>>>> 0c2c802e17e2bc98e5aa8f9407c7b68c3250651b
 
     return render(request, 'cart.html')
 
