@@ -275,7 +275,6 @@ def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
-<<<<<<< HEAD
 def preqform(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
@@ -300,10 +299,8 @@ def property(request):
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
-=======
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
->>>>>>> d291d153722483bce523a560c592e775a252d389
 
 @authenticated_user
 def profile_html(request):
