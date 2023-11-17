@@ -12,7 +12,7 @@ urlpatterns = [
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/' , views.requester, name="requester"),
-   path('request/',views.request, name='request'),
+   path('request/',views.requester, name='request'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
@@ -25,8 +25,6 @@ urlpatterns = [
    path('prof/',views.prof, name='prof'),
    path('preqform/',views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
-   path('bids/',views.bids, name='bids'),
-   path('noa/',views.noa, name='noa'),
-   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
-   
+   path('delete_item/<int:user_id>/',views.delete_item, name='delete_item'),
+    path('show_more_details/',views.show_more_details, name='show_more_details'),
 ]

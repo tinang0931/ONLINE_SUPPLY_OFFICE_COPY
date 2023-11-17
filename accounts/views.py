@@ -429,18 +429,6 @@ def your_view(request):
 
     return render(request, 'cart.html', {'items': items})
 
-def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-
-    return render(request, 'cart.html', {'item': item})
 
 
 def item_delete(request, pk):
