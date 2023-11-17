@@ -289,7 +289,7 @@ def signout(request):
 
 
 @authenticated_user
-def request(request):
+def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
@@ -306,15 +306,47 @@ def request(request):
             quantity=quantity,
         )
 
-        return redirect('request') 
-    
+        return redirect('requester')
+
+    return render(request, 'accounts/User/request.html')
+
+
+@authenticated_user
+def request(request):
+    if request.method == 'POST':
+        # Retrieve selected rows from the form
+        selected_rows = request.POST.getlist('selectRow')
+
+        # Process and save data to the database
+        for row_id in selected_rows:
+            item_name = request.POST.get(f'item_{row_id}')
+            item_brand = request.POST.get(f'item_brand_{row_id}')
+            unit = request.POST.get(f'unit_{row_id}')
+            price = request.POST.get(f'price_{row_id}')
+            quantity = request.POST.get(f'quantity_{row_id}')
+
+            # Save the data to the CartItem model (update this based on your model)
+            items = Item.objects.create(
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price,
+                quantity=quantity,
+            )
+            items.save()
+
+        # Redirect to a success page
+        return redirect('requester')
+
     else:
         csv_file_path ='C:/Users/duhig.janecarmel/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+        
+        # Pass data to the template
+        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
 def requester(request):
@@ -377,17 +409,17 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
+    # item = get_object_or_404(Item, pk=pk)
 
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    # if request.method == 'POST':
+    #     form = ItemForm(request.POST, instance=item)
+    #     if form.is_valid():
+    #         form.save()
+    #         return JsonResponse({'status': 'success'})
+    #     else:
+    #         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
-    return render(request, 'cart.html', {'item': item})
+    return render(request, 'cart.html')
 
 
 def item_delete(request, pk):

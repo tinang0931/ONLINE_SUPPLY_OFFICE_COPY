@@ -5,22 +5,20 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 
+
 class Item(models.Model):
     request_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    purpose = models.CharField(max_length=255)
-    item = models.CharField(max_length=255)
-    item_brand_description = models.CharField(max_length=255)
-    unit = models.CharField(max_length=50)
-    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.IntegerField()
+    purpose = models.CharField(max_length=255, blank=True, null=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
+
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
-    
-    
-    
-
 
 
 
@@ -68,23 +66,3 @@ def __str__(self):
          return self.item_name
 
 
-class User(AbstractUser):
-    # Add your additional fields here
-
-    # Define the 'groups' and 'user_permissions' fields with a 'related_name'
-    groups = models.ManyToManyField(
-        'auth.Group',
-        blank=True,
-        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
-        related_name='accounts_user_set',   # Add this line
-        related_query_name='accounts_user', # Add this line
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='accounts_user_set',   # Add this line
-        related_query_name='accounts_user', # Add this line
-
-    )
-    
