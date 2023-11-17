@@ -95,60 +95,10 @@
       <td>Verify Papers submitted</td>
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
-        <div class="d-flex justify-content-start align-items-center">
-          <link rel="stylesheet" type="text/css" href="{% static 'print-form.css' %}" media="print">
-          <button type="button" class="btn btn-success me-2" onclick="window.print()">
-            <i class="fas fa-print"></i> View
-          </button>
-          <div class="d-flex justify-content-start align-items-center">
-            <div class="d-flex justify-content-start align-items-center">
-              <button type="button" class="btn btn-primary" onclick="handleAction('approve', '0000100')">Approve</button>
-              <button type="button" class="btn btn-danger" onclick="handleAction('disapprove', '0000100')">Disapprove</button>
-              
-          </div>
-          <script>
-          function handleAction(action) {
-    // Mocking a request_id for demonstration purposes
-    var request_id = 1;
-
-    // Make an AJAX request to the corresponding endpoint based on the action
-    fetch('/approve/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
-    },
      
-        body: JSON.stringify({ request_id: request_id }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the response here
-        document.getElementById('status').innerText = data.status;
-    })
-    .catch(error => {
-        console.error('Error ' + action + 'ing instance:', error);
-    });
-}
+         
 
-// Function to get CSRF token from cookies
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-        </script>
-    </body>
-    </html>
+
 
 
         <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">

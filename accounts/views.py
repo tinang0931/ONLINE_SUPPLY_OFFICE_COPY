@@ -14,22 +14,28 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse      
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode      
+from django.contrib.auth.models import User
+from django.http import HttpResponse  
+from django.shortcuts import render, redirect   
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage 
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from .tokens import account_activation_token
 from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
-
-
 import random
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+
 
 
 def main(request):
@@ -216,12 +222,10 @@ def logout_user(request):
     return redirect('homepage')
 
 
-@unauthenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-@unauthenticated_user
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
@@ -238,7 +242,6 @@ def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
-@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -258,35 +261,10 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
+
 @authenticated_user
 def preqform(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
-
-
-@authenticated_user
-def np(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
-
-
-@authenticated_user
-def bids(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
-
-
-@authenticated_user
-def noa(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
-
-
-@authenticated_user
-def preqform(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
-
-
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
 @authenticated_user
@@ -311,78 +289,76 @@ def request(request):
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
-        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        # Compute the total cost
-    
 
+        # Django model section
+        # Create a new Item instance and set its attributes
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,  # Add the total_cost field in your Item model
+            quantity=quantity,
+            user=request.user,
+           
         )
 
-        return redirect('requester')
-
-    return render(request, 'accounts/User/request.html')
-
-
-@authenticated_user
-def request(request): 
-    csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-    if request.method == 'POST':
-        # Handle the form submission logic here
-        selected_items = []
-
-        # Iterate through form data to get selected items
-        for key, value in request.POST.items():
-            if key.startswith('selected_item_id') and value:
-                item_id = value
-                quantity = request.POST.get(f'quantity_{item_id}', 0)
-
-                # Create a dictionary with item details
-                item_details = {
-                    'item': request.POST.get(f'item_{item_id}', ''),
-                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
-                    'unit': request.POST.get(f'unit_{item_id}', ''),
-                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
-                    'quantity': quantity,
-                }
-
-                selected_items.append(item_details)
-
-                # Save the selected items to the database (Item model)
-                Item.objects.create(
-                    item=item_details['item'],
-                    item_brand_description=item_details['item_brand_description'],
-                    unit=item_details['unit'],
-                    unit_cost=item_details['unit_cost'],
-                    quantity=item_details['quantity'],
-                )
-
-        # Redirect after processing all selected items
-        messages.success(request, 'Items added to the cart successfully!')
-        return redirect('request')
-
+        return redirect('request')  # Redirect to the same page after adding the item
+    
     else:
+        # Handle data fetching for GET request
+        # Connect to MongoDB
+        csv_file_path = 'C:/Users/dugaduga.jhake/Desktop/SUPPLY SYSTEM\ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+    return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
-@authenticated_user
+def history(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/User/history.html', {'items': items})
+
+def show_more_details(request):
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+
+        # Assuming you have a model called PurchaseRequest
+        purchase_request = PurchaseRequest.objects.get(request_id=request_id)
+
+        # Assuming additional_details is a field in your PurchaseRequest model
+        additional_details = purchase_request.additional_details
+
+        # Determine which form to display based on your logic
+        # You may want to add more sophisticated logic based on your use case
+        form_type = determine_form_type(purchase_request)
+
+        # You can customize this response based on your model structure
+        response_data = {
+            'purchase_request_id': purchase_request.request_id,
+            'additional_details': additional_details,
+            'form_type': form_type,
+        }
+
+        return JsonResponse(response_data)
+
+    # Handle invalid requests or GET requests
+    return JsonResponse({'error': 'Invalid request'})
+
+def determine_form_type(purchase_request):
+    # Your logic to determine the form type based on purchase_request
+    # For simplicity, let's assume it returns a string indicating the form type
+    # You may want to implement more sophisticated logic based on your use case
+    return 'purchase_approval'  # Replace with your actual logic
+
 def requester(request):
     items = Item.objects.all() 
     return render(request, 'accounts/User/cart.html', {'items': items})
 
 
-@authenticated_user
 def delete_item(request, item_id):
     try:
         item = get_object_or_404(Item, id=item_id)
@@ -406,6 +382,7 @@ def your_view(request):
     }
 
     return render(request, 'accounts/User/cart.html', context)
+
 
 # @authenticated_user
 # def bac_history(request):
@@ -443,32 +420,67 @@ def your_view(request):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
+def your_view(request):
+    items = Item.objects.all()  # Replace with your actual method to get items
+    items = PurchaseRequest.objects.all()
+    # Calculate total cost for each item
+    for item in items:
+        item.total_cost = item.unit_cost * item.quantity
 
-@authenticated_user
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
+    return render(request, 'cart.html', {'items': items})
 
-def item_edit(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-
-    return render(request, 'cart.html', {'item': item})
-
-
-@authenticated_user
-def item_delete(request, pk):
-    item = get_object_or_404(Item, pk=pk)
+def update_item(request, item_id):
+    item = get_object_or_404(request, id=item_id)
 
     if request.method == 'POST':
-        item.delete()
-        return JsonResponse({'status': 'success'})
-    
-    return JsonResponse({'status': 'serror'}, status=400)
+        editedItem = request.POST.get('item')
+        editedItemBrandDescription = request.POST.get('item_brand_description')
+        editedUnit = request.POST.get('unit')
+        editedUnitCost = request.POST.get('unit_cost')
+        editedQuantity = request.POST.get('quantity')
+        editedTotalCost = request.POST.get('total_cost')
+
+        # Update the item fields
+        item.item = editedItem
+        item.item_brand_description = editedItemBrandDescription
+        item.unit = editedUnit
+        item.unit_cost = editedUnitCost
+        item.quantity = editedQuantity
+        item.total_cost = editedTotalCost
+
+        # Save the changes
+        item.save()
+
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'errors': 'Invalid request method'})
+
+
+
+from pymongo import MongoClient
+
+def cart(request):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['jhakedbdb']
+    collection = db['inventory']
+
+    # Fetch items from MongoDB
+    items = list(collection.find())
+
+    return render(request, 'cart.html', {'items': items})
+
+
+
+def get_bac_history_data(request):
+    # Connect to MongoDB
+    client = MongoClient('mongodb://localhost:27017/')  # Replace with your MongoDB connection string
+    db = client['jhakedbdb']  # Replace with your MongoDB database name
+    collection = db['inventory']  # Replace with your MongoDB collection name
+
+    # Fetch data from MongoDB
+    history_data = list(collection.find())  # Adjust the query as per your data structure
+
+    # Close the MongoDB connection
+    client.close()
+
+    return render(request, 'accounts/User/bac_history .html', {'history_data': history_data})

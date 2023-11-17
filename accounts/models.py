@@ -20,9 +20,9 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
-    request_id = models.UUIDField(editable=False, unique=True)
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
-    id = models.BigAutoField(primary_key=True, default=timezone.now)
+   
 
     @property
     def total_cost(self):
@@ -108,3 +108,15 @@ class User(AbstractUser):
 
     )
     
+class PurchaseRequest(models.Model):
+    request_id = models.BigAutoField(primary_key=True)
+    submission_date = models.DateField()
+    item = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    # Add other fields as needed
+
+    def calculate_total_cost(self):
+        # Add your logic to calculate the total cost
+        return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
+
+    total_cost = property(calculate_total_cost)
