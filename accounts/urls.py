@@ -32,6 +32,7 @@ urlpatterns = [
    path('noa/',views.noa, name='noa'),
    path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
 
+
    
 
 

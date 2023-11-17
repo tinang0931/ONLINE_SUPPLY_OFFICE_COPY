@@ -422,6 +422,17 @@ def item_list(request):
 
 
 
+
+
+
+    
+
+
+
+
+  
+
+
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
