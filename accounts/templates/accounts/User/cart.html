@@ -1,16 +1,14 @@
-{% extends "accounts/User/nav.html" %}
+
+
+
+
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
 {% load static %}
 
 
 {% block cart %}
-
-<style>
-  .cart_table tbody tr td {
-    vertical-align: middle;
-  }
-</style>
 
 
 <form action="{% url 'requester' %}" method="post">
@@ -37,32 +35,77 @@
             <tbody>
               {% for item in items %}
               <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                  <td class="item_name text-center">  {{ item.item }} </td>
-                  <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                  <td class="item_unit text-center">{{ item.unit }}</td>
-                  <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                  <td class="item_quantity text-center">{{ item.quantity }}</td>
-                  <td class="item_total_cost text-center">{{item.total_cost}}</td> <td class="text-center">
+                <td class="item_name text-center">  {{ item.item }} </td>
+                <td class="item_description text-center">
+                  <span id="item_description_{{ item.id }}_display">
+                    {{ item.item_brand_description }}
+                  </span>
+                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                </td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td></td>
                   <td class="text-center">
-                    <button class="edit-button" data-item-id="{{ item.id }}"  onclick="editRow(this)" style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(1, 154, 72);" >
+                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
                       <i class="fa fa-edit"></i>
-                    </button>                
-                    <button class="delete-button" data-item-id="{{ item.id }}"  style="background-color: transparent; border: none;  size:50%; border-radius: 50%;;color: rgb(157, 2, 2);" >
-                      <i class="fa fa-trash"></i>
                     </button>
-                    
+                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)"
+                    style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                    <i class="fa fa-trash"></i>
+                    </button>
                 </td>
               </tr>
               {% endfor %}
           </tbody>
         </table>
 
-
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
+        
+  
+        <div class="editmodal" style="display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5)" id="editModal" >
+          <div class="modal-content" style=" position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: white;
+              padding: 20px;
+              border-radius: 10px;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="editForm">
+              <input type="text" name="item" id="editItem">
+              <input type="text" name="item_brand_description" id="editItemBrandDescription">
+              <input type="text" name="unit" id="editUnit">
+              <input type="text" name="unit_cost" id="editUnitCost">
+              <input type="text" name="quantity" id="editQuantity">
+              <button type="button" onclick="submitEditForm()">Save</button>
+            </form>
+          </div>
+        </div>
     
 
-        <div class="row-at-bottom d-flex justify-content-between">
+        <div class="row-at-bottom d-flex justify-content-between" >
           <div class="purpose">
-            <textarea class="purpose_box" id="exampleFormcontrolTextarea1" name="item_purpose" placeholder="Purpose"></textarea>
+            <label>Purpose:</label>
+            <textarea id="purpose" placeholder="Purpose">
+            </textarea>
           </div>
           <div class="total_amount">
             <span>Total Amount: {{total_cost}}</span>
@@ -72,11 +115,15 @@
           </div>
         </div>
       
+     
       </div>
-      </div>
-  
   </form>
+<script>
+    
+    
+
+</script>
 
 
 
-  {% endblock %}
+{% endblock %}

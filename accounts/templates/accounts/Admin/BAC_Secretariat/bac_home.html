@@ -1,10 +1,158 @@
 {% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
-
-
 {% load static %}
 
 
+
+
 {% block bac_home %}
+<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <div class="container">
+    <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
+  </div>
+  <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+    </div>
+  </div>
+  <div class="custom-f row w-100 m-auto border text-start text-dark">
+    <table class="table table-bordered" style="margin: 0px !important;">
+      <thead>
+        <th id="categorySelectionLink" class="modal-link highlight-on-hover" data-toggle="modal"
+          data-target="#categorySelectionModal">
+          7210853 has sent a request
+          <span style="float: right;">10/18/23</span>
+        </th>
+      </thead>
+    </table>
+  </div>
+</div>
 
 
-{% endblock %}  
+<!-- Outer Modal for Category Selection -->
+<div class="modal fade" id="categorySelectionModal" tabindex="-1" role="dialog"
+  aria-labelledby="categorySelectionModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categorySelectionModalLabel">FORMS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <a href="{% url 'preqform' %}">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Purchase Request Approval</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Resolution Approval</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Abstract of Bids</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="{% url 'noa' %}">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Notice of Reward</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Purchase Order</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="{% url 'np' %}">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Notice to Proceed</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Inspection and Acceptance Report</button>
+                </a>
+            </div>
+            <div class="col-12 mb-3">
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category1ButtonModal">Property Acknowledgment Report</button>
+                </a>
+            </div>
+        </div>
+    </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</main>
+<footer>
+
+
+
+
+
+
+
+
+  <script>
+
+
+
+
+    $(document).ready(function () {
+      $('#categorySelectionModal').on('show.bs.modal', function () {
+        $('.blur-background').addClass('modal-open');
+      });
+
+
+
+
+      $('#categorySelectionModal').on('hidden.bs.modal', function () {
+        $('.blur-background').removeClass('modal-open');
+      });
+    });
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+
+
+
+
+  {% endblock %}

@@ -12,6 +12,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
+      
   </head>
 
   <body>
@@ -57,43 +58,15 @@
         {% block cart %}
         {% endblock %}
 
+        {% block preqform %}
+        {% endblock %}
+
+        {% block np %}
+        {% endblock %}
+
 
     </main>
-    <footer class=" footer ">
-      <div class="container text-white">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>Contact Us:</h5>
-            <p>Cellphone # :093456738652</p>
-            <p>Telephone # : (02) 123-4567</p>
-      
-          </div>
-          <div class="col-md-4">
-            <h5>Mail Us:</h5>
-            <p>inventory@gmail.com</p>
-            
-          </div>
-          <div class="col-md-4">
-            <h5>Follow Us:</h5>
-            <a href="https://www.facebook.com/your-facebook-profile" target="_blank">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://twitter.com/your-twitter-profile" target="_blank">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/your-instagram-profile" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.youtube.com/your-youtube-channel" target="_blank">
-                <i class="fab fa-youtube"></i>
-            </a>
-        </div>
-        
-
-          <p></p>
-          <p></p>
-          <p>&copy; All Rights Reserved 2023-2024 Online Supply System</p>
-      </div>
+    
       
   </body>
   
@@ -101,6 +74,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
   <script>
     // Get the table body element.
     const tableBody = document.querySelector('.cart_table tbody');
