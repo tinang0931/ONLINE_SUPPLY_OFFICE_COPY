@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://fonts.google.com/icons"></script>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -16,10 +16,56 @@
 </head>
 
 <body>
+
     <div class="upper">Online Supply System</div>
 
     <div class="container">
-        
+
+        <div class="icon-container">
+            <img class="login_icon" src="{% static 'images/login.png' %}" alt="">
+        </div>
+
+        <div class="title">Login In</div>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="number" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
+                </div>
+                <script>
+                    function maxLengthCheck(object, maxLength) {
+                        if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                        }
+                    </script>
+
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                </div>
+                <script>
+                    function maxLengthCheck(object, maxLength) {
+                        if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                        }
+                    </script>
+
+            </div>
+
+        </form>
+
     </div>
+
+
 </body>
 </html>

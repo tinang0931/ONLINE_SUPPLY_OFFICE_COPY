@@ -8,6 +8,7 @@ urlpatterns = [
    path('bac/',views.bac, name='bac'),
    path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
+   path('signin/',views.signin, name='signin'),
    path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
    path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),

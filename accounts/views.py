@@ -218,6 +218,10 @@ def about(request):
     return render(request, 'accounts/User/about.html')
 
 
+def signin(request):
+    return render(request, 'accounts/User/signin.html')
+
+
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
@@ -338,14 +342,10 @@ def request(request):
         return redirect('requester')
 
     else:
-<<<<<<< HEAD
         # Handle data fetching for GET request
         # Connect to MongoDB
         csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
-=======
-        csv_file_path = 'C:/Users/duhig.jeykierose/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
->>>>>>> b82c04c4af1e68406ad1010bb5a164efaf9ccc8f
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
