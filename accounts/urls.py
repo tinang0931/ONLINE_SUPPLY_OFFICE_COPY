@@ -30,4 +30,7 @@ urlpatterns = [
    path('noa/',views.noa, name='noa'),
    path('notif/',views.notif, name='notif'),
    path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
+   path('inpection/',views.inpection, name='inpection'),
+   path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
+   path('property/',views.property, name='property'),
 ]
