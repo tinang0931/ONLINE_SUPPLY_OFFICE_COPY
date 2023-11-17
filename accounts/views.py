@@ -220,10 +220,6 @@ def about(request):
     return render(request, 'accounts/User/about.html')
 
 
-def registration(request):
-    return render(request, 'accounts/User/registration.html')
-
-
 def history(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/User/history.html', {'items': items})
@@ -278,6 +274,9 @@ def bids(request):
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
+@authenticated_user
+def notif(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
 
 @authenticated_user
 def profile_html(request):
@@ -341,10 +340,14 @@ def request(request):
         return redirect('requester')
 
     else:
+<<<<<<< HEAD
         # Handle data fetching for GET request
         # Connect to MongoDB
         csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
+=======
+        csv_file_path = 'C:/Users/duhig.jeykierose/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+>>>>>>> b82c04c4af1e68406ad1010bb5a164efaf9ccc8f
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)

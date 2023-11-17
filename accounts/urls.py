@@ -1,5 +1,3 @@
-
-
 from django.urls import path
 from . import views 
 
@@ -30,6 +28,7 @@ urlpatterns = [
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
+   path('notif/',views.notif, name='notif'),
    path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
 
 
