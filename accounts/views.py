@@ -343,6 +343,16 @@ def purchaseorder(request):
 
 
 @authenticated_user
+def inspection(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
+
+
+@authenticated_user
+def property(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
+
+
+@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 

@@ -33,5 +33,7 @@ urlpatterns = [
    path('noa/',views.noa, name='noa'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
+   path('inspection/',views.inspection, name='inspection'),
+    path('property/',views.property, name='property'),
    path('addItem/', views.addItem, name='addItem'),
 ]
