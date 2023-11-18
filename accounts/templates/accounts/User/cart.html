@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
 {% load static %}
@@ -6,10 +6,69 @@
 
 {% block request %}
 
-<style>
-    .input-group {
-      display: flex;
-    }
+
+<form action="{% url 'requester' %}" method="post">
+    {% csrf_token %} 
+
+    
+    <div>
+      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
+        <table class="cart_table" id="create_request_table" style="background-color: none; ">
+          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
+            <tr>
+                <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+                <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
+                <th class="text-center text-nowrap"></th>
+                
+            </tr>
+        </thead>
+        
+            <tbody>
+              {% for item in items %}
+         
+              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+                <td class="item_name text-center">  {{ item.item }} </td>
+                <td class="item_description text-center">
+                  <span id="item_description_{{ item.id }}_display">
+                    {{ item.item_brand_description }}
+                  </span>
+                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+                </td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td></td>
+                  <td class="text-center">
+                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    
+                    <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+              
+              {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="row-at-bottom d-flex justify-content-between">
+          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
+                border: 2px solid #0a0168;">
+           
+           <div id="myModal" class="modal" >
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <label for="inputText">Input Text:</label>
+                <textarea id="inputText"></textarea>
+                <button onclick="updateDisplayBox()">Submit</button>
+              </div>
+            </div>
+        
   
     #quantityInput {
       flex: 1;
