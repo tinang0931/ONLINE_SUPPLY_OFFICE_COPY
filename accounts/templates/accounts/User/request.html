@@ -160,8 +160,12 @@
           <div class="additem">
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
           </div>
-       </div> 
 
+
+          
+       </div>
+    
+        
     </div>
 
 
@@ -172,6 +176,11 @@
     {% csrf_token %}
     <div class="row2">
 
+        
+        <div class="addtocart">
+            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+            
+        </div>
         <div class="col-12">  
           
             <table class="table table-striped">
@@ -223,8 +232,9 @@
 </script>
 
 </div>
+        </div>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+          <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
                       <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
@@ -272,8 +282,9 @@
                     </form>
                   </div>
               </div>
+          </div>
         </div>
-    </div>
+        
 
 
 
