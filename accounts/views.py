@@ -29,6 +29,8 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import random
 
 
@@ -273,9 +275,32 @@ def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
+def preqform(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
+
+
+@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
+
+@authenticated_user
+def inspection(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
+
+
+@authenticated_user
+def property(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
+
+
+@authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+def notif(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
 
 @authenticated_user
 def profile_html(request):
@@ -408,24 +433,15 @@ def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
-def item_edit(request, pk):
-    # item = get_object_or_404(Item, pk=pk)
-
-    # if request.method == 'POST':
-    #     form = ItemForm(request.POST, instance=item)
-    #     if form.is_valid():
-    #         form.save()
-    #         return JsonResponse({'status': 'success'})
-    #     else:
-    #         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-
-    return render(request, 'cart.html')
 
 
-def item_delete(request, pk):
-    item = get_object_or_404(Item, pk=pk)
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
 
-    if request.method == 'POST':
-        item.delete()
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'serror'}, status=400)
+
+def item_delete(request, request_id):
+    item = get_object_or_404(Item, request_id=request_id)
+    item.delete()
+    # Redirect to an appropriate URL after deletion
+    return redirect('requester')  # Replace 'requester' with your desired redirect URL name

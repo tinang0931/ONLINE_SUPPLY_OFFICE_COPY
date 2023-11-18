@@ -8,8 +8,6 @@ urlpatterns = [
    path('bac/',views.bac, name='bac'),
    path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
-   path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
-   path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
@@ -30,7 +28,9 @@ urlpatterns = [
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
-   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   path('notif/',views.notif, name='notif'),
+   path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
+   path('inspection/',views.inspection, name='inspection'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
-   
+   path('property/',views.property, name='property'),
 ]
