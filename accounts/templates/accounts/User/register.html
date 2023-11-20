@@ -16,9 +16,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        function maxLengthCheck(object, maxLength) {
+            if (object.value.length > maxLength)
+            object.value = object.value.slice(0, maxLength);
+            }
+        </script>
 
 
     <title>Registration Page</title>
+
+
+    <style>
+        .form-check-label {
+            font-family: 'system-ui', sans-serif; /* Replace 'Your Custom Font' with the desired font name */
+            /* Add any other styling properties as needed */
+        }
+
+            /* Add a solid border to form inputs */
+        .form-control {
+            border: none; /* You can customize the border color */
+            background: rgba(255, 255, 255, 0.486);
+            border-radius: 3px;
+            box-shadow: 0 0 3px black;
+            width: 102%;
+        }
+
+           /* Hide number input arrows in WebKit browsers (e.g., Chrome, Safari) */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        /* Hide number input arrows in Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+     
+        
+            
+            
+
+        
+    </style>
 </head>
 
 <body>
@@ -42,54 +83,73 @@
         </div>
 
             
-        <form action="{% url 'register_user' %}" method="post">
+        <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
         
             <h1>Register</h1>
 
-            <div class="input-box">
-                <input type="number" id="username" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 10)">
+            <div class="input-container">
+                <div class="input-box">
+                    <input type="number" id="username" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 10)">
+                </div>
             </div>
-            <script>
-            function maxLengthCheck(object, maxLength) {
-                if (object.value.length > maxLength)
-                object.value = object.value.slice(0, maxLength);
-                }
-            </script>
-
-            <div class="input-box">
-                <input type="text" id="fname" name="fname" placeholder="First Name:" required>
-                <i class='bx bxs-id-card'></i>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First name:" required oninput="maxLengthCheck(this, 12)">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name:" required oninput="maxLengthCheck(this, 12)">
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="input-box">
-                <input type="text" id="lname" name="lname" placeholder="Last Name:" required>
+    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            
+                            <input type="number" class="form-control" id="contact1" name="contact1" placeholder="Contact No.1" required oninput="maxLengthCheck(this, 12)">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            
+                            <input type="number" class="form-control" id="contact2" name="contact2" placeholder="Contact No.2" required oninput="maxLengthCheck(this, 12)">
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="input-box">
-                <input type="email" id="email" name="email" placeholder="Email:" required>
+            
+            <div class="input-container">
+                <div class="input-box">
+                    <input type="email" id="email" name="email" placeholder="Email:" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="pass1" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                </div>
+            
+                <div class="input-box">
+                    <input type="password" id="pass2" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+                </div>
             </div>
-
-            <div class="input-box">
-                <input type="number" id="contact1" name="contact1" placeholder="Contact No.1:" required oninput="maxLengthCheck(this, 12)">
-            </div>
-
-            <div class="input-box">
-                <input type="number" id="contact2" name="contact2" placeholder="Contact No.2:" required oninput="maxLengthCheck(this, 12)">
-            </div>
-            <script>
-            function maxLengthCheck(object, maxLength) {
-                if (object.value.length > maxLength)
-                object.value = object.value.slice(0, maxLength);
-                }
-            </script>
-
-            <div class="input-box">
-                <input type="password" id="pass1" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
-            </div>
-
-            <div class="input-box">
-                <input type="password" id="pass2" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+            <div class="form-group">
+                <label for="user_type">Type of User:</label>
+        
+                <!-- Radio buttons for user type -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="admin_radio" name="user_type" value="admin">
+                    <label class="form-check-label" for="admin_radio">Admin</label>
+                </div>
+        
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="user_radio" name="user_type" value="regular">
+                    <label class="form-check-label" for="user_radio">Regular User</label>
+                </div>
             </div>
             <script>
             function maxLengthCheck(object, maxLength) {
@@ -105,5 +165,6 @@
 
         </form>
     </div>
+    
 </body>
 </html>

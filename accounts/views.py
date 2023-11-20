@@ -1,5 +1,7 @@
 from audioop import reverse
 import json
+from urllib.parse import parse_qs
+from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
@@ -43,19 +45,24 @@ def bac(request):
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
-
+User = get_user_model()
 @unauthenticated_user
+
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
         email = request.POST['email']
-        pass1 = request.POST['pass1']
-        pass2 = request.POST['pass2']
+        contact1 = request.POST['contact1']
+        contact2 = request.POST['contact2']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
+
 
         # Check if passwords match
-        if pass1 != pass2:
+        if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
 
@@ -65,9 +72,9 @@ def register(request):
             return render(request, 'accounts/User/register.html')
 
         # Create a new user account
-        user = User.objects.create_user(username=username, email=email, password=pass1, is_active=False)
-        user.first_name = fname
-        user.last_name = lname
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
         user.save()
 
         # Send an activation email
@@ -108,7 +115,6 @@ def activate(request, uidb64, token):
 @unauthenticated_user
 def login(request):
     if request.method == "POST":
-        print('fddzjkfds')
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
         
@@ -222,9 +228,16 @@ def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
-def history(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
-    return render(request, 'accounts/User/history.html', {'items': items})
+
+class PurchaseRequestHistoryView(View):
+    template_name = 'accounts/User/history.html'
+    def get(self, request):
+        # Query the data from the Checkout model
+        purchase_requests = Checkout.objects.all()
+
+        # Pass the data to the template
+        context = {'items': purchase_requests}
+        return render(request, self.template_name, context)
 
 
 def tracker(request):
@@ -254,17 +267,31 @@ def bac_history(request):
 
 @authenticated_user
 def bac_home(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
-
+   
+    
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
 
 @authenticated_user
-def preqform(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+def preqform(request, pr_id):
+    # Retrieve the Checkout instance with the given pr_id
+    checkout_instance = get_object_or_404(Checkout, pr_id=pr_id)
+    
+    # Retrieve CheckoutItems related to the checkout_instance
+    checkout_items = CheckoutItems.objects.filter(checkout=checkout_instance)
+    
+    context = {
+        'pr_id': pr_id,
+        'checkout_items': checkout_items,
+    }
 
-
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
 @authenticated_user
@@ -341,7 +368,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
@@ -351,83 +378,77 @@ def request(request):
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
 
 
-def requester(request):
-    items = Item.objects.all() 
-    return render(request, 'accounts/User/cart.html', {'items': items})
+class RequesterView(View):
+    template_name = 'accounts/User/cart.html'
+
+    def get(self, request):
+         # Fetch data from the Item model and pass it to the template
+        items = Item.objects.all()
+
+        # Calculate total cost based on the items
+        # ...
+
+        return render(request, self.template_name, {'items': items})
+
+    def post(self, request):
+        if 'submit_button' in request.POST:
+            # Fetch data from the Item model
+            items = Item.objects.all()
+
+            # Handle form submission
+            purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
+
+            new_checkout = Checkout.objects.create()
+
+            for row in items:
+                item_id = row.id
+                item = request.POST.get(f'item_{item_id}')
+                item_brand = request.POST.get(f'item_brand_{item_id}')
+                unit = request.POST.get(f'unit_{item_id}')
+                quantity = request.POST.get(f'quantity_{item_id}')
+                price = request.POST.get(f'price_{item_id}')
+
+                # Customize the fields according to your CheckoutItems model
+                CheckoutItems.objects.create(
+                    checkout=new_checkout,
+                    purpose=purpose,
+                    item=item,
+                    item_brand_description=item_brand,
+                    unit=unit,
+                    quantity=quantity,
+                    unit_cost=price,
+                    # Add other fields as needed
+                )
+
+                Item.objects.filter(id=item_id).delete()
+
+            return redirect('requester')
+
+        # Handle the case where the edit or delete button was clicked
+        # You might want to add some specific logic for these cases
+        return HttpResponse("Edit or delete logic goes here")
+        
 
 
 def delete_item(request, item_id):
-    try:
-        item = get_object_or_404(Item, id=item_id)
+    if request.method == 'POST':
+        # Get the object to be deleted
+        item = get_object_or_404(CheckoutItems, id=item_id)
+
+        # Perform delete operation
         item.delete()
-        message = f"{item_id} will be deleted."
-        status = "success"
-    except Exception as e:
-        message = f"Error deleting item: {str(e)}"
-        status = "error"
 
-    return JsonResponse({"status": status, "message": message})
-
-
-
-# @authenticated_user
-# def bac_history(request):
-#     # Fetch all PurchaseRequest objects linked to the logged-in user
-#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
-
-#     if request.method == 'POST':
-#         action = request.POST.get('Action')
-#         purchase_request_id = request.POST.get('Purchase_Request_ID')
-
-#         # Check if the 'Purchase_Request_ID' field is present
-#         if not purchase_request_id:
-#             return HttpResponse('Please fill in all the required fields.')
-
-#         # Fetch the PurchaseRequest object from the database
-#         try:
-#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-#         except PurchaseRequestForm.DoesNotExist:
-#             return HttpResponse('Purchase request not found.')
-
-#         # Update the PurchaseRequest object based on the submitted action
-#         if action == 'approve':
-#             purchase_request.is_approved = True
-#         elif action == 'disapprove':
-#             purchase_request.is_disapproved = False
-#         else:
-#             return HttpResponse('Invalid action.')
-
-#         # Save the updated PurchaseRequest object to the database
-#         purchase_request.save()
-
-#         # Redirect to the bac_history page
-#         return render(request('bac_history'))
-#     # Render the bac_history page with the list of PurchaseRequest objects
-#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
-
-
+        # Return a JSON response indicating success
+        return JsonResponse({'status': 'success'})
+    else:
+        # Return a JSON response indicating failure for non-POST requests
+        return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
-def item_edit(request, pk):
-    # item = get_object_or_404(Item, pk=pk)
-
-    # if request.method == 'POST':
-    #     form = ItemForm(request.POST, instance=item)
-    #     if form.is_valid():
-    #         form.save()
-    #         return JsonResponse({'status': 'success'})
-    #     else:
-    #         return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-
+def item_edit(request):
+    
     return render(request, 'cart.html')
 
 
-def item_delete(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-
-    if request.method == 'POST':
-        item.delete()
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'serror'}, status=400)

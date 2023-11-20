@@ -308,69 +308,69 @@
         <br>
         
         <h1>PURCHASE REQUEST</h1>
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-6 text-left" style="margin-bottom: 10px;">
-                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
-            </div>
-            <div class="col-6 text-right" style="margin-bottom: 10px;">
-                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;"
-                        id="editableField"></span></h4>
-            </div>
-        </div>
-        <div class="table-container">
-            <div class="justify-content">
-                <div class="col-md-12">
-                    <div class="mx-auto">
-                        <table class="table-bordered" style="width: 120%">
-                            <thead>
-                            <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
-                            </tr>
-                            <tr>
-                                    <th>Stock/Property</th>
-                                    <th>Unit</th>
-                                    <th>Item Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Cost</th>
-                                    <th>Total Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in items %}
-                                <tr>
-                                    <td class="text-center">{{ forloop.counter }}</td>
-                                    <td class="text-center">{{ item.unit }}</td>
-                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
-                                    <td class="text-center">{{ item.quantity }}</td>
-                                    <td class="text-center">{{ item.unit_cost }}</td>
-                                    <td class="text-center">{{item.total_cost}}</td>
-                                </tr>
-                            {% endfor %}
-                            
-                            
-                            <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
-                                </td>
-                            </tr>
 
+<div class="row" style="margin-top: 20px;">
+    <div class="col-6 text-left" style="margin-bottom: 10px;">
+        <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+    </div>
+    <div class="col-6 text-right" style="margin-bottom: 10px;">
+        <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;"
+                id="editableField"></span></h4>
+    </div>
+</div>
 
-                           
-                            <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
-                            <tr>
-                                <td colspan="2">Requested by: <span contenteditable="true"
-                                        style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
-                                </td>
-                            </tr>
-                        </table>
+<div class="table-container">
+    <div class="justify-content">
+        <div class="col-md-12">
+            <div class="mx-auto">
+                <table class="table-bordered" style="width: 120%">
+                    <thead>
+                        
+                        <tr>
+                            <th colspan="2">Office Section: <span contenteditable="true" id="editableField"></span></th>
+                            <td colspan="2">PR No.: <u>{{ pr_id }}</u> <br>Responsibility Center Code: </td>
+                            <th colspan="2">Date: </th>
+                        </tr>
+                
+                        <tr>
+                            <th>Stock/Property</th>
+                            <th>Unit</th>
+                            <th>Item Description</th>
+                            <th>Quantity</th>
+                            <th>Unit Cost</th>
+                            <th>Total Cost</th>
+                        </tr>
+                        {% for item in checkout_items %}
+                        <tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="text-center">{{ item.unit }}</td>
+                            <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-center">{{ item.unit_cost }}</td>
+                            <td class="text-center">{{ item.total_cost }}</td>
+                        </tr>
+                       
+                
+                        <tr>
+                            <td colspan="6" style="text-align: center;">
+                                <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                            </td>
+                        </tr>
+                
+                        <tr>
+                            <td colspan="2">Purpose: {{ item.purpose }} <span contenteditable="true" style="border: none; outline: none;"
+                                    id="editableField"></span></td>
+                        </tr>
+                
+                        <tr>
+                            <td colspan="2">Requested by: <span contenteditable="true" style="border: none; outline: none;"
+                                    id="requestedByField"></span></td>
+                            <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </thead>
+                </table>
                     </div>
                 </div>
             </div>
