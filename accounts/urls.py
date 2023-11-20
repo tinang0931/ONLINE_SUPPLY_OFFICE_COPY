@@ -32,7 +32,6 @@ urlpatterns = [
    path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
    path('inspection/',views.inspection, name='inspection'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
-   path('edit_item/<int:item_id>/', views.edit_item, name='edit_item'),
-
-
+   path('property/',views.property, name='property'),
+   path('abstract/',views.abstract, name='abstract'),
 ]
