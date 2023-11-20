@@ -53,11 +53,27 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
-     
+     .container {
+        width: 900px;
         
             
             
+     }
+     .input-box label {
+        display: flex;
+        align-items: center; /* Align checkbox and text vertically */
+        margin-bottom: 10px; /* Adjust the spacing between checkboxes */
+    }
 
+    .input-box input[type="checkbox"] {
+        margin-right: 5px; /* Adjust the spacing between checkbox and text */
+        width: 20px; /* Adjust the width of the checkbox */
+        height: 20px; /* Adjust the height of the checkbox */
+    }
+
+    .register-details .details {
+        font-size: 20px; /* Adjust the font size of the title */
+    }
         
     </style>
 </head>
@@ -154,21 +170,24 @@
                         }
                     </script>
 
-                <div class="register-details">
-                    <input type="radio" name="user" id="dot-1">
-                    <input type="radio" name="user" id="dot-2">
-                    <span class="user-title">REGISTER AS:</span>
-                    <div class="category">
-                        <label for="dot-1">
-                            <span class="dot one"></span>
-                            <span class="user">User</span>
-                        </label>
-
-                        <label for="dot-2">
-                            <span class="dot two"></span>
-                            <span class="user">Admin</span>
-                        </label>
+                    <div class="register-details">
+                        <span class="details">Type of user</span> <!-- Add a title -->
+                    
+                        <div class="input-box">
+                            <label for="studentCheckbox">
+                                <input type="checkbox" name="user_type" id="studentCheckbox" value="admin">
+                                Admin
+                            </label>
+                    
+                            <label for="staffCheckbox">
+                                <input type="checkbox" name="user_type" id="staffCheckbox" value="regular">
+                               Regular User
+                            </label>
+                    
+                            <!-- Add more checkboxes as needed for different user types -->
+                        </div>
                     </div>
+                    
                 </div>
 
                 <div class="login-link">
@@ -176,11 +195,10 @@
                 </div>
                 
                 <button type="submit" class="btn"> Register </button>
-        </div>
-
-            
         </form>
     </div>
+    
+
     
 </body>
 </html>
