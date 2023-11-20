@@ -373,17 +373,21 @@
             </div>
         </div>
         <div class="comment-box">
-            <form id="purchaseRequestForm">
             <textarea placeholder="Update the purchase request status..."></textarea>
-            <button type="button" onclick="sendRequest()">Send</button>
             <div class="icons-container">
-                
-                    </div>
-                </form>
-               
-                <a href="javascript:window.print()" title="Print" class="icon-link">
+                <div class="send-icon" onclick="sendMessage()">
+                  </div>
+                  <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                  </a>
+                  <a href="javascript:window.print()" title="Print" class="icon-link">
                     <i class="fas fa-print"></i> Print
-                </a>
+                  </a>
+                </div>
+            </div>
+        </div>
+                </form>
+
             </div>
         </div>
         
@@ -417,9 +421,6 @@
         }
 
         </script>
-       
-    
-    
 </body>
 </head>
 
