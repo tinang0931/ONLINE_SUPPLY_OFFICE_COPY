@@ -275,6 +275,10 @@ def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 @authenticated_user
+def abstract(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+@authenticated_user
 def preqform(request):
     items = Item.objects.all()  # Fetch all Item instances from the database
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
