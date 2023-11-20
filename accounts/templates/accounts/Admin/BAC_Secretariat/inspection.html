@@ -241,19 +241,20 @@
             display: inline-block; /* Display icons next to each other */
             margin-right: 10px; /* Adjust margin as needed */
         }
-.comment-box {
+        .input-box{
+            width: 60%;
             margin-top: 20px;
-            width: 100%;
             margin-left: 50px;
             margin-right: 50px;
         }
-
-        .comment-box textarea {
-            width: 100%;
-            height: 90px;
-            margin-top: 10px;
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
             padding: 10px;
             box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
 
     table {
@@ -349,8 +350,11 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="comment-box">
-                        <textarea placeholder="Update the purchase request status..."></textarea>
+
+                        <div class="input-box">
+                            <input placeholder="Update the purchase request status...">
+                        </div>
+
                         <div class="icons-container">
                             <a href="#" title="Download" class="icon-link">
                                 <i class="fas fa-download"></i> Download

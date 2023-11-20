@@ -250,20 +250,7 @@
     text-decoration: none;
     color: #007acc; /* Adjust the color as needed */
 }
-.comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
 
-        .comment-box textarea {
-            width: 100%;
-            height: 50px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
     table {
         width:60%;
     }
@@ -271,6 +258,21 @@
         /* Add this style to your CSS file or in the head of your HTML file */
         table td {
             font-weight: normal;
+        }
+        .input-box{
+            width: 45%;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
  
 </style>
@@ -297,8 +299,8 @@
             <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
             <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
     </div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -379,8 +381,10 @@
                 </div>
             </div>
         </div>
-            <div class="comment-box">
-                <textarea name="comment_content" placeholder="Update the purchase request status..." required></textarea>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+            <div class="input-box">
+                <input placeholder="Update the purchase request status...">
                 <div class="send-icon" onclick="sendMessage()">
             </div>
         </form>
