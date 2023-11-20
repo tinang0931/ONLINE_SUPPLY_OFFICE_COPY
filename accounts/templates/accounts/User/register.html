@@ -16,6 +16,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        function maxLengthCheck(object, maxLength) {
+            if (object.value.length > maxLength)
+            object.value = object.value.slice(0, maxLength);
+            }
+        </script>
+
+
+    <title>Registration Page</title>
+
+
+    <style>
+        .form-check-label {
+            font-family: 'system-ui', sans-serif; /* Replace 'Your Custom Font' with the desired font name */
+            /* Add any other styling properties as needed */
+        }
+
+            /* Add a solid border to form inputs */
+        .form-control {
+            border: none; /* You can customize the border color */
+            background: rgba(255, 255, 255, 0.486);
+            border-radius: 3px;
+            box-shadow: 0 0 3px black;
+            width: 102%;
+        }
+
+           /* Hide number input arrows in WebKit browsers (e.g., Chrome, Safari) */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        /* Hide number input arrows in Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+     
+        
+            
+            
+
+        
+    </style>
 </head>
 
 <body>
@@ -133,7 +177,10 @@
                 
                 <button type="submit" class="btn"> Register </button>
         </div>
+
+            
         </form>
     </div>
+    
 </body>
 </html>
