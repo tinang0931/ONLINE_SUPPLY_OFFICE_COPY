@@ -151,7 +151,8 @@
         margin: 0;
         padding: 0;
     }
-
+   
+    display: contents;
     .container-fluid {
         display: flex;
         flex-direction: column;
@@ -163,17 +164,24 @@
             width: 100%;
             table-layout: fixed; /* Prevent table from resizing columns based on content */
         }
-    .table-and-comment {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-        }
-        .table-container {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -500px;
-        }
 
-        .comment-box {
+        .table-and-comment {
+    display: contents;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center; /* Center items vertically */
+}
+
+.table-container {
+        margin-top: 20px;
+        width: 60%;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+.table-container table {
+    width: 100%;
+}
+         .comment-box {
             width: 60%; /* Adjust the width as needed */
             margin-top: 20px;
             margin-bottom: 20px;
@@ -339,7 +347,7 @@
             </div>
             <div class="logo-container-right">
                 <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
+                <img class="stars" src="{% static 'images/uni.png' %}" alt="STARS Logo">
             </div>
         </div>
         <br>
@@ -351,7 +359,7 @@
               <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
             </div>
             <div class="col-md-4 text-center" style="margin-bottom: 10px;">
-              <h4>Fund Cluster<span contenteditable="true" id="editableField"></span></h4></h4>
+              <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4></h4>
             </div>
             <div class="col-md-4 text-right" style="margin-bottom: 10px;">
               <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
