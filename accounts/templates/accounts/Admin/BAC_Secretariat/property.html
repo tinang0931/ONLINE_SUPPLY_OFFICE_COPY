@@ -1,9 +1,4 @@
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
-
 {% load static %}
-
-{% block preqform %}
-     
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,30 +10,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
-  
-        header {
-            background-color: #007acc;
-      
-            color: white;
-            padding: 10px;
-        }
-
     
-        .ctu_logo {
-            width: 167px;
+    header {
+        background-color: #007acc; 
+        color: white;
+        padding: 10px;
+    }
     
-            height: auto;
-            margin-right: 20px;
-            float: left;
-        }
-
-        .asean_logo {
-            width: 167px;
-          
-            height: auto;
-            margin-right: 20px;
-            float: left;
-        }
+    .ctu_logo {
+        width: 190px;
+        height: auto;
+        margin-right: 20px;
+        float: left;
+        margin-top: 30px;
+    }
+        
+    .asean_logo{
+        width: 167px;
+        height: auto;
+        margin-right: 20px;
+        margin-top: 55px;
+        float: left;
+    }
 
         .container-fluid {
             height: 150vh;
@@ -54,49 +47,34 @@
 
     
         .container {
-            max-width: 800px;
-          
-            padding: 15px;
-            text-align: center;
-           
-            display: flex;
-           
-            flex-direction: column;
-         
-            justify-content: center;
-            
-            align-items: center;
-          
-            margin: 0 auto;
-           
+            max-width: 800px; 
+            padding: 20px;
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 0 auto; 
         }
 
        
         h {
             font-size: 25px;
-          
             text-align: center;
-          
         }
 
         p {
-            font-size: 25px;
-         
-            text-align: center;
-
-
-
+            font-size: 16px; 
+            text-align: center; 
         }
 
         a {
             color: #007acc;
-            text-decoration: underline;
-         
+            text-decoration: underline; 
         }
 
         a:hover {
-            text-decoration: none;
-            
+            text-decoration: none; 
         }
 
         .management {
@@ -107,11 +85,18 @@
  
         }
 
-        .stars {
+        .iso_logo {
             float: right;
-            margin-right: 10px;
             width: 167px;
             height: auto;
+            margin-top: 50px;
+        }
+
+        .stars_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-top: 145px;
         }
 
         .br {
@@ -151,8 +136,7 @@
         margin: 0;
         padding: 0;
     }
-   
-    display: contents;
+
     .container-fluid {
         display: flex;
         flex-direction: column;
@@ -164,24 +148,17 @@
             width: 100%;
             table-layout: fixed; /* Prevent table from resizing columns based on content */
         }
+    .table-and-comment {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        .table-container {
+            width: 60%; /* Adjust the width as needed */
+            margin-top: -500px;
+        }
 
-        .table-and-comment {
-    display: contents;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center; /* Center items vertically */
-}
-
-.table-container {
-        margin-top: 20px;
-        width: 60%;
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-.table-container table {
-    width: 100%;
-}
-         .comment-box {
+        .comment-box {
             width: 60%; /* Adjust the width as needed */
             margin-top: 20px;
             margin-bottom: 20px;
@@ -283,7 +260,7 @@
 
   .send-icon {
     position: absolute;
-    top: 10px;
+    top: 20px;
     right: 10px;
     width: 30px;
     height: 30px;
@@ -306,7 +283,7 @@
             font-weight: normal;
         }
        
-        .orange {
+    .orange {
     background-color: #f48c06;
     padding: 10px;
     border: none;
@@ -317,49 +294,54 @@
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    width: 100%;
    
-    .row 
+    .row {
     flex-shrink:0;
     width: 40%;
     max-width: 100%;
   }
+}
  
 </style>
 
 <body>
 
-    <div class="container-fluid">
-        <div class="logo-container">
-            <div class="logo-container-left">
-                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
-                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
-            </div>
-            <div class="heading-container" style="text-align: center;"> 
-                <h3>Republic of the Philippines</h3>
-                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
-                <h3>ARGAO CAMPUS</h3>
-                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                <div>
-                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                    &nbsp;
-                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                </div>
-            </div>
-            <div class="logo-container-right">
-                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-                <img class="stars" src="{% static 'images/uni.png' %}" alt="STARS Logo">
-            </div>
-        </div>
-        <br>
-        <br>
-        
-        <h1><P>PROPERTY ACKNOWLEDGMENT REPORT</P></h1>
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
+
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+    </nav>
+
+    <div class="container">
+        <h>Republic of the Philippines</h>
+        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h>ARGAO CAMPUS</h>
+        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+        <div>
+            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
+            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
+    </div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <h><b>PROPERTY ACKNOWLEDGMENT REPORT</b></h>  
+    </div>
+
         <div class="row" style="margin-top: 20px;">
             <div class="col-md-4 text-left" style="margin-bottom: 10px;">
               <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
             </div>
             <div class="col-md-4 text-center" style="margin-bottom: 10px;">
-              <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4></h4>
+              <h4>Fund Cluster<span contenteditable="true" id="editableField"></span></h4></h4>
             </div>
             <div class="col-md-4 text-right" style="margin-bottom: 10px;">
               <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
@@ -450,13 +432,9 @@
           </div>
             <button class="orange">The requester has picked up the items.</button>
         </div>
-        
     </div>
 
     
-    
 </body>
 </head>
-
 </html>
-{% endblock %}
