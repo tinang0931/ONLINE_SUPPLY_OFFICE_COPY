@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
+
+from accounts.forms import RequestItemForm
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -395,40 +397,6 @@ def delete_item(request, item_id):
 
 
 
-# @authenticated_user
-# def bac_history(request):
-#     # Fetch all PurchaseRequest objects linked to the logged-in user
-#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
-
-#     if request.method == 'POST':
-#         action = request.POST.get('Action')
-#         purchase_request_id = request.POST.get('Purchase_Request_ID')
-
-#         # Check if the 'Purchase_Request_ID' field is present
-#         if not purchase_request_id:
-#             return HttpResponse('Please fill in all the required fields.')
-
-#         # Fetch the PurchaseRequest object from the database
-#         try:
-#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-#         except PurchaseRequestForm.DoesNotExist:
-#             return HttpResponse('Purchase request not found.')
-
-#         # Update the PurchaseRequest object based on the submitted action
-#         if action == 'approve':
-#             purchase_request.is_approved = True
-#         elif action == 'disapprove':
-#             purchase_request.is_disapproved = False
-#         else:
-#             return HttpResponse('Invalid action.')
-
-#         # Save the updated PurchaseRequest object to the database
-#         purchase_request.save()
-
-#         # Redirect to the bac_history page
-#         return render(request('bac_history'))
-#     # Render the bac_history page with the list of PurchaseRequest objects
-#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
 def item_list(request):
@@ -440,10 +408,31 @@ def item_list(request):
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
+
+
+def edit_item(request):
+
+    if request.method == 'POST' and request.is_ajax():
+        edited_data = request.POST.get('edited_data')  # Assuming edited data is sent as POST parameter
+
+        # Perform necessary processing to update the database based on the received data
+        # For example:
+        for data in edited_data:
+            item_id = data['id']
+            new_value = data['newValue']
+
+            # Update the corresponding item in the database (this depends on your model structure)
+            item = Item.objects.get(id=item_id)
+            item.field_to_update = new_value
+            item.save()
+
+        return JsonResponse({'message': 'Data saved successfully'}, status=200)
+    else:
+        return JsonResponse({'message': 'Invalid request'}, status=400)
 
 
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+
+    return redirect('requester') 
