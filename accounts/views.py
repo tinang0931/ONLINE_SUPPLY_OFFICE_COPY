@@ -243,9 +243,9 @@ class PurchaseRequestHistoryView(View):
 
 
 def tracker(request):
-    # purchase_requests = PurchaseRequest.objects.all()
-    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
-    return render(request, 'accounts/User/tracker.html')
+    status = Comment.objects.all()
+    return render(request, 'accounts/User/tracker.html', {'status': status})
+   
 
 
 @authenticated_user
@@ -274,19 +274,24 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
 
 @authenticated_user
-def preqform(request, pr_id):
-    # Retrieve the Checkout instance with the given pr_id
-    checkout_instance = get_object_or_404(Checkout, pr_id=pr_id)
-    
-    # Retrieve CheckoutItems related to the checkout_instance
-    checkout_items = CheckoutItems.objects.filter(checkout=checkout_instance)
-    
+def preqform(request):
+    checkout_items = CheckoutItems.objects.all()
+
+    if request.method == 'POST':
+        content = request.POST.get('comment_content')
+
+        if content:
+            Comment.objects.create(content=content, timestamp=timezone.now())
+            return redirect('preqform')
+        else:
+            return HttpResponse("Comment content cannot be empty.")
+
     context = {
-        'pr_id': pr_id,
         'checkout_items': checkout_items,
     }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -309,10 +314,6 @@ def noa(request):
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 
-@authenticated_user
-def preqform(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
 
 
 @authenticated_user
@@ -366,7 +367,7 @@ def addItem(request):
             quantity=quantity,
         )
 
-        return redirect('requester')
+        return redirect('request')
 
     return render(request, 'accounts/User/request.html')
 

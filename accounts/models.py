@@ -92,6 +92,15 @@ class CsvFile(models.Model):
     UNIT = models.CharField(max_length=50)
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
+
+class Comment(models.Model):
+    checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment #{self.id}'
+
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
