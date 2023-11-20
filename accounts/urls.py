@@ -1,5 +1,3 @@
-
-
 from django.urls import path
 from . import views 
 from .views import *
@@ -34,6 +32,10 @@ urlpatterns = [
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
-   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
-   
+   path('notif/',views.notif, name='notif'),
+   path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
+   path('inspection/',views.inspection, name='inspection'),
+   path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
+   path('property/',views.property, name='property'),
+   path('abstract/',views.abstract, name='abstract'),
 ]
