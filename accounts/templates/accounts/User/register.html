@@ -86,7 +86,7 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
+                    <input type="number" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
@@ -97,33 +97,22 @@
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="email" placeholder="Email:" required>
+                    <input type="email" name="email" placeholder="Email:" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="text" placeholder="First Name:" required>
+                    <input type="text" name="fname" placeholder="First Name:" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="text" placeholder="Last Name:" required>
+                    <input type="text" name="lname" placeholder="Last Name:" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" placeholder="Contact No. 1:" required oninput="maxLengthCheck(this, 12)">
-                </div>
-                <script>
-                    function maxLengthCheck(object, maxLength) {
-                        if (object.value.length > maxLength)
-                        object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                <div class="input-box">
-                    <span class="details"></span>
-                    <input type="number" placeholder="Contact 2:" required oninput="maxLengthCheck(this, 12)">
+                    <input type="number" name="contact1" placeholder="Contact No. 1:" required oninput="maxLengthCheck(this, 12)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
@@ -134,7 +123,7 @@
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="password" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                    <input type="number" name="contact2" placeholder="Contact 2:" required oninput="maxLengthCheck(this, 12)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
@@ -145,7 +134,18 @@
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="password" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+                    <input type="password" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                </div>
+                <script>
+                    function maxLengthCheck(object, maxLength) {
+                        if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                        }
+                    </script>
+
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
