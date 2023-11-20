@@ -26,31 +26,19 @@
           </tr>
         </thead>
         <tbody>
-          {% regroup items by checkout_id as grouped_items %}
-          {% for group in grouped_items %}
-          <tr class="pr-row" data-pr-id="{{ group.grouper }}">
-            <td style="text-align: center;">
-              <span class="pr-no">{{ group.grouper }}</span>
-            </td>
-            {% for item in group.list %}
-            <td>{{ item.submission_date }}</td>
-            <td>{{ item.item }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>Verify Papers submitted</td>
-            <td><span class="total">{{ item.total_price }}</span></td>
-            <td class="text-end my-2 mt-0">
-              <div class="d-flex justify-content-start align-items-center">
-                <button type="button" class="btn btn-success view-btn me-2">
-                  <i class="fas fa-print"></i> View
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-                <button type="button" class="btn btn-link btn-sm details-btn">Show More Details</button>
-                <button type="button" class="btn btn-link btn-sm">
-                </button>
-              </div>
-            </td>
-            {% endfor %}
+          {% for item in requests %}
+          <tr>
+            
+            <td>{{item.pr_id}}</td>
+            <td>{{item.submission_date}}</td>
+            <td>{{item.item}}</td>
+            <td>{{item.quantity}}</td>
+            <td>RECEIVED</td>
+            <td>{{item.total_cost}}</td>
+            <td></td>
+           
+            
+          
           </tr>
           {% endfor %}
         </tbody>
@@ -62,20 +50,7 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function () {
-    // Hide all item rows initially
-    $('.pr-row').find('.item-row').hide();
 
-    // Toggle item rows when clicking on Purchase Request ID
-    $('.view-btn').on('click', function () {
-      var prRow = $(this).closest('.pr-row');
-      prRow.find('.item-row').toggle();
-    });
-
-    // Add more JavaScript logic as needed
-  });
-</script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 {% endblock %}
