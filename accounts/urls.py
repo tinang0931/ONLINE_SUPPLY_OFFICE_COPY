@@ -34,4 +34,6 @@ urlpatterns = [
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
+   path('item_edit/<uuid:request_id>/edit/', views.item_edit, name='item_edit'),
+
 ]

@@ -440,3 +440,18 @@ def item_delete(request, request_id):
     item.delete()
 
     return redirect('requester') 
+
+def item_edit(request, request_id):
+    item = get_object_or_404(Item, request_id=request_id)
+    form = RequestItemForm(instance=item)
+
+    if request.method == 'POST':
+        form = RequestItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Item edited successfully")
+            return redirect ('cart.html')
+    context = {'form': form}
+    return render(request, 'cart.html', context)
+
+    

@@ -10,143 +10,78 @@
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-    
-    <div>
+  
+  <div>
+    <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
       <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
-      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
-        <table class="cart_table" id="create_request_table" style="background-color: none; ">
-          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
-            <tr>
-                <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
-                <th class="text-center text-nowrap"></th>
-                
-            </tr>
-        </thead>
-        
-            <tbody>
-              {% for item in items %}
-         
-              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                <td class="item_name text-center"> 
-                  <span id="item_name_{{ item.id }}_display">
-                  {{ item.item }}
-                </span>
-                <input type="text" id="item_name_{{ item.id }}_input" class="form-control" value="{{ item.item}}" style="display: none;">  
-              </td>
-                <td class="item_description text-center">
-                  <span id="item_description_{{ item.id }}_display">
-                    {{ item.item_brand_description }}
-                  </span>
-                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
-                </td>
-                <td class="item_unit text-center">
-                <span id="item_unit_{{ item.id }}_display">
-                  {{ item.unit }}
-                </span>
-                <input type="text" id="item_unit_{{ item.id }}_input" class="form-control" value=" {{ item.unit }}" style="display: none;">
-              </td>
-                <td class="item_unit_cost text-center">
-                  <span id="item_unit_cost_{{ item.id }}_display">
-                    {{ item.unit_cost }}
-                  </span>
-                <input type="text" id="item_unit_cost_{{ item.id }}_input" class="form-control" value="{{ item.unit_cost }}" style="display: none;">
-              </td>
-                <td class="item_quantity text-center">
-                  <span id="item_quantity_{{ item.id }}_display">
-                    {{ item.quantity }}
-                  </span>
-                <input type="text" id="item_quantity_{{ item.id }}_input" class="form-control" value="{{ item.quantity }}" style="display: none;">
-              </td>
-                <td></td>
-                <td class="text-center">
-                  <button type="button" class="edit-button"onclick="enableEditing('item_name_{{ item.id }}_display', '{{item.id}}')"
-                          style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
-                      <i class="fa fa-edit"></i>
-                  </button>
-                    <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
-                </td>
-              </tr>
+      <table class="cart_table" id="create_request_table" style="background-color: none; ">
+        <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
+          <tr>
+              <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
+              <th class="text-center text-nowrap"></th>
               
-              {% endfor %}
-          </tbody>
-        </table>
-
+          </tr>
+      </thead>
+      
+          <tbody>
+            {% for item in items %}
         
+            <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
+              <td class="item_name text-center"> {{ item.item }} </td>
+              <td class="item_description text-center"> {{ item.item_brand_description }}</td>
+              <td class="item_unit text-center">{{ item.unit }}</td>
+              <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+              <td class="item_quantity text-center">{{ item.quantity }}</td>
+              <td class="item_total_cost text-center">{{ item.total_cost}}</td>
+              <td class="text-center">
 
-    
+                            <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+  </div>
 
-        <div class="row-at-bottom d-flex justify-content-between" >
-          <div class="purpose">
-            <label>Purpose:</label>
-            <textarea id="purpose" placeholder="Purpose">
-            </textarea>
+
+
+  <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <!-- Purpose -->
+          <div class="form-group">
+            <label for="purpose" style="color:#FFFFFF">Purpose:</label>
+            <textarea class="form-control" id="purpose" placeholder="Purpose"  contenteditable="true" style="resize: vertical;"></textarea>
           </div>
-          <div class="total_amount">
-            <span>Total Amount: {{total_cost}}</span>
+        </div>
+        <div class="col-md-4">
+          <!-- Total Amount -->
+          <div class="text-center">
+            <span>Total Amount: {{ total_cost }}</span>
           </div>
-          <div class="submit">
-            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
+        </div>
+        <div class="col-md-4">
+          <!-- Submit Button -->
+          <div class="text-right">
+            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id" class="btn btn-primary">
           </div>
         </div>
       </div>
-  </form>
+    </div>
+  </footer>
+  
+</form>
 
-  <script>
-    function enableEditing(cellId, itemId) {
-      const displayField = document.getElementById(cellId + '_display');
-      const cell = document.getElementById(cellId + '_input');
-  
-      if (cell && !cell.classList.contains('editing')) {
-        const cellText = cell.value;
-        cell.style.display = 'block';
-        cell.focus();
-        cell.classList.add('editing');
-  
-        cell.addEventListener('blur', function () {
-          saveEditedData(cellId, cellText, itemId);
-        });
-  
-        cell.addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') {
-            saveEditedData(cellId, cell.value, itemId);
-          }
-        });
-      }
-    }
-  
-    function saveEditedData(cellId, newValue, itemId) {
-      const cell = document.getElementById(cellId + '_input');
-      if (cell) {
-        cell.style.display = 'none';
-        cell.classList.remove('editing');
-  
-        fetch('/edit_item/' + itemId + '/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': getCSRFToken(),
-            },
-            body: JSON.stringify({
-              id: itemId,
-              newValue: newValue
-            }),
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Data saved successfully');
-          })
-          .catch(error => {
-            console.error('Error while saving data:', error);
-          });
-      }
-    }
-  </script>
+
+
+
   
   
 
