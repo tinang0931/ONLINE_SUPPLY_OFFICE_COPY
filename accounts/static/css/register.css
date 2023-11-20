@@ -39,7 +39,7 @@ body{
 .container{
     max-width: 700px;
     width: 100%;
-    background:  rgba(255, 255, 255, 0.938);
+    background:  rgba(255, 255, 255, 0.87);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     padding: 20px 30px;
     border-radius: 10px;
