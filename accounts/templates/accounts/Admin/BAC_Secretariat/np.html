@@ -6,21 +6,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    
     <style>
-        body, h, p {
-            margin: 0;
-            padding: 0;
-            font-family: 'Times New Roman', Times, serif;
-        }
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
 
+
+        /* Apply some styling to the header */
         header {
-            background-color: #007acc; 
+            background-color: #007acc;
             color: white;
             padding: 10px;
         }
 
+        /* Style the logo */
         .ctu_logo {
             width: 190px;
             height: auto;
@@ -37,35 +39,40 @@
             float: left;
         }
         
+
+        /* Style the container */
         .container {
-            max-width: 800px; 
+            max-width: 800px;
             padding: 20px;
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0 auto; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
 
+        /* Style the headings and paragraphs */
         h {
-            font-size: 25px;
-            text-align: center;
+            font-size: 25px; 
+            text-align: center; 
         }
 
         p {
-            font-size: 16px; 
-            text-align: center; 
+            font-size: 25px; 
+            text-align: center;
+            
         }
-
+    
         a {
-            color: #007acc;
+            color: #007acc; 
             text-decoration: underline; 
         }
 
         a:hover {
             text-decoration: none; 
         }
+
 
         .iso_logo {
             float: right;
@@ -81,10 +88,112 @@
             margin-top: 145px;
         }
 
-        body {
-            font-family: Arial, sans-serif;
+        .br {
+            margin-bottom: 20px;
+        }
+
+        .content p{
+            text-align: left;
+            margin-right: 800px;
+        }
+
+        .name p {
+            font-size: 25px;
+            display: grid;
             margin: 0;
+            padding: 5px;
+        }
+
+        .committee-member {
+    border-radius: 5px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+    align-self: flex-start;
+    
+}
+.committee {
+    display: inline;
+    align-self: flex-end;
+}
+
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+}
+
+ul {
+        list-style-type: none; 
+        padding: 0; 
+        margin: 0; 
+    }
+
+    li {
+        margin: 5px 0; 
+    }
+
+    li:before {
+        content: "\00a0"; 
+    }
+
+    ul[contenteditable="true"]:focus {
+        outline: none; 
+    }
+
+    .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .content h,
+        .text h {
+            margin: 0; 
             padding: 0;
+            display: inline; 
+        }
+
+        .content h span,
+        .text h span,
+        .content h1 span,
+        .text h1 span {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+            display: inline; 
+            background-color: transparent; 
+            white-space: pre-wrap; 
+        }
+        
+        .content, .text, .text.closing, .committee-member {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: left;
+        }
+
+        h {
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 0;
         }
 
         .content,
@@ -119,7 +228,7 @@
             margin: 20px;
             padding: 20px;
             border-radius: 10px;
-            max-width: fit-content;
+            max-width: 600px;
             margin: left;
         }
 
@@ -136,136 +245,13 @@
             font-size: 16px;
             margin: 0;
         }
-
-        .text {
-            margin-top: 20px;
-        }
-
-        .text.closing {
-            text-align: left;
-        }
-
-        .text.closing h2{
-            margin:0;
-        }
-
-        .name{
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .name h{
-            margin: 0;
-        }
-        .committee-member {
-            margin-top: 20px;
-        }
-
-        .committee-member h2{
-            font-size: 24px;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .member {
-            text-align: center;
-            margin: 30px 0;
-            padding: 80px;
-        }
-
-        .member hr{
-            border:none;
-            border-top: 2px solid black;
-            width: 10%
-        }
-        .member h2{
-            margin: 8px 0;
-        }
-
-        h{
-            font-family: Arial, sans-serif;
-            margin: 10px 0;
-        } 
-
-        span{
-            display: inline-block;
-            min-width: 100px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        span[contenteditable="true"]:empty::before{
-            color:#999;
-        }
-         
-        h:not(.no-bold) {
-            font-weight: normal;
-        }
-
-        .committee-member h2,
-        .name h {
-            font-weight: normal;
-        }
-
-        h.no-bold {
-            font-weight: normal; 
-        }
         
-        h.no-bold b{
-            font-weight:normal ;
-        }   
-
-        .icons-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px; 
-        }
-
-        .icon-link {
-            text-decoration: none;
-            color: #007acc;
-            display: flex;
-            align-items: center;
-            margin: 0 10px;
-            font-family: Arial, sans-serif; 
-        }
-
-        .icon-link i {
-            margin-right: 5px;
-        }
-
-        @media print {
-            .icons-container {
-                display: none;
-            }
-        }
-
-        .comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
-
-        .comment-box textarea {
-            width: 160%;
-            height: 80px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        table {
-            width:60%;
-        }
     </style>
 
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
         <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
@@ -275,21 +261,19 @@
     <nav>
         <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
     </nav>
-
+    
     <div class="container">
         <h>Republic of the Philippines</h>
-        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
         <h>ARGAO CAMPUS</h>
         <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-        <div>
-            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
-            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <h3>PROCUREMENT OFFICE</h>
+        <div><h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h> &nbsp; <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
+        </div>
+
+    <div class="text">
+        <h3><b>PROCUREMENT OFFICE</b></h3>
         <hr>
-        <div> &nbsp</div>
+        <div> &nbsp</div> 
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -297,69 +281,28 @@
         <h><b>NOTICE TO PROCEED</b></h>  
     </div>
 
-    <div>&nbsp</div>
-    <div>&nbsp</div>
-    <div>&nbsp</div>
-
-
-
-
     <div class="content">
         <h>Date: <span contenteditable="true"></span></h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
     </div>
 
     <div class="text">
         <h>Dear, Ma'am/Sir: <span contenteditable="true"></span></h>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-    </div>
-
-    <div class="text closing">
-        <h>Very truly yours,</h>
         <div>&nbsp;</div>
         <div>&nbsp;</div>
         <div>&nbsp;</div>
-        <div class="name">
-        <h style="text-align: center;">JOHN JOHN</h> 
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
+        <h1><span contenteditable="true"></span></h1>
     </div>
-    <div>&nbsp;</div>
-        <h>Campus Director/Head Procuring Entity</h>
-    </div>
-
-
-        <div class="committee-member">
-            <br>
-            <br>
-            <br>
-            <h2 class="no-bold">Conforme : </h2>
-        </div>
-            <div class="member">
-                <hr> <!-- Horizontal line -->
-                <h2>(Signature over printed)</h2>
-                <br>
-                <br>
-                <h>Date: <span contenteditable="true"></span></h>
-            </div>
-        </div>
-
-        <div class="comment-box">
-            <textarea placeholder="Update the purchase request status..."></textarea>
-         </div>    
-             <div class="icons-container">
-                 <a href="#" title="Download" class="icon-link">
-                     <i class="fas fa-download"></i> Download
-                 </a>
-                 <a href="javascript:window.print()" title="Print" class="icon-link">
-                     <i class="fas fa-print"></i> Print
-                 </a>
-             </div>
-
-</body> 
-</html>
