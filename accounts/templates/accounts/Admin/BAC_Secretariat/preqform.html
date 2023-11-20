@@ -375,12 +375,14 @@
             </div>
         </div>
         <div class="comment-box">
-  
+            <form id="purchaseRequestForm">
             <textarea placeholder="Update the purchase request status..."></textarea>
+            <button type="button" onclick="sendRequest()">Send</button>
             <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
+                
+                    </div>
+                </form>
+               
                 <a href="javascript:window.print()" title="Print" class="icon-link">
                     <i class="fas fa-print"></i> Print
                 </a>
@@ -388,7 +390,36 @@
         </div>
         
     </div>
+    <script>
+        function sendRequest() {
+            var statusUpdateText = document.getElementById("statusUpdate").value;
+        
+            // Simulate sending data to the server using a Fetch API or XMLHttpRequest
+            fetch('updateStatus.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'statusUpdate=' + encodeURIComponent(statusUpdateText),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Purchase request status updated successfully: " + statusUpdateText);
+        
+                    // Redirect to the request tracker page
+                    window.location.href = 'requestTracker.php';
+                } else {
+                    alert("Failed to update purchase request status. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
 
+        </script>
+       
     
     
 </body>

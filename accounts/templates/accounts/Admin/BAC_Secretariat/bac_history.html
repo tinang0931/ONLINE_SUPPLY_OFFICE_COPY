@@ -10,6 +10,10 @@
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
             <h1 class="pr text-center pt-4">HISTORY</h1>  
+          
+          <!-- Modal -->
+      
+    <!-- Your form inputs go here -->
    
 </form>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -78,7 +82,20 @@
       </tr>
   </thead>
   <tbody>
-  
+    {% for request in requests %}
+    <tr class="item-row">
+      <td>{{ item.field1 }}</td>
+      <td>{{ item.field2 }}</td>
+        <td>{{ request.request_id }}</td>
+        <td>{{ request.date_requested }}</td>
+        <td>{{ request.purpose }}</td>
+        <td>{{ request.quantity }}</td>
+        <td>{{ request.status }}</td>
+        <td>{{ request.status_description }}</td>
+        <td>{{ request.amount }}</td>
+        <td class="text-end my-2 mt-0">
+            <!-- Additional actions if needed -->
+       
     
     <tr class="item-row">
       <td style="text-align: center;">
@@ -92,98 +109,306 @@
       <td><span class="total">1,200,000</span></td>
       <td class="text-end my-2 mt-0">
         <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2">
-            <i class="fas fa-print"></i> View
-          </button>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-          <button type="button" class="btn btn-link btn-sm">
-            <i class="fas fa-comment"></i> Add Comment
-          </button>
-        </div>
-      </td>
-    </tr>
-    <tr class="item-row">
-      <td style="text-align: center;">
-        <span class="item-no">0000100</span>
-      </td>
-      <td>09-30-2023</td>
-      <td>Purchase Dell Laptop Order</td>
-      <td>1 unit</td>
-      <td>pending approval</td>
-      <td>Verify Papers submitted</td>
-      <td><span class="total">1,200,000</span></td>
-      <td class="text-end my-2 mt-0">
-        <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2">
-            <i class="fas fa-print"></i> View
-          </button>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-          <button type="button" class="btn btn-link btn-sm">
-            <i class="fas fa-comment"></i> Add Comment
-          </button>
-        </div>
-      </td>
-    </tr>
-    <tr class="item-row">
-      <td style="text-align: center;">
-        <span class="item-no">0000100</span>
-      </td>
-      <td>09-30-2023</td>
-      <td>Purchase Dell Laptop Order</td>
-      <td>1 unit</td>
-      <td>pending approval</td>
-      <td>Verify Papers submitted</td>
-      <td><span class="total">1,200,000</span></td>
-      <td class="text-end my-2 mt-0">
-        <div class="d-flex justify-content-start align-items-center">
-          <button type="button" class="btn btn-success me-2">
-            <i class="fas fa-print"></i> View
-          </button>
-          <button type="button" class="btn btn-primary" onclick="showDetails()">Approve</button>
-          <button type="button" class="btn btn-danger" onclick="showDetails()">Disapprove</button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
-          <button type="button" class="btn btn-link btn-sm">Show More Details</button>
-          <button type="button" class="btn btn-link btn-sm">
-            <i class="fas fa-comment"></i> Add Comment
-          </button>
-        </div>
-      </td>
-    </tr>
-    
-      </td>
-</tbody>
-</table>
-<div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-  <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
-</div>
-<script>
-  $("#add-item-form").submit(function(e){
-    e.preventDefault();
-
-    // You can add some additional code here if needed, like form validation.
-
-    $.ajax({
-        url: 'requester',
-        type: 'get',
-        data: $(this).serialize(),
-        success: function(response) {
-            console.log('Success:', response);
-            // You can add some code here to handle the server response.
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            console.log('Error:', textStatus, errorThrown);
-            // You can add some code here to handle errors.
-        }
+         
+          <div class="d-flex justify-content-start align-items-center">
+            <div class="d-flex justify-content-start align-items-center">
+            
+          </div>
+          <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
+            Show More Details
+        </button>
+        <script>
+    document.querySelectorAll('.show-details-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var request_id = this.getAttribute('data-request-id');
+            if (request_id) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/show_more_details/', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        // Update the user interface with the additional details
+                        alert('Additional Details for Request ' + response.purchase_request_id + ':\n' + response.additional_details);
+                    } else {
+                        alert('Error: ' + xhr.statusText);
+                    }
+                };
+                xhr.send('request_id=' + request_id);
+            }
+        });
     });
-});
+    </script>
+       
+           
+          </div>
+        </td>
+      </tr>
+      
+      
+      
+        </td>
+  </tbody>
+  </table>
+  
+  <script>
+    $("#add-item-form").submit(function(e){
+      e.preventDefault();
+  
+      // You can add some additional code here if needed, like form validation.
+  
+      $.ajax({
+          url: 'requester',
+          type: 'get',
+          data: $(this).serialize(),
+          success: function(response) {
+              console.log('Success:', response);
+              // You can add some code here to handle the server response.
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log('Error:', textStatus, errorThrown);
+              // You can add some code here to handle errors.
+          }
+      });
+  });
+  </script>
+  
+  <script>
+    function submitFormAndRefreshTable() {
+        // Get form data
+        var formData = {
+            purchaseRequestId: document.getElementById('purchaseRequestId').value,
+            // Add other form fields here
+        };
+  
+        // Add the form data to the table
+        updateTable(formData);
+  
+        // Close the modal
+        $('#staticBackdrop').modal('hide');
+  
+        // Optional: You can submit the form data to the server using AJAX if needed
+        // Example: You can use fetch or jQuery.ajax to send the data to the server
+    }
+  
+    function updateTable(formData) {
+        // Get the table body
+        var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+  
+        // Create a new row
+        var newRow = tableBody.insertRow();
+  
+        // Add cells to the row
+        for (var key in formData) {
+            var cell = newRow.insertCell();
+            cell.appendChild(document.createTextNode(formData[key]));
+        }
+  
+        // Optional: You can add more customization or validation here
+    }
+  </script>
+  
+  <script>
+    // Function to update the history table with data from the server
+    function updatebac_historyTable() {
+      $.ajax({
+        url: '/get_bac_history_data/',  // Replace with the actual URL for fetching history data
+        type: 'get',
+        success: function (response) {
+          // Update the history table with the new data
+          updateTable(response);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          console.log('Error:', textStatus, errorThrown);
+          // Handle errors if needed
+        },
+      });
+    }
+  
+    // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
+    setInterval(updatebac_historyTable, 10000);
+  
+    // Initial call to populate the history table
+    updateHistoryTable();
+  
+    // Function to update the history table with new data
+    function updateTable(newData) {
+      // Clear existing rows in the table body
+      var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = '';
+  
+      // Iterate over the newData array and add rows to the table
+      newData.forEach(function (data) {
+        var newRow = tableBody.insertRow();
+        for (var key in data) {
+          var cell = newRow.insertCell();
+          cell.appendChild(document.createTextNode(data[key]));
+        }
+      });
+    }
+  </script>
+  
+  <script>
+    // Function to update the history table with data from the server
+    function updatebac_historyTable() {
+        $.ajax({
+            url: '/get_bac_history_data/',
+            type: 'get',
+            success: function (response) {
+                // Update the history table with the new data
+                updateTable(response);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error:', textStatus, errorThrown);
+                // Handle errors if needed
+            },
+        });
+    }
+  
+    // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
+    setInterval(updatebac_historyTable, 10000);
+  
+    // Initial call to populate the history table
+    updatebac_historyTable();
+  
+    // Function to update the history table with new data
+    function updateTable(newData) {
+        // Clear existing rows in the table body
+        var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+  
+        // Iterate over the newData array and add rows to the table
+        newData.forEach(function (data) {
+            var newRow = tableBody.insertRow();
+            for (var key in data) {
+                var cell = newRow.insertCell();
+                cell.appendChild(document.createTextNode(data[key]));
+            }
+        });
+    }
+  </script>
+  <script>
+    function handleAction(action, request_id) {
+        // Make an AJAX request to the corresponding endpoint based on the action
+        fetch('/update_approval/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
+            },
+            body: JSON.stringify({ action: action, request_id: request_id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response here
+            if (data.success) {
+                // Show a message in the tracker and history pages
+                alert('Request ' + request_id + ' has been ' + action + 'd.');
+                updateTracker(request_id, action);
+                updateHistory(request_id, action);
+            } else {
+                alert('Failed to ' + action + ' request ' + request_id + '.');
+            }
+        })
+        .catch(error => {
+            console.error('Error ' + action + 'ing instance:', error);
+        });
+    }
+    
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        // ... (same as before)
+    }
+    </script>
+    <script>
+      function updateTracker(request_id, action) {
+          // Find the corresponding row in the tracker table and update its status
+          var trackerRow = $('#tracker_table').find('td:contains("' + request_id + '")').closest('tr');
+          trackerRow.find('.status').text(action.toUpperCase());
+      
+          // Optionally, you can update other details in the tracker table as needed
+      }
+      
+      function updateHistory(request_id, action) {
+          // Make an AJAX request to get the latest history data
+          $.ajax({
+              url: '/get_history_data/',  // Replace with the actual URL for fetching history data
+              type: 'get',
+              success: function (response) {
+                  // Update the history table with the new data
+                  updateHistoryTable(response);
+      
+                  // Show a message in the history page
+                  alert('Request ' + request_id + ' has been ' + action + 'd.');
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                  console.log('Error:', textStatus, errorThrown);
+                  // Handle errors if needed
+              },
+          });
+      }
+      
+      function updateHistoryTable(newData) {
+          // Clear existing rows in the history table body
+          var historyTableBody = document.getElementById('history_table').getElementsByTagName('tbody')[0];
+          historyTableBody.innerHTML = '';
+      
+          // Iterate over the newData array and add rows to the history table
+          newData.forEach(function (data) {
+              var newRow = historyTableBody.insertRow();
+              for (var key in data) {
+                  var cell = newRow.insertCell();
+                  cell.appendChild(document.createTextNode(data[key]));
+              }
+          });
+      }
+      </script>
+      <div id="bac_history"></div>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Function to update history
+    function updateHistory(action) {
+      // Get the current date and time
+      var dateTime = new Date().toLocaleString();
+
+      // Create a new history entry
+      var historyEntry = "<p>" + action + " - " + dateTime + "</p>";
+
+      // Append the entry to bac_history
+      $("#bac_history").append(historyEntry);
+
+      // You can also update your history page here or navigate to it if necessary
+      // Example: window.location.href = 'path_to_history_page.html';
+    }
+
+    // Attach a click event to the Purchase Request Approval button
+    $(".btn-primary").on("click", function () {
+      // Perform the Purchase Request Approval action
+      // (You may need to customize this part based on your actual logic)
+
+      // For demonstration purposes, let's assume the approval was successful
+      var approvalResult = "Purchase Request Approved";
+
+      // Update history with the action result
+      updateHistory(approvalResult);
+    });
+
+    // You can listen for other events or changes on the page and call updateHistory accordingly
+    // Example: $(document).on("change", "#someElement", function() { updateHistory("Some action"); });
+  });
 </script>
+
+         
+
+        </td>
+      </tr>
+  {% endfor %}
+</tbody>
+
+    
+    
+
 {% endblock %}  
