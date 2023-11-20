@@ -101,6 +101,15 @@ class Comment(models.Model):
     def __str__(self):
         return f'Comment #{self.id}'
 
+
+class Notification(models.Model):
+    username = models.CharField(max_length=255)
+    submission_date = models.DateField()
+    # Add other fields as needed
+
+    def __str__(self):
+        return f"{self.username} - {self.submission_date}"
+
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
