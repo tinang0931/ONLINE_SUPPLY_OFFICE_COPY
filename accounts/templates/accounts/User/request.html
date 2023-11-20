@@ -76,7 +76,7 @@
         top: 38%;
         position: fixed;
         z-index: 1000;
-        left: 92%;
+        left: 89%;
       
     }
 
@@ -175,6 +175,12 @@
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row2">
+
+        
+        <div class="addtocart">
+            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+            
+        </div>
         <div class="col-12">  
           
             <table class="table table-striped">
@@ -429,6 +435,8 @@ function getCookie(name) {
             }
         }
     }
+    
+
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
