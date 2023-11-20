@@ -4,318 +4,78 @@
 
 {% block history %}
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
-
 
     <div class="col-6 col-sm-6 col-md-5 col-lg-3">
       <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
     </div>
+
     <div class="table-responsive" style="margin: 0 auto;">
-        <table class="table" id="create_request_table" style="border: 1px solid black;">
-          <thead>
-            <tr>
-              <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
-              <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
-              <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
-              <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-              <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
-              <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-              <th class="text-center text-nowrap"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in items %}
-            <tr class="item-row">
-              <td style="text-align: center;">
-                <span class="item-no">{{ item.request_id }}</span>
+      <table class="table" id="create_request_table" style="border: 1px solid black;">
+        <thead>
+          <tr>
+            <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
+            <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+            <th class="text-center text-nowrap"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% regroup items by checkout_id as grouped_items %}
+          {% for group in grouped_items %}
+          <tr class="pr-row" data-pr-id="{{ group.grouper }}">
+            <td style="text-align: center;">
+              <span class="pr-no">{{ group.grouper }}</span>
             </td>
-              <td>{{ item.submission_date }}</td>
-              <td>{{item.item}}</td>
-              <td>{{item.quantity}}</td>
-              <td>Verify Papers submitted</td>
-              <td class="item_total_cost text-center">
-                {{ item.total_cost }}
-              </td>
-              <td class="text-end my-2 mt-0">
-                <html lang="en">
-
-</html>
-<button type="button" class="btn btn-link btn-sm show-details-btn"
-        data-request-id="{{ item.request_id }}" data-form-type="purchase_approval">
-    Show More Details
-</button>
-
-<script>
-document.querySelectorAll('.show-details-btn').forEach(function (button) {
-  button.addEventListener('click', function () {
-    var request_id = this.getAttribute('data-request-id');
-    var form_type = this.getAttribute('data-form-type');
-
-    if (request_id && form_type) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/show_more_details/', true);
-
-      // Include the CSRF token in the request
-      var csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-      xhr.setRequestHeader('X-CSRFToken', csrftoken);
-
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-
-            // Determine which form to display based on the response
-            displayForm(form_type, response);
-
-          } else {
-            alert('Error: ' + xhr.statusText);
-          }
-        }
-      };
-      xhr.send('request_id=' + request_id);
-    }
-  });
-});
-
-function displayForm(formType, response) {
-  // Your logic to dynamically display the form based on the formType
-  // You may want to implement a more sophisticated way to display forms
-
-  // Hide all forms initially
-  document.getElementById('purchase-approval-form').style.display = 'none';
-  document.getElementById('resolution-approval-form').style.display = 'none';
-  document.getElementById('abstract-of-bids-form').style.display = 'none';
-  document.getElementById('notice-of-reward-form').style.display = 'none';
-  document.getElementById('notice-to-proceed-form').style.display = 'none';
-  document.getElementById('inspection-acceptance-form').style.display = 'none';
-  document.getElementById('property-acknowledgment-form').style.display = 'none';
-  document.getElementById('purchase-order-form').style.display = 'none';
-
-  // Show the form based on formType
-  switch (formType) {
-    case 'purchase_approval':
-      document.getElementById('purchase-approval-form').style.display = 'block';
-      break;
-    case 'resolution_approval':
-      document.getElementById('resolution-approval-form').style.display = 'block';
-      break;
-    case 'abstract_of_bids':
-      document.getElementById('abstract-of-bids-form').style.display = 'block';
-      break;
-    case 'notice_of_reward':
-      document.getElementById('notice-of-reward-form').style.display = 'block';
-      break;
-    case 'notice_to_proceed':
-      document.getElementById('notice-to-proceed-form').style.display = 'block';
-      break;
-    case 'inspection_acceptance':
-      document.getElementById('inspection-acceptance-form').style.display = 'block';
-      break;
-    case 'property_acknowledgment':
-      document.getElementById('property-acknowledgment-form').style.display = 'block';
-      break;
-      case 'purchase_order':
-      document.getElementById('purchase-order-form').style.display = 'block';
-      break;
-    default:
-      alert('Unknown form type');
-  }
-}
-</script>
-
-<form id="purchase-approval-form" style="display: none;">
-<!-- Purchase Approval Form fields go here -->
-Purchase Approval Form
-</form>
-
-<!-- resolution-approval-template -->
-<form id="resolution-approval-form" style="display: none;">
-<!-- Resolution Approval Form fields go here -->
-Resolution Approval Form
-</form>
-
-<!-- abstract-of-bids-template -->
-<form id="abstract-of-bids-form" style="display: none;">
-<!-- Abstract of Bids Form fields go here -->
-Abstract of Bids Form
-</form>
-
-<!-- notice-of-reward-template -->
-<form id="notice-of-reward-form" style="display: none;">
-<!-- Notice of Reward Form fields go here -->
-Notice of Reward Form
-</form>
-
-<!-- notice-to-proceed-template -->
-<form id="notice-to-proceed-form" style="display: none;">
-<!-- Notice to Proceed Form fields go here -->
-Notice to Proceed Form
-</form>
-
-<!-- inspection-acceptance-template -->
-<form id="inspection-acceptance-form" style="display: none;">
-<!-- Inspection and Acceptance Form fields go here -->
-Inspection and Acceptance Form
-</form>
-
-<!-- property-acknowledgment-template -->
-<form id="property-acknowledgment-form" style="display: none;">
-<!-- Property Acknowledgment Form fields go here -->
-Property Acknowledgment Form
-</form>
-<!-- purchase-order-template -->
-<form id="purchase-order-form" style="display: none;">
-  <!-- Purchase Order Form fields go here -->
-  Purchase Order Form
-  </form>
-
-<script id="purchase-approval-template" type="text/html">
-<form id="purchase-approval-form">
-  <!-- Purchase Approval Form fields go here -->
-  <label for="purchase-approval-field">Purchase Approval Field:</label>
-  <input type="text" id="purchase-approval-field" name="purchase_approval_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- resolution-approval-template -->
-<script id="resolution-approval-template" type="text/html">
-<form id="resolution-approval-form">
-  <!-- Resolution Approval Form fields go here -->
-  <label for="resolution-approval-field">Resolution Approval Field:</label>
-  <input type="text" id="resolution-approval-field" name="resolution_approval_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- abstract-of-bids-template -->
-<script id="abstract-of-bids-template" type="text/html">
-<form id="abstract-of-bids-form">
-  <!-- Abstract of Bids Form fields go here -->
-  <label for="abstract-of-bids-field">Abstract of Bids Field:</label>
-  <input type="text" id="abstract-of-bids-field" name="abstract_of_bids_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- notice-of-reward-template -->
-<script id="notice-of-reward-template" type="text/html">
-<form id="notice-of-reward-form">
-  <!-- Notice of Reward Form fields go here -->
-  <label for="notice-of-reward-field">Notice of Reward Field:</label>
-  <input type="text" id="notice-of-reward-field" name="notice_of_reward_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- notice-to-proceed-template -->
-<script id="notice-to-proceed-template" type="text/html">
-<form id="notice-to-proceed-form">
-  <!-- Notice to Proceed Form fields go here -->
-  <label for="notice-to-proceed-field">Notice to Proceed Field:</label>
-  <input type="text" id="notice-to-proceed-field" name="notice_to_proceed_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- inspection-acceptance-template -->
-<script id="inspection-acceptance-template" type="text/html">
-<form id="inspection-acceptance-form">
-  <!-- Inspection and Acceptance Form fields go here -->
-  <label for="inspection-acceptance-field">Inspection and Acceptance Field:</label>
-  <input type="text" id="inspection-acceptance-field" name="inspection_acceptance_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<!-- property-acknowledgment-template -->
-<script id="property-acknowledgment-template" type="text/html">
-<form id="property-acknowledgment-form">
-  <!-- Property Acknowledgment Form fields go here -->
-  <label for="property-acknowledgment-field">Property Acknowledgment Field:</label>
-  <input type="text" id="property-acknowledgment-field" name="property_acknowledgment_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-<!-- purchase-order-template -->
-<script id="purchase-order-template" type="text/html">
-<form id="purchase-order-form">
-  <!-- Property Acknowledgment Form fields go here -->
-  <label for="purchase-order-field">Purchase Order Field:</label>
-  <input type="text" id="purchase-order-field" name="purchase_order_field">
-  <button type="submit">Submit</button>
-</form>
-</script>
-
-<script>
-function displayForm(formType, response) {
-  // Clear existing content
-  document.getElementById('form-container').innerHTML = '';
-
-  // Get the template based on formType
-  var templateId = formType + '-template';
-  var templateSource = document.getElementById(templateId).innerHTML;
-
-  // Compile the template
-  var template = Handlebars.compile(templateSource);
-
-  // Render the template with the response data
-  var renderedHtml = template(response);
-
-  // Append the rendered form to the container
-  document.getElementById('form-container').innerHTML = renderedHtml;
-}
-</script>
-
-<div id="form-container"></div>
-<div id="bac_history"></div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            {% for item in group.list %}
+            <td>{{ item.submission_date }}</td>
+            <td>{{ item.item }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>Verify Papers submitted</td>
+            <td><span class="total">{{ item.total_price }}</span></td>
+            <td class="text-end my-2 mt-0">
+              <div class="d-flex justify-content-start align-items-center">
+                <button type="button" class="btn btn-success view-btn me-2">
+                  <i class="fas fa-print"></i> View
+                </button>
+              </div>
+              <div class="d-flex justify-content-start align-items-center" style="color: grey; margin-top: 5px;">
+                <button type="button" class="btn btn-link btn-sm details-btn">Show More Details</button>
+                <button type="button" class="btn btn-link btn-sm">
+                </button>
+              </div>
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
+          <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+        </div>
+      </table>
+    </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function () {
-    // Function to update history
-    function updateHistory(action) {
-      // Get the current date and time
-      var dateTime = new Date().toLocaleString();
+    // Hide all item rows initially
+    $('.pr-row').find('.item-row').hide();
 
-      // Create a new history entry
-      var historyEntry = "<p>" + action + " - " + dateTime + "</p>";
-
-      // Append the entry to bac_history
-      $("#bac_history").append(historyEntry);
-
-      // You can also update your history page here or navigate to it if necessary
-      // Example: window.location.href = 'path_to_history_page.html';
-    }
-
-    // Attach a click event to the Purchase Request Approval button
-    $(".btn-primary").on("click", function () {
-      // Perform the Purchase Request Approval action
-      // (You may need to customize this part based on your actual logic)
-
-      // For demonstration purposes, let's assume the approval was successful
-      var approvalResult = "Purchase Request Approved";
-
-      // Update history with the action result
-      updateHistory(approvalResult);
+    // Toggle item rows when clicking on Purchase Request ID
+    $('.view-btn').on('click', function () {
+      var prRow = $(this).closest('.pr-row');
+      prRow.find('.item-row').toggle();
     });
 
-    // You can listen for other events or changes on the page and call updateHistory accordingly
-    // Example: $(document).on("change", "#someElement", function() { updateHistory("Some action"); });
+    // Add more JavaScript logic as needed
   });
 </script>
-
-</td>
-</tr>
-{% endfor %}
-</tbody>
-
-</table>
-</div>
-</div>
-</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 {% endblock %}

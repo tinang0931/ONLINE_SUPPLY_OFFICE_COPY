@@ -286,7 +286,8 @@
     <nav>
         <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
     </nav>
-
+    <form method="post" action="{% url 'preqform' %}">
+        {% csrf_token %}
     <div class="container">
         <h>Republic of the Philippines</h>
         <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
@@ -320,13 +321,14 @@
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
                             <thead>
+                                
                             <tr>
                                 <th colspan="2">Office Section: <span contenteditable="true" ;
                                         id="editableField"></span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
+                                <th colspan="2">PR No.: {{item.pr_id}} <span contenteditable="true" ;
                                         id="editableField"></span><br>Responsibility Center Code: <span
                                         contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
+                                <th colspan="2">Date: {{item.submission_date}} <span contenteditable="true" ; id="editableField"></span></th>
                             </tr>
                             <tr>
                                     <th>Stock/Property</th>
@@ -338,16 +340,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for item in items %}
+                                {% for item in checkout_items %}
                                 <tr>
                                     <td class="text-center">{{ forloop.counter }}</td>
                                     <td class="text-center">{{ item.unit }}</td>
-                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
+                                    <td class="text-center">{{ item.item_brand_description }} </td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ item.unit_cost }}</td>
                                     <td class="text-center">{{item.total_cost}}</td>
                                 </tr>
-                            {% endfor %}
+                                {% endfor %}
                             
                             
                             <tr>
@@ -357,39 +359,46 @@
                             </tr>
 
 
-                           
+                            {% if checkout_items %}
                             <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
-                            <tr>
-                                <td colspan="2">Requested by: <span contenteditable="true"
-                                        style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                                <td colspan="2">Purpose: {{ checkout_items.0.purpose }} 
+                                    <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span>
                                 </td>
                             </tr>
-                        </table>
+                        {% endif %}
+                        <tr>
+                            <td colspan="2">Requested by: {{ first_name }} {{ last_name }} <span contenteditable="true" style="border: none; outline: none;"
+                                    id="requestedByField"></span></td>
+                            <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                        </tr>
+                        
+                        
+                    </thead>
+                </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="comment-box">
-            <textarea placeholder="Update the purchase request status..."></textarea>
+            <div class="comment-box">
+                <textarea name="comment_content" placeholder="Update the purchase request status..." required></textarea>
+                <div class="send-icon" onclick="sendMessage()">
+            </div>
+        </form>
+       
+        
+        
             <div class="icons-container">
                 <div class="send-icon" onclick="sendMessage()">
-                  </div>
-                  <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                  </a>
-                  <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                  </a>
+                    <a href="#" title="Download" class="icon-link">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="javascript:window.print()" title="Print" class="icon-link">
+                        <i class="fas fa-print"></i> Print
+                    </a>
                 </div>
             </div>
-        </div>
-                </form>
-
-            </div>
-        </div>
+      
+        
         
     </div>
     <script>
