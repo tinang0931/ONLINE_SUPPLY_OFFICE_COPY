@@ -388,7 +388,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
@@ -479,8 +479,6 @@ def item_delete(request, request_id):
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
-
 def your_view(request):
     # Replace this with your actual logic to retrieve items from the database
     items = Item.objects.all()
@@ -488,8 +486,8 @@ def your_view(request):
     # Calculate total cost for each item
     for item in items:
         item.total_cost = item.unit_cost * item.quantity
-    return render(request, 'cart.html', {'items': items})
 
+    return render(request, 'cart.html', {'items': items})
 
 def show_more_details(request):
     if request.method == 'POST':
@@ -523,3 +521,4 @@ def bac_history(request):
    requests = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+
