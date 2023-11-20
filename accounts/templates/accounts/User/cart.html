@@ -1,6 +1,5 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
-
 {% load static %}
 
 
@@ -23,11 +22,22 @@
 </style>
 
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+  .cart_table tbody tr td {
+    vertical-align: middle;
+  }
+</style>
+
+
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
     
     <div>
+      
       <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
         <table class="cart_table" id="create_request_table" style="background-color: none; ">
           <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">

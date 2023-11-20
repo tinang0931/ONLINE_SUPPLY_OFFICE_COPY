@@ -147,3 +147,15 @@ def __str__(self):
          return self.item_name
 
 
+class PurchaseRequest(models.Model):
+    request_id = models.BigAutoField(primary_key=True)
+    submission_date = models.DateField()
+    item = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    # Add other fields as needed
+
+    def calculate_total_cost(self):
+        # Add your logic to calculate the total cost
+        return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
+
+    total_cost = property(calculate_total_cost)

@@ -114,7 +114,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-@unauthenticated_user
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -137,7 +137,7 @@ def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
 
-@unauthenticated_user
+
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -162,7 +162,7 @@ def handle_reset_request(request):
     return render(request, 'accounts/User/forgot.html')
 
 
-@unauthenticated_user
+
 def verify_code(request):
     if request.method == 'POST':
         code1 = request.POST.get('code1')
@@ -191,7 +191,7 @@ def is_valid_code(verification_code, user_email):
     return False
 
 
-@unauthenticated_user
+
  # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
@@ -248,7 +248,6 @@ def tracker(request):
    
 
 
-@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
@@ -257,23 +256,19 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@authenticated_user
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
 
-@authenticated_user
 def bac_home(request):
    
     
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
 
-@authenticated_user
 def preqform(request):
     checkout_items = CheckoutItems.objects.all()
 
@@ -292,7 +287,6 @@ def preqform(request):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
-@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
@@ -301,55 +295,48 @@ def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
-@authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
 
-@authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
-@authenticated_user
-def abstract(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+def preqform(request):
+    items = Item.objects.all()  # Fetch all Item instances from the database
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
 
 
-
-@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
-@authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
 
 
-@authenticated_user
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
 
-@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
-
-@authenticated_user
+def abstract(request):
+    # Your view logic here
+    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 def profile_html(request):
     return render(request, 'profile.html')
 
 
-@authenticated_user
 def signout(request):
     pass
 
 
 
-@authenticated_user
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -372,7 +359,6 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 
-@authenticated_user
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
@@ -402,7 +388,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
@@ -493,3 +479,46 @@ def item_delete(request, request_id):
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+def your_view(request):
+    # Replace this with your actual logic to retrieve items from the database
+    items = Item.objects.all()
+
+    # Calculate total cost for each item
+    for item in items:
+        item.total_cost = item.unit_cost * item.quantity
+
+    return render(request, 'cart.html', {'items': items})
+
+def show_more_details(request):
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id', None)
+
+        if request_id:
+            # Fetch the relevant data based on request_id
+            # You should replace this with your actual data retrieval logic
+
+            # For demonstration purposes, let's assume you have a dictionary
+            # with form_type and form_data
+            form_type = request.POST.get('form_type', 'other')
+            form_data = {
+                'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
+                'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
+                'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
+                'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
+                'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
+                'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
+                'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
+                'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
+            }
+
+            response_data = form_data.get(form_type, {})
+
+            return JsonResponse(response_data)
+    
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def bac_history(request):
+   requests = Item.objects.all()
+
+   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+

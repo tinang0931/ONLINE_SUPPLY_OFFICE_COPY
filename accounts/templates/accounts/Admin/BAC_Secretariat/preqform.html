@@ -381,30 +381,55 @@
         </div>
             <div class="comment-box">
                 <textarea name="comment_content" placeholder="Update the purchase request status..." required></textarea>
-                <button type="submit" title="Send" class="icon-link">
-                    <i class="fas fa-paper-plane"></i> Send
-                </button>
+                <div class="send-icon" onclick="sendMessage()">
             </div>
         </form>
        
         
         
             <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
-                
+                <div class="send-icon" onclick="sendMessage()">
+                    <a href="#" title="Download" class="icon-link">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="javascript:window.print()" title="Print" class="icon-link">
+                        <i class="fas fa-print"></i> Print
+                    </a>
+                </div>
             </div>
       
         
         
     </div>
+    <script>
+        function sendRequest() {
+            var statusUpdateText = document.getElementById("statusUpdate").value;
+        
+            // Simulate sending data to the server using a Fetch API or XMLHttpRequest
+            fetch('updateStatus.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'statusUpdate=' + encodeURIComponent(statusUpdateText),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Purchase request status updated successfully: " + statusUpdateText);
+        
+                    // Redirect to the request tracker page
+                    window.location.href = 'requestTracker.php';
+                } else {
+                    alert("Failed to update purchase request status. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
 
-    
-    
+        </script>
 </body>
 </head>
 
