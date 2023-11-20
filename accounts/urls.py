@@ -10,10 +10,7 @@ urlpatterns = [
    path('bac/',views.bac, name='bac'),
    path('addItem/',views.addItem, name='addItem'),
    path('login/',views.login, name='login'),
-   path('item/<int:pk>/edit/', views.update_item, name='update_item'),
-   # path('item/<int:pk>/delete/', views.item_delete, name='item_delete'),
-   # path('item/<int:pk>/list/', views.item_list, name='item_list'),
-   # path('register/',views.register, name='register'),
+   path('edit_item/<int:pk>/edit/', views.edit_item, name='edit_item'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/' , views.requester, name="requester"),
@@ -33,5 +30,6 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+
    
 ]

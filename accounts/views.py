@@ -28,6 +28,10 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
+from django.views.decorators.csrf import csrf_exempt
+
+
+
 
 
 import random
@@ -491,23 +495,41 @@ def delete_item(request, item_id):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-def update_item(request, item_id):
+
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+
+
+def edit_item(request, item_id):
+    item = get_object_or_404(request, id=item_id)
+
     if request.method == 'POST':
-        # Retrieve data from POST request
-        edited_item = request.POST.get('item')
-        edited_item_brand_description = request.POST.get('item_brand_description')
-        edited_unit = request.POST.get('unit')
-        edited_unit_cost = request.POST.get('unit_cost')
-        edited_quantity = request.POST.get('quantity')
-        edited_total_cost = request.POST.get('total_cost')
+        # Assuming YourItemModelForm is the form you use for editing items
+        form = Item(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-        # TODO: Update the item in the database
-        # You should replace this with your actual update logic
 
-        # For demonstration, return a success response
-        response_data = {'success': True}
-        return JsonResponse(response_data)
 
-    # Return an error response if the request is not POST
-    response_data = {'success': False, 'error': 'Invalid request method'}
-    return JsonResponse(response_data)
+
+
+def delete_item(request, item_id):
+    # Assuming YourItemModel is the model for your items
+    item = get_object_or_404(request, id=item_id)
+
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})

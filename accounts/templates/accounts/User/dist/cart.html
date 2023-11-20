@@ -1,188 +1,126 @@
-
-
-
-
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
-
-
 {% load static %}
 
-
 {% block cart %}
-
-
-<form action="{% url 'requester' %}" method="post">
+  <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-    
     <div>
-      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
-        <table class="cart_table" id="create_request_table" style="background-color: none; ">
-          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
+      <div class="cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;">
+        <table class="cart_table" id="create_request_table">
+          <thead style="background-color: rgba(0, 50, 102, 0.8); font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
             <tr>
-                <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
-                <th class="text-center text-nowrap"></th>
-                
+              <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
+              <th class="text-center text-nowrap"></th>
             </tr>
-        </thead>
-        
-            <tbody>
-              {% for item in items %}
-              <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-                <td class="item_name text-center">  {{ item.item }} </td>
-                <td class="item_description text-center">
-                  <span id="item_description_{{ item.id }}_display">
-                    {{ item.item_brand_description }}
-                  </span>
-                  <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
-                </td>
-                <td class="item_unit text-center">{{ item.unit }}</td>
-                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                <td class="item_quantity text-center">{{ item.quantity }}</td>
-                <td></td>
-                  <td class="text-center">
-                    <button onclick="openModal()" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
-                      <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow(this)"
-                    style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
-                    <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-              </tr>
-              {% endfor %}
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr id="item_row_{{ item.id }}" style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+              <td class="item_name text-center">{{ item.item }}</td>
+              <td class="item_description text-center">
+                <span id="item_description_{{ item.id }}_display">{{ item.item_brand_description }}</span>
+                <input type="text" id="item_description_{{ item.id }}_input" class="form-control" value="{{ item.item_brand_description }}" style="display: none;">
+              </td>
+              <td class="item_unit text-center">{{ item.unit }}</td>
+              <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+              <td class="item_quantity text-center">{{ item.quantity }}</td>
+              <td></td>
+              <td class="text-center">
+                <button onclick="openEditModal('{{ item.id }}', '{{ item.item }}', '{{ item.item_brand_description }}', '{{ item.unit }}', '{{ item.unit_cost }}', '{{ item.quantity }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(1, 154, 72);">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="delete-button" data-item-id="{{ item.id }}" onclick="deleteRow('{{ item.id }}')" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
           </tbody>
         </table>
 
         <div class="row-at-bottom d-flex justify-content-between">
-          <div class="purpose" label="Purpose" onclick="openModal()" style="width: 11em;
-                border: 2px solid #0a0168;">
-           
-           <div id="myModal" class="modal" >
-              <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <label for="inputText">Input Text:</label>
-                <textarea id="inputText"></textarea>
-                <button onclick="updateDisplayBox()">Submit</button>
-              </div>
-            </div>
-        
-  
-        <div class="editmodal" style="display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5)" id="editModal" >
-          <div class="modal-content" style=" position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              background-color: white;
-              padding: 20px;
-              border-radius: 10px;">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <form id="editForm">
-              <input type="text" name="item" id="editItem">
-              <input type="text" name="item_brand_description" id="editItemBrandDescription">
-              <input type="text" name="unit" id="editUnit">
-              <input type="text" name="unit_cost" id="editUnitCost">
-              <input type="text" name="quantity" id="editQuantity">
-              <button type="button" onclick="submitEditForm()">Save</button>
-            </form>
-          </div>
-        </div>
-    
-
-        <div class="row-at-bottom d-flex justify-content-between" >
-          <div class="purpose">
-            <label>Purpose:</label>
-            <textarea id="purpose" placeholder="Purpose" required style="">
-            </textarea>
-          </div>
-          <div class="total_amount">
-            <span>Total Amount: {{total_cost}}</span>
-          </div>
-          <div class="submit">
-            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id">
-          </div>
+          <!-- Your other content here -->
         </div>
       </div>
-      </div>
+    </div>
   </form>
 
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   
   <script>
-    $('#editItemModal').on('hidden.bs.modal', function () {
-// Reset any modal-related changes or perform additional actions
-});
-
-
     function openEditModal(itemId, item, itemBrandDescription, unit, unitCost, quantity) {
-// Set values in the modal inputs
-$('#editItem').val(item);
-// Set other values as needed
-
-// Show the modal
-$('#editItemModal').modal('show');
-
-// Remove the backdrop element manually
-$('.modal-backdrop').remove();
-}
-
-function saveEdits() {
-// Retrieve edited values from modal inputs
-var editedItem = $('#editItem').val();
-var editedItemBrandDescription = $('#editItemBrandDescription').val();
-var editedUnit = $('#editUnit').val();
-var editedUnitCost = parseFloat($('#editUnitCost').val());
-var editedQuantity = parseFloat($('#editQuantity').val());
-
-// Calculate total cost
-var editedTotalCost = editedUnitCost * editedQuantity;
-
-// Send updated data to server using AJAX
-$.ajax({
-   type: 'POST',
-   url: '/update_item/' + itemId + '/',  // Replace with your Django URL for updating items
-   data: {
-       item: editedItem,
-       item_brand_description: editedItemBrandDescription,
-       unit: editedUnit,
-       unit_cost: editedUnitCost,
-       quantity: editedQuantity,
-       total_cost: editedTotalCost,  // Include total cost in the update
-       csrfmiddlewaretoken: '{{ csrf_token }}'
-   },
-   success: function (response) {
-       if (response.success) {
-           // Close the modal
-           $('#editItemModal').modal('hide');
-
-           // Optionally, update the item details in the table without refreshing the page
-           // Update the corresponding row in the table with the edited values
-
-           // Alternatively, you can redirect the user to a new page or refresh the current page
-           // window.location.href = '/your_redirect_url/';
-       } else {
-           // Handle errors if needed
-           console.error(response.errors);
-       }
-   },
-   error: function () {
-       // Handle errors if needed
-       console.error('Failed to save edits.');
+      // Your existing edit modal code
+  
+      // For example, you can populate the modal form fields with the item details
+      $('#item_id').val(itemId);
+      $('#item_brand_description').val(itemBrandDescription);
+      $('#unit').val(unit);
+      $('#unit_cost').val(unitCost);
+      $('#quantity').val(quantity);
+  
+      // Show the modal
+      $('#editModal').modal('show');
+    }
+  
+    function saveEdits() {
+      // Your existing save edits function
+      // This function should send an AJAX request to the server to update the item
+      // Include {% csrf_token %} directly in the AJAX request headers
+      var csrfToken = '{% csrf_token %}';
+      // Your existing AJAX request with csrfToken in headers
+    }
+  
+    function deleteRow(itemId) {
+      var confirmed = confirm("Are you sure you want to delete this item?");
+      if (!confirmed) {
+         return;
+      }
+   
+      fetch(`/delete_item/${itemId}/`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'), // Function to retrieve CSRF token
+         },
+         body: JSON.stringify({
+            csrfmiddlewaretoken: getCookie('csrftoken'), // Include CSRF token in the request body
+         }),
+      })
+      .then(response => response.json())
+      .then(data => {
+         if (data.status === 'success') {
+            document.getElementById('item_row_' + itemId).remove();
+            // You may perform other actions if needed
+         } else {
+            console.error('Failed to delete item.');
+         }
+      })
+      .catch(error => {
+         console.error('Error during delete request:', error);
+      });
    }
-});
-}
-
-</script>
-
+   
+   // Function to get CSRF token from cookie
+   function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+         var cookies = document.cookie.split(';');
+         for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+               break;
+            }
+         }
+      }
+      return cookieValue;
+   }
+     </script>
 {% endblock %}
