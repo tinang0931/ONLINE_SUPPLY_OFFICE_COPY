@@ -39,27 +39,6 @@
         font-size: 20px; /* Adjust the font size as needed */
         padding: 10px 20px; /* Adjust padding for better appearance */
     }
-    button {
-    color: white;
-    background-color: rgba(1, 53, 101, 0.5); /* Use rgba for transparency */
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 10px;
-}
-
-button:hover {
-    background-color: #3498db;
-}
-.u_ser {
-    text-decoration: none;
-    color: white;
-}
-.ad_min {
-  text-decoration: none;
-  color: white;
-}
 </style>
   <body>
 
@@ -74,12 +53,12 @@ button:hover {
       <h1 class="cot">COLLEGE<br>OF<br>TECHNOLOGY</h1>
       <p class="ctu">Cebu Technological University<br>Argao Campus</p>
       <div class="login">
-        <button>
-          <a class="u_ser" href="{% url 'login' %}">USER</a>
-        </button>
-        <button>
-          <a class="ad_min" href="{% url 'admin_login' %}">ADMIN</a>
-        </button>
+        <div class="login">
+          <a href="{% url 'login' %}">
+            <img class="arrow" src="{% static 'images/double_arrow.png' %}" >
+          </a>
+        </div>
+        
           
       </div>
        
