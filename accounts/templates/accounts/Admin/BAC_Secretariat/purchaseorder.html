@@ -284,45 +284,21 @@
     }
 }
 
-.comment-box {
-    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-    position: relative;
-  }
-
-  .comment-box textarea {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  .send-icon {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .send-icon i {
-    line-height: 30px;
-  }
-
-table {
-    width:60%;
-}
-    
+.input-box{
+            width: 60%;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
 </style>
 
 <body>
@@ -461,8 +437,12 @@ table {
                                 </td>
                             </tr>
                         </table>
-                        <div class="comment-box">
-                            <textarea placeholder="Update the purchase request status..."></textarea>
+                        <div class="input-box">
+                            <input placeholder="Update the purchase request status...">
+                        </div>
+            
+                        <div>&nbsp</div>
+
                             <div class="icons-container">
                               <div class="send-icon" onclick="sendMessage()">
                                 <i class="fas fa-paper-plane"></i>
