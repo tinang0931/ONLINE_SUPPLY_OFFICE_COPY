@@ -491,7 +491,6 @@ def item_delete(request, request_id):
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
 
-
 def your_view(request):
     # Replace this with your actual logic to retrieve items from the database
     items = Item.objects.all()
