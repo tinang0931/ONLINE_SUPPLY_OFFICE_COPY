@@ -1,4 +1,9 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
 {% load static %}
+
+{% block preqform %}
+     
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,30 +18,25 @@
   
         header {
             background-color: #007acc;
+      
             color: white;
             padding: 10px;
         }
 
     
-        header {
-            background-color: #007acc; 
-            color: white;
-            padding: 10px;
-        }
-
         .ctu_logo {
-            width: 190px;
+            width: 167px;
+    
             height: auto;
             margin-right: 20px;
             float: left;
-            margin-top: 30px;
         }
-        
-        .asean_logo{
+
+        .asean_logo {
             width: 167px;
+          
             height: auto;
             margin-right: 20px;
-            margin-top: 55px;
             float: left;
         }
 
@@ -52,25 +52,36 @@
         }
 
 
+    
         .container {
-            max-width: 800px; 
-            padding: 20px;
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0 auto; 
+            max-width: 800px;
+          
+            padding: 15px;
+            text-align: center;
+           
+            display: flex;
+           
+            flex-direction: column;
+         
+            justify-content: center;
+            
+            align-items: center;
+          
+            margin: 0 auto;
+           
         }
+
        
         h {
             font-size: 25px;
+          
             text-align: center;
           
         }
 
         p {
             font-size: 25px;
+         
             text-align: center;
 
 
@@ -96,18 +107,11 @@
  
         }
 
-        .iso_logo {
+        .stars {
             float: right;
+            margin-right: 10px;
             width: 167px;
             height: auto;
-            margin-top: 50px;
-        }
-
-        .stars_logo {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-top: 145px;
         }
 
         .br {
@@ -131,6 +135,7 @@
         td {
             border: 1px solid #dddddd;
             padding: 10px;
+           
             text-align: left;
         }
 
@@ -159,10 +164,10 @@
             table-layout: fixed; /* Prevent table from resizing columns based on content */
         }
     .table-and-comment {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-    }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
         .table-container {
             width: 60%; /* Adjust the width as needed */
             margin-top: -500px;
@@ -250,7 +255,40 @@
     text-decoration: none;
     color: #007acc; /* Adjust the color as needed */
 }
+.comment-box {
+    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    position: relative;
+  }
 
+  .comment-box textarea {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .send-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .send-icon i {
+    line-height: 30px;
+  }
     table {
         width:60%;
     }
@@ -259,182 +297,172 @@
         table td {
             font-weight: normal;
         }
-        .input-box{
-            width: 45%;
-            margin-top: 20px;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
-        
-        .input-box input{
-            width: 160%;
-            height: 60px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.97);
-            border-radius: 5px;
+       
+        .orange {
+    background-color: #f48c06;
+    padding: 10px;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+   
+    .row {
+    flex-shrink:0;
+    width: 40%;
+    max-width: 100%;
+  }
+  .row-horizontal-align {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 0;
+}
+
+.col-md-4 {
+    flex: 1;
+    margin-bottom: 10px;
+}
         }
  
 </style>
 
 <body>
 
-    <nav>
-        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
-        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
-    </nav>
-
-    <nav>
-        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
-    </nav>
-    <form method="post" action="{% url 'preqform' %}">
-        {% csrf_token %}
-    <div class="container">
-        <h>Republic of the Philippines</h>
-        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
-        <h>ARGAO CAMPUS</h>
-        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-        <div>
-            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
-            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <h><b>PURCHASE REQUEST</b></h>  
-    </div>
-
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-md-6 text-left" style="margin-bottom: 10px;">
-                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+    <div class="container-fluid">
+        <div class="logo-container">
+            <div class="logo-container-left">
+                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
+                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
             </div>
-            <div class="col-md-6 text-right" style="margin-bottom: 10px;">
-                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
+            <div class="heading-container" style="text-align: center;"> 
+                <h3>Republic of the Philippines</h3>
+                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
+                <h3>ARGAO CAMPUS</h3>
+                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
+                <div>
+                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                    &nbsp;
+                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
+                </div>
+            </div>
+            <div class="logo-container-right">
+                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
+                <img class="stars" src="{% static 'images/uni.png' %}" alt="STARS Logo">
             </div>
         </div>
+        <br>
+        <br>
+        
+        <h1><P>PROPERTY ACKNOWLEDGMENT REPORT</P></h1>
+        <div class="row row-horizontal-align">
+            <div class="col-md-4 text-left">
+                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+            </div>
+            <div class="col-md-4 text-center">
+                <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4>
+            </div>
+            <div class="col-md-4 text-right">
+                <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
+            </div>
+        </div>
+                 
         <div class="table-container">
             <div class="justify-content">
-                <div class="col-md-12">
+                <div class="col-md-14">
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
                             <thead>
-                                
                             <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
-                                <th colspan="2">PR No.: {{item.pr_id}} <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: {{item.submission_date}} <span contenteditable="true" ; id="editableField"></span></th>
-                            </tr>
                             <tr>
-                                    <th>Stock/Property</th>
+                                    <th>Quantity</th>
                                     <th>Unit</th>
                                     <th>Item Description</th>
-                                    <th>Quantity</th>
+                                    <th>Property<br>Number</th>
                                     <th>Unit Cost</th>
                                     <th>Total Cost</th>
                                 </tr>
+                                     
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
                             </thead>
                             <tbody>
-                                {% for item in checkout_items %}
+                                {% for item in items %}
                                 <tr>
                                     <td class="text-center">{{ forloop.counter }}</td>
                                     <td class="text-center">{{ item.unit }}</td>
-                                    <td class="text-center">{{ item.item_brand_description }} </td>
+                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ item.unit_cost }}</td>
                                     <td class="text-center">{{item.total_cost}}</td>
                                 </tr>
-                                {% endfor %}
-                            
-                            
-                            <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                            {% endfor %}
+                            <td colspan="3">Received by: <br><span contenteditable="true">_________________________________</span>
+                                <br>Signature Over Printed Name of End User
+                                <br>
+                                <br><span contenteditable="true">_____________________</span>
+                                <br>Position/Office
+                                <br><span contenteditable="true">_____________________</span>
+                                <br>Date
+                             
+                           
+                                <td colspan="3">Issued by:<br><span contenteditable="true">_________________________________</span>
+                                    <br>Signature Over Printed Name of Supply and/or<br>Property Custodian
+                                    <br>
+                                    <br><span contenteditable="true">_____________________</span>
+                                    <br>Position/Office
+                                    <br><span contenteditable="true">_____________________</span>
+                                    <br>Date
                                 </td>
                             </tr>
-
-
-                            {% if checkout_items %}
-                            <tr>
-                                <td colspan="2">Purpose: {{ checkout_items.0.purpose }} 
-                                    <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        <tr>
-                            <td colspan="2">Requested by: {{ first_name }} {{ last_name }} <span contenteditable="true" style="border: none; outline: none;"
-                                    id="requestedByField"></span></td>
-                            <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
-                        </tr>
-                        
-                        
-                    </thead>
-                </table>
+                        </table>
                     </div>
-                </div>
+               </div>
             </div>
         </div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-            <div class="input-box">
-                <input placeholder="Update the purchase request status...">
-                <div class="send-icon" onclick="sendMessage()">
-            </div>
-        </form>
-       
-        
-        
+        <div class="comment-box">
+            <textarea placeholder="Update the purchase request status..."></textarea>
             <div class="icons-container">
-                <div class="send-icon" onclick="sendMessage()">
-                    <a href="#" title="Download" class="icon-link">
-                        <i class="fas fa-download"></i> Download
-                    </a>
-                    <a href="javascript:window.print()" title="Print" class="icon-link">
-                        <i class="fas fa-print"></i> Print
-                    </a>
-                </div>
+              <div class="send-icon" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <a href="#" title="Download" class="icon-link">
+                <i class="fas fa-download"></i> Download
+              </a>
+              <a href="javascript:window.print()" title="Print" class="icon-link">
+                <i class="fas fa-print"></i> Print
+              </a>
             </div>
-      
-        
+          </div>
+            <button class="orange">The requester has picked up the items.</button>
+        </div>
         
     </div>
-    <script>
-        function sendRequest() {
-            var statusUpdateText = document.getElementById("statusUpdate").value;
-        
-            // Simulate sending data to the server using a Fetch API or XMLHttpRequest
-            fetch('updateStatus.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'statusUpdate=' + encodeURIComponent(statusUpdateText),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Purchase request status updated successfully: " + statusUpdateText);
-        
-                    // Redirect to the request tracker page
-                    window.location.href = 'requestTracker.php';
-                } else {
-                    alert("Failed to update purchase request status. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
 
-        </script>
+    
+    
 </body>
 </head>
 
 </html>
+{% endblock %}
