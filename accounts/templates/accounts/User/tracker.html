@@ -2,50 +2,53 @@
 
 {% block tracker %}
 <style>
-  .custom-f {
+  .custom-f{
     display: flex;
     justify-content: center;
   }
 
-  .pad {
-    padding: 0px !important;
+  .pad{
+    padding: 0px!important;
   }
 
   .item-received {
-    margin: 20 auto;
-  }
+  margin: 20 auto;
+}
+
 </style>
 
-<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
   <div class="container">
     <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
   </div>
-  <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
+  <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
     </div>
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
-      <table class="table" style="margin: 0px !important;">
-        <thead>
-          <tr>
-            <th class="text-center">Purchase Request No.</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center">0000001</td>
-            <td class="text-center">Waiting for Campus Director Approval</td>
-            <td class="text-center">10-09-23</td>
-            <td class="text-center"><a href="#"
-                style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
-                RECEIVED</a></td>
-          </tr>
-        </tbody>
-      </table>
+        <table class="table table-bordered" style="margin: 0px!important;">
+          <thead>
+            <tr>
+              <th>Purchase Request No.</th>
+              <th>Forms</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in status %}
+            <tr>
+              <td>{{item.pr_id}}</td>
+              <td>Purchase Request Approval</td>
+              <td>{{item.content}}</td>
+              <td><a href="#"
+                  style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
+                  RECEIVED</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
     </div>
   </div>
 </div>

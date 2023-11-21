@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,17 +14,12 @@
   
         header {
             background-color: #007acc;
+      
             color: white;
             padding: 10px;
         }
 
     
-        header {
-            background-color: #007acc; 
-            color: white;
-            padding: 10px;
-        }
-
         .ctu_logo {
             width: 190px;
             height: auto;
@@ -40,18 +36,7 @@
             float: left;
         }
 
-        .container-fluid {
-            height: 150vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 15px;
-            margin-right: 150px;
-        }
-
-
+    
         .container {
             max-width: 800px; 
             padding: 20px;
@@ -62,30 +47,25 @@
             align-items: center; 
             margin: 0 auto; 
         }
+
        
         h {
             font-size: 25px;
             text-align: center;
-          
         }
 
         p {
             font-size: 25px;
             text-align: center;
-
-
-
         }
 
         a {
             color: #007acc;
             text-decoration: underline;
-         
         }
 
         a:hover {
             text-decoration: none;
-            
         }
 
         .management {
@@ -93,7 +73,6 @@
             width: 167px;
             height: auto;
             margin-right: 20px;
- 
         }
 
         .iso_logo {
@@ -122,9 +101,8 @@
         table {
             font-weight: bold;
             border: 2px solid;
-            width: 100%;
+            width: 10%;
             margin-top: 20px;
-   
         }
 
         th,
@@ -153,38 +131,14 @@
         align-items: center;
         text-align: center;
     }
-
-    table {
-            width: 100%;
-            table-layout: fixed; /* Prevent table from resizing columns based on content */
-        }
     .table-and-comment {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-    }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
         .table-container {
             width: 60%; /* Adjust the width as needed */
             margin-top: -500px;
-        }
-
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -20px; /* Adjust the negative margin to move it up */
-            margin-bottom: 20px;
-        }
-
-        .comment-box textarea {
-            width: 100%;
-            height: 80px; /* Adjust the height as needed */
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
         }
 
     .logo-container {
@@ -235,44 +189,57 @@
 
 .table-container {
         margin-top: 20px;
-        width: 60%;
+        width: 80%;
         margin-left: 50px;
         margin-right: 50px;
     }
     .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        margin-right: 50px;
+    }
 
 .icon-link {
     margin-left: 20px;
     text-decoration: none;
     color: #007acc; /* Adjust the color as needed */
 }
-.comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
 
-        .comment-box textarea {
-            width: 100%;
-            height: 50px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-    table {
-        width:60%;
-    }
-   
-        /* Add this style to your CSS file or in the head of your HTML file */
-        table td {
-            font-weight: normal;
-        }
- 
+
+.input-box{
+    width: 60%;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+        
+.input-box input{
+    width: 160%;
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.97);
+    border-radius: 5px;
+}
+
+.send-icon {
+    position: fixed;
+    top: 91%;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+  .send-icon i {
+    line-height: 30px;
+  }
+
 </style>
 
 <body>
@@ -295,9 +262,7 @@
         <div>
             <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
             <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
+        </div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -307,11 +272,12 @@
     </div>
 
         <div class="row" style="margin-top: 20px;">
-            <div class="col-md-6 text-left" style="margin-bottom: 10px;">
+            <div class="col-6 text-left" style="margin-bottom: 10px;">
                 <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
             </div>
-            <div class="col-md-6 text-right" style="margin-bottom: 10px;">
-                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
+            <div class="col-6 text-right" style="margin-bottom: 10px;">
+                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;"
+                        id="editableField"></span></h4>
             </div>
         </div>
         <div class="table-container">
@@ -319,7 +285,6 @@
                 <div class="col-md-12">
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
-                            <thead>
                             <tr>
                                 <th colspan="2">Office Section: <span contenteditable="true" ;
                                         id="editableField"></span></th>
@@ -329,27 +294,62 @@
                                 <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
                             </tr>
                             <tr>
-                                    <th>Stock/Property</th>
-                                    <th>Unit</th>
-                                    <th>Item Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Cost</th>
-                                    <th>Total Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in items %}
-                                <tr>
-                                    <td class="text-center">{{ forloop.counter }}</td>
-                                    <td class="text-center">{{ item.unit }}</td>
-                                    <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
-                                    <td class="text-center">{{ item.quantity }}</td>
-                                    <td class="text-center">{{ item.unit_cost }}</td>
-                                    <td class="text-center">{{item.total_cost}}</td>
-                                </tr>
-                            {% endfor %}
-                            
-                            
+                                <td>Stock/Property</td>
+                                <td>Unit</td>
+                                <td>Item Description</td>
+                                <td>Quantity</td>
+                                <td>Unit Cost</td>
+                                <td>Total Cost</td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
                             <tr>
                                 <td colspan="6" style="text-align: center;">
                                     <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
@@ -357,7 +357,8 @@
                             </tr>
 
 
-                           
+                            </tr>
+                            <tr>
                             <tr>
                                 <td colspan="2">Purpose: <span contenteditable="true"
                                     style="border: none; outline: none;" id="editableField"></span></td></tr>
@@ -372,16 +373,20 @@
                 </div>
             </div>
         </div>
-        <div class="comment-box">
-  
-            <textarea placeholder="Update the purchase request status..."></textarea>
+        <div> &nbsp</div>
+        <div class="input-box">
+            <input placeholder="Update the purchase request status...">
+        </div>
             <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
+                <div class="send-icon" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                  </div>
+                  <a href="#" title="Download" class="icon-link">
                     <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
+                  </a>
+                  <a href="javascript:window.print()" title="Print" class="icon-link">
                     <i class="fas fa-print"></i> Print
-                </a>
+                  </a>
             </div>
         </div>
         
