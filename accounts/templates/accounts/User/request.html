@@ -10,6 +10,14 @@
     .input-group {
       display: flex;
     }
+
+    .table-container {
+        width: 600px; /* Set your desired width */
+        overflow-x: auto; /* Enable horizontal scrolling if needed */
+    }
+
+    /* Set the table to have a fixed layout */
+    
   
     #quantityInput {
       flex: 1;
@@ -77,7 +85,7 @@
         top: 38%;
         position: fixed;
         z-index: 1000;
-        left: 92%;
+        left: 89%;
       
     }
 
@@ -133,10 +141,12 @@
     .additem {
         margin-left: 6%
     }
+    
 
 
 
 </style>
+
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
@@ -173,10 +183,14 @@
 <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row2">
+
+        
+        <div class="addtocart">
+            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
+            
+        </div>
         <div class="col-12">  
-            <div class="addtocart">
-                <button type="submit" class="btn btn-primary btn-sm float-right">Add to Cart</button>
-            </div> 
+          
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -196,7 +210,7 @@
                             <td  >{{ row.UNIT }}</td>
                             <td  >{{ row.PRICE }}</td>
                             <td>
-                                <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity_{{ row.ITEMS }}" value="1" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                                <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity_{{ row.ITEMS }}" value="" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
                             </td>
                             <td>
                                 <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
@@ -404,6 +418,8 @@ function getCookie(name) {
                 break;
             }
         }
+    }
+}
 
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
@@ -425,6 +441,8 @@ function getCookie(name) {
             }
         }
     }
+    
+
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 

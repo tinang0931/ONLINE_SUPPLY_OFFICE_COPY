@@ -139,49 +139,47 @@
         ul[contenteditable="true"]:focus {
             outline: none; 
         }
+
         .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px; 
-}
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px; 
+        }
 
-.icon-link {
-    text-decoration: none;
-    color: #007acc;
-    display: flex;
-    align-items: center;
-    margin: 0 10px;
-    font-family: Arial, sans-serif; 
-}
+        .icon-link {
+            text-decoration: none;
+            color: #007acc;
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-family: Arial, sans-serif; 
+        }
 
-.icon-link i {
-    margin-right: 5px;
-}
+        .icon-link i {
+            margin-right: 5px;
+        }
 
-@media print {
-    .icons-container {
-        display: none;
-    }
-}
+        @media print {
+            .icons-container {
+                display: none;
+            }
+        }
 
-.comment-box {
-            margin-top: 20px;
+        .input-box{
             width: 60%;
+            margin-top: 20px;
             margin-left: 50px;
             margin-right: 50px;
         }
-
-        .comment-box textarea {
+        
+        .input-box input{
             width: 160%;
-            height: 80px;
-            margin-top: 10px;
+            height: 60px;
             padding: 10px;
             box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
-    table {
-        width:60%;
-    }
-
  
     </style>
 
@@ -262,11 +260,12 @@
     </div>
     </div>
 
-    <div class="comment-box">
-  
-        <textarea placeholder="Update the purchase request status..."></textarea>
+    <div class="input-box">
+        <input placeholder="Update the purchase request status...">
+    </div>
 
-    </div>    
+    <div>&nbsp</div>
+
         <div class="icons-container">
             <a href="#" title="Download" class="icon-link">
                 <i class="fas fa-download"></i> Download

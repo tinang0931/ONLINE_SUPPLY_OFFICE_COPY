@@ -1,4 +1,4 @@
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,14 +8,14 @@
 
 body{
     display: flex;
+    height: 100vh;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    padding: 10px;
     background:
         linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
         url("/static/images/CTU-Logo.jpg");
         background-size: cover;
-        background-repeat: no-repeat;
         background-attachment: fixed;
         position: fixed;
         top: 0;
@@ -26,29 +26,25 @@ body{
 }
 
 
-.title{
+.upper{
     position: absolute;
     top: 10%;
     left: 120px;
     color: white;
     font-size: 60px;
-    margin-top: 30px;
-    margin-right: 80px;
+    margin-bottom: 100%;
 }
 
 
-.wrapper {
-    width: 380px;
-    height: 740px;
-    background: rgba(255, 255, 255, 0.486);
+.container{
+    max-width: 700px;
+    width: 100%;
+    background:  rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
-    color: rgba(0, 0, 0, 0.815);
-    padding: 30px 40px;
+    padding: 20px 30px;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    position: absolute;
-    left: 1100px;
     top: 160px;
 }
 
@@ -62,80 +58,137 @@ body{
 }
 
 
-.wrapper .input-box {
-    position: relative;
-    width: 270px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.486);;
-    margin: 15px auto;
+.container .title{
+    color: #003566;
+    font-size: 45px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
 
-.input-box input {
-    width: 270px;
-    height: 100%;
-    background: transparent;
-    border: none;
+.container form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+
+
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+}
+
+
+.user-details .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+
+.user-details .input-box input{
+    background: rgba(255, 255, 255, 0.486);
+    height: 45px;
+    width: 100%;
     outline: none;
-    border-radius: 3px;
-    font-size: 14px;
-    color: black;
-    padding: 10px;
-    box-shadow: 0 0 3px black;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.5s ease;
 }
 
 
-.input-box input:hover{
+.user-details .input-box input:hover{
     color: #003566;
 }
 
 
-.wrapper .btn {
-    width: 32%;
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+    border-color: #003566;
+}
+
+
+form .register-details .user-title{
+    color: #003566;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+form .register-details .category{
+    display: flex;
+    width: 150%;
+    margin: 14px 0;
+    justify-content: space-between;
+}
+
+
+.register-details .category label{
+    display: flex;
+    align-items: center;
+}
+
+
+.register-details .category .dot{
+    height: 18px;
+    width: 18px;
+    background: #ccc;
+    border-radius: 50%;
+    margin-right: 10px; 
+    border: 5px solid transparent;
+    transition: all 0.5s ease;
+}
+
+
+ #dot-1:checked ~ .category label .one,
+ #dot-2:checked ~ .category label .two{    
+    border-color: #ccc;
+    background-color: #003566;
+ }
+
+
+ form input[type="radio"]{
+    display: none;
+ }
+
+
+ .container .btn {
+    justify-content: center;
+    width: 10%;
     height: 30px;
     background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    border: solid #df8004ad .5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
     font-weight: 250;
     font-size: 17px;
-    margin-left: 64%;
-    margin-top: 10px;
+    margin-top: 50px;
     text-align: center;
     line-height: 5px;
-    transition-duration: 0.4s;
+    transition-duration: 0.5s;
 }
 
 
-.wrapper .btn:hover{
+.container .btn:hover{
     color: white;
     background-color: #ffa125e3;
 }
 
 
-.icon-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.wrapper .btn:hover{
-    color: white;
-}
-
-
-.wrapper .login-link {
+.container .login-link {
     font: 17px;
     color: black;
     text-align: center;
     margin-top: 10%;
     display: flex;
     justify-content: flex-start;
-    margin-left: 20%;
 }
 
 
@@ -150,4 +203,29 @@ body{
 .login-link p a:hover {
     text-decoration: underline;
     color: #007bff;
+    transition: all 0.5s ease;
+}
+
+
+@media (max-width: 500px) {
+    .container {
+        max-width: 100%;
+    }
+
+    form .user-details .input-box {
+        width: 100%;
+    }
+
+    form .register-details .category {
+        width: 100%;
+    }
+
+    .container form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar {
+        width: 0;
+    }
 }

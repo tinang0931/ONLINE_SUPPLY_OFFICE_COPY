@@ -5,12 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     
-    <style>
+<style>
         body, h, p {
             margin: 0;
             padding: 0;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Times New Roman';
         }
 
         header {
@@ -80,7 +82,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family:'Times New Roman';
             margin: 0;
             padding: 0;
         }
@@ -117,7 +119,7 @@
             margin: 20px;
             padding: 20px;
             border-radius: 10px;
-            max-width: 600px;
+            max-width: fit-content;
             margin: left;
         }
 
@@ -143,7 +145,7 @@
             text-align: left;
         }
 
-        .text.closing h{
+        .text.closing h2{
             margin:0;
         }
 
@@ -181,7 +183,7 @@
         }
 
         h{
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman';
             margin: 10px 0;
         } 
 
@@ -197,9 +199,65 @@
         span[contenteditable="true"]:empty::before{
             color:#999;
         }
-           
-       
-    </style>
+         
+        h:not(.no-bold) {
+            font-weight: normal;
+        }
+
+        .committee-member h2,
+        .name h {
+            font-weight: normal;
+        }
+
+        h.no-bold {
+            font-weight: normal; 
+        }
+        
+        h.no-bold b{
+            font-weight:normal ;
+        }   
+
+        .icons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px; 
+        }
+
+        .icon-link {
+            text-decoration: none;
+            color: #007acc;
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-family: 'Times New Roman'; 
+        }
+
+        .icon-link i {
+            margin-right: 5px;
+        }
+
+        @media print {
+            .icons-container {
+                display: none;
+            }
+        }
+        
+        .input-box{
+            width: 60%;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
+</style>
 
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -217,56 +275,55 @@
 
     <div class="container">
         <h>Republic of the Philippines</h>
-        <h><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
         <h>ARGAO CAMPUS</h>
         <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
         <div>
             <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
             <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h>NOTICE OF REWARD</h>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <h><b>NOTICE OF AWARD</b></h>  
     </div>
+
+    <div>&nbsp</div>
+    <div>&nbsp</div>
+    <div>&nbsp</div>
+
+
+
 
     <div class="content">
         <h>Date: <span contenteditable="true"></span></h>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
     </div>
 
     <div class="text">
         <h>Dear, Ma'am/Sir: <span contenteditable="true"></span></h>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
-        <h1><span contenteditable="true"></span></h1>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
+        <div>&nbsp</div>
     </div>
 
     <div class="text closing">
-    <h>Very truly yours,</h>
+        <h>Very truly yours,</h>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div class="name" style="text-align: center;">
+            <h contenteditable="true">JOHN JOHN</h>
+        </div>
     <div>&nbsp;</div>
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
-    <div class="name">
-    <h style="text-align: center;">JOHN JOHN</h> 
-</div>
-    <div>&nbsp;</div>
-    <h>Campus Director/Head Procuring Entity</h>
+       <h contenteditable="true">Campus Director/Head Procuring Entity</h>
     </div>
 
 
@@ -274,7 +331,7 @@
             <br>
             <br>
             <br>
-            <h2>Conforme : </h2>
+            <h2 class="no-bold">Conforme : </h2>
         </div>
             <div class="member">
                 <hr> <!-- Horizontal line -->
@@ -284,6 +341,21 @@
                 <h>Date: <span contenteditable="true"></span></h>
             </div>
         </div>
-        
-</body>
+
+        <div class="input-box">
+            <input placeholder="Update the purchase request status...">
+        </div>
+
+            <div>&nbsp</div>
+
+             <div class="icons-container">
+                 <a href="#" title="Download" class="icon-link">
+                     <i class="fas fa-download"></i> Download
+                 </a>
+                 <a href="javascript:window.print()" title="Print" class="icon-link">
+                     <i class="fas fa-print"></i> Print
+                 </a>
+             </div>
+
+</body> 
 </html>
