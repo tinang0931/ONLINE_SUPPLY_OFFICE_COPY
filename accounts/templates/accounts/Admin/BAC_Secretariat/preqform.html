@@ -1,5 +1,4 @@
-Jane Carmel Barro Duhig
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+preqform.html {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 {% load static %}
 
@@ -257,19 +256,39 @@ Jane Carmel Barro Duhig
     color: #007acc; /* Adjust the color as needed */
 }
 .comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
+    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    position: relative;
+  }
 
-        .comment-box textarea {
-            width: 100%;
-            height: 50px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+  .comment-box textarea {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .send-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .send-icon i {
+    line-height: 30px;
+  }
     table {
         width:60%;
     }
@@ -277,6 +296,37 @@ Jane Carmel Barro Duhig
         /* Add this style to your CSS file or in the head of your HTML file */
         table td {
             font-weight: normal;
+        }
+       
+        .orange {
+    background-color: #f48c06;
+    padding: 10px;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+   
+    .row {
+    flex-shrink:0;
+    width: 40%;
+    max-width: 100%;
+  }
+  .row-horizontal-align {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 0;
+}
+
+.col-md-4 {
+    flex: 1;
+    margin-bottom: 10px;
+}
         }
  
 </style>
@@ -302,43 +352,59 @@ Jane Carmel Barro Duhig
             </div>
             <div class="logo-container-right">
                 <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
+                <img class="stars" src="{% static 'images/uni.png' %}" alt="STARS Logo">
             </div>
         </div>
         <br>
         <br>
         
-        <h1>PURCHASE REQUEST</h1>
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-md-6 text-left" style="margin-bottom: 10px;">
+        <h1><P>PROPERTY ACKNOWLEDGMENT REPORT</P></h1>
+        <div class="row row-horizontal-align">
+            <div class="col-md-4 text-left">
                 <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
             </div>
-            <div class="col-md-6 text-right" style="margin-bottom: 10px;">
-                <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
+            <div class="col-md-4 text-center">
+                <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4>
+            </div>
+            <div class="col-md-4 text-right">
+                <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
             </div>
         </div>
+                 
         <div class="table-container">
             <div class="justify-content">
-                <div class="col-md-12">
+                <div class="col-md-14">
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
                             <thead>
                             <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
-                            </tr>
                             <tr>
-                                    <th>Stock/Property</th>
+                                    <th>Quantity</th>
                                     <th>Unit</th>
                                     <th>Item Description</th>
-                                    <th>Quantity</th>
+                                    <th>Property<br>Number</th>
                                     <th>Unit Cost</th>
                                     <th>Total Cost</th>
                                 </tr>
+                                     
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
                             </thead>
                             <tbody>
                                 {% for item in items %}
@@ -351,41 +417,44 @@ Jane Carmel Barro Duhig
                                     <td class="text-center">{{item.total_cost}}</td>
                                 </tr>
                             {% endfor %}
-                            
-                            
-                            <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
-                                </td>
-                            </tr>
-
-
+                            <td colspan="3">Received by: <br><span contenteditable="true">_________________________________</span>
+                                <br>Signature Over Printed Name of End User
+                                <br>
+                                <br><span contenteditable="true">_____________________</span>
+                                <br>Position/Office
+                                <br><span contenteditable="true">_____________________</span>
+                                <br>Date
+                             
                            
-                            <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
-                            <tr>
-                                <td colspan="2">Requested by: <span contenteditable="true"
-                                        style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                                <td colspan="3">Issued by:<br><span contenteditable="true">_________________________________</span>
+                                    <br>Signature Over Printed Name of Supply and/or<br>Property Custodian
+                                    <br>
+                                    <br><span contenteditable="true">_____________________</span>
+                                    <br>Position/Office
+                                    <br><span contenteditable="true">_____________________</span>
+                                    <br>Date
                                 </td>
                             </tr>
                         </table>
                     </div>
-                </div>
+               </div>
             </div>
         </div>
         <div class="comment-box">
-  
             <textarea placeholder="Update the purchase request status..."></textarea>
             <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
+              <div class="send-icon" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <a href="#" title="Download" class="icon-link">
+                <i class="fas fa-download"></i> Download
+              </a>
+              <a href="javascript:window.print()" title="Print" class="icon-link">
+                <i class="fas fa-print"></i> Print
+              </a>
             </div>
+          </div>
+            <button class="orange">The requester has picked up the items.</button>
         </div>
         
     </div>

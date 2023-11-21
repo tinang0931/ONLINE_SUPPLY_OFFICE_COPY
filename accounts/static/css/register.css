@@ -43,13 +43,18 @@ body{
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     padding: 20px 30px;
     border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    top: 160px;
 }
 
 
-.icon-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.wrapper h1 {
+    color: #003566;
+    font-size: 45px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 35px;
 }
 
 
