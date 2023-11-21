@@ -288,7 +288,7 @@ def signout(request):
 
 
 
-@authenticated_user
+
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -311,7 +311,7 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 
-@authenticated_user
+
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form

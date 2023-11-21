@@ -54,33 +54,69 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper" style="height: 74vh;">
 
- <!-- Sidebar -->
-<div class="sidebar">
+        
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
   <div class="d-flex flex-wrap align-content-between h-100">
-      <div class="bg-#6C757D w-100" id="sidebar-wrapper">
-          <div class="list-group w-100">
-            <br>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request' %}">
-                  <i class="fas fa-file-alt"></i> <span class="d-none d-md-inline">Purchase Request</span>
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker' %}">
-                  <i class="fas fa-tasks"></i> <span class="d-none d-md-inline">Request Tracker</span>
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history' %}">
-                  <i class="fas fa-history"></i> <span class="d-none d-md-inline">History</span>
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about' %}">
-                  <i class="fas fa-info-circle"></i> <span class="d-none d-md-inline">About</span>
-              </a>
-          </div>
+    <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+      <div class="list-group w-100">
+        <br><br>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
+          <i class="fas fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
+          <i class="fas fa-tasks"></i> <span id="requestTracker" class="hidden-name">Request Tracker</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
+          <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
+          <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
+          <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
+        </a>
       </div>
-      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'logout_user' %}">
-          <i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">Logout</span>
-      </a>
+    </div>
   </div>
 </div>
 
-       
+<style>
+  #sidebar {
+    transition: width 0.5s ease-in-out;
+    overflow: hidden;
+    width: 50px; /* Set your desired initial width */
+  }
+
+  #sidebar.show-names {
+    width: 300px; /* Set your desired expanded width */
+  }
+
+  .hidden-name {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  #sidebar.show-names .hidden-name {
+    opacity: 1;
+  }
+
+  .list-group-item-action:hover {
+    background-color: #6C757D; /* Set the desired background color for hover */
+  }
+</style>
+
+<script>
+  function showNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.add('show-names');
+  }
+
+  function hideNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('show-names');
+  }
+</script>
         {% block notification %}
         {% endblock %}
 
@@ -102,11 +138,10 @@
         {% block cart %}
         {% endblock %}
 
-
     </main>
       
   </body>
-  
+   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
