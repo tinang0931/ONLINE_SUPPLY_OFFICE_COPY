@@ -72,10 +72,12 @@
               <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
           </td>
 
-              <!-- <td class="text-center">
+              <td class="text-center">
 
-              <a href="#" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
-              </td> -->
+                <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
+
+
+              </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -84,7 +86,7 @@
 
 
 
-  <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
+  <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.8);">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-4">
@@ -96,7 +98,7 @@
         </div>
         <div class="col-md-4">
           <!-- Total Amount -->
-          <div class="text-center">
+          <div class="text-center"  style="color:#FFFFFF" >
             <span>Total Amount: {{ total_cost }}</span>
           </div>
         </div>

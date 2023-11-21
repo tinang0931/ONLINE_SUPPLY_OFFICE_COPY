@@ -9,8 +9,6 @@ urlpatterns = [
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
    path('addItem/',views.addItem, name='addItem'),
-   path('login/',views.login, name='login'),
-   # path('item/<int:pk>/edit/', views.item_edit, name='item_edit'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
@@ -36,4 +34,7 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
+   path('item/<int:request_id>/delete/', views.item_delete, name='item_delete')
+
+
 ]
