@@ -36,8 +36,8 @@
     {% csrf_token %} 
 
   
-  <div>
-    <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
+  <div style="height: 69vh;">
+    <div class=" cart table-responsive" style=" overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
       <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
       <table class="cart_table" id="create_request_table" style="background-color: none; ">
         <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
@@ -102,38 +102,37 @@
               // Call the calculateTotal function initially
               calculateTotal();
           });
-      </script
+      </script>
       </table>
   </div>
 
 
 
-  <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.8);">
+  <footer class="fixed-bottom p-2" style="background-color: rgba(1, 33, 67, 0.8);">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4">
-          <!-- Purpose -->
-          <div class="form-group">
-            <label for="purpose" style="color:#FFFFFF">Purpose:</label>
-            <textarea class="form-control" id="purpose" placeholder="Purpose"  contenteditable="true" style="resize: vertical;"></textarea>
-          </div>
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <!-- Purpose -->
+                <div class="form-group">
+                    <label for="purpose" style="color:#FFFFFF">Purpose:</label>
+                    <textarea class="form-control" id="purpose" placeholder="Purpose" contenteditable="true" style="resize: vertical;"></textarea>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Total Amount -->
+                <div class="text-center" style="color:#FFFFFF">
+                    <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Submit Button -->
+                <div class="text-right">
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-          <!-- Total Amount -->
-          <div class="text-center" style="color:#FFFFFF">
-    <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
-</div>
-        </div>
-        <div class="col-md-4">
-          <!-- Submit Button -->
-          <div class="text-right">
-            <input type="submit"  class="btn btn-primary">
-          </div>
-        </div>
-      </div>
     </div>
   </footer>
-  
 </form>
 
 
