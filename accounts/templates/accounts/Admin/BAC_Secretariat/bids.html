@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     
     <style>
         * {
@@ -138,6 +139,62 @@
         ul[contenteditable="true"]:focus {
             outline: none; 
         }
+
+        .icons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px; 
+            margin-right: 50px;
+        }
+
+        .icon-link {
+            text-decoration: none;
+            color: #007acc;
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-family: Arial, sans-serif; 
+        }
+
+        .icon-link i {
+            margin-right: 5px;
+        }
+
+        @media print {
+            .icons-container {
+                display: none;
+            }
+        }
+
+        .input-box{
+            width: 60%;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
+
+.send-icon {
+    position: fixed;
+    top: 90.5%;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+ 
     </style>
 
 
@@ -174,6 +231,8 @@
         <div> &nbsp</div> 
         <h><b>RESOLUTION</b></h>  
     </div>
+
+
     <ul contenteditable="true">
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -216,5 +275,24 @@
         <p>Vice-Chairman</p>
     </div>
     </div>
+
+    <div class="input-box">
+        <input placeholder="Update the purchase request status...">
+    </div>
+
+    <div>&nbsp</div>
+
+        <div class="icons-container">
+            <div class="send-icon" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <a href="#" title="Download" class="icon-link">
+                <i class="fas fa-download"></i> Download
+              </a>
+              <a href="javascript:window.print()" title="Print" class="icon-link">
+                <i class="fas fa-print"></i> Print
+              </a>
+        </div>
+    
 </body>
 </html>

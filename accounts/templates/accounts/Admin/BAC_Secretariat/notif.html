@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .pr {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .pt-4 {
+            padding-top: 18px;
+        }
+
+        .custom-f {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 .15px;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .text-start {
+            text-align: left;
+        }
+
+        .text-dark {
+            color: #343a34;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        #categorySelectionLink {
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top; 
+            font-weight: normal;
+        }
+
+        .modal-link {
+            color: black;
+            font-weight: normal;
+        }
+
+        .highlight-on-hover:hover {
+            background-color: #e0e0e0;
+        }
+
+        .td {
+            padding: 50px;
+            text-align: left;
+            vertical-align: top; 
+        }
+
+        .text-dark {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+        <div class="container">
+            <h1 class="pr text-center pt-4">NOTIFICATIONS</h1>
+        </div>
+        <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+            <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+            </div>
+        </div>
+        <div class="custom-f row w-100 m-auto border text-start text-dark">
+            <table class="table table-bordered" style="margin: 0px !important;">
+                <thead>
+                    <th id="categorySelectionLink" class="modal-link highlight-on-hover">
+                        Purchase Request No. 0000100 is waiting for you. 
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="text-dark">  09/02/23</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="custom-f row w-100 m-auto border text-start text-dark">
+            <table class="table table-bordered" style="margin: 0px !important;">
+                <thead>
+                    <th id="categorySelectionLink" class="modal-link highlight-on-hover">
+                        Resolution for Purchase Request No. 0000100 is declined by the Campus Director.
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="text-dark">  09/02/23</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ </div>
+
+</body>
+</html>

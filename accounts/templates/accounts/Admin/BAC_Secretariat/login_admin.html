@@ -27,7 +27,7 @@
             <img class="login_icon" src="{% static 'images/login.png' %}" alt="">
         </div>
         
-        <form action="{% url 'login' %}" method="post">
+        <form action="{% url 'admin_login' %}" method="post">
             {% csrf_token %}
             
             {% if messages %}
@@ -57,7 +57,7 @@
             </div>
 
             <div class="register-link">
-                <p>Don't have an Account? <a href="{% url 'register' %}">Register</a></p>
+                <p>Don't have an Account? <a href="{% url 'register_admin' %}">Register</a></p>
             </div>
         </form>
     </div>
