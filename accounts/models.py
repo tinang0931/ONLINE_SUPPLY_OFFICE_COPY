@@ -55,6 +55,7 @@ class Item(models.Model):
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
+    
 
 
 
@@ -84,6 +85,12 @@ class CheckoutItems(models.Model):
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
+    
+    @staticmethod
+    def calculate_total_amount(checkout):
+        items = CheckoutItems.objects.filter(checkout=checkout)
+        total_amount = sum(item.total_cost for item in items)
+        return total_amount
 
 class CsvFile(models.Model):
     CATEGORY = models.CharField(max_length=255)

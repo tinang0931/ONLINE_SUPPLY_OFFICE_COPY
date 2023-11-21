@@ -429,6 +429,7 @@ class RequesterView(View):
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
+                    
                     # Add other fields as needed
                 )
 
@@ -437,9 +438,7 @@ class RequesterView(View):
             return redirect('requester')
         return render(request, self.template_name)
 
-        # Handle the case where the edit or delete button was clicked
-        # You might want to add some specific logic for these cases
-        return HttpResponse("Edit or delete logic goes here")
+
         
 
 
@@ -489,6 +488,9 @@ def your_view(request):
     # Calculate total cost for each item
     for item in items:
         item.total_cost = item.unit_cost * item.quantity
+       
+    
+
 
     return render(request, 'cart.html', {'items': items})
 

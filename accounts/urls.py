@@ -34,7 +34,9 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-   path('item/<int:request_id>/delete/', views.item_delete, name='item_delete')
+   path('item/<int:request_id>/delete/', views.item_delete, name='item_delete'),
+   path('login/',views.login, name='login'),
+
 
 
 ]

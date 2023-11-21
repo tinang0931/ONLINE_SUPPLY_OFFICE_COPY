@@ -74,13 +74,35 @@
 
               <td class="text-center">
 
-                <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
 
 
               </td>
             </tr>
             {% endfor %}
         </tbody>
+
+
+        <script>
+          // Wait for the document to be ready
+          $(document).ready(function() {
+              // Function to calculate total amount
+              function calculateTotal() {
+                  var totalAmount = 0;
+                  // Loop through each row in the table body
+                  $(".item_total_cost").each(function() {
+                      // Get the value of each item's total cost in this row
+                      var itemCost = parseFloat($(this).text());
+                      // Add the total cost of this item to the totalAmount
+                      totalAmount += itemCost;
+                  });
+                  // Display the total amount in the designated span or div
+                  $("#total_amount").text(totalAmount.toFixed(2)); // Adjust if needed
+              }
+              
+              // Call the calculateTotal function initially
+              calculateTotal();
+          });
+      </script
       </table>
   </div>
 
@@ -98,9 +120,9 @@
         </div>
         <div class="col-md-4">
           <!-- Total Amount -->
-          <div class="text-center"  style="color:#FFFFFF" >
-            <span>Total Amount: {{ total_cost }}</span>
-          </div>
+          <div class="text-center" style="color:#FFFFFF">
+    <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+</div>
         </div>
         <div class="col-md-4">
           <!-- Submit Button -->
