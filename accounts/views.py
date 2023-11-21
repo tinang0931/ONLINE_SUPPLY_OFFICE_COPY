@@ -401,7 +401,7 @@ class RequesterView(View):
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
-        if 'submit_button' in request.POST:
+        if request.method == 'POST':
             # Fetch data from the Item model
             items = Item.objects.all()
 
@@ -409,6 +409,8 @@ class RequesterView(View):
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
 
             new_checkout = Checkout.objects.create()
+            
+
 
             for row in items:
                 item_id = row.id
@@ -421,6 +423,7 @@ class RequesterView(View):
                 # Customize the fields according to your CheckoutItems model
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
+                    
                     purpose=purpose,
                     item=item,
                     item_brand_description=item_brand,
@@ -429,26 +432,12 @@ class RequesterView(View):
                     unit_cost=price,
                     # Add other fields as needed
                 )
-
-                Item.objects.filter(id=item_id).delete()
+                new_checkout.save()
+                items.delete()
 
             return redirect('requester')
         return render(request, self.template_name)
 
-@authenticated_user
-def delete_item(request, item_id):
-    if request.method == 'POST':
-        # Get the object to be deleted
-        item = get_object_or_404(CheckoutItems, id=item_id)
-
-        # Perform delete operation
-        item.delete()
-
-        # Return a JSON response indicating success
-        return JsonResponse({'status': 'success'})
-    else:
-        # Return a JSON response indicating failure for non-POST requests
-        return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
 
 @authenticated_user
 def item_list(request):
@@ -496,24 +485,20 @@ def bac_history(request):
    requests = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
-@authenticated_user
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
-    item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
 
 
 class GetNewRequestsView(View):
     def get(self, request, *args, **kwargs):
-        # Fetch new requests from the database based on your criteria
+
+       
+
+          # Fetch new requests from the database based on your criteria
         new_requests = Checkout.objects.exclude(pr_id=None)
 
         # Serialize the data as needed
         serialized_requests = [
             {
-                'id': request.id,
+                'user_id': request.user_id,
                 'submission_date': request.submission_date,
                 # Add other fields as needed
             }

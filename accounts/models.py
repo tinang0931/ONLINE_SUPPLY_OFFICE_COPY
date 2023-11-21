@@ -60,6 +60,7 @@ class Item(models.Model):
 
 class Checkout(models.Model):
     pr_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
 
     @property
