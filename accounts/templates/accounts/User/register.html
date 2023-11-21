@@ -74,30 +74,28 @@
     .register-details .details {
         font-size: 20px; /* Adjust the font size of the title */
     }
-        
+    
     </style>
 </head>
 
 <body>
     <div class="upper">Online Supply System</div>
 
-    <div class="container">
+    <div class="container" style="margin-top: 150px;">
         {% if messages %}
     
             {% for message in messages %}
                 {{ message }}
-                {% endfor %}
+            {% endfor %}
     
             {% endif %}
-
-
             <div class="icon-container">
-                <img class="login_icon" src="{% static 'images/register.png' %}" alt="">
+                <img class="login_icon" src="{% static 'images/register.png' %}" alt="" style="display: block; margin: 0 auto;">
             </div>
 
         <div class="title">Register</div>
         <form action="{% url 'register' %}" method="post">
-            {%csrf_token %}
+            {% csrf_token %}
 
             <div class="user-details">
                 <div class="input-box">
@@ -171,23 +169,23 @@
                     </script>
 
                     <div class="register-details">
-                        <span class="details">Type of user</span> <!-- Add a title -->
-                    
-                        <div class="input-box">
-                            <label for="studentCheckbox">
-                                <input type="checkbox" name="user_type" id="studentCheckbox" value="admin">
-                                Admin
-                            </label>
-                    
-                            <label for="staffCheckbox">
-                                <input type="checkbox" name="user_type" id="staffCheckbox" value="regular">
-                               Regular User
-                            </label>
-                    
-                            <!-- Add more checkboxes as needed for different user types -->
-                        </div>
-                    </div>
-                    
+    <span class="details">Type of user</span>
+
+    <div class="input-box">
+        <label class="checkbox-label" for="adminCheckbox">
+            <input type="checkbox" name="user_type" id="adminCheckbox" value="admin">
+            <div class="checkbox-box">Admin</div>
+        </label>
+
+        <label class="checkbox-label" for="regularCheckbox">
+            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+            <div class="checkbox-box">Regular User</div>
+        </label>
+
+        <!-- Add more checkboxes as needed for different user types -->
+    </div>
+</div>      
+          
                 </div>
 
                 <div class="login-link">

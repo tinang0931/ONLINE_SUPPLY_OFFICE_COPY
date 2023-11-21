@@ -114,7 +114,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-@unauthenticated_user
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -326,7 +326,7 @@ def profile_html(request):
 
 
 
-@authenticated_user
+
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -348,7 +348,7 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-@authenticated_user
+
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
