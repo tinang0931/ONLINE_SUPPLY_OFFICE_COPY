@@ -331,6 +331,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
+.fas fa-sign-out-alt{
+  position: sticky;
+}
+
+
 .cart_image{
   height: 30px;
   width: 30px;
