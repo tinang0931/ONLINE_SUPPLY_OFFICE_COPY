@@ -72,10 +72,10 @@
               <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
           </td>
 
-              <td class="text-center">
+              <!-- <td class="text-center">
 
-                            <a href="{% url 'item_delete' item.request_id %}" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
-              </td>
+              <a href="#" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
+              </td> -->
             </tr>
             {% endfor %}
         </tbody>
@@ -103,7 +103,7 @@
         <div class="col-md-4">
           <!-- Submit Button -->
           <div class="text-right">
-            <input type="submit" value="Submit" name="my-submit-button" id="my-submit-button-id" class="btn btn-primary">
+            <input type="submit"  class="btn btn-primary">
           </div>
         </div>
       </div>

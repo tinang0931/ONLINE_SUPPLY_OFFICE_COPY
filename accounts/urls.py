@@ -21,7 +21,6 @@ urlpatterns = [
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
-   path('purchase_request_history/', PurchaseRequestHistoryView.as_view(), name='purchase_request_history'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_history/',views.bac_history, name='bac_history'),
@@ -32,10 +31,9 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('notif/',views.notif, name='notif'),
-   path('item/<uuid:request_id>/delete/', views.item_delete, name='item_delete'),
    path('inspection/',views.inspection, name='inspection'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
-
+   path('history/',views.history, name='history'),
 ]

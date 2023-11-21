@@ -18,19 +18,19 @@
     }
     
     .ctu_logo {
-        width: 190px;
-        height: auto;
-        margin-right: 20px;
-        float: left;
-        margin-top: 30px;
-    }
+    width: 150px;
+    height: auto;
+    margin-right: 1px;
+    float: left;
+    margin-top: 30px;
+}
         
-    .asean_logo{
-        width: 167px;
-        height: auto;
-        margin-right: 20px;
-        margin-top: 55px;
-        float: left;
+.asean_logo {
+    width: 120px;
+    height: auto;
+    margin-right: 20px;
+    margin-top: 55px;
+     float: left;
     }
 
         .container-fluid {
@@ -93,10 +93,11 @@
         }
 
         .stars_logo {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-top: 145px;
+    float: right;
+    width: 167px;
+    height: auto;
+    margin-top: 120px;
+    margin-left: -5px;
         }
 
         .br {
@@ -225,7 +226,7 @@
 
 .table-container {
         margin-top: 20px;
-        width: 60%;
+        width: 80%;
         margin-left: 50px;
         margin-right: 50px;
     }
@@ -240,23 +241,7 @@
     text-decoration: none;
     color: #007acc; /* Adjust the color as needed */
 }
-.comment-box {
-    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-    position: relative;
-  }
 
-  .comment-box textarea {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
 
   .send-icon {
     position: absolute;
@@ -281,6 +266,22 @@
         /* Add this style to your CSS file or in the head of your HTML file */
         table td {
             font-weight: normal;
+        }
+
+        .input-box{
+            width: 60%;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        
+        .input-box input{
+            width: 160%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
        
     .orange {
@@ -337,15 +338,16 @@
     </div>
 
         <div class="row" style="margin-top: 20px;">
-            <div class="col-md-4 text-left" style="margin-bottom: 10px;">
-              <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
-            </div>
-            <div class="col-md-4 text-center" style="margin-bottom: 10px;">
-              <h4>Fund Cluster<span contenteditable="true" id="editableField"></span></h4></h4>
-            </div>
-            <div class="col-md-4 text-right" style="margin-bottom: 10px;">
-              <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
-            </div>
+    <div class="col-md-4 text-left" style="margin-bottom: 10px;">
+        <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+    </div>
+    <div class="col-md-4 text-center" style="margin-bottom: 10px;">
+        <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4>
+    </div>
+    <div class="col-md-4 text-right" style="margin-bottom: 10px;">
+        <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
+    </div>
+</div>
                  
         <div class="table-container">
             <div class="justify-content">
@@ -416,8 +418,12 @@
                </div>
             </div>
         </div>
-        <div class="comment-box">
-            <textarea placeholder="Update the purchase request status..."></textarea>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div class="input-box">
+            <input placeholder="Update the purchase request status...">
+        </div>
             <div class="icons-container">
               <div class="send-icon" onclick="sendMessage()">
                 <i class="fas fa-paper-plane"></i>

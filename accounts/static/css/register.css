@@ -45,8 +45,6 @@ body{
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    position: absolute;
-    left: 1100px;
     top: 160px;
 }
 
@@ -57,66 +55,6 @@ body{
     text-align: center;
     margin-top: 0;
     margin-bottom: 35px;
-}
-
-
-.wrapper .input-box {
-    position: relative;
-    width: 270px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.486);
-    margin: 15px auto;
-}
-
-
-.input-box input {
-    width: 270px;
-    height: 100%;
-    background: transparent;
-    border: 1px solid #070707;
-    border-radius: 3px;
-    font-size: 14px;
-    color: black;
-    padding: 10px;
-    box-shadow: 0 0 3px black;
-}
-
-
-.input-box input:hover{
-    color: #003566;
-}
-
-
-.wrapper .btn {
-    width: 32%;
-    height: 30px;
-    background: #fc8f01;
-    outline: none;
-    border-radius: 40px;
-    border: solid #df8004ad .5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
-    cursor: pointer;
-    color: black;
-    font-weight: 250;
-    font-size: 17px;
-    margin-left: 64%;
-    margin-top: 10px;
-    text-align: center;
-    line-height: 5px;
-    transition-duration: 0.4s;
-}
-
-
-.wrapper .btn:hover{
-    color: white;
-    background-color: #ffa125e3;
-}
-
-
-.icon-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 
