@@ -30,10 +30,7 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.is_admin = self.user_type == 'admin'
         super().save(*args, **kwargs)
-    is_regular = models.BooleanField(default=False) 
-    def save(self, *args, **kwargs):
-        self.is_regular = self.user_type == 'regular'
-        super().save(*args, **kwargs)
+   
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
     def save(self, *args, **kwargs):

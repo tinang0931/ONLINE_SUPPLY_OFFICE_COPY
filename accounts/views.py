@@ -9,7 +9,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_required
+from .decorators import unauthenticated_user, authenticated_user, admin_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -42,13 +42,13 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-@regular_required
+
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 User = get_user_model()
 @unauthenticated_user
-@regular_required
+
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -228,43 +228,44 @@ def reset_password(request):
         messages.success(request, 'Password updated successfully.')
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
-@regular_required
+
 @authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
-@regular_required
+
 @authenticated_user
+
 def about(request):
     return render(request, 'accounts/User/about.html')
 @authenticated_user
 @authenticated_user
-@regular_required
+
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
 @authenticated_user
-@regular_required
+
 def history(request):
     requests = CheckoutItems.objects.all()
     return render(request, 'accounts/User/history.html', {'requests': requests})
 
 @authenticated_user
-@regular_required
+
 def tracker(request):
     status = Comment.objects.all()
     return render(request, 'accounts/User/tracker.html', {'status': status})
    
 
 @authenticated_user
-@regular_required
+
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 @authenticated_user
-@regular_required
+
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -363,7 +364,7 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-@regular_required
+
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
