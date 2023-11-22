@@ -166,19 +166,39 @@
         }
 
         .comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
+    width: calc(60% - 40px);
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    position: relative;
+  }
 
-        .comment-box textarea {
-            width: 160%;
-            height: 100px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+  .comment-box textarea {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .send-icon {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .send-icon i {
+    line-height: 30px;
+  }
 
         table {
             width:60%;
@@ -241,40 +261,48 @@
     <div> &nbsp</div>
     <div> &nbsp</div>
     <div class="committee-member">
-        <h2>Juan Juan</h2>
-        <p>Chairman</p><br><h2>Juan Juan</h2>
-        <p>Member</p>
+        <h2><span contenteditable="true">Juan Juan</span></h2>
+        <p><span contenteditable="true">Chairman</span></p>
+        <br>
+        <h2><span contenteditable="true">Juan Juan</span></h2>
+        <p><span contenteditable="true">Member</span></p>
     </div>
     <div class="committee">
-        <h2>Juan Juan</h2>
-        <p>Campus Director</p><br><h2>Juan Juan</h2>
-        <p>Member</p>
+        <h2><span contenteditable="true">Juan Juan</span></h2>
+        <p><span contenteditable="true">Campus Director</span></p>
+        <br>
+        <h2><span contenteditable="true">Juan Juan</span></h2>
+        <p><span contenteditable="true">Member</span></p>
     </div>
-    <div> &nbsp</div>
+    <div>&nbsp;</div>
     <div class="member">
-        <h2>Juan Juan</h2>
-        <p>Vice-Chairman</p>
+        <h2><span contenteditable="true+">Juan Juan</span></h2>
+        <p><span contenteditable="true">Vice-Chairman</span></p>
     </div>
     <div class="committee-member">
-        <h2>Approved : </h2>
+        <h2><span contenteditable="true">Approved :</span></h2>
     </div>
     <div class="member">
-        <h2>Juan Juan</h2>
-        <p>Vice-Chairman</p>
+        <h2><span contenteditable="true">Juan Juan</span></h2>
+        <p><span contenteditable="true">Vice-Chairman</span></p>
     </div>
     </div>
-
     <div class="comment-box">
         <textarea placeholder="Update the purchase request status..."></textarea>
-    </div>    
         <div class="icons-container">
-            <a href="#" title="Download" class="icon-link">
-                <i class="fas fa-download"></i> Download
-            </a>
-            <a href="javascript:window.print()" title="Print" class="icon-link">
-                <i class="fas fa-print"></i> Print
-            </a>
+          <div class="send-icon" onclick="sendMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+          <a href="#" title="Download" class="icon-link">
+            <i class="fas fa-download"></i> Download
+          </a>
+          <a href="javascript:window.print()" title="Print" class="icon-link">
+            <i class="fas fa-print"></i> Print
+          </a>
         </div>
+      </div>
+    </div>
+</div>
     
 </body>
 </html>
