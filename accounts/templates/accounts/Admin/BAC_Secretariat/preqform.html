@@ -203,7 +203,7 @@
 .icon-link {
     margin-left: 20px;
     text-decoration: none;
-    color: #007acc; /* Adjust the color as needed */
+    color: white; /* Adjust the color as needed */
 }
 
 
@@ -240,6 +240,16 @@
     line-height: 30px;
   }
 
+  .footer {
+  background-color: rgba(1, 33, 67, 0.9);
+  text-align: center;
+  width: 100%;
+  height: auto;
+  bottom: 0;
+  -webkit-user-modify: read-only;
+  position: fixed;
+  z-index: 2;
+}
 </style>
 
 <body>
@@ -374,26 +384,25 @@
             </div>
         </div>
         <div> &nbsp</div>
-        <div class="input-box">
-            <input placeholder="Update the purchase request status...">
-        </div>
-            <div class="icons-container">
-                <div class="send-icon" onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                  </div>
-                  <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                  </a>
-                  <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                  </a>
+        <footer class="footer">
+            <div class="input-box">
+                <input placeholder="Update the purchase request status...">
             </div>
-        </div>
+                <div class="icons-container">
+                    <div class="send-icon" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                      </div>
+                      <a href="#" title="Download" class="icon-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="javascript:window.print()" title="Print" class="icon-link">
+                        <i class="fas fa-print"></i> Print
+                      </a>
+                </div>
+            </div>
+        </footer>
         
     </div>
-
-    
-    
 </body>
 </head>
 
