@@ -28,23 +28,19 @@ class User(AbstractUser):
     ]
     is_admin = models.BooleanField(default=False) 
     def save(self, *args, **kwargs):
-        # Set is_admin based on user_type
         self.is_admin = self.user_type == 'admin'
         super().save(*args, **kwargs)
-    
+    is_regular = models.BooleanField(default=False) 
+    def save(self, *args, **kwargs):
+        self.is_regular = self.user_type == 'regular'
+        super().save(*args, **kwargs)
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
     def save(self, *args, **kwargs):
-        # Perform actions based on user_type before saving
         if self.user_type == 'admin':
-            # Do something specific for admin users
             self.is_admin = True
         else:
-            # Do something specific for regular users
             self.is_admin = False
-
-        # You can add more custom actions based on user_type here
-
         super().save(*args, **kwargs)
 
     def __str__(self):

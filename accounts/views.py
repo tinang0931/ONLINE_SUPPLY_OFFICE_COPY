@@ -9,7 +9,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -32,24 +32,23 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt 
 import random
 
 
 def main(request):
     return render(request, 'accounts/User/main.html')
-
-
+@admin_required
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-
+@regular_required
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 User = get_user_model()
 @unauthenticated_user
-
+@regular_required
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -129,21 +128,24 @@ def login(request):
                 return redirect('bac_home')  
             else:
                 return redirect('request')
+        if user.user_type == 'regular':
+                return redirect('request')  
         else:
+                return redirect('bac_home')
+    else:
             messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
-
+@admin_required
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
     return render(request, 'bac_home.html')
+@admin_required
 def request_page(request):
     if request.user.is_admin:
        
         return redirect('bac_home')
-    
-    
     return render(request, 'request.html')
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
@@ -226,54 +228,57 @@ def reset_password(request):
         messages.success(request, 'Password updated successfully.')
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
-
+@regular_required
 @authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
-
+@regular_required
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
 @authenticated_user
 @authenticated_user
+@regular_required
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
 @authenticated_user
+@regular_required
 def history(request):
     requests = CheckoutItems.objects.all()
     return render(request, 'accounts/User/history.html', {'requests': requests})
 
 @authenticated_user
+@regular_required
 def tracker(request):
     status = Comment.objects.all()
     return render(request, 'accounts/User/tracker.html', {'status': status})
    
 
 @authenticated_user
+@regular_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 @authenticated_user
+@regular_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-@authenticated_user
+@admin_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
-@authenticated_user
+@admin_required
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
-@authenticated_user
+@admin_required
 def bac_home(request):
-   
-    
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 @authenticated_user
 def preqform(request):
     checkout_items = CheckoutItems.objects.all()
@@ -332,9 +337,6 @@ def notif(request):
 def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-@authenticated_user
-def profile_html(request):
-    return render(request, 'profile.html')
 
 
 
@@ -361,7 +363,7 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-
+@regular_required
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
@@ -504,6 +506,7 @@ def show_more_details(request):
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+@admin_required
 @authenticated_user
 def bac_history(request):
    requests = Item.objects.all()

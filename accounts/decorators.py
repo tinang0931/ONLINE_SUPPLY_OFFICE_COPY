@@ -27,14 +27,17 @@ def authenticated_user(view_func):
     return wrapper_func
 
 
-
-
 def admin_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.role == 'admin':
-            return view_func(request, *args, **kwargs)
-        else:
-            return redirect('bac_home')  # Redirect to login page if not authenticated or not an admin
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated or not request.user.is_admin:
+            return redirect('login')  # You can change 'login' to the appropriate login URL
+        return view_func(request, *args, **kwargs)
 
-    return _wrapped_view
+    return wrapper
+def regular_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated or not request.user.is_regular:
+            return redirect('login')  # You can change 'login' to the appropriate login URL
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
