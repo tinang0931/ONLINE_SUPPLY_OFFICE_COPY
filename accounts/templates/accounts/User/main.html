@@ -30,7 +30,6 @@
              <div class="profile-container">
               <a href="{% url 'prof' %}">
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
-
                 
                 <script>
             
@@ -42,10 +41,25 @@
               </script>
               </a>
               <h1 class="user">Username</h1>
-              <script>
-                  var fullName = localStorage.getItem('fullName') || 'Username';
-                  document.querySelector('.user').textContent = fullName;
-              </script>
+<script>
+    // Function to shorten the full name and update the display
+    function shortenAndDisplay(fullName, maxLength) {
+        var shortenedName = fullName.length > maxLength ?
+            fullName.substring(0, maxLength - 3) + '...' :
+            fullName;
+        document.querySelector('.user').textContent = shortenedName;
+    }
+
+    // Retrieve the full name from localStorage or use a default value
+    var fullName = localStorage.getItem('fullName') || 'Username';
+
+    // Specify the maximum length you want for the displayed username
+    var maxLength = 10; // Adjust this value as needed
+
+    // Call the function to update the displayed username
+    shortenAndDisplay(fullName, maxLength);
+</script>
+
             
             </div>
           </div>
