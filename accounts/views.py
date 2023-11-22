@@ -388,8 +388,6 @@ def request(request):
         
         # Pass data to the template
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
-
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
 
@@ -403,7 +401,7 @@ class RequesterView(View):
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
-        if 'submit_button' in request.POST:
+        if request.method == 'POST':
             # Fetch data from the Item model
             items = Item.objects.all()
 
@@ -429,11 +427,11 @@ class RequesterView(View):
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
-                    
                     # Add other fields as needed
                 )
 
-                Item.objects.filter(id=item_id).delete()
+                new_checkout.save()
+                items.delete()
 
             return redirect('requester')
         return render(request, self.template_name)

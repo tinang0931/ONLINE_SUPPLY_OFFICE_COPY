@@ -286,86 +286,72 @@
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 120%">
                             <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
+                                <th colspan="2">Office Section: <span contenteditable="true" 
+                                    style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                    oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                              </span</span></th>
                                 <th colspan="2">PR No.: <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
+                                        id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" 
+                                        style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                        oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                        </span></th>
                                 <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
                             </tr>
+
                             <tr>
-                                <td>Stock/Property</td>
-                                <td>Unit</td>
-                                <td>Item Description</td>
-                                <td>Quantity</td>
-                                <td>Unit Cost</td>
-                                <td>Total Cost</td>
+                                <th>Stock/Property</th>
+                                <th>Unit</th>
+                                <th>Item Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Cost</th>
+                                <th>Total Cost</th>
                             </tr>
+                            {% for item in checkout_items %}
                             <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                            <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                                 <td>{{ forloop.counter }}</td>
+                                <td class="item_unit text-center">{{ item.unit }}</td>
+                                <td class="item_description text-center">{{ item.item_description }}</td>
+                                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                                <td class="item_total_cost text-center">{{total_cost }}</td>
+                                <td>
+                                    <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
+                                    <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                                    <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
+                                    <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                                    <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
+                                    <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
                                 </td>
                             </tr>
+                            {% endfor %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">
+                                        <span>Total Amount:</span>
+                                    </td>
+                                </tr>
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <span contenteditable="true" 
+              style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+              oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+        </span><br>Accountant
+                                </td>
+                            </tr>
+                            
 
 
                             </tr>
                             <tr>
                             <tr>
                                 <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
+                                    style="border: none; outline: none; text-decoration: underline"></span></td></tr>
                             <tr>
                                 <td colspan="2">Requested by: <span contenteditable="true"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                                        <td colspan="4" style="text-align: left;">Approved by<span contenteditable="true" 
+                                            style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                            oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                      </span</td>
                                 </td>
                             </tr>
                         </table>
