@@ -142,6 +142,9 @@
         margin-left: 6%
     }
     
+    .cart {
+        width: 50px;
+    }
 
 
 
@@ -157,7 +160,7 @@
             <div class="cart">
                 <a href="{% url 'requester' %}">
                     <i>
-                        <img id="cartImage" src="{% static 'images/cart.png' %}" alt="Icon Description">
+                        <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
                     </i>
                 </a>
             </div>
