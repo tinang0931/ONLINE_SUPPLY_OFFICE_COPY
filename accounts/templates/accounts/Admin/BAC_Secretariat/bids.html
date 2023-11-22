@@ -144,11 +144,12 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 20px; 
+            margin-right: 50px;
         }
 
         .icon-link {
             text-decoration: none;
-            color: #007acc;
+            color: white;
             display: flex;
             align-items: center;
             margin: 0 10px;
@@ -200,11 +201,30 @@
     line-height: 30px;
   }
 
-        table {
-            width:60%;
-        }
+.send-icon {
+    position: fixed;
+    top: 90.5%;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
- 
+
+.footer {
+  background-color: rgba(1, 33, 67, 0.9);
+  text-align: center;
+  width: 100%;
+  height: auto;
+  bottom: 0;
+  -webkit-user-modify: read-only;
+  position: fixed;
+  z-index: 2;
+}
     </style>
 
 
@@ -241,6 +261,8 @@
         <div> &nbsp</div> 
         <h><b>RESOLUTION</b></h>  
     </div>
+
+
     <ul contenteditable="true">
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -303,6 +325,22 @@
       </div>
     </div>
 </div>
+    
+        <div>&nbsp</div>
+        
+    
+            <div class="icons-container">
+                <div class="send-icon" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                  </div>
+                  <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                  </a>
+                  <a href="javascript:window.print()" title="Print" class="icon-link">
+                    <i class="fas fa-print"></i> Print
+                  </a>
+            </div>
+    </footer>
     
 </body>
 </html>
