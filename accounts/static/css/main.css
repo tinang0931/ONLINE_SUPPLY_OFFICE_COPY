@@ -252,7 +252,7 @@ height: 100%;
 
 
 #sidebar-wrapper .list-group {
-  width: 280px;
+  width: 320px;
 }
 
 
@@ -328,6 +328,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .arrow_img {
   height: 30px;
   width: 30px;
+}
+
+
+.fas fa-sign-out-alt{
+  position: sticky;
 }
 
 
