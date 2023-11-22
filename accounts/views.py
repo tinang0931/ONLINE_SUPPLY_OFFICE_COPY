@@ -518,19 +518,9 @@ def delete_item(request, item_id):
 #     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
+# def delete_item(request,request_id):
+#     item = get_object_or_404(Item, request_id)
+#     item.delete()
+#     return JsonResponse({'ststus': 'success'})
 
 
-
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
-
-
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
-    item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
