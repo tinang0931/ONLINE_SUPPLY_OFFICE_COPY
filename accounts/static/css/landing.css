@@ -50,8 +50,6 @@
     position: fixed;
     left: 900px;
     top: 0px;
-  
-
 }
 
 .triangle-up {
@@ -122,8 +120,8 @@
     position: fixed;
     width: 822px;
     height: 225px;
-    left: 50px;
-    top: 650px;
+    left: 100px;
+    top: 750px;
     font-family: 'Hermeneus One';
     font-style: normal;
     font-weight: 400;
