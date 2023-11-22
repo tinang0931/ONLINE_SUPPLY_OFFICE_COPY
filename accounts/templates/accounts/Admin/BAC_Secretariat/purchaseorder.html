@@ -174,11 +174,10 @@
 
 
 .table-container {
-        margin-top: -200px;
-        width: 62%;
-        margin-left: 100px;
-        margin-right: 150px;
-    }
+        margin-top: 0;
+        margin-left: 10px;
+        width: 66.1%;
+        }
 
         .icons-container {
             margin-top: 20px;
@@ -189,20 +188,20 @@
 
         .icon-link {
             text-decoration: none;
-            color: #007acc;
+            color: white;
             padding: 5px; /* Add padding for better spacing */
             display: inline-block; /* Display icons next to each other */
             margin-right: 10px; /* Adjust margin as needed */
         }
 
 .input-box{
-    width: 93.8%;
-    margin-top: 20px;
-    margin-right: 50px;
+    width: 66.1%;
+    margin-top: 25px;
+    margin-left: 5px;
 }
         
 .input-box input{
-    width: 160%;
+    width: 150%;
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
@@ -244,6 +243,18 @@
         th span[contenteditable]:focus {
             border-bottom: 1px solid #000; /* Change border style when focused */
         }
+
+
+.footer {
+    background-color: rgba(1, 33, 67, 0.9);
+    text-align: center;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+}
 </style>
 
 <body>
@@ -287,11 +298,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
+        
         <div class="table-container">
             <div class="justify-content">
                 <div class="col-md-10">
@@ -379,21 +386,41 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="input-box">
-                            <input placeholder="Update the purchase request status...">
-                        </div>
-                
-                        <div class="icons-container">
-                            <div class="send-icon" onclick="sendMessage()">
-                                <i class="fas fa-paper-plane"></i>
-                              </div>
-                              <a href="#" title="Download" class="icon-link">
-                                <i class="fas fa-download"></i> Download
-                              </a>
-                              <a href="javascript:window.print()" title="Print" class="icon-link">
-                                <i class="fas fa-print"></i> Print
-                              </a>
-                        </div>
+
+                        <div>&nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+
+                        <footer class="footer">
+                            <div class="input-box">
+                                <input placeholder="Update the purchase request status...">
+                            </div>
+                    
+                            <div class="icons-container">
+                                <div class="send-icon" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                  </div>
+                                  <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> Download
+                                  </a>
+                                  <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> Print
+                                  </a>
+                            </div>
+                        </footer>
         </div>
         
     </div>
