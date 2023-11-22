@@ -23,7 +23,15 @@ class User(AbstractUser):
     USER_TYPES = [
         ('admin', 'Admin'),
         ('regular', 'Regular User'),
+        
+        
     ]
+    is_admin = models.BooleanField(default=False) 
+    def save(self, *args, **kwargs):
+        # Set is_admin based on user_type
+        self.is_admin = self.user_type == 'admin'
+        super().save(*args, **kwargs)
+    
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
     def save(self, *args, **kwargs):
