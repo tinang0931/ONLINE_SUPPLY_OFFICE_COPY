@@ -214,54 +214,42 @@ def reset_password(request):
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
-@authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
-@authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
-@authenticated_user
-@authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
-@authenticated_user
 def history(request):
     requests = CheckoutItems.objects.all()
     return render(request, 'accounts/User/history.html', {'requests': requests})
 
-@authenticated_user
 def tracker(request):
     status = Comment.objects.all()
     return render(request, 'accounts/User/tracker.html', {'status': status})
    
 
-@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
-@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
-@authenticated_user
 def bac_history(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
-@authenticated_user
 def bac_home(request):
    
     
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
-@authenticated_user
 def preqform(request):
     checkout_items = CheckoutItems.objects.all()
 
@@ -279,47 +267,36 @@ def preqform(request):
     }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
-@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
-@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
-@authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
-@authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
 
-@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
-@authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
 
-@authenticated_user
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
-@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
-@authenticated_user
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
-@authenticated_user
 def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -435,7 +412,6 @@ class RequesterView(View):
             return redirect('requester')
         return render(request, self.template_name)
 
-@authenticated_user
 def delete_item(request, item_id):
     if request.method == 'POST':
         # Get the object to be deleted
@@ -450,20 +426,19 @@ def delete_item(request, item_id):
         # Return a JSON response indicating failure for non-POST requests
         return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
 
-@authenticated_user
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
 
-
-@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
 
 
-@authenticated_user
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
+
+
+
 def show_more_details(request):
     if request.method == 'POST':
         request_id = request.POST.get('request_id', None)
@@ -491,12 +466,10 @@ def show_more_details(request):
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
-@authenticated_user
 def bac_history(request):
    requests = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
-@authenticated_user
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
