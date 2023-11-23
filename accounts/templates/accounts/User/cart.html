@@ -2,14 +2,13 @@
 
 {% load static %}
 
-
 {% block cart %}
 
 <style>
   .primary-btn {
-      background-color: rgb(52, 129, 211); /* Set the primary color for the button */
-      color: #ffffff; /* Set the text color for the button */
-      padding: 10px 20px; /* Adjust padding as needed */
+      background-color: rgb(52, 129, 211); 
+      color: #ffffff; 
+      padding: 10px 20px; 
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -48,8 +47,8 @@
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
-              <th class="text-center text-nowrap"></th>
+             
+             
               
           </tr>
       </thead>
@@ -63,7 +62,6 @@
               <td class="item_unit text-center">{{ item.unit }}</td>
               <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
               <td class="item_quantity text-center">{{ item.quantity }}</td>
-              <td class="item_total_cost text-center">{{ item.total_cost}}</td>
               <td>
               <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
               <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
@@ -72,10 +70,6 @@
               <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
           </td>
 
-              <!-- <td class="text-center">
-
-              <a href="#" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
-              </td> -->
             </tr>
             {% endfor %}
         </tbody>

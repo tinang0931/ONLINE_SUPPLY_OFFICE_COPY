@@ -261,18 +261,37 @@
         }
 
 
-.footer {
-    background-color: rgba(1, 33, 67, 0.9);
-    text-align: center;
-    width: 100%;
-    height: auto;
-    bottom: 0;
-    -webkit-user-modify: read-only;
-    position: fixed;
-    z-index: 2;
-}
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
+        
+        .button-container{
+            margin-right: 13px;
+            float:right;
+        }
 
-</style>
+        .send-button{
+            position: sticky;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            width: 61px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .icons-container{
+            display: flex;
+        }
+    </style>
+</head>
 
 
 <body>
@@ -371,24 +390,26 @@
     <div> &nbsp</div>
     <div> &nbsp</div>
 
+</body>
 
-    <footer class="footer">
-        <div class="input-box">
-            <input placeholder="Update the purchase request status...">
-        </div>
-
-        <div class="icons-container">
-            <a href="#" title="Download" class="icon-link">
-                <i class="fas fa-download"></i> Download
-            </a>
-            <a href="javascript:window.print()" title="Print" class="icon-link">
-                <i class="fas fa-print"></i> Print
-            </a>
-</div>
-</div>
-
-</div>
-    </footer>
+        <footer class="footer">
+            <div class="input-box">
+                <input placeholder="Update the purchase request status...">
+            </div>
+            <div class="button-container">
+                <button class="send-button" onclick="sendMessage">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+            <div class="icons-container">
+                <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a href="javascript:window.print()" title="Print" class="icon-link">
+                    <i class="fas fa-print"></i> Print
+                </a>
+            </div>
+        </footer>
 
     
 </body>

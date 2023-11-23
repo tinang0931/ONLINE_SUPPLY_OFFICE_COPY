@@ -440,8 +440,9 @@ class RequesterView(View):
                     unit_cost=price,
                     # Add other fields as needed
                 )
+                CheckoutItems.save()
 
-                Item.objects.filter(id=item_id).delete()
+                Item.objects.delete()
 
             return redirect('requester')
         return render(request, self.template_name)

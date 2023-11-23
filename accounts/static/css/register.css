@@ -28,13 +28,13 @@ body{
 
 .upper{
     position: absolute;
-    top: 10%;
-    left: 120px;
+    font-family: Verdana;
+    top: 5%;
+    left: 97px;
     color: white;
     font-size: 60px;
-    margin-bottom: 100%;
-
 }
+
 .container {
     max-width: 700px;
     width: 100%;
