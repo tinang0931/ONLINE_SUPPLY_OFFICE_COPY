@@ -299,7 +299,7 @@ class PreqFormView(View):
 
     def get(self, request):
         # Get the latest checkout object based on the submission date
-        latest_checkout = Checkout.objects.latest('submission_date')
+        latest_checkout = Checkout.objects.latest('submission_date', 'pr_id', 'user', 'purpose')
 
         # Get checkout items associated with the latest checkout
         checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
@@ -307,6 +307,8 @@ class PreqFormView(View):
         context = {
             'checkout_items': checkout_items,
             'pr_id': latest_checkout.pr_id,
+            'user': latest_checkout.user,
+            'purpose': latest_checkout.purpose,
         }
 
         return render(request, self.template_name, context)
@@ -459,8 +461,9 @@ class RequesterView(View):
 
             # Handle form submission
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
+           
 
-            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id())
+            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
 
             
 
@@ -470,19 +473,23 @@ class RequesterView(View):
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = request.POST.get(f'quantity_{item_id}')
-                price = request.POST.get(f'price_{item_id}')
+                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
+                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+
+                try:
+                    total_cost = price * quantity
+                except TypeError:
+                    total_cost = Decimal('0.00')
 
                 # Customize the fields according to your CheckoutItems model
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
-                    
-                    purpose=purpose,
                     item=item,
                     item_brand_description=item_brand,
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
+                    total_cost=total_cost,  # Calculate total cost based on the price and quantity
                     # Add other fields as needed
                 )
                 new_checkout.save()
@@ -540,7 +547,7 @@ def show_more_details(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 @authenticated_user
 def bac_history(request):
-   requests = Item.objects.all()
+   request = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
