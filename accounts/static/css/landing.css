@@ -106,7 +106,7 @@
     width: 685px;
     height: 318px;
     left: 10px;
-    top: 250px;
+    top: 210px;
     font-family: 'Hermeneus One';
     font-style: normal;
     font-weight: 400;
@@ -120,15 +120,15 @@
     position: fixed;
     width: 822px;
     height: 225px;
-    left: 100px;
-    top: 750px;
+    left: 0px;
+    top: 810px;
     font-family: 'Hermeneus One';
     font-style: normal;
     font-weight: 400;
     font-size: 45px;
     line-height: 58px;
     color: #F48C06;
-    text-align: end;
+    text-align: center;
 }
 
 

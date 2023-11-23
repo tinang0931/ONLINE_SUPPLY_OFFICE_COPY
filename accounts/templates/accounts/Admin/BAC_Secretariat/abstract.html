@@ -57,6 +57,18 @@
         }
 
 
+        .btn{
+            position: sticky;
+            width: 6%;
+            height: 30px;
+            border: #01ffff solid 0.5px;
+            background: rgba(1, 33, 67, 0.479);
+            font-weight: 250;
+            font-size: 17px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
         .footer {
             background-color: rgba(1, 33, 67, 0.9);
             text-align: center;
@@ -103,9 +115,11 @@
         <input placeholder="Update the purchase request status...">
     </div>   
         <div class="icons-container">
-            <a href="#" title="Download" class="icon-link">
-                <i class="fas fa-download"></i> Download
-            </a>
+            <button class="btn">
+                <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </button>
             <a href="javascript:window.print()" title="Print" class="icon-link">
                 <i class="fas fa-print"></i> Print
             </a>
