@@ -19,7 +19,6 @@
   
         header {
             background-color: #007acc;
-      
             color: white;
             padding: 10px;
         }
@@ -147,181 +146,178 @@
         }
 
         body,
-    h3,
-    p {
-        margin: 0;
-        padding: 0;
-    }
+            h3,
+            p {
+                margin: 0;
+                padding: 0;
+            }
 
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+            .container-fluid {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .table-and-comment {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-evenly;
+                }
+                .table-container {
+                    width: 60%; /* Adjust the width as needed */
+                    margin-top: -500px;
+                }
 
-    table {
-            width: 100%;
-            table-layout: fixed; /* Prevent table from resizing columns based on content */
+            .logo-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                width: 80%;
+            }
+
+            .logo-container img {
+                max-width: 20%;
+                height: auto;
+                margin: 0 10px;
+            }
+
+            .logo-container-left,
+            .logo-container-right {
+                width: 48%; 
+            }
+
+            .logo-container-left img,
+            .logo-container-right img {
+                width: 100%; 
+            }
+
+            .heading-container {
+            text-align: center;
+            font-size: 10;
         }
-    .table-and-comment {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
+
+        .heading-container h3 {
+            font-size: 1.5em; 
         }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
+        }
+
+
         .table-container {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -500px;
+                margin-top: 20px;
+                width: 80%;
+                margin-left: 50px;
+                margin-right: 50px;
+            }
+            .icons-container {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 20px;
+                margin-right: 50px;
+            }
+
+        .icon-link {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white; /* Adjust the color as needed */
         }
 
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -20px; /* Adjust the negative margin to move it up */
-            margin-bottom: 20px;
-        }
 
-        .comment-box textarea {
-            width: 100%;
-            height: 80px; /* Adjust the height as needed */
-            margin-top: 10px;
+        .input-box{
+            width: 60%;
+            margin-top: 25px;
+            margin-left: 5px;
+        }
+                
+        .input-box input{
+            width: 165.5%;
+            height: 60px;
             padding: 10px;
             box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
 
-    .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        width: 80%;
-    }
+        .send-icon {
+            position: fixed;
+            top: 91%;
+            right: 50px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .logo-container img {
-        max-width: 20%;
+        .send-icon i {
+            line-height: 30px;
+        }
+
+        .footer {
+        background-color: rgba(1, 33, 67, 0.9);
+        text-align: center;
+        width: 100%;
         height: auto;
-        margin: 0 10px;
-    }
-
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: 20px;
-        width: 60%;
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-    .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.icon-link {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #007acc; /* Adjust the color as needed */
-}
-.comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
+        bottom: 0;
+        -webkit-user-modify: read-only;
+        position: fixed;
+        z-index: 2;
         }
 
+        .button-container{
+            margin-right: 8px;
+            float:right;
+        }
 
-.input-box{
-    width: 60%;
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-}
-        
-.input-box input{
-    width: 160%;
-    height: 60px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.97);
-    border-radius: 5px;
-}
+        .send-button{
+            position: sticky;
+            background-color: #4CAF50;
+            color:white;
+            border: none;
+            width: 61px;
+            height: 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-.send-icon {
-    position: fixed;
-    top: 91%;
-    right: 50px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-  .send-icon i {
-    line-height: 30px;
-  }
-
-</style>
+        .icons-container{
+            display: flex;
+        }
+    </style>
+</head>
 
 <body>
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
 
-    <div class="container-fluid">
-        <div class="logo-container">
-            <div class="logo-container-left">
-                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
-                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
-            </div>
-            <div class="heading-container" style="text-align: center;"> 
-                <h3>Republic of the Philippines</h3>
-                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
-                <h3>ARGAO CAMPUS</h3>
-                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                <div>
-                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                    &nbsp;
-                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                </div>
-            </div>
-            <div class="logo-container-right">
-                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
-            </div>
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+    </nav>
+
+    <div class="container">
+        <h>Republic of the Philippines</h>
+        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h>ARGAO CAMPUS</h>
+        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+        <div>
+            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
+            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
         </div>
         <br>
         <br>
@@ -425,3 +421,35 @@
 
 </html>
 {% endblock %}
+        </div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+</body>
+
+    <footer class="footer">
+        <div class="input-box">
+            <input placeholder="Update the purchase request status...">
+        </div>
+        <div class="button-container">
+            <button class="send-button" onclick="sendMessage">
+                <i class="fas fa-paper-plane"></i> Send
+            </button>
+        </div>
+        <div class="icons-container">
+            <a href="#" title="Download" class="icon-link">
+                <i class="fas fa-download"></i> Download
+            </a>
+            <a href="javascript:window.print()" title="Print" class="icon-link">
+                <i class="fas fa-print"></i> Print
+            </a>
+        </div>
+    </footer>
+
+        
+    </div>
+</html>

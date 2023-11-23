@@ -50,8 +50,6 @@
     position: fixed;
     left: 900px;
     top: 0px;
-  
-
 }
 
 .triangle-up {
@@ -108,11 +106,11 @@
     width: 685px;
     height: 318px;
     left: 10px;
-    top: 250px;
-    font-family: 'Hermeneus One';
+    top: 275px;
+    font-family: Verdana;
     font-style: normal;
-    font-weight: 400;
-    font-size: 85px;
+    font-weight: 600;
+    font-size: 69px;
     line-height: 100px;
     color: #ffff;
     text-align: center;
@@ -122,15 +120,14 @@
     position: fixed;
     width: 822px;
     height: 225px;
-    left: 50px;
-    top: 650px;
-    font-family: 'Hermeneus One';
+    left: 282px;
+    top: 859px;
+    font-family: Verdana;
     font-style: normal;
     font-weight: 400;
-    font-size: 45px;
+    font-size: 30px;
     line-height: 58px;
     color: #F48C06;
-    text-align: end;
 }
 
 
