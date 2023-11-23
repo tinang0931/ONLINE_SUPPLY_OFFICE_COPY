@@ -33,23 +33,26 @@ body{
     color: white;
     font-size: 60px;
     margin-bottom: 100%;
+
 }
-
-
-.container{
+.container {
     max-width: 700px;
     width: 100%;
-    background:  rgba(255, 255, 255, 0.87);
+    background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     padding: 20px 30px;
     border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    top: 160px;
 }
 
-
-.icon-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.wrapper h1 {
+    color: #003566;
+    font-size: 45px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 35px;
 }
 
 
@@ -154,16 +157,16 @@ form .register-details .category{
 
  .container .btn {
     justify-content: center;
-    width: 10%;
-    height: 30px;
+    width: 100%;
+    height: 35px;
     background: #fc8f01;
     outline: none;
-    border-radius: 40px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
     font-weight: 250;
-    font-size: 17px;
+    font-size: 19px;
     margin-top: 50px;
     text-align: center;
     line-height: 5px;
@@ -181,7 +184,6 @@ form .register-details .category{
     font: 17px;
     color: black;
     text-align: center;
-    margin-top: 10%;
     display: flex;
     justify-content: flex-start;
 }

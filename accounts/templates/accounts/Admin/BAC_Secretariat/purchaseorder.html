@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,12 +11,13 @@
 
     <style>
   
-  header {
-            background-color: #007acc; 
+        header {
+            background-color: #007acc;
             color: white;
             padding: 10px;
         }
 
+    
         .ctu_logo {
             width: 190px;
             height: auto;
@@ -34,16 +34,7 @@
             float: left;
         }
 
-        .container-fluid {
-            height: 80vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-        }
-
+    
         .container {
             max-width: 800px; 
             padding: 20px;
@@ -55,27 +46,19 @@
             margin: 0 auto; 
         }
 
-       
         h {
             font-size: 25px;
-          
             text-align: center;
-          
         }
 
         p {
             font-size: 25px;
-         
             text-align: center;
-
-
-
         }
 
         a {
             color: #007acc;
             text-decoration: underline;
-         
         }
 
         .management {
@@ -83,7 +66,6 @@
             width: 167px;
             height: auto;
             margin-right: 20px;
- 
         }
 
         .iso_logo {
@@ -115,7 +97,6 @@
             width: 50%; /* Adjust the width as needed */
             margin-top: -500px;
         }
-        
 
         th,
         td {
@@ -124,129 +105,131 @@
             text-align: left;
         }
         body,
-    h3,
-    p {
-        margin: 0;
-        padding: 0;
-    }
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
+        }
 
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .table-container {
+                margin-top: -200px;
+                width: 70%; /* Adjust the width as needed */
+                margin-left: 100px;
+                margin-right: 150px;
+            }
+
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .logo-container img {
+            max-width: 20%;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .logo-container-left,
+        .logo-container-right {
+            width: 48%; 
+        }
+
+        .logo-container-left img,
+        .logo-container-right img {
+            width: 100%; 
+        }
+
+        .heading-container {
         text-align: center;
-    }
+        font-size: 10;
+        }
 
-    .table-container {
-            margin-top: -200px;
-            width: 70%; /* Adjust the width as needed */
-            margin-left: 100px;
-            margin-right: 150px;
+        .heading-container h3 {
+            font-size: 1.5em; 
+        }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
         }
 
 
-    .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        width: 80%;
-    }
+        .table-container {
+            margin-top: 0;
+            margin-left: 10px;
+            width: 66.1%;
+            }
 
-    .logo-container img {
-        max-width: 20%;
-        height: auto;
-        margin: 0 10px;
-    }
-
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: -200px;
-        width: 50%;
-        margin-left: 100px;
-        margin-right: 150px;
-    }
-    .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -20px; /* Adjust the negative margin to move it up */
-            margin-bottom: 20px;
-        }
-
-        .comment-box textarea {
-            width: 100%;
-            height: 60px; /* Adjust the height as needed */
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
         .icons-container {
             margin-top: 20px;
             display: flex;
             justify-content: flex-end; /* Align icons to the right */
+            margin-left: 50%;
         }
 
         .icon-link {
             text-decoration: none;
-            color: #007acc;
+            color: white;
             padding: 5px; /* Add padding for better spacing */
             display: inline-block; /* Display icons next to each other */
             margin-right: 10px; /* Adjust margin as needed */
         }
-.comment-box {
-            margin-top: 20px;
-            width: 100%;
-            margin-left: 50px;
-            margin-right: 50px;
+
+        .input-box{
+            width: 66.1%;
+            margin-top: 25px;
+            margin-left: 5px;
+        }
+                
+        .input-box input{
+            width: 150%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
 
-        .comment-box textarea {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-}
-    table {
-        width:70%;
-    }
+        .send-icon {
+            position: fixed;
+            top: 91%;
+            right: 50px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    th span[contenteditable] {
+        .send-icon i {
+            line-height: 30px;
+        }
+                
+        table {
+            width:70%;
+        }
+
+        th span[contenteditable] {
             display: inline-block;
             width: 80%; /* Adjust the width as needed */
             margin-bottom: 5px; /* Adjust the margin as needed */
@@ -259,71 +242,20 @@
         th span[contenteditable]:focus {
             border-bottom: 1px solid #000; /* Change border style when focused */
         }
-         .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px; 
-}
 
-.icon-link {
-    text-decoration: none;
-    color: #007acc;
-    display: flex;
-    align-items: center;
-    margin: 0 10px;
-    font-family: Arial, sans-serif; 
-}
 
-.icon-link i {
-    margin-right: 5px;
-}
-
-@media print {
-    .icons-container {
-        display: none;
-    }
-}
-
-.comment-box {
-    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-    position: relative;
-  }
-
-  .comment-box textarea {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  .send-icon {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .send-icon i {
-    line-height: 30px;
-  }
-
-table {
-    width:60%;
-}
-    
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
 </style>
+</head>
 
 <body>
 
@@ -345,19 +277,17 @@ table {
         <div>
             <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
             <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
+        </div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <h><b>PURCHASE ORDER</b></h>  
-    </div>
+        </div>
+     
+        </div>
 
-        <div>&nbsp</div>
-        <div>&nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -368,24 +298,19 @@ table {
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-
+        
         <div class="table-container">
             <div class="justify-content">
                 <div class="col-md-10">
                     <div class="mx-auto">
                         <table class="table-bordered" style="width: 150%">
                             <tr>
-                                <th colspan="4">Supplier:<span contenteditable="true">______________________________</span>
-                                        </span><br>Address:<span contenteditable="true">______________________________</span>
-                                       </span><br>TIN:<span contenteditable="true">__________________________________</span>
-                                <th colspan="6">PO NO.:<span contenteditable="true">______________________________</span>
-                                        </span><br>Date:<span contenteditable="true">_________________________________</span>
-                                    </span><br> Mode of Procurement:<span contenteditable="true">______________________________________<span</th></span>
+                                <th colspan="4">Supplier:<span contenteditable="true"></span>
+                                        </span><br>Address:<span contenteditable="true"></span>
+                                       </span><br>TIN:<span contenteditable="true"></span>
+                                <th colspan="6">PO NO.:<span contenteditable="true"></span>
+                                        </span><br>Date:<span contenteditable="true"></span>
+                                    </span><br> Mode of Procurement:<span contenteditable="true"><span</th></span>
                                     <tr> 
                                         <tr>
                                     <td colspan="6" style="text-align: left;">
@@ -393,10 +318,10 @@ table {
                                 </td>
                                 </tr>
                             <tr>
-                                <th colspan="4">Place of Delivery:<span contenteditable="true">_____________________________</span>
-                                </span><br>Date of Delivery:<span contenteditable="true">______________________________</span>
-                        <th colspan="6">Delivery Team:<span contenteditable="true">_________________________________</span>
-                                </span><br>Payment Team:<span contenteditable="true">_________________________________</span>
+                                <th colspan="4">Place of Delivery:<span contenteditable="true"></span>
+                                </span><br>Date of Delivery:<span contenteditable="true"></span>
+                        <th colspan="6">Delivery Team:<span contenteditable="true"></span>
+                                </span><br>Payment Team:<span contenteditable="true"></span>
                             <tr> 
                                 <tr>
                                      <td>Stock/Property<br>No.</td>
@@ -444,43 +369,57 @@ table {
                         undelivered item/s.
                        <br>
                        <br>
-                       <br>Conforme:<span contenteditable="true">______________________</span>
-                        <br><br><span contenteditable="true">____________________________________<br>Signature over Printed Name of Supplier<br><br>Date:<span contenteditable="true">_____________</span>
-                        <br><span contenteditable="true"style="float:right"  >Very truly yours,<br>_____________________________
-                        <br>Signature over Printed Name of Authorized<br>Official<br>____________<br>Designation</span>
+                       <br>Conforme:<span contenteditable="true"></span>
+                        <br><br><span contenteditable="true"><br>Signature over Printed Name of Supplier<br><br>Date:<span contenteditable="true"></span>
+                        <br><span contenteditable="true"style="float:right"  >Very truly yours,<br>
+                        <br>Signature over Printed Name of Authorized<br>Official<br><br>Designation</span>
                                  <tr>
-                                    <th colspan="4">Func Cluster:<span contenteditable="true">_____________________________</span>
-                                    </span><br>Fund Available:<span contenteditable="true">______________________________</span>
-                                 <br><br><span contenteditable="true">______________________________<br>Signature over Printed Name of Chief Accountant/Head<br>of Accounting Division Unit</span>
-                            <th colspan="6">ORS/BUS No:<span contenteditable="true">______________________________</span>
-                                    </span><br>Date of ORS/BUS:<span contenteditable="true">_________________________________</span>
-                                </span><br> Amount:<span contenteditable="true">__________________<span</th></span>
+                                    <th colspan="4">Func Cluster:<span contenteditable="true"></span>
+                                    </span><br>Fund Available:<span contenteditable="true"></span>
+                                 <br><br><span contenteditable="true"><br>Signature over Printed Name of Chief Accountant/Head<br>of Accounting Division Unit</span>
+                            <th colspan="6">ORS/BUS No:<span contenteditable="true"></span>
+                                    </span><br>Date of ORS/BUS:<span contenteditable="true"></span>
+                                </span><br> Amount:<span contenteditable="true"><span</th></span>
                                 <tr> 
                 
                                     <tr>
                                 </td>
                             </tr>
                         </table>
-                        <div class="comment-box">
-                            <textarea placeholder="Update the purchase request status..."></textarea>
-                            <div class="icons-container">
-                              <div class="send-icon" onclick="sendMessage()">
-                                <i class="fas fa-paper-plane"></i>
-                              </div>
-                              <a href="#" title="Download" class="icon-link">
-                                <i class="fas fa-download"></i> Download
-                              </a>
-                              <a href="javascript:window.print()" title="Print" class="icon-link">
-                                <i class="fas fa-print"></i> Print
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        
-        
-    </div>
-    
-</body>
-</head>
 
+                        <div>&nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+</body>
+
+                        <footer class="footer">
+                            <div class="input-box">
+                                <input placeholder="Update the purchase request status...">
+                            </div>
+                    
+                            <div class="icons-container">
+                                <div class="send-icon" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                  </div>
+                                  <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> Download
+                                  </a>
+                                  <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> Print
+                                  </a>
+                            </div>
+                        </footer>
 </html>
