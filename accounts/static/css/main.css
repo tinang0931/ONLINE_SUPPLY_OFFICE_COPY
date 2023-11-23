@@ -230,13 +230,11 @@ height: 100%;
 } 
 
 
-.sidebar{
-  
+.sidebar {
   transition: all 1s;
   -webkit-transition: all 1s;
   border-right: 2px solid black;
 }
-
 
 #sidebar-wrapper {
   min-height: auto;
@@ -244,21 +242,34 @@ height: 100%;
   transition: margin 3s ease-out;
 }
 
-
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
 }
 
-
 #sidebar-wrapper .list-group {
-  width: 280px;
+  width: 320px;
 }
 
+#sidebar-wrapper .list-group-item {
+  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+}
 
 #page-content-wrapper {
-  
   min-width: 100vw;
+}
+
+#sidebar-wrapper {
+  position: relative; /* Ensure the parent container has a position */
+}
+
+#sidebar-wrapper .list-group-item.logout-link {
+  position: absolute;
+  top: 220%; /* Adjust the top position as needed */
+}
+
+#sidebar-wrapper .list-group-item.logout-link i {
+  margin-right: 10px; /* Adjust the margin as needed for icon spacing */
 }
 
 
@@ -328,6 +339,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .arrow_img {
   height: 30px;
   width: 30px;
+}
+
+
+.fas fa-sign-out-alt{
+  position: sticky;
 }
 
 

@@ -114,27 +114,40 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-@unauthenticated_user
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
-        pass1 = request.POST.get('pass1')  # Use 'pass1' as the password field name
-        
-        # Authenticate the user
+        pass1 = request.POST.get('pass1')  
+
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
-    # User is valid and active, log them in
-           auth_login(request, user)
-           messages.success(request, "You are now logged in.")
-           return redirect('request')
+            auth_login(request, user)
+            messages.success(request, "You are now logged in.")
+
+            if user.user_type == 'admin':
+                return redirect('bac_home')  
+            else:
+                return redirect('request')
         else:
-            # Authentication failed, show an error message
             messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
 
+def bac_home(request):
+    if not request.user.is_admin:
+        return redirect('request')
+    return render(request, 'bac_home.html')
+def request_page(request):
+    if request.user.is_admin:
+       
+        return redirect('bac_home')
+    
+    
+    return render(request, 'request.html')
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
+
 
 
 
@@ -326,7 +339,7 @@ def profile_html(request):
 
 
 
-@authenticated_user
+
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -348,7 +361,7 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-@authenticated_user
+
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
@@ -376,10 +389,7 @@ def request(request):
         return redirect('requester')
 
     else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
         csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -502,4 +512,3 @@ def item_delete(request, request_id):
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
