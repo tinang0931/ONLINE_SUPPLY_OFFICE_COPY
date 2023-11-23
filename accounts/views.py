@@ -6,8 +6,6 @@ from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
-
-from accounts.forms import RequestItemForm
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -393,14 +391,15 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
+        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
         
         # Pass data to the template
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+
+
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
 
@@ -414,7 +413,7 @@ class RequesterView(View):
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
-        if request.method == 'POST':
+        if 'submit_button' in request.POST:
             # Fetch data from the Item model
             items = Item.objects.all()
 
@@ -442,69 +441,42 @@ class RequesterView(View):
                     unit_cost=price,
                     # Add other fields as needed
                 )
+                CheckoutItems.save()
 
-                new_checkout.save()
-                items.delete()
+                Item.objects.delete()
 
             return redirect('requester')
         return render(request, self.template_name)
 
+@authenticated_user
+def delete_item(request, item_id):
+    if request.method == 'POST':
+        # Get the object to be deleted
+        item = get_object_or_404(CheckoutItems, id=item_id)
 
-        
+        # Perform delete operation
+        item.delete()
 
-
-
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
-
-
-
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
-
-
-def edit_item(request):
-
-    if request.method == 'POST' and request.is_ajax():
-        edited_data = request.POST.get('edited_data')  # Assuming edited data is sent as POST parameter
-
-        # Perform necessary processing to update the database based on the received data
-        # For example:
-        for data in edited_data:
-            item_id = data['id']
-            new_value = data['newValue']
-
-            # Update the corresponding item in the database (this depends on your model structure)
-            item = Item.objects.get(id=item_id)
-            item.field_to_update = new_value
-            item.save()
-
-        return JsonResponse({'message': 'Data saved successfully'}, status=200)
+        # Return a JSON response indicating success
+        return JsonResponse({'status': 'success'})
     else:
-        return JsonResponse({'message': 'Invalid request'}, status=400)
+        # Return a JSON response indicating failure for non-POST requests
+        return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
 
-
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
-    item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
-def your_view(request):
-    # Replace this with your actual logic to retrieve items from the database
+@authenticated_user
+def item_list(request):
     items = Item.objects.all()
-
-    # Calculate total cost for each item
-    for item in items:
-        item.total_cost = item.unit_cost * item.quantity
-       
-    
+    return render(request, 'item_list.html', {'items': items})
 
 
-    return render(request, 'cart.html', {'items': items})
+@authenticated_user
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
 
+
+
+@authenticated_user
 def show_more_details(request):
     if request.method == 'POST':
         request_id = request.POST.get('request_id', None)
