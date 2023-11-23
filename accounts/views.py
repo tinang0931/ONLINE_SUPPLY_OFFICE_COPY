@@ -9,7 +9,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user, admin_required
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -36,12 +36,12 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 
 
+
 def main(request):
     return render(request, 'accounts/User/main.html')
-@admin_required
+
 def bac(request):
     return render(request, 'accounts/User/bac.html')
-
 
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
@@ -136,7 +136,6 @@ def login(request):
             messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
-@admin_required
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
@@ -149,8 +148,6 @@ def request_page(request):
     return render(request, 'request.html')
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
-
-
 
 
 def handle_reset_request(request):
@@ -236,7 +233,7 @@ def logout_user(request):
     return redirect('homepage')
 
 @authenticated_user
-
+@regular_user_required
 def about(request):
     return render(request, 'accounts/User/about.html')
 @authenticated_user
@@ -245,15 +242,17 @@ def about(request):
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
+@regular_user_required
+def regular_user_only_view(request):
+    return render(request, 'accounts/User/request.html')
 
+@regular_user_required
 @authenticated_user
-
 def history(request):
     requests = CheckoutItems.objects.all()
     return render(request, 'accounts/User/history.html', {'requests': requests})
-
+@regular_user_required
 @authenticated_user
-
 def tracker(request):
     status = Comment.objects.all()
     return render(request, 'accounts/User/tracker.html', {'status': status})
@@ -364,7 +363,7 @@ def addItem(request):
 
     return render(request, 'accounts/User/request.html')
 
-
+@regular_user_required
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
