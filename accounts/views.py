@@ -391,7 +391,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path ='C:/Users/duhig.jeykierose/Documents/GitHub/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -441,8 +441,9 @@ class RequesterView(View):
                     unit_cost=price,
                     # Add other fields as needed
                 )
+                CheckoutItems.save()
 
-                Item.objects.filter(id=item_id).delete()
+                Item.objects.delete()
 
             return redirect('requester')
         return render(request, self.template_name)
