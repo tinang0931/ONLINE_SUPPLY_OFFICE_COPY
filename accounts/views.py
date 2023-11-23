@@ -491,9 +491,8 @@ class RequesterView(View):
                     total_cost=total_cost,  # Calculate total cost based on the price and quantity
                     # Add other fields as needed
                 )
-                CheckoutItems.save()
-
-                Item.objects.delete()
+                new_checkout.save()
+                items.delete()
 
             return redirect('requester')
         
