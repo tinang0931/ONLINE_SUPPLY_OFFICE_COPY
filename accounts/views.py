@@ -49,7 +49,6 @@ def homepage(request):
 
 User = get_user_model()
 @unauthenticated_user
-
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -227,89 +226,154 @@ def reset_password(request):
         return redirect('login')  # Change 'login' to the name of your login URL pattern
     return render(request, 'accounts/User/reset.html')  # Adjust the template name as needed
 
+@authenticated_user
 def logout_user(request):
     logout(request)
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+@authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+@authenticated_user
+@authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
+@authenticated_user
 def history(request):
-    requests = CheckoutItems.objects.all()
-    return render(request, 'accounts/User/history.html', {'requests': requests})
+    latest_checkout = Checkout.objects.latest('submission_date')
 
+        # Get checkout items associated with the latest checkout
+    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+
+    context = {
+            'checkout_items': checkout_items,
+            'pr_id': latest_checkout.pr_id,
+        }
+    
+    return render(request, 'accounts/User/history.html', context)
+
+@authenticated_user
 def tracker(request):
     status = Comment.objects.all()
     return render(request, 'accounts/User/tracker.html', {'status': status})
    
 
+@authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
+@authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
+@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
-def bac_history(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
 
+
+@authenticated_user
 def bac_home(request):
-   
-    
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
-def preqform(request):
-    checkout_items = CheckoutItems.objects.all()
+    username = request.user.username
+    submission_date = timezone.now().date()
 
-    if request.method == 'POST':
-        content = request.POST.get('comment_content')
-
-        if content:
-            Comment.objects.create(content=content, timestamp=timezone.now())
-            return redirect('preqform')
-        else:
-            return HttpResponse("Comment content cannot be empty.")
+    checkout_items = CheckoutItems.objects.filter(
+        checkout__user__username=username,
+        submission_date=submission_date
+    )
 
     context = {
+        'username': username,
+        'submission_date': submission_date,
         'checkout_items': checkout_items,
     }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
+
+
+class PreqFormView(View):
+    template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
+
+    def get(self, request):
+        # Get the latest checkout object based on the submission date
+        latest_checkout = Checkout.objects.latest('submission_date', 'pr_id', 'user', 'purpose')
+
+        # Get checkout items associated with the latest checkout
+        checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+
+        context = {
+            'checkout_items': checkout_items,
+            'pr_id': latest_checkout.pr_id,
+            'user': latest_checkout.user,
+            'purpose': latest_checkout.purpose,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        # Access the pr_id and content from the POST data
+        pr_id = request.POST.get('pr_id')
+        content = request.POST.get('comment_content')
+
+        # Check if both pr_id and content are present
+        if pr_id and content:
+            try:
+                # Save the comment with the pr_id directly
+                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
+
+                # Redirect after processing
+                return redirect('preqform')
+            except Exception as e:
+                # Handle exceptions, log errors, etc.
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or comment content not found in the form data.")
+
+@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
+@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
+@authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
 
+@authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
 
+@authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
+@authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
 
+@authenticated_user
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
+@authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+@authenticated_user
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+@authenticated_user
 def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
@@ -368,8 +432,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-
+        csv_file_path ='C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -391,67 +454,69 @@ class RequesterView(View):
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
-        if 'submit_button' in request.POST:
+        if request.method == 'POST':
             # Fetch data from the Item model
             items = Item.objects.all()
 
             # Handle form submission
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
+           
 
-            new_checkout = Checkout.objects.create()
+            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
+
+            
+
 
             for row in items:
                 item_id = row.id
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = request.POST.get(f'quantity_{item_id}')
-                price = request.POST.get(f'price_{item_id}')
+                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
+                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+
+                try:
+                    total_cost = price * quantity
+                except TypeError:
+                    total_cost = Decimal('0.00')
 
                 # Customize the fields according to your CheckoutItems model
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
-                    purpose=purpose,
                     item=item,
                     item_brand_description=item_brand,
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
+                    total_cost=total_cost,  # Calculate total cost based on the price and quantity
                     # Add other fields as needed
                 )
-
-                Item.objects.filter(id=item_id).delete()
+                new_checkout.save()
+                items.delete()
 
             return redirect('requester')
-        return render(request, self.template_name)
-
-def delete_item(request, item_id):
-    if request.method == 'POST':
-        # Get the object to be deleted
-        item = get_object_or_404(CheckoutItems, id=item_id)
-
-        # Perform delete operation
-        item.delete()
-
-        # Return a JSON response indicating success
-        return JsonResponse({'status': 'success'})
-    else:
-        # Return a JSON response indicating failure for non-POST requests
-        return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
+        
+    def generate_pr_id(self):
+        random_number = str(random.randint(10000000, 99999999))
+        return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
 
 
+
+
+@authenticated_user
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'item_list.html', {'items': items})
+
+
+@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
 
 
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
-
-
-
+@authenticated_user
 def show_more_details(request):
     if request.method == 'POST':
         request_id = request.POST.get('request_id', None)
@@ -479,13 +544,36 @@ def show_more_details(request):
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+@authenticated_user
 def bac_history(request):
-   requests = Item.objects.all()
+   request = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+
+
+class GetNewRequestsView(View):
+    def get(self, request, *args, **kwargs):
+
+       
+
+          # Fetch new requests from the database based on your criteria
+        new_requests = Checkout.objects.exclude(pr_id=None)
+
+        # Serialize the data as needed
+        serialized_requests = [
+            {
+                'user_id': request.user_id,
+                'submission_date': request.submission_date,
+                # Add other fields as needed
+            }
+            for request in new_requests
+        ]
+
+        return JsonResponse({'new_requests': serialized_requests})
+
+@authenticated_user
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
