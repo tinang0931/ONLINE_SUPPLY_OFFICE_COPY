@@ -13,7 +13,6 @@
   
         header {
             background-color: #007acc;
-      
             color: white;
             padding: 10px;
         }
@@ -106,78 +105,78 @@
             text-align: left;
         }
         body,
-    h3,
-    p {
-        margin: 0;
-        padding: 0;
-    }
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
+        }
 
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .table-container {
+                margin-top: -200px;
+                width: 70%; /* Adjust the width as needed */
+                margin-left: 100px;
+                margin-right: 150px;
+            }
+
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .logo-container img {
+            max-width: 20%;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .logo-container-left,
+        .logo-container-right {
+            width: 48%; 
+        }
+
+        .logo-container-left img,
+        .logo-container-right img {
+            width: 100%; 
+        }
+
+        .heading-container {
         text-align: center;
-    }
+        font-size: 10;
+        }
 
-    .table-container {
-            margin-top: -200px;
-            width: 70%; /* Adjust the width as needed */
-            margin-left: 100px;
-            margin-right: 150px;
+        .heading-container h3 {
+            font-size: 1.5em; 
+        }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
         }
 
 
-    .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        width: 80%;
-    }
-
-    .logo-container img {
-        max-width: 20%;
-        height: auto;
-        margin: 0 10px;
-    }
-
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: 0;
-        margin-left: 10px;
-        width: 66.1%;
-        }
+        .table-container {
+            margin-top: 0;
+            margin-left: 10px;
+            width: 66.1%;
+            }
 
         .icons-container {
             margin-top: 20px;
@@ -194,43 +193,43 @@
             margin-right: 10px; /* Adjust margin as needed */
         }
 
-.input-box{
-    width: 66.1%;
-    margin-top: 25px;
-    margin-left: 5px;
-}
-        
-.input-box input{
-    width: 150%;
-    height: 60px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.97);
-    border-radius: 5px;
-}
+        .input-box{
+            width: 66.1%;
+            margin-top: 25px;
+            margin-left: 5px;
+        }
+                
+        .input-box input{
+            width: 150%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
 
-.send-icon {
-    position: fixed;
-    top: 91%;
-    right: 50px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .send-icon {
+            position: fixed;
+            top: 91%;
+            right: 50px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-  .send-icon i {
-    line-height: 30px;
-  }
-        
-    table {
-        width:70%;
-    }
+        .send-icon i {
+            line-height: 30px;
+        }
+                
+        table {
+            width:70%;
+        }
 
-    th span[contenteditable] {
+        th span[contenteditable] {
             display: inline-block;
             width: 80%; /* Adjust the width as needed */
             margin-bottom: 5px; /* Adjust the margin as needed */
@@ -245,17 +244,18 @@
         }
 
 
-.footer {
-    background-color: rgba(1, 33, 67, 0.9);
-    text-align: center;
-    width: 100%;
-    height: auto;
-    bottom: 0;
-    -webkit-user-modify: read-only;
-    position: fixed;
-    z-index: 2;
-}
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
 </style>
+</head>
 
 <body>
 
@@ -284,7 +284,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <h><b>PURCHASE ORDER</b></h>  
-     </div>
+        </div>
      
         </div>
 
@@ -403,6 +403,7 @@
                         <div> &nbsp</div>
                         <div> &nbsp</div>
                         <div> &nbsp</div>
+</body>
 
                         <footer class="footer">
                             <div class="input-box">
@@ -421,13 +422,4 @@
                                   </a>
                             </div>
                         </footer>
-        </div>
-        
-    </div>
-
-    
-    
-</body>
-</head>
-
 </html>
