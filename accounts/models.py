@@ -68,7 +68,7 @@ class Item(models.Model):
 
 
 class Checkout(models.Model):
-    pr_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    pr_id = models.CharField(unique=True, max_length=8)
     submission_date = models.DateField(default=timezone.now)
 
     @property
