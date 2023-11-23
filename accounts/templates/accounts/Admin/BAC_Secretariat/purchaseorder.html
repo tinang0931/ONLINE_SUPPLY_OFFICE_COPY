@@ -13,7 +13,6 @@
   
         header {
             background-color: #007acc;
-      
             color: white;
             padding: 10px;
         }
@@ -106,79 +105,78 @@
             text-align: left;
         }
         body,
-    h3,
-    p {
-        margin: 0;
-        padding: 0;
-    }
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
+        }
 
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .table-container {
+                margin-top: -200px;
+                width: 70%; /* Adjust the width as needed */
+                margin-left: 100px;
+                margin-right: 150px;
+            }
+
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .logo-container img {
+            max-width: 20%;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .logo-container-left,
+        .logo-container-right {
+            width: 48%; 
+        }
+
+        .logo-container-left img,
+        .logo-container-right img {
+            width: 100%; 
+        }
+
+        .heading-container {
         text-align: center;
-    }
+        font-size: 10;
+        }
 
-    .table-container {
-            margin-top: -200px;
-            width: 70%; /* Adjust the width as needed */
-            margin-left: 100px;
-            margin-right: 150px;
+        .heading-container h3 {
+            font-size: 1.5em; 
+        }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
         }
 
 
-    .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        width: 80%;
-    }
-
-    .logo-container img {
-        max-width: 20%;
-        height: auto;
-        margin: 0 10px;
-    }
-
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: -200px;
-        width: 62%;
-        margin-left: 100px;
-        margin-right: 150px;
-    }
+        .table-container {
+            margin-top: 0;
+            margin-left: 10px;
+            width: 66.1%;
+            }
 
         .icons-container {
             margin-top: 20px;
@@ -189,49 +187,49 @@
 
         .icon-link {
             text-decoration: none;
-            color: #007acc;
+            color: white;
             padding: 5px; /* Add padding for better spacing */
             display: inline-block; /* Display icons next to each other */
             margin-right: 10px; /* Adjust margin as needed */
         }
 
-.input-box{
-    width: 93.8%;
-    margin-top: 20px;
-    margin-right: 50px;
-}
-        
-.input-box input{
-    width: 160%;
-    height: 60px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.97);
-    border-radius: 5px;
-}
+        .input-box{
+            width: 66.1%;
+            margin-top: 25px;
+            margin-left: 5px;
+        }
+                
+        .input-box input{
+            width: 150%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
 
-.send-icon {
-    position: fixed;
-    top: 91%;
-    right: 50px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .send-icon {
+            position: fixed;
+            top: 91%;
+            right: 50px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-  .send-icon i {
-    line-height: 30px;
-  }
-        
-    table {
-        width:70%;
-    }
+        .send-icon i {
+            line-height: 30px;
+        }
+                
+        table {
+            width:70%;
+        }
 
-    th span[contenteditable] {
+        th span[contenteditable] {
             display: inline-block;
             width: 80%; /* Adjust the width as needed */
             margin-bottom: 5px; /* Adjust the margin as needed */
@@ -244,7 +242,20 @@
         th span[contenteditable]:focus {
             border-bottom: 1px solid #000; /* Change border style when focused */
         }
+
+
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
 </style>
+</head>
 
 <body>
 
@@ -273,7 +284,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <h><b>PURCHASE ORDER</b></h>  
-     </div>
+        </div>
      
         </div>
 
@@ -287,11 +298,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
+        
         <div class="table-container">
             <div class="justify-content">
                 <div class="col-md-10">
@@ -379,28 +386,40 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="input-box">
-                            <input placeholder="Update the purchase request status...">
-                        </div>
-                
-                        <div class="icons-container">
-                            <div class="send-icon" onclick="sendMessage()">
-                                <i class="fas fa-paper-plane"></i>
-                              </div>
-                              <a href="#" title="Download" class="icon-link">
-                                <i class="fas fa-download"></i> Download
-                              </a>
-                              <a href="javascript:window.print()" title="Print" class="icon-link">
-                                <i class="fas fa-print"></i> Print
-                              </a>
-                        </div>
-        </div>
-        
-    </div>
 
-    
-    
+                        <div>&nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
 </body>
-</head>
 
+                        <footer class="footer">
+                            <div class="input-box">
+                                <input placeholder="Update the purchase request status...">
+                            </div>
+                    
+                            <div class="icons-container">
+                                <div class="send-icon" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                  </div>
+                                  <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> Download
+                                  </a>
+                                  <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> Print
+                                  </a>
+                            </div>
+                        </footer>
 </html>

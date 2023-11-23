@@ -23,14 +23,13 @@
               <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
             </div>
             <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                <h1 class="head">Online Supply Office</h1>
+                <h1 class="head">Supply Office Request Monitoring System</h1>
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
              <div class="profile-container">
               <a href="{% url 'prof' %}">
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
-
                 
                 <script>
             
@@ -42,10 +41,25 @@
               </script>
               </a>
               <h1 class="user">Username</h1>
-              <script>
-                  var fullName = localStorage.getItem('fullName') || 'Username';
-                  document.querySelector('.user').textContent = fullName;
-              </script>
+<script>
+    // Function to shorten the full name and update the display
+    function shortenAndDisplay(fullName, maxLength) {
+        var shortenedName = fullName.length > maxLength ?
+            fullName.substring(0, maxLength - 3) + '...' :
+            fullName;
+        document.querySelector('.user').textContent = shortenedName;
+    }
+
+    // Retrieve the full name from localStorage or use a default value
+    var fullName = localStorage.getItem('fullName') || 'Username';
+
+    // Specify the maximum length you want for the displayed username
+    var maxLength = 10; // Adjust this value as needed
+
+    // Call the function to update the displayed username
+    shortenAndDisplay(fullName, maxLength);
+</script>
+
             
             </div>
           </div>
