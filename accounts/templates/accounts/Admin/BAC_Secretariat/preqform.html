@@ -335,21 +335,23 @@
                 <h4>Fund Cluster: <span contenteditable="true" style="border: none; outline: none;" id="editableField"></span></h4>
             </div>
         </div>
+        
         <div class="table-container">
             <div class="justify-content">
                 <div class="col-md-12">
                     <div class="mx-auto">
+                        <form action="" method="post">
+                            {% csrf_token %}
                         <table class="table-bordered" style="width: 120%">
+                            <input type="hidden" name="pr_id" value="{{ pr_id }}">
                             <thead>
-                            <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
-                            </tr>
-                            <tr>
+                                <tr>
+                                    <th colspan="2">Office Section: <span contenteditable="true" ; id="editableField"></span></th>
+                                    <th colspan="2">PR No.: {{pr_id }} <span contenteditable="true" ; id="editableField"></span><br>
+                                        Responsibility Center Code: <span contenteditable="true" ; id="editableField"></span></th>
+                                    <th colspan="2">Date: {{ latest_checkout.submission_date }} <span contenteditable="true" ; id="editableField"></span></th>
+                                </tr>
+                                <tr>
                                     <th>Stock/Property</th>
                                     <th>Unit</th>
                                     <th>Item Description</th>
@@ -366,47 +368,55 @@
                                     <td class="text-center">{{ item.item }} {% if item.item_brand_description %} ({{ item.item_brand_description }}) {% endif %}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ item.unit_cost }}</td>
-                                    <td class="text-center">{{item.total_cost}}</td>
+                                    <td class="text-center">{{ item.total_cost }}</td>
                                 </tr>
-                            {% endfor %}
-                            
+                                
                             
                             <tr>
                                 <td colspan="6" style="text-align: center;">
                                     <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
                                 </td>
                             </tr>
-
-
-                           
                             <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
+                                <td colspan="2">Purpose:  {{ item.purpose }} <span contenteditable="true"
+                                    style="border: none; outline: none;" id="editableField"></span>
+                                </td>
+                            </tr>
+                                    {% endfor %}
                             <tr>
+                               
                                 <td colspan="2">Requested by: <span contenteditable="true"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
                                         <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
                                 </td>
                             </tr>
                         </table>
+                        <div class="comment-box">
+                            <textarea placeholder="Update the purchase request status..." name="comment_content"></textarea>
+
+                            <button type="submit"><i class="fas fa-paper-plane">Send</i></button>
+                            
+                            <div class="icons-container">
+                                <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> Print
+                                </a>
+                                
+                                <!-- Add the send icon with the submit functionality -->
+                                
+                            </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="comment-box">
-  
-            <textarea placeholder="Update the purchase request status..."></textarea>
-            <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
-            </div>
-        </div>
-        
+        </div> 
     </div>
+
+
+
 
     
     

@@ -49,7 +49,6 @@ def homepage(request):
 
 User = get_user_model()
 @unauthenticated_user
-
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -231,8 +230,17 @@ def registration(request):
 
 @authenticated_user
 def history(request):
-    requests = CheckoutItems.objects.all()
-    return render(request, 'accounts/User/history.html', {'requests': requests})
+    latest_checkout = Checkout.objects.latest('submission_date')
+
+        # Get checkout items associated with the latest checkout
+    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+
+    context = {
+            'checkout_items': checkout_items,
+            'pr_id': latest_checkout.pr_id,
+        }
+    
+    return render(request, 'accounts/User/history.html', context)
 
 @authenticated_user
 def tracker(request):
@@ -252,33 +260,64 @@ def profile(request):
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
-@authenticated_user
-def bac_history(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
 
 @authenticated_user
 def bac_home(request):
-   
-    
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
-@authenticated_user
-def preqform(request):
-    checkout_items = CheckoutItems.objects.all()
+    username = request.user.username
+    submission_date = timezone.now().date()
 
-    if request.method == 'POST':
-        content = request.POST.get('comment_content')
-
-        if content:
-            Comment.objects.create(content=content, timestamp=timezone.now())
-            return redirect('preqform')
-        else:
-            return HttpResponse("Comment content cannot be empty.")
+    checkout_items = CheckoutItems.objects.filter(
+        checkout__user__username=username,
+        submission_date=submission_date
+    )
 
     context = {
+        'username': username,
+        'submission_date': submission_date,
         'checkout_items': checkout_items,
     }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
+
+
+class PreqFormView(View):
+    template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
+
+    def get(self, request):
+        # Get the latest checkout object based on the submission date
+        latest_checkout = Checkout.objects.latest('submission_date')
+
+        # Get checkout items associated with the latest checkout
+        checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+
+        context = {
+            'checkout_items': checkout_items,
+            'pr_id': latest_checkout.pr_id,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        # Access the pr_id and content from the POST data
+        pr_id = request.POST.get('pr_id')
+        content = request.POST.get('comment_content')
+
+        # Check if both pr_id and content are present
+        if pr_id and content:
+            try:
+                # Save the comment with the pr_id directly
+                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
+
+                # Redirect after processing
+                return redirect('preqform')
+            except Exception as e:
+                # Handle exceptions, log errors, etc.
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or comment content not found in the form data.")
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -408,7 +447,8 @@ class RequesterView(View):
             # Handle form submission
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
 
-            new_checkout = Checkout.objects.create()
+            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id())
+
             
 
 
@@ -436,7 +476,12 @@ class RequesterView(View):
                 items.delete()
 
             return redirect('requester')
-        return render(request, self.template_name)
+        
+    def generate_pr_id(self):
+        random_number = str(random.randint(10000000, 99999999))
+        return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
+
+
 
 
 @authenticated_user
