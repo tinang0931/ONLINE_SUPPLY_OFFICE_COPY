@@ -8,8 +8,6 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
 import csv
-from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import unauthenticated_user, authenticated_user
 from django.contrib.auth.tokens import default_token_generator
@@ -17,15 +15,17 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse      
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode      
+from django.contrib.auth.models import User
+from django.http import HttpResponse  
+from django.shortcuts import render, redirect   
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.core.mail import EmailMessage 
 from django.contrib.auth import get_user_model
 from .tokens import account_activation_token
-from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
+from django.contrib import messages
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
@@ -34,8 +34,6 @@ from .models import Item
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
 
 
 def main(request):
@@ -114,70 +112,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
-    
-@unauthenticated_user   
-def register_admin(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
-        pass2 = request.POST['pass2']
 
-        # Check if passwords match
-        if pass1 != pass2:
-            messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')  # Assuming you have a separate template for admin registration
-
-        # Check if the username or email is already in use
-        if get_user_model().objects.filter(username=username).exists() or get_user_model().objects.filter(email=email).exists():
-            messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
-
-        # Create a new admin account
-        admin = get_user_model().objects.create_user(username=username, email=email, password=pass1, is_active=True, is_staff=True, is_superuser=True)
-        admin.first_name = fname
-        admin.last_name = lname
-        admin.save()
-
-        current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
-        message = render_to_string('accounts/User/acc_active_email.html', {
-            'admin': admin,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(admin.pk)),
-            'token': account_activation_token.make_token(admin),
-        })
-        to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-
-        messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('admin_login')  # Redirect to the login page upon successful registration
-    return render(request, 'accounts/Admin/BAC_Secretariat/register_admin.html')
-
-
-@unauthenticated_user
-def admin_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-    
-        # Authenticate the user
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None and user.is_active and user.is_staff and user.is_superuser:
-            auth_login(request, user)
-            messages.success(request, "Admin login successful.")
-            return redirect('bac_home')  # Redirect to the admin dashboard or any other admin-specific page
-        else:
-            messages.error(request, "Invalid admin credentials.")
-            return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
-
-    return render(request, 'accounts/Admin/BAC_Secretariat/login_admin.html')  # Assuming you have a separate template for admin login
 
 
 def login(request):
@@ -253,7 +188,6 @@ def verify_code(request):
         if is_valid_code(verification_code, user_email):
             return redirect('reset_password')  # Make sure 'reset_password' is a valid URL pattern
     return render(request, 'accounts/User/verify.html')  # Make sure the template exists
-
 
 
 def is_valid_code(verification_code, user_email):
@@ -399,46 +333,28 @@ def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 @authenticated_user
-def preqform(request):
-    items = Item.objects.all()  # Fetch all Item instances from the database
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', {'items': items})
-
-
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
-
-
-@authenticated_user
-def np(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
-
-
-@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
 
 
 
+
 def addItem(request):
     if request.method == 'POST':
-        # Handle the form for adding a single item
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
-        unit_cost = float(request.POST.get('unit_Cost', 0))  # Convert to float to handle decimal values
-        quantity = int(request.POST.get('quantity', 0))  # Convert to int to handle whole numbers
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-        # Compute the total cost
     
-
         Item.objects.create(
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,  # Add the total_cost field in your Item model
+            quantity=quantity,
         )
 
         return redirect('request')
@@ -446,45 +362,36 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 
-@authenticated_user
-def request(request): 
-    csv_file_path = 'C:/Users/maceda.danicamae\Documents\MACEDA DANICA MAE D\INVENTORY\ONLINE_SUPPLY_OFFICE_COPY\items.csv'
+def request(request):
     if request.method == 'POST':
-        # Handle the form submission logic here
-        selected_items = []
+        # Retrieve selected rows from the form
+        selected_rows = request.POST.getlist('selectRow')
 
-        # Iterate through form data to get selected items
-        for key, value in request.POST.items():
-            if key.startswith('selected_item_id') and value:
-                item_id = value
-                quantity = request.POST.get(f'quantity_{item_id}', 0)
+        # Process and save data to the database
+        for row_id in selected_rows:
+            item_name = request.POST.get(f'item_{row_id}')
+            item_brand = request.POST.get(f'item_brand_{row_id}')
+            unit = request.POST.get(f'unit_{row_id}')
+            price = request.POST.get(f'price_{row_id}')
+            quantity = request.POST.get(f'quantity_{row_id}')
 
-                # Create a dictionary with item details
-                item_details = {
-                    'item': request.POST.get(f'item_{item_id}', ''),
-                    'item_brand_description': request.POST.get(f'item_brand_{item_id}', ''),
-                    'unit': request.POST.get(f'unit_{item_id}', ''),
-                    'unit_cost': request.POST.get(f'price_{item_id}', ''),
-                    'quantity': quantity,
-                }
+            # Save the data to the CartItem model (update this based on your model)
+            items = Item.objects.create(
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price,
+                quantity=quantity,
+            )
+            items.save()
 
-                selected_items.append(item_details)
-
-                # Save the selected items to the database (Item model)
-                Item.objects.create(
-                    item=item_details['item'],
-                    item_brand_description=item_details['item_brand_description'],
-                    unit=item_details['unit'],
-                    unit_cost=item_details['unit_cost'],
-                    quantity=item_details['quantity'],
-                )
-
-        # Redirect after processing all selected items
-        messages.success(request, 'Items added to the cart successfully!')
-        return redirect('request')
+        # Redirect to a success page
+        return redirect('requester')
 
     else:
-
+        # Handle data fetching for GET request
+        # Connect to MongoDB
+        csv_file_path ='C:/Users/maceda.danicamae/Documents/MACEDA DANICA MAE D/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
