@@ -494,10 +494,11 @@ class RequesterView(View):
                 new_checkout.save()
                 items.delete()
 
-            return redirect('requester')
+            return redirect('history')
         
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
+
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
 
 
