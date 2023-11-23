@@ -50,8 +50,6 @@
     position: fixed;
     left: 900px;
     top: 0px;
-  
-
 }
 
 .triangle-up {
@@ -110,9 +108,11 @@
     left: 10px;
     top: 250px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    top: 275px;
+    font-family: Verdana;
     font-style: normal;
-    font-weight: 400;
-    font-size: 85px;
+    font-weight: 600;
+    font-size: 69px;
     line-height: 100px;
     color: #ffff;
     text-align: center;
@@ -127,10 +127,9 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 45px;
+    font-size: 30px;
     line-height: 58px;
     color: #F48C06;
-    text-align: end;
 }
 
 

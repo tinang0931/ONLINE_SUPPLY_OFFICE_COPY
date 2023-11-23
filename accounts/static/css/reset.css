@@ -114,7 +114,6 @@ body{
     background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    border: solid #df8004ad .5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
