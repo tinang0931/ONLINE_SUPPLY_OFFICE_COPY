@@ -111,9 +111,10 @@
     }
 
     .cart {
-        margin-left: 45%;
-      
-
+        top: 28%;
+        position: fixed;
+        z-index: 1000;
+        left: 89%;
     }
     .row {
         margin-top: 1%;
@@ -154,13 +155,13 @@
         
         <div class="container">
             <h1 class="title">CREATE PURCHASE REQUEST</h1>
-            <div class="cart">
-                <a href="{% url 'requester' %}">
-                    <i>
-                        <img id="cartImage" src="{% static 'images/cart.png' %}" alt="Icon Description">
-                    </i>
-                </a>
-            </div>
+        </div>
+        <div class="cart">
+            <a href="{% url 'requester' %}">
+                <i>
+                    <img id="cartImage" src="{% static 'images/cart.png' %}" alt="Icon Description">
+                </i>
+            </a>
         </div>
 
 
