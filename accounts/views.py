@@ -441,8 +441,9 @@ class RequesterView(View):
                     unit_cost=price,
                     # Add other fields as needed
                 )
+                CheckoutItems.save()
 
-                Item.objects.filter(id=item_id).delete()
+                Item.objects.delete()
 
             return redirect('requester')
         return render(request, self.template_name)
@@ -514,4 +515,3 @@ def item_delete(request, request_id):
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
