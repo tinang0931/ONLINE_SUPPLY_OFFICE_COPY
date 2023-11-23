@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     
-<style>
+    <style>
         body, h, p {
             margin: 0;
             padding: 0;
@@ -225,7 +225,7 @@
 
         .icon-link {
             text-decoration: none;
-            color: #007acc;
+            color: white;
             display: flex;
             align-items: center;
             margin: 0 10px;
@@ -244,24 +244,34 @@
         
         .input-box{
             width: 60%;
-            margin-top: 20px;
-            margin-left: 50px;
-            margin-right: 50px;
+            margin-top: 25px;
+            margin-left: 5px;
         }
         
         .input-box input{
-            width: 160%;
+            width: 166%;
             height: 60px;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid rgba(0, 0, 0, 0.97);
             border-radius: 5px;
         }
-</style>
 
-
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
+    </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+   
 </head>
+
 <body>
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
@@ -342,20 +352,48 @@
             </div>
         </div>
 
-        <div class="input-box">
-            <input placeholder="Update the purchase request status...">
-        </div>
-
-            <div>&nbsp</div>
-
-             <div class="icons-container">
-                 <a href="#" title="Download" class="icon-link">
-                     <i class="fas fa-download"></i> Download
-                 </a>
-                 <a href="javascript:window.print()" title="Print" class="icon-link">
-                     <i class="fas fa-print"></i> Print
-                 </a>
-             </div>
-
+        <div>&nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
 </body> 
+
+
+        <footer class="footer">
+            <div class="input-box">
+                <input placeholder="Update the purchase request status...">
+            </div>
+    
+                <div>&nbsp</div>
+    
+                 <div class="icons-container">
+                     <a href="#" title="Download" class="icon-link">
+                         <i class="fas fa-download"></i> Download
+                     </a>
+                     <a href="javascript:window.print()" title="Print" class="icon-link">
+                         <i class="fas fa-print"></i> Print
+                     </a>
+                 </div>
+        </footer>
 </html>
