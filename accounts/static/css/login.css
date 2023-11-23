@@ -28,17 +28,17 @@ body {
 
 .title{
     position: fixed;
-    top: 0;
-    left: 0;
+    font-family: Verdana;
+    top: 80px;
+    left: 100px;
     color: white;
     font-size: 60px;
-    margin-top: 30px;
-    margin-right: 80px;
+    font-weight: 200px;
 }
 
 
 .wrapper {
-    width: 380px;
+    width: 27%;
     height: 530px;
     background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
@@ -47,10 +47,6 @@ body {
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    position: absolute;
-    left: 50%;
-    top: 270px;
-    margin: 0 auto;
 }
 
 
@@ -80,14 +76,16 @@ body {
 
 
 .input-box input {
-    width: 300px;
+    width: 484px;
     height: 100%;
+    right: 53px;
     background: rgba(255, 255, 255, 0.486);
     border: none;
     outline: none;
     border-radius: 5px;
     font-size: 14px;
-    color: black;
+    margin-left: -93px;
+    margin-top: 3px;
     padding: 10px;
     box-shadow: 0 0 3px;
     transition: all 0.5s ease;
@@ -98,6 +96,11 @@ body {
     color: #003566;
 }
 
+
+.input-box input:focus,
+.input-box input:valid{
+    border-color: #003566;
+}
 
 .wrapper .forgot {
     display: flex;
@@ -115,6 +118,7 @@ body {
 
 .forgot a {
     font-size: 17px;
+    margin-left: 15px;
     color: black;
     text-decoration: none;
 }
@@ -126,18 +130,18 @@ body {
 
 
 .wrapper .btn {
-    width: 40%;
+    width: 87%;
     height: 30px;
     background: #fc8f01;
     outline: none;
-    border-radius: 40px;
-    border: solid #df8004ad .5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;
     font-weight: 250;
     font-size: 17px;
-    margin-left: 56%;
+    margin-left: 8%;
+    margin-top: 42px;
     text-align: center;
     line-height: 14px;
     transition-duration: 0.5s;
@@ -152,6 +156,7 @@ body {
 
 .wrapper .register-link {
     font: 17px;
+    margin-left: 30px;
     color: black;
     text-align: center;
     margin-top: 20%;
