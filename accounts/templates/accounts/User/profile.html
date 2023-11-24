@@ -113,5 +113,40 @@ inputFile.onchange = function() {
         }
       
           </script>
+          <script>
+    function updateAccountId() {
+        var ctuIdInput = document.getElementById('username');
+        var accountIdSpan = document.getElementById('account-id');
+
+        // Check if the input is a valid number
+        if (!isNaN(ctuIdInput.value) && ctuIdInput.value.trim() !== "") {
+            accountIdSpan.textContent = ctuIdInput.value;
+        } else {
+            // Display a default value if the input is not a valid number
+            accountIdSpan.textContent = "Invalid CTU ID";
+        }
+    }
+</script>
+<script>
+  // Initialize ctu_id with a default value
+  var ctu_id = "12345";
+
+  function updateAccountId() {
+      var ctuIdInput = document.getElementById('username');
+      var accountIdSpan = document.getElementById('account-id');
+
+      // Check if the input is a valid number
+      if (!isNaN(ctuIdInput.value) && ctuIdInput.value.trim() !== "") {
+          // Update the ctu_id variable with the input value
+          ctu_id = ctuIdInput.value;
+
+          // Update the content of the account-id span
+          accountIdSpan.textContent = ctu_id;
+      } else {
+          // Display a default value if the input is not a valid number
+          accountIdSpan.textContent = "Invalid CTU ID";
+      }
+  }
+</script>
         
     </html>

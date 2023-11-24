@@ -12,8 +12,22 @@
     <title>Landing Page</title>
 
   </head>
-  <body>
+  <style>
+    body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
 
+    .container {
+        position: relative;
+        text-align: center;
+    }
+  </style>
+
+  <body>
     <div class="container">
       <div class="frame"></div>
       <div class="trapezoid"></div>
@@ -22,13 +36,17 @@
       <div class="triangle-down"></div>
       <div class="parallelogram2"></div>
       <div class="triangle-down2"></div>
-      <h1 class="cot">COLLEGE<br>OF<br>TECHNOLOGY</h1>
-      <p class="ctu">Cebu Technological University<br>Argao Campus</p>
+      <h1 class="cot">CTU-AC <br> SUPPLY OFFICE <br> REQUEST MONITORING <br> SYSTEM</h1>
+      <h4 class="ctu">Cebu Technological University Argao Campus</h4>
       <div class="login">
+        <div class="login">
           <a href="{% url 'login' %}">
             <img class="arrow" src="{% static 'images/double_arrow.png' %}" >
           </a>
         </div>
+        
+          
+      </div>
        
 
     </div>

@@ -147,44 +147,6 @@ padding: 0px !important;
 }
 
 
-.ctulogo {
-  width: 220px; 
-  height: auto;
-  margin-right: 30px;
-  float: left;
-}
-
-.aseanlogo{
-  width: 167px; 
-  height: auto;
-  margin-right: 10px;
-  margin-top: 38px;
-  float: left;
-}
-
-
-.miso{
-  vertical-align: middle;
-  height: 120px;
-  padding: 3px;
-  display: inline-flex;
-  margin-left: 100%;
-}
-
-
-.star{
-  width: 250px; 
-  height: auto;
-  margin-top: 115px;
-  float: right;
-}
-
-
-.context{
-  text-align: center;
-}
-
-
 .background{
   position: relative;
   background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
@@ -253,6 +215,7 @@ height: 100%;
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 0.1em;
+  color: #000;
 }
 
 
@@ -267,13 +230,11 @@ height: 100%;
 } 
 
 
-.sidebar{
-  
+.sidebar {
   transition: all 1s;
   -webkit-transition: all 1s;
   border-right: 2px solid black;
 }
-
 
 #sidebar-wrapper {
   min-height: auto;
@@ -281,21 +242,34 @@ height: 100%;
   transition: margin 3s ease-out;
 }
 
-
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
 }
 
-
 #sidebar-wrapper .list-group {
-  width: 280px;
+  width: 320px;
 }
 
+#sidebar-wrapper .list-group-item {
+  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+}
 
 #page-content-wrapper {
-  
   min-width: 100vw;
+}
+
+#sidebar-wrapper {
+  position: relative; /* Ensure the parent container has a position */
+}
+
+#sidebar-wrapper .list-group-item.logout-link {
+  position: absolute;
+  top: 220%; /* Adjust the top position as needed */
+}
+
+#sidebar-wrapper .list-group-item.logout-link i {
+  margin-right: 10px; /* Adjust the margin as needed for icon spacing */
 }
 
 
@@ -365,6 +339,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .arrow_img {
   height: 30px;
   width: 30px;
+}
+
+
+.fas fa-sign-out-alt{
+  position: sticky;
 }
 
 
@@ -3302,4 +3281,42 @@ button {
 
 .modal-footer {
   border-top: 15px solid #ccc;
+}
+
+.table-striped thead {
+  background-color: blue;
+  color: white; 
+}
+
+.fab.fa-facebook {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-facebook:hover {
+  color: #1877f2;
+}
+.fab.fa-twitter {
+  color: white;
+  transition: color 0.3s ease;
+}
+.fab.fa-twitter:hover {
+  color:  #1da1f2;
+}
+.fab.fa-instagram {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-instagram:hover {
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.fab.fa-youtube {
+  color: white;
+  transition: color 0.3s ease;
+}
+.fab.fa-youtube:hover {
+  color:  #FF0000;
 }

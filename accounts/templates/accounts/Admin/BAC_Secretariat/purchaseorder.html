@@ -1,0 +1,446 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <style>
+  
+        header {
+            background-color: #007acc;
+            color: white;
+            padding: 10px;
+        }
+
+    
+        .ctu_logo {
+            width: 190px;
+            height: auto;
+            margin-right: 20px;
+            float: left;
+            margin-top: 30px;
+        }
+        
+        .asean_logo{
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+            margin-top: 55px;
+            float: left;
+        }
+
+    
+        .container {
+            max-width: 800px; 
+            padding: 20px;
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 0 auto; 
+        }
+
+        h {
+            font-size: 25px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 25px;
+            text-align: center;
+        }
+
+        a {
+            color: #007acc;
+            text-decoration: underline;
+        }
+
+        .management {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .iso_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-top: 50px;
+        }
+
+        .stars_logo {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-top: 145px;
+        }
+
+        .br {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            text-align: left;
+            margin-right: 1000px;
+        }
+
+        table {
+            font-weight: bold;
+            border: 2px solid;
+            width: 50%; /* Adjust the width as needed */
+            margin-top: -500px;
+        }
+
+        th,
+        td {
+            border: 2px solid #dddddd;
+            padding: 2px;
+            text-align: left;
+        }
+        body,
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .table-container {
+                margin-top: -200px;
+                width: 70%; /* Adjust the width as needed */
+                margin-left: 100px;
+                margin-right: 150px;
+            }
+
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .logo-container img {
+            max-width: 20%;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .logo-container-left,
+        .logo-container-right {
+            width: 48%; 
+        }
+
+        .logo-container-left img,
+        .logo-container-right img {
+            width: 100%; 
+        }
+
+        .heading-container {
+        text-align: center;
+        font-size: 10;
+        }
+
+        .heading-container h3 {
+            font-size: 1.5em; 
+        }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
+        }
+
+
+        .table-container {
+            margin-top: 0;
+            margin-left: 10px;
+            width: 66.1%;
+            }
+
+        .icons-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end; /* Align icons to the right */
+            margin-left: 50%;
+        }
+
+        .icon-link {
+            text-decoration: none;
+            color: white;
+            padding: 5px; /* Add padding for better spacing */
+            display: inline-block; /* Display icons next to each other */
+            margin-right: 10px; /* Adjust margin as needed */
+        }
+
+        .input-box{
+            width: 66.1%;
+            margin-top: 25px;
+            margin-left: 5px;
+        }
+                
+        .input-box input{
+            width: 150%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
+        }
+
+        .send-icon {
+            position: fixed;
+            top: 91%;
+            right: 50px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .send-icon i {
+            line-height: 30px;
+        }
+                
+        table {
+            width:70%;
+        }
+
+        th span[contenteditable] {
+            display: inline-block;
+            width: 80%; /* Adjust the width as needed */
+            margin-bottom: 5px; /* Adjust the margin as needed */
+        }
+
+        th span[contenteditable]:not(:empty)::before {
+            content: ""; /* Hide placeholder when content is not empty */
+        }
+
+        th span[contenteditable]:focus {
+            border-bottom: 1px solid #000; /* Change border style when focused */
+        }
+
+
+        .footer {
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+        }
+
+        .button-container{
+            margin-right: 13px;
+            float:right;
+        }
+
+        .send-button{
+            position: sticky;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            width: 61px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .icons-container{
+            display: flex;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
+    </nav>
+
+    <nav>
+        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
+    </nav>
+
+    <div class="container">
+        <h>Republic of the Philippines</h>
+        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h>ARGAO CAMPUS</h>
+        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+        <div>
+            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
+            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
+        </div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <h><b>PURCHASE ORDER</b></h>  
+        </div>
+     
+        </div>
+
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        
+        <div class="table-container">
+            <div class="justify-content">
+                <div class="col-md-10">
+                    <div class="mx-auto">
+                        <table class="table-bordered" style="width: 150%">
+                            <tr>
+                                <th colspan="4">Supplier:<span contenteditable="true"></span>
+                                        </span><br>Address:<span contenteditable="true"></span>
+                                       </span><br>TIN:<span contenteditable="true"></span>
+                                <th colspan="6">PO NO.:<span contenteditable="true"></span>
+                                        </span><br>Date:<span contenteditable="true"></span>
+                                    </span><br> Mode of Procurement:<span contenteditable="true"><span</th></span>
+                                    <tr> 
+                                        <tr>
+                                    <td colspan="6" style="text-align: left;">
+                <span style=>Gentlemen:<span contenteditable="true"></span>
+                                </td>
+                                </tr>
+                            <tr>
+                                <th colspan="4">Place of Delivery:<span contenteditable="true"></span>
+                                </span><br>Date of Delivery:<span contenteditable="true"></span>
+                        <th colspan="6">Delivery Team:<span contenteditable="true"></span>
+                                </span><br>Payment Team:<span contenteditable="true"></span>
+                            <tr> 
+                                <tr>
+                                     <td>Stock/Property<br>No.</td>
+                                     <td>Unit</td>
+                                     <td>Description</td>
+                                     <td>Quantity</td>
+                                     <td>Unit Cost</td>
+                                     <td>Amount</td>
+                               
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                              
+                        <td colspan="6" style="text-align: left">
+                                    <span>Total Amount:<span contenteditable="true"></span>
+                                </td>
+                            </tr>
+                        </tr>
+                       
+                    <td colspan="11">In case of failure to make the full delivery within the time specified above,
+                        a penalty of one-tenth (1/10) of one percent for every day of delay shall be imposed on the
+                        undelivered item/s.
+                       <br>
+                       <br>
+                       <br>Conforme:<span contenteditable="true"></span>
+                        <br><br><span contenteditable="true"><br>Signature over Printed Name of Supplier<br><br>Date:<span contenteditable="true"></span>
+                        <br><span contenteditable="true"style="float:right"  >Very truly yours,<br>
+                        <br>Signature over Printed Name of Authorized<br>Official<br><br>Designation</span>
+                                 <tr>
+                                    <th colspan="4">Func Cluster:<span contenteditable="true"></span>
+                                    </span><br>Fund Available:<span contenteditable="true"></span>
+                                 <br><br><span contenteditable="true"><br>Signature over Printed Name of Chief Accountant/Head<br>of Accounting Division Unit</span>
+                            <th colspan="6">ORS/BUS No:<span contenteditable="true"></span>
+                                    </span><br>Date of ORS/BUS:<span contenteditable="true"></span>
+                                </span><br> Amount:<span contenteditable="true"><span</th></span>
+                                <tr> 
+                
+                                    <tr>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div>&nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+                        <div> &nbsp</div>
+</body>
+
+            <footer class="footer">
+                <div class="input-box">
+                    <input placeholder="Update the purchase request status...">
+                </div>
+                <div class="button-container">
+                    <button class="send-button" onclick="sendMessage">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+                <div class="icons-container">
+                    <a href="#" title="Download" class="icon-link">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="javascript:window.print()" title="Print" class="icon-link">
+                        <i class="fas fa-print"></i> Print
+                    </a>
+                </div>
+            </footer>
+</html>
