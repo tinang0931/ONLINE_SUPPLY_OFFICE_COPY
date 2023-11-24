@@ -23,14 +23,13 @@
               <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
             </div>
             <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                <h1 class="head">Online Supply Office</h1>
+                <h1 class="head">Supply Office Request Monitoring System</h1>
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
             <div class="profile-container">
               <a href="{% url 'prof' %}">
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
-
                 
                 <script>
             
@@ -42,10 +41,25 @@
               </script>
               </a>
               <h1 class="user">Username</h1>
-              <script>
-                  var fullName = localStorage.getItem('fullName') || 'Username';
-                  document.querySelector('.user').textContent = fullName;
-              </script>
+<script>
+    // Function to shorten the full name and update the display
+    function shortenAndDisplay(fullName, maxLength) {
+        var shortenedName = fullName.length > maxLength ?
+            fullName.substring(0, maxLength - 3) + '...' :
+            fullName;
+        document.querySelector('.user').textContent = shortenedName;
+    }
+
+    // Retrieve the full name from localStorage or use a default value
+    var fullName = localStorage.getItem('fullName') || 'Username';
+
+    // Specify the maximum length you want for the displayed username
+    var maxLength = 10; // Adjust this value as needed
+
+    // Call the function to update the displayed username
+    shortenAndDisplay(fullName, maxLength);
+</script>
+
             
             </div>
           </div>
@@ -54,35 +68,69 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper" style="height: 74vh;">
 
-      <!-- Sidebar -->
-<div class="sidebar">
+        
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
   <div class="d-flex flex-wrap align-content-between h-100">
-      <div class="bg-white w-100" id="sidebar-wrapper">
-          <div class="list-group w-100">
-            <br>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request' %}">
-                  <i class="fas fa-file-alt"></i> Purchase Request
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker' %}">
-                  <i class="fas fa-tasks"></i> Request Tracker
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history' %}">
-                  <i class="fas fa-history"></i> History
-              </a>
-              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about' %}">
-                  <i class="fas fa-info-circle"></i> About
-              </a>
-          </div>
+    <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+      <div class="list-group w-100">
+        <br><br>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
+          <i class="fas fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
+          <i class="fas fa-tasks"></i> <span id="requestTracker" class="hidden-name">Request Tracker</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
+          <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
+          <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
+        </a>
+        <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
+          <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
+        </a>
       </div>
-      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'logout_user' %}">
-          <i class="fas fa-sign-out-alt"></i> Logout
-      </a>
-
-      
+    </div>
   </div>
 </div>
 
-        
+<style>
+  #sidebar {
+    transition: width 0.5s ease-in-out;
+    overflow: hidden;
+    width: 50px; /* Set your desired initial width */
+  }
+
+  #sidebar.show-names {
+    width: 300px; /* Set your desired expanded width */
+  }
+
+  .hidden-name {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  #sidebar.show-names .hidden-name {
+    opacity: 1;
+  }
+
+  .list-group-item-action:hover {
+    background-color: #6C757D; /* Set the desired background color for hover */
+  }
+</style>
+
+<script>
+  function showNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.add('show-names');
+  }
+
+  function hideNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('show-names');
+  }
+</script>
         {% block notification %}
         {% endblock %}
 
@@ -104,7 +152,6 @@
         {% block cart %}
         {% endblock %}
 
-
     </main>
       
   </body>
@@ -113,4 +160,5 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </html>

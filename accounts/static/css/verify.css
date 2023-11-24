@@ -40,7 +40,7 @@ body {
 .wrapper {
     width: 410px;
     height: 380px;
-    background: rgba(255, 255, 255, 0.486);
+    background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
     padding: 50px;
@@ -76,6 +76,8 @@ body {
 .otp-bx input:hover{
     color: #003566;
 }
+
+
 .otp-bx input[type="number"]::-webkit-outer-spin-button,
     .otp-bx input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -134,7 +136,6 @@ body {
     background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    border: solid #df8004ad .5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;

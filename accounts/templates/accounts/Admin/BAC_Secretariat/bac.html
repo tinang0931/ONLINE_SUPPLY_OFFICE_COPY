@@ -26,7 +26,7 @@
               <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
             </div>
             <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                <h1 class="head">Online Supply Office</h1>
+                <h1 class="head">Supply Office Request Monitoring System</h1>
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
@@ -43,20 +43,63 @@
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
-        <div class="sidebar">
-            <div class="d-flex flex-wrap align-content-between h-100">
-                <div class="bg-white w-100" id="sidebar-wrapper">
-                  <div class="list-group w-100">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'bac_home' %}">Home</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'bac_history' %}">History</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'bac_about' %}">About Us</a>
-                  </div>
-                </div>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'logout_user' %}">
-                  <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
+        <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
+          <div class="d-flex flex-wrap align-content-between h-100">
+            <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+              <div class="list-group w-100">
+                <br><br>
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_home'%}">
+                  <i class="fas fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">Home</span>
                 </a>
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_history'%}">
+                  <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
+                </a>
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_about'%}">
+                  <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
+                </a>
+                <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
+                  <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
+                </a>
+              </div>
             </div>
+          </div>
         </div>
+        <style>
+          #sidebar {
+            transition: width 0.5s ease-in-out;
+            overflow: hidden;
+            width: 50px; /* Set your desired initial width */
+          }
+        
+          #sidebar.show-names {
+            width: 300px; /* Set your desired expanded width */
+          }
+        
+          .hidden-name {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+          }
+        
+          #sidebar.show-names .hidden-name {
+            opacity: 1;
+          }
+        
+          .list-group-item-action:hover {
+            background-color: #6C757D; /* Set the desired background color for hover */
+          }
+        </style>
+        
+        <script>
+          function showNames() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.add('show-names');
+          }
+        
+          function hideNames() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('show-names');
+          }
+        </script>
         
         {% block bac_about %}
         {% endblock %}
@@ -68,41 +111,6 @@
         {% endblock %}
 
     </main>
-    <footer class=" footer ">
-      <div class="container text-white">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>Contact Us:</h5>
-            <p>Cellphone # :093456738652</p>
-            <p>Telephone # : (02) 123-4567</p>
-      
-          </div>
-          <div class="col-md-4">
-            <h5>Mail Us:</h5>
-            <p>inventory@gmail.com</p>
-            
-          </div>
-          <div class="col-md-4">
-            <h5>Follow Us:</h5>
-            <a href="https://www.facebook.com/your-facebook-profile" target="_blank">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://twitter.com/your-twitter-profile" target="_blank">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/your-instagram-profile" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.youtube.com/your-youtube-channel" target="_blank">
-                <i class="fab fa-youtube"></i>
-            </a>
-        </div>
-        
-
-          <p></p>
-          <p></p>
-          <p>&copy; All Rights Reserved 2023-2024 Online Supply System</p>
-      </div>
   </body>
   
 </html>
