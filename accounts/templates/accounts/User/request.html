@@ -111,7 +111,11 @@
     }
 
     .cart {
-        margin-left: 45%;
+        top: 30%;
+        position: fixed;
+        z-index: 100000;
+        left: 89%;
+
       
 
     }
@@ -151,18 +155,22 @@
 </style>
 
 
+
+
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <a href="{% url 'requester' %}">
+        <i>
+            <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
+        </i>
+    </a>
 
     <div class="subheader">
         
         <div class="container">
             <h1 class="title">CREATE PURCHASE REQUEST</h1>
             <div class="cart">
-                <a href="{% url 'requester' %}">
-                    <i>
-                        <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
-                    </i>
-                </a>
+                
             </div>
         </div>
 
@@ -174,7 +182,7 @@
             </div>
       
           <div class="additem">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New Request</button>
           </div>
 
           <div class="addtocart">
@@ -230,7 +238,7 @@
     </div>
 </form>
 </div>
-0     
+
 <script>
     function scrollToCategory() {
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
@@ -241,8 +249,6 @@ table.scrollIntoView({behavior: 'smooth'});
        }
 </script>
 
-</div>
-        </div>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
