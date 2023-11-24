@@ -251,6 +251,7 @@ def history(request):
     context = {
             'checkout_items': checkout_items,
             'pr_id': latest_checkout.pr_id,
+ 
         }
     
     return render(request, 'accounts/User/history.html', context)
