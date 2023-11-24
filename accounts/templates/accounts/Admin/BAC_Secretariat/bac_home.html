@@ -12,9 +12,9 @@
 
  
         <div class="custom-f row w-100 m-auto border text-start text-dark">
-            <p id="categorySelectionLink" class="modal-link highlight-on-hover" data-toggle="modal" data-target="#categorySelectionModal">
+            <h6 id="categorySelectionLink" class="modal-link highlight-on-hover" data-toggle="modal" data-target="#categorySelectionModal">
               {{username }} submitted a new request on {{submission_date }}
-            </p>
+            </h6>
         </div>
    
 </div>
@@ -22,73 +22,5 @@
 
   
 
-  <!-- Outer Modal for Category Selection -->
-  <div class="modal" id="categorySelectionModal" tabindex="-1" role="dialog" aria-labelledby="categorySelectionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="categorySelectionModalLabel">FORMS</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body">
-          <div class="row">
-            <div class="form-group">
-              <a href="{% url 'preqform'  %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category1ButtonModal">Purchase Request Approval</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'bids' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category2ButtonModal">Resolution Approval</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'abstract' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category3ButtonModal">Abstract of Bids</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'noa' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category4ButtonModal">Notice of Reward</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'purchaseorder' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category5ButtonModal">Purchase Order</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'np' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category6ButtonModal">Notice to Proceed</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'inspection' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category7ButtonModal">Inspection and Acceptance Report</button>
-              </a>
-            </div>
-            <div class="form-group">
-              <a href="{% url 'property' %}">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#category8ButtonModal">Property Acknowledgment Report</button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<style>
-  /* Custom style to keep the background visible when the modal is open */
-  .modal-open .modal {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-</style>
-
+  
 {% endblock %}

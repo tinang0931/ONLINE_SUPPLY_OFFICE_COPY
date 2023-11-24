@@ -136,7 +136,6 @@ def login(request):
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
-    return render(request, 'bac_home.html')
 def request_page(request):
     if request.user.is_admin:
        
@@ -277,20 +276,38 @@ def bac_about(request):
 
 @authenticated_user
 def bac_home(request):
-    username = request.user.username
-    submission_date = timezone.now().date()
+    checkouts = Checkout.objects.select_related('user').all()
 
-    checkout_items = CheckoutItems.objects.filter(
-        checkout__user__username=username,
-        submission_date=submission_date
-    )
+# Create a dictionary to store the results, using pr_id as keys
+    checkout_data_dict = {}
 
-    context = {
-        'username': username,
-        'submission_date': submission_date,
-        'checkout_items': checkout_items,
-    }
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+    # Loop through each Checkout instance and gather relevant data
+    for checkout in checkouts:
+        pr_id = checkout.pr_id
+
+        if pr_id not in checkout_data_dict:
+            # If pr_id is not in the dictionary, create a new entry
+            checkout_data_dict[pr_id] = {
+                'pr_id': pr_id,
+                'username': checkout.user.username,
+                'submission_date': checkout.submission_date,
+                'purpose': checkout.purpose,
+                # Add more fields as needed
+            }
+        else:
+            # If pr_id is already in the dictionary, update the entry
+            # with additional information, e.g., concatenate purposes
+            checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+
+    # Convert the dictionary values to a list
+    checkout_data = list(checkout_data_dict.values())
+
+
+    print(checkout_data)
+
+ 
+    
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 
 
