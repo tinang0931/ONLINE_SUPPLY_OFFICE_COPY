@@ -76,19 +76,19 @@
       <div class="list-group w-100">
         <br><br>
         <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
-          <i class="fas fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
+          <i class="far fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">&nbsp;&nbsp;Purchase Request</span>
         </a>
         <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
-          <i class="fas fa-tasks"></i> <span id="requestTracker" class="hidden-name">Request Tracker</span>
+          <i class="fas fa-location-arrow fa-flip-horizontal"></i><span id="requestTracker" class="hidden-name">&nbsp;&nbsp;Request Tracker</span>
         </a>
         <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
-          <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
+          <i class="fas fa-history"></i> <span id="history" class="hidden-name">&nbsp;History</span>
         </a>
         <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
-          <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
+          <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name"> &nbsp;About</span>
         </a>
         <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'login'%}">
-          <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
+          <i class="fa-solid fa-arrow-right-from-bracket"></i></i> <span id="logout" class="hidden-name">&nbsp;Logout</span>
         </a>
       </div>
     </div>
@@ -109,8 +109,8 @@
   .hidden-name {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    border-radius: 10px;
   }
-
   #sidebar.show-names .hidden-name {
     opacity: 1;
   }
@@ -118,6 +118,7 @@
   .list-group-item-action:hover {
     background-color: #6C757D; /* Set the desired background color for hover */
   }
+
 </style>
 
 <script>
