@@ -28,8 +28,9 @@ body{
 
 .title{
     position: absolute;
-    top: 10%;
-    left: 120px;
+    font-family: Verdana;
+    top: 180px;
+    left: 100px;
     color: white;
     font-size: 60px;
     margin-top: 30px;
