@@ -27,13 +27,15 @@ body {
 
 
 .title{
-    position: absolute;
+    position: fixed;
+    font-family: Verdana;
     top: 10%;
     left: 120px;
     color: white;
     font-size: 60px;
     margin-top: 30px;
     margin-right: 80px;
+    font-weight: bold;
 }
 
 

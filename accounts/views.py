@@ -136,7 +136,6 @@ def login(request):
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
-    return render(request, 'bac_home.html')
 def request_page(request):
     if request.user.is_admin:
        
@@ -278,45 +277,69 @@ def bac_about(request):
 
 @authenticated_user
 def bac_home(request):
-    username = request.user.username
-    submission_date = timezone.now().date()
+    checkouts = Checkout.objects.select_related('user').all()
+    comments = Comment.objects.all()
 
-    checkout_items = CheckoutItems.objects.filter(
-        checkout__user__username=username,
-        submission_date=submission_date
-    )
+    # Create a dictionary to store the results, using pr_id as keys
+    checkout_data_dict = {}
 
-    context = {
-        'username': username,
-        'submission_date': submission_date,
-        'checkout_items': checkout_items,
-    }
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+    # Loop through each Checkout instance and gather relevant data
+    for checkout in checkouts:
+        pr_id = checkout.pr_id
+
+        # Get the latest comment for the current pr_id
+        latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+
+        if pr_id not in checkout_data_dict:
+            # If pr_id is not in the dictionary, create a new entry
+            checkout_data_dict[pr_id] = {
+                'pr_id': pr_id,
+                'first_name': checkout.user.first_name,
+                'last_name': checkout.user.last_name,
+                'submission_date': checkout.submission_date,
+                'purpose': checkout.purpose,
+                'status_comment': latest_comment.content if latest_comment else "No comments",
+                'status_update_date': latest_comment.timestamp if latest_comment else None,
+                # Add more fields as needed
+            }
+        else:
+            # If pr_id is already in the dictionary, update the entry
+            # with additional information, e.g., concatenate purposes
+            checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+
+    # Convert the dictionary values to a list
+    checkout_data = list(checkout_data_dict.values())
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', {'checkouts': checkout_data})
 
 
+
+
+from django.urls import reverse
+
+# ...
 
 class PreqFormView(View):
     template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
 
-    def get(self, request):
-        # Get the latest checkout object based on the submission date
-        latest_checkout = Checkout.objects.latest('submission_date', 'pr_id', 'user', 'purpose')
+    def get(self, request, pr_id):
+        # Use the pr_id to retrieve the corresponding Checkout object
+        checkout = Checkout.objects.get(pr_id=pr_id)
 
-        # Get checkout items associated with the latest checkout
-        checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+        # Get checkout items associated with the checkout
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
 
         context = {
             'checkout_items': checkout_items,
-            'pr_id': latest_checkout.pr_id,
-            'user': latest_checkout.user,
-            'purpose': latest_checkout.purpose,
+            'pr_id': pr_id,
+            'user': checkout.user,
+            'purpose': checkout.purpose,
         }
 
         return render(request, self.template_name, context)
 
-    def post(self, request):
+    def post(self, request, pr_id):
         # Access the pr_id and content from the POST data
-        pr_id = request.POST.get('pr_id')
         content = request.POST.get('comment_content')
 
         # Check if both pr_id and content are present
@@ -326,14 +349,13 @@ class PreqFormView(View):
                 Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
 
                 # Redirect after processing
-                return redirect('preqform')
+                return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
             except Exception as e:
                 # Handle exceptions, log errors, etc.
                 print(f"Error: {e}")
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or comment content not found in the form data.")
-
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
