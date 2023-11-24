@@ -28,7 +28,6 @@
         <tbody>
           {% for item in checkout_items %}
           <tr>
-            
             <td>{{ item.checkout.pr_id }}</td>
             <td>{{item.submission_date}}</td>
             <td>{{item.item}}</td>
@@ -36,9 +35,6 @@
             <td>REQUEST SENT</td>
             <td>{{item.total_cost}}</td>
             <td></td>
-           
-            
-          
           </tr>
           {% endfor %}
         </tbody>
