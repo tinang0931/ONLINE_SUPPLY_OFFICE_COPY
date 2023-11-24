@@ -1,5 +1,6 @@
 {% load static %}
 
+{% block preqform %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -243,32 +244,107 @@
         text-align: center;
         width: 100%;
         height: auto;
-        bottom: 0;
-        -webkit-user-modify: read-only;
-        position: fixed;
-        z-index: 2;
-        }
+        margin: 0 10px;
+    }
 
-        .button-container{
-            margin-right: 8px;
-            float:right;
-        }
+    .logo-container-left,
+    .logo-container-right {
+        width: 48%; 
+    }
 
-        .send-button{
-            position: sticky;
-            background-color: #4CAF50;
-            color:white;
-            border: none;
-            width: 61px;
-            height: 20px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    .logo-container-left img,
+    .logo-container-right img {
+        width: 100%; 
+    }
 
-        .icons-container{
-            display: flex;
-        }
-    </style>
+    .heading-container {
+    text-align: center;
+    font-size: 10;
+}
+
+.heading-container h3 {
+    font-size: 1.5em; 
+}
+
+.heading-container h2 {
+    font-size: 2em; 
+}
+
+.heading-container p {
+    font-size: 1em; 
+}
+
+.heading-container a {
+    font-size: 1em; 
+}
+
+
+.table-container {
+        margin-top: 20px;
+        width: 80%;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .icons-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        margin-right: 50px;
+    }
+
+.icon-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white; /* Adjust the color as needed */
+}
+
+
+.input-box{
+    width: 60%;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+        
+.input-box input{
+    width: 160%;
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.97);
+    border-radius: 5px;
+}
+
+.send-icon {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+  .send-icon i {
+    line-height: 30px;
+  }
+
+  .footer {
+  background-color: rgba(1, 33, 67, 0.9);
+  text-align: center;
+  width: 100%;
+  height: auto;
+  bottom: 0;
+  -webkit-user-modify: read-only;
+  position: fixed;
+  z-index: 2;
+  position:fixed;
+}
+</style>
+
 </head>
 
 <body>
@@ -312,91 +388,101 @@
             <div class="justify-content">
                 <div class="col-md-12">
                     <div class="mx-auto">
+                        <form action="" method="post">
+                            {% csrf_token %}
                         <table class="table-bordered" style="width: 120%">
-                            <tr>
-                                <th colspan="2">Office Section: <span contenteditable="true" ;
-                                        id="editableField"></span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
-                                        id="editableField"></span><br>Responsibility Center Code: <span
-                                        contenteditable="true" ; id="editableField"></span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
+                            
+                                <th colspan="2">Office Section: <span contenteditable="true" 
+                                    style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                    oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                              </span</span></th>
+                                <th colspan="2">PR No.: {{ pr_id }} <span contenteditable="true" ;
+                                        id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" 
+                                        style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                        oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                        </span></th>
+                                <th colspan="2">Date: {{ latest_checkout.submission_date }}  <span contenteditable="true" ; id="editableField"></span></th>
+
+                                <input type="hidden" name="pr_id" value="{{ pr_id }}">
                             </tr>
+
                             <tr>
-                                <td>Stock/Property</td>
-                                <td>Unit</td>
-                                <td>Item Description</td>
-                                <td>Quantity</td>
-                                <td>Unit Cost</td>
-                                <td>Total Cost</td>
+                                <th>Stock/Property</th>
+                                <th>Unit</th>
+                                <th>Item Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Cost</th>
+                                <th>Total Cost</th>
                             </tr>
+                            {% for item in checkout_items %}
                             <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                            </tr>
-                            <tr>
-                            <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <span style="text-decoration: underline;">Ralph Tuazon</span><br>Accountant
+                                 <td>{{ forloop.counter }}</td>
+                                <td class="item_unit text-center">{{ item.unit }}</td>
+                                <td class="item_description text-center">{{ item.item_description }}</td>
+                                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                                <td class="item_total_cost text-center">{{item.total_cost }}</td>
+                                <td>
+                                    <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
+                                    <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                                    <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
+                                    <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                                    <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
+                                    <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
                                 </td>
                             </tr>
-
-
+                            {% endfor %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">
+                                        <span>Total Amount: {{ total_cost }} </span>
+                                    </td>
+                                </tr>
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <span contenteditable="true" 
+              style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+              oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+        </span><br>Accountant
+                                </td>
                             </tr>
+                            
+
+
+                            
                             <tr>
                             <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
-                                    style="border: none; outline: none;" id="editableField"></span></td></tr>
+                                <td colspan="2">Purpose: {{ purpose }} <span contenteditable="true"
+                                    style="border: none; outline: none; text-decoration: underline"></span></td></tr>
                             <tr>
-                                <td colspan="2">Requested by: <span contenteditable="true"
+                                <td colspan="2">Requested by: {{user.first_name}} {{user.last_name}} <span contenteditable="false"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by: Juan Juan</td>
+                                        <td colspan="4" style="text-align: left;">Approved by<span contenteditable="true" 
+                                            style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                            oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                        </span>
                                 </td>
                             </tr>
                         </table>
+
+                        <footer class="footer">
+                            <div class="input-box">
+                                <input placeholder="Update the purchase request status..." name="comment_content">
+                            </div>
+                                <div class="icons-container">
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
+                                        
+                                      </div>
+                                      <a href="#" title="Download" class="icon-link">
+                                        <i class="fas fa-download"></i> Download
+                                      </a>
+                                      <a href="javascript:window.print()" title="Print" class="icon-link">
+                                        <i class="fas fa-print"></i> Print
+                                      </a>
+                                </div>
+                        </footer>
+                        
+                        </form>
                     </div>
                 </div>
             </div>
@@ -408,27 +494,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-</body>
-
-    <footer class="footer">
-        <div class="input-box">
-            <input placeholder="Update the purchase request status...">
-        </div>
-        <div class="button-container">
-            <button class="send-button" onclick="sendMessage">
-                <i class="fas fa-paper-plane"></i> Send
-            </button>
-        </div>
-        <div class="icons-container">
-            <a href="#" title="Download" class="icon-link">
-                <i class="fas fa-download"></i> Download
-            </a>
-            <a href="javascript:window.print()" title="Print" class="icon-link">
-                <i class="fas fa-print"></i> Print
-            </a>
-        </div>
-    </footer>
-
-        
-    </div>
+</body> 
 </html>
+
+{% endblock %}
