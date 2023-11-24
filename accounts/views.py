@@ -229,7 +229,7 @@ def history(request):
 
 def tracker(request):
     # purchase_requests = PurchaseRequest.objects.all()
-    # data = [{'purchase_request_id': request.ppurchase_request_id, 'status': request.status} for request in purchase_requests]
+    # data = [{'purchase_request_id': request.purchase_request_id, 'status': request.status} for request in purchase_requests]
     return render(request, 'accounts/User/tracker.html')
 
 
@@ -341,7 +341,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/taladro.maryann/Downloads/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
