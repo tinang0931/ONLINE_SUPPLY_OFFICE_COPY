@@ -97,10 +97,11 @@ body {
 }
 
 
-.input-box input:focus,
-.input-box input:valid{
+.wrapper .input-box input:focus,
+.wrapper .input-box input:valid{
     border-color: #003566;
 }
+
 
 .wrapper .forgot {
     display: flex;
