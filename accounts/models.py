@@ -52,7 +52,7 @@ class User(AbstractUser):
 
 class Item(models.Model):
     
-    purpose = models.CharField(max_length=255, blank=True, null=True)
+    
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -71,8 +71,10 @@ class Item(models.Model):
 
 
 class Checkout(models.Model):
-    pr_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    pr_id = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
+    purpose = models.CharField(max_length=255, blank=True, null=True)
 
     @property
     def combined_id(self):
@@ -85,17 +87,29 @@ class Checkout(models.Model):
     
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
-    purpose = models.CharField(max_length=255, blank=True, null=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     quantity = models.IntegerField(default=1)
+    
     submission_date = models.DateField(auto_now_add=True)
 
-    @property
-    def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))  # Add total_cost field
+
+    def save(self, *args, **kwargs):
+        # Calculate total_cost before saving
+        self.total_cost = self.unit_cost * self.quantity
+        super().save(*args, **kwargs)
+        
+class Comment(models.Model):
+    content = models.TextField()
+    timestamp = models.DateTimeField()
+    pr_id = models.CharField(max_length=50)  # Add pr_id field
+
+    def __str__(self):
+        return f"Comment by {self.pr_id} at {self.timestamp}"
+    
 
 class CsvFile(models.Model):
     CATEGORY = models.CharField(max_length=255)
@@ -103,15 +117,6 @@ class CsvFile(models.Model):
     ITEMS = models.CharField(max_length=255)
     UNIT = models.CharField(max_length=50)
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
-
-
-class Comment(models.Model):
-    checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
-    content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'Comment #{self.id}'
 
 
 class Notification(models.Model):
