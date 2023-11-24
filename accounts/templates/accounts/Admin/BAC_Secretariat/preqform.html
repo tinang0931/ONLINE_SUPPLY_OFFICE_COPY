@@ -1,5 +1,6 @@
 {% load static %}
 
+{% block preqform %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -387,18 +388,22 @@
             <div class="justify-content">
                 <div class="col-md-12">
                     <div class="mx-auto">
+                        <form action="" method="post">
+                            {% csrf_token %}
                         <table class="table-bordered" style="width: 120%">
-                            <tr>
+                            
                                 <th colspan="2">Office Section: <span contenteditable="true" 
                                     style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                     oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
                               </span</span></th>
-                                <th colspan="2">PR No.: <span contenteditable="true" ;
+                                <th colspan="2">PR No.: {{ pr_id }} <span contenteditable="true" ;
                                         id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" 
                                         style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                         oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
                                         </span></th>
-                                <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
+                                <th colspan="2">Date: {{ latest_checkout.submission_date }}  <span contenteditable="true" ; id="editableField"></span></th>
+
+                                <input type="hidden" name="pr_id" value="{{ pr_id }}">
                             </tr>
 
                             <tr>
@@ -413,10 +418,10 @@
                             <tr>
                                  <td>{{ forloop.counter }}</td>
                                 <td class="item_unit text-center">{{ item.unit }}</td>
-                                <td class="item_description text-center">{{ item.item_description }}</td>
+                                <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
                                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                                <td class="item_total_cost text-center">{{total_cost }}</td>
+                                <td class="item_total_cost text-center">{{item.total_cost }}</td>
                                 <td>
                                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
                                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
@@ -429,7 +434,7 @@
                             {% endfor %}
                                 <tr>
                                     <td colspan="6" style="text-align: center;">
-                                        <span>Total Amount:</span>
+                                        <span>Total Amount: {{ total_cost }} </span>
                                     </td>
                                 </tr>
                             <tr>
@@ -443,21 +448,41 @@
                             
 
 
-                            </tr>
+                            
                             <tr>
                             <tr>
-                                <td colspan="2">Purpose: <span contenteditable="true"
+                                <td colspan="2">Purpose: {{ purpose }} <span contenteditable="true"
                                     style="border: none; outline: none; text-decoration: underline"></span></td></tr>
                             <tr>
-                                <td colspan="2">Requested by: <span contenteditable="true"
+                                <td colspan="2">Requested by: {{user.first_name}} {{user.last_name}} <span contenteditable="false"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
                                         <td colspan="4" style="text-align: left;">Approved by<span contenteditable="true" 
                                             style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                             oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
-                                      </span</td>
+                                        </span>
                                 </td>
                             </tr>
                         </table>
+
+                        <footer class="footer">
+                            <div class="input-box">
+                                <input placeholder="Update the purchase request status..." name="comment_content">
+                            </div>
+                                <div class="icons-container">
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
+                                        
+                                      </div>
+                                      <a href="#" title="Download" class="icon-link">
+                                        <i class="fas fa-download"></i> Download
+                                      </a>
+                                      <a href="javascript:window.print()" title="Print" class="icon-link">
+                                        <i class="fas fa-print"></i> Print
+                                      </a>
+                                </div>
+                        </footer>
+                        
+                        </form>
                     </div>
                 </div>
             </div>
@@ -469,25 +494,7 @@
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
-</body>
-
-        <footer class="footer">
-            <div class="input-box">
-                <input placeholder="Update the purchase request status...">
-            </div>
-                <div class="icons-container">
-                    <div class="send-icon" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                      </div>
-                      <a href="#" title="Download" class="icon-link">
-                        <i class="fas fa-download"></i> Download
-                      </a>
-                      <a href="javascript:window.print()" title="Print" class="icon-link">
-                        <i class="fas fa-print"></i> Print
-                      </a>
-                </div>
-            </div>
-        </footer>
-        
-    </div>
+</body> 
 </html>
+
+{% endblock %}

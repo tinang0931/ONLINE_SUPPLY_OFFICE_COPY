@@ -111,10 +111,13 @@
     }
 
     .cart {
-        top: 28%;
+        top: 30%;
         position: fixed;
-        z-index: 1000;
+        z-index: 100000;
         left: 89%;
+
+      
+
     }
     .row {
         margin-top: 1%;
@@ -152,18 +155,22 @@
 </style>
 
 
+
+
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <a href="{% url 'requester' %}">
+        <i>
+            <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
+        </i>
+    </a>
 
     <div class="subheader">
         
         <div class="container">
             <h1 class="title">CREATE PURCHASE REQUEST</h1>
             <div class="cart">
-                <a href="{% url 'requester' %}">
-                    <i>
-                        <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
-                    </i>
-                </a>
+                
             </div>
         </div>
 
@@ -175,7 +182,7 @@
             </div>
       
           <div class="additem">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New Request</button>
           </div>
 
           <div class="addtocart">
@@ -188,6 +195,7 @@
     {% csrf_token %}
     <div class="row2">
 
+        
         <div class="addtocart">
             <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
             
@@ -230,7 +238,7 @@
     </div>
 </form>
 </div>
-0     
+
 <script>
     function scrollToCategory() {
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
@@ -241,8 +249,6 @@
        }
 </script>
 
-</div>
-        </div>
         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">

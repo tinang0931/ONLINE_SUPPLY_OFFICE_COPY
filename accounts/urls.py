@@ -9,6 +9,7 @@ urlpatterns = [
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
    path('addItem/',views.addItem, name='addItem'),
+   path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
@@ -24,7 +25,7 @@ urlpatterns = [
    path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
-   path('preqform/', views.preqform, name='preqform'),
+   path('preqform/<str:pr_id>/', PreqFormView.as_view(), name='preqform'),
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
@@ -34,9 +35,5 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-   path('item/<int:request_id>/delete/', views.item_delete, name='item_delete'),
-   path('login/',views.login, name='login'),
-
-
-
+  path('api/getNewRequests/', GetNewRequestsView.as_view(), name='get_new_requests'),
 ]

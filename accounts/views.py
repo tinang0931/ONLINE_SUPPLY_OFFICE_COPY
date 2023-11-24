@@ -49,7 +49,6 @@ def homepage(request):
 
 User = get_user_model()
 @unauthenticated_user
-
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -137,7 +136,6 @@ def login(request):
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
-    return render(request, 'bac_home.html')
 def request_page(request):
     if request.user.is_admin:
        
@@ -244,8 +242,17 @@ def registration(request):
 
 @authenticated_user
 def history(request):
-    requests = CheckoutItems.objects.all()
-    return render(request, 'accounts/User/history.html', {'requests': requests})
+    latest_checkout = Checkout.objects.latest('submission_date')
+
+        # Get checkout items associated with the latest checkout
+    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+
+    context = {
+            'checkout_items': checkout_items,
+            'pr_id': latest_checkout.pr_id,
+        }
+    
+    return render(request, 'accounts/User/history.html', context)
 
 @authenticated_user
 def tracker(request):
@@ -265,33 +272,89 @@ def profile(request):
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
-@authenticated_user
-def bac_history(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_history.html')
+
 
 @authenticated_user
 def bac_home(request):
-   
-    
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html',)
-@authenticated_user
-def preqform(request):
-    checkout_items = CheckoutItems.objects.all()
+    checkouts = Checkout.objects.select_related('user').all()
+    comments = Comment.objects.all()
 
-    if request.method == 'POST':
+    # Create a dictionary to store the results, using pr_id as keys
+    checkout_data_dict = {}
+
+    # Loop through each Checkout instance and gather relevant data
+    for checkout in checkouts:
+        pr_id = checkout.pr_id
+
+        # Get the latest comment for the current pr_id
+        latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+
+        if pr_id not in checkout_data_dict:
+            # If pr_id is not in the dictionary, create a new entry
+            checkout_data_dict[pr_id] = {
+                'pr_id': pr_id,
+                'first_name': checkout.user.first_name,
+                'last_name': checkout.user.last_name,
+                'submission_date': checkout.submission_date,
+                'purpose': checkout.purpose,
+                'status_comment': latest_comment.content if latest_comment else "No comments",
+                'status_update_date': latest_comment.timestamp if latest_comment else None,
+                # Add more fields as needed
+            }
+        else:
+            # If pr_id is already in the dictionary, update the entry
+            # with additional information, e.g., concatenate purposes
+            checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+
+    # Convert the dictionary values to a list
+    checkout_data = list(checkout_data_dict.values())
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', {'checkouts': checkout_data})
+
+
+
+
+from django.urls import reverse
+
+# ...
+
+class PreqFormView(View):
+    template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
+
+    def get(self, request, pr_id):
+        # Use the pr_id to retrieve the corresponding Checkout object
+        checkout = Checkout.objects.get(pr_id=pr_id)
+
+        # Get checkout items associated with the checkout
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+
+        context = {
+            'checkout_items': checkout_items,
+            'pr_id': pr_id,
+            'user': checkout.user,
+            'purpose': checkout.purpose,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, pr_id):
+        # Access the pr_id and content from the POST data
         content = request.POST.get('comment_content')
 
-        if content:
-            Comment.objects.create(content=content, timestamp=timezone.now())
-            return redirect('preqform')
+        # Check if both pr_id and content are present
+        if pr_id and content:
+            try:
+                # Save the comment with the pr_id directly
+                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
+
+                # Redirect after processing
+                return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
+            except Exception as e:
+                # Handle exceptions, log errors, etc.
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
         else:
-            return HttpResponse("Comment content cannot be empty.")
-
-    context = {
-        'checkout_items': checkout_items,
-    }
-
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
+            return HttpResponse("PR ID or comment content not found in the form data.")
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -413,55 +476,55 @@ class RequesterView(View):
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
-        if 'submit_button' in request.POST:
+        if request.method == 'POST':
             # Fetch data from the Item model
             items = Item.objects.all()
 
             # Handle form submission
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
+           
 
-            new_checkout = Checkout.objects.create()
+            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
+
+            
+
 
             for row in items:
                 item_id = row.id
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = request.POST.get(f'quantity_{item_id}')
-                price = request.POST.get(f'price_{item_id}')
+                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
+                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+
+                try:
+                    total_cost = price * quantity
+                except TypeError:
+                    total_cost = Decimal('0.00')
 
                 # Customize the fields according to your CheckoutItems model
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
-                    purpose=purpose,
                     item=item,
                     item_brand_description=item_brand,
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
+                    total_cost=total_cost,  # Calculate total cost based on the price and quantity
                     # Add other fields as needed
                 )
-                CheckoutItems.save()
+                new_checkout.save()
+                items.delete()
 
-                Item.objects.delete()
+            return redirect('history')
+        
+    def generate_pr_id(self):
+        random_number = str(random.randint(10000000, 99999999))
 
-            return redirect('requester')
-        return render(request, self.template_name)
+        return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
 
-@authenticated_user
-def delete_item(request, item_id):
-    if request.method == 'POST':
-        # Get the object to be deleted
-        item = get_object_or_404(CheckoutItems, id=item_id)
 
-        # Perform delete operation
-        item.delete()
 
-        # Return a JSON response indicating success
-        return JsonResponse({'status': 'success'})
-    else:
-        # Return a JSON response indicating failure for non-POST requests
-        return JsonResponse({'status': 'failure', 'message': 'Invalid request method'})
 
 @authenticated_user
 def item_list(request):
@@ -506,9 +569,31 @@ def show_more_details(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 @authenticated_user
 def bac_history(request):
-   requests = Item.objects.all()
+   request = Item.objects.all()
 
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+
+
+class GetNewRequestsView(View):
+    def get(self, request, *args, **kwargs):
+
+       
+
+          # Fetch new requests from the database based on your criteria
+        new_requests = Checkout.objects.exclude(pr_id=None)
+
+        # Serialize the data as needed
+        serialized_requests = [
+            {
+                'user_id': request.user_id,
+                'submission_date': request.submission_date,
+                # Add other fields as needed
+            }
+            for request in new_requests
+        ]
+
+        return JsonResponse({'new_requests': serialized_requests})
+
 @authenticated_user
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
