@@ -29,10 +29,11 @@ body{
 .upper{
     position: absolute;
     font-family: Verdana;
-    top: 3%;
-    left: 85px;
+    font-weight: bold;
+    top: 6%;
+    left: 80px;
     color: white;
-    font-size: 60px;
+    font-size: 50px;
 }
 
 .container {

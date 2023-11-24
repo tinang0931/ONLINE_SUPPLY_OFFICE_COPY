@@ -71,6 +71,10 @@ class Checkout(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
+    is_approved = models.BooleanField(default=False)  # Add this field
+
+    # ... other fields and methods ...
+
 
     @property
     def combined_id(self):
