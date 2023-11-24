@@ -52,7 +52,7 @@ class User(AbstractUser):
 
 class Item(models.Model):
     
-    
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -63,6 +63,8 @@ class Item(models.Model):
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
+
+
 
 
 
@@ -104,6 +106,7 @@ class CheckoutItems(models.Model):
         
 class Comment(models.Model):
     content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     pr_id = models.CharField(max_length=50)  # Add pr_id field
 

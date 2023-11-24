@@ -242,22 +242,29 @@ def registration(request):
 
 @authenticated_user
 def history(request):
-    latest_checkout = Checkout.objects.latest('submission_date')
+    # Get the logged-in user
+    user = request.user
 
-        # Get checkout items associated with the latest checkout
-    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+    # Get the checkouts associated with the logged-in user
+    checkouts = Checkout.objects.filter(user=user)
+
+    # Create an empty list to store checkout items
+    checkout_items = []
+
+    # Loop through each checkout and retrieve associated checkout items
+    for checkout in checkouts:
+        items = CheckoutItems.objects.filter(checkout=checkout)
+        checkout_items.extend(items)
 
     context = {
-            'checkout_items': checkout_items,
-            'pr_id': latest_checkout.pr_id,
-        }
-    
-    return render(request, 'accounts/User/history.html', context)
+        'checkout_items': checkout_items,
+    }
 
+    return render(request, 'accounts/User/history.html', context)
 @authenticated_user
 def tracker(request):
-    status = Comment.objects.all()
-    return render(request, 'accounts/User/tracker.html', {'status': status})
+    feedback = Comment.objects.all()
+    return render(request, 'accounts/User/tracker.html', {'feedback': feedback})
    
 
 @authenticated_user
@@ -344,8 +351,13 @@ class PreqFormView(View):
         # Check if both pr_id and content are present
         if pr_id and content:
             try:
-                # Save the comment with the pr_id directly
-                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
+                # Get the user associated with the request (assuming a Checkout model)
+                user = request.user
+                # Retrieve the checkout object again based on the pr_id
+                checkout = Checkout.objects.get(pr_id=pr_id)
+
+                # Save the comment with the pr_id and user information
+                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id, user=user)
 
                 # Redirect after processing
                 return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
@@ -355,6 +367,7 @@ class PreqFormView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or comment content not found in the form data.")
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -411,14 +424,19 @@ def addItem(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
+        user = request.user
+
     
         Item.objects.create(
+            user=user,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+             # Calculate total cost based on price and quantity
         )
+        Item.save()
 
         return redirect('request')
 
@@ -438,15 +456,20 @@ def request(request):
             price = request.POST.get(f'price_{row_id}')
             quantity = request.POST.get(f'quantity_{row_id}')
 
+            user = request.user
+
             # Save the data to the CartItem model (update this based on your model)
             items = Item.objects.create(
+                user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
+                 # Calculate total cost based on price and quantity
             )
             items.save()
+            
 
         # Redirect to a success page
         return redirect('requester')
@@ -517,10 +540,11 @@ class RequesterView(View):
                 new_checkout.save()
                 items.delete()
 
-            return redirect('requester')
+            return redirect('history')
         
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
+
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
 
 
