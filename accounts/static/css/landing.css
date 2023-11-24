@@ -27,7 +27,6 @@
     overflow: visible;
     left: 320px;
     top: 0px;
-
 }
 
 .trapezoid {
@@ -106,7 +105,7 @@
     width: 685px;
     height: 318px;
     left: 10px;
-    top: 250px;
+    top: 240px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     top: 215px;
     font-family: Verdana;
@@ -122,8 +121,8 @@
     position: fixed;
     width: 822px;
     height: 225px;
-    left: 3%;
-    top: 82%;
+    left: 14%;
+    top: 8%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -135,7 +134,7 @@
 
 .arrow {
     position: fixed;
-    top: 870px;
+    top: 880px;
     left: 980px;
     width: 75px;
 }
