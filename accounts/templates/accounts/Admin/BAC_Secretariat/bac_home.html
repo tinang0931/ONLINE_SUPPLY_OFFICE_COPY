@@ -6,17 +6,55 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<style>
+
+  .status{
+    width: 35%;
+    text-align: center;
+  }
+
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  
+</style>
+
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
 
-
- 
-        <div class="custom-f row w-100 m-auto border text-start text-dark">
-            <h6 id="categorySelectionLink" class="modal-link highlight-on-hover" data-toggle="modal" data-target="#categorySelectionModal">
-              {{username }} submitted a new request on {{submission_date }}
-            </h6>
-        </div>
-   
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Requests</th>
+        <th class="status">Status</th>
+        <th class="date"> Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkout in checkouts %}
+        <tr>
+          <td>
+            <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+              <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+            </a>
+          </td>
+          <td>
+            {{ checkout.status_comment }}
+          </td>
+          <td>
+            {{ checkout.status_update_date|default:"Not available" }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  
+  
+  
 </div>
 
 
