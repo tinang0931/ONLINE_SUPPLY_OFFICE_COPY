@@ -19,31 +19,43 @@
     color: black;
   }
 
+  .bg-success {
+    /* Your styles for a successful status */
+    background-color: #b5e550; /* Adjust this to your desired background color */
+    color: white; /* Adjust this to your desired text color */
+}
   
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
 
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Requests</th>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests</th>
+        <th class="text-center">Purpose</th>
+        
         <th class="status">Status</th>
-        <th class="date"> Date</th>
+        <th class="text-center"> Date</th>
       </tr>
     </thead>
     <tbody>
       {% for checkout in checkouts %}
         <tr>
+          <td class="text-center">{{ checkout.submission_date }}</td>
           <td>
+            
             <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
               <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-          <td>
-            {{ checkout.status_comment }}
-          </td>
+          <td>{{ checkout.purpose }}</td>
+          
+          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}">
+            {{ checkout.status_comment|default:"" }}
+        </td>
           <td>
             {{ checkout.status_update_date|default:"Not available" }}
           </td>

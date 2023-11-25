@@ -27,25 +27,30 @@
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
-        <table class="table table-bordered" style="margin: 0px!important;">
-          <thead>
-            <tr>
-              <th>Purchase Request No.</th>
-              <th>Forms</th>
-              <th>Status</th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in feedback %}
-            <tr>
-              <td>{{item.pr_id}}</td>
-              <td>Purchase Request Approval</td>
-              <td >{{item.content}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <table class="table table-bordered" style="margin: 0px!important;">
+        <thead>
+          <tr>
+            <th>Purchase Request No.</th>
+            <th>Forms</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in feedback %}
+          <tr>
+            <td>{{ item.pr_id }}</td>
+            <td>Purchase Request Approval</td>
+            <td>{{ item.content }}</td>
+          </tr>
+          {% endfor %}
+          {% if feedback|length == 0 %}
+          <tr>
+            <td colspan="3">NO REQUEST YET</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      
     </div>
   </div>
 </div>

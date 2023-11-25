@@ -245,27 +245,30 @@ def history(request):
     # Get the logged-in user
     user = request.user
 
-    # Get the checkouts associated with the logged-in user
-    checkouts = Checkout.objects.filter(user=user)
+    # Get all checkouts for the logged-in user
+    all_checkouts = Checkout.objects.filter(user=user)
 
-    # Create an empty list to store checkout items
-    checkout_items = []
-
-    # Loop through each checkout and retrieve associated checkout items
-    for checkout in checkouts:
-        items = CheckoutItems.objects.filter(checkout=checkout)
-        checkout_items.extend(items)
+    # Get checkout items associated with all checkouts
+    all_checkout_items = CheckoutItems.objects.filter(checkout__in=all_checkouts)
 
     context = {
-        'checkout_items': checkout_items,
+        'checkout_items': all_checkout_items,
     }
 
     return render(request, 'accounts/User/history.html', context)
+
 @authenticated_user
 def tracker(request):
-    feedback = Comment.objects.all()
-    return render(request, 'accounts/User/tracker.html', {'feedback': feedback})
-   
+    user = request.user
+
+    # Get all checkouts for the user
+    all_checkouts = Checkout.objects.filter(user=user)
+
+    # Filter feedback items based on the pr_ids of all the user's checkouts
+    feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
+
+    context = {'feedback': feedback}
+    return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
 def prof(request):
@@ -304,7 +307,7 @@ def bac_home(request):
                 'last_name': checkout.user.last_name,
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
-                'status_comment': latest_comment.content if latest_comment else "No comments",
+                'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
                 # Add more fields as needed
             }
@@ -351,13 +354,8 @@ class PreqFormView(View):
         # Check if both pr_id and content are present
         if pr_id and content:
             try:
-                # Get the user associated with the request (assuming a Checkout model)
-                user = request.user
-                # Retrieve the checkout object again based on the pr_id
-                checkout = Checkout.objects.get(pr_id=pr_id)
-
-                # Save the comment with the pr_id and user information
-                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id, user=user)
+                # Save the comment with the pr_id directly
+                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
 
                 # Redirect after processing
                 return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
@@ -367,7 +365,6 @@ class PreqFormView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or comment content not found in the form data.")
-
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -436,7 +433,7 @@ def addItem(request):
             quantity=quantity,
              # Calculate total cost based on price and quantity
         )
-        Item.save()
+       
 
         return redirect('request')
 
