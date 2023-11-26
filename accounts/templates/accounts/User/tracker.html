@@ -31,16 +31,21 @@
         <thead>
           <tr>
             <th>Purchase Request No.</th>
+            <th>Purpose</th>
             <th>Forms</th>
             <th>Status</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
           {% for item in feedback %}
           <tr>
+
             <td>{{ item.pr_id }}</td>
+            <td>{{ checkout_info.forloop.counter0.purpose }}</td>
             <td>Purchase Request Approval</td>
             <td>{{ item.content }}</td>
+            <td>{{ checkout_info.forloop.counter0.date_updated }}</td>
           </tr>
           {% endfor %}
           {% if feedback|length == 0 %}

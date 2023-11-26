@@ -264,10 +264,13 @@ def tracker(request):
     # Get all checkouts for the user
     all_checkouts = Checkout.objects.filter(user=user)
 
-    # Filter feedback items based on the pr_ids of all the user's checkouts
+    # Fetch additional information (purpose and date) for each checkout
+    checkout_info = [{'purpose': checkout.purpose, 'date_updated': checkout.date_updated} for checkout in all_checkouts]
+
+    # Get all feedback items based on the pr_ids of all the user's checkouts
     feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
 
-    context = {'feedback': feedback}
+    context = {'feedback': feedback, 'checkout_info': checkout_info}
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
@@ -615,9 +618,8 @@ class GetNewRequestsView(View):
 
         return JsonResponse({'new_requests': serialized_requests})
 
-@authenticated_user
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
+@authenticated_user              
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+    return redirect ('requester')

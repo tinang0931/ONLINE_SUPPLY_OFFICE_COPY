@@ -34,5 +34,6 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-  path('api/getNewRequests/', GetNewRequestsView.as_view(), name='get_new_requests'),
+   path('delete_item/<int:id>/', delete_item, name='delete_item'),
+ 
 ]
