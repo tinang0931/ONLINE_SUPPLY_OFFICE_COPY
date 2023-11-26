@@ -122,17 +122,15 @@ def login(request):
         if user is not None and user.is_active:
             auth_login(request, user)
             messages.success(request, "You are now logged in.")
-
-            if user.user_type == 'admin':
-                return redirect('bac_home')  
-            else:
-                return redirect('request')
-        if user.user_type == 'regular':
-                return redirect('request')  
         else:
-                return redirect('bac_home')
+                return redirect('login')
+
+        if user.user_type == 'admin':
+                return redirect('bac_home')  
+        else:
+                return redirect('request')
     else:
-            messages.error(request, "Invalid login credentials. Please try again.")
+            messages.success(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
 
 def bac_home(request):
@@ -226,8 +224,8 @@ def reset_password(request):
 @authenticated_user
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You are now successfully logout."))
-    return redirect('homepage')
+    messages.success(request, "You are now logged out.")
+    return redirect('login')
 
 @authenticated_user
 @regular_user_required

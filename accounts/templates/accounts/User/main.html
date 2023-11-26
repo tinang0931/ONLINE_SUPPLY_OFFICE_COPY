@@ -75,23 +75,45 @@
     <div class="bg-#6C757D w-100" id="sidebar-wrapper">
       <div class="list-group w-100">
         <br><br>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
-          <i class="far fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">&nbsp;&nbsp;Purchase Request</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
-          <i class="fas fa-location-arrow fa-flip-horizontal"></i><span id="requestTracker" class="hidden-name">&nbsp;&nbsp;Request Tracker</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
-          <i class="fas fa-history"></i> <span id="history" class="hidden-name">&nbsp;History</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
-          <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name"> &nbsp;About</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'login'%}">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i></i> <span id="logout" class="hidden-name">&nbsp;Logout</span>
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center" href="{% url 'request'%}">
+              <i class="far fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name ml-2">Purchase Request</span>
+          </a>
+          <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center" href="{% url 'tracker'%}">
+              <i class="fas fa-location-arrow fa-flip-horizontal"></i><span id="requestTracker" class="hidden-name ml-2">Request Tracker</span>
+          </a>
+          <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center" href="{% url 'history'%}">
+              <i class="fas fa-history"></i> <span id="history" class="hidden-name ml-2">History</span>
+          </a>
+          <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center" href="{% url 'about'%}">
+              <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name ml-2">About</span>
+          </a>
+          
+          <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center logout-link" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span id="logout" class="hidden-name ml-2">Logout</span>
         </a>
       </div>
+      </div>
     </div>
+  </div>
+</div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Logout Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Are you sure you want to logout?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <a href="{% url 'login' %}" class="btn btn-primary">Logout</a>
+          </div>
+      </div>
   </div>
 </div>
 
@@ -109,8 +131,8 @@
   .hidden-name {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    border-radius: 10px;
   }
+
   #sidebar.show-names .hidden-name {
     opacity: 1;
   }
@@ -118,7 +140,6 @@
   .list-group-item-action:hover {
     background-color: #6C757D; /* Set the desired background color for hover */
   }
-
 </style>
 
 <script>
