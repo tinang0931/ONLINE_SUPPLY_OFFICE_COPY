@@ -9,7 +9,9 @@
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
 
     <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-      <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
+     
+       <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+   
     </div>
 
     <div class="table-responsive" style="margin: 0 auto;">
@@ -47,6 +49,45 @@
     </div>
   </div>
 </div>
+
+<script>
+  function highlightInput(input) {
+    input.select();
+  }
+
+  function filterTable() {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("search_bar_request");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".table");
+    tr = table.getElementsByTagName("tr");
+
+    // Start loop from index 1 to skip the header row (index 0)
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td");
+      var found = false;
+      for (j = 0; j < td.length; j++) {
+        txtValue = td[j].textContent || td[j].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          found = true;
+          break;
+        }
+      }
+      if (found) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+</script>
+
+
+
+  
+
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

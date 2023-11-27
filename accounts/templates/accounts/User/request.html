@@ -111,7 +111,11 @@
     }
 
     .cart {
-        margin-left: 45%;
+        top: 30%;
+        position: fixed;
+        z-index: 100000;
+        left: 89%;
+
       
 
     }
@@ -151,18 +155,22 @@
 </style>
 
 
+
+
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <a href="{% url 'requester' %}">
+        <i>
+            <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
+        </i>
+    </a>
 
     <div class="subheader">
         
         <div class="container">
             <h1 class="title">CREATE PURCHASE REQUEST</h1>
             <div class="cart">
-                <a href="{% url 'requester' %}">
-                    <i>
-                        <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
-                    </i>
-                </a>
+                
             </div>
         </div>
 
@@ -230,7 +238,7 @@
     </div>
 </form>
 </div>
-0     
+
 <script>
     function scrollToCategory() {
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
