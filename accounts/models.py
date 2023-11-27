@@ -45,7 +45,7 @@ class User(AbstractUser):
 
 class Item(models.Model):
     
-    
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -59,12 +59,15 @@ class Item(models.Model):
 
 
 
+
+
 class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
-    is_approved = models.BooleanField(default=False)  # Add this field
+    date_updated = models.DateField(auto_now=True)
+    
 
     # ... other fields and methods ...
 
@@ -97,6 +100,7 @@ class CheckoutItems(models.Model):
         
 class Comment(models.Model):
     content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     pr_id = models.CharField(max_length=50)  # Add pr_id field
 

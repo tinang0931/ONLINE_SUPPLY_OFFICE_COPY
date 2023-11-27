@@ -244,23 +244,34 @@ def regular_user_only_view(request):
 @regular_user_required
 @authenticated_user
 def history(request):
-    latest_checkout = Checkout.objects.latest('submission_date')
+    # Get the logged-in user
+    user = request.user
 
-        # Get checkout items associated with the latest checkout
-    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+    # Get all checkouts for the logged-in user
+    all_checkouts = Checkout.objects.filter(user=user)
+
+    # Get checkout items associated with all checkouts
+    all_checkout_items = CheckoutItems.objects.filter(checkout__in=all_checkouts)
 
     context = {
-            'checkout_items': checkout_items,
-            'pr_id': latest_checkout.pr_id,
-        }
-    
+        'checkout_items': all_checkout_items,
+    }
+
     return render(request, 'accounts/User/history.html', context)
 
 @authenticated_user
 def tracker(request):
-    status = Comment.objects.all()
-    return render(request, 'accounts/User/tracker.html', {'status': status})
-   
+    user = request.user
+
+
+    all_checkouts = Checkout.objects.filter(user=user)
+
+
+    feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
+                                                
+
+    context = {'feedback': feedback, 'checkout_info': all_checkouts}
+    return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
 @regular_user_required
@@ -300,7 +311,7 @@ def bac_home(request):
                 'last_name': checkout.user.last_name,
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
-                'status_comment': latest_comment.content if latest_comment else "No comments",
+                'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
                 # Add more fields as needed
             }
@@ -411,14 +422,19 @@ def addItem(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
+        user = request.user
+
     
         Item.objects.create(
+            user=user,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+             # Calculate total cost based on price and quantity
         )
+       
 
         return redirect('request')
 
@@ -438,15 +454,20 @@ def request(request):
             price = request.POST.get(f'price_{row_id}')
             quantity = request.POST.get(f'quantity_{row_id}')
 
+            user = request.user
+
             # Save the data to the CartItem model (update this based on your model)
             items = Item.objects.create(
+                user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
+                 # Calculate total cost based on price and quantity
             )
             items.save()
+            
 
         # Redirect to a success page
         return redirect('requester')
@@ -593,9 +614,8 @@ class GetNewRequestsView(View):
 
         return JsonResponse({'new_requests': serialized_requests})
 
-@authenticated_user
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
+@authenticated_user              
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+    return redirect ('requester')
