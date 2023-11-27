@@ -44,6 +44,6 @@ def admin_required(view_func):
         if request.user.is_authenticated and request.user.user_type == 'admin':
             return view_func(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("dili pwede ma_access buanga ka!")
+            return HttpResponseForbidden("You don't have permission to access this page.")
 
     return _wrapped_view

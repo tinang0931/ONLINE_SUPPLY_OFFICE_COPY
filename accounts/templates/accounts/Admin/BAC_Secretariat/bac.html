@@ -57,33 +57,15 @@
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_about'%}">
                   <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
-                <a class="list-group-item list-group-item-action p-3 border-0 d-flex align-items-center logout-link" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fa-solid fa-arrow-right-from-bracket"></i> <span id="logout" class="hidden-name ml-2">Logout</span>
-              </a>
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'logout_user'%}">
+                  <i class= "fa-solid fa-arrow-right-from-bracket"></i> <span id="about" class="hidden-name">Logout</span>
+                </a>
+             
               </div>
             </div>
           </div>
         </div>
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Logout Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      Are you sure you want to logout?
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <a href="{% url 'login' %}" class="btn btn-primary">Logout</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
+       
         <style>
           #sidebar {
             transition: width 0.5s ease-in-out;
