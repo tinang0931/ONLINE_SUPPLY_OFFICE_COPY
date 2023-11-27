@@ -261,16 +261,14 @@ def history(request):
 def tracker(request):
     user = request.user
 
-    # Get all checkouts for the user
+
     all_checkouts = Checkout.objects.filter(user=user)
 
-    # Fetch additional information (purpose and date) for each checkout
-    checkout_info = [{'purpose': checkout.purpose, 'date_updated': checkout.date_updated} for checkout in all_checkouts]
 
-    # Get all feedback items based on the pr_ids of all the user's checkouts
     feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
+                                                
 
-    context = {'feedback': feedback, 'checkout_info': checkout_info}
+    context = {'feedback': feedback, 'checkout_info': all_checkouts}
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user

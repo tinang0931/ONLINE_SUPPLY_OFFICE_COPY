@@ -53,7 +53,7 @@
           </td>
           <td>{{ checkout.purpose }}</td>
           
-          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}">
+          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px">
             {{ checkout.status_comment|default:"" }}
         </td>
           <td>

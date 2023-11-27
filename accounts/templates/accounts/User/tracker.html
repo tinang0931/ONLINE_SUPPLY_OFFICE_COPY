@@ -31,28 +31,40 @@
         <thead>
           <tr>
             <th>Purchase Request No.</th>
-            <th>Purpose</th>
+            <th>Purpose </th>
             <th>Forms</th>
             <th>Status</th>
             <th>Date</th>
+            
           </tr>
         </thead>
         <tbody>
           {% for item in feedback %}
-          <tr>
+    <tr>
+        <td>{{ item.pr_id }}</td>
+        
+        <!-- Debugging: Display the checkout_info for the current item -->
+        {% for i in checkout_info %}
+            {% if i.pr_id == item.pr_id %}
+                <td>{{ i.purpose }}</td>
+                
+            {% endif %}
+        {% endfor %}
 
-            <td>{{ item.pr_id }}</td>
-            <td>{{ checkout_info.forloop.counter0.purpose }}</td>
-            <td>Purchase Request Approval</td>
-            <td>{{ item.content }}</td>
-            <td>{{ checkout_info.forloop.counter0.date_updated }}</td>
-          </tr>
-          {% endfor %}
+        <td>Purchase Request Approval</td>
+        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px">{{ item.content }}</td>
+        <td>{{ item.timestamp }}</td>
+    </tr>
+{% endfor %}
+
           {% if feedback|length == 0 %}
-          <tr>
-            <td colspan="3">NO REQUEST YET</td>
-          </tr>
-          {% endif %}
+            <tr>
+                <td colspan="3">
+                    <span >NO REQUEST YET</span>
+                </td>
+            </tr>
+        {% endif %}
+
         </tbody>
       </table>
       
