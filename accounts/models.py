@@ -52,7 +52,7 @@ class User(AbstractUser):
 
 class Item(models.Model):
     
-    
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -66,12 +66,15 @@ class Item(models.Model):
 
 
 
+
+
 class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
-    is_approved = models.BooleanField(default=False)  # Add this field
+    date_updated = models.DateField(auto_now=True)
+    
 
     # ... other fields and methods ...
 
@@ -104,6 +107,7 @@ class CheckoutItems(models.Model):
         
 class Comment(models.Model):
     content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     pr_id = models.CharField(max_length=50)  # Add pr_id field
 
@@ -119,13 +123,7 @@ class CsvFile(models.Model):
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-class Notification(models.Model):
-    username = models.CharField(max_length=255)
-    submission_date = models.DateField()
-    # Add other fields as needed
 
-    def __str__(self):
-        return f"{self.username} - {self.submission_date}"
 
 class VerificationCode(models.Model):
     email = models.EmailField()
