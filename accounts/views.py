@@ -61,7 +61,6 @@ def register(request):
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
 
-
         # Check if passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -147,8 +146,6 @@ def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
 
-
-
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -201,7 +198,6 @@ def is_valid_code(verification_code, user_email):
     return False
 
 
-
  # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
@@ -231,9 +227,12 @@ def logout_user(request):
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
+
 @authenticated_user
 @authenticated_user
 def registration(request):
@@ -257,6 +256,7 @@ def history(request):
 
     return render(request, 'accounts/User/history.html', context)
 
+
 @authenticated_user
 def tracker(request):
     user = request.user
@@ -271,18 +271,20 @@ def tracker(request):
     context = {'feedback': feedback, 'checkout_info': all_checkouts}
     return render(request, 'accounts/User/tracker.html', context)
 
+
 @authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
+
 
 @authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
+
 @authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
-
 
 
 @authenticated_user
@@ -321,8 +323,6 @@ def bac_home(request):
     checkout_data = list(checkout_data_dict.values())
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', {'checkouts': checkout_data})
-
-
 
 
 from django.urls import reverse
@@ -366,52 +366,97 @@ class PreqFormView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or comment content not found in the form data.")
+        
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
 
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
+
 @authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
 
 @authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
-
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
 
 @authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
 
+
 @authenticated_user
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
 @authenticated_user
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+
+
 @authenticated_user
 def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+
+@authenticated_user
+def bo(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bo.html')
+
+
+@authenticated_user
+def boabout(request):
+    return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
+
+
+@authenticated_user
+def bohistory(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
+
+
+@authenticated_user
+def cd(request):
+    return render(request, 'accounts/Admin/Campus_Director/cd.html')
+
+
+@authenticated_user
+def cdabout(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
+
+
+@authenticated_user
+def cdhistory(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+
+
+@authenticated_user
+def cdresolution(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
+
+
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-
 
 
 def addItem(request):
@@ -436,7 +481,6 @@ def addItem(request):
         )
         
         return redirect('request')
-
     return render(request, 'accounts/User/request.html')
 
 
@@ -466,7 +510,6 @@ def request(request):
                  # Calculate total cost based on price and quantity
             )
             items.save()
-            
 
         # Redirect to a success page
         return redirect('requester')
@@ -492,7 +535,6 @@ class RequesterView(View):
 
         # Calculate total cost based on the items
         # ...
-
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
@@ -505,9 +547,6 @@ class RequesterView(View):
            
 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
-
-            
-
 
             for row in items:
                 item_id = row.id
@@ -542,7 +581,6 @@ class RequesterView(View):
         random_number = str(random.randint(10000000, 99999999))
 
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
 
 
 
@@ -583,10 +621,11 @@ def show_more_details(request):
             }
 
             response_data = form_data.get(form_type, {})
-
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
 @authenticated_user
 def bac_history(request):
    request = Item.objects.all()
@@ -613,6 +652,7 @@ class GetNewRequestsView(View):
         ]
 
         return JsonResponse({'new_requests': serialized_requests})
+    
 
 @authenticated_user              
 def delete_item(request, id):
