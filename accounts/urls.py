@@ -35,5 +35,13 @@ urlpatterns = [
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('bo/',views.bo, name='bo'),
+   path('boabout/',views.boabout, name='boabout'),
+   path('bohistory/',views.bohistory, name='bohistory'),
+   path('cd/',views.cd, name='cd'),
+   path('cdabout/',views.cdabout, name='cdabout'),
+   path('cdhistory/',views.cdhistory, name='cdhistory'),
+   path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
  
 ]
