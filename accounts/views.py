@@ -479,6 +479,7 @@ def addItem(request):
             quantity=quantity,
              # Calculate total cost based on price and quantity
         )
+        
         return redirect('request')
     return render(request, 'accounts/User/request.html')
 
@@ -516,7 +517,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -658,3 +659,7 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+
+def bac_dashboard(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
