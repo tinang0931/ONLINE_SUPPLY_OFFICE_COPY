@@ -60,15 +60,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField()),
-                ('timestamp', models.DateTimeField()),
-                ('pr_id', models.CharField(max_length=50)),
-            ],
-        ),
-        migrations.CreateModel(
             name='CsvFile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -77,18 +68,6 @@ class Migration(migrations.Migration):
                 ('ITEMS', models.CharField(max_length=255)),
                 ('UNIT', models.CharField(max_length=50)),
                 ('PRICE', models.DecimalField(decimal_places=2, max_digits=10)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Item',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('item', models.CharField(blank=True, max_length=255, null=True)),
-                ('item_brand_description', models.CharField(blank=True, max_length=255, null=True)),
-                ('unit', models.CharField(blank=True, max_length=50, null=True)),
-                ('unit_cost', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)),
-                ('quantity', models.IntegerField(default=1)),
-                ('submission_date', models.DateField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
@@ -131,6 +110,19 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Item',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('item', models.CharField(blank=True, max_length=255, null=True)),
+                ('item_brand_description', models.CharField(blank=True, max_length=255, null=True)),
+                ('unit', models.CharField(blank=True, max_length=50, null=True)),
+                ('unit_cost', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)),
+                ('quantity', models.IntegerField(default=1)),
+                ('submission_date', models.DateField(auto_now_add=True)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='History',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -140,6 +132,16 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField()),
                 ('status_description', models.CharField(max_length=200)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Comment',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('content', models.TextField()),
+                ('timestamp', models.DateTimeField()),
+                ('pr_id', models.CharField(max_length=50)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
