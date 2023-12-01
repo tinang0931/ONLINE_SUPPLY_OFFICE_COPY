@@ -472,14 +472,37 @@
                                     <div class="send-icon">
                                         <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
                                         
-                                      </div>
-                                      <a href="#" title="Download" class="icon-link">
-                                        <i class="fas fa-download"></i> Download
-                                      </a>
-                                      <a href="javascript:window.print()" title="Print" class="icon-link">
-                                        <i class="fas fa-print"></i> Print
-                                      </a>
-                                </div>
+                                        <div>
+                                            <a href="#" title="Download" class="icon-link" id="downloadBtn">
+                                              <i class="fas fa-download"></i> Download
+                                            </a>
+                                            <a href="#" title="Print" class="icon-link" id="printBtn">
+                                              <i class="fas fa-print"></i> Print
+                                            </a>
+                                          </div>
+                                        
+                                          <script>
+                                            document.getElementById('downloadBtn').addEventListener('click', function () {
+                                              downloadAsPDF();
+                                            });
+                                        
+                                            document.getElementById('printBtn').addEventListener('click', function () {
+                                              window.print();
+                                            });
+                                        
+                                            function downloadAsPDF() {
+                                              var element = document.body; // Choose the element you want to download as PDF
+                                        
+                                              html2pdf(element, {
+                                                margin: 10,
+                                                filename: 'document.pdf',
+                                                image: { type: 'jpeg', quality: 0.98 },
+                                                html2canvas: { scale: 2 },
+                                                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                                              });
+                                            }
+                                          </script>
+                                        
                         </footer>
                         
                         </form>
