@@ -22,7 +22,6 @@ urlpatterns = [
    path('about/',views.about, name='about'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
-   path('bac_history/',views.bac_history, name='bac_history'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
    path('preqform/<str:pr_id>/', PreqFormView.as_view(), name='preqform'),
@@ -35,5 +34,5 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-  path('api/getNewRequests/', GetNewRequestsView.as_view(), name='get_new_requests'),
+   path('delete_item/<int:id>/', delete_item, name='delete_item'),
 ]
