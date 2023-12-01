@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -51,7 +53,6 @@ class User(AbstractUser):
         return self.username
 
 class Item(models.Model):
-    
     
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)

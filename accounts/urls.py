@@ -31,11 +31,14 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('notif/',views.notif, name='notif'),
-   path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+   path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('view_cart/<int:id>/', views.view_cart, name='view_cart'),
+   path('edit_item/<int:id>/', views.edit_item, name='edit_item'),
    path('inspection/',views.inspection, name='inspection'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
   path('api/getNewRequests/', GetNewRequestsView.as_view(), name='get_new_requests'),
+ 
 ]

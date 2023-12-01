@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
+from accounts.forms import EditItemForm
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -403,6 +404,7 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 
+
 def request(request):
     if request.method == 'POST':
         # Retrieve selected rows from the form
@@ -572,11 +574,47 @@ class GetNewRequestsView(View):
 
         return JsonResponse({'new_requests': serialized_requests})
 
-@authenticated_user
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
+# @authenticated_user
+# def item_delete(request, request_id):
+#     item = get_object_or_404(Item, request_id=request_id)
+#     item.delete()
+#     # Redirect to an appropriate URL after deletion
+#     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+
+
+def view_cart(request, id):
+    item = Item.objects.get(id = id)
+
+    return render (request, { 'item': item})
+
+
+
+def edit_item(request, id):
+    edit = Item.objects.get(id=id)
+
+    if request.method == "POST":
+        # Update the item fields with the new data from the request
+        item_name = request.POST.get('item_name')
+        item_description = request.POST.get('item_description')
+        unit = request.POST.get('item_unit')
+        unit_cost = request.POST.get('item_unit_cost')
+        quantity = request.POST.get('item_quantity')
+        total_cost = request.POST.get('item_total_cost')
+
+        # Update the existing 'edit' item with the new data
+        edit.item = item_name
+        edit.item_brand_description = item_description
+        edit.unit = unit
+        edit.unit_cost = unit_cost
+        edit.quantity = quantity
+        edit.total_cost = total_cost
+        edit.save()
+
+
+    return render(request, 'requester', {'edit': edit})
+                  
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
-
-
+    return redirect ('requester')
+    
