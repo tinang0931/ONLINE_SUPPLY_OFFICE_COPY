@@ -32,8 +32,8 @@ body {
     top: 80px;
     left: 100px;
     color: white;
-    font-size: 60px;
-    font-weight: 200px;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 
@@ -67,7 +67,7 @@ body {
 
 
 .wrapper .input-box {
-    position: relative;
+    position: sticky;
     width: 300px;
     height: 40px;
     background: rgba(255, 255, 255, 0.486);
