@@ -123,13 +123,7 @@ class CsvFile(models.Model):
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-class Notification(models.Model):
-    username = models.CharField(max_length=255)
-    submission_date = models.DateField()
-    # Add other fields as needed
 
-    def __str__(self):
-        return f"{self.username} - {self.submission_date}"
 
 class VerificationCode(models.Model):
     email = models.EmailField()

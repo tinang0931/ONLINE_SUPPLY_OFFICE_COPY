@@ -479,6 +479,7 @@ def addItem(request):
             quantity=quantity,
              # Calculate total cost based on price and quantity
         )
+        
         return redirect('request')
     return render(request, 'accounts/User/request.html')
 
@@ -658,5 +659,8 @@ class GetNewRequestsView(View):
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+    return redirect ('requester')
+
+
+def bac_dashboard(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')

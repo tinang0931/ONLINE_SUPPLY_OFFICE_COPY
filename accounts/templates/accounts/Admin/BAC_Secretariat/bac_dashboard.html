@@ -1,0 +1,143 @@
+{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+
+{% load static %}
+
+{% block bac_dashboard %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Display</title>
+    <style>
+        .container-fluid {
+            height: 68vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        input, select {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .update-btn, .delete-btn {
+            cursor: pointer;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="container">
+        <h1 class="pr text-center pt-4">DASHBOARDS</h1>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category">
+
+        <label for="item">Item:</label>
+        <input type="text" id="item">
+
+        <label for="price">Price:</label>
+        <input type="text" id="price">
+
+        <label for="unit">Unit:</label>
+        <input type="text" id="unit">
+
+        <button onclick="addItem()">Add Item</button>
+
+        <table id="itemTable">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Items will be displayed here dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function addItem() {
+        var category = document.getElementById('category').value;
+        var item = document.getElementById('item').value;
+        var price = document.getElementById('price').value;
+        var unit = document.getElementById('unit').value;
+
+        if (category && item && price && unit) {
+            var table = document.getElementById('itemTable').getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(table.rows.length);
+
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+
+            cell1.innerHTML = category;
+            cell2.innerHTML = item;
+            cell3.innerHTML = price;
+            cell4.innerHTML = unit;
+            cell5.innerHTML = '<span class="update-btn" onclick="updateItem(this)">Update</span> | <span class="delete-btn" onclick="deleteItem(this)">Delete</span>';
+
+            // Clear input fields
+            document.getElementById('category').value = '';
+            document.getElementById('item').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('unit').value = '';
+        }
+    }
+
+    function updateItem(row) {
+        var selectedRow = row.parentNode.parentNode;
+        var category = selectedRow.cells[0].innerHTML;
+        var item = selectedRow.cells[1].innerHTML;
+        var price = selectedRow.cells[2].innerHTML;
+        var unit = selectedRow.cells[3].innerHTML;
+
+        document.getElementById('category').value = category;
+        document.getElementById('item').value = item;
+        document.getElementById('price').value = price;
+        document.getElementById('unit').value = unit;
+
+        // Remove the selected row
+        selectedRow.parentNode.removeChild(selectedRow);
+    }
+
+    function deleteItem(row) {
+        var selectedRow = row.parentNode.parentNode;
+        selectedRow.parentNode.removeChild(selectedRow);
+    }
+</script>
+
+</body>
+</html>
+
+{% endblock %}
