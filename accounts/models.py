@@ -123,6 +123,14 @@ class CsvFile(models.Model):
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
+class Bac_Item(models.Model):
+    CATEGORY = models.CharField(max_length=255)
+    ITEM_BRAND = models.CharField(max_length=255)
+    ITEMS = models.CharField(max_length=255)
+    UNIT = models.CharField(max_length=50)
+    PRICE = models.DecimalField(max_digits=10, decimal_places=2)
+
+
 
 
 class VerificationCode(models.Model):

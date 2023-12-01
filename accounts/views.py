@@ -622,4 +622,11 @@ def delete_item(request, id):
 
 
 def bac_dashboard(request):
+    if request.method == 'POST':
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
+
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')

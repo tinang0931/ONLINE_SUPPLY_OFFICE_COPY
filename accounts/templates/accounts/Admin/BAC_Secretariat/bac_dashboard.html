@@ -52,20 +52,24 @@
 <div class="container-fluid">
     <div class="container">
         <h1 class="pr text-center pt-4">DASHBOARDS</h1>
+    
+        <form action="{% url 'bac_dashboard' %}" method="post">
 
         <label for="category">Category:</label>
-        <input type="text" id="category">
+        <input type="text" id="category" name="category">
 
         <label for="item">Item:</label>
-        <input type="text" id="item">
+        <input type="text" id="item" name="item">
 
         <label for="price">Price:</label>
-        <input type="text" id="price">
+        <input type="text" id="price" name="price">
 
         <label for="unit">Unit:</label>
-        <input type="text" id="unit">
+        <input type="text" id="unit" name="unit">
 
         <button onclick="addItem()">Add Item</button>
+
+        </form>
 
         <table id="itemTable">
             <thead>
