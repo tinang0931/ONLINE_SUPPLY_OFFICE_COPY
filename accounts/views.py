@@ -434,8 +434,7 @@ def addItem(request):
             quantity=quantity,
              # Calculate total cost based on price and quantity
         )
-       
-
+        
         return redirect('request')
 
     return render(request, 'accounts/User/request.html')
@@ -620,3 +619,7 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+
+def bac_dashboard(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')

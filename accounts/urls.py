@@ -35,5 +35,6 @@ urlpatterns = [
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
  
 ]
