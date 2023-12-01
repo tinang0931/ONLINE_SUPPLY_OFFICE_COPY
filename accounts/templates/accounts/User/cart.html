@@ -2,8 +2,23 @@
 
 {% load static %}
 
-
 {% block cart %}
+
+<style>
+  .primary-btn {
+      background-color: rgb(52, 129, 211); 
+      color: #ffffff; 
+      padding: 10px 20px; 
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 120px;
+  }
+
+  .primary-btn:hover {
+      background-color: #65a2e2; /* Change the color on hover if desired */
+  }
+</style>
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -19,161 +34,100 @@
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-    
-    <div>
+  
+  <div>
+    <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
+      <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+      <table class="cart_table" id="create_request_table" style="background-color: none; ">
+        <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
+          <tr>
+              <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap"></th>
+              <th class="text-center text-nowrap"></th>   
+          </tr>
+      </thead>
       
-      <div class=" cart table-responsive" style="height: 68vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
-        <table class="cart_table" id="create_request_table" style="background-color: none; ">
-          <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
-            <tr>
-                <th class="text-center text-nowrap" style="min-width: 15rem;">Item Name</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Item Brand/Description</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-                <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
-                <th class="text-center text-nowrap"></th>
+      <tbody>
+        {% for item in items %}
+            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+                <td class="item_name text-center">{{ item.item }}</td>
+                <td class="item_description text-center">{{ item.item_brand_description }}</td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+                <td>
+                    <a href="#" class="btn btn-primary btn-sm">Update</a>
+                </td>
                 
+                <td class="text-center">
+                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                <td>
+                    <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
+                    <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
+                    <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                    <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                    <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
+                </td>
             </tr>
-        </thead>
-        
-        <tbody>
-          {% for item in items %}
-          <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
-            <td class="item_name text-center">{{ item.item }}</td>
-            <td class="item_description text-center">{{ item.item_brand_description }}</td>
-            <td class="item_unit text-center">{{ item.unit }}</td>
-            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-            <td class="item_quantity text-center">{{ item.quantity }}</td>
-            <td class="item_total_cost text-center">
-              {{ item.total_cost }}
-            </td>
-            <td class="text-center">
-              <button type="button" class="btn btn-primary" onclick="openEditModal('{{ item.id }}', '{{ item.item }}', '{{ item.item_brand_description }}', '{{ item.unit }}', '{{ item.unit_cost }}', '{{ item.quantity }}')">Edit</button>
-          </td>
-          
-          <form id="editForm" method="POST" action="{% url 'request' %}">
-          {% endfor %}
-        </tbody>
-
-        <!-- Modal container -->
-        <div id="editItemModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Item</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        {% endfor %}
+    </tbody>
+    </table>
+    
+    <script>
+        // Wait for the document to be ready
+        $(document).ready(function() {
+            // Function to calculate total amount
+            function calculateTotal() {
+                var totalAmount = 0;
+                // Loop through each row in the table body
+                $(".item_total_cost").each(function() {
+                    // Get the value of each item's total cost in this row
+                    var itemCost = parseFloat($(this).text());
+                    // Add the total cost of this item to the totalAmount
+                    totalAmount += itemCost;
+                });
+                // Display the total amount in the designated span or div
+                $("#total_amount").text(totalAmount.toFixed(2)); // Adjust if needed
+            }
+    
+            // Call the calculateTotal function initially
+            calculateTotal();
+        });
+    </script>
+    
+    </div>
+    
+    <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="purpose" style="color:#FFFFFF">Purpose:</label>
+                        <textarea class="form-control" id="purpose" placeholder="Purpose" name="purpose" contenteditable="true" style="resize: vertical;"></textarea>
                     </div>
-                    <div class="modal-body">
-                        <!-- Your form inputs for editing -->
-                        <label for="editItem">Item:</label>
-                        <input type="text" class="form-control" id="editItem">
-                        
-                        <label for="editItemBrandDescription">Item Brand Description:</label>
-                        <input type="text" class="form-control" id="editItemBrandDescription">
-                        
-                        <label for="editUnit">Unit:</label>
-                        <input type="text" class="form-control" id="editUnit">
-                        
-                        <label for="editUnitCost">Unit Cost:</label>
-                        <input type="text" class="form-control" id="editUnitCost">
-                        
-                        <label for="editQuantity">Quantity:</label>
-                        <input type="text" class="form-control" id="editQuantity">
-        
-                        <!-- Add other input fields as needed -->
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center" style="color:#FFFFFF">
+                        <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <div class="modal-footer">
-                          <button type="submit" value ="submit" class="btn btn-primary" >Save</button>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-         $('#editItemModal').on('hidden.bs.modal', function () {
-    // Reset any modal-related changes or perform additional actions
-});
+    </footer>   
+  </div>
+</form>
 
-
-         function openEditModal(itemId, item, itemBrandDescription, unit, unitCost, quantity) {
-    // Set values in the modal inputs
-    $('#editItem').val(item);
-    // Set other values as needed
-
-    // Show the modal
-    $('#editItemModal').modal('show');
-    
-    // Remove the backdrop element manually
-    $('.modal-backdrop').remove();
-}
-
-function saveEdits() {
-    // Retrieve edited values from modal inputs
-    var editedItem = $('#editItem').val();
-    var editedItemBrandDescription = $('#editItemBrandDescription').val();
-    var editedUnit = $('#editUnit').val();
-    var editedUnitCost = parseFloat($('#editUnitCost').val());
-    var editedQuantity = parseFloat($('#editQuantity').val());
-
-    // Calculate total cost
-    var editedTotalCost = editedUnitCost * editedQuantity;
-
-    // Send updated data to server using AJAX
-    $.ajax({
-        type: 'POST',
-        url: '/update_item/' + itemId + '/',  // Replace with your Django URL for updating items
-        data: {
-            item: editedItem,
-            item_brand_description: editedItemBrandDescription,
-            unit: editedUnit,
-            unit_cost: editedUnitCost,
-            quantity: editedQuantity,
-            total_cost: editedTotalCost,  // Include total cost in the update
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function (response) {
-            if (response.success) {
-                // Close the modal
-                $('#editItemModal').modal('hide');
-
-                 // Update the corresponding row in the table with the edited values
-                 var editedRow = $('#create_request_table').find('td:contains("' + editedItem + '")').closest('tr');
-                editedRow.find('.item_name').text(editedItem);
-                editedRow.find('.item_description').text(editedItemBrandDescription);
-                editedRow.find('.item_unit').text(editedUnit);
-                editedRow.find('.item_unit_cost').text(editedUnitCost);
-                editedRow.find('.item_quantity').text(editedQuantity);
-                editedRow.find('.item_total_cost').text(editedTotalCost);
-
-                // Optionally, you can update the total cost in the footer or perform other actions
-
-                // Display the cart table
-                $('.cart').show();
-            
-                // Handle errors if needed
-                console.error(response.errors)
-
-                // Optionally, update the item details in the table without refreshing the page
-                // Update the corresponding row in the table with the edited values
-
-                // Alternatively, you can redirect the user to a new page or refresh the current page
-                // window.location.href = '/your_redirect_url/';
-            } else {
-                // Handle errors if needed
-                console.error(response.errors);
-            }
-        },
-        error: function () {
-            // Handle errors if needed
-            console.error('Failed to save edits.');
-        }
-    });
-}
-
-</script>
 
 {% endblock %}

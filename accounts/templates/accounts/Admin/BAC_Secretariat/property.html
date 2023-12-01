@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,51 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
-    
-    header {
-        background-color: #007acc; 
-        color: white;
-        padding: 10px;
-    }
-    
-    .ctu_logo {
-        width: 190px;
-        height: auto;
-        margin-right: 20px;
-        float: left;
-        margin-top: 30px;
-    }
-        
-    .asean_logo{
-        width: 167px;
-        height: auto;
-        margin-right: 20px;
-        margin-top: 55px;
-        float: left;
-    }
-
-        .container-fluid {
-            height: 150vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 15px;
-            margin-right: 150px;
+  
+        header {
+            background-color: #007acc;
+            color: white;
+            padding: 10px;
         }
 
+    
+        .ctu_logo {
+            width: 190px;
+            height: auto;
+            margin-right: 20px;
+            float: left;
+            margin-top: 30px;
+        }
+        
+        .asean_logo{
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+            margin-top: 55px;
+            float: left;
+        }
 
     
         .container {
-            max-width: 800px; 
-            padding: 20px;
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0 auto; 
+            max-width: 800px;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
 
        
@@ -64,17 +52,17 @@
         }
 
         p {
-            font-size: 16px; 
-            text-align: center; 
+            font-size: 25px;
+            text-align: center;
         }
 
         a {
             color: #007acc;
-            text-decoration: underline; 
+            text-decoration: underline;
         }
 
         a:hover {
-            text-decoration: none; 
+            text-decoration: none;
         }
 
         .management {
@@ -82,7 +70,6 @@
             width: 167px;
             height: auto;
             margin-right: 20px;
- 
         }
 
         .iso_logo {
@@ -113,7 +100,6 @@
             border: 2px solid;
             width: 100%;
             margin-top: 20px;
-   
         }
 
         th,
@@ -131,179 +117,216 @@
         }
 
         body,
-    h3,
-    p {
-        margin: 0;
-        padding: 0;
-    }
-
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    table {
-            width: 100%;
-            table-layout: fixed; /* Prevent table from resizing columns based on content */
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
         }
-    .table-and-comment {
+
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        table {
+                width: 100%;
+                table-layout: fixed; /* Prevent table from resizing columns based on content */
+            }
+        .table-and-comment {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
         }
+        
         .table-container {
             width: 60%; /* Adjust the width as needed */
             margin-top: -500px;
         }
 
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: 20px;
+        
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-        }
-        .comment-box {
-            width: 60%; /* Adjust the width as needed */
-            margin-top: -20px; /* Adjust the negative margin to move it up */
-            margin-bottom: 20px;
+            width: 80%;
         }
 
-        .comment-box textarea {
-            width: 100%;
-            height: 80px; /* Adjust the height as needed */
-            margin-top: 10px;
+        .logo-container img {
+            max-width: 20%;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .logo-container-left,
+        .logo-container-right {
+            width: 48%; 
+        }
+
+        .logo-container-left img,
+        .logo-container-right img {
+            width: 100%; 
+        }
+
+        .heading-container {
+        text-align: center;
+        font-size: 10;
+        }
+
+        .heading-container h3 {
+            font-size: 1.5em; 
+        }
+
+        .heading-container h2 {
+            font-size: 2em; 
+        }
+
+        .heading-container p {
+            font-size: 1em; 
+        }
+
+        .heading-container a {
+            font-size: 1em; 
+        }
+
+
+        .table-container {
+            margin-top: 20px;
+            width: 82.5%;
+            margin-left: 10px;
+        }
+
+        .icons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 50px;
+        }
+
+        .icon-link {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white; /* Adjust the color as needed */
+        }
+
+
+        .input-box{
+            width: 60%;
+            margin-top: 25px;
+            margin-left: 5px
+        }
+                
+        .input-box input{
+            width: 165.5%;
+            height: 60px;
             padding: 10px;
             box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.97);
+            border-radius: 5px;
         }
 
-    .logo-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        width: 80%;
-    }
+        .send-icon {
+            position: fixed;
+            top: 84%;
+            right: 52px;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .logo-container img {
-        max-width: 20%;
-        height: auto;
-        margin: 0 10px;
-    }
+        .send-icon i {
+            line-height: 30px;
+        }
 
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: 20px;
-        width: 60%;
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-    .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.icon-link {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #007acc; /* Adjust the color as needed */
-}
-.comment-box {
-    width: calc(60% - 40px); /* Adjusted width to fit inside the send icon */
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-    position: relative;
-  }
-
-  .comment-box textarea {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  .send-icon {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50; /* Green color */
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .send-icon i {
-    line-height: 30px;
-  }
-    table {
-        width:60%;
-    }
-   
-        /* Add this style to your CSS file or in the head of your HTML file */
+        table {
+            width:60%;
+        }
+    
         table td {
             font-weight: normal;
         }
        
-    .orange {
-    background-color: #f48c06;
-    padding: 10px;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-   
-    .row {
-    flex-shrink:0;
-    width: 40%;
-    max-width: 100%;
-  }
-}
+        
+        .orange {
+        background-color: #f48c06;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition-duration: 0.5s;
+        }
+
+
+        .orange:hover{
+        color: white;
+        background-color: #ffa125e3;
+        }
+    
+        .row {
+        flex-shrink:0;
+        width: 40%;
+        max-width: 100%;
+    }   
+
+        .row-horizontal-align {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 20px;
+            margin-right: 0;
+        }
+
+        .col-md-4 {
+            flex: 1;
+            margin-bottom: 10px;
+        }
+
  
-</style>
+
+        .footer {
+        background-color: rgba(1, 33, 67, 0.9);
+        text-align: center;
+        width: 100%;
+        height: auto;
+        bottom: 0;
+        -webkit-user-modify: read-only;
+        position: fixed;
+        z-index: 2;
+        }
+        
+        .button-container{
+            margin-right: 8px;
+            float:right;
+        }
+
+        .send-button{
+            position: sticky;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            width: 61px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .icons-container{
+            display: flex;
+        }
+    </style>
+
+</head>
 
 <body>
 
@@ -325,9 +348,7 @@
         <div>
             <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
             <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div>&nbsp</div>
-        <div>&nbsp</div>
+        </div>
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -336,16 +357,17 @@
         <h><b>PROPERTY ACKNOWLEDGMENT REPORT</b></h>  
     </div>
 
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-md-4 text-left" style="margin-bottom: 10px;">
-              <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
+        <div class="row row-horizontal-align">
+            <div class="col-md-4 text-left">
+                <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
             </div>
-            <div class="col-md-4 text-center" style="margin-bottom: 10px;">
-              <h4>Fund Cluster<span contenteditable="true" id="editableField"></span></h4></h4>
+            <div class="col-md-4 text-center">
+                <h4>Fund Cluster:<span contenteditable="true" id="editableField"></span></h4>
             </div>
-            <div class="col-md-4 text-right" style="margin-bottom: 10px;">
-              <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
+            <div class="col-md-4 text-right">
+                <h4>PAR No.: <span contenteditable="true" id="editableField"></span></h4>
             </div>
+        </div>
                  
         <div class="table-container">
             <div class="justify-content">
@@ -416,25 +438,40 @@
                </div>
             </div>
         </div>
-        <div class="comment-box">
-            <textarea placeholder="Update the purchase request status..."></textarea>
-            <div class="icons-container">
-              <div class="send-icon" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i>
-              </div>
-              <a href="#" title="Download" class="icon-link">
-                <i class="fas fa-download"></i> Download
-              </a>
-              <a href="javascript:window.print()" title="Print" class="icon-link">
-                <i class="fas fa-print"></i> Print
-              </a>
-            </div>
-          </div>
-            <button class="orange">The requester has picked up the items.</button>
-        </div>
-    </div>
 
-    
+    <div>&nbsp</div>
+    <div> &nbsp</div>
+
+    <button class="orange">The requester has picked up the items.</button>
+
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+
 </body>
-</head>
+        <footer class="footer">
+            <div class="input-box">
+                <input placeholder="Update the purchase request status...">
+            </div>
+            <div class="button-container">
+                <button class="send-button" onclick="sendMessage">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+            <div class="icons-container">
+                <a href="#" title="Download" class="icon-link">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a href="javascript:window.print()" title="Print" class="icon-link">
+                    <i class="fas fa-print"></i> Print
+                </a>
+            </div>
+        </footer>
 </html>

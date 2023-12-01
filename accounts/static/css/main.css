@@ -230,13 +230,11 @@ height: 100%;
 } 
 
 
-.sidebar{
-  
+.sidebar {
   transition: all 1s;
   -webkit-transition: all 1s;
   border-right: 2px solid black;
 }
-
 
 #sidebar-wrapper {
   min-height: auto;
@@ -244,21 +242,34 @@ height: 100%;
   transition: margin 3s ease-out;
 }
 
-
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
 }
 
-
 #sidebar-wrapper .list-group {
-  width: 280px;
+  width: 320px;
 }
 
+#sidebar-wrapper .list-group-item {
+  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+}
 
 #page-content-wrapper {
-  
   min-width: 100vw;
+}
+
+#sidebar-wrapper {
+  position: relative; /* Ensure the parent container has a position */
+}
+
+#sidebar-wrapper .list-group-item.logout-link {
+  position: absolute;
+  top: 220%; /* Adjust the top position as needed */
+}
+
+#sidebar-wrapper .list-group-item.logout-link i {
+  margin-right: 10px; /* Adjust the margin as needed for icon spacing */
 }
 
 
@@ -328,6 +339,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .arrow_img {
   height: 30px;
   width: 30px;
+}
+
+
+.fas fa-sign-out-alt{
+  position: sticky;
 }
 
 
@@ -3270,4 +3286,37 @@ button {
 .table-striped thead {
   background-color: blue;
   color: white; 
+}
+
+.fab.fa-facebook {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-facebook:hover {
+  color: #1877f2;
+}
+.fab.fa-twitter {
+  color: white;
+  transition: color 0.3s ease;
+}
+.fab.fa-twitter:hover {
+  color:  #1da1f2;
+}
+.fab.fa-instagram {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fab.fa-instagram:hover {
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.fab.fa-youtube {
+  color: white;
+  transition: color 0.3s ease;
+}
+.fab.fa-youtube:hover {
+  color:  #FF0000;
 }

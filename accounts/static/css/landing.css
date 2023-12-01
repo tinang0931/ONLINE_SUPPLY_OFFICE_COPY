@@ -2,7 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing:border-box;
-    font-family: 'Hermenes-one', sans-serif;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     overflow: hidden;
     width: 100%;
     height: 100;
@@ -18,7 +18,7 @@
 }
 
 .frame {
-    background-image: url("/static/images/school.png");
+    background-image: url("/static/images/cargao.png");
     background-size: cover;
     background-repeat: no-repeat;
     width: 1773px;
@@ -27,7 +27,6 @@
     overflow: visible;
     left: 320px;
     top: 0px;
-
 }
 
 .trapezoid {
@@ -50,8 +49,6 @@
     position: fixed;
     left: 900px;
     top: 0px;
-  
-
 }
 
 .triangle-up {
@@ -108,36 +105,21 @@
     width: 685px;
     height: 318px;
     left: 10px;
-    top: 250px;
-    font-family: 'Hermeneus One';
+    top: 220px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Verdana;
     font-style: normal;
-    font-weight: 400;
-    font-size: 85px;
+    font-weight: 600;
+    font-size: 69px;
     line-height: 100px;
     color: #ffff;
     text-align: center;
 }
 
-.ctu {
-    position: fixed;
-    width: 822px;
-    height: 225px;
-    left: 50px;
-    top: 650px;
-    font-family: 'Hermeneus One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 45px;
-    line-height: 58px;
-    color: #F48C06;
-    text-align: end;
-}
-
 
 .arrow {
     position: fixed;
-    top: 960px;
+    top: 880px;
     left: 980px;
     width: 75px;
-
 }
