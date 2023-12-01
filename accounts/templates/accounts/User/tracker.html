@@ -17,37 +17,44 @@
 
 </style>
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
     <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
   </div>
-  <div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+  <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
     </div>
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
-        <table class="table table-bordered" style="margin: 0px!important;">
-          <thead>
-            <tr>
-              <th>Purchase Request No.</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in items %}
-            <tr>
-              <td>{{item.request_id}}</td>
-              <td>Waiting for Campus Director Approval</td>
-              <td><a href="#"
-                  style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
-                  RECEIVED</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <table class="table table-bordered" style="margin: 0px!important;">
+        <thead>
+          <tr>
+            <th>Purchase Request No.</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="requestTableBody">
+          {% for item in items %}
+          <tr>
+            <td>{{item.request_id}}</td>
+            <td class="status-cell">Waiting for Campus Director Approval</td>
+            <td>
+              <a href="#" onclick="updateStatus(this)"
+                data-request-id="{{item.request_id}}"
+                style="background-color: gray; color: white; border: 1px solid black; padding: 5px; text-align: center; text-decoration: none; border-radius: 10px;">ITEM
+                RECEIVED</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+
+
+</script>
+
 {% endblock %}

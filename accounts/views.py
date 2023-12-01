@@ -352,7 +352,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/dugaduga.jhake/Desktop/SUPPLY SYSTEM/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
 
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
@@ -381,40 +381,7 @@ def delete_item(request, item_id):
 
 
 
-# @authenticated_user
-# def bac_history(request):
-#     # Fetch all PurchaseRequest objects linked to the logged-in user
-#     purchase_requests = PurchaseRequestForm.objects.filter(item__user=request.user)
 
-#     if request.method == 'POST':
-#         action = request.POST.get('Action')
-#         purchase_request_id = request.POST.get('Purchase_Request_ID')
-
-#         # Check if the 'Purchase_Request_ID' field is present
-#         if not purchase_request_id:
-#             return HttpResponse('Please fill in all the required fields.')
-
-#         # Fetch the PurchaseRequest object from the database
-#         try:
-#             purchase_request = PurchaseRequestForm.objects.get(id=purchase_request_id)
-#         except PurchaseRequestForm.DoesNotExist:
-#             return HttpResponse('Purchase request not found.')
-
-#         # Update the PurchaseRequest object based on the submitted action
-#         if action == 'approve':
-#             purchase_request.is_approved = True
-#         elif action == 'disapprove':
-#             purchase_request.is_disapproved = False
-#         else:
-#             return HttpResponse('Invalid action.')
-
-#         # Save the updated PurchaseRequest object to the database
-#         purchase_request.save()
-
-#         # Redirect to the bac_history page
-#         return render(request('bac_history'))
-#     # Render the bac_history page with the list of PurchaseRequest objects
-#     return render(request, 'bac_history.history', {'purchase_requests': purchase_requests})
 
 
 def item_list(request):
@@ -443,36 +410,69 @@ def your_view(request):
 
     return render(request, 'cart.html', {'items': items})
 
-def show_more_details(request):
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import PurchaseRequest, History
+
+def get_additional_details(request):
     if request.method == 'POST':
-        request_id = request.POST.get('request_id', None)
+        request_id = request.POST.get('request_id')
+        request = get_object_or_404(PurchaseRequest, request_id=request_id)
+        
+        # Placeholder for additional details retrieval logic
+        additional_details = "Some additional details for request {}".format(request_id)
+        
+        return JsonResponse({"request_id": request_id, "additional_details": additional_details})
 
-        if request_id:
-            # Fetch the relevant data based on request_id
-            # You should replace this with your actual data retrieval logic
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
-            # For demonstration purposes, let's assume you have a dictionary
-            # with form_type and form_data
-            form_type = request.POST.get('form_type', 'other')
-            form_data = {
-                'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
-                'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
-                'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
-                'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
-                'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
-                'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
-                'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
-                'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
-            }
+def get_bac_history_data(request):
+    # Placeholder for the actual logic to retrieve history data
+    # For now, let's return some sample data
+    history_data = [
+        {"request_id": 1, "action": "Status updated", "timestamp": "2023-01-01 12:00:00"},
+        {"request_id": 2, "action": "Status updated", "timestamp": "2023-01-02 14:30:00"},
+        # Add more data as needed
+    ]
+    return JsonResponse(history_data, safe=False)
 
-            response_data = form_data.get(form_type, {})
+def update_status(request, id):
+    if request.method == 'POST':
+        form = PurchaseRequestForm(request.POST)
+        if form.is_valid():
+            request_id = form.cleaned_data['id']
+            status = form.cleaned_data['status']
+            
+            # Assuming you have a purchase request instance, you can update its status here
+            # For demonstration purposes, let's create a new instance
+            purchase_request = PurchaseRequest.objects.create(status=status)
+             # Update the status
+            purchase_request.update_status(status)
 
-            return JsonResponse(response_data)
+            return JsonResponse({'message': 'Purchase request status updated successfully.'})
+        else:
+            return JsonResponse({'error': 'Invalid form data.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
     
-    return JsonResponse({'error': 'Invalid request'}, status=400)
 
-def bac_history(request):
-   requests = Item.objects.all()
 
-   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+def store_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        requester_name = data.get('requester_name', '')
 
+        # Save the data to the database
+        RequestData.objects.create(requester_name=requester_name)
+        
+        return JsonResponse({'message': 'Data stored successfully'})
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+    
+def get_data(request):
+    if request.method == 'GET':
+        # Retrieve all stored data from the database
+        data = list(RequestData.objects.values())
+        return JsonResponse(data, safe=False)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})

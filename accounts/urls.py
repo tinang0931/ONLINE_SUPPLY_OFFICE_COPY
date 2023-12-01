@@ -34,4 +34,8 @@ urlpatterns = [
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
+   path('update_status/',views.update_status, name='get_update_status'),
+   path('store_data/',views.store_data, name='store_data'),
+    path('get_data/',views.get_data, name='get_data'),
+   
 ]

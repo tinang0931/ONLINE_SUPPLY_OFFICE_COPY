@@ -43,7 +43,7 @@ class History(models.Model):
     date_requested = models.DateField()
     purpose = models.CharField(max_length=200)
     quantity = models.IntegerField()
-    status_description = models.CharField(max_length=200)
+    status_description = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
   
 
@@ -58,8 +58,7 @@ class PurchaseRequestForm(models.Model):
      description = models.TextField()
      quantity = models.IntegerField()
      is_submitted = models.BooleanField(default=False)
-     approved = models.BooleanField(default=False)
-     disapproved = models.BooleanField(default=False)
+     status = models.CharField(max_length=100)
 
     
 def __str__(self):
@@ -68,6 +67,7 @@ def __str__(self):
 
 class PurchaseRequest(models.Model):
     request_id = models.BigAutoField(primary_key=True)
+    status = models.CharField(max_length=255)
     submission_date = models.DateField()
     item = models.CharField(max_length=100)
     quantity = models.IntegerField()
@@ -78,3 +78,13 @@ class PurchaseRequest(models.Model):
         return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
 
     total_cost = property(calculate_total_cost)
+
+    def update_status(self, new_status):
+        self.status = new_status
+        self.save() 
+
+class RequestData(models.Model):
+    requester_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    # Add other fields as needed

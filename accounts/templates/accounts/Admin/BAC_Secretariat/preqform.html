@@ -1,4 +1,9 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
 {% load static %}
+
+{% block preqform %}
+     
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,30 +18,25 @@
   
         header {
             background-color: #007acc;
+      
             color: white;
             padding: 10px;
         }
 
     
-        header {
-            background-color: #007acc; 
-            color: white;
-            padding: 10px;
-        }
-
         .ctu_logo {
-            width: 190px;
+            width: 167px;
+    
             height: auto;
             margin-right: 20px;
             float: left;
-            margin-top: 30px;
         }
-        
-        .asean_logo{
+
+        .asean_logo {
             width: 167px;
+          
             height: auto;
             margin-right: 20px;
-            margin-top: 55px;
             float: left;
         }
 
@@ -52,25 +52,36 @@
         }
 
 
+    
         .container {
-            max-width: 800px; 
-            padding: 20px;
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0 auto; 
+            max-width: 800px;
+          
+            padding: 15px;
+            text-align: center;
+           
+            display: flex;
+           
+            flex-direction: column;
+         
+            justify-content: center;
+            
+            align-items: center;
+          
+            margin: 0 auto;
+           
         }
+
        
         h {
             font-size: 25px;
+          
             text-align: center;
           
         }
 
         p {
             font-size: 25px;
+         
             text-align: center;
 
 
@@ -96,18 +107,11 @@
  
         }
 
-        .iso_logo {
+        .stars {
             float: right;
+            margin-right: 10px;
             width: 167px;
             height: auto;
-            margin-top: 50px;
-        }
-
-        .stars_logo {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-top: 145px;
         }
 
         .br {
@@ -131,6 +135,7 @@
         td {
             border: 1px solid #dddddd;
             padding: 10px;
+           
             text-align: left;
         }
 
@@ -159,10 +164,10 @@
             table-layout: fixed; /* Prevent table from resizing columns based on content */
         }
     .table-and-comment {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-    }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
         .table-container {
             width: 60%; /* Adjust the width as needed */
             margin-top: -500px;
@@ -277,35 +282,32 @@
 
 <body>
 
-    <nav>
-        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
-        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
-        <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
-    </nav>
-
-    <nav>
-        <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
-    </nav>
-
-    <div class="container">
-        <h>Republic of the Philippines</h>
-        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
-        <h>ARGAO CAMPUS</h>
-        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
-        <div>
-            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
-            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
-    </div>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <h><b>PURCHASE REQUEST</b></h>  
-    </div>
-
+    <div class="container-fluid">
+        <div class="logo-container">
+            <div class="logo-container-left">
+                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
+                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
+            </div>
+            <div class="heading-container" style="text-align: center;"> 
+                <h3>Republic of the Philippines</h3>
+                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
+                <h3>ARGAO CAMPUS</h3>
+                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
+                <div>
+                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                    &nbsp;
+                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
+                </div>
+            </div>
+            <div class="logo-container-right">
+                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
+                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
+            </div>
+        </div>
+        <br>
+        <br>
+        
+        <h1>PURCHASE REQUEST</h1>
         <div class="row" style="margin-top: 20px;">
             <div class="col-md-6 text-left" style="margin-bottom: 10px;">
                 <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
@@ -372,55 +374,56 @@
                 </div>
             </div>
         </div>
-        <div class="comment-box">
-            <form id="purchaseRequestForm">
-            <textarea placeholder="Update the purchase request status..."></textarea>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <div class="comment-box">
+        <form class="purchase-request-form" id="purchase-form" action="{% url 'preqform' %}" method="post">
+            {% csrf_token %}
+            <textarea class="status-update" name="status" placeholder="Update the purchase request status..."></textarea>
             <button type="button" onclick="sendRequest()">Send</button>
-            <div class="icons-container">
-                
-                    </div>
-                </form>
-               
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
-            </div>
-        </div>
-        
+        </form>
     </div>
     <script>
-        function sendRequest() {
-            var statusUpdateText = document.getElementById("statusUpdate").value;
-        
-            // Simulate sending data to the server using a Fetch API or XMLHttpRequest
-            fetch('updateStatus.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'statusUpdate=' + encodeURIComponent(statusUpdateText),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Purchase request status updated successfully: " + statusUpdateText);
-        
-                    // Redirect to the request tracker page
-                    window.location.href = 'requestTracker.php';
-                } else {
-                    alert("Failed to update purchase request status. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+    function sendRequest() {
+        var form = document.getElementById('purchase-form');
+        var formData = new FormData(form);
 
-        </script>
-       
+        fetch('/preqform/update_status/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+    if ('message' in data) {
+        console.log(data.message);
+        // Handle success, maybe update UI
+    } else if ('error' in data) {
+        console.error('Error:', data.error);
+        // Handle error, maybe display an error message to the user
+    }
+})
+    }
+</script>
     
+  <!-- Include FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY1Qoe1gX3AUTUqz5F72J3KMj78t1U5VIbpQb4" crossorigin="anonymous">
+<!-- Your page content here -->
+
+<div class="icons-container">
+    <a href="javascript:window.print()" title="Print" class="icon-link">
+        <i class="fas fa-print"></i> Print
+    </a>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</div>
+</div>
+</body>
     
 </body>
 </head>
 
 </html>
+{% endblock %}
