@@ -1,5 +1,6 @@
 from audioop import reverse
 import json
+from pymongo import MongoClient
 from urllib.parse import parse_qs
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
@@ -660,13 +661,45 @@ def delete_item(request, id):
     item.delete()
     return redirect ('requester')
 
+def connect_to_mongo():
+    client = MongoClient("mongodb://localhost:27017/")  # Update the connection string accordingly
+    database = client["inventory"]
+    collection = database["inventorycol"]
+    return collection
+
 
 def bac_dashboard(request):
     if request.method == 'POST':
-        item_data = request.POST.get('item')
-        item_brand_description = request.POST.get('item_Brand_Description')
+        category = request.POST.get('category')  # Corrected from 'catgory'
+        item_name = request.POST.get('item_name')  # Corrected name
+        item_brand_description = request.POST.get('item_brand')
         unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
+        unit_cost = request.POST.get('price')  # Corrected name
 
+        insert_data = {
+            "Category": category,
+            "Item_name": item_name,
+            "Item_brand": item_brand_description,
+            "Unit": unit,
+            "Price": unit_cost
+            
+        }
+        collection = connect_to_mongo()
+        collection.insert_one(insert_data)
+        
+        return redirect('bac_dashboard')
+    
+   
+
+    elif request.method == 'GET':
+        # Handling GET request to retrieve data
+        collection = connect_to_mongo()
+        items = collection.find()
+
+        # Convert the cursor to a list
+        item_list = list(items)
+
+        # Pass the data to the template
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
+    
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
