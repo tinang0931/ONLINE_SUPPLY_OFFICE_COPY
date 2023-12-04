@@ -29,10 +29,11 @@ body{
 .upper{
     position: absolute;
     font-family: Verdana;
-    top: 5%;
-    left: 97px;
+    font-weight: bold;
+    top: 6%;
+    left: 80px;
     color: white;
-    font-size: 60px;
+    font-size: 50px;
 }
 
 .container {
@@ -46,6 +47,7 @@ body{
     border-width: 2px;
     top: 160px;
 }
+
 
 .wrapper h1 {
     color: #003566;
