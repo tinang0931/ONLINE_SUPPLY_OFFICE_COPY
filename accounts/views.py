@@ -515,16 +515,22 @@ def request(request):
         # Redirect to a success page
         return redirect('requester')
 
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+    elif request.method == 'GET':
+        # Handling GET request to retrieve data
+        collection = connect_to_mongo()
+        items = collection.find()
+
+        # Organize items by category
+        categories = {}
+        for item in items:
+            category = item["Category"]
+            if category not in categories:
+                categories[category] = []
+            categories[category].append(item)
+
+        # Pass the organized data to the template
+        return render(request, 'accounts/User/request.html', {'categories': categories})
+
 
 
 class RequesterView(View):
@@ -670,11 +676,11 @@ def connect_to_mongo():
 
 def bac_dashboard(request):
     if request.method == 'POST':
-        category = request.POST.get('category')  # Corrected from 'catgory'
-        item_name = request.POST.get('item_name')  # Corrected name
+        category = request.POST.get('category')
+        item_name = request.POST.get('item_name')
         item_brand_description = request.POST.get('item_brand')
         unit = request.POST.get('unit')
-        unit_cost = request.POST.get('price')  # Corrected name
+        unit_cost = request.POST.get('price')
 
         insert_data = {
             "Category": category,
@@ -682,24 +688,26 @@ def bac_dashboard(request):
             "Item_brand": item_brand_description,
             "Unit": unit,
             "Price": unit_cost
-            
         }
         collection = connect_to_mongo()
         collection.insert_one(insert_data)
-        
+
         return redirect('bac_dashboard')
-    
-   
 
     elif request.method == 'GET':
         # Handling GET request to retrieve data
         collection = connect_to_mongo()
         items = collection.find()
 
-        # Convert the cursor to a list
-        item_list = list(items)
+        # Organize items by category
+        categories = {}
+        for item in items:
+            category = item["Category"]
+            if category not in categories:
+                categories[category] = []
+            categories[category].append(item)
 
-        # Pass the data to the template
-        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
-    
+        # Pass the organized data to the template
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'categories': categories})
+
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
