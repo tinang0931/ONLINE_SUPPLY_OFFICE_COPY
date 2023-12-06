@@ -3283,40 +3283,59 @@ button {
   border-top: 15px solid #ccc;
 }
 
+
 .table-striped thead {
   background-color: blue;
   color: white; 
 }
+
 
 .fab.fa-facebook {
   color: white;
   transition: color 0.3s ease;
 }
 
+
 .fab.fa-facebook:hover {
   color: #1877f2;
 }
+
+
 .fab.fa-twitter {
   color: white;
   transition: color 0.3s ease;
 }
+
+
 .fab.fa-twitter:hover {
   color:  #1da1f2;
 }
+
+
 .fab.fa-instagram {
   color: white;
   transition: color 0.3s ease;
 }
+
 
 .fab.fa-instagram:hover {
   background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
   -webkit-background-clip: text;
   color: transparent;
 }
+
+
 .fab.fa-youtube {
   color: white;
   transition: color 0.3s ease;
 }
+
+
 .fab.fa-youtube:hover {
   color:  #FF0000;
+}
+
+
+.add-file{
+  background-color: #0a58ca;
 }

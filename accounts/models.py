@@ -123,7 +123,12 @@ class CsvFile(models.Model):
     PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-
+class Bac_Item(models.Model):
+    Category = models.CharField(max_length=255)
+    Item_Brand  = models.CharField(max_length=255)
+    Item_name = models.CharField(max_length=255)
+    Unit = models.CharField(max_length=50)
+    Price = models.DecimalField(max_digits=10, decimal_places=2)
 
 class VerificationCode(models.Model):
     email = models.EmailField()
