@@ -45,6 +45,10 @@
             cursor: pointer;
             color: blue;
         }
+        .h4 {
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
@@ -52,90 +56,66 @@
 <div class="container-fluid">
     <div class="container">
         <h1 class="pr text-center pt-4">DASHBOARDS</h1>
+    
+        <form action="{% url 'bac_dashboard' %}" method="post">
+            {% csrf_token %}
+        
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category">
+        
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name">
+        
+            <label for="item_brand">Item Brand / Description:</label>
+            <input type="text" id="item_brand" name="item_brand">
+        
+            <label for="unit">Unit:</label>
+            <input type="text" id="unit" name="unit">
+            <br>
+        
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price">
+        
+            <button type="submit">Add Item</button>
+            <br>
+            <br>
+        
+        
 
-        <label for="category">Category:</label>
-        <input type="text" id="category">
-
-        <label for="item">Item:</label>
-        <input type="text" id="item">
-
-        <label for="price">Price:</label>
-        <input type="text" id="price">
-
-        <label for="unit">Unit:</label>
-        <input type="text" id="unit">
-
-        <button onclick="addItem()">Add Item</button>
-
-        <table id="itemTable">
+        <table>
             <thead>
+                <h4 >Category</h4>
                 <tr>
-                    <th>Category</th>
-                    <th>Item</th>
-                    <th>Price</th>
+                    
+                    <th>Item Name</th>
+                    <th>Item Brand/Description</th>
                     <th>Unit</th>
+                    <th>Price</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Items will be displayed here dynamically -->
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.Item_name }}</td>
+                    <td>{{ item.Item_brand }}</td>
+                    <td>{{ item.Unit }}</td>
+                    <td>{{ item.Price }}</td>
+                    <td>
+                        <button class="update-btn">Update</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+
+               
             </tbody>
         </table>
+    
+    </form>
     </div>
 </div>
 
-<script>
-    function addItem() {
-        var category = document.getElementById('category').value;
-        var item = document.getElementById('item').value;
-        var price = document.getElementById('price').value;
-        var unit = document.getElementById('unit').value;
-
-        if (category && item && price && unit) {
-            var table = document.getElementById('itemTable').getElementsByTagName('tbody')[0];
-            var newRow = table.insertRow(table.rows.length);
-
-            var cell1 = newRow.insertCell(0);
-            var cell2 = newRow.insertCell(1);
-            var cell3 = newRow.insertCell(2);
-            var cell4 = newRow.insertCell(3);
-            var cell5 = newRow.insertCell(4);
-
-            cell1.innerHTML = category;
-            cell2.innerHTML = item;
-            cell3.innerHTML = price;
-            cell4.innerHTML = unit;
-            cell5.innerHTML = '<span class="update-btn" onclick="updateItem(this)">Update</span> | <span class="delete-btn" onclick="deleteItem(this)">Delete</span>';
-
-            // Clear input fields
-            document.getElementById('category').value = '';
-            document.getElementById('item').value = '';
-            document.getElementById('price').value = '';
-            document.getElementById('unit').value = '';
-        }
-    }
-
-    function updateItem(row) {
-        var selectedRow = row.parentNode.parentNode;
-        var category = selectedRow.cells[0].innerHTML;
-        var item = selectedRow.cells[1].innerHTML;
-        var price = selectedRow.cells[2].innerHTML;
-        var unit = selectedRow.cells[3].innerHTML;
-
-        document.getElementById('category').value = category;
-        document.getElementById('item').value = item;
-        document.getElementById('price').value = price;
-        document.getElementById('unit').value = unit;
-
-        // Remove the selected row
-        selectedRow.parentNode.removeChild(selectedRow);
-    }
-
-    function deleteItem(row) {
-        var selectedRow = row.parentNode.parentNode;
-        selectedRow.parentNode.removeChild(selectedRow);
-    }
-</script>
 
 </body>
 </html>
