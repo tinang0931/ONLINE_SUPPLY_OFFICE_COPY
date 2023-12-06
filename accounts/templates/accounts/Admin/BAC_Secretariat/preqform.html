@@ -124,7 +124,7 @@
                 padding: 0;
             }
 
-<<<<<<< HEAD
+
     .container-fluid {
         display: flex;
         flex-direction: column;
@@ -135,7 +135,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
-=======
+
             .container-fluid {
                 display: flex;
                 flex-direction: column;
@@ -183,7 +183,7 @@
 
         .heading-container h3 {
             font-size: 1.5em; 
->>>>>>> b163209f086c6d3a9e0e9061cb2d4d2cf326c235
+
         }
 
         .heading-container h2 {
@@ -200,10 +200,6 @@
 
 
         .table-container {
-<<<<<<< HEAD
-            width: 100%; /* Adjust the width as needed */
-            margin-top: -500px;
-=======
                 margin-top: 20px;
                 width: 80%;
                 margin-left: 50px;
@@ -220,7 +216,6 @@
             margin-left: 20px;
             text-decoration: none;
             color: white; /* Adjust the color as needed */
->>>>>>> b163209f086c6d3a9e0e9061cb2d4d2cf326c235
         }
 
 
@@ -261,78 +256,6 @@
         text-align: center;
         width: 100%;
         height: auto;
-<<<<<<< HEAD
-        margin: 0 10px;
-    }
-
-    .logo-container-left,
-    .logo-container-right {
-        width: 48%; 
-    }
-
-    .logo-container-left img,
-    .logo-container-right img {
-        width: 100%; 
-    }
-
-    .heading-container {
-    text-align: center;
-    font-size: 10;
-}
-
-.heading-container h3 {
-    font-size: 1.5em; 
-}
-
-.heading-container h2 {
-    font-size: 2em; 
-}
-
-.heading-container p {
-    font-size: 1em; 
-}
-
-.heading-container a {
-    font-size: 1em; 
-}
-
-
-.table-container {
-        margin-top: 20px;
-        width: 100%;
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-    .icons-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.icon-link {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #007acc; /* Adjust the color as needed */
-}
-.comment-box {
-            margin-top: 20px;
-            width: 60%;
-            margin-left: 50px;
-            margin-right: 50px;
-        }
-
-        .comment-box textarea {
-            width: 100%;
-            height: 50px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-    table {
-        width:60%;
-    }
-</style>
-=======
         bottom: 0;
         -webkit-user-modify: read-only;
         position: fixed;
@@ -340,7 +263,6 @@
         }
     </style>
 </head>
->>>>>>> b163209f086c6d3a9e0e9061cb2d4d2cf326c235
 
 <body>
     <nav>
@@ -349,34 +271,6 @@
         <img class="stars_logo" src="{% static 'images/uni.png' %}"  alt="logo">
     </nav>
 
-<<<<<<< HEAD
-    <div class="container-fluid">
-        <div class="logo-container">
-            <div class="logo-container-left">
-                <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}" alt="CTU Logo">
-                <img class="asean_logo" src="{% static 'images/asean.png' %}" alt="ASEAN Logo">
-            </div>
-            <div class="heading-container" style="text-align: center;"> 
-                <h3>Republic of the Philippines</h3>
-                <h2><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h2>
-                <h3>ARGAO CAMPUS</h3>
-                <p>Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                <div>
-                    <p>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                    &nbsp;
-                    <p>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                </div>
-            </div>
-            <div class="logo-container-right">
-                <img class="management" src="{% static 'images/iso.jpg' %}" alt="ISO Logo">
-                <img class="stars" src="{% static 'images/stars.png' %}" alt="STARS Logo">
-            </div>
-        </div>
-        <br>
-        <br>
-        
-        <h1>PURCHASE REQUEST</h1>
-=======
     <nav>
         <img class="iso_logo" src="{% static 'images/iso.jpg' %}"  alt="logo">
     </nav>
@@ -398,7 +292,6 @@
         <h><b>PURCHASE REQUEST</b></h>  
     </div>
 
->>>>>>> b163209f086c6d3a9e0e9061cb2d4d2cf326c235
         <div class="row" style="margin-top: 20px;">
             <div class="col-6 text-left" style="margin-bottom: 10px;">
                 <h4>Entity Name: CTU-ARGAO CAMPUS</h4>
@@ -422,12 +315,20 @@
                                 <th colspan="2">Date: <span contenteditable="true" ; id="editableField"></span></th>
                             </tr>
                             <tr>
-                                <td>Stock/Property</td>
-                                <td>Unit</td>
-                                <td>Item Description</td>
-                                <td>Quantity</td>
-                                <td>Unit Cost</td>
-                                <td>Total Cost</td>
+                                 <td>{{ forloop.counter }}</td>
+                                <td class="item_unit text-center">{{ item.unit }}</td>
+                                <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
+                                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                                <td class="item_total_cost text-center">{{item.total_cost }}</td>
+                                <td>
+                                    <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
+                                    <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                                    <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
+                                    <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                                    <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
+                                    <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
+                                </td>
                             </tr>
                             <tr>
                                 <td contenteditable="true"></td>
@@ -501,29 +402,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-        <div class="comment-box">
-  
-            <textarea placeholder="Update the purchase request status..."></textarea>
-            <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
-            </div>
-        </div>
-        
-    </div>
-
-    
-    
-</body>
-</head>
-
-</html>
-=======
         <div> &nbsp</div>
         <div> &nbsp</div>
         <div> &nbsp</div>
@@ -550,7 +428,5 @@
                 </div>
             </div>
         </footer>
-        
-    </div>
+  </div>
 </html>
->>>>>>> b163209f086c6d3a9e0e9061cb2d4d2cf326c235
