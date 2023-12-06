@@ -247,7 +247,7 @@ height: 100%;
 .sidebar {
   transition: all 1s;
   -webkit-transition: all 1s;
-  border-right: 2px solid black;
+  
 }
 
 #sidebar-wrapper {
