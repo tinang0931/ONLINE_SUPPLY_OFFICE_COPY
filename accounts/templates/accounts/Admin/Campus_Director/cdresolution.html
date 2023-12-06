@@ -1,0 +1,116 @@
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
+
+
+{% load static %}
+
+
+{% block cd %}
+
+        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
+          <div class="container">
+            <h1 class="pr text-center pt-4">RESOLUTION</h1>  
+          </div>
+          <div class="row w-100 m-auto border text-center">
+            <div class="col-7  text-start">
+              <p>
+                Resolution for Purchase Request No. 000002 is waiting for your aprroval.
+              </p>
+            </div>
+            <div class="col-3  text-center">
+              <p>
+                27/09/2023
+              </p>
+            </div>
+            <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="row w-100 m-auto border text-center">
+            <div class="col-7  text-start">
+              <p>
+                Resolution for Purchase Request No. 000001 is waiting for your aprroval.
+              </p>
+            </div>
+            <div class="col-3  text-center">
+              <p>
+                20/09/2023
+              </p>
+            </div>
+            <div class="col-2  text-center"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div 
+                class="container justify-content-center align-items-baseline">
+                  Resolution</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="decline_request()">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="btn btn-success" onclick="approve_request()">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </button>
+                </div>
+            </div>
+          </div>
+        </div>  
+      </main>
+    <footer>
+      <div class="footer" style="height: 45px;">
+
+      </div>
+    </footer>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function approve_request(){
+      Swal.fire({
+        icon: 'success',
+        title: 'You approved the request!',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      })
+    }
+    function decline_request() {
+      Swal.fire({
+          input: 'textarea',
+          text: 'If you want to continue in declining this request, please state your reason',
+          inputPlaceholder: 'Type your message here...',
+          inputAttributes: {
+            'aria-label': 'Type your message here'
+          },
+          confirmButtonText: 'Done',
+          showCancelButton: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Message Sent!',
+              text: 'Your message has been sent to the requester.',
+              icon: 'success',
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false
+            })
+          }
+        })
+
+        if (text) {
+          Swal.fire(text)
+        }
+    }
+    </script>
+
+
+{% endblock %}  

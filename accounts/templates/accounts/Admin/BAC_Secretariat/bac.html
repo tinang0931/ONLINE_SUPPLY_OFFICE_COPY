@@ -51,15 +51,20 @@
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_home'%}">
                   <i class="fas fa-file-alt"></i> <span id="purchaseRequest" class="hidden-name">Home</span>
                 </a>
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_history'%}">
-                  <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
+
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_dashboard'%}">
+                  <i class="fas fa-tachometer-alt"></i> <span id="dashboard" class="hidden-name">Dashboard</span>
                 </a>
+                
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_about'%}">
                   <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
+                
+
+                
               </div>
             </div>
           </div>
@@ -108,6 +113,9 @@
         {% endblock %}
 
         {% block bac_home %}
+        {% endblock %}
+
+        {% block bac_dashboard %}
         {% endblock %}
 
     </main>
