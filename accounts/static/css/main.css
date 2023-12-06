@@ -131,6 +131,7 @@ p{
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  height: 100px;
 }
 
 
@@ -144,8 +145,8 @@ padding: 0px !important;
   position: absolute;
   left: 26px; /* X-coordinate */
   top: 10px; /* Y-coordinate */
-  width: 80px;
-  height: 77px;
+  width: 84px;
+  height: 84px;
   margin: 0 3px; /* mx-3 */
   }
   .user {
@@ -173,7 +174,7 @@ height: 100%;
 .profile_img {
   padding: 10px;
   position: absolute;
-  left: 1925px; /* X-coordinate */
+  left: 1745px; /* X-coordinate */
   top: 10px; /* Y-coordinate */
   margin-right: 30px;
   width: 84px;
@@ -278,7 +279,7 @@ height: 100%;
 
 #sidebar-wrapper .list-group-item.logout-link {
   position: absolute;
-  top: 220%; /* Adjust the top position as needed */
+  top: 260%; /* Adjust the top position as needed */
 }
 
 #sidebar-wrapper .list-group-item.logout-link i {
@@ -367,6 +368,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   justify-content: space-around;
   visibility: visible;
   content-visibility: auto;
+  height: 50px;
 }
 
 

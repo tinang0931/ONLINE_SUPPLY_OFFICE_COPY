@@ -75,10 +75,10 @@
   }
 
   .addtocart {
-      top: 38%;
+      top: 27%;
       position: fixed;
       z-index: 1000;
-      left: 89%;
+      left: 87%;
     
   }
 
@@ -104,7 +104,7 @@
   }
 
   .cart {
-      top: 30%;
+      top: 20%;
       position: fixed;
       z-index: 100000;
       left: 89%;
@@ -136,7 +136,9 @@
   }
 
   .additem {
-      margin-left: 6%
+      margin-left: 6%;
+      margin-top: 10px;
+      top: 10%;
   }
   
   .cart {
