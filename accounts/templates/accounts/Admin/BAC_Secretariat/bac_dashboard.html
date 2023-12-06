@@ -1,0 +1,123 @@
+{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+
+{% load static %}
+
+{% block bac_dashboard %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Display</title>
+    <style>
+        .container-fluid {
+            height: 68vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        input, select {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .update-btn, .delete-btn {
+            cursor: pointer;
+            color: blue;
+        }
+        .h4 {
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="container">
+        <h1 class="pr text-center pt-4">DASHBOARDS</h1>
+    
+        <form action="{% url 'bac_dashboard' %}" method="post">
+            {% csrf_token %}
+        
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category">
+        
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name">
+        
+            <label for="item_brand">Item Brand / Description:</label>
+            <input type="text" id="item_brand" name="item_brand">
+        
+            <label for="unit">Unit:</label>
+            <input type="text" id="unit" name="unit">
+            <br>
+        
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price">
+        
+            <button type="submit">Add Item</button>
+            <br>
+            <br>
+        
+        
+
+        <table>
+            <thead>
+                <h4 >Category</h4>
+                <tr>
+                    
+                    <th>Item Name</th>
+                    <th>Item Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.Item_name }}</td>
+                    <td>{{ item.Item_brand }}</td>
+                    <td>{{ item.Unit }}</td>
+                    <td>{{ item.Price }}</td>
+                    <td>
+                        <button class="update-btn">Update</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+
+               
+            </tbody>
+        </table>
+    
+    </form>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+{% endblock %}

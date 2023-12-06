@@ -41,6 +41,7 @@ urlpatterns = [
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdhistory/',views.cdhistory, name='cdhistory'),
-   path('cdresolution/',views.cdresolution, name='cdresolution'), 
-  
+   path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
+ 
 ]
