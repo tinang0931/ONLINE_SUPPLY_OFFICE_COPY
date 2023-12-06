@@ -1,5 +1,6 @@
 from audioop import reverse
 import json
+from pymongo import MongoClient
 from urllib.parse import parse_qs
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
@@ -60,7 +61,6 @@ def register(request):
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
-
 
         # Check if passwords match
         if password1 != password2:
@@ -147,8 +147,6 @@ def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
 
-
-
 def handle_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -201,7 +199,6 @@ def is_valid_code(verification_code, user_email):
     return False
 
 
-
  # You can use this decorator to ensure the user is logged in to reset their password
 def reset_password(request):
     if request.method == 'POST':
@@ -231,9 +228,12 @@ def logout_user(request):
     messages.success(request, ("You are now successfully logout."))
     return redirect('homepage')
 
+
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
+
 @authenticated_user
 @authenticated_user
 def registration(request):
@@ -242,36 +242,50 @@ def registration(request):
 
 @authenticated_user
 def history(request):
-    latest_checkout = Checkout.objects.latest('submission_date')
+    # Get the logged-in user
+    user = request.user
 
-        # Get checkout items associated with the latest checkout
-    checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+    # Get all checkouts for the logged-in user
+    all_checkouts = Checkout.objects.filter(user=user)
+
+    # Get checkout items associated with all checkouts
+    all_checkout_items = CheckoutItems.objects.filter(checkout__in=all_checkouts)
 
     context = {
-            'checkout_items': checkout_items,
-            'pr_id': latest_checkout.pr_id,
-        }
-    
+        'checkout_items': all_checkout_items,
+    }
+
     return render(request, 'accounts/User/history.html', context)
+
 
 @authenticated_user
 def tracker(request):
-    status = Comment.objects.all()
-    return render(request, 'accounts/User/tracker.html', {'status': status})
-   
+    user = request.user
+
+
+    all_checkouts = Checkout.objects.filter(user=user)
+
+
+    feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
+                                                
+
+    context = {'feedback': feedback, 'checkout_info': all_checkouts}
+    return render(request, 'accounts/User/tracker.html', context)
+
 
 @authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
+
 @authenticated_user
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
+
 @authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
-
 
 
 @authenticated_user
@@ -297,7 +311,7 @@ def bac_home(request):
                 'last_name': checkout.user.last_name,
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
-                'status_comment': latest_comment.content if latest_comment else "No comments",
+                'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
                 # Add more fields as needed
             }
@@ -310,8 +324,6 @@ def bac_home(request):
     checkout_data = list(checkout_data_dict.values())
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', {'checkouts': checkout_data})
-
-
 
 
 from django.urls import reverse
@@ -355,52 +367,97 @@ class PreqFormView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or comment content not found in the form data.")
+        
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
 
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
+
 @authenticated_user
 def bids(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
 
 @authenticated_user
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
-
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
 
 @authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
 
+
 @authenticated_user
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+
+
 @authenticated_user
 def notif(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+
+
 @authenticated_user
 def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+
+@authenticated_user
+def bo(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bo.html')
+
+
+@authenticated_user
+def boabout(request):
+    return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
+
+
+@authenticated_user
+def bohistory(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
+
+
+@authenticated_user
+def cd(request):
+    return render(request, 'accounts/Admin/Campus_Director/cd.html')
+
+
+@authenticated_user
+def cdabout(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
+
+
+@authenticated_user
+def cdhistory(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+
+
+@authenticated_user
+def cdresolution(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
+
+
 @authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
-
-
-
 
 
 def addItem(request):
@@ -411,17 +468,20 @@ def addItem(request):
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
 
+        user = request.user
+
     
         Item.objects.create(
+            user=user,
             item=item_data,
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+             # Calculate total cost based on price and quantity
         )
-
+        
         return redirect('request')
-
     return render(request, 'accounts/User/request.html')
 
 
@@ -438,13 +498,17 @@ def request(request):
             price = request.POST.get(f'price_{row_id}')
             quantity = request.POST.get(f'quantity_{row_id}')
 
+            user = request.user
+
             # Save the data to the CartItem model (update this based on your model)
             items = Item.objects.create(
+                user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
+                 # Calculate total cost based on price and quantity
             )
             items.save()
 
@@ -454,7 +518,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path ='C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -472,7 +536,6 @@ class RequesterView(View):
 
         # Calculate total cost based on the items
         # ...
-
         return render(request, self.template_name, {'items': items})
 
     def post(self, request):
@@ -485,9 +548,6 @@ class RequesterView(View):
            
 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
-
-            
-
 
             for row in items:
                 item_id = row.id
@@ -522,7 +582,6 @@ class RequesterView(View):
         random_number = str(random.randint(10000000, 99999999))
 
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
 
 
 
@@ -563,10 +622,11 @@ def show_more_details(request):
             }
 
             response_data = form_data.get(form_type, {})
-
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
 @authenticated_user
 def bac_history(request):
    request = Item.objects.all()
@@ -593,10 +653,53 @@ class GetNewRequestsView(View):
         ]
 
         return JsonResponse({'new_requests': serialized_requests})
+    
 
-@authenticated_user
-def item_delete(request, request_id):
-    item = get_object_or_404(Item, request_id=request_id)
+@authenticated_user              
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
     item.delete()
-    # Redirect to an appropriate URL after deletion
-    return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+    return redirect ('requester')
+
+def connect_to_mongo():
+    client = MongoClient("mongodb://localhost:27017/")  # Update the connection string accordingly
+    database = client["inventory"]
+    collection = database["inventorycol"]
+    return collection
+
+
+def bac_dashboard(request):
+    if request.method == 'POST':
+        category = request.POST.get('category')  # Corrected from 'catgory'
+        item_name = request.POST.get('item_name')  # Corrected name
+        item_brand_description = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('price')  # Corrected name
+
+        insert_data = {
+            "Category": category,
+            "Item_name": item_name,
+            "Item_brand": item_brand_description,
+            "Unit": unit,
+            "Price": unit_cost
+            
+        }
+        collection = connect_to_mongo()
+        collection.insert_one(insert_data)
+        
+        return redirect('bac_dashboard')
+    
+   
+
+    elif request.method == 'GET':
+        # Handling GET request to retrieve data
+        collection = connect_to_mongo()
+        items = collection.find()
+
+        # Convert the cursor to a list
+        item_list = list(items)
+
+        # Pass the data to the template
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
+    
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
