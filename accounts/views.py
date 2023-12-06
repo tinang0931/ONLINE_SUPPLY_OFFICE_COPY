@@ -1,4 +1,5 @@
 from audioop import reverse
+from io import BytesIO
 import json
 from urllib.parse import parse_qs
 from django.views import View
@@ -35,7 +36,9 @@ from .models import Item
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
-
+from django.shortcuts import render
+from django.http import HttpResponse
+import pdfkit
 
 def main(request):
     return render(request, 'accounts/User/main.html')
@@ -699,3 +702,11 @@ def delete_item(request, id):
     item.delete()
     return redirect ('requester')
     
+
+
+
+
+
+
+
+

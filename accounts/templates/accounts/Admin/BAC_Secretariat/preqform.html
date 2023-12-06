@@ -390,12 +390,11 @@
                     <div class="mx-auto">
                         <form action="" method="post">
                             {% csrf_token %}
-                        <table class="table-bordered" style="width: 120%">
-                            
+                            <table class="table-bordered" id="purchaseRequestTable" style="width: 120%">
                                 <th colspan="2">Office Section: <span contenteditable="true" 
                                     style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                     oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
-                              </span</span></th>
+                             </span></th>
                                 <th colspan="2">PR No.: {{ pr_id }} <span contenteditable="true" ;
                                         id="editableField"></span><br>Responsibility Center Code: <span contenteditable="true" 
                                         style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
@@ -445,14 +444,10 @@
         </span><br>Accountant
                                 </td>
                             </tr>
-                            
-
-
-                            
-                            <tr>
+<tr>
                             <tr>
                                 <td colspan="2">Purpose: {{ purpose }} <span contenteditable="true"
-                                    style="border: none; outline: none; text-decoration: underline"></span></td></tr>
+                                    style="border: none; outline: none; text-decoration: underline"></span></td></tr>i
                             <tr>
                                 <td colspan="2">Requested by: {{user.first_name}} {{user.last_name}} <span contenteditable="false"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
@@ -463,27 +458,53 @@
                                 </td>
                             </tr>
                         </table>
-
                         <footer class="footer">
                             <div class="input-box">
                                 <input placeholder="Update the purchase request status..." name="comment_content">
                             </div>
-                                <div class="icons-container">
-                                    <div class="send-icon">
-                                        <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
-                                        
-                                      </div>
-                                      <a href="#" title="Download" class="icon-link">
+                            <div class="icons-container">
+                                <div class="send-icon">
+                                    <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px; "></i> Send</button>
+                                </div>
+                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> Print
+                                </a>
+                            </div>
+                                      <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
                                         <i class="fas fa-download"></i> Download
-                                      </a>
+                                    </a>
                                       <a href="javascript:window.print()" title="Print" class="icon-link">
                                         <i class="fas fa-print"></i> Print
                                       </a>
+                                    </div>
+                                </footer>
+<script>
+                                        function downloadPDF() {
+                                            const body = document.body;
+                                    
+                                            const options = {
+                                                margin: 2,
+                                                filename: 'purchase_request.pdf',
+                                                image: { type: 'jpeg', quality: 0.98 },
+                                                html2canvas: { scale: 2 },
+                                                jsPDF: { unit: 'mm', format: 'legal', orientation: 'landscape' }, 
+                                            };
+                                    
+                                            html2pdf(body, options);
+                                        }
+                                    </script>
+                                    
                                 </div>
+                                               
                         </footer>
                         
                         </form>
                     </div>
+                  
+                    
                 </div>
             </div>
         </div>
@@ -496,5 +517,7 @@
         <div> &nbsp</div>
 </body> 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 
 {% endblock %}

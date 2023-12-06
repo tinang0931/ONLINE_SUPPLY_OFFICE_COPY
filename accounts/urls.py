@@ -3,7 +3,7 @@ from . import views
 from .views import *
 
 
-urlpatterns = [
+urlpatterns = [ 
    path('',views.homepage, name='homepage'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
@@ -14,7 +14,6 @@ urlpatterns = [
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('register/', views.register, name='register'),
    path('requester/', RequesterView.as_view(), name='requester'),
    path('request/',views.request, name='request'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
@@ -30,9 +29,6 @@ urlpatterns = [
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
    path('notif/',views.notif, name='notif'),
-   path('delete_item/<int:id>/', delete_item, name='delete_item'),
-   path('view_cart/<int:id>/', views.view_cart, name='view_cart'),
-   path('edit_item/<int:id>/', views.edit_item, name='edit_item'),
    path('inspection/',views.inspection, name='inspection'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('property/',views.property, name='property'),
@@ -45,5 +41,6 @@ urlpatterns = [
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdhistory/',views.cdhistory, name='cdhistory'),
-   path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('cdresolution/',views.cdresolution, name='cdresolution'), 
+  
 ]
