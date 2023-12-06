@@ -420,7 +420,7 @@ def addItem(request):
             quantity=quantity,
         )
 
-        return redirect('request')
+        return redirect('requester')
 
     return render(request, 'accounts/User/request.html')
 
@@ -600,3 +600,5 @@ def item_delete(request, request_id):
     item.delete()
     # Redirect to an appropriate URL after deletion
     return redirect('requester')  # Replace 'requester' with your desired redirect URL name
+
+
