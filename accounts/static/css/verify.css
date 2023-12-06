@@ -27,13 +27,15 @@ body {
 
 
 .title{
-    position: absolute;
+    position: fixed;
+    font-family: Verdana;
     top: 10%;
     left: 120px;
     color: white;
     font-size: 60px;
     margin-top: 30px;
     margin-right: 80px;
+    font-weight: bold;
 }
 
 
@@ -76,6 +78,8 @@ body {
 .otp-bx input:hover{
     color: #003566;
 }
+
+
 .otp-bx input[type="number"]::-webkit-outer-spin-button,
     .otp-bx input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -134,7 +138,6 @@ body {
     background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    border: solid #df8004ad .5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;

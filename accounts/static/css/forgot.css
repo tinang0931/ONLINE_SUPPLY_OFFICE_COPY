@@ -35,10 +35,12 @@ body {
 
 .title{
     position: absolute;
+    font-family: Verdana;
     top: 10%;
     left: 120px;
     color: white;
     font-size: 60px;
+    font-weight: bold;
     margin-top: 30px;
     margin-right: 80px;
 }
@@ -130,7 +132,6 @@ body {
     background: #fc8f01;
     outline: none;
     border-radius: 40px;
-    border: solid #df8004ad .5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
     cursor: pointer;
     color: black;

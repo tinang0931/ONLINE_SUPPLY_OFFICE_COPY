@@ -2,14 +2,13 @@
 
 {% load static %}
 
-
 {% block cart %}
 
 <style>
   .primary-btn {
-      background-color: rgb(52, 129, 211); /* Set the primary color for the button */
-      color: #ffffff; /* Set the text color for the button */
-      padding: 10px 20px; /* Adjust padding as needed */
+      background-color: rgb(52, 129, 211); 
+      color: #ffffff; 
+      padding: 10px 20px; 
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -48,68 +47,87 @@
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;"></th>
               <th class="text-center text-nowrap"></th>
-              
+              <th class="text-center text-nowrap"></th>   
           </tr>
       </thead>
       
-          <tbody>
-            {% for item in items %}
-        
-            <tr style=  "background-color: rgba(30, 150, 255, 0.3) !important;  border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); ">
-              <td class="item_name text-center"> {{ item.item }} </td>
-              <td class="item_description text-center"> {{ item.item_brand_description }}</td>
-              <td class="item_unit text-center">{{ item.unit }}</td>
-              <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-              <td class="item_quantity text-center">{{ item.quantity }}</td>
-              <td class="item_total_cost text-center">{{ item.total_cost}}</td>
-              <td>
-              <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
-              <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
-              <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
-              <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
-              <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
-          </td>
-
-              <!-- <td class="text-center">
-
-              <a href="#" style="background-color: transparent; border: none; size:50%; border-radius: 50%; color: rgb(157, 2, 2);">  <i class="fa fa-trash"></i></a>
-              </td> -->
+      <tbody>
+        {% for item in items %}
+            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+                <td class="item_name text-center">{{ item.item }}</td>
+                <td class="item_description text-center">{{ item.item_brand_description }}</td>
+                <td class="item_unit text-center">{{ item.unit }}</td>
+                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                <td class="item_quantity text-center">{{ item.quantity }}</td>
+                <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+                <td>
+                    <a href="#" class="btn btn-primary btn-sm">Update</a>
+                </td>
+                
+                <td class="text-center">
+                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                <td>
+                    <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
+                    <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
+                    <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                    <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                    <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
+                </td>
             </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-  </div>
-
-
-
-  <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4">
-          <!-- Purpose -->
-          <div class="form-group">
-            <label for="purpose" style="color:#FFFFFF">Purpose:</label>
-            <textarea class="form-control" id="purpose" placeholder="Purpose"  contenteditable="true" style="resize: vertical;"></textarea>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <!-- Total Amount -->
-          <div class="text-center">
-            <span>Total Amount: {{ total_cost }}</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <!-- Submit Button -->
-          <div class="text-right">
-            <input type="submit"  class="btn btn-primary">
-          </div>
-        </div>
-      </div>
+        {% endfor %}
+    </tbody>
+    </table>
+    
+    <script>
+        // Wait for the document to be ready
+        $(document).ready(function() {
+            // Function to calculate total amount
+            function calculateTotal() {
+                var totalAmount = 0;
+                // Loop through each row in the table body
+                $(".item_total_cost").each(function() {
+                    // Get the value of each item's total cost in this row
+                    var itemCost = parseFloat($(this).text());
+                    // Add the total cost of this item to the totalAmount
+                    totalAmount += itemCost;
+                });
+                // Display the total amount in the designated span or div
+                $("#total_amount").text(totalAmount.toFixed(2)); // Adjust if needed
+            }
+    
+            // Call the calculateTotal function initially
+            calculateTotal();
+        });
+    </script>
+    
     </div>
-  </footer>
-  
+    
+    <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="purpose" style="color:#FFFFFF">Purpose:</label>
+                        <textarea class="form-control" id="purpose" placeholder="Purpose" name="purpose" contenteditable="true" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center" style="color:#FFFFFF">
+                        <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>   
+  </div>
 </form>
+
 
 {% endblock %}

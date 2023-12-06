@@ -1,0 +1,186 @@
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
+
+
+{% load static %}
+
+
+{% block cd %}
+
+<div class="container">
+  <h1 class="pr text-center pt-4">HISTORY ON REQUEST PURCHASES</h1>  
+</div>
+<div class="container" style=" display: inline-flex; margin: 3; flex-direction: column;">
+  <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+    <i class="fa fa-circle px-3" aria-hidden="true" style="color: green;"></i>
+    <strong>Successful Requests</strong>
+  </div>
+  <div style="display: flex; align-items: baseline; flex-wrap: nowrap;">
+    <i class="fa fa-circle px-3" aria-hidden="true" style="color: red;"></i>
+    <strong>Failed Requests</strong>
+  </div>
+</div>
+<div class="row w-100 m-auto border text-center text-danger">
+  <div class="col-4">
+    <p>
+      Purchase Request No. 000001
+    </p>
+  </div>
+  <div class="col-3">
+    <p>
+      John Doe
+    </p>
+  </div>
+  <div class="col-3">
+    <p>
+      27/09/2023
+    </p>
+  </div>
+  <div class="col-2" onclick="red()">
+    <i class="fa fa-eye" aria-hidden="true"></i>
+  </div>
+  
+</div>
+<div class="row w-100 m-auto border text-center text-success">
+  <div class="col-4">
+    <p>
+      Purchase Request No. 000002
+    </p>
+  </div>
+  <div class="col-3">
+    <p>
+      John Doe
+    </p>
+  </div>
+  <div class="col-3">
+    <p>
+      28/09/2023
+    </p>
+  </div>
+  <div class="col-2"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="fa fa-eye" aria-hidden="true"></i>
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="row w-100 m-auto text-dark text-start mb-3">
+            <div class="col-12">
+              <p>
+               <strong>Approved on:</strong> mm/dd/yy
+              </p>
+            </div>
+          </div>
+          <div class="row w-100 m-auto border text-start p-0 text-dark ">
+            <div class="col-6 border">
+              <p>
+                Office/ Section:
+              </p>
+            </div>
+            <div class="col-6 border text-dark text-start">
+              <p>
+                PR No.: 0000002
+              </p>
+            </div>
+        </div>
+          <div class="row w-100 m-auto border text-dark text-start">
+            <div class="col-12">
+              <p>
+                Department:
+              </p>
+            </div>
+          </div>
+          <div class="row w-100 m-auto border text-dark text-start">
+            <div class="col-12">
+              <p>
+                Purpose:
+              </p>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive" id="itemTable">
+          <thead>
+              <tr>
+                  <th class="">Stock/ Property No.</th>
+                  <th class="">Unit</th>
+                  <th class="">Item Brand/Description</th>
+                  <th class="">Quantity</th>
+                  <th class="">Unit Cost</th>
+                  <th class="">Total Cost</th>
+              </tr>
+          </thead>
+          <tbody>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              
+    
+          </tbody>
+      </table>
+                <div 
+                  class="container justify-content-end align-items-baseline">
+                  Total Amount:_______
+                </div>
+            </div>
+          </div>
+       </div>
+      </div> 
+    </main>
+    
+{% endblock %}  
+  
+    <footer>
+      <div class="footer" style="height: 45px;">
+
+      </div>
+    </footer>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+
+    
+    function red() {
+      Swal.fire({
+          title: 'Your request has been declined',
+          text: "Reason of Disapproval: "
+        })
+
+        if (text) {
+          Swal.fire(text)
+        }
+    }
+
+    const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017'; // Replace with your MongoDB connection string
+const dbName = 'inventorydb';
+
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+  if (err) throw err;
+
+  const db = client.db(dbName);
+
+  // Now you can query the database and retrieve the data.
+});
+
+
+    // Assuming you have a collection named "requests" in your database
+const requestsCollection = db.collection('items');
+
+requestsCollection.findOne({ /* Your query criteria here */ }, (err, request) => {
+  if (err) throw err;
+
+  // Once you have the data from MongoDB, populate your HTML template
+  const modalBody = document.querySelector('.modal-body');
+  const approvedOn = document.querySelector('.modal-body strong');
+})
+

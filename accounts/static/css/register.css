@@ -28,13 +28,14 @@ body{
 
 .upper{
     position: absolute;
-    top: 10%;
-    left: 120px;
+    font-family: Verdana;
+    font-weight: bold;
+    top: 6%;
+    left: 80px;
     color: white;
-    font-size: 60px;
-    margin-bottom: 100%;
-
+    font-size: 50px;
 }
+
 .container {
     max-width: 700px;
     width: 100%;
@@ -46,6 +47,7 @@ body{
     border-width: 2px;
     top: 160px;
 }
+
 
 .wrapper h1 {
     color: #003566;
