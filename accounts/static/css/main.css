@@ -141,13 +141,13 @@ padding: 0px !important;
 
 
 .ctu_logo{
-  padding: 10px;
+  padding: 6px;
   position: absolute;
   left: 26px; /* X-coordinate */
-  top: 10px; /* Y-coordinate */
-  width: 84px;
-  height: 84px;
-  margin: 0 3px; /* mx-3 */
+  top: 2px; /* Y-coordinate */
+  width: 100px;
+  height: 100px;
+  margin:  3px; /* mx-3 */
   }
   .user {
     font-size: 20px;
@@ -177,7 +177,7 @@ height: 100%;
   left: 1745px; /* X-coordinate */
   top: 10px; /* Y-coordinate */
   margin-right: 30px;
-  width: 84px;
+  width: 300px;
   height: 84px;
   border-radius: 50%;
 }
@@ -230,6 +230,7 @@ height: 100%;
   line-height: 30px;
   letter-spacing: 0.1em;
   color: #000;
+  background-color: #f2f2f2 !important;
 }
 
 

@@ -9,8 +9,8 @@
 <style>
 </style>
 
-
-
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
@@ -37,7 +37,7 @@
             </div>
       
           <div class="additem">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New Request</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New Request</button>
           </div>
 
           <div class="addtocart">
@@ -305,9 +305,11 @@ function getCookie(name) {
 
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
+
 
 {% endblock %}

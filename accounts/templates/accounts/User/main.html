@@ -13,6 +13,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
   </head>
 
@@ -98,8 +99,8 @@
 </div>
 
 <style>
- #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out; /* Add transition for smooth effect */
+  #sidebar {
+    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s; /* Remove transition delay for padding */
     overflow: hidden;
     width: 50px; /* Set your desired initial width */
 }
@@ -118,9 +119,14 @@
     opacity: 1;
 }
 
+.list-group-item-action {
+    transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s; /* Remove transition delay for all properties */
+}
+
 .list-group-item-action:hover {
-    background-color: #001524;
+    background-color: #001524 !important;
     border-radius: 15px !important;
+    color: #f2f2f2 !important; /* Set the text color to white when hovered */
 }
 
 #sidebar:hover {
@@ -128,9 +134,16 @@
     padding: 0 10px; /* Adjust the padding on both sides */
 }
 
+.d-flex.flex-wrap.align-content-between.h-100 {
+    background-color: #f2f2f2;
+}
 
+.list-group-item-action:not(:hover) span {
+    color: black !important; /* Set the text color to black when not hovered */
+}
 
-</style>
+ </style>
+ 
 
 <script>
   function showNames() {

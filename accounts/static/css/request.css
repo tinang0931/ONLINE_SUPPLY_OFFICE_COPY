@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">;
+
 
 .input-group {
     display: flex;
@@ -75,12 +75,12 @@
   }
 
   .addtocart {
-      top: 27%;
-      position: fixed;
-      z-index: 1000;
-      left: 87%;
-    
-  }
+    top: 25%; /* Adjusted top to move it higher */
+    position: fixed;
+    z-index: 1000;
+    left: 87%;
+}
+
 
 
   .col-12 {
@@ -104,14 +104,20 @@
   }
 
   .cart {
-      top: 20%;
-      position: fixed;
-      z-index: 100000;
-      left: 89%;
+    top: 24vh; /* Adjusted top using viewport height */
+    position: fixed;
+    z-index: 100000;
+    left: 80vw; /* Adjusted left using viewport width */
+}
 
-    
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .cart {
+        top: 10vh; /* Adjusted top for smaller screens */
+        left: 70vw; /* Adjusted left for smaller screens */
+    }
+}
 
-  }
   .row {
       margin-top: 1%;
       
@@ -137,10 +143,30 @@
 
   .additem {
       margin-left: 6%;
-      margin-top: 10px;
+      margin-top: 3px;
       top: 10%;
   }
   
   .cart {
       width: 50px;
   }
+/* Style rows in the "row2" table with colorful backgrounds */
+.row2 tr:nth-child(odd) {
+    background-color: #ffcccb; /* Light Coral */
+}
+
+.row2 tr:nth-child(even) {
+    background-color: #b3e0ff; /* Light Sky Blue */
+}
+
+/* Style columns in the "row2" table with alternating colors */
+.row2 td:nth-child(odd) {
+    background-color: #345e85; /* Light Green */
+}
+
+.row2 td:nth-child(even) {
+    background-color: #597b9b; /* Gold */
+}
+.btn.btn-primary {
+    border-radius: 15px;
+}
