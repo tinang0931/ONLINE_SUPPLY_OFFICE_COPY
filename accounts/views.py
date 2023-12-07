@@ -235,7 +235,6 @@ def about(request):
 
 
 @authenticated_user
-@authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
@@ -518,7 +517,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -701,5 +700,4 @@ def bac_dashboard(request):
 
         # Pass the data to the template
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
-    
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
