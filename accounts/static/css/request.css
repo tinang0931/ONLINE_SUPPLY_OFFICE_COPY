@@ -150,14 +150,18 @@
   .cart {
       width: 50px;
   }
+
+  
 /* Style rows in the "row2" table with colorful backgrounds */
 .row2 tr:nth-child(odd) {
     background-color: #ffcccb; /* Light Coral */
 }
 
+
 .row2 tr:nth-child(even) {
     background-color: #b3e0ff; /* Light Sky Blue */
 }
+
 
 /* Style columns in the "row2" table with alternating colors */
 .row2 td:nth-child(odd) {
@@ -167,6 +171,8 @@
 .row2 td:nth-child(even) {
     background-color: #597b9b; /* Gold */
 }
+
+
 .btn.btn-primary {
     border-radius: 15px;
 }
