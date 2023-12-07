@@ -530,7 +530,7 @@ class RequesterView(View):
     template_name = 'accounts/User/cart.html'
 
     def get(self, request):
-         # Fetch data from the Item model and pass it to the template
+        # Fetch data from the Item model and pass it to the template
         items = Item.objects.all()
 
         # Calculate total cost based on the items
@@ -544,7 +544,7 @@ class RequesterView(View):
 
             # Handle form submission
             purpose = request.POST.get('purpose', '')  # Retrieve the 'Purpose' value
-           
+        
 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
 
