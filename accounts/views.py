@@ -460,6 +460,11 @@ def cdhistory(request):
 
 
 @authenticated_user
+def cdpurchase(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+
+@authenticated_user
 def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
 
