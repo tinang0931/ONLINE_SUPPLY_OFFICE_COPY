@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-xxxxxxxxxxxxxxxxxxxxxxxxxxxx" crossorigin="anonymous">
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
     <style>
   
@@ -394,14 +396,14 @@ width: 100%;
                                     <div class="send-icon">
                                         <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px; "></i> Send</button>
                                         
-                                      </div>
-                                      <a href="#" title="Download" class="icon-link">
-                                        <i class="fas fa-download"></i> Download
-                                      </a>
-                                      <a href="javascript:window.print()" title="Print" class="icon-link">
-                                        <i class="fas fa-print"></i> Print
-                                      </a>
-                                </div>
+                                        <div>
+                                            <a href="#" title="Download" class="icon-link" id="downloadBtn">
+                                              <i class="fas fa-download"></i> Download
+                                            </a>
+                                            <a href="#" title="Print" class="icon-link" id="printBtn">
+                                              <i class="fas fa-print"></i> Print
+                                            </a>
+                                          </div>
                         </footer>
                         
                         </form>
