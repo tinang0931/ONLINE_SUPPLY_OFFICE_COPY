@@ -425,6 +425,11 @@ def bo(request):
 
 
 @authenticated_user
+def bohome(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html')
+
+
+@authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
@@ -437,6 +442,11 @@ def bohistory(request):
 @authenticated_user
 def cd(request):
     return render(request, 'accounts/Admin/Campus_Director/cd.html')
+
+
+@authenticated_user
+def cdhome(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhome.html')
 
 
 @authenticated_user

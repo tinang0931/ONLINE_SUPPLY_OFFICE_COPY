@@ -48,12 +48,17 @@
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
+
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'boabout'%}">
-                  <i class="fas fa-file-alt"></i> <span id="about" class="hidden-name">About</span>
+                  <i class="fas fa-file-alt"></i> <span id="home" class="hidden-name">Home</span>
+                </a>
+
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'boabout'%}">
+                  <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bohistory'%}">
-                  <i class="fas fa-info-circle"></i> <span id="history" class="hidden-name">History</span>
+                  <i class="fas fa-history"></i> <span id="history" class="hidden-name">History</span>
                 </a>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
@@ -99,6 +104,9 @@
             sidebar.classList.remove('show-names');
           }
         </script>
+
+        {% block bohome %}
+        {% endblock %}
         
         {% block boabout %}
         {% endblock %}
