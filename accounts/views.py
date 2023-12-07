@@ -459,6 +459,10 @@ def cdresolution(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
 
 def addItem(request):
     if request.method == 'POST':
@@ -518,7 +522,7 @@ def request(request):
     else:
         # Handle data fetching for GET request
         # Connect to MongoDB
-        csv_file_path = 'C:/Users/tuazon.ralph/Desktop/system/inventory_system/online_supply_system/online_supply_system/new/inventory/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+        csv_file_path = 'C:/Users/hermoso.kendes/Desktop/ONLINE OFFICE COPY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
@@ -703,3 +707,7 @@ def bac_dashboard(request):
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
     
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
+
+
+def admin(request):
+    return render(request, 'accounts/User/admin.html')
