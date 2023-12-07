@@ -279,7 +279,7 @@ height: 100%;
 
 #sidebar-wrapper .list-group-item.logout-link {
   position: absolute;
-  top: 260%; /* Adjust the top position as needed */
+  top: 240%; /* Adjust the top position as needed */
 }
 
 #sidebar-wrapper .list-group-item.logout-link i {
@@ -328,7 +328,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-top: 40px;
   cursor: pointer;
   object-fit: cover;
-  border: 2px solid #ffffff;
+  border: 2px solid #141313;
   border-radius: 50%;
   padding: 7px;
 }
