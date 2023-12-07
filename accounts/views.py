@@ -235,7 +235,6 @@ def about(request):
 
 
 @authenticated_user
-@authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
 
@@ -705,9 +704,4 @@ def bac_dashboard(request):
 
         # Pass the data to the template
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
-    
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
-
-
-def admin(request):
-    return render(request, 'accounts/User/admin.html')
