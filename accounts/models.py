@@ -115,15 +115,10 @@ class Comment(models.Model):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
 
-class CsvFile(models.Model):
-    CATEGORY = models.CharField(max_length=255)
-    ITEM_BRAND = models.CharField(max_length=255)
-    ITEMS = models.CharField(max_length=255)
-    UNIT = models.CharField(max_length=50)
-    PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-class Bac_Item(models.Model):
+
+class CSV(models.Model):
     Category = models.CharField(max_length=255)
     Item_Brand  = models.CharField(max_length=255)
     Item_name = models.CharField(max_length=255)

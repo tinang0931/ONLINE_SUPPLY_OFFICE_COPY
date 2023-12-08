@@ -49,6 +49,19 @@
             text-align: left;
         }
 
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .dropdown-arrow {
+          position: absolute;
+          top: 50%;
+          right: 10px; /* Adjust the right distance as needed */
+          transform: translateY(-50%);
+        }
+        
+
       
         
 
@@ -60,108 +73,155 @@
     <div class="container">
         <h1 class="pr text-center pt-4">Available Items</h1>
 
-        <br>
-        <br>
-        <br>
 
-        <div class="search">
-            <input class="search" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="float: left; width: 300px; height: 40px; margin-bottom: 30px">
-            
-            <button class="additem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal" style="float: right; width: 200px; color: white; height: 35px; background-color: rgb(77, 77, 228)">Add New Item</button>
-        </div>
-        
-        
-        
+       
+    <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file">Choose CSV file:</label>
+        <input type="file" name="file" accept=".csv" required>
+        <br>
+        <button class="btn btn-success" type="submit">Upload</button>
+    </form> 
+<br>
+<div class="dropdown" style="width: 45%;">
+  <select class="form-control" id="category-dropdown">
+    <option value="all">All Categories</option>
+    {% for category, items in grouped_data.items %}
+      <option value="{{ category }}">{{ category }}</option>
+    {% endfor %}
+  </select>
+  <div class="dropdown-arrow">&#9660;</div>
+</div>
 
-        
+    <script>
+      document.getElementById('category-dropdown').addEventListener('change', function () {
+        var selectedCategory = this.value;
     
-        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-  
-                    <div class="modal-body">
-  
-                      <form action="{% url 'bac_dashboard' %}" method="post">
-                          {% csrf_token %}
-  
-                          <div class="form-group">
-                            <label for="Item">Category</label>
-                            <input type="text" class="form-control" id="Item" name="category" required>
-                        </div>
-  
-                            <div class="form-group">
-                                <label for="Item">Item</label>
-                                <input type="text" class="form-control" id="Item" name="item_name" required>
-                            </div>
-  
-                            <div class="form-group">
-                                <label for="Item_Brand_Description">Item Brand/Description</label>
-                                <input type="text" class="form-control" id="Item_Brand_Description" name="item_brand" required>
-                            </div>
-  
-                            <div class="form-group">
-                                <label for="Unit">Unit</label>
-                                <input type="text" class="form-control" id="Unit" name="unit" required>
-                            </div>
-  
-                            <div class="form-group"> 
-                                <label for="Unit">Unit Cost</label>
-                                <input type="text" class="form-control" id="Unit_Cost" name="price" required>
-                            </div>
-                            
-                            <div class="modal-footer">
-                              <button type="submit" value ="submit" class="btn btn-primary" >Save New Item</button>
-                                
-                            </div>
-                      </form>
-                    </div>
-                </div>
-            </div>
-          </div>
-        
+        // Hide all tables
+        var tables = document.querySelectorAll('.category-table');
+        tables.forEach(function (table) {
+          table.style.display = 'none';
+        });
+    
+        // Show the selected table
+        if (selectedCategory === 'all') {
+          // Show all tables if "All Categories" is selected
+          tables.forEach(function (table) {
+            table.style.display = '';
+          });
+        } else {
+          // Show the table corresponding to the selected category
+          var selectedTable = document.getElementById('table-' + selectedCategory);
+          if (selectedTable) {
+            selectedTable.style.display = '';
+          }
+        }
+      });
+    </script>
+    
+<!-- Add this button where you want to trigger the new category addition -->
+<button class="add-category-btn btn-primary" onclick="addNewCategory()">Add New Category</button>
 
-          {% for category, items in categories.items %}
-  <table>
-    <thead>
-      <tr>
-        <th colspan="5">{{ category }}</th>
-      </tr>
-      <tr>
-        <th>Item Name</th>
-        <th>Item Brand/Description</th>
-        <th>Unit</th>
-        <th>Price</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
+<script>
+  function addNewCategory() {
+      var newCategory = prompt("Enter the name of the new category:");
+  
+      if (newCategory !== null && newCategory.trim() !== "") {
+          var csrfToken = '{{ csrf_token }}';
+  
+          fetch('{% url "add_category" %}', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'X-CSRFToken': csrfToken,
+              },
+              body: 'new_category=' + encodeURIComponent(newCategory),
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Handle the response
+              if (data.status === 'success') {
+                  // Optionally, you can reload the page or update it dynamically
+                  location.reload();  // Reload the page
+              } else {
+                  console.error('Error adding new category:', data.message);
+              }
+          })
+          .catch(error => {
+              console.error('Error adding new category:', error);
+          });
+      }
+  }
+  </script>
+  
+
+    {% for category, items in grouped_data.items %}
+    <table class="category-table" id="table-{{ category }}">
+      <thead>
         <tr>
-          <td>{{ item.Item_name }}</td>
-          <td>{{ item.Item_brand }}</td>
-          <td>{{ item.Unit }}</td>
-          <td>{{ item.Price }}</td>
-          <td>
-            <button class="update-btn">Update</button>
-            <button class="delete-btn">Delete</button>
-          </td>
+          <th colspan="5">{{ category }}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% endfor %}
+        <tr>
+          <th>Item Name</th>
+          <th>Item Brand/Description</th>
+          <th>Unit</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+            <td>{{ item.Item_name }}</td>
+            <td>{{ item.Item_Brand }}</td>
+            <td>{{ item.Unit }}</td>
+            <td>{{ item.Price }}</td>
+            <td>
+              <button class="update-btn btn-primary">Update</button>
+              <button class="delete-btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        {% endfor %}
+        <tr id="new-item-row-{{ category }}" style="display: none;">
+          
+          <form method="post" action="{% url 'add_new_item' %}">
+          {% csrf_token %}
+          <input type="hidden" name="category" value="{{ category }}">
+          <td>
+            <input type="text" name="new_item_name" placeholder="New Item Name" required>
+          </td>
+          <td>
+            <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
+          </td>
+          <td>
+            <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
+          </td>
+          <td>
+            <input type="text" name="new_item_price" placeholder="New Item Price" required>
+          </td>
+          <td>
+            <button type="submit" class="save-btn btn-success">Save</button>
+          </td>
+        </form>
+        </tr>
+        
+      </tbody>
+    </table>
+    <button class="add-btn btn-primary float-left mt-2 mb-2" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
-      
-    
-    </form>
+  {% endfor %}
+  
+  
     </div>
 </div>
+
+<script>
+  function toggleNewItemRow(category) {
+    var newRow = document.getElementById('new-item-row-' + category);
+    newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
+  }
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
