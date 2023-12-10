@@ -30,9 +30,6 @@
                 <!-- <h1 class="p1">Cebu Technological University - Argao Campus</h1> -->
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-             <div class="profile-container">
-              <a href="{% url 'prof' %}">
-                <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
                 
                 <script>
             
@@ -75,31 +72,38 @@
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
   <div class="d-flex flex-wrap align-content-between h-100">
-    <div class="bg-#6C757D w-100" id="sidebar-wrapper">
-      <div class="list-group w-100">
-        <br><br>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
-          <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
-          <i class='bx bx-location-plus' ></i> <span id="requestTracker" class="hidden-name">Request Tracker</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
-          <i class='bx bx-history' ></i></i> <span id="history" class="hidden-name">History</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
-          <i class='bx bx-info-circle'></i></i> <span id="about" class="hidden-name">About</span>
-        </a>
-        <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
-          <i class='bx bx-log-out'></i></i> <span id="logout" class="hidden-name">Logout</span>
-        </a>
+      <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+          <div class="list-group w-100">
+              <br><br>
+              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'request'%}">
+                  <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
+              </a>
+              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
+                  <i class='bx bx-location-plus' ></i> <span id="requestTracker" class="hidden-name">Request Tracker</span>
+              </a>
+              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
+                  <i class='bx bx-history' ></i></i> <span id="history" class="hidden-name">History</span>
+              </a>
+              <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
+                  <i class='bx bx-info-circle'></i></i> <span id="about" class="hidden-name">About</span>
+              </a>
+              <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
+                  <i class='bx bx-log-out'></i></i> <span id="logout" class="hidden-name">Logout</span>
+              </a>
+          </div>
+          <div class="profile-container">
+            <!-- Your profile content goes here -->
+            <!-- For example, you can add an image and user name -->
+            <img class="ctu_logo mx-3" src="{% static 'images/propayl.png' %}" alt="CTU LOGO">
+
+        </div>
       </div>
-    </div>
   </div>
 </div>
 
+
 <style>
-  #sidebar {
+#sidebar {
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s; /* Remove transition delay for padding */
     overflow: hidden;
     width: 50px; /* Set your desired initial width */
@@ -132,6 +136,11 @@
 #sidebar:hover {
     width: 300px; /* Set your desired expanded width */
     padding: 0 10px; /* Adjust the padding on both sides */
+}
+
+/* Adjust the top margin for the logout-link */
+.logout-link {
+    margin-top: -10px; /* Adjust the value to move it up or down */
 }
 
 .d-flex.flex-wrap.align-content-between.h-100 {
