@@ -51,7 +51,3 @@ urlpatterns = [
    path('update_item/<int:id>/', update_item, name='update_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
 ]
-
-
-
- 
