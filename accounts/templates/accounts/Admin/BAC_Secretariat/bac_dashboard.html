@@ -66,8 +66,6 @@
       /* Adjust the right distance as needed */
       transform: translateY(-50%);
     }
-
-    
   </style>
 </head>
 
@@ -100,29 +98,46 @@
       <script>
         document.getElementById('category-dropdown').addEventListener('change', function () {
           var selectedCategory = this.value;
-
-          // Hide all tables
+      
+          // Hide all tables and "Add" buttons
           var tables = document.querySelectorAll('.category-table');
           tables.forEach(function (table) {
             table.style.display = 'none';
           });
-
-          // Show the selected table
+      
+          var addButtons = document.querySelectorAll('.add-btn');
+          addButtons.forEach(function (button) {
+            button.style.display = 'none';
+          });
+      
+          // Show the selected table and its "Add" button
           if (selectedCategory === 'all') {
-            // Show all tables if "All Categories" is selected
+            // Show all tables and "Add" buttons if "All Categories" is selected
             tables.forEach(function (table) {
               table.style.display = '';
             });
+      
+            addButtons.forEach(function (button) {
+              button.style.display = '';
+            });
           } else {
-            // Show the table corresponding to the selected category
+            // Show the table and "Add" button corresponding to the selected category
             var selectedTable = document.getElementById('table-' + selectedCategory);
-            if (selectedTable) {
+            var addButton = document.getElementById('add-btn-' + selectedCategory);
+      
+            if (selectedTable && addButton) {
               selectedTable.style.display = '';
+              addButton.style.display = '';
             }
           }
         });
+      
+        function toggleNewItemRow(category) {
+          var newRow = document.getElementById('new-item-row-' + category);
+          newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
+        }
       </script>
-
+      
       <!-- Add this button where you want to trigger the new category addition -->
       <button class="add-category-btn btn-primary" onclick="addNewCategory()">Add New Category</button>
 
@@ -163,7 +178,14 @@
       <table class="category-table" id="table-{{ category }}">
         <thead>
           <tr>
-            <th colspan="5">{{ category }}</th>
+            <th colspan="5">
+              {{ category }}
+              <a href="{% url 'delete_category' Category=category %}">
+                  <i class="fas fa-trash-alt"></i> <!-- Replace 'fa-trash-alt' with the actual trash icon class -->
+              </a>
+          </th>
+          
+          
           </tr>
           <tr>
             <th>Item Name</th>
@@ -258,7 +280,7 @@
 
         </tbody>
       </table>
-      <button class="add-btn btn-primary float-left mt-2 mb-2" onclick="toggleNewItemRow('{{ category }}')">+</button>
+      <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
       {% endfor %}
 
@@ -266,18 +288,15 @@
     </div>
   </div>
 
-  <script>
-    function toggleNewItemRow(category) {
-      var newRow = document.getElementById('new-item-row-' + category);
-      newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
-    }
-  </script>
-
+  
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 </body>
 
