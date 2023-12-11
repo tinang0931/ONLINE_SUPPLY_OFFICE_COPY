@@ -700,3 +700,4 @@ def bac_dashboard(request):
         # Pass the data to the template
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
+
