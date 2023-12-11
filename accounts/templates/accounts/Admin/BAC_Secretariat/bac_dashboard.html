@@ -6,118 +6,281 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Display</title>
-    <style>
-        .container-fluid {
-            height: 68vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Display</title>
+  <style>
+    .container-fluid {
+      height: 68vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
 
-        .container {
-            text-align: center;
-        }
+    .container {
+      text-align: center;
+    }
 
-        input, select {
-            margin-bottom: 10px;
-        }
+    input,
+    select {
+      margin-bottom: 10px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
+    th {
+      background-color: #f2f2f2;
+    }
 
-        .update-btn, .delete-btn {
-            cursor: pointer;
-            color: blue;
-        }
-        .h4 {
-            text-align: left;
-        }
+    .update-btn,
+    .delete-btn {
+      cursor: pointer;
+      color: blue;
+    }
 
-    </style>
+    .h4 {
+      text-align: left;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      /* Adjust the right distance as needed */
+      transform: translateY(-50%);
+    }
+
+    
+  </style>
 </head>
+
 <body>
 
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="container">
-        <h1 class="pr text-center pt-4">DASHBOARDS</h1>
-    
-        <form action="{% url 'bac_dashboard' %}" method="post">
-            {% csrf_token %}
-        
-            <label for="category">Category:</label>
-            <input type="text" id="category" name="category">
-        
-            <label for="item_name">Item Name:</label>
-            <input type="text" id="item_name" name="item_name">
-        
-            <label for="item_brand">Item Brand / Description:</label>
-            <input type="text" id="item_brand" name="item_brand">
-        
-            <label for="unit">Unit:</label>
-            <input type="text" id="unit" name="unit">
-            <br>
-        
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price">
-        
-            <button type="submit">Add Item</button>
-            <br>
-            <br>
-        
-        
+      <h1 class="pr text-center pt-4">Available Items</h1>
 
-        <table>
-            <thead>
-                <h4 >Category</h4>
-                <tr>
-                    
-                    <th>Item Name</th>
-                    <th>Item Brand/Description</th>
-                    <th>Unit</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items %}
-                <tr>
-                    <td>{{ item.Item_name }}</td>
-                    <td>{{ item.Item_brand }}</td>
-                    <td>{{ item.Unit }}</td>
-                    <td>{{ item.Price }}</td>
-                    <td>
-                        <button class="update-btn">Update</button>
-                        <button class="delete-btn">Delete</button>
-                    </td>
-                </tr>
-                {% endfor %}
 
-               
-            </tbody>
-        </table>
-    
-    </form>
+
+      <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file">Choose CSV file:</label>
+        <input type="file" name="file" accept=".csv" required>
+        <br>
+        <button class="btn btn-success" type="submit">Upload</button>
+      </form>
+      <br>
+      <div class="dropdown" style="width: 45%;">
+        <select class="form-control" id="category-dropdown">
+          <option value="all">All Categories</option>
+          {% for category, items in grouped_data.items %}
+          <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+        <div class="dropdown-arrow">&#9660;</div>
+      </div>
+
+      <script>
+        document.getElementById('category-dropdown').addEventListener('change', function () {
+          var selectedCategory = this.value;
+
+          // Hide all tables
+          var tables = document.querySelectorAll('.category-table');
+          tables.forEach(function (table) {
+            table.style.display = 'none';
+          });
+
+          // Show the selected table
+          if (selectedCategory === 'all') {
+            // Show all tables if "All Categories" is selected
+            tables.forEach(function (table) {
+              table.style.display = '';
+            });
+          } else {
+            // Show the table corresponding to the selected category
+            var selectedTable = document.getElementById('table-' + selectedCategory);
+            if (selectedTable) {
+              selectedTable.style.display = '';
+            }
+          }
+        });
+      </script>
+
+      <!-- Add this button where you want to trigger the new category addition -->
+      <button class="add-category-btn btn-primary" onclick="addNewCategory()">Add New Category</button>
+
+      <script>
+        function addNewCategory() {
+          var newCategory = prompt("Enter the name of the new category:");
+
+          if (newCategory !== null && newCategory.trim() !== "") {
+            var csrfToken = '{{ csrf_token }}';
+
+            fetch('{% url "add_category" %}', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': csrfToken,
+              },
+              body: 'new_category=' + encodeURIComponent(newCategory),
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Handle the response
+                if (data.status === 'success') {
+                  // Optionally, you can reload the page or update it dynamically
+                  location.reload();  // Reload the page
+                } else {
+                  console.error('Error adding new category:', data.message);
+                }
+              })
+              .catch(error => {
+                console.error('Error adding new category:', error);
+              });
+          }
+        }
+      </script>
+
+
+      {% for category, items in grouped_data.items %}
+      <table class="category-table" id="table-{{ category }}">
+        <thead>
+          <tr>
+            <th colspan="5">{{ category }}</th>
+          </tr>
+          <tr>
+            <th>Item Name</th>
+            <th>Item Brand/Description</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.Item_name }}</td>
+            <td>{{ item.Item_Brand }}</td>
+            <td>{{ item.Unit }}</td>
+            <td>{{ item.Price }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal{{ item.id }}">
+                Update
+              </button>
+
+
+              <div class="modal fade" id="updateModal{{ item.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="updateModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="updateModalLabel{{ item.id }}">Update Item</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {% if item.id %}
+                      <form method="post" action="{% url 'update_item' item.id %}">
+                        {% csrf_token %}
+                        <label for="category">Category:</label>
+                        <input type="text" name="category" value="{{ item.Category }}" required>
+                        <br>
+                        <label for="item_name">Item Name:</label>
+                        <input type="text" name="item_name" value="{{ item.Item_name }}" required>
+                        <br>
+                        <label for="item_brand">Item Brand:</label>
+                        <input type="text" name="item_brand" value="{{ item.Item_Brand }}" required>
+                        <br>
+                        <label for="unit">Unit:</label>
+                        <input type="text" name="unit" value="{{ item.Unit }}" required>
+                        <br>
+                        <label for="price">Price:</label>
+                        <input type="text" name="price" value="{{ item.Price }}" required>
+                        <br><br>
+                        <button type="submit" class="btn btn-primary">Update Item</button>
+                      </form>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              {% if item.id %}
+              <a href="{% url 'delete_item' item.id %}">
+                <button class="btn btn-danger">Delete</button>
+              </a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+
+          <tr id="new-item-row-{{ category }}" style="display: none;">
+
+            <form method="post" action="{% url 'add_new_item' %}">
+              {% csrf_token %}
+              <input type="hidden" name="category" value="{{ category }}">
+              <td>
+                <input type="text" name="new_item_name" placeholder="New Item Name" required>
+              </td>
+              <td>
+                <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
+              </td>
+              <td>
+                <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
+              </td>
+              <td>
+                <input type="text" name="new_item_price" placeholder="New Item Price" required>
+              </td>
+              <td>
+                <button type="submit" class="save-btn btn-success">Save</button>
+              </td>
+            </form>
+          </tr>
+
+        </tbody>
+      </table>
+      <button class="add-btn btn-primary float-left mt-2 mb-2" onclick="toggleNewItemRow('{{ category }}')">+</button>
+
+      {% endfor %}
+
+
     </div>
-</div>
+  </div>
 
+  <script>
+    function toggleNewItemRow(category) {
+      var newRow = document.getElementById('new-item-row-' + category);
+      newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 </body>
+
 </html>
 
 {% endblock %}

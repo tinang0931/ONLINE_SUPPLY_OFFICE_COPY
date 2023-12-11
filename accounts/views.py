@@ -1,10 +1,12 @@
 from audioop import reverse
 import json
 from pymongo import MongoClient
+import itertools
 from urllib.parse import parse_qs
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 from typing import ItemsView
+import logging
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from .models import *
@@ -514,16 +516,22 @@ def request(request):
         # Redirect to a success page
         return redirect('requester')
 
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+    elif request.method == 'GET':
+        # Handling GET request to retrieve data
+        collection = connect_to_mongo()
+        items = collection.find()
+
+        # Organize items by category
+        categories = {}
+        for item in items:
+            category = item["Category"]
+            if category not in categories:
+                categories[category] = []
+            categories[category].append(item)
+
+        # Pass the organized data to the template
+        return render(request, 'accounts/User/request.html', {'categories': categories})
+
 
 
 class RequesterView(View):
@@ -597,33 +605,7 @@ def item_list(request):
 
 
 
-@authenticated_user
-def show_more_details(request):
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id', None)
 
-        if request_id:
-            # Fetch the relevant data based on request_id
-            # You should replace this with your actual data retrieval logic
-
-            # For demonstration purposes, let's assume you have a dictionary
-            # with form_type and form_data
-            form_type = request.POST.get('form_type', 'other')
-            form_data = {
-                'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
-                'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
-                'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
-                'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
-                'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
-                'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
-                'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
-                'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
-            }
-
-            response_data = form_data.get(form_type, {})
-            return JsonResponse(response_data)
-    
-    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 @authenticated_user
@@ -655,7 +637,7 @@ class GetNewRequestsView(View):
     
 
 @authenticated_user              
-def delete_item(request, id):
+def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
@@ -666,38 +648,122 @@ def connect_to_mongo():
     collection = database["inventorycol"]
     return collection
 
+def add_new_item(request):
+
+    grouped_data = {
+        'ANTISEPTICS': CSV.objects.filter(Category='ANTISEPTICS'),
+        'APPLIANCES': CSV.objects.filter(Category='APPLIANCES'),
+        'FURNITURE AND FURNISHINGS': CSV.objects.filter(Category='FURNITURE AND FURNISHINGS'),
+        'INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES': CSV.objects.filter(Category='INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES'),
+        'OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES': CSV.objects.filter(Category='OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES'),
+        'PERSONAL PROTECTIVE EQUIPMENT': CSV.objects.filter(Category='PERSONAL PROTECTIVE EQUIPMENT'),
+        'PESTICIDES OR PEST REPELLENTS': CSV.objects.filter(Category='PESTICIDES OR PEST REPELLENTS'),
+        # Add more categories as needed
+    }
+
+    
+    if request.method == 'POST':
+        # Assuming you are using POST to submit the form data
+
+        # Retrieve data from the POST request
+        new_item_name = request.POST.get('new_item_name')
+        new_item_brand = request.POST.get('new_item_brand')
+        new_item_unit = request.POST.get('new_item_unit')
+        new_item_price = request.POST.get('new_item_price')
+        category = request.POST.get('category')
+
+        # Create a new item instance
+        new_item = CSV(
+            Category=category,
+            Item_name=new_item_name,
+            Item_Brand=new_item_brand,
+            Unit=new_item_unit,
+            Price=new_item_price,
+            # Add other fields as needed
+        )
+
+        
+
+        # Save the new item to the database
+        new_item.save()
+
+        # Redirect to the same page or any other desired page
+
+        return redirect('add_new_item')
+
+    # Handle other HTTP methods or provide an error response if needed
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})  # Replace 'your_template.html' with your actual template name
+
+
+def add_category(request):
+    if request.method == 'POST':
+        new_category = request.POST.get('new_category')
+
+        # Check if the new category is not empty
+        if new_category:
+            # Create the new category (replace this with your actual model)
+            CSV.objects.create(Category=new_category)
+
+            # You can return a success response if needed
+            return JsonResponse({'status': 'success'})
+        else:
+            # Return an error response if the category is empty
+            return JsonResponse({'status': 'error', 'message': 'New category cannot be empty'})
+
+    # Return a general error response if the request method is not POST
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def bac_dashboard(request):
+    if request.method == 'GET':
+        csv_data = CSV.objects.all()
+
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+
+
+
+
+def upload_file(request):
     if request.method == 'POST':
-        category = request.POST.get('category')  # Corrected from 'catgory'
-        item_name = request.POST.get('item_name')  # Corrected name
-        item_brand_description = request.POST.get('item_brand')
-        unit = request.POST.get('unit')
-        unit_cost = request.POST.get('price')  # Corrected name
+        uploaded_file = request.FILES.get('file')
+        if uploaded_file:
+            handle_uploaded_file(uploaded_file)
+            return redirect('bac_dashboard')  # Redirect to a success page or wherever you need
 
-        insert_data = {
-            "Category": category,
-            "Item_name": item_name,
-            "Item_brand": item_brand_description,
-            "Unit": unit,
-            "Price": unit_cost
-            
-        }
-        collection = connect_to_mongo()
-        collection.insert_one(insert_data)
-        
-        return redirect('bac_dashboard')
-    
-   
-
-    elif request.method == 'GET':
-        # Handling GET request to retrieve data
-        collection = connect_to_mongo()
-        items = collection.find()
-
-        # Convert the cursor to a list
-        item_list = list(items)
-
-        # Pass the data to the template
-        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
+
+def handle_uploaded_file(file):
+    decoded_file = file.read().decode('utf-8')
+    csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
+    
+    # Skip the header row if your CSV has one
+    next(csv_data)
+
+    for row in csv_data:
+        CSV.objects.create(
+            Category=row[0],
+            Item_name=row[1],
+            Item_Brand=row[2],
+            Unit=row[3],
+            Price=row[4]
+        )
+
+def delete_item(request, id):
+    item = CSV.objects.get(id=id)
+    item.delete()
+    return redirect('bac_dashboard')
+
+def update_item(request, id):
+    item = CSV.objects.get(id=id)
+    if request.method == 'POST':
+        item.Category = request.POST.get('category')
+        item.Item_name = request.POST.get('item_name')
+        item.Item_Brand = request.POST.get('item_brand')
+        item.Unit = request.POST.get('unit')
+        item.Price = request.POST.get('price')
+        item.save()
+        return redirect('bac_dashboard')
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})
