@@ -538,6 +538,7 @@ class RequesterView(View):
 
     def post(self, request):
         if request.method == 'POST':
+            id_value = request.POST.get('id') 
             # Fetch data from the Item model
             items = Item.objects.all()
 
@@ -700,4 +701,3 @@ def bac_dashboard(request):
         # Pass the data to the template
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'items': item_list})
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
-
