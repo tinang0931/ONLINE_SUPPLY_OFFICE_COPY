@@ -68,65 +68,64 @@
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
 
-  <!-- Search Form -->
-  <form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="" id="">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="searchPR()">Search</button>
-  </form>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="text-center">Date Requested</th>
-        <th class="text-center">Requests</th>
-        <th class="text-center">Purpose</th>
-        <th class="status">Status</th>
-        <th class="text-center">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for checkout in checkouts %}
-        <tr>
-          <td class="text-center">{{ checkout.submission_date }}</td>
-          <td>
-            <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-            </a>
-          </td>
-          <td>{{ checkout.purpose }}</td>
-          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
-            {{ checkout.status_comment|default:"" }}
-          </td>
-          <td>
-            {{ checkout.status_update_date|default:"Not available" }}
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
+  <div class="search">
+    <input class="form-control mb-3" type="text" placeholder="First name, Last name, Department" id="search_bar_request" oninput="filterTable()">
 </div>
 
-<script>
-  function searchPR() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementsByTagName("table")[0];
-    tr = table.getElementsByTagName("tr");
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center">Date Requested</th>
+            <th class="text-center">Requests</th>
+            <th class="text-center">Purpose</th>
+            <th class="status">Status</th>
+            <th class="text-center">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for checkout in checkouts %}
+        <tr>
+            <td class="text-center">{{ checkout.submission_date }}</td>
+            <td>
+                <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+                    <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+                </a>
+            </td>
+            <td>{{ checkout.purpose }}</td>
+            <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
+                {{ checkout.status_comment|default:"" }}
+            </td>
+            <td>
+                {{ checkout.status_update_date|default:"Not available" }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1]; // Change the index based on the column you want to search
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
+<script>
+  function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
+          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
       }
-    }
   }
 </script>
+
+
+
 
 {% endblock %}
