@@ -115,20 +115,17 @@ class Comment(models.Model):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
 
-class CsvFile(models.Model):
-    CATEGORY = models.CharField(max_length=255)
-    ITEM_BRAND = models.CharField(max_length=255)
-    ITEMS = models.CharField(max_length=255)
-    UNIT = models.CharField(max_length=50)
-    PRICE = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-class Bac_Item(models.Model):
+
+class CSV(models.Model):
+    id = models.AutoField(primary_key=True)
     Category = models.CharField(max_length=255)
-    Item_Brand  = models.CharField(max_length=255)
     Item_name = models.CharField(max_length=255)
+    Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -179,3 +176,6 @@ class PurchaseRequest(models.Model):
         return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
 
     total_cost = property(calculate_total_cost)
+
+
+    
