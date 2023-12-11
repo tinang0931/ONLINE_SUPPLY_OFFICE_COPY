@@ -3,52 +3,138 @@ from django.db import models
 from django.contrib.auth.models import  User
 from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
+from django.db.models.signals import post_save
+from django.contrib.auth.models import BaseUserManager
+from django.dispatch import receiver
 import uuid
 import random
+from djongo import models
 
 
 
 class User(AbstractUser):
-    CTU_ID_LENGTH = 10
+    id = models.ObjectIdField(primary_key=True)
+    class Role(models.TextChoices):
+        BAC_SECRETARIAT = "BAC SECRETARIAT", "BAC SECRETARIAT"
+        REGULAR_USER = "REGULAR USER", "REGULAR USER"
+        CAMPUS_DIRECTOR = "CAMPUS_DIRECTOR", "CAMPUS DIRECTOR"
+        BUDGET_OFFICER = "BUDGET_OFFICER", "BUDGET OFFICER"
 
-    username = models.CharField(max_length=12, unique=True, primary_key=True)
-    first_name = models.CharField(max_length=12)
-    last_name = models.CharField(max_length=12)
-    contact1 = models.PositiveIntegerField()
-    contact2 = models.PositiveIntegerField()
-    email = models.EmailField(unique=True)
-    password1 = models.CharField(max_length=15)
-    password2 = models.CharField(max_length=15)
+    role = models.CharField(max_length=50, choices=Role.choices)
+    base_role = models.CharField(max_length=50, choices=Role.choices)  # Add base_role field
 
-    USER_TYPES = [
-        ('admin', 'Admin'),
-        ('regular', 'Regular User'),
-        
-        
-    ]
-    is_admin = models.BooleanField(default=False) 
     def save(self, *args, **kwargs):
-        # Set is_admin based on user_type
-        self.is_admin = self.user_type == 'admin'
-        super().save(*args, **kwargs)
+        if not self.pk:
+            self.base_role = self.role  # Set base_role when creating a new user
+        return super().save(*args, **kwargs)
+        
+
+class BAC_SECRETARIAT(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.BAC_SECRETARIAT)
+class BAC_SECRETARIAT(User):
+    base_role = User.Role.BAC_SECRETARIAT
+    Bac = BAC_SECRETARIAT()
+    class Meta:
+        proxy = True
+    def welcome(self):
+        return "Only for Bac Secretariats"
+
+@receiver(post_save, sender=BAC_SECRETARIAT)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "BAC_SECRETARIAT":
+        BAC_SECRETARIAT.Profile.objects.create(user=instance)
+class BAC_SECRETARIAT(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ctu_id = models.IntegerField(null=True, blank=True)
+
     
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
-    def save(self, *args, **kwargs):
-        # Perform actions based on user_type before saving
-        if self.user_type == 'admin':
-            # Do something specific for admin users
-            self.is_admin = True
-        else:
-            # Do something specific for regular users
-            self.is_admin = False
 
-        # You can add more custom actions based on user_type here
 
-        super().save(*args, **kwargs)
+class RegularUser(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.request)
+class Regular(User):
+    base_role = User.Role.REGULAR_USER
+    Regular = RegularUser()
+    class Meta:
+        proxy = True
+    def welcome(self):
+        return "Only for Requesters"
 
-    def __str__(self):
-        return self.username
+@receiver(post_save, sender=Regular)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "Regular":
+        Regular.Profile.objects.create(user=instance)
+class RegularProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ctu_id = models.IntegerField(null=True, blank=True)
+
+
+
+
+class CAMPUS_DIRECTOR(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.CAMPUS_DIRECTOR)
+class CAMPUS_DIRECTOR(User):
+    base_role = User.Role.CAMPUS_DIRECTOR
+    Campus = CAMPUS_DIRECTOR()
+    class Meta:
+        proxy = True
+    def welcome(self):
+        return "Only for Campus Directors"
+class CAMPUS_DIRECTOR(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ctu_id = models.IntegerField(null=True, blank=True)
+
+@receiver(post_save, sender=CAMPUS_DIRECTOR)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "CAMPUS_DIRECTOR":
+        CAMPUS_DIRECTOR.objects.create(user=instance)
+
+
+
+class BudgetManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.bohome)
+class Budget(User):
+    base_role = User.Role.BUDGET_OFFICER
+    Budget = BudgetManager()
+    class Meta:
+        proxy = True
+
+    def welcome(self):
+        return "Only for Budget Officers"
+class BudgetProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ctu_id = models.IntegerField(null=True, blank=True)
+
+@receiver(post_save, sender=Budget)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "BUDGET OFFICER":
+        BudgetProfile.objects.create(user=instance)
+
+
+def base_role(self):
+        return determine_base_role(self.user_type)
+
+def determine_base_role(user_type):
+    if user_type == 'BAC Secretariat':
+        return User.Role.BAC_SECRETARIAT
+    elif user_type == 'Campus Director':
+        return User.Role.CAMPUS_DIRECTOR
+    elif user_type == 'Budget Officer':
+        return User.Role.BUDGET_OFFICER
+    elif user_type == 'Regular User':
+        return User.Role.REGULAR_USER
+    else:
+        return None  # or any other default value, or handle the invalid case appropriately
+        
 
 class Item(models.Model):
     

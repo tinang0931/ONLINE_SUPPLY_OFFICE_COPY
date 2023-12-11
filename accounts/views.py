@@ -52,6 +52,19 @@ User = get_user_model()
 @unauthenticated_user
 def register(request):
     if request.method == "POST":
+
+        if 'BAC Secretariat' in request.POST.getlist('user_type'):
+            user_type = 'BAC Secretariat'
+        elif 'Campus Director' in request.POST.getlist('user_type'):
+            user_type = 'Campus Director'
+        elif 'Budget Officer' in request.POST.getlist('user_type'):
+            user_type = 'Budget Officer'
+        elif 'Regular User' in request.POST.getlist('user_type'):
+            user_type = 'Regular User'
+        else:
+            # Handle the case where no user type is selected or handle it according to your requirements
+            user_type = 'What type of User are you?'  # Change this as needed
+
         username = request.POST['username']
         first_name = request.POST['fname']
         last_name = request.POST['lname']
@@ -68,14 +81,17 @@ def register(request):
             return render(request, 'accounts/User/register.html')
 
         # Check if the username or email is already in use
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if get_user_model().objects.filter(username=username).exists() or get_user_model().objects.filter(email=email).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
         # Create a new user account
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = get_user_model().objects.create_user(username=username, email=email, password=password1)
         user.first_name = first_name
         user.last_name = last_name
+        user.contact1 = contact1  # Set the contact1 value
+        user.contact2 = contact2  # Set the contact2 value
+        user_type = request.POST.get('user_type', '')  # Use get method to avoid KeyError
         user.save()
 
         # Send an activation email
@@ -95,6 +111,7 @@ def register(request):
 
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')  # Redirect to the login page upon successful registration
+
     return render(request, 'accounts/User/register.html')
 
 
