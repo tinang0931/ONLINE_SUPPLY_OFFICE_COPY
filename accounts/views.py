@@ -518,20 +518,14 @@ def request(request):
         return redirect('requester')
 
     elif request.method == 'GET':
-        # Handling GET request to retrieve data
-        collection = connect_to_mongo()
-        items = collection.find()
+        csv_data = CSV.objects.all()
 
-        # Organize items by category
-        categories = {}
-        for item in items:
-            category = item["Category"]
-            if category not in categories:
-                categories[category] = []
-            categories[category].append(item)
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
 
-        # Pass the organized data to the template
-        return render(request, 'accounts/User/request.html', {'categories': categories})
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
 
 
 

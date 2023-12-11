@@ -202,7 +202,7 @@
         </div>
         <div class="col-12">  
 
-            {% for category, items in categories.items %}
+            {% for category, items in grouped_data.items %}
           
             <table class="table table-striped">
                 <thead>
@@ -220,12 +220,11 @@
                 </thead>
                 <tbody>
                     {% for item in items %}
-                        <tr class="table-row" id="{{ row.ITEMS }}">
-                            <tr>
-                                <td>{{ item.Item_name }}</td>
-                                <td>{{ item.Item_brand }}</td>
-                                <td>{{ item.Unit }}</td>
-                                <td>{{ item.Price }}</td>
+                        <tr>
+                            <td>{{ item.Item_name }}</td>
+                            <td>{{ item.Item_Brand }}</td>
+                            <td>{{ item.Unit }}</td>
+                            <td>{{ item.Price }}</td>
                             <td>
                                 <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity_{{ row.ITEMS }}" value="" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
                             </td>
