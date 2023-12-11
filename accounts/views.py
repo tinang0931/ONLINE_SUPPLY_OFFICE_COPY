@@ -768,3 +768,10 @@ def update_item(request, id):
         item.save()
         return redirect('bac_dashboard')
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})
+
+def delete_category(request, Category):
+    items_to_delete = CSV.objects.filter(Category=Category)
+    items_to_delete.delete()
+
+
+    return redirect('bac_dashboard')
