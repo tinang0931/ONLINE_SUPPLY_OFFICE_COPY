@@ -206,6 +206,7 @@ height: 100%;
   flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
+  padding: 10px;
 }
 
 
@@ -280,7 +281,7 @@ height: 100%;
 
 #sidebar-wrapper .list-group-item.logout-link {
   position: absolute;
-  top: 240%; /* Adjust the top position as needed */
+  top: 215%; /* Adjust the top position as needed */
 }
 
 #sidebar-wrapper .list-group-item.logout-link i {
@@ -291,7 +292,6 @@ height: 100%;
 body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-left: 0;
 }
-
 
 @media (min-width: 800px) {
   #sidebar-wrapper {
