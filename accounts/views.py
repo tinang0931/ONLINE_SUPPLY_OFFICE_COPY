@@ -638,7 +638,7 @@ class GetNewRequestsView(View):
     
 
 @authenticated_user              
-def delete_item(request, id):
+def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
@@ -751,3 +751,20 @@ def handle_uploaded_file(file):
             Unit=row[3],
             Price=row[4]
         )
+
+def delete_item(request, id):
+    item = CSV.objects.get(id=id)
+    item.delete()
+    return redirect('bac_dashboard')
+
+def update_item(request, id):
+    item = CSV.objects.get(id=id)
+    if request.method == 'POST':
+        item.Category = request.POST.get('category')
+        item.Item_name = request.POST.get('item_name')
+        item.Item_Brand = request.POST.get('item_brand')
+        item.Unit = request.POST.get('unit')
+        item.Price = request.POST.get('price')
+        item.save()
+        return redirect('bac_dashboard')
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})

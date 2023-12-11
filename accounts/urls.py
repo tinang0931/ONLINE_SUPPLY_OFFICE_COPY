@@ -34,7 +34,7 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-   path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('delete/<int:id>/', delete, name='delete'),
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),
@@ -47,6 +47,11 @@ urlpatterns = [
    path('add_category/', views.add_category, name='add_category'),
    path('upload_file/',views.upload_file, name='upload_file'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
+   path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('update_item/<int:id>/', update_item, name='update_item'),
+
+
+
 
  
 ]
