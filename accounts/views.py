@@ -516,15 +516,15 @@ def request(request):
         # Redirect to a success page
         return redirect('requester')
 
-    else:
-        csv_file_path = 'C:/Users/cardosa.kristineanne/Desktop/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all()
 
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
 
 
 class RequesterView(View):
