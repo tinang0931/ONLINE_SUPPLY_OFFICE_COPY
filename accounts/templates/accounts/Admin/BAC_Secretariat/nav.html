@@ -27,28 +27,7 @@
                 <h1 class="head">Online Supply Office</h1>
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
-            <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-             <div class="profile-container">
-              <a href="{% url 'prof' %}">
-                <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
-
-                
-                <script>
             
-                  const savedImageUrl = localStorage.getItem('profileImage');
-                  if (savedImageUrl) {
-                      const profilePic = document.getElementById('profile-pic');
-                      profilePic.src = savedImageUrl;
-                  }
-              </script>
-              </a>
-              <h1 class="user">Username</h1>
-              <script>
-                  var fullName = localStorage.getItem('fullName') || 'Username';
-                  document.querySelector('.user').textContent = fullName;
-              </script>
-            
-            </div>
           </div>
         </nav>
       </div>
