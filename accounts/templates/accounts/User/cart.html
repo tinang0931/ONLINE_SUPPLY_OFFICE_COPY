@@ -27,6 +27,32 @@
     color: rgb(35, 91, 245);
     text-decoration: underline;
 }
+
+p {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+    #attachments {
+        display:flex ;
+         /* Hide the default file input button */
+    }
+
+    .custom-file-upload {
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Style for the file input container */
+    #fileInputsContainer {
+        margin-bottom: 20px;
+    }
 </style>
 
 
@@ -111,50 +137,47 @@
         });
     </script>
 
-    <div>
-        <div id="fileInputsContainer">
-            <div class="add-file">
-                <label for="attachments">Attach File:</label>
-                <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx">
-            </div>
-        </div>
-        
-        <!-- Add jQuery library (if not already included) -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        
-        <script>
-            $(document).ready(function () {
-                // Track the number of file input fields
-                var fileFieldCount = 1;
-        
-                // Update file names display
-                function updateFileNames(fileInput) {
-                    var fileLabel = fileInput.parent().find('label');
-                    var files = fileInput[0].files;
-        
-                    // Display the names of the attached files
-                    var fileNames = Array.from(files).map(function (file) {
-                        return file.name;
-                    });
-                        }
-        
-                // Make attached files clickable
-                $('#fileInputsContainer').on('change', 'input[type="file"]', function () {
-                    var fileInput = $(this);
-                    updateFileNames(fileInput);
-        
-                    // Automatically proceed to the attached file (you may customize this behavior)
-                    fileInput.on('click', function () {
-                        if (fileInput[0].files.length > 0) {
-                            var filePath = URL.createObjectURL(fileInput[0].files[0]); // Use the first file
-                            window.open(filePath, '_blank');
-                        }
-                    });
-                });
-            });
-        </script>
-        
+
+
+<div>
+    <div id="fileInputsContainer">
+        <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
     </div>
+
+    <!-- Display attached files as clickable links -->
+    <div>
+        <p>Attached Files:</p>
+        <div id="fileLinksContainer"></div>
+    </div>
+    
+     
+
+    <!-- Add jQuery library (if not already included) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
+    <script>
+        $(document).ready(function () {
+            $('#attachments').on('change', function () {
+                var files = this.files;
+
+                // Append new file links without clearing the previous ones
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var fileLink = $('<a class="file-link" target="_blank"></a>').attr('href', URL.createObjectURL(file)).text(file.name);
+                    $('#fileLinksContainer').append(fileLink).append('<br>');
+                }
+            });
+
+            // Click event to open the attached file in a new tab
+            $('#fileLinksContainer').on('click', 'a.file-link', function (e) {
+                e.preventDefault();
+                var filePath = $(this).attr('href');
+                window.open(filePath, '_blank');
+            });
+        });
+    </script>
+   
+</div>
 
     </div>
     
