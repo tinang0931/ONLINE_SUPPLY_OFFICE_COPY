@@ -550,7 +550,6 @@ def add_new_item(request):
             Unit=new_item_unit,
             Price=new_item_price,
         )
-        # Save the new item to the database
         new_item.save()
         return redirect('add_new_item')
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})  # Replace 'your_template.html' with your actual template name
