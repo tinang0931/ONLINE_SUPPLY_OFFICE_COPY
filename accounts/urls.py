@@ -45,6 +45,7 @@ urlpatterns = [
    path('cdhome/',views.cdhome, name='cdhome'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('add_category/', views.add_category, name='add_category'),
