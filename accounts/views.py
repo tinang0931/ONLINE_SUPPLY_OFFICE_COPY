@@ -134,10 +134,8 @@ def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
 
-
 def request_page(request):
     if request.user.is_admin:
-       
         return redirect('bac_home')
     return render(request, 'request.html')
 
@@ -370,8 +368,13 @@ def cdabout(request):
 
 
 @authenticated_user
-def cdhistory(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+def cdpurchase(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+
+@authenticated_user
+def cdhome(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhome.html')
 
 
 @authenticated_user
@@ -547,6 +550,7 @@ def add_new_item(request):
             Unit=new_item_unit,
             Price=new_item_price,
         )
+        # Save the new item to the database
         new_item.save()
         return redirect('add_new_item')
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})  # Replace 'your_template.html' with your actual template name
@@ -617,4 +621,5 @@ def update_item(request, id):
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
+
     return redirect('bac_dashboard')
