@@ -46,20 +46,20 @@
               <div class="list-group w-100">
                 <br><br>
 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'cdhome'%}">
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'cdhome'%}">
                   <i class="fa-solid fa-house"></i> <span id="home" class="hidden-name">Home</span>
                 </a>
 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'cdpurchase'%}">
+                <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdpurchase'%}">
                   <i class="fas fa-file-alt"></i> <span id="requests" class="hidden-name">Purchase Requests</span>
                 </a>
 
 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'cdresolution'%}">
+                <a class="list-group-item list-group-item-action p-3 border-0 resolution-link" href="{% url 'cdresolution'%}">
                   <i class='bx bxs-detail' ></i> <span id="resolution" class="hidden-name">Resolution</span>
                 </a>
 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'cdabout'%}">
+                <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'cdabout'%}">
                   <i class='bx bxs-info-circle' ></i> <span id="about" class="hidden-name">About</span>
                 </a>
 
@@ -67,6 +67,11 @@
                   <i class='bx bx-log-out'></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
               </div>
+              <div class="profile-container">
+                <a href="{% url 'prof' %}">
+                <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
+                <p1 class="account_type">Admin</p1>
+            </div>
             </div>
           </div>
         </div>
@@ -101,13 +106,27 @@
     color: #f2f2f2 !important;
 }
 
+
 #sidebar:hover {
     width: 300px;
     padding: 0 10px;
 }
 
 .logout-link {
-    margin-top: -10px;
+    margin-top: -153px;
+    margin-left: -10px;
+}
+.about-link {
+  margin-left: -10px;
+}
+.resolution-link {
+  margin-left: -10px;
+}
+.purchase-requests-link {
+  margin-left: -10px;
+}
+.home-link {
+  margin-left: -10px;
 }
 
 .d-flex.flex-wrap.align-content-between.h-100 {
@@ -126,7 +145,7 @@
 
 .pro {
     position: relative;
-    top: 380px;
+    top: 200px;
     z-index: 1;
     height: 45px;
     width: 45px;
@@ -148,11 +167,12 @@
     justify-content: center;
     width: 90%;
     margin: 0;
+    margin-left: 10px;
 }
 
 .account_type {
     position: relative;
-    top: 380px;
+    top: 200px;
     left: 30px;
     font-size: 20px;
     margin: 0;
