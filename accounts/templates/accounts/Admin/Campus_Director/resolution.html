@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    
+    <style>
+        body, h, p {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman';
+        }
+
+        header {
+            background-color: #007acc; 
+            color: white;
+            padding: 10px;
+        }
+
+        .ctu_logo {
+            width: 190px;
+            height: auto;
+            margin-right: 20px;
+            float: left;
+            margin-top: 30px;
+        }
+        
+        
+        .container {
+            max-width: 800px; 
+            padding: 20px;
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 0 auto; 
+        }
+
+        h {
+            font-size: 25px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px; 
+            text-align: center; 
+        }
+
+        a {
+            color: #007acc;
+            text-decoration: underline; 
+        }
+
+        a:hover {
+            text-decoration: none; 
+        }
+
+        .asean_logo {
+            width: 167px;
+            height: auto;
+            float: right;
+            width: 167px;
+            margin-top: 30px;
+        }
+
+
+        body {
+            font-family: 'Times New Roman';
+            margin: 0;
+            padding: 0;
+        }
+
+        .content,
+        .text {
+            border: none; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+    
+    </style>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+
+<body>
+    <nav>
+        <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
+    </nav>
+
+    <nav>
+        <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
+    </nav>
+
+    <div class="container">
+        <h>Republic of the Philippines</h>
+        <h class="no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></h>
+        <h>ARGAO CAMPUS</h>
+        <h>Ed Kintanar Street Lamacan Argao, Cebu Philippines</h>
+        <div>
+            <h>Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></h>
+            <h>Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></h>
+    </div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <div> &nbsp</div>
+        <h><b>RESOLUTION</b></h>  
+    </div>
+
+
+</body>
+</html>

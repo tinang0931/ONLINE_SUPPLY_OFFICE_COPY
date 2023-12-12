@@ -383,6 +383,12 @@ def cdresolution(request):
 
 
 @authenticated_user
+def resolution(request):
+    return render(request, 'accounts/Admin/Campus_Director/resolution.html')
+
+
+
+@authenticated_user
 def profile_html(request):
     return render(request, 'profile.html')
 
