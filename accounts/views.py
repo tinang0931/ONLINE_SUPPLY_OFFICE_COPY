@@ -342,7 +342,12 @@ def notif(request):
 @authenticated_user
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-
+@authenticated_user
+def bac_prof(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html')
+@authenticated_user
+def bac_profile(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_profile.html')
 
 @authenticated_user
 def bo(request):
