@@ -48,14 +48,18 @@
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
+
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bohome'%}">
+                  <i class="fas fa-home"></i> <span id="about" class="hidden-name">HOME</span>
+                </a>
+
+             
+           
+
                 <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'boabout'%}">
                   <i class="fas fa-file-alt"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bohistory'%}">
-                  <i class="fas fa-info-circle"></i> <span id="history" class="hidden-name">History</span>
-                </a>
-
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
@@ -63,6 +67,7 @@
             </div>
           </div>
         </div>
+ 
         <style>
           #sidebar {
             transition: width 0.5s ease-in-out;
@@ -103,7 +108,12 @@
         {% block boabout %}
         {% endblock %}
 
-        {% block bohistory %}
+  
+
+        {% block bohome %}
+        {% endblock %}
+
+        {% block bodashboard %}
         {% endblock %}
 
     </main>

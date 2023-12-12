@@ -52,19 +52,66 @@
         {% endfor %}
 
         <td>Purchase Request Approval</td>
-        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;">{{ item.content }}</td>
+        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: rgb(240, 230, 230);">
+          {{ item.content }}</td>
         <td>{{ item.timestamp }}</td>
     </tr>
+
+    {% if feedback|length == 0 %}
+    <tr>
+        <td colspan="3">
+            <span >NO REQUEST YET</span>
+        </td>
+    </tr>
+{% endif %}
+
+<tbody>
+  {% for item in feedback %}
+    <tr>
+      <td>{{ item.pr_id }}</td>
+
+      <!-- Display the purpose from "preqform" or "bohome" -->
+      {% for i in checkout_info %}
+        {% if i.pr_id == item.pr_id %}
+          <td>{{ i.purpose }}</td>
+        {% endif %}
+      {% endfor %}
+
+      <td>Purchase Request Approval</td>
+
+      <!-- Display the status and timestamp -->
+      <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;">
+        {% if item.status_comment %}
+          {{ item.status_comment }}
+        {% else %}
+          {{ item.content }}
+        {% endif %}
+      </td>
+
+      <td>{{ item.status_update_date|default:item.timestamp }}</td>
+
+      <!-- Display the approval status -->
+      <td class="badge {% if item.is_approve %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: black;">
+        {% if item.is_approve %}
+          Approved
+        {% else %}
+          Disapproved
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+
+  {% if feedback|length == 0 %}
+    <tr>
+      <td colspan="3">
+        <span>NO REQUEST YET</span>
+      </td>
+    </tr>
+  {% endif %}
+
 {% endfor %}
 
-          {% if feedback|length == 0 %}
-            <tr>
-                <td colspan="3">
-                    <span >NO REQUEST YET</span>
-                </td>
-            </tr>
-        {% endif %}
-
+         
         </tbody>
       </table>
       

@@ -221,9 +221,7 @@
         }
 
         .send-icon {
-            position: fixed;
-            top: 91%;
-            right: 50px;
+            position: relative;
             width: 30px;
             height: 30px;
             background-color: #4CAF50;
@@ -231,6 +229,8 @@
             text-align: center;
             border-radius: 5px;
             cursor: pointer;
+            margin-left: 20px;
+            margin-bottom: 20px; 
         }
 
         .send-icon i {
@@ -238,12 +238,20 @@
         }
 
         .footer {
-        background-color: rgba(1, 33, 67, 0.9);
-        text-align: center;
-        width: 100%;
-        height: auto;
-        margin: 0 10px;
-    }
+            background-color: rgba(1, 33, 67, 0.9);
+            text-align: center;
+            width: 100%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+            position: fixed;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
     .logo-container-left,
     .logo-container-right {
@@ -284,28 +292,31 @@
         margin-right: 50px;
     }
     .icons-container {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-        margin-right: 50px;
-    }
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 50px;
+            padding-right: 5%;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
 
 .icon-link {
     margin-left: 20px;
     text-decoration: none;
-    color: white; /* Adjust the color as needed */
+    color: white; 
 }
 
 
 .input-box{
-    width: 60%;
+    width: 40%;
     margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 20px;
+    margin-right: auto;
 }
         
 .input-box input{
-    width: 160%;
+    width: 100%;
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
@@ -316,7 +327,7 @@
 .send-icon {
     position: fixed;
     top: 90%;
-    left: 95%;
+    right: 5%;
     width: 30px;
     height: 30px;
     background-color: #4CAF50;
@@ -324,10 +335,11 @@
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 20px;
 }
 
   .send-icon i {
-    line-height: 30px;
+    line-height: 50px;
   }
 
   .footer {
@@ -340,7 +352,31 @@
   position: fixed;
   z-index: 2;
   position:fixed;
+  padding: 10px;
 }
+    .aprv,
+    .disaprv {
+        font-size: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: 5px;
+        color: #ffa125;
+        background-color: transparent;
+        padding: 16px 16px;
+        border-radius: 8px;
+        /* Add hover animation */
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
+
+    /* Apply the color change on hover */
+    .aprv:hover,
+    .disaprv:hover {
+        color: #ffa125e3;
+        background-color: #000000e3;
+    }
+
+
+
 </style>
 
 </head>
@@ -386,7 +422,7 @@
             <div class="justify-content">
                 <div class="col-md-12">
                     <div class="mx-auto">
-                        <form action="" method="post">
+                        <form action="" method="post" action="{% url 'preqform_bo' pr_id=pr_id %}">
                             {% csrf_token %}
                                <table class="table-bordered"  style="width: 120%">
                                 <th colspan="2">Office Section: <span contenteditable="true" 
@@ -420,6 +456,7 @@
                                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                                 <td class="item_total_cost text-center">{{item.total_cost }}</td>
                                 <td>
+                                    <input type="hidden" name="action" id="action" value="">
                                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
                                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
                                     <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
@@ -439,62 +476,62 @@
                                     <span contenteditable="true" 
               style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
               oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
-        </span><br>Accountant
+        </span><br>Budget Officer
                                 </td>
                             </tr>
-<tr>
                             <tr>
                                 <td colspan="2">Purpose: {{ purpose }} <span contenteditable="true"
-                                    style="border: none; outline: none; text-decoration: underline"></span></td></tr>
+                                    style="border: none; outline: none; text-decoration: underline"></span></td>
+                            </tr>
                             <tr>
-                                <td colspan="2">Requested by: {{user.first_name}} {{user.last_name}} <span contenteditable="false"
+                                <td colspan="2">Requested by: {{ user.first_name }} {{ user.last_name }} <span contenteditable="false"
                                         style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by<span contenteditable="true" 
-                                            style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
-                                            oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
-                                        </span>
+                                <td colspan="4" style="text-align: left;">Approved by<span contenteditable="true"
+                                        style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                        oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                    </span>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                    <footer class="footer">
-                        <div class="input-box">
-                            <input placeholder="Update the purchase request status ..." name="comment_content">
-                        </div>
-                        <div class="icons-container">
-                            <div class="send-icon">
-                                <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px; "></i> Send</button>
+                            </table>
                             </div>
-                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                    <i class="fas fa-download"></i> Download
-                                </a>
-                                  <a href="javascript:window.print()" title="Print" class="icon-link">
-                                    <i class="fas fa-print"></i> Print
-                                  </a>
+                            <footer class="footer">
+                                <div class="icons-container">
+                                    <form method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="new_status" value="True">
+                                        <button type="submit" class="aprv">Approve</button>
+                                    </form>
+                            
+                                    <form method="post" action="{% url 'disapprove_checkout' pr_id=pr_id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="new_status" value="Fasle">
+                                        <button type="submit" class="disaprv">Disapprove</button>
+                                    </form>
+                            
+                                    <a href="#" title="Download" class="icon-link">
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                    <a href="javascript:window.print()" title="Print" class="icon-link">
+                                        <i class="fas fa-print"></i> Print
+                                    </a>
                                 </div>
-
-                                <script>
-                                    function downloadPDF() {
-                                        const body = document.getElementById('purchaseRequestTable');
-                                
-                                        const options = {
-                                            margin: 10,
-                                            filename: 'purchase_request.pdf',
-                                            image: { type: 'jpeg', quality: 0.98 },
-                                            html2canvas: { scale: 2 },
-                                            jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }, 
-                                        };
-                                        console.log ("HELLo")
-                                        html2pdf(body, options);
-                                    }
-                                </script>
-                                
+                            
+                                <div class="input-box">
+                                    <input placeholder="Update the purchase request status ..." name="comment_content">
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i> Send</button>
+                                    </div>
+                                </div>
+                            </footer>
+                            
+                            </form> <!-- Close the form tag here -->
+                            <script>
+                                function setAction(action) {
+                                    document.getElementById('action').value = action;
+                                    document.forms[0].submit();  // Assuming the form is the first form on the page
+                                }
+                            </script>
                             </div>
-                                           
-                    </footer>
-                    
-                    </form>
-                </div>
               
                 
             </div>

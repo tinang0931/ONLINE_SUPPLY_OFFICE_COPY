@@ -34,6 +34,7 @@ from .models import Item
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
+from django.contrib.auth.decorators import login_required
 
 
 def main(request):
@@ -48,7 +49,7 @@ def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 User = get_user_model()
-@unauthenticated_user
+
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -239,7 +240,7 @@ def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
-@authenticated_user
+
 def history(request):
     # Get the logged-in user
     user = request.user
@@ -257,7 +258,7 @@ def history(request):
     return render(request, 'accounts/User/history.html', context)
 
 
-@authenticated_user
+
 def tracker(request):
     user = request.user
 
@@ -282,12 +283,12 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 
-@authenticated_user
+
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@authenticated_user
+
 def bac_home(request):
     checkouts = Checkout.objects.select_related('user').all()
     comments = Comment.objects.all()
@@ -419,27 +420,30 @@ def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 
 
-@authenticated_user
+
 def bo(request):
     return render(request, 'accounts/Admin/Budget_Officer/bo.html')
 
 
-@authenticated_user
+
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
 
-@authenticated_user
-def bohistory(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
 
 
-@authenticated_user
+
+def bohome(request):
+   
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html')
+
+
+
 def cd(request):
     return render(request, 'accounts/Admin/Campus_Director/cd.html')
 
 
-@authenticated_user
+
 def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
 
@@ -461,6 +465,7 @@ def profile_html(request):
 
 def addItem(request):
     if request.method == 'POST':
+     
         item_data = request.POST.get('item')
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
@@ -521,6 +526,8 @@ def request(request):
         with open(csv_file_path, 'r') as file:
             reader = csv.DictReader(file)
             csv_data = list(reader)
+
+            
         
         # Pass data to the template
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
@@ -587,13 +594,13 @@ class RequesterView(View):
 
 
 
-@authenticated_user
+
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
 
-@authenticated_user
+
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -628,7 +635,7 @@ def show_more_details(request):
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
-@authenticated_user
+
 def bac_history(request):
    request = Item.objects.all()
 
@@ -655,7 +662,7 @@ class GetNewRequestsView(View):
 
         return JsonResponse({'new_requests': serialized_requests})
 
-@authenticated_user
+
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
@@ -664,3 +671,148 @@ def item_delete(request, request_id):
 
 def bac_dashboard(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
+
+
+def bohome(request):
+    checkouts = Checkout.objects.select_related('user').all()
+    comments = Comment.objects.all()
+
+    # Create a dictionary to store the results, using pr_id as keys
+    checkout_data_dict = {}
+
+    # Loop through each Checkout instance and gather relevant data
+    for checkout in checkouts:
+        pr_id = checkout.pr_id
+
+        # Get the latest comment for the current pr_id
+        latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+
+        if pr_id not in checkout_data_dict:
+            # If pr_id is not in the dictionary, create a new entry
+            checkout_data_dict[pr_id] = {
+                'pr_id': pr_id,
+                'first_name': checkout.user.first_name,
+                'last_name': checkout.user.last_name,
+                'submission_date': checkout.submission_date,
+                'purpose': checkout.purpose,
+                'is_approve': checkout.is_approve,
+                'is_disapprove': checkout.is_disapprove,
+                'status_comment': latest_comment.content if latest_comment else "",
+                'status_update_date': latest_comment.timestamp if latest_comment else None,
+                # Add more fields as needed
+            }
+        else:
+            # If pr_id is already in the dictionary, update the entry
+            # with additional information, e.g., concatenate purposes
+            checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+
+    # Convert the dictionary values to a list
+    checkout_data = list(checkout_data_dict.values())
+
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
+
+class PreqForm_boView(View):
+    template_name = 'accounts/Admin/Budget_Officer/preqform_bo.html'
+
+    def get(self, request, pr_id,):
+        # Use the pr_id to retrieve the corresponding Checkout object
+        checkout = get_object_or_404(Checkout, pr_id=pr_id)
+
+        # Get checkout items associated with the checkout
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+
+        context = {
+            'checkout_items': checkout_items,
+            'pr_id': pr_id,
+            'user': checkout.user,
+            'purpose': checkout.purpose,
+            'approved': checkout.is_approve,  # Include the status in the context
+            'disapproved': checkout.is_disapprove
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, pr_id):
+        # Access the pr_id and content from the POST data
+        new_status = request.POST.get('new_status')
+
+        # Check if both pr_id and new_status are present
+        if pr_id and new_status:
+            try:
+                # Update the status of the checkout directly
+                checkout = Checkout.objects.get(pr_id=pr_id)
+                
+                checkout.date_updated = timezone.now()
+                
+                checkout.is_approve = new_status 
+                checkout.is_disapprove = not new_status 
+                checkout.save()
+
+                # Redirect after processing
+                return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
+            except Checkout.DoesNotExist:
+                return HttpResponse("Checkout not found.")
+            except Exception as e:
+                # Handle exceptions, log errors, etc.
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or new status not found in the form data.")
+
+def approve_checkout(request, pr_id):
+    return update_checkout_status(request, pr_id, new_status=True)
+
+def disapprove_checkout(request, pr_id):
+    return update_checkout_status(request, pr_id, new_status=False)
+
+def update_checkout_status(request, pr_id, new_status):
+    if request.method == 'POST':
+        try:
+
+            # Convert new_status to boolean
+            new_status = new_status.lower() == 'true'  if isinstance(new_status, str) else new_status
+
+            # Update the status of the checkout directly
+            checkout = get_object_or_404(Checkout, pr_id=pr_id)
+            checkout.status_update_date = timezone.now()
+            checkout.is_approve = new_status 
+            checkout.is_disapprove = not new_status 
+            checkout.save()
+
+
+            # Redirect after processing
+            return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
+        except Checkout.DoesNotExist:
+            return HttpResponse("Checkout not found.")
+        except Exception as e:
+            # Handle exceptions, log errors, etc.
+            print(f"Error: {e}")
+            return HttpResponse("An error occurred while processing the form.")
+    else:
+        return HttpResponse("Invalid request method.")
+
+def bohistory(request):
+   request = Item.objects.all()
+
+   return render(request, 'accounts/Admin/Budget_Officer/bohistory.html', {'request': request})
+   
+
+class GetNewRequestsView(View):
+    def get(self, request, *args, **kwargs):
+
+       
+
+          # Fetch new requests from the database based on your criteria
+        new_requests = Checkout.objects.exclude(pr_id=None)
+
+        # Serialize the data as needed
+        serialized_requests = [
+            {
+                'user_id': request.user_id,
+                'submission_date': request.submission_date,
+                # Add other fields as needed
+            }
+            for request in new_requests
+        ]
+
+        return JsonResponse({'new_requests': serialized_requests})

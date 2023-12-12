@@ -52,7 +52,7 @@ class User(AbstractUser):
 
 class Item(models.Model):
     
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -60,10 +60,12 @@ class Item(models.Model):
     quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
 
+
     @property
     def total_cost(self):
         return Decimal(str(self.unit_cost)) * self.quantity
-
+    
+   
 
 
 
@@ -74,11 +76,19 @@ class Checkout(models.Model):
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
-    
+    is_approve = models.BooleanField(default=True)
+    is_disapprove = models.BooleanField(default=False)
 
-    # ... other fields and methods ...
+    # # ... other fields and methods ...
+    # STATUS_CHOICES = (
+    #     ('approve', 'approve'),
+    #     ('disapprove', 'disapprove'),
+      
+    #     # Add more status choices as needed
+    # )
 
-
+    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approve')
+    # status_update_date = models.DateTimeField(auto_now=True)  # This field will automatically update when the status is modified
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999))  # Generates an 8-digit number
@@ -184,4 +194,4 @@ class RequestData(models.Model):
     email = models.EmailField()
     timestamp = models.DateTimeField(auto_now_add=True)
     # Add other fields as needed
-    
+

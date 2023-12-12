@@ -14,7 +14,7 @@ urlpatterns = [
    path('register/',views.register, name='register'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('requester/',RequesterView.as_view, name='requester'),
+   path('requester/',RequesterView.as_view(), name='requester'),
    path('request/',views.request, name='request'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
@@ -36,11 +36,15 @@ urlpatterns = [
    path('history/',views.history, name='history'),
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
-   path('bohistory/',views.bohistory, name='bohistory'),
+   
+   path('bohome/',views.bohome, name='bohome'),
+    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
+    path('approve_checkout/<str:pr_id>/', approve_checkout, name='approve_checkout'),
+    path('disapprove_checkout/<str:pr_id>/', disapprove_checkout, name='disapprove_checkout'),
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdhistory/',views.cdhistory, name='cdhistory'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
- 
+  
 ]
