@@ -19,6 +19,7 @@ urlpatterns = [
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
+   path('Procurement/',views.Procurement, name='Procurement'),
    path('about/',views.about, name='about'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
@@ -43,5 +44,5 @@ urlpatterns = [
    path('cdhistory/',views.cdhistory, name='cdhistory'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
- 
+   path('excel_data/', views.request, name='excel_data_view'),
 ]

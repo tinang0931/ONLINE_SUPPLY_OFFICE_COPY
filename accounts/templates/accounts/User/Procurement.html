@@ -1,0 +1,245 @@
+{% extends "accounts/User/main.html" %}
+
+
+{% load static %}
+
+
+{% block request %}
+
+<style>
+    .input-group {
+      display: flex;
+    }
+
+    .table-container {
+        width: 600px; /* Set your desired width */
+        overflow-x: auto; /* Enable horizontal scrolling if needed */
+    }
+
+    /* Set the table to have a fixed layout */
+    
+  
+    #quantityInput {
+      flex: 1;
+      width: 30px;
+    }
+  
+    .btn-inc-dec {
+      flex: 0;
+    }
+  
+    /* Style for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 456px;
+      left: 300px;
+      width: 20%;
+      height: 55%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  
+    .modal-content {
+      position: absolute;
+      top: 456px;
+      left: 50%;
+      width: 1000px;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 5px;
+    }
+  
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      cursor: pointer;
+    }
+    
+    .custom-checkbox input:checked + label {
+        color: green;
+    }
+
+ 
+        .selected {
+            background-color: #e0e0e0;  /* Change this to the desired background color */
+        }
+        .subheader {
+        position: fixed;
+        z-index: 1000;
+        background-color: #fff;
+        width: 100%;
+        height: 15vh;
+    }
+
+  
+    
+    .row2 {
+        margin-top: 5%;
+        display: flex;
+
+    }
+
+
+
+    .col-12 {
+        margin-top: 5%;
+        flex-grow: 1; 
+        overflow-y: auto;
+        
+
+    }
+
+    .container {
+        margin-top: 1%;
+        display: flex;
+    }
+
+    .title {
+        flex-grow: 1;
+        text-align: center;
+        font-family: 'Trebuchet MS', sans-serif;
+        white-space: nowrap;
+    }
+
+
+      
+
+    
+    .row {
+        margin-top: 1%;
+        
+    }
+
+    .search,
+    .additem{
+        margin: 0;
+        width: 200px;
+        height: 100px;
+      
+    }
+    .search input {
+        width: 300px;
+    }
+
+    .search,    
+    .additem {
+        align-items: normal;
+        
+      
+    }
+
+    .additem {
+        margin-left: 6%
+    }
+    
+    .cart {
+        width: 50px;
+    }
+
+
+
+</style>
+
+
+
+
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <a href="{% url 'requester' %}">
+        <i>
+            <img id="cartImage" class="cart" src="{% static 'images/add-to-cart.png' %}" alt="Icon Description">
+        </i>
+    </a>
+
+    <div class="subheader">
+        
+        <div class="container">
+            <h1 class="title">PROJECT PROCUREMENT MANAGEMENT PLAN</h1>
+            <div class="cart">
+                
+            </div>
+        </div>
+ 
+          
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Item & Specifications</th>
+                        <th>UNIT</th>
+                        <th>ESTIMATED BUDGET</th>
+                        <th>QUANTITY &</th>
+                        <th>Monthly Quantity Requirement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INSECTICIDE, aerosol type.</td>
+                        <td>can</td>
+                        <td>400.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>LIQUID HAND SANITIZER, 500mL</td>
+                        <td>bottle</td>
+                        <td>250.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>ALCOHOL, Ethyl. 68%-72%, 500 ml</td>
+                        <td>bottle</td>
+                        <td>200.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>ALCOHOL, ethyl, 68%-72%, 1 Gallon</td>
+                        <td>gallon</td>
+                        <td>650.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>ALCOHOL, isopropyl, 68% 72%, 500ml (-5ml)</td>
+                        <td>bottle</td>
+                        <td>200.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>ALCOHOL, Isopropyl, 68%-72%, scented, 3.785 liters</td>
+                        <td>gallon</td>
+                        <td>650.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>POVIDDONE IODINE, 10 % solution, 120 ml</td>
+                        <td>gallon</td>
+                        <td>300.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>INK, for stamp pad</td>
+                        <td>bottle</td>
+                        <td>50.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>ACETATE</td>
+                        <td>roll</td>
+                        <td>1000.00</td>
+                        <td>0.00</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>CARBON FILM, A4</td>
+        <td>box</td>
+        <td>
+            
+{% endblock %}
