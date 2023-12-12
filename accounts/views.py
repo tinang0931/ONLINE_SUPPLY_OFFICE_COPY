@@ -138,13 +138,14 @@ def login(request):
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
+    
+
 def request_page(request):
     if request.user.is_admin:
-       
         return redirect('bac_home')
-    
-    
     return render(request, 'request.html')
+
+
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
@@ -447,8 +448,13 @@ def cdabout(request):
 
 
 @authenticated_user
-def cdhistory(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+def cdpurchase(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+
+@authenticated_user
+def cdhome(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhome.html')
 
 
 @authenticated_user
@@ -598,10 +604,6 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 
-
-
-
-
 @authenticated_user
 def bac_history(request):
    request = Item.objects.all()
@@ -675,9 +677,6 @@ def add_new_item(request):
             Price=new_item_price,
             # Add other fields as needed
         )
-
-        
-
         # Save the new item to the database
         new_item.save()
 
@@ -719,7 +718,6 @@ def bac_dashboard(request):
 
 
 
-
 def upload_file(request):
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
@@ -750,6 +748,7 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+
 def update_item(request, id):
     item = CSV.objects.get(id=id)
     if request.method == 'POST':
@@ -762,9 +761,9 @@ def update_item(request, id):
         return redirect('bac_dashboard')
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})
 
+
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
-
 
     return redirect('bac_dashboard')

@@ -40,7 +40,8 @@ urlpatterns = [
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
-   path('cdhistory/',views.cdhistory, name='cdhistory'),
+   path('cdhome/',views.cdhome, name='cdhome'),
+   path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('add_new_item/', add_new_item, name='add_new_item'),
@@ -51,7 +52,3 @@ urlpatterns = [
    path('update_item/<int:id>/', update_item, name='update_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
 ]
-
-
-
- 
