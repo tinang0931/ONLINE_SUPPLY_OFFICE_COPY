@@ -2,6 +2,7 @@
 
 {% block preqform %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-xxxxxxxxxxxxxxxxxxxxxxxxxxxx" crossorigin="anonymous">
-    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
     <style>
   
@@ -49,17 +48,6 @@
       
     }
 
-    .container {
-        max-width: 800px;
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        margin-top: 10px; /* Adjusted margin */
-    }
 
     h4 {
         font-size: 25px;
@@ -100,16 +88,19 @@
         table {
     font-weight: bold;
     text-align: center;
-
+    position: center;
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse; /* Ensure borders collapse into a single border */
 }
 
-th, td {
-    border: 1px solid #000000; /* Set border color to black */
-    text-align: center; /* Center text within cells */
-    font-size: 14px; /* Adjust the font size as needed */
+/* Adjust the border color and opacity for better visibility */
+/* Adjust the border color and opacity for better visibility */
+th,
+td {
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
+    text-align: left; /* Center text within cells */
+    font-size: 12px; /* Adjust the font size as needed */
     height: 50px;
     padding: 8px; /* Adjust the padding for better visibility */
 }
@@ -124,9 +115,18 @@ tr:hover {
 }
 
 /* Add borders to the vertical sides of th and td, excluding the last cell in each row */
-th:not(:last-child), td:not(:last-child) {
-    border-right: 1px solid #000000;
+th:not(:last-child),
+td:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
 }
+
+/* Make the outer border thicker */
+table {
+    border: 2px solid #000000; /* Set the outer border color and thickness */
+}
+
+
+
         body,
             h3,
             p {
@@ -197,6 +197,8 @@ th:not(:last-child), td:not(:last-child) {
         margin-top: 20px; /* Adjust the margin-top as needed */
         width: 80%;
         margin-left: -16%;
+       
+        
     }
 
 
@@ -226,7 +228,7 @@ th:not(:last-child), td:not(:last-child) {
 .send-icon {
     position: fixed;
     top: 90%;
-    left: 70%;
+    left: 65%;
     width: 30px;
     height: 30px;
     background-color: #4CAF50;
@@ -243,7 +245,7 @@ th:not(:last-child), td:not(:last-child) {
   .footer {
   background-color: rgba(1, 33, 67, 0.9);
   text-align: center;
-  width: 50%;
+  width: 38%;
   height: auto;
   bottom: 0;
   -webkit-user-modify: read-only;
@@ -257,167 +259,234 @@ th:not(:last-child), td:not(:last-child) {
 
 .container {
 width: 100%;
+max-width: 950px;
+padding: 10px;
+text-align: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+margin-top: 10px; /* Adjusted margin */
+position: ceneter;
+
 }
+
+
+.subpage {
+    padding: 1cm;
+    border: 5px red solid;
+    height: 256mm;
+    outline: 2cm #FFEAEA solid;
+  }
+  
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+
+  @media print {
+    .footer {
+        display: none; /* Hide the footer when printing */
+    }
+
+    .input-box, .icons-container {
+        display: none; /* Hide the input box and icons in the footer when printing */
+    }
+}
+
 </style>
 
 <body>
-    <div class="container" style="border: b;">
-        
-            
-       
-        
-        
-        <div class="container">
-            
-            <div class="pdf-page size-a4">
-                <nav>
-                    <img class="ctu_logo" style="float: left;" src="{% static 'images/ctu_loogo.png' %}" alt="logo">
-                    <img class="asean_logo" style="float: right;" src="{% static 'images/asean.png' %}" alt="logo">
-                </nav>
-                <page size="a4">
-                    <p class="heading-paragraph">Republic of the Philippines</p>
-                    <p class="heading-paragraph no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></p>
-                    <p class="heading-paragraph">ARGAO CAMPUS</p>
-                    <p class="heading-paragraph">Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                    <div>
-                        <p class="heading-paragraph">Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                        <p class="heading-paragraph">Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                        <p class="heading-paragraph">Phone No.: (032) 4858-290/4865-109 loc 1700 Fax No.: (032) 4858-290</p>
-                    </div>
-                </page>
+<div class="container page-break">
+    <div id="purchaseRequestTable" class="container-fluid">
+        <div class="container" style="border: b;">
+            <div class="container">
+                <div class="pdf-page size-a4">
+                    <nav>
+                        <img class="ctu_logo" style="float: left;" src="{% static 'images/ctu_loogo.png' %}" alt="logo">
+                        <img class="asean_logo" style="float: right;" src="{% static 'images/asean.png' %}" alt="logo">
+                    </nav>
+                    <page size="a4">
+                        <p class="heading-paragraph">Republic of the Philippines</p>
+                        <p class="heading-paragraph no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></p>
+                        <p class="heading-paragraph">ARGAO CAMPUS</p>
+                        <p class="heading-paragraph">Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
+                        <div>
+                            <p class="heading-paragraph">Website: <a href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                            <p class="heading-paragraph">Email: <a href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
+                            <p class="heading-paragraph">Phone No.: (032) 4858-290/4865-109 loc 1700 Fax No.: (032) 4858-290</p>
+                        </div>
+                    </page>
+                </div>
             </div>
-        </div>
-        
-        <h><b>PURCHASE REQUEST</b></h>  
+            <h><b>PURCHASE REQUEST</b></h>  
     
-
-      
-    
-        <div style="display: flex; justify-content: space-between; margin-left: -9%; margin-top: 3%; margin-bottom: -4%;">
-            <h><b>Entity Name:</b></h> &nbsp &nbsp
-            <h>CTU-ARGAO CAMPUS</h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
-            <h> <b> Fund Cluster : </b></h> &nbsp  &nbsp 
-            <h> GAA (Research) </h>
-        </div>
-        
-        
-     
-        <div class="table-container">
-            <div class="justify-content">
-                <div class="col-md-12">
-                    <div class="mx-auto">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <table class="table-bordered" style="width: 120%">
-                                <tr>
-                                    <th
-                                      colspan="2">Office Section:<span contenteditable="true"></span>
-                            
-                                        </span>
-                                    </th>
-                                    <th colspan="2">PR No.: {{ pr_id }} <span contenteditable="true" ;
-                                            id="editableField"></span><br><br>Responsibility Center Code: <span contenteditable="true" 
-                                            style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
-                                            oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
-                                        </span>
-                                    </th>
-                                    <th colspan="2">Date: {{ latest_checkout.submission_date }}  <span contenteditable="true" ; id="editableField"
-                                    style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
-                                    oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';"></span></th>
-                                    <input type="hidden" name="pr_id" value="{{ pr_id }}">
-                                </tr>
-                            
-                                <tr>
-                                    <th>Stock/Property</th>
-                                    <th>Unit</th>
-                                    <th>Item Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Cost</th>
-                                    <th>Total Cost</th>
-
-                               
-                                    
-                                </tr>
-                                <tr></tr>
-                                <tr></tr>
-                                {% for item in checkout_items %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td class="item_unit text-center">{{ item.unit }}</td>
-                                    <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
-                                    <td class="item_quantity text-center">{{ item.quantity }}</td>
-                                    <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                                    <td class="item_total_cost text-center">{{item.total_cost }}</td>
-                                    <td>
-                                        <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
-                                        <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
-                                        <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
-                                        <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
-                                        <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
-                                        <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
-                                    </td>
-                                </tr>
-                                {% endfor %}
+            <div style="display: flex; justify-content: space-between; margin-left: -9%; margin-top: 3%; margin-bottom: -4%;">
+                <h><b>Entity Name:</b></h> &nbsp &nbsp
+                <h>CTU-ARGAO CAMPUS</h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
+                <h> <b> Fund Cluster : </b></h> &nbsp  &nbsp 
+                <h> GAA (Research) </h>
+            </div>
+            <div class="table-container">
+                <div class="justify-content">
+                    <div class="col-md-12">
+                        <div class="mx-auto">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <table class="table-bordered" style="width: 115%" position="center">
+                                    <tr>
+                                        <th
+                                        colspan="2">Office Section:<span contenteditable="true"></span>
                                 
-                                <!-- Move the TOTAL row below the Unit Cost -->
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td style="text-align: right;">TOTAL</td>
-                                    <td style="text-align: center;" colspan="2">{{ total_cost }}</td>
-                                </tr>
+                                            </span>
+                                        </th>
+                                        <th colspan="2">PR No.: {{ pr_id }} <span contenteditable="true" ;
+                                                id="editableField"></span><br><br>Responsibility Center Code: <span contenteditable="true" 
+                                                style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                                oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
+                                            </span>
+                                        </th>
+                                        <th colspan="2">Date: {{ latest_checkout.submission_date }}  <span contenteditable="true" ; id="editableField"
+                                        style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                        oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';"></span></th>
+                                        <input type="hidden" name="pr_id" value="{{ pr_id }}">
+                                    </tr>
                                 
-                              <tr>
-    <td colspan="7" style="text-align: left; vertical-align: top;">
-        Funds Available: 
-        <div style="text-align: center; display: block; margin-top: 5px;">Mr. BETHANY URACA<br>Budget Officer<br><span style="border: none; outline: none; text-decoration: underline"></span></div>
-    </td>
-</tr>
-
-                            
-                            <tr>
-                                <tr>
-                                    <td colspan="7" style="text-align: left;">Purpose: {{ purpose }} <span contenteditable="true" style="border: none; outline: none; text-decoration: underline"></span></td>
-                                </tr>
-                                <td colspan="2">Requested by: {{user.first_name}} {{user.last_name}}<br>Signature:<br>Printed Name:  GLICERIO A. BAGUIA<br>Designation  Chair, BSIT & BIT-CT (OsGin)</br> <span contenteditable="false"
-                                        style="border: none; outline: none;" id="requestedByField"></span></td>
-                                        <td colspan="4" style="text-align: left;">Approved by<br><br>EINGILBERT C. BENOLIRAO, Dev.Ed.D<br>Campus Director</span>
-
-                                        </span>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <footer class="footer">
-                            <div class="input-box">
-                                <input placeholder="Update the purchase request status..." name="comment_content">
-                            </div>
-                                <div class="icons-container">
-                                    <div class="send-icon">
-                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px; "></i> Send</button>
+                                    <tr>
+                                        <th>Stock/Property</th>
+                                        <th>Unit</th>
+                                        <th>Item Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Cost</th>
+                                        <th>Total Cost</th>
+                                    </tr>
+                                    <tr></tr>
+                                    <tr></tr>
+                                    {% for item in checkout_items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td class="item_unit text-center">{{ item.unit }}</td>
+                                        <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
+                                        <td class="item_quantity text-center">{{ item.quantity }}</td>
+                                        <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+                                        <td class="item_total_cost text-center">{{item.total_cost }}</td>
+                                            <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
+                                            <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                                            <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
+                                            <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                                            <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
+                                            <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
                                         
-                                        <div>
-                                            <a href="#" title="Download" class="icon-link" id="downloadBtn">
-                                              <i class="fas fa-download"></i> Download
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                    <!-- Move the TOTAL row below the Unit Cost -->
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td style="text-align: right;">TOTAL</td>
+                                        <td id="totalCostCell" style="text-align: center;" colspan="2">{{ total_cost }}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="7" style="text-align: left; vertical-align: top;">
+                                            Funds Available: 
+                                            <div style="text-align: center; display: block; margin-top: 5px;">Mr. BETHANY URACA<br>Budget Officer<br><span style="border: none; outline: none; text-decoration: underline"></span></div>
+                                        </td>
+                                    </tr>     
+                                    <tr>
+                                        <tr>
+                                            <td colspan="7" style="text-align: left;">Purpose: {{ purpose }} <span contenteditable="true" style="border: none; outline: none; text-decoration: underline"></span></td>
+                                        </tr>
+                                        <td colspan="4">Requested by: {{user.first_name}} {{user.last_name}}<br>Signature:<br>Printed Name:  GLICERIO A. BAGUIA<br>Designation  Chair, BSIT & BIT-CT (OsGin)</br> <span contenteditable="false"
+                                                style="border: none; outline: none;" id="requestedByField"></span></td>
+                                                <td colspan="4" style="text-align: left;">Approved by<br><br>EINGILBERT C. BENOLIRAO, Dev.Ed.D<br>Campus Director</span>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div>
+                                    <br>
+                                    <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                                <footer class="footer">
+                                    <div class="input-box">
+                                        <input placeholder="Update the purchase request status..." name="comment_content">
+                                    </div>
+                                    <div class="icons-container">
+                                        <div class="send-icon">
+                                            <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px; "></i> Send</button>
+                                        </div>
+                                            <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                                <i class="fas fa-download"></i> Download
                                             </a>
-                                            <a href="#" title="Print" class="icon-link" id="printBtn">
-                                              <i class="fas fa-print"></i> Print
+                                            <a href="javascript:window.print()" title="Print" class="icon-link">
+                                                <i class="fas fa-print"></i> Print
                                             </a>
-                                          </div>
-                        </footer>
-                        
-                        </form>
+                                        </div>
+                                    </div>
+                                </footer> 
+                            </form> 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
     </div>
+</div>
+    <script>
+        // Wait for the document to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to calculate total amount
+            function calculateTotal() {
+                var totalAmount = 0;
+                // Loop through each row in the table body
+                document.querySelectorAll(".item_total_cost").forEach(function(element) {
+                    // Get the value of each item's total cost in this row
+                    var itemCost = parseFloat(element.textContent);
+                    // Add the total cost of this item to the totalAmount
+                    totalAmount += itemCost;
+                });
+                // Display the total amount in the designated span or div
+                document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2); // Adjust if needed
+            }
+    
+            // Call the calculateTotal function initially
+            calculateTotal();
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+    <script>
+        function downloadPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+    
+            // Add page breaks before specific elements
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+    
+            const footer = document.querySelector('.footer');
+            footer.style.display = 'none';
+    
+            const options = {
+                filename: 'purchase_request.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            };
+    
+            html2pdf(body, options);
+    
+            // Reset page breaks after generating PDF
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+        }
+    </script>
 </body> 
 </html>
 

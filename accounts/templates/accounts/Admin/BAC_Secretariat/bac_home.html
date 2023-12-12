@@ -7,12 +7,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
+  /* Your existing styles */
 
-  .status{
+  .status {
     width: 30%;
     text-align: center;
   }
-
 
   .table a {
     text-decoration: none;
@@ -20,49 +20,112 @@
   }
 
   .bg-success {
-    /* Your styles for a successful status */
-    background-color: #b5e550; /* Adjust this to your desired background color */
-    color: white; /* Adjust this to your desired text color */
-}
+    background-color: #9ee800;
+    color: white;
+  }
+
+  .form-control {
+    display: block;
+    width: 26%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid #343a40;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1300px;
+  }
+
+  /* Updated styles for the search button */
+  .btn-outline-success {
+    color: #ffffff; /* Text color */
+    background-color: #2d83da; /* Orange color */
+    border-color: #000;
+ margin-left: 1680px;
+ height: 35px;
+  }
   
+
+  .btn-outline-success:hover {
+    color: #ffffff; /* Text color on hover */
+    background-color: rgb(9, 66, 222); /* Darker shade of orange on hover */
+    border-color: #082fdc; /* Border color on hover */
+  }
+
+  /* Move the search bar to the right */
+  .search-form {
+    justify-content: flex-end;
+  }
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
 
-  <table class="table table-bordered">
+  <div class="search">
+    <input class="form-control mb-3" type="text" placeholder="First name, Last name, Department" id="search_bar_request" oninput="filterTable()">
+</div>
+
+<table class="table table-bordered">
     <thead>
-      <tr>
-        <th class="text-center">Date Requested</th>
-        <th class="text-center">Requests</th>
-        <th class="text-center">Purpose</th>
-        <th class="status">Status</th>
-        <th class="text-center"> Date</th>
-      </tr>
+        <tr>
+            <th class="text-center">Date Requested</th>
+            <th class="text-center">Requests</th>
+            <th class="text-center">Purpose</th>
+            <th class="status">Status</th>
+            <th class="text-center">Date</th>
+        </tr>
     </thead>
     <tbody>
-      {% for checkout in checkouts %}
+        {% for checkout in checkouts %}
         <tr>
-          <td class="text-center">{{ checkout.submission_date }}</td>
-          <td>
-            
-            <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-            </a>
-          </td>
-          <td>{{ checkout.purpose }}</td>
-          
-          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
-            {{ checkout.status_comment|default:"" }}
-        </td>
-          <td>
-            {{ checkout.status_update_date|default:"Not available" }}
-          </td>
+            <td class="text-center">{{ checkout.submission_date }}</td>
+            <td>
+                <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+                    <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+                </a>
+            </td>
+            <td>{{ checkout.purpose }}</td>
+            <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
+                {{ checkout.status_comment|default:"" }}
+            </td>
+            <td>
+                {{ checkout.status_update_date|default:"Not available" }}
+            </td>
         </tr>
-      {% endfor %}
+        {% endfor %}
     </tbody>
-  </table>
-  
-</div>
+</table>
+
+<script>
+  function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
+          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+  }
+</script>
+
+
+
 
 {% endblock %}
