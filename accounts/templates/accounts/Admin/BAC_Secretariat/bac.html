@@ -59,6 +59,7 @@
                   <i class='bx bx-log-out' ></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
                 <div class="profile-container">
+                  <a href="{% url 'bac_prof' %}">
                   <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
               <p1 class="account_type">BAC</p1>
                 </div>
@@ -160,7 +161,7 @@
     z-index: 1;
     height: 45px;
     width: 45px;
-    margin-left: 55px;
+    margin-left: 47px;
     transition: height 0.3s ease, width 0.3s ease, top 0.3s ease; /* Add top to the transition */
     cursor: pointer;
     border-radius: 50px;
@@ -207,7 +208,13 @@
 }
 
         </style>
-        
+        <script>
+          const savedImageUrl = localStorage.getItem('profileImage');
+          if (savedImageUrl) {
+              const profilePic = document.getElementById('profile-pic');
+              profilePic.src = savedImageUrl;
+          }
+      </script>
         <script>
           function showNames() {
             const sidebar = document.getElementById('sidebar');
