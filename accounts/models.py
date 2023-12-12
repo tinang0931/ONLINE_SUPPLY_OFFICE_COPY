@@ -21,8 +21,12 @@ class User(AbstractUser):
     password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
+        ('bac', 'BAC Secretariat'),
+        ('campusd', 'Campus Director'),
+        ('budget', 'Budget Officer'),
+        ('admin', 'Admin'),
         
         
     ]

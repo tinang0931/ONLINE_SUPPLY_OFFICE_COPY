@@ -1,0 +1,123 @@
+{% extends "accounts/Admin/System_Admin/admin_home.html" %}
+
+
+{% load static %}
+{% block user %}
+
+
+
+<div class="container-fluid">
+    <div class="container">
+        <i class="fas fa-user-friends two-user-icon"></i> 
+        <h1 class="user">USERS</h1>
+    </div>
+    <div class="search">
+        <input class="form-control mb-3" type="text" placeholder="Search..." id="search_bar_request" oninput="filterTable()">
+    </div>
+    <button class="pending">Pending Request</button>
+    <button class="adduser" onclick="openModal()">+Add User</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+            <div class="form-group">
+                <label for="username">CTU ID</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group"> 
+                <label for="contact1">Contact Number 1</label>
+                <input type="text" class="form-control" id="contact1" name="contact1" required>
+            </div>
+            
+            <div class="form-group"> 
+                <label for="contact2">Contact Number 2</label>
+                <input type="text" class="form-control" id="contact2" name="contact2" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <input type="text" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div class="input-box">
+
+                <label class="checkbox-label" for="bacCheckbox">
+                    <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
+                    <div class="checkbox-box">Admin</div>
+                </label>
+
+            
+        
+                <label class="checkbox-label" for="bacCheckbox">
+                    <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
+                    <div class="checkbox-box">BAC Secretariat</div>
+                </label>
+               
+        
+                <label class="checkbox-label" for="regularCheckbox">
+                    <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
+                    <div class="checkbox-box">Campus Director</div>
+                </label>
+                <br>
+        
+                <label class="checkbox-label" for="regularCheckbox">
+                    <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
+                    <div class="checkbox-box">Budget Officer</div>
+                </label>
+                
+        
+                <label class="checkbox-label" for="regularCheckbox">
+                    <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+                    <div class="checkbox-box">Regular User</div>
+                </label>
+            </div>
+        
+
+
+            <div class="modal-footer ">
+            <button type="submit" value ="submit" class="btn btn-primary" >Add User</button>
+                
+        </div>
+      </div>
+    
+
+</div>
+
+
+<script>
+    // JavaScript to open and close the modal
+    function openModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "block";
+    }
+    
+    function closeModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+</script>
+
+{% endblock %}
+{% block admin_home %}
+{% endblock %}

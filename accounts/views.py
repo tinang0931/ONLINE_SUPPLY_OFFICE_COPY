@@ -125,7 +125,7 @@ def login(request):
             messages.success(request, "You are now logged in.")
 
             if user.user_type == 'admin':
-                return redirect('bac_home')  
+                return redirect('admin_home')  
             else:
                 return redirect('request')
         else:
@@ -461,6 +461,14 @@ def profile_html(request):
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def admin_home(request):
+    return render(request, 'accounts/Admin/System_Admin/admin_home.html')
+
+@authenticated_user
+def user(request):
+    return render(request, 'accounts/Admin/System_Admin/user.html')
 
 
 def addItem(request):

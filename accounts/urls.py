@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 from . import views 
 from .views import *
 
@@ -43,6 +44,10 @@ urlpatterns = [
    path('cdhistory/',views.cdhistory, name='cdhistory'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
-   path('admin/',views.admin, name='admin'),
+   path('admin_home/',views.admin_home, name='admin_home'),
+   path('user/',views.user, name='user'),
+
+   
+
  
 ]
