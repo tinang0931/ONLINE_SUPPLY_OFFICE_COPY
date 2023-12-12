@@ -8,11 +8,11 @@ def unauthenticated_user(view_func):
     """
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('request')  # Redirect to the home page if the user is already authenticated
+            return redirect('request')  
         else:
             return view_func(request, *args, **kwargs)
-    
     return wrapper_func
+
 
 def authenticated_user(view_func):
     """
@@ -20,13 +20,10 @@ def authenticated_user(view_func):
     """
     def wrapper_func(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('login')  # Redirect to the login page if the user is not authenticated
+            return redirect('login') 
         else:
             return view_func(request, *args, **kwargs)
-    
     return wrapper_func
-
-
 
 
 def admin_required(view_func):
@@ -35,6 +32,5 @@ def admin_required(view_func):
         if request.user.is_authenticated and request.user.role == 'admin':
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('bac_home')  # Redirect to login page if not authenticated or not an admin
-
+            return redirect('bac_home') 
     return _wrapped_view

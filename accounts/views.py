@@ -49,7 +49,7 @@ def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
 User = get_user_model()
-
+@unauthenticated_user
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -240,7 +240,7 @@ def registration(request):
     return render(request, 'accounts/User/registration.html')
 
 
-
+@authenticated_user
 def history(request):
     # Get the logged-in user
     user = request.user
@@ -258,7 +258,7 @@ def history(request):
     return render(request, 'accounts/User/history.html', context)
 
 
-
+@authenticated_user
 def tracker(request):
     user = request.user
 
@@ -425,25 +425,25 @@ def bo(request):
     return render(request, 'accounts/Admin/Budget_Officer/bo.html')
 
 
-
+@authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
 
 
 
-
+@authenticated_user
 def bohome(request):
    
     return render(request, 'accounts/Admin/Budget_Officer/bohome.html')
 
 
-
+@authenticated_user
 def cd(request):
     return render(request, 'accounts/Admin/Campus_Director/cd.html')
 
 
-
+@authenticated_user
 def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
 
@@ -594,13 +594,13 @@ class RequesterView(View):
 
 
 
-
+@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
 
 
-
+@authenticated_user
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'item_list.html', {'items': items})
@@ -635,7 +635,7 @@ def show_more_details(request):
             return JsonResponse(response_data)
     
     return JsonResponse({'error': 'Invalid request'}, status=400)
-
+@authenticated_user
 def bac_history(request):
    request = Item.objects.all()
 
@@ -662,7 +662,7 @@ class GetNewRequestsView(View):
 
         return JsonResponse({'new_requests': serialized_requests})
 
-
+@authenticated_user
 def item_delete(request, request_id):
     item = get_object_or_404(Item, request_id=request_id)
     item.delete()
@@ -673,6 +673,7 @@ def bac_dashboard(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html')
 
 
+@authenticated_user
 def bohome(request):
     checkouts = Checkout.objects.select_related('user').all()
     comments = Comment.objects.all()
@@ -790,7 +791,7 @@ def update_checkout_status(request, pr_id, new_status):
             return HttpResponse("An error occurred while processing the form.")
     else:
         return HttpResponse("Invalid request method.")
-
+@authenticated_user
 def bohistory(request):
    request = Item.objects.all()
 

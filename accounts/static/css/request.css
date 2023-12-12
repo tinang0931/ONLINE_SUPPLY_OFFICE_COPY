@@ -1,0 +1,178 @@
+
+
+.input-group {
+    display: flex;
+  }
+
+  .table-container {
+      width: 600px; /* Set your desired width */
+      overflow-x: auto; /* Enable horizontal scrolling if needed */
+  }
+
+  /* Set the table to have a fixed layout */
+  
+
+  #quantityInput {
+    flex: 1;
+    width: 30px;
+  }
+
+  .btn-inc-dec {
+    flex: 0;
+  }
+
+  /* Style for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 456px;
+    left: 300px;
+    width: 20%;
+    height: 55%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    position: absolute;
+    top: 456px;
+    left: 50%;
+    width: 1000px;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 5px;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox input:checked + label {
+      color: green;
+  }
+
+
+      .selected {
+          background-color: #e0e0e0;  /* Change this to the desired background color */
+      }
+      .subheader {
+      position: fixed;
+      z-index: 1000;
+      background-color: #fff;
+      width: 100%;
+      height: 15vh;
+  }
+
+
+  
+  .row2 {
+      margin-top: 5%;
+      display: flex;
+
+  }
+
+  .addtocart {
+    top: 25%; /* Adjusted top to move it higher */
+    position: fixed;
+    z-index: 1000;
+    left: 87%;
+}
+
+
+
+  .col-12 {
+      margin-top: 5%;
+      flex-grow: 1; 
+      overflow-y: auto;
+      
+
+  }
+
+  .container {
+      margin-top: 1%;
+      display: flex;
+  }
+
+  .title {
+      flex-grow: 1;
+      text-align: center;
+      font-family: 'Trebuchet MS', sans-serif;
+      white-space: nowrap;
+  }
+
+  .cart {
+    top: 24vh; /* Adjusted top using viewport height */
+    position: fixed;
+    z-index: 100000;
+    left: 80vw; /* Adjusted left using viewport width */
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .cart {
+        top: 10vh; /* Adjusted top for smaller screens */
+        left: 70vw; /* Adjusted left for smaller screens */
+    }
+}
+
+  .row {
+      margin-top: 1%;
+      
+  }
+
+  .search,
+  .additem{
+      margin: 0;
+      width: 200px;
+      height: 100px;
+    
+  }
+  .search input {
+      width: 300px;
+  }
+
+  .search,    
+  .additem {
+      align-items: normal;
+      
+    
+  }
+
+  .additem {
+      margin-left: 6%;
+      margin-top: 3px;
+      top: 10%;
+  }
+  
+  .cart {
+      width: 50px;
+  }
+
+  
+/* Style rows in the "row2" table with colorful backgrounds */
+.row2 tr:nth-child(odd) {
+    background-color: #ffcccb; /* Light Coral */
+}
+
+
+.row2 tr:nth-child(even) {
+    background-color: #b3e0ff; /* Light Sky Blue */
+}
+
+
+/* Style columns in the "row2" table with alternating colors */
+.row2 td:nth-child(odd) {
+    background-color: #345e85; /* Light Green */
+}
+
+.row2 td:nth-child(even) {
+    background-color: #597b9b; /* Gold */
+}
+
+
+.btn.btn-primary {
+    border-radius: 50px;
+}
