@@ -21,83 +21,88 @@
     </a>
 
     <div class="subheader">
-        
+
         <div class="container">
             <h1 class="title">CREATE PURCHASE REQUEST</h1>
             <div class="cart">
-                
+
             </div>
         </div>
 
 
         <div class="row  align-items-center">
-    
+
             <div class="search">
-                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request"
+                    oninput="filterTable()">
             </div>
-      
-          <div class="additem">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New Request</button>
-          </div>
 
-          <div class="addtocart">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=>Add To Cart</button>
-        </div>       
-       </div>       
-    </div> 
-<br><br>
-<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="row2">
+            <div class="additem">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New
+                    Request</button>
+            </div>
 
-        
-        <div class="addtocart">
-            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
-            
+            <div class="addtocart">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=>Add To Cart</button>
+            </div>
         </div>
-        <div class="col-12">  
+    </div>
+    <br><br>
+    <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row2">
 
-            {% for category, items in grouped_data.items %}
-          
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th colspan="5" class="text-center">{{ category }}</th>
-                      </tr>
-                    <tr>
-                        <th scope="col">Items</th>
-                        <th scope="col">Item Brand Description</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items %}
+
+            <div class="addtocart">
+                <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+            </div>
+            <div class="col-12">
+
+                {% for category, items in grouped_data.items %}
+                <table class="table table-striped">
+                    <thead>
                         <tr>
+                            <th colspan="6" class="text-center">{{ category }}</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Items</th>
+                            <th scope="col">Item Brand Description</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr class="table-row" id="{{ item.ITEMS }}">
                             <td>{{ item.Item_name }}</td>
                             <td>{{ item.Item_Brand }}</td>
                             <td>{{ item.Unit }}</td>
                             <td>{{ item.Price }}</td>
                             <td>
-                                <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity_{{ row.ITEMS }}" value="" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
+                                <input type="number" name="quantity_{{ item.ITEMS }}" id="quantity_{{ item.ITEMS }}"
+                                    value="" min="1" class="form-control form-control-sm" style="width: 60px;"
+                                    oninput="resetToOriginalValue(this)" onclick="highlightInput(this);">
                             </td>
                             <td>
-                                <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
-                                <input type="hidden" name="item_brand_{{ row.ITEMS }}" value="{{ row.ITEM_BRAND }}">
-                                <input type="hidden" name="unit_{{ row.ITEMS }}" value="{{ row.UNIT }}">
-                                <input type="hidden" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
-                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ row.ITEMS }}">
+                                <input type="hidden" name="item_{{ item.ITEMS }}" value="{{ item.Item_name }}">
+                                <input type="hidden" name="item_brand_{{ item.ITEMS }}" value="{{ item.Item_Brand }}">
+                                <input type="hidden" name="unit_{{ item.ITEMS }}" value="{{ item.Unit }}">
+                                <input type="hidden" name="price_{{ item.ITEMS }}" value="{{ item.Price }}">
+                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ item.ITEMS }}">
                             </td>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% endfor %}
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                {% endfor %}
+
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>
 
 <script>
@@ -105,70 +110,72 @@
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;
         var table = document.getElementById(selectedCategory);
         if (table) {
-           table.scrollIntoView({behavior: 'smooth'});
+            table.scrollIntoView({ behavior: 'smooth' });
         }
-       }
+    }
 </script>
 
-        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
+<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                  <div class="modal-body">
+            <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
-                        {% csrf_token %}
+                <form action="{% url 'addItem' %}" method="post">
+                    {% csrf_token %}
 
-                        
 
-                          <div class="form-group">
-                              <label for="Item">Item</label>
-                              <input type="text" class="form-control" id="Item" name="item" required>
-                          </div>
 
-                          <div class="form-group">
-                              <label for="Item_Brand_Description">Item Brand/Description</label>
-                              <input type="text" class="form-control" id="Item_Brand_Description" name="item_Brand_Description" required>
-                          </div>
+                    <div class="form-group">
+                        <label for="Item">Item</label>
+                        <input type="text" class="form-control" id="Item" name="item" required>
+                    </div>
 
-                          <div class="form-group">
-                              <label for="Unit">Unit</label>
-                              <input type="text" class="form-control" id="Unit" name="unit" required>
-                          </div>
+                    <div class="form-group">
+                        <label for="Item_Brand_Description">Item Brand/Description</label>
+                        <input type="text" class="form-control" id="Item_Brand_Description"
+                            name="item_Brand_Description" required>
+                    </div>
 
-                          <div class="form-group"> 
-                              <label for="Unit">Unit Cost</label>
-                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                          </div>
-                          
-                          <div class="form-group">
-                              <label for="Quantity">Quantity</label>
-                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                          </div>
+                    <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <input type="text" class="form-control" id="Unit" name="unit" required>
+                    </div>
 
-                          <div class="modal-footer">
-                            <button type="submit" value ="submit" class="btn btn-primary" >Add to Cart</button>
-                              
-                          </div>
-                    </form>
-                  </div>
-              </div>
-          </div>
+                    <div class="form-group">
+                        <label for="Unit">Unit Cost</label>
+                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Quantity">Quantity</label>
+                        <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+                    </div>
+                </form>
+            </div>
         </div>
-        
+    </div>
+</div>
+
 <script>
 
     function highlightInput(input) {
-                                      input.select();
-                                    }
-    
-    
+        input.select();
+    }
+
+
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search_bar_request");
@@ -192,100 +199,100 @@
 
 
 
-$(document).ready(function () {
-  // Add click event to checkboxes
-  $('.row-checkbox').on('click', function () {
-      // Find the closest tr and toggle the 'selected' class
-      $(this).closest('tr').toggleClass('selected');
-  });
-});
+    $(document).ready(function () {
+        // Add click event to checkboxes
+        $('.row-checkbox').on('click', function () {
+            // Find the closest tr and toggle the 'selected' class
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
 
-const categoryFilter = document.getElementById('category_filter');
-const productTables = document.querySelectorAll('.table table');
+    const categoryFilter = document.getElementById('category_filter');
+    const productTables = document.querySelectorAll('.table table');
 
-categoryFilter.addEventListener('change', (event) => {
-const selectedCategory = event.target.value;
-const filteredProducts = {};
+    categoryFilter.addEventListener('change', (event) => {
+        const selectedCategory = event.target.value;
+        const filteredProducts = {};
 
-if (selectedCategory !== 'all') {
-    for (const productTable of productTables) {
-        const categoryName = productTable.querySelector('h3').textContent;
-        if (categoryName === selectedCategory) {
-            const products = productTable.querySelectorAll('tbody tr');
-            for (const product of products) {
-                const itemName = product.querySelector('td:nth-child(2)').textContent;
-                const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                const unit = product.querySelector('td:nth-child(4)').textContent;
-                const price = product.querySelector('td:nth-child(5)').textContent;
+        if (selectedCategory !== 'all') {
+            for (const productTable of productTables) {
+                const categoryName = productTable.querySelector('h3').textContent;
+                if (categoryName === selectedCategory) {
+                    const products = productTable.querySelectorAll('tbody tr');
+                    for (const product of products) {
+                        const itemName = product.querySelector('td:nth-child(2)').textContent;
+                        const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                        const unit = product.querySelector('td:nth-child(4)').textContent;
+                        const price = product.querySelector('td:nth-child(5)').textContent;
 
-                if (!filteredProducts[categoryName]) {
-                    filteredProducts[categoryName] = [];
+                        if (!filteredProducts[categoryName]) {
+                            filteredProducts[categoryName] = [];
+                        }
+
+                        filteredProducts[categoryName].push({
+                            itemName,
+                            itemDescription,
+                            unit,
+                            price
+                        });
+                    }
                 }
+            }
+        }
 
-                filteredProducts[categoryName].push({
-                    itemName,
-                    itemDescription,
-                    unit,
-                    price
-                });
+        // Update the displayed items based on the filtered products
+        updateProductTables(filteredProducts);
+    });
+
+
+    function updateProductTables(filteredProducts) {
+        for (const productTable of productTables) {
+            productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
+
+            const categoryName = productTable.querySelector('h3').textContent;
+            const products = filteredProducts[categoryName] || [];
+
+            for (const product of products) {
+                const row = document.createElement('tr');
+
+                const itemNameCell = document.createElement('td');
+                itemNameCell.textContent = product.itemName;
+                row.appendChild(itemNameCell);
+
+                const itemDescriptionCell = document.createElement('td');
+                itemDescriptionCell.textContent = product.itemDescription;
+                row.appendChild(itemDescriptionCell);
+
+                const unitCell = document.createElement('td');
+                unitCell.textContent = product.unit;
+                row.appendChild(unitCell);
+
+                const priceCell = document.createElement('td');
+                priceCell.textContent = product.price;
+                row.appendChild(priceCell);
+
+                productTable.querySelector('tbody').appendChild(row);
             }
         }
     }
-}
-
-// Update the displayed items based on the filtered products
-updateProductTables(filteredProducts);
-});
-
-
-  function updateProductTables(filteredProducts) {
-      for (const productTable of productTables) {
-          productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
-
-          const categoryName = productTable.querySelector('h3').textContent;
-          const products = filteredProducts[categoryName] || [];
-
-          for (const product of products) {
-              const row = document.createElement('tr');
-
-              const itemNameCell = document.createElement('td');
-              itemNameCell.textContent = product.itemName;
-              row.appendChild(itemNameCell);
-
-              const itemDescriptionCell = document.createElement('td');
-              itemDescriptionCell.textContent = product.itemDescription;
-              row.appendChild(itemDescriptionCell);
-
-              const unitCell = document.createElement('td');
-              unitCell.textContent = product.unit;
-              row.appendChild(unitCell);
-
-              const priceCell = document.createElement('td');
-              priceCell.textContent = product.price;
-              row.appendChild(priceCell);
-
-              productTable.querySelector('tbody').appendChild(row);
-          }
-      }
-  }
 
 
     // Call a server-side function to handle the import
 
-// Function to get CSRF token from cookies
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
     }
-}
 
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
@@ -296,7 +303,7 @@ function getCookie(name) {
 
 
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]; 
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -307,7 +314,7 @@ function getCookie(name) {
             }
         }
     }
-    
+
 
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

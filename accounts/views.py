@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import itertools
 from urllib.parse import parse_qs
 from django.views import View
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from typing import ItemsView
 import logging
 from django.shortcuts import redirect, render, get_object_or_404
@@ -236,6 +236,7 @@ def about(request):
     return render(request, 'accounts/User/about.html')
 
 
+@authenticated_user
 @authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
@@ -487,9 +488,12 @@ def addItem(request):
 
 
 def request(request):
+
     if request.method == 'POST':
+     
         # Retrieve selected rows from the form
         selected_rows = request.POST.getlist('selectRow')
+      
 
         # Process and save data to the database
         for row_id in selected_rows:
@@ -497,8 +501,8 @@ def request(request):
             item_brand = request.POST.get(f'item_brand_{row_id}')
             unit = request.POST.get(f'unit_{row_id}')
             price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
-
+            quantity = int(request.POST.get(f'quantity_{row_id}', 0)) 
+           
             user = request.user
 
             # Save the data to the CartItem model (update this based on your model)
@@ -509,6 +513,7 @@ def request(request):
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
+                
                  # Calculate total cost based on price and quantity
             )
             items.save()
@@ -540,7 +545,6 @@ class RequesterView(View):
 
     def post(self, request):
         if request.method == 'POST':
-            id_value = request.POST.get('id') 
             # Fetch data from the Item model
             items = Item.objects.all()
 
@@ -636,76 +640,30 @@ def delete(request, id):
     item.delete()
     return redirect ('requester')
 
-def connect_to_mongo():
-    client = MongoClient("mongodb://localhost:27017/")  # Update the connection string accordingly
-    database = client["inventory"]
-    collection = database["inventorycol"]
-    return collection
-
 def add_new_item(request):
 
-    grouped_data = {
-        'ANTISEPTICS': CSV.objects.filter(Category='ANTISEPTICS'),
-        'APPLIANCES': CSV.objects.filter(Category='APPLIANCES'),
-        'FURNITURE AND FURNISHINGS': CSV.objects.filter(Category='FURNITURE AND FURNISHINGS'),
-        'INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES': CSV.objects.filter(Category='INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES'),
-        'OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES': CSV.objects.filter(Category='OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES'),
-        'PERSONAL PROTECTIVE EQUIPMENT': CSV.objects.filter(Category='PERSONAL PROTECTIVE EQUIPMENT'),
-        'PESTICIDES OR PEST REPELLENTS': CSV.objects.filter(Category='PESTICIDES OR PEST REPELLENTS'),
-        # Add more categories as needed
-    }
+    grouped_data = {}  
 
-    
     if request.method == 'POST':
-        # Assuming you are using POST to submit the form data
-
-        # Retrieve data from the POST request
         new_item_name = request.POST.get('new_item_name')
         new_item_brand = request.POST.get('new_item_brand')
         new_item_unit = request.POST.get('new_item_unit')
         new_item_price = request.POST.get('new_item_price')
         category = request.POST.get('category')
 
-        # Create a new item instance
         new_item = CSV(
             Category=category,
             Item_name=new_item_name,
             Item_Brand=new_item_brand,
             Unit=new_item_unit,
             Price=new_item_price,
-            # Add other fields as needed
         )
 
-        
-
-        # Save the new item to the database
         new_item.save()
-
-        # Redirect to the same page or any other desired page
-
         return redirect('add_new_item')
-
-    # Handle other HTTP methods or provide an error response if needed
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})  # Replace 'your_template.html' with your actual template name
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
 
-def add_category(request):
-    if request.method == 'POST':
-        new_category = request.POST.get('new_category')
-
-        # Check if the new category is not empty
-        if new_category:
-            # Create the new category (replace this with your actual model)
-            CSV.objects.create(Category=new_category)
-
-            # You can return a success response if needed
-            return JsonResponse({'status': 'success'})
-        else:
-            # Return an error response if the category is empty
-            return JsonResponse({'status': 'error', 'message': 'New category cannot be empty'})
-
-    # Return a general error response if the request method is not POST
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def bac_dashboard(request):
     if request.method == 'GET':
@@ -715,7 +673,14 @@ def bac_dashboard(request):
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+
+    elif request.method == 'POST':
+        new_category = request.POST.get('custom-category', '').strip()
+
+        if new_category:
+            CSV.objects.create(Category=new_category)
+            return redirect('bac_dashboard')
 
 
 

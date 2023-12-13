@@ -115,8 +115,7 @@ class Comment(models.Model):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
 
-
-
+from django.db import models
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
@@ -125,6 +124,12 @@ class CSV(models.Model):
     Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class VerificationCode(models.Model):
