@@ -288,11 +288,11 @@ position: ceneter;
 
   @media print {
     .footer {
-        display: none; /* Hide the footer when printing */
+        display: none;
     }
 
     .input-box, .icons-container {
-        display: none; /* Hide the input box and icons in the footer when printing */
+        display: none; 
     }
 }
 
@@ -382,7 +382,6 @@ position: ceneter;
                                     </tr>
                                     {% endfor %}
                                     
-                                    <!-- Move the TOTAL row below the Unit Cost -->
                                     <tr>
                                         <td colspan="4"></td>
                                         <td style="text-align: right;">TOTAL</td>
@@ -436,20 +435,14 @@ position: ceneter;
     </div>
 </div>
     <script>
-        // Wait for the document to be ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to calculate total amount
             function calculateTotal() {
                 var totalAmount = 0;
-                // Loop through each row in the table body
                 document.querySelectorAll(".item_total_cost").forEach(function(element) {
-                    // Get the value of each item's total cost in this row
                     var itemCost = parseFloat(element.textContent);
-                    // Add the total cost of this item to the totalAmount
                     totalAmount += itemCost;
                 });
-                // Display the total amount in the designated span or div
-                document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2); // Adjust if needed
+                document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2);
             }
     
             // Call the calculateTotal function initially
@@ -481,7 +474,6 @@ position: ceneter;
     
             html2pdf(body, options);
     
-            // Reset page breaks after generating PDF
             elementsWithPageBreak.forEach((element) => {
                 element.style.pageBreakBefore = 'auto';
             });

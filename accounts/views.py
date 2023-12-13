@@ -134,10 +134,8 @@ def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
 
-
 def request_page(request):
     if request.user.is_admin:
-       
         return redirect('bac_home')
     return render(request, 'request.html')
 
@@ -342,7 +340,12 @@ def notif(request):
 @authenticated_user
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-
+@authenticated_user
+def bac_prof(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html')
+@authenticated_user
+def bac_profile(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_profile.html')
 
 @authenticated_user
 def bo(request):
@@ -370,13 +373,24 @@ def cdabout(request):
 
 
 @authenticated_user
-def cdhistory(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+def cdpurchase(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+
+@authenticated_user
+def cdhome(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhome.html')
 
 
 @authenticated_user
 def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
+
+
+@authenticated_user
+def resolution(request):
+    return render(request, 'accounts/Admin/Campus_Director/resolution.html')
+
 
 
 @authenticated_user
@@ -617,4 +631,5 @@ def update_item(request, id):
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
+
     return redirect('bac_dashboard')
