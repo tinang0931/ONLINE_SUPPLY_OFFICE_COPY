@@ -7,6 +7,10 @@
 {% block request %}
 
 <style>
+.search input {
+    width: 300px;
+    border-radius: 20px;
+}
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -56,9 +60,14 @@
             
         </div>
         <div class="col-12">  
+
+            {% for category, items in grouped_data.items %}
           
             <table class="table table-striped">
                 <thead>
+                    <tr>
+                        <th colspan="5" class="text-center">{{ category }}</th>
+                      </tr>
                     <tr>
                         <th scope="col">Items</th>
                         <th scope="col">Item Brand Description</th>
@@ -69,12 +78,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in csv_data %}
-                        <tr class="table-row" id="{{ row.ITEMS }}">
-                            <td  >{{ row.ITEMS }}</td>
-                            <td  >{{ row.ITEM_BRAND }}</td>
-                            <td  >{{ row.UNIT }}</td>
-                            <td  >{{ row.PRICE }}</td>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.Item_name }}</td>
+                            <td>{{ item.Item_Brand }}</td>
+                            <td>{{ item.Unit }}</td>
+                            <td>{{ item.Price }}</td>
                             <td>
                                 <input type="number" name="quantity_{{ row.ITEMS }}" id="quantity_{{ row.ITEMS }}" value="" min="1" class="form-control form-control-sm" style="width: 60px;" oninput="resetToOriginalValue(this)"  onclick="highlightInput(this);">
                             </td>
@@ -89,6 +98,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% endfor %}
         </div>
     </div>
 </form>
@@ -119,7 +129,7 @@
                     <form action="{% url 'addItem' %}" method="post">
                         {% csrf_token %}
 
-                          
+                        
 
                           <div class="form-group">
                               <label for="Item">Item</label>
