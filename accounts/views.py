@@ -35,7 +35,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
 
-
 def main(request):
     return render(request, 'accounts/User/main.html')
 
