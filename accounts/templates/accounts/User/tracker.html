@@ -27,25 +27,47 @@
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
-        <table class="table table-bordered" style="margin: 0px!important;">
-          <thead>
+      <table class="table table-bordered" style="margin: 0px!important;">
+        <thead>
+          <tr>
+            <th>Purchase Request No.</th>
+            <th>Purpose </th>
+            <th>Forms</th>
+            <th>Status</th>
+            <th>Date</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in feedback %}
+    <tr>
+        <td>{{ item.pr_id }}</td>
+        
+        <!-- Debugging: Display the checkout_info for the current item -->
+        {% for i in checkout_info %}
+            {% if i.pr_id == item.pr_id %}
+                <td>{{ i.purpose }}</td>
+                
+            {% endif %}
+        {% endfor %}
+
+        <td>Purchase Request Approval</td>
+        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: rgb(243, 233, 233);">{{ item.content }}</td>
+        <td>{{ item.timestamp }}</td>
+    </tr>
+{% endfor %}
+
+          {% if feedback|length == 0 %}
             <tr>
-              <th>Purchase Request No.</th>
-              <th>Forms</th>
-              <th>Status</th>
-              
+                <td colspan="3">
+                    <span >NO REQUEST YET</span>
+                </td>
             </tr>
-          </thead>
-          <tbody>
-            {% for item in status %}
-            <tr>
-              <td>{{item.pr_id}}</td>
-              <td>Purchase Request Approval</td>
-              <td >{{item.content}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        {% endif %}
+
+        </tbody>
+      </table>
+      
     </div>
   </div>
 </div>

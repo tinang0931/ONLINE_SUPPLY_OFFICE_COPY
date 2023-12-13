@@ -82,13 +82,13 @@
     <div class="upper">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
 
     <div class="container" style="margin-top: 150px;">
-        {% if messages %}
+        <!-- {% if messages %}
     
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
     
-            {% endif %}
+            {% endif %} -->
             <div class="icon-container">
                 <img class="login_icon" src="{% static 'images/register.png' %}" alt="" style="display: block; margin: 0 auto;">
             </div>
@@ -174,7 +174,17 @@
     <div class="input-box">
         <label class="checkbox-label" for="adminCheckbox">
             <input type="checkbox" name="user_type" id="adminCheckbox" value="admin">
-            <div class="checkbox-box">Admin</div>
+            <div class="checkbox-box">BAC Secretariat</div>
+        </label>
+
+        <label class="checkbox-label" for="regularCheckbox">
+            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+            <div class="checkbox-box">Campus Director</div>
+        </label>
+
+        <label class="checkbox-label" for="regularCheckbox">
+            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+            <div class="checkbox-box">Budget Officer</div>
         </label>
 
         <label class="checkbox-label" for="regularCheckbox">
