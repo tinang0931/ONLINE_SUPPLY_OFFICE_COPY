@@ -65,15 +65,6 @@
       width: 100%;
       height: 15vh;
   }
-
-
-  
-  .row2 {
-      margin-top: 5%;
-      display: flex;
-
-  }
-
   .addtocart {
     top: 25%; /* Adjusted top to move it higher */
     position: fixed;
@@ -150,29 +141,66 @@
   .cart {
       width: 50px;
   }
-
-  
-/* Style rows in the "row2" table with colorful backgrounds */
-.row2 tr:nth-child(odd) {
-    background-color: #ffcccb; /* Light Coral */
+  .row2 {
+    margin-top: 5%;
+    display: flex;
+}
+/* Define color variables for easy maintenance */
+:root {
+    --lightCoral: #ffcccb;
+    --lightSkyBlue: #b3e0ff;
+    --lightGreen: #345e85;
+    --gold: #597b9b;
 }
 
+/* Style rows in the "row2" table with alternating colorful backgrounds */
+.row2 tr:nth-child(odd) {
+    background-color: var(--lightCoral);
+}
 
 .row2 tr:nth-child(even) {
-    background-color: #b3e0ff; /* Light Sky Blue */
+    background-color: var(--lightSkyBlue);
 }
-
 
 /* Style columns in the "row2" table with alternating colors */
 .row2 td:nth-child(odd) {
-    background-color: #345e85; /* Light Green */
+    background-color: var(--lightGreen);
 }
 
 .row2 td:nth-child(even) {
-    background-color: #597b9b; /* Gold */
+    background-color: var(--gold);
 }
 
+/* Set the text color to white and center it for all cells in the "row2" table */
+.row2 td {
+    color: white;
+    text-align: center;
+}
+
+/* Center align text in table headers */
+.table th {
+    text-align: center;
+}
+
+/* Center align content in the cells of the table body */
+.table td {
+    text-align: center;
+}
+
+/* Style the table with striped rows using the defined color variables */
+.table tbody tr:nth-child(odd) {
+    background-color: var(--lightCoral);
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: var(--lightSkyBlue);
+}
+
+/* Style the primary button with rounded corners */
+.btn.btn-primary {
+    border-radius: 50px;
+}
 
 .btn.btn-primary {
-    border-radius: 15px;
+    border-radius: 50px;
 }
