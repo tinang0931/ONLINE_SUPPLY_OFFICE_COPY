@@ -34,10 +34,55 @@ from .models import Item
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
+import pandas as pd
+from itertools import groupby
 
 
 def main(request):
     return render(request, 'accounts/User/main.html')
+
+
+def Procurement(request):
+    class proc:
+        def __init__(self, category, item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price) -> None:
+            self.category = category
+            self.item = item,
+            self.unit = unit,
+            self.budget = budget,
+            self.jan = jan,
+            self.feb = feb,
+            self.march = march,
+            self.april = april,
+            self.may = may,
+            self.june = june,
+            self.july = july,
+            self.aug = aug,
+            self.sep = sep,
+            self.oct = oct,
+            self.nov = nov,
+            self.dec = dec,
+            self.price = price
+    
+    procure = []
+    df = pd.read_csv('categories.csv')
+    categories = df['categories']
+    for c in categories:
+        cat = pd.read_csv(f'categories\{c}.csv')
+        for index, row in cat.iterrows():
+            p = proc(c, row['item'], row['unit'],row['budget'],row['jan'],row['feb'],row['march'],row['april'],row['may'],row['june'],row['july'],row['aug'],row['sep'],row['oct'],row['nov'],row['dec'],row['price'])
+            procure.append(p)
+    
+    
+    grouped_data = {}
+    for item in procure:
+        category = item.category
+        if category not in grouped_data:
+            grouped_data[category] = []
+        grouped_data[category].append(item)
+    context = {
+        'grouped_data':grouped_data
+    }
+    return render(request, 'accounts/User/Procurement.html', context)
 
 
 def bac(request):
@@ -366,9 +411,7 @@ def property(request):
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
-@authenticated_user
-def notif(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+
 @authenticated_user
 def abstract(request):
     # Your view logic here
@@ -430,6 +473,19 @@ def request(request):
         return redirect('requester')
 
     else:
+        """
+        The above code snippet includes various functions related to handling requests and rendering
+        templates in a Python web application.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request made by
+        the client. It contains information such as the request method (GET, POST, etc.), headers, user
+        session, and request data
+        :return: The code is returning a rendered HTML template with the data passed to it. The template
+        being rendered depends on the request method. If it is a GET request, it renders the
+        'accounts/User/request.html' template with the 'csv_data' variable passed to it. If it is a POST
+        request, it renders the 'accounts/User/cart.html' template with the 'items' variable passed to
+        it.
+        """
         # Handle data fetching for GET request
         # Connect to MongoDB
         csv_file_path ='C:/Users/taladro.maryann/Downloads/items.csv'
@@ -439,7 +495,6 @@ def request(request):
         
         # Pass data to the template
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
 
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
