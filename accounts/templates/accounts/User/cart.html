@@ -144,10 +144,14 @@ p {
         <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
     </div>
 
+
     <!-- Display attached files as clickable links -->
     <div>
         <p>Attached Files:</p>
         <div id="fileLinksContainer"></div>
+        {% for file in files %}
+        <a class="file-link" target="_blank" href="{{ file.url }}">{{ file.name }}</a><br>
+    {% endfor %}
     </div>
     
      
