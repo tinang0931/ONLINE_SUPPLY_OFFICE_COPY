@@ -46,21 +46,22 @@
       </button>
       
 
-        <div class="sidebar" id="sidebar" style="z-index:1; opacity: 1; left: 0 !important; position: relative; height: auto;">
-            <div class="d-flex flex-wrap align-content-between h-100">
-                <div class="bg-white w-100" id="sidebar-wrapper">
-                    <div class="list-group w-100">
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
-                    </div>
+      <div class="sidebar" id="sidebar" style="z-index:1; opacity: 1; left: 0 !important; position: relative; height: auto;">
+        <div class="d-flex flex-wrap align-content-between h-100">
+            <div class="bg-white w-100" id="sidebar-wrapper">
+                <div class="list-group w-100">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
+
                 </div>
             </div>
         </div>
     </div>
     
+ 
             
                 <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
                   <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout

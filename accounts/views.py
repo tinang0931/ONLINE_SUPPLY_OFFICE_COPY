@@ -48,7 +48,6 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
 
@@ -398,6 +397,7 @@ def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
+
 @authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
@@ -530,6 +530,9 @@ def request(request):
         
         # Pass data to the template
         return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
+
+
+    
 
 
 class RequesterView(View):
@@ -709,6 +712,7 @@ def connect_to_mongo():
     database = client["inventory"]
     collection = database["inventorycol"]
     return collection
+
 
 
 def bac_dashboard(request):
