@@ -53,6 +53,12 @@ urlpatterns = [
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('update_item/<int:id>/', update_item, name='update_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
+   path('update_user/<int:user_id>/', update_user, name='update_user'), 
+   path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+  
+
+
+
 
    
 

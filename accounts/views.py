@@ -34,6 +34,8 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
+from .models import User
+from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
@@ -91,9 +93,8 @@ def register(request):
         )
         email.send()
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('login')  
+        return redirect('login')
     return render(request, 'accounts/User/register.html')
-
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -393,7 +394,43 @@ def admin_home(request):
 
 @authenticated_user
 def user(request):
-    return render(request, 'accounts/Admin/System_Admin/user.html')
+    users = User.objects.all()
+    return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
+
+
+
+def update_user(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(pk=user_id)
+        form = UserForm(request.POST or None, instance=user)
+        if form.is_valid():
+            form.save()
+            # Fetch the updated user data
+            updated_user = User.objects.get(pk=user_id)
+            # Construct a JSON response with the updated data
+            user_data = {
+                'username': updated_user.username,
+                'first_name': updated_user.first_name,
+                'last_name': updated_user.last_name,
+                'email': updated_user.email,
+                'contact1': updated_user.contact1,
+                'contact2': updated_user.contact2,
+                'user_type': updated_user.get_user_type_display(),
+            }
+            return JsonResponse({'success': True, 'user_data': user_data})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+   
+def delete_user(request, id):
+    try:
+        user = User.objects.get(id=id)
+        user.delete()
+        messages.success(request, "User Deleted!!")
+    except User.DoesNotExist:
+        messages.error(request, "User does not exist")
+
+    return redirect('user') 
+
 
 
 def addItem(request):
@@ -455,7 +492,7 @@ class RequesterView(View):
     def post(self, request):
         if request.method == 'POST':
             id_value = request.POST.get('id') 
-            items = Item.objects.all()
+            items = Item.objects.a
             purpose = request.POST.get('purpose', '') 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
 
@@ -487,12 +524,6 @@ class RequesterView(View):
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
-
-@authenticated_user
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
 
 
 @authenticated_user
@@ -630,3 +661,6 @@ def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
     return redirect('bac_dashboard')
+
+
+

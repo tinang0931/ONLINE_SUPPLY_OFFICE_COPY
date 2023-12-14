@@ -27,13 +27,15 @@
 
     .user {
         font:  'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
+        font-size: 40px;
+        font-weight: 550px;;
         
     }
 
     .search {
-        position: absolute;
-        top: 380px;
+        position: fixed;
+        top: 200px;
         right: 10px;
         display: flex;
         align-items: center;
@@ -71,6 +73,35 @@
 
        
   }
+  
+  .usertable {
+    overflow-x: auto;
+    
+  }
+
+  #myTable {
+    top: 25%;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #myTable thead th {
+    text-align: center;
+    min-width: 13rem;
+    padding: 8px;
+    background-color: rgba(0, 53, 102, 0.9);
+    border: 1px solid #dddddd;
+    color: #ffff;
+    letter-spacing: 1px;
+  }
+  
+  #myTable tbody td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #dddddd;
+  }
+
+
 
     .modal {
         display: none;

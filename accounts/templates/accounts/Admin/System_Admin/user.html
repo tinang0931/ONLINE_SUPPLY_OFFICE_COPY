@@ -14,109 +14,227 @@
     <div class="search">
         <input class="form-control mb-3" type="text" placeholder="Search..." id="search_bar_request" oninput="filterTable()">
     </div>
-    <button class="pending">Pending Request</button>
-    <button class="adduser" onclick="openModal()">+Add User</button>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-            <div class="form-group">
-                <label for="username">CTU ID</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email" required>
-            </div>
-
-            <div class="form-group"> 
-                <label for="contact1">Contact Number 1</label>
-                <input type="text" class="form-control" id="contact1" name="contact1" required>
-            </div>
-            
-            <div class="form-group"> 
-                <label for="contact2">Contact Number 2</label>
-                <input type="text" class="form-control" id="contact2" name="contact2" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" name="password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Confirm Password</label>
-                <input type="text" class="form-control" id="password" name="password" required>
-            </div>
-
-            <div class="input-box">
-
-                <label class="checkbox-label" for="bacCheckbox">
-                    <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
-                    <div class="checkbox-box">Admin</div>
-                </label>
-
-            
-        
-                <label class="checkbox-label" for="bacCheckbox">
-                    <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
-                    <div class="checkbox-box">BAC Secretariat</div>
-                </label>
-               
-        
-                <label class="checkbox-label" for="regularCheckbox">
-                    <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
-                    <div class="checkbox-box">Campus Director</div>
-                </label>
-                <br>
-        
-                <label class="checkbox-label" for="regularCheckbox">
-                    <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
-                    <div class="checkbox-box">Budget Officer</div>
-                </label>
-                
-        
-                <label class="checkbox-label" for="regularCheckbox">
-                    <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
-                    <div class="checkbox-box">Regular User</div>
-                </label>
-            </div>
-        
-
-
-            <div class="modal-footer ">
-            <button type="submit" value ="submit" class="btn btn-primary" >Add User</button>
-                
-        </div>
-      </div>
     
+
+   
+    <form action="" method="POST">
+        {% csrf_token %}
+                <div class="usertable table-responsive">
+                    
+                    <table id="myTable" class="usertable">
+                        <thead>
+
+                            <tr>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CTU ID</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">FIRST NAME</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">LAST NAME</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">EMAIL</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 1</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 2</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">ROLE</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">ACTION</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            
+                            {% for user in users %}
+                            <tr id="user_row_{{ user.id }}" class="user-row">
+                                <td class="user_username text-center">
+                                    <span class="editable">{{ user.username }}</span>
+                                    <input type="text" class="edit-input" name="username" value="{{ user.username }}" style="display: none;">
+                                </td>
+                                <td class="user_first_name text-center">
+                                    <span class="editable">{{ user.first_name }}</span>
+                                    <input type="text" class="edit-input" name="first_name" value="{{ user.first_name }}" style="display: none;">
+                                </td>
+                                <td class="user_last_name text-center">
+                                    <span class="editable">{{ user.last_name }}</span>
+                                    <input type="text" class="edit-input" name="last_name" value="{{ user.last_name }}" style="display: none;">
+                                </td>
+                                <td class="user_email text-center">
+                                    <span class="editable">{{ user.email }}</span>
+                                    <input type="text" class="edit-input" name="email" value="{{ user.email }}" style="display: none;">
+                                </td>
+                                <td class="user_contact1 text-center">
+                                    <span class="editable">{{ user.contact1 }}</span>
+                                    <input type="text" class="edit-input" name="contact1" value="{{ user.contact1 }}" style="display: none;">
+                                </td>
+                                <td class="user_contact2 text-center">
+                                    <span class="editable">{{ user.contact2 }}</span>
+                                    <input type="text" class="edit-input" name="contact2" value="{{ user.contact2}}" style="display: none;">
+                                </td>
+                                <td class="user_usertype text-center">
+                                    <span class="editable">{{ user.get_user_type_display }}</span>
+                                    <input type="text" class="edit-input" name="user_type" value="{{ user.get_user_type_display }}" style="display: none;">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary edit-icon" onclick="editUser('user_row_{{ user.id }}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                        <div>
+                                            <button class="btn btn-success save-icon" style="display: none;">
+                                            Save
+                                            </button>
+                                            <button class="btn btn-danger cancel-icon" style="display: none;"> 
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    <button type="button" class="btn btn-primary edit-icon" onclick="deleteUser('user_row_{{ user.id }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            
+                            {% endfor %}
+
+                        </tbody>
+
+                        
+                    </table>
+                </div>
+  
+
+    </form>
+
+    
+
 
 </div>
 
 
+
 <script>
-    // JavaScript to open and close the modal
-    function openModal() {
-      var modal = document.getElementById("myModal");
-      modal.style.display = "block";
+
+    var editButtons = document.querySelectorAll('.edit-icon');
+    editButtons.forEach(function(editIcon) {
+        editIcon.addEventListener('click', function(event) {
+            var currentRow = event.currentTarget.closest('.user-row');
+            editUser(currentRow);
+        });
+    });
+
+
+    function editUser(userId) {
+        var row = document.getElementById(userId);
+
+        var editIcon = row.querySelector('.edit-icon');
+        var saveButton = row.querySelector('.save-icon');
+        var cancelButton = row.querySelector('.cancel-icon');
+        var editInputs = row.querySelectorAll('.edit-input');
+        var editableSpans = row.querySelectorAll('.editable');
+
+        editIcon.style.display = 'none';
+        saveButton.style.display = 'inline-block'; 
+        cancelButton.style.display = 'inline-block'; 
+
+  
+        editInputs.forEach(function(input) {
+            input.style.display = 'block'; 
+        });
+
+        editableSpans.forEach(function(span) {
+            span.style.display = 'none';  
+        });
+
+        
+        cancelButton.addEventListener('click', function() {
+           
+            editIcon.style.display = 'inline-block'; 
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+
+            editInputs.forEach(function(input) {
+                input.style.display = 'none';
+            });
+            editableSpans.forEach(function(span) {
+                span.style.display = 'inline-block';  
+            });
+        });
+
+        
+        saveButton.addEventListener('click', function() {
+            var formData = new FormData();
+            var csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            editInputs.forEach(function(input) {
+                formData.append(input.name, input.value);
+            });
+
+            fetch('/update_user/{{ user.id }}/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    
+                    editableSpans.forEach(function(span, index) {
+                        span.textContent = editInputs[index].value;
+                        span.style.display = 'inline-block';
+                        editInputs[index].style.display = 'none';
+                    });
+
+                    saveButton.style.display = 'none';
+                    cancelButton.style.display = 'none';
+                } else {
+                    
+                    console.error('Error updating user:', data.errors);
+                    
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                
+            });
+        });
     }
+
+    function deleteUser(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+        fetch(`/delete_user/${userId}/`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+               
+                console.log('User deleted successfully');
+                
+                window.location.reload(); 
+                
+            } else {
+                throw new Error('Failed to delete user');
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem deleting the user:', error);
+            
+        });
+    }
+}
+
     
-    function closeModal() {
-      var modal = document.getElementById("myModal");
-      modal.style.display = "none";
-    }
+
+
 </script>
+
+
 
 {% endblock %}
 {% block admin_home %}

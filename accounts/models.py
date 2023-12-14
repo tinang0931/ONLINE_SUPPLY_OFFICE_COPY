@@ -37,6 +37,12 @@ class User(AbstractUser):
     
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
+
     def save(self, *args, **kwargs):
         if self.user_type == 'admin':
             self.is_admin = True
