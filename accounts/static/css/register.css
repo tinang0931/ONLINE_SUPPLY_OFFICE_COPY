@@ -206,7 +206,7 @@ form .register-details .category{
 }
 
 
-@media (max-width: 500px) {
+@media (max-width: 100px) {
     .container {
         max-width: 100%;
     }
