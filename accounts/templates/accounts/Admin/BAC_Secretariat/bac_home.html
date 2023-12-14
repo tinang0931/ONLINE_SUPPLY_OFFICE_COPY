@@ -80,7 +80,6 @@
             <th class="text-center">Purpose</th>
             <th class="status">Status</th>
             <th class="text-center">Date</th>
-            <th>Comment</th>
         </tr>
     </thead>
     <tbody>
@@ -108,7 +107,6 @@
           <td>
             {{ checkout.status_update_date|default:"Not available" }}
           </td>
-          <td>{{ item.comment|default:'' }}</td>
         </tr>
       {% endfor %}
     
