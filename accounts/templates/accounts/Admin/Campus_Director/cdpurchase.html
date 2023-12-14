@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block cdresolution %}
+{% block cdpurchase %}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -41,7 +41,6 @@
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
   }
-  
 
   .search-form {
     justify-content: flex-end;
@@ -50,7 +49,7 @@
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">RESOLUTION</h1>
+  <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
 
   <div class="search">
     <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
@@ -71,7 +70,7 @@
         <tr>
             <td class="text-center">{{ checkout.submission_date }}</td>
             <td>
-                <a href="{% url 'resolution' %}">
+              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
                     <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
                 </a>
             </td>
@@ -95,8 +94,8 @@
       table = document.querySelector(".table");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
-          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1];
           if (td) {
               txtValue = td.textContent || td.innerText;
               if (txtValue.toUpperCase().indexOf(filter) > -1) {

@@ -20,6 +20,8 @@ urlpatterns = [
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
+   path('bac_prof/',views.bac_prof, name='bac_prof'),
+    path('bac_profile/',views.bac_profile, name='bac_profile'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_home/',views.bac_home, name='bac_home'),
@@ -40,8 +42,10 @@ urlpatterns = [
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
-   path('cdhistory/',views.cdhistory, name='cdhistory'),
+   path('cdhome/',views.cdhome, name='cdhome'),
+   path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('update_item/<int:id>/', views.update_item, name='update_item'),
@@ -50,7 +54,3 @@ urlpatterns = [
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
 ]
-
-
-
- 
