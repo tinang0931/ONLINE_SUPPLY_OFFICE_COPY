@@ -419,33 +419,40 @@ def addItem(request):
 
 
 def request(request):
-
     if request.method == 'POST':
-     
-        # Retrieve selected rows from the form
-        selected_rows = request.POST.getlist('selectRow')
-      
 
-        # Process and save data to the database
+        selected_rows = request.POST.getlist('selectRow')
+
         for row_id in selected_rows:
             item_name = request.POST.get(f'item_{row_id}')
             item_brand = request.POST.get(f'item_brand_{row_id}')
             unit = request.POST.get(f'unit_{row_id}')
             price = request.POST.get(f'price_{row_id}')
-            quantity = int(request.POST.get(f'quantity_{row_id}', 0)) 
-           
+            quantity = request.POST.get(f'quantity_{row_id}')
+
+        
+            if quantity and quantity.isdigit():
+                quantity = int(quantity)
+            else:
+               
+                print(f"Invalid quantity for row {row_id}")
+                continue
+
             user = request.user
-            items = Item.objects.create(
+
+
+            item = Item.objects.create(
                 user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
-                
-                 # Calculate total cost based on price and quantity
+
+                total_cost=float(price) * quantity,
             )
-            items.save()
+            item.save()
+
         return redirect('requester')
 
     elif request.method == 'GET':

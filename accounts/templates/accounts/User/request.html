@@ -80,22 +80,18 @@
                     </thead>
                     <tbody>
                         {% for item in items %}
-                        <tr class="table-row" id="{{ item.ITEMS }}">
+                        <tr class="table-row" id="{{ item.id }}">
                             <td>{{ item.Item_name }}</td>
                             <td>{{ item.Item_Brand }}</td>
                             <td>{{ item.Unit }}</td>
                             <td>{{ item.Price }}</td>
+                            <td><input type="number" name="quantity_{{ item.id }}" value="" min="1"  style="width: 50px; text-align: center" ></td>
                             <td>
-                                <input type="number" name="quantity_{{ item.ITEMS }}" id="quantity_{{ item.ITEMS }}"
-                                    value="" min="1" class="form-control form-control-sm" style="width: 60px;"
-                                    oninput="resetToOriginalValue(this)" onclick="highlightInput(this);">
-                            </td>
-                            <td>
-                                <input type="hidden" name="item_{{ item.ITEMS }}" value="{{ item.Item_name }}">
-                                <input type="hidden" name="item_brand_{{ item.ITEMS }}" value="{{ item.Item_Brand }}">
-                                <input type="hidden" name="unit_{{ item.ITEMS }}" value="{{ item.Unit }}">
-                                <input type="hidden" name="price_{{ item.ITEMS }}" value="{{ item.Price }}">
-                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ item.ITEMS }}">
+                                <input type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
+                                <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.Item_Brand }}">
+                                <input type="hidden" name="unit_{{ item.id }}" value="{{ item.Unit }}">
+                                <input type="number" style="display: none;" name="price_{{ item.id }}" value="{{ item.Price }}">
+                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ item.id }}">
                             </td>
                         </tr>
                         {% endfor %}
@@ -322,7 +318,6 @@
 
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
