@@ -676,11 +676,13 @@ def bac_dashboard(request):
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
     elif request.method == 'POST':
+
         new_category = request.POST.get('custom-category', '').strip()
 
         if new_category:
             CSV.objects.create(Category=new_category)
             return redirect('bac_dashboard')
+        
 
 
 
@@ -716,20 +718,33 @@ def delete_item(request, id):
     return redirect('bac_dashboard')
 
 def update_item(request, id):
-    item = CSV.objects.get(id=id)
     if request.method == 'POST':
-        item.Category = request.POST.get('category')
-        item.Item_name = request.POST.get('item_name')
-        item.Item_Brand = request.POST.get('item_brand')
-        item.Unit = request.POST.get('unit')
-        item.Price = request.POST.get('price')
-        item.save()
-        return redirect('bac_dashboard')
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})
+        CSV.objects.get(id=id)
+        
+        
+        item_name = request.POST.get(f'item_{id}')
+        print(item_name)
+        item_brand = request.POST.get(f'item_brand_{id}')
+        print(item_brand)
+        unit = request.POST.get(f'unit_{id}')
+        print(unit)
+        
+        price = request.POST.get(f'price_{id}')
+        
 
+        CSV.objects.filter(id=id).update(
+            Item_name=item_name,
+            Item_Brand=item_brand,
+            Unit=unit,
+            Price=price
+        )
+
+
+
+       
+       
+        return redirect('bac_dashboard')
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
-
-
     return redirect('bac_dashboard')

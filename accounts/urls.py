@@ -44,11 +44,10 @@ urlpatterns = [
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('add_new_item/', add_new_item, name='add_new_item'),
-
+   path('update_item/<int:id>/', views.update_item, name='update_item'),
    path('upload_file/',views.upload_file, name='upload_file'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
-   path('update_item/<int:id>/', update_item, name='update_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
 ]
 
