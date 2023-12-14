@@ -5,19 +5,20 @@
 {% block cart %}
 
 <style>
-  .primary-btn {
-      background-color: rgb(52, 129, 211); 
-      color: #ffffff; 
-      padding: 10px 20px; 
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 120px;
-  }
+  .icon-btn {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        transition: background-color 0.3s;
+    }
 
   .primary-btn:hover {
-      background-color: #65a2e2; /* Change the color on hover if desired */
+    background-color: transparent;
   }
+
+  .icon-btn i:hover {
+    background-color: transparent;
+    }
   
   .button, input, optgroup, select, textarea {
     margin: 0;
@@ -35,7 +36,6 @@ p {
 }
     #attachments {
         display:flex ;
-         /* Hide the default file input button */
     }
 
     .custom-file-upload {
@@ -89,21 +89,22 @@ p {
       
       <tbody>
         {% for item in items %}
-            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+        <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
                 <td class="item_name text-center">{{ item.item }}</td>
                 <td class="item_description text-center">{{ item.item_brand_description }}</td>
                 <td class="item_unit text-center">{{ item.unit }}</td>
                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                 <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td>
-                    <a href="#" class="btn btn-primary btn-sm">Update</a>
-                </td>
+                
                 
                 <td class="text-center">
-                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="#" class="btn btn-primary btn-sm icon-btn"><i class="fas fa-edit fa-lg" style="color: blue;"></i></a>
                 </td>
-                <td>
+                <td class="text-center">
+                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm icon-btn"><i class="fas fa-trash-alt fa-lg" style="color: red;"></i></a>
+                </td>
+                 <td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
