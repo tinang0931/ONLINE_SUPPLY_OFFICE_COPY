@@ -1,6 +1,8 @@
 {% extends "accounts/Admin/Campus_Director/cd.html" %}
 
+
 {% load static %}
+
 
 {% block cdhome %}
 
@@ -25,7 +27,7 @@
 
   .form-control {
     display: block;
-    width: 26%;
+    width: 18%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -34,15 +36,11 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: rgb(13 110 253 / 8%);
     background-clip: padding-box;
-    border: var(--bs-border-width) solid #343a40;
-    border-radius: var(--bs-border-radius);
+    border-radius: 20px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
   }
-
-
 
   .search-form {
     justify-content: flex-end;
@@ -53,5 +51,34 @@
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">NOTIFICATIONS</h1>
 
+  <div class="search">
+    <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
+</div>
 
-{% endblock %}   
+
+
+<script>
+  function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+  }
+</script>
+
+
+
+{% endblock %}
