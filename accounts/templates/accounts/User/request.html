@@ -87,7 +87,7 @@
                                 <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
                                 <input type="hidden" name="item_brand_{{ row.ITEMS }}" value="{{ row.ITEM_BRAND }}">
                                 <input type="hidden" name="unit_{{ row.ITEMS }}" value="{{ row.UNIT }}">
-                                <input type="hidden" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
+                                <input type="number" style="display: none;" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
                                 <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ row.ITEMS }}">
                             </td>
                         </tr>
@@ -144,12 +144,12 @@
 
                           <div class="form-group"> 
                               <label for="Unit">Unit Cost</label>
-                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                              <input type="nmuber" class="form-control" id="Unit_Cost" name="unit_Cost" required>
                           </div>
                           
                           <div class="form-group">
                               <label for="Quantity">Quantity</label>
-                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                              <input type="number" class="form-control" id="Quantity" name="quantity" required>
                           </div>
 
                           <div class="modal-footer">

@@ -37,7 +37,8 @@ urlpatterns = [
    path('delete/<int:id>/', delete, name='delete'),
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
-   
+   path('bohistory/',views.bohistory, name='bohistory'),
+   path('comment_submit/', comment_submit, name='comment_submit'),
    path('bohome/',views.bohome, name='bohome'),
     path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
     path('approve_checkout/<str:pr_id>/', approve_checkout, name='approve_checkout'),
@@ -54,4 +55,5 @@ urlpatterns = [
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('update_item/<int:id>/', update_item, name='update_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
+
 ]

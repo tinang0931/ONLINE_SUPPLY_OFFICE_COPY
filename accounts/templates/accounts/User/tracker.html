@@ -35,84 +35,53 @@
             <th>Forms</th>
             <th>Status</th>
             <th>Date</th>
-            
+            <th>Comment</th>
           </tr>
         </thead>
         <tbody>
           {% for item in feedback %}
-    <tr>
-        <td>{{ item.pr_id }}</td>
+            <tr>
+              <td>{{ item.pr_id }}</td>
         
-        <!-- Debugging: Display the checkout_info for the current item -->
-        {% for i in checkout_info %}
-            {% if i.pr_id == item.pr_id %}
-                <td>{{ i.purpose }}</td>
+              <!-- Display the purpose from "preqform" or "bohome" -->
+              {% for i in checkout_info %}
+                {% if i.pr_id == item.pr_id %}
+                  <td>{{ i.purpose }}</td>
+                {% endif %}
+              {% endfor %}
+        
+              <td>Purchase Request Approval</td>
+        
+              <!-- Display the combined status and timestamp -->
+              <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;">
+                {% if item.status_comment %}
+                  {{ item.status_comment }}
+                {% else %}
+                  {{ item.content }}
+                {% endif %}
+                {% if item.is_approve %}
+                  - Approved
+                {% else %}
+                  - Disapproved
+                {% endif %}
                 
-            {% endif %}
-        {% endfor %}
-
-        <td>Purchase Request Approval</td>
-        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: rgb(243, 233, 233);">{{ item.content }}</td>
-        <td>{{ item.timestamp }}</td>
-    </tr>
-
-    {% if feedback|length == 0 %}
-    <tr>
-        <td colspan="3">
-            <span >NO REQUEST YET</span>
-        </td>
-    </tr>
-{% endif %}
-
-<tbody>
-  {% for item in feedback %}
-    <tr>
-      <td>{{ item.pr_id }}</td>
-
-      <!-- Display the purpose from "preqform" or "bohome" -->
-      {% for i in checkout_info %}
-        {% if i.pr_id == item.pr_id %}
-          <td>{{ i.purpose }}</td>
-        {% endif %}
-      {% endfor %}
-
-      <td>Purchase Request Approval</td>
-
-      <!-- Display the status and timestamp -->
-      <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;">
-        {% if item.status_comment %}
-          {{ item.status_comment }}
-        {% else %}
-          {{ item.content }}
-        {% endif %}
-      </td>
-
-      <td>{{ item.status_update_date|default:item.timestamp }}</td>
-
-      <!-- Display the approval status -->
-      <td class="badge {% if item.is_approve %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: black;">
-        {% if item.is_approve %}
-          Approved
-        {% else %}
-          Disapproved
-        {% endif %}
-      </td>
-    </tr>
-  {% endfor %}
-
-  {% if feedback|length == 0 %}
-    <tr>
-      <td colspan="3">
-        <span>NO REQUEST YET</span>
-      </td>
-    </tr>
-  {% endif %}
-
-{% endfor %}
-
-         
+              </td>
+        
+              <td>{{ item.status_update_date|default:item.timestamp }}</td>
+              <td>{{ item.comment|default:'' }}</td>
+            </tr>
+          {% endfor %}
+        
+          {% if feedback|length == 0 %}
+            <tr>
+              <td colspan="3">
+                <span>NO REQUEST YET</span>
+              </td>
+            </tr>
+          {% endif %}
         </tbody>
       </table>
+      
       
     </div>
   </div>
