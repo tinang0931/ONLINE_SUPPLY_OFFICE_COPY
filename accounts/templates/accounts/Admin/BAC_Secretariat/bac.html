@@ -31,7 +31,12 @@
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-            </div>
+            
+                <a href="{% url 'profile' %}">
+                  <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
+                </a>
+                <h1 class="p1">Profile Name</h1>
+            
             </div>
           </div>
         </nav>
@@ -59,6 +64,7 @@
                   <i class='bx bx-log-out' ></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
                 <div class="profile-container">
+                  <a href="{% url 'bac_prof' %}">
                   <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
               <p1 class="account_type">BAC</p1>
                 </div>
@@ -67,29 +73,35 @@
           </div>
         </div>
         <style>
-          #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 50px;
-}
+
+
+    #sidebar {
+      transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+      overflow: hidden;
+      width: 50px;
+    }   
 
 #sidebar.show-names {
     width: 400px;
     padding: 0 20px;
 }
 
+
 .hidden-name {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
+
 #sidebar.show-names .hidden-name {
     opacity: 1;
 }
 
+
 .list-group-item-action {
     transition: background-color 0.5s ease-in-out, border-radius 0.5s ease-in-out, color 0.5s ease-in-out;
 }
+
 
 .list-group-item-action:hover {
     background-color: #244a6e !important;
@@ -97,41 +109,48 @@
     color: #f2f2f2 !important;
 }
 
+
 #sidebar:hover {
     width: 300px;
     padding: 0 10px;
 }
 
+
 .logout-link {
     margin-top: -55px;
 }
 
+
 .d-flex.flex-wrap.align-content-between.h-100 {
     background-color: #f2f2f2;
 }
+
 
 .list-group-item-action:not(:hover) span {
     color: black !important;
 }
 
 
-/* Add styles for the new sidebar elements */
 #sidebar a {
-    color: #000000; /* Set the text color for links */
-    text-decoration: none; /* Remove underlines from links */
-    padding: 10px 0; /* Adjust the padding for links */
-    display: block; /* Make links block-level for full width */
-    transition: color 0.5s ease-in-out; /* Add a transition effect for text color */
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 0; 
+    display: block; 
+    transition: color 0.5s ease-in-out; 
 }
 
+
 #sidebar a:hover {
-    color: #fff; /* Set the text color for links when hovered */
+    color: #fff; 
 }
+
+
 #sidebar {
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
     overflow: hidden;
     width: 50px;
 }
+
 
 #sidebar.show-names,
 #sidebar:hover {
@@ -156,25 +175,29 @@
 }
 .pro {
     position: relative;
-    top: 250px; /* Adjust the desired vertical position */
+    top: 250px; 
+    
     z-index: 1;
     height: 45px;
     width: 45px;
-    margin-left: 55px;
-    transition: height 0.3s ease, width 0.3s ease, top 0.3s ease; /* Add top to the transition */
+    margin-left: 47px;
+    transition: height 0.3s ease, width 0.3s ease, top 0.3s ease; 
     cursor: pointer;
     border-radius: 50px;
     border: 2px solid #000;
 }
 
+
 #sidebar:hover .pro {
-    margin-left: 55px; /* Ensure that the margin-left property is set to the same value */
+    margin-left: 55px; 
 }
+
 
 .list-group-item i {
     transform: scale(1.4);
     display: inline-block;
 }
+
 
 .profile-container {
     display: flex;
@@ -183,31 +206,41 @@
     width: 90%;
     margin: 0;
 }
+
+
 .account_type {
     position: relative;
-    top: 250px; /* Adjust the desired vertical position */
-    left: 30px; /* Adjust the desired horizontal position */
+    top: 250px; 
+    left: 30px; 
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease, top 0.3s ease; /* Add top to the transition */
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease, top 0.3s ease; 
 }
+
 
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
-    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
+    opacity: 1;
+    visibility: visible; 
 }
+
 
 .sidebar:hover .account_type {
-    opacity: 1; /* Show the element when the sidebar is hovered */
-    visibility: visible; /* Show the element when the sidebar is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
 
-        </style>
-        
+</style>
+        <script>
+          const savedImageUrl = localStorage.getItem('profileImage');
+          if (savedImageUrl) {
+              const profilePic = document.getElementById('profile-pic');
+              profilePic.src = savedImageUrl;
+          }
+      </script>
         <script>
           function showNames() {
             const sidebar = document.getElementById('sidebar');
