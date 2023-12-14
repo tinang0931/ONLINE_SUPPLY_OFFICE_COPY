@@ -32,6 +32,7 @@
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
             </div>
+            <br>
             </div>
           </div>
         </nav>
@@ -161,7 +162,7 @@
     z-index: 1;
     height: 45px;
     width: 45px;
-    margin-left: 47px;
+    margin-left: 34px;
     transition: height 0.3s ease, width 0.3s ease, top 0.3s ease; /* Add top to the transition */
     cursor: pointer;
     border-radius: 50px;
@@ -180,25 +181,7 @@
 .profile-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 90%;
-    margin: 0;
-}
-.account_type {
-    position: relative;
-    top: 250px; /* Adjust the desired vertical position */
-    left: 30px; /* Adjust the desired horizontal position */
-    font-size: 20px;
-    margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease, top 0.3s ease; /* Add top to the transition */
-}
-
-.sidebar:hover .account_type,
-.pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
+    justify-content: center; bar or .pro is hovered */
     visibility: visible; /* Show the element when the sidebar or .pro is hovered */
 }
 
@@ -206,7 +189,9 @@
     opacity: 1; /* Show the element when the sidebar is hovered */
     visibility: visible; /* Show the element when the sidebar is hovered */
 }
-
+#sidebar .logout-link, #sidebar .list-group-item-action, #sidebar .d-flex.flex-wrap.align-content-between.h-100, #sidebar .profile-container, #sidebar .account_type {
+  margin-left: -5px;
+}
         </style>
         <script>
           const savedImageUrl = localStorage.getItem('profileImage');

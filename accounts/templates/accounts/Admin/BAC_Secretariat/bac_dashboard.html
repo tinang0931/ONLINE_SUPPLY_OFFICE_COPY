@@ -14,16 +14,29 @@
   <title>Dynamic Display</title>
 
   <style>
+    .body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .content {
+      padding: 16px;
+    }
     .container-fluid {
-    height: 100vh; 
-    overflow-y: auto;
-    overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
       text-align: center;
+      width: 12000px;
     }
-
+    .category-table {
+      margin: 20;
+    }
+    .category-table th,
+    .category-table td {
+      text-align: center;
+    }
     input,
     select {
       margin-bottom: 10px;
@@ -31,21 +44,18 @@
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+      margin: 20px 0 20px 0;
     }
-
     th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center; /* Align content in the center */
+}
 
-    th {
-      background-color: #f2f2f2;
-    }
-
+th {
+  background-color: #f2f2f2;
+}
     .update-btn,
     .delete-btn {
       cursor: pointer;
@@ -82,7 +92,7 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 10px;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;]
     }
 
     .btn-primary {
@@ -98,27 +108,32 @@
     border-color: #28a745;
     border-radius: 5px;
 }
-
+.sticky-container {
+  position: fixed;
+  top: 20;
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
   </style>
 </head>
 
-<body>
-
+<body> 
+  
   <div class="container-fluid">
-    <div class="container">
       <h1 class="pr text-center pt-4">Available Items</h1>
-
-
 
       <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="file">Choose CSV file:</label>
         <input type="file" name="file" accept=".csv" required>
-        <br>
-        <button class="btn btn-success" type="submit">Upload</button>
+        <br><br>
+        <button class="btn btn-success" type="submit">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </button>                
       </form>
       <br>
-      <div class="dropdown" style="width: 45%;">
+      <div class="dropdown" style="width: 30%;">
         <select class="form-control" id="category-dropdown">
           <option value="all">All Categories</option>
           {% for category, items in grouped_data.items %}
@@ -206,7 +221,7 @@
         }
       </script>
 
-
+      <div class="container-table">
       {% for category, items in grouped_data.items %}
       <table class="category-table" id="table-{{ category }}">
         <thead>
@@ -236,10 +251,7 @@
             <td>{{ item.Unit }}</td>
             <td>{{ item.Price }}</td>
             <td>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal{{ item.id }}">
-                Update
-              </button>
-
+              <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#updateModal{{ item.id }}"></i>
 
               <div class="modal fade" id="updateModal{{ item.id }}" tabindex="-1" role="dialog"
                 aria-labelledby="updateModalLabel{{ item.id }}" aria-hidden="true">
@@ -277,12 +289,12 @@
                   </div>
                 </div>
               </div>
-
+            </div>
 
               {% if item.id %}
               <a href="{% url 'delete_item' item.id %}">
-                <button class="btn btn-danger">Delete</button>
-              </a>
+                <i class="fas fa-trash-alt text-danger"></i>
+              </a>                 
               {% endif %}
             </td>
           </tr>
@@ -306,15 +318,17 @@
                 <input type="text" name="new_item_price" placeholder="New Item Price" required>
               </td>
               <td>
-                <button type="submit" class="save-btn btn-success">Save</button>
+                <button type="submit" class="save-btn btn-success">
+                  <i class="fas fa-check-circle fa-sm"></i>
+                </button>
               </td>
             </form>
           </tr>
-
         </tbody>
       </table>
-      <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
-
+      <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
+        <i class="fas fa-plus"></i> <!-- Replace 'fa-plus' with your desired plus icon class -->
+      </button>
       {% endfor %}
 
 
