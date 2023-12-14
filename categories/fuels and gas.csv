@@ -1,0 +1,8 @@
+item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price
+"FUEL, Diesel, for Mitsubishi Adventure","liter ",,,,,,,,,,,,,,80
+"FUEL, Diesel, for Van","liter ",,,,,,,,,,,,,,80
+"FUEL, Gasoline, for Multi-Cab"," liter ",,,,,,,,,,,,,,70
+"FUEL, Gasoline, for Lawn Mower","liter ",,,,,,,,,,,,,,70
+LPG 11 kg. tank and content,"tank ",,,,,,,,,,,,,,"3,000.00"
+LPG 50 kg. cylinder refill,"cylinder ",,,,,,,,,,,,,,"7,000.00"
+"LPG, 11 kg refill",tank,,,,,,,,,,,,,,"1,200.00"
