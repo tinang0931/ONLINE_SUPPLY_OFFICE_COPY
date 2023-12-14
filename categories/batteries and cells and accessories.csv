@@ -1,0 +1,4 @@
+item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price
+"BATTERY, dry Cell, size AA",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,150
+"BATTERY, dry Cell, size AAA",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,200
+"BATTERY, dry Cell, size D",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,250

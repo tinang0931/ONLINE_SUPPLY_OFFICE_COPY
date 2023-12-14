@@ -50,6 +50,7 @@ urlpatterns = [
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('add_category/', views.add_category, name='add_category'),
    path('upload_file/',views.upload_file, name='upload_file'),
+   path('Procurement/',views.Procurement, name='Procurement'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('update_item/<int:id>/', update_item, name='update_item'),
