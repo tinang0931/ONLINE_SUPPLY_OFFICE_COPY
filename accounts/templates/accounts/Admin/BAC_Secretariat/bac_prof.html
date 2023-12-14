@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bac_prof.css' %}">
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#expand-image').click(function () {
+        $(this).toggleClass('expanded');
+    });
+});
+</script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="profile-box">
+                <a href="{% url 'bac_home' %}">
+                <img src="{% static 'images/back.png' %}" class="back-icon"></a>
+                <img src="{% static 'images/setting.png' %}" class="setting-icon">
+                <img class="bac-prof" id="bac-prof" src="{% static 'images/propayl.png' %}" alt="Profile Picture">
+                
+                <script>
+                  const savedImageUrl = localStorage.getItem('profileImage');
+                  
+                 
+                  if (savedImageUrl) {
+                      const profilePic = document.getElementById('bac-prof');
+                      profilePic.src = savedImageUrl;
+                  }
+              </script> 
+            
+
+                <h3 class="user">Username</h3>
+                <script>
+         
+                    var fullName = localStorage.getItem('fullName') || 'Username';
+
+                    document.querySelector('.user').textContent = fullName;
+
+                </script>
+                <p class="type-of-user">BAC Secretariat</p>
+                <a href="{%url 'bac_profile'%}"> 
+                <button type="button">Edit Profile</button></a>
+                  
+
+                <div class="profile-bottom">
+                    <p class="email">example@gmail.com</p>
+                    <p class="contact1">12345</p>
+                    <p class="contact2">54321</p>
+                    <script>
+         
+                        var emailAddress = localStorage.getItem('emailAddress') || 'example@gmail.com';
+                        var contact1 = localStorage.getItem('contact1') || '12345';
+                        var contact2 = localStorage.getItem('contact2') || '54321';
+                
+                        document.querySelector('.email').textContent = emailAddress;
+                        document.querySelector('.contact1').textContent = contact1;
+                        document.querySelector('.contact2').textContent = contact2;
+              
+                      </script>     
+                    <div class="icons">
+                        <img src="{% static 'images/mail.png' %}" class="mail_icon">
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>

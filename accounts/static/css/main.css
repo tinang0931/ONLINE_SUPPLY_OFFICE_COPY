@@ -334,6 +334,8 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   border-radius: 50%;
   padding: 7px;
 }
+
+
   .ctu_logo {
     position: absolute;
     left: 26px; /* X-coordinate */
@@ -347,11 +349,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .cart_icon{
   height: 40px;
   color: #000;
-}
-
-
-.dropdown-item{
-  text-align: left;
 }
 
 

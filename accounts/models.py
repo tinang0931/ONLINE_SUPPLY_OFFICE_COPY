@@ -60,12 +60,11 @@ class Item(models.Model):
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    @property
-    def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
+
 
 
 
@@ -117,6 +116,12 @@ class CSV(models.Model):
     Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class VerificationCode(models.Model):

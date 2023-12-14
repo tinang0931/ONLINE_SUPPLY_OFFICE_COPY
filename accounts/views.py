@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import itertools
 from urllib.parse import parse_qs
 from django.views import View
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from typing import ItemsView
 import logging
 from django.shortcuts import redirect, render, get_object_or_404
@@ -39,10 +39,55 @@ from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
+import pandas as pd
+from itertools import groupby
 
 
 def main(request):
     return render(request, 'accounts/User/main.html')
+
+
+def Procurement(request):
+    class proc:
+        def __init__(self, category, item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price) -> None:
+            self.category = category
+            self.item = item,
+            self.unit = unit,
+            self.budget = budget,
+            self.jan = jan,
+            self.feb = feb,
+            self.march = march,
+            self.april = april,
+            self.may = may,
+            self.june = june,
+            self.july = july,
+            self.aug = aug,
+            self.sep = sep,
+            self.oct = oct,
+            self.nov = nov,
+            self.dec = dec,
+            self.price = price
+    
+    procure = []
+    df = pd.read_csv('categories.csv')
+    categories = df['categories']
+    for c in categories:
+        cat = pd.read_csv(f'categories\{c}.csv')
+        for index, row in cat.iterrows():
+            p = proc(c, row['item'], row['unit'],row['budget'],row['jan'],row['feb'],row['march'],row['april'],row['may'],row['june'],row['july'],row['aug'],row['sep'],row['oct'],row['nov'],row['dec'],row['price'])
+            procure.append(p)
+    
+    
+    grouped_data = {}
+    for item in procure:
+        category = item.category
+        if category not in grouped_data:
+            grouped_data[category] = []
+        grouped_data[category].append(item)
+    context = {
+        'grouped_data':grouped_data
+    }
+    return render(request, 'accounts/User/Procurement.html', context)
 
 
 def bac(request):
@@ -135,10 +180,8 @@ def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
 
-
 def request_page(request):
     if request.user.is_admin:
-       
         return redirect('bac_home')
     return render(request, 'request.html')
 
@@ -343,7 +386,12 @@ def notif(request):
 @authenticated_user
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-
+@authenticated_user
+def bac_prof(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html')
+@authenticated_user
+def bac_profile(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_profile.html')
 
 @authenticated_user
 def bo(request):
@@ -371,13 +419,24 @@ def cdabout(request):
 
 
 @authenticated_user
-def cdhistory(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html')
+def cdpurchase(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+
+@authenticated_user
+def cdhome(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdhome.html')
 
 
 @authenticated_user
 def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
+
+
+@authenticated_user
+def resolution(request):
+    return render(request, 'accounts/Admin/Campus_Director/resolution.html')
+
 
 
 @authenticated_user
@@ -455,23 +514,39 @@ def addItem(request):
 
 def request(request):
     if request.method == 'POST':
+
         selected_rows = request.POST.getlist('selectRow')
+
         for row_id in selected_rows:
             item_name = request.POST.get(f'item_{row_id}')
             item_brand = request.POST.get(f'item_brand_{row_id}')
             unit = request.POST.get(f'unit_{row_id}')
             price = request.POST.get(f'price_{row_id}')
             quantity = request.POST.get(f'quantity_{row_id}')
+
+        
+            if quantity and quantity.isdigit():
+                quantity = int(quantity)
+            else:
+               
+                print(f"Invalid quantity for row {row_id}")
+                continue
+
             user = request.user
-            items = Item.objects.create(
+
+
+            item = Item.objects.create(
                 user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
+
+                total_cost=float(price) * quantity,
             )
-            items.save()
+            item.save()
+
         return redirect('requester')
 
     elif request.method == 'GET':
@@ -480,7 +555,6 @@ def request(request):
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
-
 
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
@@ -491,8 +565,8 @@ class RequesterView(View):
 
     def post(self, request):
         if request.method == 'POST':
-            id_value = request.POST.get('id') 
-            items = Item.objects.a
+            # Fetch data from the Item model
+            items = Item.objects.all()
             purpose = request.POST.get('purpose', '') 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
 
@@ -557,25 +631,10 @@ def delete(request, id):
     item.delete()
     return redirect ('requester')
 
-
-def connect_to_mongo():
-    client = MongoClient("mongodb://localhost:27017/")  
-    database = client["inventory"]
-    collection = database["inventorycol"]
-    return collection
-
-
 def add_new_item(request):
-    grouped_data = {
-        'ANTISEPTICS': CSV.objects.filter(Category='ANTISEPTICS'),
-        'APPLIANCES': CSV.objects.filter(Category='APPLIANCES'),
-        'FURNITURE AND FURNISHINGS': CSV.objects.filter(Category='FURNITURE AND FURNISHINGS'),
-        'INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES': CSV.objects.filter(Category='INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES'),
-        'OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES': CSV.objects.filter(Category='OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES'),
-        'PERSONAL PROTECTIVE EQUIPMENT': CSV.objects.filter(Category='PERSONAL PROTECTIVE EQUIPMENT'),
-        'PESTICIDES OR PEST REPELLENTS': CSV.objects.filter(Category='PESTICIDES OR PEST REPELLENTS'),
-    }
-    
+
+    grouped_data = {}  
+
     if request.method == 'POST':
         new_item_name = request.POST.get('new_item_name')
         new_item_brand = request.POST.get('new_item_brand')
@@ -590,20 +649,12 @@ def add_new_item(request):
             Unit=new_item_unit,
             Price=new_item_price,
         )
+
         new_item.save()
         return redirect('add_new_item')
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})  # Replace 'your_template.html' with your actual template name
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
 
-def add_category(request):
-    if request.method == 'POST':
-        new_category = request.POST.get('new_category')
-        if new_category:
-            CSV.objects.create(Category=new_category)
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'New category cannot be empty'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 def bac_dashboard(request):
@@ -612,7 +663,17 @@ def bac_dashboard(request):
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+
+    elif request.method == 'POST':
+
+        new_category = request.POST.get('custom-category', '').strip()
+
+        if new_category:
+            CSV.objects.create(Category=new_category)
+            return redirect('bac_dashboard')
+        
 
 
 def upload_file(request):
@@ -645,18 +706,32 @@ def delete_item(request, id):
 
 
 def update_item(request, id):
-    item = CSV.objects.get(id=id)
     if request.method == 'POST':
-        item.Category = request.POST.get('category')
-        item.Item_name = request.POST.get('item_name')
-        item.Item_Brand = request.POST.get('item_brand')
-        item.Unit = request.POST.get('unit')
-        item.Price = request.POST.get('price')
-        item.save()
+        CSV.objects.get(id=id)
+        
+        
+        item_name = request.POST.get(f'item_{id}')
+        print(item_name)
+        item_brand = request.POST.get(f'item_brand_{id}')
+        print(item_brand)
+        unit = request.POST.get(f'unit_{id}')
+        print(unit)
+        
+        price = request.POST.get(f'price_{id}')
+        
+
+        CSV.objects.filter(id=id).update(
+            Item_name=item_name,
+            Item_Brand=item_brand,
+            Unit=unit,
+            Price=price
+        )
+
+
+
+       
+       
         return redirect('bac_dashboard')
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'item': item})
-
-
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
