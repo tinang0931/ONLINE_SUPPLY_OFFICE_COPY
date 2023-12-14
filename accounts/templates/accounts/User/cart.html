@@ -99,10 +99,11 @@ p {
                 <td>
                     <a href="#" class="btn btn-primary btn-sm">Update</a>
                 </td>
-                
+                {% if item.id %}
                 <td class="text-center">
-                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'delete' item.id %}" class="btn btn-danger btn-sm">Delete</a>
                 </td>
+                {% endif %}
                 <td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
