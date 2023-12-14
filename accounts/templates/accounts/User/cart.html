@@ -144,15 +144,12 @@ p {
         <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
     </div>
 
-    <!-- Display attached files as clickable links -->
     <div>
         <p>Attached Files:</p>
         <div id="fileLinksContainer"></div>
     </div>
     
      
-
-    <!-- Add jQuery library (if not already included) -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
  
     <script>
@@ -160,7 +157,6 @@ p {
             $('#attachments').on('change', function () {
                 var files = this.files;
 
-                // Append new file links without clearing the previous ones
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
                     var fileLink = $('<a class="file-link" target="_blank"></a>').attr('href', URL.createObjectURL(file)).text(file.name);
@@ -168,7 +164,6 @@ p {
                 }
             });
 
-            // Click event to open the attached file in a new tab
             $('#fileLinksContainer').on('click', 'a.file-link', function (e) {
                 e.preventDefault();
                 var filePath = $(this).attr('href');
@@ -176,7 +171,6 @@ p {
             });
         });
     </script>
-   
 </div>
 
     </div>
