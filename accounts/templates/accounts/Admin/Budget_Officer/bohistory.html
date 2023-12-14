@@ -1,351 +1,89 @@
 {% extends "accounts/Admin/Budget_Officer/bo.html" %}
 
+
 {% load static %}
 
-{% block bohistory %}
+
+{% block bohome %}
 
 
-<div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <div class="container">
-    <h1 class="pr text-center pt-4">HISTORY</h1>  
 
-   
-</form>
-<div class="col-6 col-sm-6 col-md-5 col-lg-3">
-  <input class="form-control" type="text" placeholder="Search" id="search_bar_request">
-</div>
-<div class="table-responsive" style="margin: 0 auto;">
-    <table class="table" id="create_request_table" style="border: 1px solid black;">
-      <thead>
-        <tr>
-          <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Purpose</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Status Description</th>
-          <th class="text-nowrap" style="min-width: 7rem;">Total Cost</th>
-          <th class="text-center text-nowrap"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in items %}
-        <tr class="item-row">
-          <td style="text-align: center;">
-            <span class="item-no">{{ item.request_id }}</span>
-        </td>
-          <td>{{ item.submission_date }}</td>
-          <td>{{item.item}}</td>
-          <td>{{purpose}}</td>
-          <td>{{item.quantity}}</td>
-          <td>Verify Papers submitted</td>
-          <td class="item_total_cost text-center">
-            {{ item.total_cost }}
-          </td>
-          <td class="text-end my-2 mt-0">
-            <html lang="en">
 
-        <div class="d-flex justify-content-start align-items-center">
-         
-          <div class="d-flex justify-content-start align-items-center">
-            <div class="d-flex justify-content-start align-items-center">
-            
-          </div>
-          <button type="button" class="btn btn-link btn-sm show-details-btn" data-request-id="0000102">
-            Show More Details
-        </button>
-        <script>
-    document.querySelectorAll('.show-details-btn').forEach(function(button) {
-        button.addEventListener('click', function() {
-            var request_id = this.getAttribute('data-request-id');
-            if (request_id) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/show_more_details/', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        // Update the user interface with the additional details
-                        alert('Additional Details for Request ' + response.purchase_request_id + ':\n' + response.additional_details);
-                    } else {
-                        alert('Error: ' + xhr.statusText);
-                    }
-                };
-                xhr.send('request_id=' + request_id);
-            }
-        });
-    });
-    </script>
-       
-           
-          </div>
-        </td>
-      </tr>
-      
-      
-      
-        </td>
-  </tbody>
-  </table>
-  
-  <script>
-    $("#add-item-form").submit(function(e){
-      e.preventDefault();
-  
-      // You can add some additional code here if needed, like form validation.
-  
-      $.ajax({
-          url: 'requester',
-          type: 'get',
-          data: $(this).serialize(),
-          success: function(response) {
-              console.log('Success:', response);
-              // You can add some code here to handle the server response.
-          },
-          error: function(xhr, textStatus, errorThrown) {
-              console.log('Error:', textStatus, errorThrown);
-              // You can add some code here to handle errors.
-          }
-      });
-  });
-  </script>
-  
-  <script>
-    function submitFormAndRefreshTable() {
-        // Get form data
-        var formData = {
-            purchaseRequestId: document.getElementById('purchaseRequestId').value,
-            // Add other form fields here
-        };
-  
-        // Add the form data to the table
-        updateTable(formData);
-  
-        // Close the modal
-        $('#staticBackdrop').modal('hide');
-  
-        // Optional: You can submit the form data to the server using AJAX if needed
-        // Example: You can use fetch or jQuery.ajax to send the data to the server
-    }
-  
-    function updateTable(formData) {
-        // Get the table body
-        var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
-  
-        // Create a new row
-        var newRow = tableBody.insertRow();
-  
-        // Add cells to the row
-        for (var key in formData) {
-            var cell = newRow.insertCell();
-            cell.appendChild(document.createTextNode(formData[key]));
-        }
-  
-        // Optional: You can add more customization or validation here
-    }
-  </script>
-  
-  <script>
-    // Function to update the history table with data from the server
-    function updatebac_historyTable() {
-      $.ajax({
-        url: '/get_bohistory_data/',  // Replace with the actual URL for fetching history data
-        type: 'get',
-        success: function (response) {
-          // Update the history table with the new data
-          updateTable(response);
-        },
-        error: function (xhr, textStatus, errorThrown) {
-          console.log('Error:', textStatus, errorThrown);
-          // Handle errors if needed
-        },
-      });
-    }
-  
-    // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
-    setInterval(updatebac_historyTable, 10000);
-  
-    // Initial call to populate the history table
-    updateHistoryTable();
-  
-    // Function to update the history table with new data
-    function updateTable(newData) {
-      // Clear existing rows in the table body
-      var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
-      tableBody.innerHTML = '';
-  
-      // Iterate over the newData array and add rows to the table
-      newData.forEach(function (data) {
-        var newRow = tableBody.insertRow();
-        for (var key in data) {
-          var cell = newRow.insertCell();
-          cell.appendChild(document.createTextNode(data[key]));
-        }
-      });
-    }
-  </script>
-  
-  <script>
-    // Function to update the history table with data from the server
-    function updatebac_historyTable() {
-        $.ajax({
-            url: '/get_bohistory_data/',
-            type: 'get',
-            success: function (response) {
-                // Update the history table with the new data
-                updateTable(response);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error:', textStatus, errorThrown);
-                // Handle errors if needed
-            },
-        });
-    }
-  
-    // Call the updateHistoryTable function every 10 seconds (adjust the interval as needed)
-    setInterval(updatebac_historyTable, 10000);
-  
-    // Initial call to populate the history table
-    updatebac_historyTable();
-  
-    // Function to update the history table with new data
-    function updateTable(newData) {
-        // Clear existing rows in the table body
-        var tableBody = document.getElementById('create_request_table').getElementsByTagName('tbody')[0];
-        tableBody.innerHTML = '';
-  
-        // Iterate over the newData array and add rows to the table
-        newData.forEach(function (data) {
-            var newRow = tableBody.insertRow();
-            for (var key in data) {
-                var cell = newRow.insertCell();
-                cell.appendChild(document.createTextNode(data[key]));
-            }
-        });
-    }
-  </script>
-  <script>
-    function handleAction(action, request_id) {
-        // Make an AJAX request to the corresponding endpoint based on the action
-        fetch('/update_approval/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
-            },
-            body: JSON.stringify({ action: action, request_id: request_id }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response here
-            if (data.success) {
-                // Show a message in the tracker and history pages
-                alert('Request ' + request_id + ' has been ' + action + 'd.');
-                updateTracker(request_id, action);
-                updateHistory(request_id, action);
-            } else {
-                alert('Failed to ' + action + ' request ' + request_id + '.');
-            }
-        })
-        .catch(error => {
-            console.error('Error ' + action + 'ing instance:', error);
-        });
-    }
-    
-    // Function to get CSRF token from cookies
-    function getCookie(name) {
-        // ... (same as before)
-    }
-    </script>
-    <script>
-      function updateTracker(request_id, action) {
-          // Find the corresponding row in the tracker table and update its status
-          var trackerRow = $('#tracker_table').find('td:contains("' + request_id + '")').closest('tr');
-          trackerRow.find('.status').text(action.toUpperCase());
-      
-          // Optionally, you can update other details in the tracker table as needed
-      }
-      
-      function updateHistory(request_id, action) {
-          // Make an AJAX request to get the latest history data
-          $.ajax({
-              url: '/get_history_data/',  // Replace with the actual URL for fetching history data
-              type: 'get',
-              success: function (response) {
-                  // Update the history table with the new data
-                  updateHistoryTable(response);
-      
-                  // Show a message in the history page
-                  alert('Request ' + request_id + ' has been ' + action + 'd.');
-              },
-              error: function (xhr, textStatus, errorThrown) {
-                  console.log('Error:', textStatus, errorThrown);
-                  // Handle errors if needed
-              },
-          });
-      }
-      
-      function updateHistoryTable(newData) {
-          // Clear existing rows in the history table body
-          var historyTableBody = document.getElementById('history_table').getElementsByTagName('tbody')[0];
-          historyTableBody.innerHTML = '';
-      
-          // Iterate over the newData array and add rows to the history table
-          newData.forEach(function (data) {
-              var newRow = historyTableBody.insertRow();
-              for (var key in data) {
-                  var cell = newRow.insertCell();
-                  cell.appendChild(document.createTextNode(data[key]));
-              }
-          });
-      }
-      </script>
-      <div id="bohistory"></div>
-<!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<script>
-  $(document).ready(function () {
-    // Function to update history
-    function updateHistory(action) {
-      // Get the current date and time
-      var dateTime = new Date().toLocaleString();
+<style>
 
-      // Create a new history entry
-      var historyEntry = "<p>" + action + " - " + dateTime + "</p>";
+  .status{
+    width: 30%;
+    text-align: center;
+  }
 
-      // Append the entry to bac_history
-      $("#bohistory").append(historyEntry);
 
-      // You can also update your history page here or navigate to it if necessary
-      // Example: window.location.href = 'path_to_history_page.html';
-    }
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
 
-    // Attach a click event to the Purchase Request Approval button
-    $(".btn-primary").on("click", function () {
-      // Perform the Purchase Request Approval action
-      // (You may need to customize this part based on your actual logic)
+  .bg-success {
+    /* Your styles for a successful status */
+    background-color: #b5e550; /* Adjust this to your desired background color */
+    color: white; /* Adjust this to your desired text color */
+}
+  
+</style>
 
-      // For demonstration purposes, let's assume the approval was successful
-      var approvalResult = "Purchase Request Approved";
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
 
-      // Update history with the action result
-      updateHistory(approvalResult);
-    });
-
-    // You can listen for other events or changes on the page and call updateHistory accordingly
-    // Example: $(document).on("change", "#someElement", function() { updateHistory("Some action"); });
-  });
-</script>
-
-         
-
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests</th>
+        <th class="text-center">Purpose</th>
+        
+        <th class="status">Status</th>
+        <th class="text-center"> Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center">
+          {{ checkout.submission_date }}
+        </td>
+        <td>
+            <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
+                <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+            </a>
+        </td>
+        <td>
+          {{ checkout.purpose }}
+        </td>
+        <td class="badge {% if checkout.is_approved %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: black;">
+          {% if checkout.is_approve %}
+              Approved
+          {% else %}
+              Disapproved
+          {% endif %}
+        </td>
+        <td>
+          {{ checkout.status_update_date|default:"Not available" }}
         </td>
       </tr>
-  {% endfor %}
-</tbody>
-
     
-    
+       {% endfor %}
+      
+    </tbody>
+  </table>
+  
+  
+  
+  
+</div>
 
-{% endblock %}  
+
+  
+
+  
+{% endblock %}

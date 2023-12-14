@@ -183,4 +183,3 @@ class RequestData(models.Model):
     email = models.EmailField()
     timestamp = models.DateTimeField(auto_now_add=True)
     # Add other fields as needed
-

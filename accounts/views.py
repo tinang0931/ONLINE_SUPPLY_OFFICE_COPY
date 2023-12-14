@@ -784,4 +784,3 @@ def bohistory(request):
    items = Item.objects.all()
 
    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html', {'request': request})
-
