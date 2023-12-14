@@ -38,13 +38,54 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
 import pandas as pd
+from itertools import groupby
+
 
 def main(request):
     return render(request, 'accounts/User/main.html')
 
 
 def Procurement(request):
-    return render(request, 'accounts/User/Procurement.html')
+    class proc:
+        def __init__(self, category, item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price) -> None:
+            self.category = category
+            self.item = item,
+            self.unit = unit,
+            self.budget = budget,
+            self.jan = jan,
+            self.feb = feb,
+            self.march = march,
+            self.april = april,
+            self.may = may,
+            self.june = june,
+            self.july = july,
+            self.aug = aug,
+            self.sep = sep,
+            self.oct = oct,
+            self.nov = nov,
+            self.dec = dec,
+            self.price = price
+    
+    procure = []
+    df = pd.read_csv('categories.csv')
+    categories = df['categories']
+    for c in categories:
+        cat = pd.read_csv(f'categories\{c}.csv')
+        for index, row in cat.iterrows():
+            p = proc(c, row['item'], row['unit'],row['budget'],row['jan'],row['feb'],row['march'],row['april'],row['may'],row['june'],row['july'],row['aug'],row['sep'],row['oct'],row['nov'],row['dec'],row['price'])
+            procure.append(p)
+    
+    
+    grouped_data = {}
+    for item in procure:
+        category = item.category
+        if category not in grouped_data:
+            grouped_data[category] = []
+        grouped_data[category].append(item)
+    context = {
+        'grouped_data':grouped_data
+    }
+    return render(request, 'accounts/User/Procurement.html', context)
 
 
 def bac(request):
@@ -449,7 +490,6 @@ def request(request):
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
-
 
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
