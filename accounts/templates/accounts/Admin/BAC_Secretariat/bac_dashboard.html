@@ -162,6 +162,7 @@ th {
   background-color: #f1f1f1;
   padding: 20px;
 }
+
   </style>
 </head>
 
@@ -387,9 +388,9 @@ th {
         {% endfor %}
       </tbody>
     </table>
-
-    <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
-
+    <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
+      <i class="fas fa-plus"></i> <!-- Replace 'fa-plus' with your desired plus icon class -->
+    </button>
     {% endfor %}
 
   </div>

@@ -149,6 +149,7 @@
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
     overflow: hidden;
     width: 50px;
+    
 }
 
 
@@ -232,7 +233,9 @@
     opacity: 1; 
     visibility: visible; 
 }
-
+#sidebar .logout-link, #sidebar .list-group-item-action, #sidebar .d-flex.flex-wrap.align-content-between.h-100, #sidebar .profile-container, #sidebar .account_type {
+  margin-left: -5px;
+}
 </style>
         <script>
           const savedImageUrl = localStorage.getItem('profileImage');
