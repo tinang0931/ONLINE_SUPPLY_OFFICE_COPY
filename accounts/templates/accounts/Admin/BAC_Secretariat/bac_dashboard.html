@@ -65,7 +65,6 @@
       position: absolute;
       top: 50%;
       right: 10px;
-      /* Adjust the right distance as needed */
       transform: translateY(-50%);
     }
 
@@ -78,7 +77,6 @@
 
     .option:hover {
       background-color: #e0e0e0;
-      /* Change the background color on hover */
       cursor: pointer;
     }
 
@@ -91,10 +89,8 @@
       text-align: center;
       width: 70%;
       border-bottom: 1px solid #000;
-      /* You can adjust the color here */
       background-color: transparent;
       outline: none;
-      /* Optional: Remove the outline when the input is focused */
     }
 
     .confirmation-modal {
@@ -209,7 +205,6 @@
         }
       
         function selectCategory(category) {
-          // Hide all tables and "Add" buttons
           var tables = document.querySelectorAll('.category-table');
           var addButtons = document.querySelectorAll('.add-btn');
       
@@ -221,9 +216,7 @@
             button.style.display = 'none';
           });
       
-          // Show the selected table and its "Add" button
           if (category === 'all') {
-            // Show all tables and "Add" buttons if "All Categories" is selected
             tables.forEach(function (table) {
               table.style.display = '';
             });
@@ -232,7 +225,6 @@
               button.style.display = '';
             });
           } else {
-            // Show the table and "Add" button corresponding to the selected category
             var selectedTable = document.getElementById('table-' + category);
             var addButton = document.getElementById('add-btn-' + category);
       
@@ -242,7 +234,6 @@
             }
           }
       
-          // Hide the options after selecting a category
           var options = document.getElementById("options");
           options.classList.add("d-none");
         }
@@ -252,9 +243,6 @@
           newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
         }
       </script>
-      
-      
-
 
     </div>
 
@@ -279,26 +267,21 @@
         
         <script>
           function confirmDeleteCategory(category) {
-              // Set the confirmation message
               var confirmationMessage = "Are you sure you want to delete the category '" + category + "'?";
       
-              // Set the confirmation message and display the modal
               document.getElementById("confirmationMessage").innerText = confirmationMessage;
               document.getElementById("confirmationModal").style.display = "flex";
           }
       
           function confirmDelete() {
-              // Get the category from the confirmation message
               var confirmationMessage = document.getElementById("confirmationMessage").innerText;
               var category = confirmationMessage.match(/'([^']+)'/)[1];
               
       
-              // If the user clicks 'OK', proceed with the deletion
              window.location.href = "/delete_category/"+category;
           }
       
           function cancelDelete() {
-              // If the user clicks 'Cancel', hide the modal
               document.getElementById("confirmationModal").style.display = "none";
           }
       </script>
@@ -386,48 +369,42 @@
   }
 
   function editItem(itemId) {
-    // Assuming each row has a unique identifier, you can use it to target specific elements
     var row = document.getElementById(itemId);
 
-    // Toggle visibility of elements
     var editIcon = row.querySelector('.edit-icon');
     var saveButton = row.querySelector('.save-icon');
     var cancelButton = row.querySelector('.cancel-icon');
     var editInputs = row.querySelectorAll('.edit-input');
     var editableSpans = row.querySelectorAll('.editable');
 
-    // Show/hide elements
     editIcon.style.display = 'none';
-    saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-    cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
+    cancelButton.style.display = 'inline-block';  
 
     // Show input fields for editing
     editInputs.forEach(function(input) {
-        input.style.display = 'block';  // Adjust display style based on your styling
+        input.style.display = 'block';  
     });
 
     // Hide the spans displaying current values
     editableSpans.forEach(function(span) {
-        span.style.display = 'none';  // Adjust display style based on your styling
+        span.style.display = 'none';  
     });
 
     // Add event listener to the cancel button
     cancelButton.addEventListener('click', function() {
         // Reset the form to its initial state
-        editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
+        editIcon.style.display = 'inline-block';  
         saveButton.style.display = 'none';
         cancelButton.style.display = 'none';
         editInputs.forEach(function(input) {
             input.style.display = 'none';
         });
         editableSpans.forEach(function(span) {
-            span.style.display = 'inline-block';  // Adjust display style based on your styling
+            span.style.display = 'inline-block';  
         });
     });
 
-    // Trigger the form submission
     saveButton.addEventListener('click', function() {
-        // Assuming you have a form element in the row
         var form = row.querySelector('form');
         form.submit();
     });
