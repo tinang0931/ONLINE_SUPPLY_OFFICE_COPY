@@ -1,5 +1,6 @@
 from audioop import reverse
 import json
+from django.core.exceptions import ValidationError
 from pymongo import MongoClient
 import itertools
 from urllib.parse import parse_qs
@@ -405,6 +406,14 @@ def addItem(request):
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
+
+        if quantity and quantity.isdigit():
+                quantity = int(quantity)
+        else:
+
+            print("Invalid quantity")
+            return redirect('request')
+        
         user = request.user
         Item.objects.create(
             user=user,
@@ -413,6 +422,8 @@ def addItem(request):
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+             total_cost=float(unit_cost) * quantity,
+            
         )
         return redirect('request')
     return render(request, 'accounts/User/request.html')
@@ -463,6 +474,22 @@ def request(request):
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
+def validate_file_extension(value):
+    valid_extensions = ['.pdf', '.doc', '.docx', '.jpg', '.png', '.xls', '.xlsx']
+    extension = value.lower().split('.')[-1]
+
+    if extension not in valid_extensions:
+        raise ValidationError(_("File type is not supported. Supported types: .pdf, .doc, .docx, .jpg, .png, .xls, .xlsx"))
+
+def validate_file_size(value):
+    max_size = 5 * 1024 * 1024  # 5 MB
+
+    if value.size > max_size:
+        raise ValidationError(_("File size exceeds the maximum allowed size (5 MB)"))
+
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
 
@@ -484,10 +511,12 @@ class RequesterView(View):
                 unit = request.POST.get(f'unit_{item_id}')
                 quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
                 price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+                
                 try:
                     total_cost = price * quantity
                 except TypeError:
                     total_cost = Decimal('0.00')
+
 
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
@@ -497,11 +526,12 @@ class RequesterView(View):
                     quantity=quantity,
                     unit_cost=price,
                     total_cost=total_cost,  
+                    
                 )
-                new_checkout.save()
-                items.delete()
+
+            new_checkout.save()
+            items.delete()
             return redirect('history')
-        
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
@@ -545,15 +575,12 @@ def delete(request, id):
     return redirect ('requester')
 
 def add_new_item(request):
-
-    grouped_data = {}  
-
     if request.method == 'POST':
+        category = request.POST.get('category')
         new_item_name = request.POST.get('new_item_name')
         new_item_brand = request.POST.get('new_item_brand')
         new_item_unit = request.POST.get('new_item_unit')
         new_item_price = request.POST.get('new_item_price')
-        category = request.POST.get('category')
 
         new_item = CSV(
             Category=category,
@@ -564,25 +591,25 @@ def add_new_item(request):
         )
 
         new_item.save()
-        return redirect('add_new_item')
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+        return redirect('bac_dashboard')
+
 
 
 
 
 def bac_dashboard(request):
     if request.method == 'GET':
-        csv_data = CSV.objects.all()
+        csv_data = CSV.objects.all().order_by('Category')
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+        
+    
 
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
     elif request.method == 'POST':
-
         new_category = request.POST.get('custom-category', '').strip()
-
         if new_category:
             CSV.objects.create(Category=new_category)
             return redirect('bac_dashboard')
@@ -624,11 +651,11 @@ def update_item(request, id):
         
         
         item_name = request.POST.get(f'item_{id}')
-        print(item_name)
+        
         item_brand = request.POST.get(f'item_brand_{id}')
-        print(item_brand)
+       
         unit = request.POST.get(f'unit_{id}')
-        print(unit)
+        
         
         price = request.POST.get(f'price_{id}')
         
@@ -639,13 +666,13 @@ def update_item(request, id):
             Unit=unit,
             Price=price
         )
-
-
-
-       
-       
         return redirect('bac_dashboard')
+    
+
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
+
     return redirect('bac_dashboard')
+
+
