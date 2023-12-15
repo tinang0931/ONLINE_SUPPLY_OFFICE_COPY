@@ -200,9 +200,7 @@
 
 
     $(document).ready(function () {
-        // Add click event to checkboxes
         $('.row-checkbox').on('click', function () {
-            // Find the closest tr and toggle the 'selected' class
             $(this).closest('tr').toggleClass('selected');
         });
     });
@@ -240,14 +238,13 @@
             }
         }
 
-        // Update the displayed items based on the filtered products
         updateProductTables(filteredProducts);
     });
 
 
     function updateProductTables(filteredProducts) {
         for (const productTable of productTables) {
-            productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
+            productTable.querySelector('tbody').innerHTML = ''; 
 
             const categoryName = productTable.querySelector('h3').textContent;
             const products = filteredProducts[categoryName] || [];
@@ -276,10 +273,6 @@
         }
     }
 
-
-    // Call a server-side function to handle the import
-
-    // Function to get CSRF token from cookies
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {

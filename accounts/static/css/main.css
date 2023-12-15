@@ -144,11 +144,11 @@ padding: 0px !important;
 .ctu_logo{
   padding: 6px;
   position: absolute;
-  left: 26px; /* X-coordinate */
-  top: 2px; /* Y-coordinate */
+  left: 26px; 
+  top: 2px; 
   width: 100px;
   height: 100px;
-  margin:  3px; /* mx-3 */
+  margin:  3px; 
   }
   .user {
     font-size: 20px;
@@ -175,8 +175,8 @@ height: 100%;
 .profile_img {
   padding: 10px;
   position: absolute;
-  left: 1745px; /* X-coordinate */
-  top: 10px; /* Y-coordinate */
+  left: 1745px; 
+  top: 10px; 
   margin-right: 30px;
   width: 300px;
   height: 84px;
@@ -269,7 +269,7 @@ height: 100%;
 }
 
 #sidebar-wrapper .list-group-item {
-  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+  white-space: nowrap; 
 }
 
 #page-content-wrapper {
@@ -277,16 +277,16 @@ height: 100%;
 }
 
 #sidebar-wrapper {
-  position: relative; /* Ensure the parent container has a position */
+  position: relative; 
 }
 
 #sidebar-wrapper .list-group-item.logout-link {
   position: absolute;
-  top: 215%; /* Adjust the top position as needed */
+  top: 215%; 
 }
 
 #sidebar-wrapper .list-group-item.logout-link i {
-  margin-right: 10px; /* Adjust the margin as needed for icon spacing */
+  margin-right: 10px; 
 }
 
 
@@ -338,11 +338,11 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
   .ctu_logo {
     position: absolute;
-    left: 26px; /* X-coordinate */
-    top: 13px; /* Y-coordinate */
+    left: 26px; 
+    top: 13px; 
     width: 80px;
     height: 77px;
-    margin: 0 3px; /* mx-3 */
+    margin: 0 3px;
   }
   
 

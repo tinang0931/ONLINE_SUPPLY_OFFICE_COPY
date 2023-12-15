@@ -1,15 +1,12 @@
-
-
 .input-group {
     display: flex;
   }
 
   .table-container {
-      width: 600px; /* Set your desired width */
-      overflow-x: auto; /* Enable horizontal scrolling if needed */
+      width: 600px; 
+      overflow-x: auto; 
   }
 
-  /* Set the table to have a fixed layout */
   
 
   #quantityInput {
@@ -21,7 +18,6 @@
     flex: 0;
   }
 
-  /* Style for the modal */
   .modal {
     display: none;
     position: fixed;
@@ -56,7 +52,7 @@
 
 
       .selected {
-          background-color: #e0e0e0;  /* Change this to the desired background color */
+          background-color: #e0e0e0;  
       }
       .subheader {
       position: fixed;
@@ -66,7 +62,7 @@
       height: 15vh;
   }
   .addtocart {
-    top: 25%; /* Adjusted top to move it higher */
+    top: 25%; 
     position: fixed;
     z-index: 1000;
     left: 87%;
@@ -95,17 +91,16 @@
   }
 
   .cart {
-    top: 24vh; /* Adjusted top using viewport height */
+    top: 24vh; 
     position: fixed;
     z-index: 100000;
-    left: 80vw; /* Adjusted left using viewport width */
+    left: 80vw; 
 }
 
-/* Media query for responsiveness */
 @media (max-width: 768px) {
     .cart {
-        top: 10vh; /* Adjusted top for smaller screens */
-        left: 70vw; /* Adjusted left for smaller screens */
+        top: 10vh; 
+        left: 70vw; 
     }
 }
 
@@ -145,7 +140,8 @@
     margin-top: 5%;
     display: flex;
 }
-/* Define color variables for easy maintenance */
+
+
 :root {
     --lightCoral: #ffcccb;
     --lightSkyBlue: #b3e0ff;
@@ -153,7 +149,6 @@
     --gold: #597b9b;
 }
 
-/* Style rows in the "row2" table with alternating colorful backgrounds */
 .row2 tr:nth-child(odd) {
     background-color: var(--lightCoral);
 }
@@ -162,7 +157,6 @@
     background-color: var(--lightSkyBlue);
 }
 
-/* Style columns in the "row2" table with alternating colors */
 .row2 td:nth-child(odd) {
     background-color: var(--lightGreen);
 }
@@ -171,23 +165,19 @@
     background-color: var(--gold);
 }
 
-/* Set the text color to white and center it for all cells in the "row2" table */
 .row2 td {
     color: white;
     text-align: center;
 }
 
-/* Center align text in table headers */
 .table th {
     text-align: center;
 }
 
-/* Center align content in the cells of the table body */
 .table td {
     text-align: center;
 }
 
-/* Style the table with striped rows using the defined color variables */
 .table tbody tr:nth-child(odd) {
     background-color: var(--lightCoral);
 }
@@ -196,7 +186,6 @@
     background-color: var(--lightSkyBlue);
 }
 
-/* Style the primary button with rounded corners */
 .btn.btn-primary {
     border-radius: 50px;
 }

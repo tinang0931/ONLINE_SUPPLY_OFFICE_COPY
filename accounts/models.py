@@ -94,6 +94,7 @@ class CheckoutItems(models.Model):
     quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.total_cost = self.unit_cost * self.quantity
