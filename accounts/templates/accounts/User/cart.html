@@ -140,31 +140,30 @@ p {
 
 
 <div>
+    <!-- File input container -->
     <div id="fileInputsContainer">
-        <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
+        <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls, .xlsx">
     </div>
-
 
     <!-- Display attached files as clickable links -->
     <div>
         <p>Attached Files:</p>
         <div id="fileLinksContainer"></div>
-        {% for file in files %}
-        <a class="file-link" target="_blank" href="{{ file.url }}">{{ file.name }}</a><br>
-    {% endfor %}
+        <!-- File links will be appended here -->
     </div>
-    
-     
 
     <!-- Add jQuery library (if not already included) -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
- 
+
     <script>
         $(document).ready(function () {
             $('#attachments').on('change', function () {
                 var files = this.files;
 
-                // Append new file links without clearing the previous ones
+                // Clear previous file links before appending new ones
+                $('#fileLinksContainer').empty();
+
+                // Append new file links
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
                     var fileLink = $('<a class="file-link" target="_blank"></a>').attr('href', URL.createObjectURL(file)).text(file.name);
@@ -180,10 +179,7 @@ p {
             });
         });
     </script>
-   
 </div>
-
-    </div>
     
     <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
         <div class="container">

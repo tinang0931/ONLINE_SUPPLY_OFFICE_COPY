@@ -635,5 +635,4 @@ def delete_category(request, Category):
 
     return redirect('bac_dashboard')
 
-
-
+  

@@ -147,3 +147,4 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
+
