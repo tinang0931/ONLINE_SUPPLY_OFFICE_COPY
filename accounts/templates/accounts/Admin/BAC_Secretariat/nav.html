@@ -56,10 +56,8 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <script>
-    // Get the table body element.
     const tableBody = document.querySelector('.cart_table tbody');
 
-    // Iterate over the table rows and set the background color dynamically.
     tableBody.querySelectorAll('tr').forEach((row, index) => {
       const backgroundColor = `rgba(30, 150, 255, ${0.2 + index * 0.09})`;
       row.style.backgroundColor = backgroundColor;

@@ -32,7 +32,7 @@
   left: 40px;
   top: 40px;
   cursor: pointer;
-  transition: transform 0.3s; /* Add a transition for the transform property */
+  transition: transform 0.3s; 
 }
 
 

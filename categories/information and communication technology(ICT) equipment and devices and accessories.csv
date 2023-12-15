@@ -1,0 +1,12 @@
+item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price
+DESKTOP FOR BASIC USERS,can,0,0,0,0,0,0,0,0,0,0,0,0,0,"30,000"
+DESKTOP FOR MID-RANGE USERS,piece,0,0,0,0,0,0,0,0,0,0,0,0,0,"50,000"
+LAPTOP FOR MID-RANGE USERS,piece,0,0,0,0,0,0,0,0,0,0,0,0,0,"55,000"
+"EXTERNAL HARD DRIVE, 1 TB",bottle,0,0,0,0,0,0,0,0,0,0,0,0,0,"3,000"
+"FLASH DRIVE, 16 GB",can,0,0,0,0,0,0,0,0,0,0,0,0,0,200
+"MOUSE, OPTICAL, USB connection type",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,150
+"MOUSE, WIRELESS, USB",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,200
+"PRINTER, impact, dot matrix, 24 pins, 136 columns",can,0,0,0,0,0,0,0,0,0,0,0,0,0,"38,101"
+"PRINTER, impact, dot matrix, 9 pins, 80 columns",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,9191.52
+"PRINTER, laser, monochrome",gallon,0,0,0,0,0,0,0,0,0,0,0,0,0,15000
+"PRINTER, laser, colored",bottle,0,0,0,0,0,0,0,0,0,0,0,0,0,30000
