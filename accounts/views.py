@@ -452,6 +452,13 @@ def purchaseorder(request):
 def admin_home(request):
     return render(request, 'accounts/Admin/System_Admin/admin_home.html')
 
+
+
+@authenticated_user
+def adminabout(request):
+    return render(request, 'accounts/Admin/System_Admin/adminabout.html')
+
+
 @authenticated_user
 def user(request):
     users = User.objects.all()

@@ -50,6 +50,7 @@ urlpatterns = [
    path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('admin_home/',views.admin_home, name='admin_home'),
+   path('adminabout/',views.adminabout, name='adminabout'),
    path('user/',views.user, name='user'),
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('update_item/<int:id>/', views.update_item, name='update_item'),
@@ -60,13 +61,4 @@ urlpatterns = [
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
-  
-
-
-
-
-   
-
- 
 ]
-   
