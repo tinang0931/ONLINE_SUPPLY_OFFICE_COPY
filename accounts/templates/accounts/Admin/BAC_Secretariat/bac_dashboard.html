@@ -284,6 +284,8 @@
           function cancelDelete() {
               document.getElementById("confirmationModal").style.display = "none";
           }
+
+          
       </script>
 
 
@@ -352,9 +354,32 @@
 
         </tr>
         {% endfor %}
+        <tr id="new-item-row-{{ category }}" style="display: none;">
+
+          <form method="post" action="{% url 'add_new_item' %}">
+            {% csrf_token %}
+            <input type="hidden" name="category" value="{{ category }}">
+            <td></td>
+            <td>
+              <input type="text" name="new_item_name" placeholder="New Item Name" required>
+            </td>
+            <td>
+              <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
+            </td>
+            <td>
+              <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
+            </td>
+            <td>
+              <input type="text" name="new_item_price" placeholder="New Item Price" required>
+            </td>
+            <td>
+              <button type="submit" class="save-btn btn-success">Save</button>
+            </td>
+          </form>
+        </tr>
+
       </tbody>
     </table>
-
     <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
     {% endfor %}
@@ -362,6 +387,11 @@
   </div>
 
 <script>
+
+  function toggleNewItemRow(category) {
+    var newRow = document.getElementById('new-item-row-' + category);
+    newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
+  }
   function change_val(id) {
     input = document.getElementById(id);
     form_input = document.getElementById('form_' + id);
