@@ -458,38 +458,82 @@ def user(request):
 
 
 
-def update_user(request, user_id):
+# def update_user(request, username):
+#     user = get_object_or_404(User, username=username)
+
+#     if request.method == 'POST':
+#         form = UserForm(request.POST, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('user')
+#     else:
+#         form = UserForm(instance=user) 
+#         return render(request, 'accounts/Admin/System_Admin/user.html', {'form': form})
+
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        contact2 = request.POST['contact2']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            
+
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
+        return redirect('user')
+    
+   
+
+
+
+def update_user(request, username):
+    user = get_object_or_404(User, username=username)
+
     if request.method == 'POST':
-        user = User.objects.get(pk=user_id)
-        form = UserForm(request.POST or None, instance=user)
+        form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            # Fetch the updated user data
-            updated_user = User.objects.get(pk=user_id)
-            # Construct a JSON response with the updated data
-            user_data = {
-                'username': updated_user.username,
-                'first_name': updated_user.first_name,
-                'last_name': updated_user.last_name,
-                'email': updated_user.email,
-                'contact1': updated_user.contact1,
-                'contact2': updated_user.contact2,
-                'user_type': updated_user.get_user_type_display(),
-            }
-            return JsonResponse({'success': True, 'user_data': user_data})
+            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
         else:
-            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
+    else:
+        form = UserForm(instance=user) 
+        return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+
    
-def delete_user(request, id):
-    try:
-        user = User.objects.get(id=id)
-        user.delete()
-        messages.success(request, "User Deleted!!")
-    except User.DoesNotExist:
-        messages.error(request, "User does not exist")
-
-    return redirect('user') 
-
+def delete_user(request, username):
+    user = User.objects.get(username=username)
+    user.delete()
+    return redirect('user')
 
 
 def addItem(request):

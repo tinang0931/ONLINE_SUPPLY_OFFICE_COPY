@@ -13,6 +13,7 @@ urlpatterns = [
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
+   path('register_user/',views.register_user, name='register_user'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/', RequesterView.as_view(), name='requester'),
@@ -57,8 +58,8 @@ urlpatterns = [
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
-   path('update_user/<int:user_id>/', update_user, name='update_user'), 
-   path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+   path('update_user/<str:username>/', views.update_user, name='update_user'),
+   path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
   
 
 
