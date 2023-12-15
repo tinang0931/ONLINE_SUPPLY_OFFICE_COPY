@@ -27,7 +27,6 @@
             </div>
             <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
                 <h1 class="head">CTU-AC Supply Office Request Monitoring System</h1>
-                <!-- <h1 class="p1">Cebu Technological University - Argao Campus</h1> -->
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
             <div class="profile-container">
@@ -35,9 +34,7 @@
                 <img class="profile_img" id="profile-pic" src="{% static 'images/profile_default_image.png' %}" alt="">
                 
                 
-              <!-- <h1 class="user">Username</h1> -->
 <script>
-    // Function to shorten the full name and update the display
     function shortenAndDisplay(fullName, maxLength) {
         var shortenedName = fullName.length > maxLength ?
             fullName.substring(0, maxLength - 3) + '...' :
@@ -45,13 +42,10 @@
         document.querySelector('.user').textContent = shortenedName;
     }
 
-    // Retrieve the full name from localStorage or use a default value
     var fullName = localStorage.getItem('fullName') || 'Username';
 
-    // Specify the maximum length you want for the displayed username
-    var maxLength = 10; // Adjust this value as needed
+    var maxLength = 10;
 
-    // Call the function to update the displayed username
     shortenAndDisplay(fullName, maxLength);
 </script>
 
@@ -64,7 +58,6 @@
       <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
 
         
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
   <div class="d-flex flex-wrap align-content-between h-100">
       <div class="bg-#6C757D w-100" id="sidebar-wrapper">
@@ -182,26 +175,26 @@
 
 .account_type {
     position: relative;
-    top: 380px; /* Adjust the desired vertical position */
-    left: 30px; /* Adjust the desired horizontal position */
+    top: 380px;
+    left: 30px; 
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
 }
 
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
-    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
+    opacity: 1; 
+    visibility: visible;
 }
 
 
 .sidebar:hover .account_type {
-    opacity: 1; /* Show the element when the sidebar is hovered */
-    visibility: visible; /* Show the element when the sidebar is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
 </style>
  
