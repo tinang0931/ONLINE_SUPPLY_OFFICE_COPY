@@ -64,7 +64,7 @@
                     <i class="fas fa-user-friends user-icon"></i> <span id="user" class="hidden-name">Users</span>
                 </a>
                 
-                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'bac_about'%}">
+                <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'adminabout'%}">
                   <i class="fas fa-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
@@ -117,13 +117,7 @@
         {% block user %}
         {% endblock %}
 
-        {% block bac_history %}
-        {% endblock %}
-
-        {% block bac_home %}
-        {% endblock %}
-
-        {% block bac_dashboard %}
+        {% block adminabout %}
         {% endblock %}
 
     </main>
