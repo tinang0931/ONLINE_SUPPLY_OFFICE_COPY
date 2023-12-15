@@ -221,10 +221,12 @@ def history(request):
 
 
 def tracker(request):
-    user = request.user
+    user = request.user 
+    
     all_checkouts = Checkout.objects.filter(user=user)
     feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
-    context = {'feedback': feedback, 'checkout_info': all_checkouts}
+  
+    context = {'feedback': feedback, 'checkout_info': all_checkouts, }
     return render(request, 'accounts/User/tracker.html', context)
 
 
@@ -261,6 +263,7 @@ def bac_home(request):
                 'purpose': checkout.purpose,
                 'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
+                'is_approve':checkout.is_approve
             }
         else:
             checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
@@ -657,6 +660,7 @@ def bohome(request):
     # Loop through each Checkout instance and gather relevant data
     for checkout in checkouts:
         pr_id = checkout.pr_id
+       
 
         # Get the latest comment for the current pr_id
         latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
@@ -670,7 +674,7 @@ def bohome(request):
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
                 'is_approve': checkout.is_approve,
-                'is_disapprove': checkout.is_disapprove,
+                'is_seen': checkout.is_seen,
                 'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
                 # Add more fields as needed
@@ -701,7 +705,7 @@ class PreqForm_boView(View):
             'user': checkout.user,
             'purpose': checkout.purpose,
             'approved': checkout.is_approve,  # Include the status in the context
-            'disapproved': checkout.is_disapprove
+            'is_seen': checkout.is_seen,
         }
 
         return render(request, self.template_name, context)
@@ -709,7 +713,7 @@ class PreqForm_boView(View):
     def post(self, request, pr_id):
         # Access the pr_id and content from the POST data
         new_status = request.POST.get('new_status')
-
+        new_is_seen = request.POST.get('new_is_seen', False) 
         # Check if both pr_id and new_status are present
         if pr_id and new_status:
             try:
@@ -719,7 +723,7 @@ class PreqForm_boView(View):
                 checkout.date_updated = timezone.now()
                 
                 checkout.is_approve = new_status 
-                checkout.is_disapprove = not new_status 
+                checkout.is_seen = new_is_seen
                 checkout.save()
 
                 # Redirect after processing
@@ -738,19 +742,23 @@ def approve_checkout(request, pr_id):
 
 def disapprove_checkout(request, pr_id):
     return update_checkout_status(request, pr_id, new_status=False)
+def mark_as_seen(request, pr_id):
+    return update_checkout_status(request, pr_id, new_is_seen=True)
 
+def mark_as_unseen(request, pr_id):
+    return update_checkout_status(request, pr_id, new_is_seen=False)
 def update_checkout_status(request, pr_id, new_status):
     if request.method == 'POST':
         try:
 
             # Convert new_status to boolean
             new_status = new_status.lower() == 'true'  if isinstance(new_status, str) else new_status
-
+            new_is_seen = new_is_seen.lower() == 'true' if isinstance(new_is_seen, str) else new_is_seen
             # Update the status of the checkout directly
             checkout = get_object_or_404(Checkout, pr_id=pr_id)
             checkout.status_update_date = timezone.now()
             checkout.is_approve = new_status 
-            checkout.is_disapprove = not new_status 
+            checkout.is_seen = new_is_seen
             checkout.save()
 
 

@@ -66,8 +66,8 @@ class Checkout(models.Model):
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
-    is_approve = models.BooleanField(default=True)
-    is_disapprove = models.BooleanField(default=False)
+    is_approve = models.BooleanField(default=False)
+    is_seen = models.BooleanField(default=False)
 
     # # ... other fields and methods ...
     # STATUS_CHOICES = (

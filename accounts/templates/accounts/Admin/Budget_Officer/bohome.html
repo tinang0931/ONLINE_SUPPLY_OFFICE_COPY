@@ -48,6 +48,7 @@
     </thead>
     <tbody>
       {% for checkout in checkouts %}
+   
       <tr>
         <td class="text-center">
           {{ checkout.submission_date }}
@@ -60,18 +61,31 @@
         <td>
           {{ checkout.purpose }}
         </td>
-        <td class="badge {% if checkout.is_approved %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: black;">
+        
+        <td class="badge {% if checkout.is_approved %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
+         
+          {% if checkout.is_seen %}
           {% if checkout.is_approve %}
-              Approved
+              {% if checkout.is_submitted %}
+                  Approved
+              {% else %}
+                 Seen
+              {% endif %}
           {% else %}
               Disapproved
           {% endif %}
+      {% else %}
+          Pending
+      {% endif %}
+        
+        
         </td>
+        
         <td>
           {{ checkout.status_update_date|default:"Not available" }}
         </td>
       </tr>
-    
+     
        {% endfor %}
       
     </tbody>

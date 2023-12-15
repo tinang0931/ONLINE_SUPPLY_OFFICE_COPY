@@ -55,7 +55,8 @@ urlpatterns = [
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('update_item/<int:id>/', views.update_item, name='update_item'),
    path('upload_file/',views.upload_file, name='upload_file'),
-  
+    path('mark_as_seen/<pr_id>/', mark_as_seen, name='mark_as_seen'),
+    path('mark_as_unseen/<pr_id>/', mark_as_unseen, name='mark_as_unseen'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
