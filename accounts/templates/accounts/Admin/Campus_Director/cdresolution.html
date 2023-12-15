@@ -27,7 +27,7 @@
 
   .form-control {
     display: block;
-    width: 26%;
+    width: 18%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -36,38 +36,24 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: rgb(13 110 253 / 8%);
     background-clip: padding-box;
-    border: var(--bs-border-width) solid #343a40;
-    border-radius: var(--bs-border-radius);
+    border-radius: 20px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
   }
-
-  .btn-outline-success {
-    color: #ffffff; 
-    background-color: #2d83da; 
- margin-left: 1680px;
- height: 35px;
-  }
   
-
-  .btn-outline-success:hover {
-    color: #ffffff; 
-    background-color: rgb(9, 66, 222); 
-    border-color: #082fdc; 
-  }
 
   .search-form {
     justify-content: flex-end;
   }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">RESOLUTIONS</h1>
+  <h1 class="pr text-center pt-4">RESOLUTION</h1>
 
   <div class="search">
-    <input class="form-control mb-3" type="text" placeholder="First name, Last name, Department" id="search_bar_request" oninput="filterTable()">
+    <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
 </div>
 
 <table class="table table-bordered">
@@ -109,8 +95,8 @@
       table = document.querySelector(".table");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
-          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1]; 
           if (td) {
               txtValue = td.textContent || td.innerText;
               if (txtValue.toUpperCase().indexOf(filter) > -1) {

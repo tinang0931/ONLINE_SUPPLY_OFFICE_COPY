@@ -65,10 +65,53 @@
       position: absolute;
       top: 50%;
       right: 10px;
-      /* Adjust the right distance as needed */
       transform: translateY(-50%);
     }
 
+    .container {
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: 200px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #custom-category {
+      border: none;
+      text-align: center;
+      width: 70%;
+      border-bottom: 1px solid #000;
+      background-color: transparent;
+      outline: none;
+    }
+
+    .confirmation-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+  }
+
+  .confirmation-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+  }
     .form-control {
     display: block;
     width: 100%;
@@ -105,47 +148,75 @@
 <body>
 
   <div class="container-fluid">
-    <div class="container">
-      <h1 class="pr text-center pt-4">Available Items</h1>
+
+
+    <h1 class="pr text-center pt-4">Available Items</h1>
 
 
 
-      <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="file">Choose CSV file:</label>
-        <input type="file" name="file" accept=".csv" required>
-        <br>
-        <button class="btn btn-success" type="submit">Upload</button>
-      </form>
+    <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="file">Choose CSV file:</label>
+      <input type="file" name="file" accept=".csv" required>
       <br>
-      <div class="dropdown" style="width: 45%;">
-        <select class="form-control" id="category-dropdown">
-          <option value="all">All Categories</option>
-          {% for category, items in grouped_data.items %}
-          <option value="{{ category }}">{{ category }}</option>
-          {% endfor %}
-        </select>
-        <div class="dropdown-arrow">&#9660;</div>
+      <button class="btn btn-success" type="submit">
+        <i class="fas fa-file-upload"></i> Upload
+      </button>
+
+
+    </form>
+    <br>
+
+    <div class="dropdown" style="width: 45%;">
+      <div>
+        <div class="container" onclick="showOptions()" style="user-select: none;">Select Category</div>
       </div>
 
+      <div id="options" class="d-none position-absolute z-1 bg-white "
+        style="user-select: none; width: 100%; max-height: 200px; overflow-y: auto; text-align: center;">
+        <div class="option" onclick="selectCategory('all')">All Categories</div>
+        {% for category, items in grouped_data.items %}
+        <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
+        {% endfor %}
+
+        <div>
+          <div id="newInputField" class="option hidden">
+            <form method="post" action="{% url 'bac_dashboard' %}">
+              {% csrf_token %}
+              <input type="text" id="custom-category" name="custom-category" placeholder="Make New Category">
+            </form>
+          </div>
+          <div class="option" onclick="showInputField()">Add Category</div>
+        </div>
+      </div>
       <script>
-        document.getElementById('category-dropdown').addEventListener('change', function () {
-          var selectedCategory = this.value;
+        function showInputField() {
+          var newInputField = document.getElementById("newInputField");
+          newInputField.classList.toggle("hidden");
+        }
       
-          // Hide all tables and "Add" buttons
+        function showOptions() {
+          var options = document.getElementById("options");
+          if (options.classList.contains("d-none")) {
+            options.classList.remove("d-none");
+          } else {
+            options.classList.add("d-none");
+          }
+        }
+      
+        function selectCategory(category) {
           var tables = document.querySelectorAll('.category-table');
+          var addButtons = document.querySelectorAll('.add-btn');
+      
           tables.forEach(function (table) {
             table.style.display = 'none';
           });
       
-          var addButtons = document.querySelectorAll('.add-btn');
           addButtons.forEach(function (button) {
             button.style.display = 'none';
           });
       
-          // Show the selected table and its "Add" button
-          if (selectedCategory === 'all') {
-            // Show all tables and "Add" buttons if "All Categories" is selected
+          if (category === 'all') {
             tables.forEach(function (table) {
               table.style.display = '';
             });
@@ -154,181 +225,203 @@
               button.style.display = '';
             });
           } else {
-            // Show the table and "Add" button corresponding to the selected category
-            var selectedTable = document.getElementById('table-' + selectedCategory);
-            var addButton = document.getElementById('add-btn-' + selectedCategory);
+            var selectedTable = document.getElementById('table-' + category);
+            var addButton = document.getElementById('add-btn-' + category);
       
             if (selectedTable && addButton) {
               selectedTable.style.display = '';
               addButton.style.display = '';
             }
           }
-        });
       
+          var options = document.getElementById("options");
+          options.classList.add("d-none");
+        }
+
         function toggleNewItemRow(category) {
           var newRow = document.getElementById('new-item-row-' + category);
           newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
         }
       </script>
+
+    </div>
+
+    {% for category, items in grouped_data.items %}
+    <table class="category-table" id="table-{{ category }}">
+      <thead>
+        <tr>
+          <th colspan="6" class="text-center">
+            {{ category }}
+            <a href="#" onclick="confirmDeleteCategory('{{ category }}')">
+                <i class="fas fa-trash-alt text-danger"></i>
+            </a>
+        </th>
+
+        <div class="confirmation-modal" id="confirmationModal">
+          <div class="confirmation-box">
+              <p id="confirmationMessage"></p>
+              <button onclick="confirmDelete()">OK</button>
+              <button onclick="cancelDelete()">Cancel</button>
+          </div>
+      </div>
+        
+        <script>
+          function confirmDeleteCategory(category) {
+              var confirmationMessage = "Are you sure you want to delete the category '" + category + "'?";
       
-      <!-- Add this button where you want to trigger the new category addition -->
-      <button class="add-category-btn btn-primary" onclick="addNewCategory()">Add New Category</button>
-
-      <script>
-        function addNewCategory() {
-          var newCategory = prompt("Enter the name of the new category:");
-
-          if (newCategory !== null && newCategory.trim() !== "") {
-            var csrfToken = '{{ csrf_token }}';
-
-            fetch('{% url "add_category" %}', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': csrfToken,
-              },
-              body: 'new_category=' + encodeURIComponent(newCategory),
-            })
-              .then(response => response.json())
-              .then(data => {
-                // Handle the response
-                if (data.status === 'success') {
-                  // Optionally, you can reload the page or update it dynamically
-                  location.reload();  // Reload the page
-                } else {
-                  console.error('Error adding new category:', data.message);
-                }
-              })
-              .catch(error => {
-                console.error('Error adding new category:', error);
-              });
+              document.getElementById("confirmationMessage").innerText = confirmationMessage;
+              document.getElementById("confirmationModal").style.display = "flex";
           }
-        }
+      
+          function confirmDelete() {
+              var confirmationMessage = document.getElementById("confirmationMessage").innerText;
+              var category = confirmationMessage.match(/'([^']+)'/)[1];
+              
+      
+             window.location.href = "/delete_category/"+category;
+          }
+      
+          function cancelDelete() {
+              document.getElementById("confirmationModal").style.display = "none";
+          }
       </script>
 
 
-      {% for category, items in grouped_data.items %}
-      <table class="category-table" id="table-{{ category }}">
-        <thead>
-          <tr>
-            <th colspan="5">
-              {{ category }}
-              <a href="{% url 'delete_category' Category=category %}">
-                  <i class="fas fa-trash-alt"></i> <!-- Replace 'fa-trash-alt' with the actual trash icon class -->
-              </a>
-          </th>
-          
-          
-          </tr>
-          <tr>
-            <th>Item Name</th>
-            <th>Item Brand/Description</th>
-            <th>Unit</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-          <tr>
-            <td>{{ item.Item_name }}</td>
-            <td>{{ item.Item_Brand }}</td>
-            <td>{{ item.Unit }}</td>
-            <td>{{ item.Price }}</td>
-            <td>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal{{ item.id }}">
-                Update
-              </button>
+        </tr>
+        <tr>
+          <th></th>
+          <th class="text-center">Item Name</th>
+          <th class="text-center">Item Brand/Description</th>
+          <th class="text-center">Unit</th>
+          <th class="text-center">Price</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr id="{{ item.id }}">
+          <td class="text-center">{{ forloop.counter }}</td>
+          <td>
+            <span class="editable" data-field="Item_name">{{ item.Item_name }}</span>
+            <input id="item_{{ item.id }}" type="text" value="{{ item.Item_name }}" oninput="change_val('item_{{ item.id }}')" class="edit-input" style="display: none">
+          </td>
+          <td>
+            <span class="editable" data-field="Item_Brand">{{ item.Item_Brand }}</span>
+            <input id="item_brand_{{ item.id }}" type="text" value="{{ item.Item_Brand }}" oninput="change_val('item_brand_{{ item.id }}')" class="edit-input" style="display: none">
+          </td>
+          <td>
+            <span class="editable" data-field="Unit">{{ item.Unit }}</span>
+            <input id="unit_{{ item.id }}" type="text" value="{{ item.Unit }}" oninput="change_val('unit_{{ item.id }}')" class="edit-input" style="display: none">
+          </td>
+          <td>
+            <span class="editable" data-field="Price">{{ item.Price }}</span>
+            <input id="price_{{ item.id }}" type="number" value="{{ item.Price }}" oninput="change_val('price_{{ item.id }}')" class="edit-input" style="display: none">
+          </td>
+
+        
+          <td>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+              <a href="#" class="edit-icon" style="text-align: center;" onclick="editItem('{{ item.id }}')">
+                <i class="fas fa-edit text-primary"></i></a>
 
 
-              <div class="modal fade" id="updateModal{{ item.id }}" tabindex="-1" role="dialog"
-                aria-labelledby="updateModalLabel{{ item.id }}" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="updateModalLabel{{ item.id }}">Update Item</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      {% if item.id %}
-                      <form method="post" action="{% url 'update_item' item.id %}">
-                        {% csrf_token %}
-                        <label for="category">Category:</label>
-                        <input type="text" name="category" value="{{ item.Category }}" required>
-                        <br>
-                        <label for="item_name">Item Name:</label>
-                        <input type="text" name="item_name" value="{{ item.Item_name }}" required>
-                        <br>
-                        <label for="item_brand">Item Brand:</label>
-                        <input type="text" name="item_brand" value="{{ item.Item_Brand }}" required>
-                        <br>
-                        <label for="unit">Unit:</label>
-                        <input type="text" name="unit" value="{{ item.Unit }}" required>
-                        <br>
-                        <label for="price">Price:</label>
-                        <input type="text" name="price" value="{{ item.Price }}" required>
-                        <br><br>
-                        <button type="submit" class="btn btn-primary">Update Item</button>
-                      </form>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <form action="{% url 'update_item' item.id %}" method="post">
 
+                  {% csrf_token %}
+                  <input id="form_item_{{ item.id }}" type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
+                  <input id="form_item_brand_{{ item.id }}"  type="hidden" name="item_brand_{{ item.id }}" value="{{ item.Item_Brand }}">
+                  <input id="form_unit_{{ item.id }}" type="hidden" name="unit_{{ item.id }}" value="{{ item.Unit }}">
+                  <input id="form_price_{{ item.id }}" type="number" style="display: none;" name="price_{{ item.id }}" value="{{ item.Price }}">
+
+                  <button type="submit" class="save-icon" style="display: none;"><i class="fas fa-check text-success"></i></button>
+                  <button type="button" class="cancel-icon" style="display: none;"><i class="fas fa-times text-danger"></i></button>
+      
+                </form>
+              
+              
 
               {% if item.id %}
-              <a href="{% url 'delete_item' item.id %}">
-                <button class="btn btn-danger">Delete</button>
+              <a href="{% url 'delete_item' item.id %}" style="text-align: center;">
+                <i class="fas fa-trash-alt text-danger"></i>
               </a>
+
               {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
 
-          <tr id="new-item-row-{{ category }}" style="display: none;">
+            </div>
+          </td>
 
-            <form method="post" action="{% url 'add_new_item' %}">
-              {% csrf_token %}
-              <input type="hidden" name="category" value="{{ category }}">
-              <td>
-                <input type="text" name="new_item_name" placeholder="New Item Name" required>
-              </td>
-              <td>
-                <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
-              </td>
-              <td>
-                <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
-              </td>
-              <td>
-                <input type="text" name="new_item_price" placeholder="New Item Price" required>
-              </td>
-              <td>
-                <button type="submit" class="save-btn btn-success">Save</button>
-              </td>
-            </form>
-          </tr>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-        </tbody>
-      </table>
-      <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
+    <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
-      {% endfor %}
+    {% endfor %}
 
-
-    </div>
   </div>
 
-  
+<script>
+  function change_val(id) {
+    input = document.getElementById(id);
+    form_input = document.getElementById('form_' + id);
+    form_input.value = input.value;
+  }
+
+  function editItem(itemId) {
+    var row = document.getElementById(itemId);
+
+    var editIcon = row.querySelector('.edit-icon');
+    var saveButton = row.querySelector('.save-icon');
+    var cancelButton = row.querySelector('.cancel-icon');
+    var editInputs = row.querySelectorAll('.edit-input');
+    var editableSpans = row.querySelectorAll('.editable');
+
+    editIcon.style.display = 'none';
+    cancelButton.style.display = 'inline-block';  
+
+    // Show input fields for editing
+    editInputs.forEach(function(input) {
+        input.style.display = 'block';  
+    });
+
+    // Hide the spans displaying current values
+    editableSpans.forEach(function(span) {
+        span.style.display = 'none';  
+    });
+
+    // Add event listener to the cancel button
+    cancelButton.addEventListener('click', function() {
+        // Reset the form to its initial state
+        editIcon.style.display = 'inline-block';  
+        saveButton.style.display = 'none';
+        cancelButton.style.display = 'none';
+        editInputs.forEach(function(input) {
+            input.style.display = 'none';
+        });
+        editableSpans.forEach(function(span) {
+            span.style.display = 'inline-block';  
+        });
+    });
+
+    saveButton.addEventListener('click', function() {
+        var form = row.querySelector('form');
+        form.submit();
+    });
+}
+
+
+</script>
+
+
+
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
 </body>
