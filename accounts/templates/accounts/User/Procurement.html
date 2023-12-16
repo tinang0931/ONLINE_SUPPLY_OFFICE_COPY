@@ -5,21 +5,22 @@
 {% block Procurement %}
     <style>
         table {
-            width: 100%;
             border-collapse: collapse;
-        }
-
-        .th{
-            text-align: inherit;
-
-        }
-
-        th, td {
-            border: 2px solid #000;
-            background-color: #f2f2f2;
-            padding: 8px;
-            text-align: left;
-        }
+            border: 1px solid #ccc;
+            background-color: #fff;
+          }
+          
+          th {
+            padding: 5px;
+            border: 1px solid #ccc;
+            background-color: #1c96c5; /* Creamy peach */
+          }
+          
+          td {
+            padding: 5px;
+            border: 1px solid #ccc;
+            background-color: #f2e6f0; /* Light pink */
+          }
 
         .category-header {
             text-align: center;
@@ -47,43 +48,64 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+          }
+          
+          .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 10px;
+          }
+          
+          .search-bar {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            position: right;
+          }
     </style>
 
     <div class="container-fluid">
         <div class="subheader">
             <div class="container">
-                <h1 class="title">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+                <div class="header">
+                    <h1 class="title" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+                    <div class="search">
+                        <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+                    </div>
+                </div>
             </div>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th>Item & Specifications</th>
-                    <th>Quantity & Unit</th>
-                    <th>Estimated Budget</th>
-                    <th>Mode of Procurement</th>
-                    <th>Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Item & Specifications</th>
+                    <th rowspan='2'>Quantity & Unit</th> <!-- Reverted back to "Quantity & Unit" -->
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th rowspan='2'>Mode of Procurement</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
-                    <th>Unit Price</th>
+                    <th rowspan='2'>Unit Price</th>
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>Aug</th>
+                    <th>Sept</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
                 </tr>
             </thead>
             <tbody>
-                    <td>Jan</td>
-                    <td>Feb</td>
-                    <td>Mar</td>
-                    <td>April</td>
-                    <td>May</td>
-                    <td>June</td>
-                    <td>July</td>
-                    <td>Aug</td>
-                    <td>Sept</td>
-                    <td>Oct</td>
-                    <td>Nov</td>
-                    <td>Dec</td>
-                </tr>
-            </td>
-
                 {% for category, items in grouped_data.items %}
                     <tr>
                         <th colspan="17">{{ category }}</th>
@@ -92,11 +114,21 @@
                         <tr class="item-row">
                             <td><input type="checkbox">{{ p.item }}</td>
                             <td>0</td>
-                            <td>00</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td>400.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><input type="text" name="unit_price" class="unit-price-input" value="400.00"></td>
                         </tr>
                     {% endfor %}
                 {% endfor %}
@@ -104,10 +136,49 @@
         </table>
     </div>
 
-    <script>
-        // Your JavaScript code here
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-{% endblock %}
+
+    <script>
+        function filterTable() {
+            // Get the search bar input value
+            const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
+          
+            // Get all table rows
+            const tableRows = document.querySelectorAll("tbody tr");
+          
+            // Hide all rows by default
+            for (const row of tableRows) {
+              row.style.display = "none";
+            }
+          
+            // Filter and show rows based on the search input
+            for (const row of tableRows) {
+              const tableData = row.querySelectorAll("td");
+              const search_value = search_bar_request;
+              let isFound = false;
+          
+              // Loop through each cell
+              for (const cell of tableData) {
+                const cellValue = cell.textContent.toLowerCase();
+          
+                // Check if the cell value matches the search input
+                if (cellValue.includes(search_value)) {
+                  isFound = true;
+                  break;
+                }
+              }
+          
+              // Show the row if at least one cell matches the search input
+              if (isFound) {
+                row.style.display = "";
+              }
+            }
+          }
+    </script>
+    <!-- Your existing template code -->
+
+<div class="modal-footer">
+    <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+</div>
+{% endblock %} 
