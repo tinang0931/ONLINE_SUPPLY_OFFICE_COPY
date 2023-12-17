@@ -7,10 +7,10 @@
 {% block request %}
 
 <style>
-.search input {
-    width: 300px;
-    border-radius: 20px;
-}
+    .search input {
+        width: 300px;
+        border-radius: 20px;
+    }
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -46,21 +46,19 @@
                     Request</button>
             </div>
 
-            <div class="addtocart">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=>Add To Cart</button>
-            </div>
+
         </div>
     </div>
     <br><br>
-    <form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    
         <div class="row2">
 
 
             <div class="addtocart">
-                <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+                <button type="submit" value="submit" class="btn btn-primary">Add to PR </button>
 
             </div>
+
             <div class="col-12">
 
                 {% for category, items in grouped_data.items %}
@@ -70,29 +68,35 @@
                             <th colspan="6" class="text-center">{{ category }}</th>
                         </tr>
                         <tr>
-                            <th scope="col">Items</th>
-                            <th scope="col">Item Brand Description</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Item Brand / Description</th>
                             <th scope="col">Unit</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
+                            <th scope="col" style="width: 50px;">Quantity</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in items %}
                         <tr class="table-row" id="{{ item.id }}">
-                            <td>{{ item.Item_name }}</td>
+                            <td style="height: 54px">{{ item.Item_name }}</td>
                             <td>{{ item.Item_Brand }}</td>
                             <td>{{ item.Unit }}</td>
                             <td>{{ item.Price }}</td>
-                            <td><input type="number" name="quantity_{{ item.id }}" value="" min="1"  style="width: 50px; text-align: center" ></td>
+                            <td><input type="number"  name="quantity_{{ item.id }}" value=""
+                                    min="1" style="width: 50px; text-align: center" data-item-id="{{ item.id }}"></td>
                             <td>
                                 <input type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
                                 <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.Item_Brand }}">
                                 <input type="hidden" name="unit_{{ item.id }}" value="{{ item.Unit }}">
-                                <input type="number" style="display: none;" name="price_{{ item.id }}" value="{{ item.Price }}">
-                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ item.id }}">
+                                <input type="number" style="display: none;" name="price_{{ item.id }}"
+                                    value="{{ item.Price }}">
+
+                                <button type="button" class="add-to-cart-btn" data-item-id="{{ item.id }}">Add to
+                                    Cart</button>
                             </td>
+
+
                         </tr>
                         {% endfor %}
 
@@ -100,11 +104,49 @@
                 </table>
                 {% endfor %}
 
+
             </div>
         </div>
-    </form>
+
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Handle button click event
+        $('.add-to-cart-btn').click(function () {
+            var item_id = $(this).data('item-id');
+            var quantity = $('input[name="quantity_' + item_id + '"]').val();
+
+            // Gather other data if needed
+            var item_name = $('input[name="item_' + item_id + '"]').val();
+            var item_brand = $('input[name="item_brand_' + item_id + '"]').val();
+            var unit = $('input[name="unit_' + item_id + '"]').val();
+            var price = $('input[name="price_' + item_id + '"]').val();
+
+            // AJAX request to send data to server
+            $.ajax({
+                url: '{% url "request" %}',  // Change this to your actual URL
+                method: 'POST',
+                data: {
+                    'item__id': item_id,
+                    'quantity': quantity,
+                    'item_name': item_name,
+                    'item_brand': item_brand,
+                    'unit': unit,
+                    'price': price,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (data) {
+                    console.log('Success:', data);
+                    // You can perform additional actions after successful submission
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+    });
+</script>
 <script>
     function scrollToCategory() {
         var selectedCategory = document.getElementById('dropdownMenuSelect').value;

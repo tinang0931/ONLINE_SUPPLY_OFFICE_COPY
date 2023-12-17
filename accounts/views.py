@@ -40,6 +40,7 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 
 
+
 def main(request):
     return render(request, 'accounts/User/main.html')
 
@@ -430,44 +431,35 @@ def addItem(request):
 
 
 def request(request):
+
     if request.method == 'POST':
 
-        selected_rows = request.POST.getlist('selectRow')
+        print("jdahfasd")
+      
+        quantity = request.POST.get('quantity')
+        print(quantity)
+        item_name = request.POST.get('item_name')
+        print(item_name)
+        item_brand = request.POST.get('item_brand')
+        print(item_brand)
+        unit = request.POST.get('unit')
+        print(unit)
+        price = request.POST.get('price')
+        print(price)
 
-        for row_id in selected_rows:
-            item_name = request.POST.get(f'item_{row_id}')
-            item_brand = request.POST.get(f'item_brand_{row_id}')
-            unit = request.POST.get(f'unit_{row_id}')
-            price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
+        Item.create(
+            
+            quantity=quantity,
+            item =item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
 
-        
-            if quantity and quantity.isdigit():
-                quantity = int(quantity)
-            else:
-               
-                print(f"Invalid quantity for row {row_id}")
-                continue
-
-            user = request.user
-
-
-            item = Item.objects.create(
-                user=user,
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price,
-                quantity=quantity,
-
-                total_cost=float(price) * quantity,
-            )
-            item.save()
-
-        return redirect('requester')
+        return redirect('request')
 
     elif request.method == 'GET':
-        csv_data = CSV.objects.all()
+        csv_data = CSV.objects.all().order_by('Category')
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
