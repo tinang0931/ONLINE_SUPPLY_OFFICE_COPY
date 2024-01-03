@@ -106,7 +106,6 @@
     height: 318px;
     left: 10px;
     top: 220px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-family: Verdana;
     font-style: normal;
     font-weight: 600;
@@ -120,6 +119,6 @@
 .arrow {
     position: fixed;
     top: 880px;
-    left: 980px;
+    left: 950px;
     width: 75px;
 }
