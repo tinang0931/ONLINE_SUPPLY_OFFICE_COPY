@@ -48,7 +48,16 @@ p {
         font-size: 16px;
     }
 
+    .attach {
+        width: 35px;
+        height: 35px;
+        display: inline-block; 
+        vertical-align: middle;
+    }
 
+    .attached-file-column {
+        text-align: center; 
+    }
 
 </style>
 
@@ -79,9 +88,9 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;">Attachment</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
+              <th class="text-center text-nowrap"></th> 
               <th class="text-center text-nowrap"></th>
-              <th class="text-center text-nowrap"></th>   
           </tr>
       </thead>
       
@@ -94,16 +103,14 @@ p {
                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                 <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td class="item_total_cost text-center">{{ item.file_attachment }}</td>
+                <td class="item_total_cost text-center">{{ Attached_File }}</td>
                 <td>
-                    <a href="#" class="btn btn-info btn-sm" title="Attach File">
-                        <i class="fa fa-paperclip"></i> <!-- Font Awesome paperclip icon -->
-                    </a>
-                    <a href="#" class="btn btn-primary btn-sm">Update</a>
+                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile">
+                    <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 35px; height: 35px; vertical-align: middle;">
                 </td>
                 {% if item.id %}
                 <td class="text-center">
-                    <a href="{% url 'delete' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 37px; height: 37px; vertical-align: middle;">
                 </td>
                 {% endif %}
                 <td>
