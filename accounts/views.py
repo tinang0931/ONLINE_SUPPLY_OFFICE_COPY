@@ -35,6 +35,8 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
+from .models import User
+from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
@@ -137,9 +139,8 @@ def register(request):
         )
         email.send()
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('login')  
+        return redirect('login')
     return render(request, 'accounts/User/register.html')
-
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -168,7 +169,7 @@ def login(request):
             messages.success(request, "You are now logged in.")
 
             if user.user_type == 'admin':
-                return redirect('bac_home')  
+                return redirect('admin_home')  
             else:
                 return redirect('request')
         else:
@@ -443,6 +444,105 @@ def resolution(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def admin_home(request):
+    return render(request, 'accounts/Admin/System_Admin/admin_home.html')
+
+
+
+@authenticated_user
+def adminabout(request):
+    return render(request, 'accounts/Admin/System_Admin/adminabout.html')
+
+
+@authenticated_user
+def user(request):
+    users = User.objects.all()
+    return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
+
+
+
+# def update_user(request, username):
+#     user = get_object_or_404(User, username=username)
+
+#     if request.method == 'POST':
+#         form = UserForm(request.POST, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('user')
+#     else:
+#         form = UserForm(instance=user) 
+#         return render(request, 'accounts/Admin/System_Admin/user.html', {'form': form})
+
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        contact2 = request.POST['contact2']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            
+
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
+        return redirect('user')
+    
+   
+
+
+
+def update_user(request, username):
+    user = get_object_or_404(User, username=username)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
+        else:
+            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
+    else:
+        form = UserForm(instance=user) 
+        return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+
+   
+def delete_user(request, username):
+    user = User.objects.get(username=username)
+    user.delete()
+    return redirect('user')
+
 
 def addItem(request):
     if request.method == 'POST':
@@ -570,8 +670,7 @@ class RequesterView(View):
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
-                    total_cost=total_cost,  
-                    
+                    total_cost=total_cost,
                 )
 
             new_checkout.save()
@@ -580,12 +679,6 @@ class RequesterView(View):
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
-
-@authenticated_user
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
 
 
 @authenticated_user
@@ -613,7 +706,7 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-@authenticated_user              
+             
 def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
@@ -719,5 +812,4 @@ def delete_category(request, Category):
     items_to_delete.delete()
 
     return redirect('bac_dashboard')
-
 
