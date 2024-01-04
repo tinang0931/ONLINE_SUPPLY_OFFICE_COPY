@@ -20,8 +20,14 @@ class User(AbstractUser):
     password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
+        ('bac', 'BAC Secretariat'),
+        ('campusd', 'Campus Director'),
+        ('budget', 'Budget Officer'),
+        ('admin', 'Admin'),
+        
+        
     ]
 
     is_admin = models.BooleanField(default=False) 
@@ -30,6 +36,12 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
     
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
         if self.user_type == 'admin':
@@ -48,12 +60,11 @@ class Item(models.Model):
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    @property
-    def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
+
 
 
 
@@ -83,6 +94,7 @@ class CheckoutItems(models.Model):
     quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.total_cost = self.unit_cost * self.quantity
@@ -105,6 +117,12 @@ class CSV(models.Model):
     Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class VerificationCode(models.Model):
