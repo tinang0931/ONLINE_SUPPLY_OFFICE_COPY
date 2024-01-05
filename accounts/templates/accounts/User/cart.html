@@ -48,10 +48,17 @@ p {
         font-size: 16px;
     }
 
-
-    #fileInputsContainer {
-        margin-bottom: 20px;
+    .attach {
+        width: 35px;
+        height: 35px;
+        display: inline-block; 
+        vertical-align: middle;
     }
+
+    .attached-file-column {
+        text-align: center; 
+    }
+
 </style>
 
 
@@ -80,10 +87,11 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th> 
-              <th class="text-center text-nowrap" style="min-width: 7rem;">Attachment</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
+              <th class="text-center text-nowrap"></th> 
               <th class="text-center text-nowrap"></th>
-              <th class="text-center text-nowrap"></th>   
+              <th class="text-center text-nowrap"></th>
           </tr>
       </thead>
       
@@ -96,17 +104,14 @@ p {
                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                 <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td class="item_total_cost text-center">{{ attach_file}}</td> 
+                <td class="item_total_cost text-center">{{ Attached_File }}</td>
                 <td>
-                    <span id="attachmentIcon" onclick="attachFile()">
-                        <img src="{% static 'images/attach.png' %}" alt="Attachment" style="width: 35px; height: 35px;">
-                    </span>
-                    <input type="file" id="fileInput" style="display: none;">
-                    <a href="#" class="btn btn-primary btn-sm">Update</a>
-                </td>                              
+                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile" style="width: 21px; height: 21px; vertical-align: middle;">
+                    <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 21px; height: 21px; vertical-align: middle;">
+                </td>
                 {% if item.id %}
                 <td class="text-center">
-                    <a href="{% url 'delete' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 21px; height: 21px; vertical-align: middle;">
                 </td>
                 {% endif %}
                 <td>
@@ -121,6 +126,20 @@ p {
         {% endfor %}
     </tbody>
     </table>
+
+    <script>
+        function handleFileChange(event, itemId) {
+            const attachedFile = event.target.files[0];
+            const attachmentSection = document.getElementById(`attachment_section${itemId}`);
+    
+            if (attachedFile) {
+                attachmentSection.textContent = attachedFile.name; // Display the file name in the attachment section
+                // You can perform further actions with the attached file here
+            } else {
+                attachmentSection.textContent = ''; // Clear the attachment section if no file is selected
+            }
+        }
+    </script>
     
     <script>
         $(document).ready(function() {
