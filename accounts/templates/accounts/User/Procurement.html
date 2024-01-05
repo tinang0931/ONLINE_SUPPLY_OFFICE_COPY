@@ -1,0 +1,112 @@
+{% extends "accounts/User/main.html" %}
+
+{% load static %}
+
+{% block Procurement %}
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .th{
+            text-align: inherit;
+
+        }
+
+        th, td {
+            border: 2px solid #000;
+            background-color: #f2f2f2;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .category-header {
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        .category-row {
+            margin-bottom: 5px;
+        }
+
+        .item-row {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-quantity {
+            text-align: right;
+        }
+
+        .container-fluid {
+            height: 74vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="subheader">
+            <div class="container">
+                <h1 class="title">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item & Specifications</th>
+                    <th>Quantity & Unit</th>
+                    <th>Estimated Budget</th>
+                    <th>Mode of Procurement</th>
+                    <th>Monthly Quantity Requirement</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th>Unit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <td>Jan</td>
+                    <td>Feb</td>
+                    <td>Mar</td>
+                    <td>April</td>
+                    <td>May</td>
+                    <td>June</td>
+                    <td>July</td>
+                    <td>Aug</td>
+                    <td>Sept</td>
+                    <td>Oct</td>
+                    <td>Nov</td>
+                    <td>Dec</td>
+                </tr>
+            </td>
+
+                {% for category, items in grouped_data.items %}
+                    <tr>
+                        <th colspan="17">{{ category }}</th>
+                    </tr>
+                    {% for p in items %}
+                        <tr class="item-row">
+                            <td><input type="checkbox">{{ p.item }}</td>
+                            <td>0</td>
+                            <td>00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>400.00</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
