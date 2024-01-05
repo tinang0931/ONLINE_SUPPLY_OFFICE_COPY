@@ -91,29 +91,32 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
               <th class="text-center text-nowrap"></th> 
               <th class="text-center text-nowrap"></th>
+              <th class="text-center text-nowrap"></th>
           </tr>
       </thead>
       
       <tbody>
         {% for item in items %}
-            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
-                <td class="item_name text-center">{{ item.item }}</td>
-                <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                <td class="item_unit text-center">{{ item.unit }}</td>
-                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                <td class="item_quantity text-center">{{ item.quantity }}</td>
-                <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td class="item_total_cost text-center">{{ Attached_File }}</td>
-                <td>
-                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile">
-                    <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 35px; height: 35px; vertical-align: middle;">
-                </td>
-                {% if item.id %}
-                <td class="text-center">
-                    <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 37px; height: 37px; vertical-align: middle;">
-                </td>
-                {% endif %}
-                <td>
+        <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+            <td class="item_name text-center">{{ item.item }}</td>
+            <td class="item_description text-center">{{ item.item_brand_description }}</td>
+            <td class="item_unit text-center">{{ item.unit }}</td>
+            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+            <td class="item_quantity text-center">{{ item.quantity }}</td>
+            <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+            <td class="text-center">
+                <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle;">
+            </td>
+            <td class="item_total_cost text-center">{{ Attached_File }}</td>
+            <td class="text-center"> 
+                <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 22px; height: 22px; vertical-align: middle;">
+            </td>
+            {% if item.id %}
+            <td class="text-center">
+                <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
+            </td>
+            {% endif %}
+        </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
