@@ -2,7 +2,6 @@
 
 {% block preqform %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,7 +90,7 @@ th, td {
     border: 0.5px solid rgba(0, 0, 0, 0.5); 
     text-align: left;
     font-size: 15px;
-    height: 50px;
+    height: 53px;
     padding: 8px; 
 }
 
@@ -285,7 +284,7 @@ tr:not(:last-child) td {
 .subpage {
     padding: 1cm;
     border: 5px red solid;
-    height: 256mm;
+    height: 300mm;
   }
   
   @page {
@@ -307,12 +306,12 @@ tr:not(:last-child) td {
 .icons-group {
     display: flex;
     justify-content: flex-end; /* Align icons to the right side */
+    position: fixed;
 }
 
 .icons-container {
-   position: fixed;
-    align-items: right;
- 
+    display: flex;
+    align-items: center;
 }
 
 .icon-link,
@@ -324,24 +323,50 @@ tr:not(:last-child) td {
     align-items: center;
 }
 
+.icon-link {
+    margin-left: 5px; /* Adjust the spacing between icons */
+}
+
+.icon {
+    cursor: pointer;
+}
+
 /* Add margin to the second and subsequent icons */
 .icon-link + .icon-link,
 .icon + .icon {
-    margin-left: 0%; /* Adjust the spacing between icons */
+    margin-left: 5px; /* Adjust the spacing between icons */
 }
 
+.no-page-break {
+    page-break-before: avoid;
+}
 
+@media print {
+    #fundclusterselect::-ms-expand {
+        display: none;
+    }
+}
+
+@media print {
+    #fundClusterSelect {
+        display: none;
+    }
+}
 </style>
 <body>
 <div class="container page-break">
+    <div id="selectedFundCluster"></div>
     <div id="purchaseRequestTable" class="container-fluid">
         <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
         <h1 style="margin-top: -15px; font-size: 25px;"><b>PURCHASE REQUEST</b></h1>
         <div style="display: flex; justify-content: space-between; margin-left: -auto; margin-top: 3; margin-bottom: -4%;">
                 <h><b>Entity Name:</b></h> &nbsp &nbsp
                 <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
-                <h> <b> Fund Cluster : </b></h> &nbsp  &nbsp 
-                <h><u>GAA (Research)</u></h>
+                <h><b>Fund Cluster:</b></h>
+               <select id="fundClusterSelect">
+                <option value="gaaResearch">GAA</option>
+                <option value="stfResearch">STF</option>
+               </select>
             </div>
             <div class="table-container">
                 <div class="justify-content">
@@ -349,7 +374,7 @@ tr:not(:last-child) td {
                         <div class="mx-auto">
                             <form action="" method="post">
                                 {% csrf_token %}
-                                <table class="table-bordered table-fixed" style="width: 115%">
+                                <table class="table-bordered table-fixed" style="width: 115%" position="center">
                                     <tr>
                                         <th
                                         colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office/Section:<span contenteditable="true"></span>
@@ -425,13 +450,14 @@ tr:not(:last-child) td {
                                         </td>
                                     </tr>
                                 </table>
-                            <div>
-                        <div class="page-break"></div>
-                        </div>
+                            </div>
+                         </div>
+                    <div class="page-break">
                                     <br>
                                     <div class="footer-container"></div>
                                     <img class="footer-image"src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Footer Image">
                                     </div>
+                                </div>
                                 <footer class="footer">
                                     <div class="input-box">
                                         <input placeholder="Update the purchase request status..." name="comment_content">
@@ -445,8 +471,8 @@ tr:not(:last-child) td {
                                                         <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
                                                        </a>
                                                        <a href="#" title="Select" class="icon-link">
+                                                        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
                                                        </a>
-                                                       <img class="icon" title="Select" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
                                                        <select id="paperSize" onchange="changePaperSize()" style="display: none;">
                                                            <option value="a4">A4</option>
                                                            <option value="legal">Legal</option>
@@ -467,6 +493,10 @@ tr:not(:last-child) td {
         </div>
     </div>
 </div>
+<script>
+    document.getElentById("fundclusterSelect").value = "stfResearch";
+</script>
+
 <script>
     function toggleSelect() {
         var selectElement = document.getElementById("paperSize");
