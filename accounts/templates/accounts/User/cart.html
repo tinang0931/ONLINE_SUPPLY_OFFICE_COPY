@@ -80,7 +80,8 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th> 
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Attachment</th>
               <th class="text-center text-nowrap"></th>
               <th class="text-center text-nowrap"></th>   
           </tr>
@@ -95,9 +96,36 @@ p {
                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                 <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+                <td class="item_total_cost text-center">{{ attach_file}}</td> 
                 <td>
+                    <span id="attachmentIcon" onclick="attachFile()">
+                        <img src="{% static 'images/attach.png' %}" alt="Attachment" style="width: 35px; height: 35px;">
+                    </span>
+                    <input type="file" id="fileInput" style="display: none;">
                     <a href="#" class="btn btn-primary btn-sm">Update</a>
                 </td>
+                
+                <script>
+                    function attachFile() {
+                        // Trigger click on the file input element when the attachment icon is clicked
+                        document.getElementById('fileInput').click();
+                
+                        // Listen for changes in the file input 
+                        document.getElementById('fileInput').addEventListener('change', function() {
+                            const selectedFile = this.files[0]; // Get the selected file
+                
+                            // Perform actions with the selected file (you can upload/process/etc. here)
+                            // For example, you can display the file name or perform an AJAX upload
+                            if (selectedFile) {
+                                alert('File attached: ' + selectedFile.name);
+                                // Additional logic to handle the attached file
+                            } else {
+                                alert('No file selected.');
+                            }
+                        });
+                    }
+                </script>
+                                      
                 {% if item.id %}
                 <td class="text-center">
                     <a href="{% url 'delete' item.id %}" class="btn btn-danger btn-sm">Delete</a>
@@ -109,6 +137,7 @@ p {
                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
                     <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
                     <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
+
                 </td>
             </tr>
         {% endfor %}
@@ -129,46 +158,6 @@ p {
             calculateTotal();
         });
     </script>
-
-
-
-<div>
-    <!-- File input container -->
-    <div id="fileInputsContainer">
-        <input type="file" name="attachments_{{ item.id }}" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
-    </div>
-
-    <div>
-        <p>Attached Files:</p>
-        <div id="fileLinksContainer"></div>
-        <!-- File links will be appended here -->
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#attachments').on('change', function () {
-                var files = this.files;
-
-                // Clear previous file links before appending new ones
-                $('#fileLinksContainer').empty();
-
-                // Append new file links
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    var fileLink = $('<a class="file-link" target="_blank"></a>').attr('href', URL.createObjectURL(file)).text(file.name);
-                    $('#fileLinksContainer').append(fileLink).append('<br>');
-                }
-            });
-            $('#fileLinksContainer').on('click', 'a.file-link', function (e) {
-                e.preventDefault();
-                var filePath = $(this).attr('href');
-                window.open(filePath, '_blank');
-            });
-        });
-    </script>
-</div>
     
     <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
         <div class="container">
