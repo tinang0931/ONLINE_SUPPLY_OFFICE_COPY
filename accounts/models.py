@@ -20,8 +20,14 @@ class User(AbstractUser):
     password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
+        ('bac', 'BAC Secretariat'),
+        ('campusd', 'Campus Director'),
+        ('budget', 'Budget Officer'),
+        ('admin', 'Admin'),
+        
+        
     ]
 
     is_admin = models.BooleanField(default=False) 
@@ -30,6 +36,12 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
     
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
         if self.user_type == 'admin':
@@ -82,6 +94,7 @@ class CheckoutItems(models.Model):
     quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.total_cost = self.unit_cost * self.quantity

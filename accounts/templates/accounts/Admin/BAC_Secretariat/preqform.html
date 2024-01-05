@@ -52,7 +52,7 @@
     h4 {
         font-size: 25px;
         text-align: center;
-        margin-top: 10px; /* Adjusted margin */
+        margin-top: 10px; 
     }
         
   p {
@@ -91,38 +91,33 @@
     position: center;
     width: 100%;
     margin-top: 20px;
-    border-collapse: collapse; /* Ensure borders collapse into a single border */
+    border-collapse: collapse; 
 }
 
-/* Adjust the border color and opacity for better visibility */
-/* Adjust the border color and opacity for better visibility */
 th,
 td {
-    border: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
-    text-align: left; /* Center text within cells */
-    font-size: 12px; /* Adjust the font size as needed */
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    text-align: left; 
+    font-size: 12px; 
     height: 50px;
-    padding: 8px; /* Adjust the padding for better visibility */
+    padding: 8px; 
 }
 
 th {
-    background-color: #f2f2f2; /* Set a background color for header cells */
+    background-color: #f2f2f2; 
 }
 
-/* Add a hover effect to highlight rows */
 tr:hover {
-    background-color: #f5f5f5; /* Adjust the background color as needed */
+    background-color: #f5f5f5; 
 }
 
-/* Add borders to the vertical sides of th and td, excluding the last cell in each row */
 th:not(:last-child),
 td:not(:last-child) {
-    border-right: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
+    border-right: 1px solid rgba(0, 0, 0, 0.5); 
 }
 
-/* Make the outer border thicker */
 table {
-    border: 2px solid #000000; /* Set the outer border color and thickness */
+    border: 2px solid #000000; 
 }
 
 
@@ -157,7 +152,7 @@ table {
         .icon-link {
             margin-left: 20px;
             text-decoration: none;
-            color: white; /* Adjust the color as needed */
+            color: white; 
         }
 
 
@@ -194,7 +189,7 @@ table {
 
 
 .table-container {
-        margin-top: 20px; /* Adjust the margin-top as needed */
+        margin-top: 20px; 
         width: 80%;
         margin-left: -16%;
        
@@ -205,7 +200,7 @@ table {
 .icon-link {
     margin-left: 20px;
     text-decoration: none;
-    color: white; /* Adjust the color as needed */
+    color: white; 
 }
 
 
@@ -267,7 +262,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin: 0 auto;
-margin-top: 10px; /* Adjusted margin */
+margin-top: 10px; 
 position: ceneter;
 
 }
@@ -445,7 +440,6 @@ position: ceneter;
                 document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2);
             }
     
-            // Call the calculateTotal function initially
             calculateTotal();
         });
     </script>
@@ -454,8 +448,6 @@ position: ceneter;
     <script>
         function downloadPDF() {
             const body = document.getElementById('purchaseRequestTable');
-    
-            // Add page breaks before specific elements
             const elementsWithPageBreak = body.querySelectorAll('.page-break');
     
             elementsWithPageBreak.forEach((element) => {

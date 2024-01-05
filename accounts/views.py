@@ -1,5 +1,6 @@
 from audioop import reverse
 import json
+from django.core.exceptions import ValidationError
 from pymongo import MongoClient
 import itertools
 from urllib.parse import parse_qs
@@ -34,6 +35,8 @@ from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
+from .models import User
+from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import random
@@ -136,9 +139,8 @@ def register(request):
         )
         email.send()
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('login')  
+        return redirect('login')
     return render(request, 'accounts/User/register.html')
-
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -167,7 +169,7 @@ def login(request):
             messages.success(request, "You are now logged in.")
 
             if user.user_type == 'admin':
-                return redirect('bac_home')  
+                return redirect('admin_home')  
             else:
                 return redirect('request')
         else:
@@ -329,7 +331,7 @@ class PreqFormView(View):
         if pr_id and content:
             try:
                 Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
-                return redirect(reverse('preqform', kwargs={'pr_id': pr_id})
+                return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
             except Exception as e:
                 print(f"Error: {e}")
                 return HttpResponse("An error occurred while processing the form.")
@@ -442,6 +444,105 @@ def resolution(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def admin_home(request):
+    return render(request, 'accounts/Admin/System_Admin/admin_home.html')
+
+
+
+@authenticated_user
+def adminabout(request):
+    return render(request, 'accounts/Admin/System_Admin/adminabout.html')
+
+
+@authenticated_user
+def user(request):
+    users = User.objects.all()
+    return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
+
+
+
+# def update_user(request, username):
+#     user = get_object_or_404(User, username=username)
+
+#     if request.method == 'POST':
+#         form = UserForm(request.POST, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('user')
+#     else:
+#         form = UserForm(instance=user) 
+#         return render(request, 'accounts/Admin/System_Admin/user.html', {'form': form})
+
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        contact2 = request.POST['contact2']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            
+
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
+        return redirect('user')
+    
+   
+
+
+
+def update_user(request, username):
+    user = get_object_or_404(User, username=username)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
+        else:
+            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
+    else:
+        form = UserForm(instance=user) 
+        return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+
+   
+def delete_user(request, username):
+    user = User.objects.get(username=username)
+    user.delete()
+    return redirect('user')
+
 
 def addItem(request):
     if request.method == 'POST':
@@ -450,6 +551,14 @@ def addItem(request):
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
         quantity = request.POST.get('quantity')
+
+        if quantity and quantity.isdigit():
+                quantity = int(quantity)
+        else:
+
+            print("Invalid quantity")
+            return redirect('request')
+        
         user = request.user
         Item.objects.create(
             user=user,
@@ -458,6 +567,8 @@ def addItem(request):
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
+             total_cost=float(unit_cost) * quantity,
+            
         )
         return redirect('request')
     return render(request, 'accounts/User/request.html')
@@ -507,6 +618,23 @@ def request(request):
             grouped_data[key] = list(group)
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
+
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
+def validate_file_extension(value):
+    valid_extensions = ['.pdf', '.doc', '.docx', '.jpg', '.png', '.xls', '.xlsx']
+    extension = value.lower().split('.')[-1]
+
+    if extension not in valid_extensions:
+        raise ValidationError(_("File type is not supported. Supported types: .pdf, .doc, .docx, .jpg, .png, .xls, .xlsx"))
+
+def validate_file_size(value):
+    max_size = 5 * 1024 * 1024  # 5 MB
+
+    if value.size > max_size:
+        raise ValidationError(_("File size exceeds the maximum allowed size (5 MB)"))
+
 class RequesterView(View):
     template_name = 'accounts/User/cart.html'
 
@@ -528,10 +656,12 @@ class RequesterView(View):
                 unit = request.POST.get(f'unit_{item_id}')
                 quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
                 price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+                
                 try:
                     total_cost = price * quantity
                 except TypeError:
                     total_cost = Decimal('0.00')
+
 
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
@@ -541,20 +671,15 @@ class RequesterView(View):
                     quantity=quantity,
                     unit_cost=price,
                     total_cost=total_cost,  
+                    
                 )
-                new_checkout.save()
-                items.delete()
+
+            new_checkout.save()
+            items.delete()
             return redirect('history')
-        
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
-
-@authenticated_user
-def item_list(request):
-    items = Item.objects.all()
-    return render(request, 'item_list.html', {'items': items})
 
 
 @authenticated_user
@@ -582,22 +707,19 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-@authenticated_user                csv_file_path ='C:/Users/sumauay.jay-anne/Desktop/onlinesystemcopy/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
+@authenticated_user              
 def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
 
 def add_new_item(request):
-
-    grouped_data = {}  
-
     if request.method == 'POST':
+        category = request.POST.get('category')
         new_item_name = request.POST.get('new_item_name')
         new_item_brand = request.POST.get('new_item_brand')
         new_item_unit = request.POST.get('new_item_unit')
         new_item_price = request.POST.get('new_item_price')
-        category = request.POST.get('category')
 
         new_item = CSV(
             Category=category,
@@ -608,25 +730,25 @@ def add_new_item(request):
         )
 
         new_item.save()
-        return redirect('add_new_item')
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+        return redirect('bac_dashboard')
+
 
 
 
 
 def bac_dashboard(request):
     if request.method == 'GET':
-        csv_data = CSV.objects.all()
+        csv_data = CSV.objects.all().order_by('Category')
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+        
+    
 
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
     elif request.method == 'POST':
-
         new_category = request.POST.get('custom-category', '').strip()
-
         if new_category:
             CSV.objects.create(Category=new_category)
             return redirect('bac_dashboard')
@@ -668,11 +790,11 @@ def update_item(request, id):
         
         
         item_name = request.POST.get(f'item_{id}')
-        print(item_name)
+        
         item_brand = request.POST.get(f'item_brand_{id}')
-        print(item_brand)
+       
         unit = request.POST.get(f'unit_{id}')
-        print(unit)
+        
         
         price = request.POST.get(f'price_{id}')
         
@@ -683,13 +805,13 @@ def update_item(request, id):
             Unit=unit,
             Price=price
         )
-
-
-
-       
-       
         return redirect('bac_dashboard')
+    
+
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
+
     return redirect('bac_dashboard')
+
+

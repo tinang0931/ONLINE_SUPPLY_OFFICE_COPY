@@ -7,10 +7,6 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-  /* Your existing styles */
-
-  /* Your existing styles */
-
  
   .status {
     width: 15%;
@@ -26,28 +22,47 @@
     background-color: #9ee800;
     color: white;
   }
-
-  .heading {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: rgba(0, 53, 102, 0.92);
-    color: white;
-    z-index: 1001;
+  .table {
+    width: 90%; 
+    margin: auto; 
+    table-layout: fixed; 
+    position: fixed; 
   }
 
-  .table {
-    width: 88%;
-    margin: 68px auto 0; /* Center the table horizontally */
-    table-layout: fixed;
-    position: center;
-    position: fixed;
-    z-index: 999;
+  .table th, .table td {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    width: 15%;
+  }
+
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 25%;
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 20%;
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 15%;
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 25%;
   }
 
   .form-control {
     display: block;
-    width: 300px;
+    width: 18%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -61,38 +76,24 @@
     border: var(--bs-border-width) solid #343a40;
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1375px;
-    position: fixed;
-    z-index: 1000;
+    margin-left: 1300px;
+    z-index: 1000; 
   }
 
-  .table th {
-    background-color: rgba(0, 53, 102, 0.92);
-    color: white;
-    width:15 px;
-    position: fi;
-  }
-
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    width: 15%;
-  }
-  /* Updated styles for the search button */
   .btn-outline-success {
-    color: #ffffff; /* Text color */
-    background-color: #2d83da; /* Orange color */
+    color: #ffffff; 
+    background-color: #2d83da; 
     border-color: #000;
     margin-left: 1680px;
     height: 35px;
   }
 
   .btn-outline-success:hover {
-    color: #ffffff; /* Text color on hover */
-    background-color: rgb(9, 66, 222); /* Darker shade of orange on hover */
-    border-color: #082fdc; /* Border color on hover */
+    color: #ffffff; 
+    background-color: rgb(9, 66, 222); 
+    border-color: #082fdc; 
   }
 
-  /* Move the search bar to the right */
   .search-form {
     justify-content: flex-end;
   }
@@ -162,7 +163,7 @@
             {% if checkout.status_comment %}
               {{ checkout.status_comment }}
             {% else %}
-              &nbsp; <!-- Display empty status when there is no data -->
+              &nbsp; 
             {% endif %}
           </td>
           <td style="width: 25%;">
@@ -177,11 +178,10 @@
   </table>
 
  <script>
-  const defaultSortDirections = [1, 1, 1, 1, 1]; // 1 for ascending, -1 for descending
-  let currentColumn = 0; // Default sorting column
-  let originalRows; // Store the original rows for resetting
+  const defaultSortDirections = [1, 1, 1, 1, 1]; 
+  let currentColumn = 0; 
+  let originalRows; 
 
-  // Initial sorting on page load
   window.addEventListener('DOMContentLoaded', () => {
     originalRows = Array.from(document.querySelector('.table').querySelectorAll('tbody tr'));
     filterAndSortTable('', currentColumn);
@@ -191,39 +191,31 @@
     let table = document.querySelector('.table');
     let rows = originalRows ? [...originalRows] : Array.from(table.querySelectorAll('tbody tr'));
 
-    // Check if the searchText is empty
     if (searchText.trim() !== '') {
-      // Filter rows based on search text
       rows = rows.filter(row => {
         let textContent = Array.from(row.getElementsByTagName('td')).map(td => td.innerText).join(' ').toLowerCase();
         return textContent.includes(searchText.toLowerCase());
       });
     }
 
-    // Sort rows based on the selected column
     sortRows(rows, sortColumn);
 
-    // Remove existing rows and append the sorted rows
     table.querySelector('tbody').innerHTML = '';
     rows.forEach(row => table.querySelector('tbody').appendChild(row));
 
-    // Check if there are no results and display all rows
     if (rows.length === 0) {
       originalRows.forEach(row => table.querySelector('tbody').appendChild(row));
     }
   }
 
   function sortRows(rows, sortColumn) {
-    // Sort rows based on the selected column
     rows.sort((a, b) => {
       let aValue, bValue;
 
       if (sortColumn === 1) {
-        // Special handling for sorting by names
         aValue = a.getElementsByTagName('td')[sortColumn].innerText.trim().toLowerCase();
         bValue = b.getElementsByTagName('td')[sortColumn].innerText.trim().toLowerCase();
       } else {
-        // Default sorting for other columns
         aValue = a.getElementsByTagName('td')[sortColumn].innerText.trim();
         bValue = b.getElementsByTagName('td')[sortColumn].innerText.trim();
       }
@@ -231,14 +223,12 @@
       return defaultSortDirections[sortColumn] * aValue.localeCompare(bValue, undefined, { numeric: true, sensitivity: 'base' });
     });
 
-    // Update arrow indicators
     resetArrows();
     let arrowUp = document.querySelectorAll('.sort-arrow-up')[sortColumn];
     arrowUp.innerHTML = '▲';
     let arrowDown = document.querySelectorAll('.sort-arrow-down')[sortColumn];
     arrowDown.innerHTML = '▼';
 
-    // Reverse the sorting direction for the next click on the same column
     defaultSortDirections[sortColumn] = defaultSortDirections[sortColumn] * -1;
     currentColumn = sortColumn;
   }
@@ -258,15 +248,6 @@
   }
 </script>
 
-  
-
-
-  
-  
-  
-  
-  
-  
   
   {% endblock %}
 </div>
