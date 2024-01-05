@@ -7,6 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
+  /* Your existing styles */
 
   /* Your existing styles */
 
@@ -25,48 +26,28 @@
     background-color: #9ee800;
     color: white;
   }
+
+  .heading {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 53, 102, 0.92);
+    color: white;
+    z-index: 1001;
+  }
+
   .table {
-    width: 90%; /* Set a percentage width for the table */
-    margin: auto; /* Center the table on the page */
-    table-layout: fixed; /* Use fixed table layout to prevent column width changes */
-    position: fixed; /* Make the table position fixed */
-  }
-
-  /* Updated column widths */
-  .table th, .table td {
-    white-space: nowrap; /* Prevent line breaks within cells */
-    overflow: hidden; /* Hide overflowing content */
-    text-overflow: ellipsis; /* Display ellipsis (...) for overflowing content */
-  }
-
-  .table th:nth-child(1),
-  .table td:nth-child(1) {
-    width: 15%;
-  }
-
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    width: 25%;
-  }
-
-  .table th:nth-child(3),
-  .table td:nth-child(3) {
-    width: 20%;
-  }
-
-  .table th:nth-child(4),
-  .table td:nth-child(4) {
-    width: 15%;
-  }
-
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    width: 25%;
+    width: 88%;
+    margin: 68px auto 0; /* Center the table horizontally */
+    table-layout: fixed;
+    position: center;
+    position: fixed;
+    z-index: 999;
   }
 
   .form-control {
     display: block;
-    width: 18%;
+    width: 300px;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -80,31 +61,38 @@
     border: var(--bs-border-width) solid #343a40;
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1300px;
-    z-index: 1000; /* Ensure it is above other elements */
+    margin-left: 1375px;
+    position: fixed;
+    z-index: 1000;
   }
 
+  .table th {
+    background-color: rgba(0, 53, 102, 0.92);
+    color: white;
+    width:15 px;
+    position: fi;
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 15%;
+  }
+  /* Updated styles for the search button */
   .btn-outline-success {
-<<<<<<< HEAD
     color: #ffffff; /* Text color */
     background-color: #2d83da; /* Orange color */
     border-color: #000;
     margin-left: 1680px;
     height: 35px;
-=======
-    color: #ffffff; 
-    background-color: #2d83da; 
- margin-left: 1680px;
- height: 35px;
->>>>>>> 2a7cc8afd28f7a459860b3ccfd8335828ce3aafd
   }
 
   .btn-outline-success:hover {
-    color: #ffffff; 
-    background-color: rgb(9, 66, 222); 
-    border-color: #082fdc; 
+    color: #ffffff; /* Text color on hover */
+    background-color: rgb(9, 66, 222); /* Darker shade of orange on hover */
+    border-color: #082fdc; /* Border color on hover */
   }
 
+  /* Move the search bar to the right */
   .search-form {
     justify-content: flex-end;
   }

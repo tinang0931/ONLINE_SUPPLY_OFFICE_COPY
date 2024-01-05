@@ -1,0 +1,21 @@
+item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price
+"AIR FRESHENER, aerosol type",can,0,0,0,0,0,0,0,0,0,0,0,0,0,100
+"BROOM, soft, tambo",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,140
+"BROOM, stick, ting-ting",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,20
+"CLEANER, toilet and urinal, 1liter",bottle,0,0,0,0,0,0,0,0,0,0,0,0,0,80
+"CLEANSER, scouring powder",can,0,0,0,0,0,0,0,0,0,0,0,0,0,60
+"DETERGENT BAR, 140g",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,10
+"DETERGENT POWDER, all-purpose, 1kg",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,80
+"DISINFECTANT SPRAY, aerosol type",can,0,0,0,0,0,0,0,0,0,0,0,0,0,250
+"DUST PAN, non-rigid plastic",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,50
+"SODIUM HYPOCHLORITE, 3.785 liters",gallon,0,0,0,0,0,0,0,0,0,0,0,0,0,180
+"LIQUID HAND SOAP, 500mL",bottle,0,0,0,0,0,0,0,0,0,0,0,0,0,130
+"FLOOR WAX, paste type, red",can,0,0,0,0,0,0,0,0,0,0,0,0,0,350
+"FURNITURE CLEANER, aerosol type",can,0,0,0,0,0,0,0,0,0,0,0,0,0,150
+"MOP BUCKET, heavy duty, hard plastic",unit,0,0,0,0,0,0,0,0,0,0,0,0,0,2000
+"MOPHANDLE, heavy duty, screw type",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,130
+"MOPHEAD, made of rayon",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,150
+"RAGS, all cotton, 32s",bundle,0,0,0,0,0,0,0,0,0,0,0,0,0,64
+"SCOURING PAD, with foam, 3s ",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,100
+"TRASHBAG, GPP specs, black, 940mmx1016mm",pack,0,0,0,0,0,0,0,0,0,0,0,0,0,150
+"WASTEBASKET, non-rigid plastic",piece,0,0,0,0,0,0,0,0,0,0,0,0,0,100

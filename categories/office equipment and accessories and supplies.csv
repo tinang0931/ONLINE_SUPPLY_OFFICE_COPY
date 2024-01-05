@@ -1,0 +1,150 @@
+item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price
+"DRUM CART, BROTHER DR-3455, Black,",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,"6,947"
+"INK CART, BROTHER LC67B, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,910
+"INK CART, BROTHER LC67HYBK, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,"1,602"
+"Drum Cart, Brother DR-451CL,high yield 30000 pages",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,"6,760"
+"Toner Cart, Brother TN-456 BLACK, high yield 6500",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,"5,080"
+"Toner Cart, Brother TN-456 CYAN, high yield 6500",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,8569.6
+"Toner Cart, Brother TN-456 MAGENTA, high yield",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,8569.6
+"Toner Cart, Brother TN-456 YELLOW, high yield 6500",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,"8,570"
+"TONER CART, SAMSUNG ML-D2850B, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,5116.8
+"ENVELOPE, DOCUMENTARY, for legal size document",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,989.04
+"INK CART, CANON CL-741,Colored",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1029.6
+"INK CART, CANON CL-811, Colored",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,754
+"INK CART, CANON PG-740, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,780
+"INK CART, CANON PG-810, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,250
+"INK CART, EPSON C13T664100 (T6641), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,250
+"INK CART, EPSON C13T664200 (T6642), Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,250
+"INK CART, EPSON C13T664300 (T6643), Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,250
+"INK CART, EPSON C13T664400 (T6644), Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,773.76
+"Ink Cartridge, HP C2P04AA (HP62) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,950.56
+"Ink Cartridge, HP C2P06AA (HP62) Tri-color",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,800
+"INK CART, HP C9351AA, (HP21), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,950
+"INK CART, HP C9352AA, (HP22), Tri-color",cart,0,0,0,0,,0,0,0,0,0,0,0,0,1996.8
+"Ink Cartridge, HP C9397A (HP72) 69ml Photo Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1992.8
+"Ink Cartridge, HP C9398A (HP72) 69ml Cyan",cart,0,0,0,0,,0,0,0,0,0,0,0,0,1996.8
+"Ink Cartridge, HP C9399A (HP72) 69ml Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1996.8
+"Ink Cartridge, HP C9400A (HP72) 69ml Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1996.8
+"Ink Cartridge, HP C9401A (HP72) 69ml Gray",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3016
+"Ink Cartridge, HP C9403A (HP72) 130ml Matte Black",cart,0,0,0,0,,0,0,0,0,0,0,0,0,769.6
+"INK CART, HP CC640WA, (HP60), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,915.2
+"INK CART, HP CC643WA, (HP60), Tri-color",cart,0,0,0,0,0,0,0,0,,0,0,0,0,450
+"INK CART, HP CD887AA, (HP703), Black",cart,0,0,0,0,,0,0,0,0,0,0,0,0,450
+"INK CART, HP CD888AA, (HP703), Tri-color",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,641.68
+"INK CART, HP CD972AA, (HP 920XL), Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,641.68
+"INK CART, HP CD973AA, (HP 920XL), Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,641.68
+"INK CART, HP CD974AA, (HP 920XL), Yellow,",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1346.8
+"INK CART, HP CD975AA, (HP 920XL), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,756.08
+"INK CART, HP CH561WA, (HP61), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,931.84
+"INK CART, HP CH562WA, (HP61), Tricolor",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1944.8
+"Ink Cartridge, HP CH565A (HP82) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1539.2
+"Ink Cartridge, HP CH566A (HP82) Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1539.2
+"Ink Cartridge, HP CH567A (HP82) Magenta",cart,0,0,0,0,0,0,,0,0,0,0,0,0,1539.2
+"Ink Cartridge, HP CH568A (HP82) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1786.72
+"INK CART, HP CN045AA, (HP950XL), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1326
+"INK CART, HP CN046AA, (HP951XL), Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1326
+"INK CART, HP CN047AA, (HP951XL), Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1326
+"INK CART, HP CN048AA, (HP951XL). Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,450
+"INK CART, HP CN692AA, (HP704), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,450
+"INK CART, HP CN693AA, (HP704), Tri-color",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,366.08
+"INK CART, HP CZ107AA, (HP678), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,366.08
+"INK CART, HP CZ108AA, (HP678), Tricolor",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,312
+"INK CART, HP CZ121A (HP685A), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,256.88
+"INK CART, HP CZ122A (HP685A), Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,256.88
+"INK CART, HP CZ123A (HP685A), Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,256.88
+"INK CART, HP CZ124A (HP685A), Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,405.6
+"Ink Cartridge, HP F6V26AA (HP680) Tri-color",cart,0,0,0," ",0,0,0,0,0,0,0,0,0,405.6
+"Ink Cartridge, HP F6V27AA (HP680) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,995.75
+"Ink Cartridge, HP L0S51AA (HP955) Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,995.75
+"Ink Cartridge, HP L0S54AA (HP955) Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,995.75
+"Ink Cartridge, HP L0S57AA (HP955) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,4956.6
+"Ink Cartridge, HP F6V26AA (HP680) Tri-color",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1212.64
+"Ink Cartridge, HP F6V27AA (HP680) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,,1212.64
+"Ink Cartridge, HP L0S51AA (HP955) Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1212.64
+"Ink Cartridge, HP L0S54AA (HP955) Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1644.24
+"Ink Cartridge, HP L0S57AA (HP955) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,,453.62
+"Ink Cartridge, HP L0S60AA (HP955) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,453.62
+"Ink Cartridge, HP L0S63AA (HP955XL) Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,453.62
+"Ink Cartridge, HP L0S66AA (HP955XL) Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,741.28
+"Ink Cartridge, HP L0S69AA (HP955XL) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,77.43
+"Ink Cartridge, HP L0S72AA (HP955XL) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,736.32
+"Ink Cartridge, HP T6L89AA (HP905) Cyan",cart,0,0,0,,0,0,0,0,0,0,0,0,0,77.94
+"Ink Cartridge, HP T6L93AA (HP905) Magenta",cart,0,0,0,0,0,0,0,0,0,,0,0,0,2685.28
+"Ink Cartridge, HP T6L97AA (HP905) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,1892.8
+"Ink Cartridge, HP T6M01AA (HP905) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2685.28
+"RIBBON CART, EPSON C13S015516 (#8750), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3567.2
+"RIBBON CART, EPSON C13S015531 (S015086), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,5002.4
+"RIBBON CART, EPSON C13S015632, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3380
+"TONER CART, BROTHER TN-2025, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3337.36
+"TONER CART, BROTHER TN-2130, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,7332
+"TONER CART, BROTHER TN-2150, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3952
+"TONER CART, BROTHER TN-3320, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3432
+"TONER CART, BROTHER TN-3350, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2614.56
+"TONER CART, HP CB435A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2542.8
+"TONER CART, HP CB540A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2542.8
+"TONER CART, HP CE255A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2542.8
+"TONER CART, HP CE278A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2916.16
+"TONER CART, HP CE285A (HP85A), Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3072.16
+"TONER CART, HP CE310A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3072.16
+"TONER CART, HP CE311A, Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3072.16
+"TONER CART, HP CE312A, Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,8476
+"TONER CART, HP CE313A, Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,6900.4
+"TONER CART, HP CE320A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,10193.04
+"TONER CART, HP CE321A, Cyan",cart,0,0,0,0,0,0,,0,0,0,0,0,0,10193.04
+"TONER CART, HP CE322A, Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,10193.04
+"TONER CART, HP CE323A, Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,4201.6
+"TONER CART, HP CE390A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,6011.2
+"TONER CART, HP CE400A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,6011.2
+"TONER CART, HP CE401A, Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,6011.2
+"TONER CART, HP CE402A, Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,4466.8
+"TONER CART, HP CE403A, Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,7332
+"TONER CART, HP CE410A, (HP305), Black",cart,0,0,0,0,0,,0,0,0,0,0,0,0,3044.08
+"TONER CART, HP CE411A, (HP305), Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,5787.6
+"TONER CART, HP CE412A, (HP305), Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,5200
+"TONER CART, HP CE413A, (HP305), Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,9004.32
+"TONER CART, HP CE505A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,8606
+"TONER CART, HP CE505X, Black, high cap",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,3241.7
+"Toner Cartridge, HP CF217A (HP17A) Black Laser Jet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,4056
+"Toner Cartridge, HP CF226A (HP26A) Black LaserJet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,10051
+"Toner Cartridge, HP CF280A, LaserJet Pro M401/M425",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,13156
+"TONER CART, HP CF280XC, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2901.6
+"Toner Cartridge, HP CF281A (HP81A) Black LaserJet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2953.6
+"Toner Cartridge, HP CF283A (HP83A) LaserJet Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,2953.6
+"Toner Cartridge, HP CF283XC (HP83X) Black LJ",cart,0,0,0,0,0,0,0," ",0,0,0,0,0,2953.6
+"Toner Cartridge, HP CF287A (HP87) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,7056.4
+"Toner Cartridge, HP CF325XC (HP25X) Black LaserJet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF350A Black LJ",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF351A Cyan LJ",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF352A Yellow LJ",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF353A Magenta LJ",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF360A (HP508A) Black LaserJet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF361A (HP508A) Cyan LaserJet",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF362A (HP508A) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF363A (HP508A) Magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF400A (HP201A) Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF401A (HP201A) Cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF402A (HP201A) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF402A (HP201A) Yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF410A (HP410A) black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF410XC (HP410XC) black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF411A (HP410A) cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF411XC (HP410XC) cyan",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF412A (HP410A) yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF412XC (HP410XC) yellow",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF413A (HP410A) magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"Toner Cartridge, HP CF413XC (HP410XC) magenta",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, HP Q2612A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, HP Q7553A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D101S, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D103S, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D104S, Black",cart,0,0,0,0,0,0,0,,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D105L, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, Samsung MLT-D108S, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, Samsung MLT-D203E, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, Samsung MLT-D203L, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, Samsung MLT-D203U, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D205E, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG MLT-D205L, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, SAMSUNG SCX-D6555A, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, BROTHER TN-3478, Black",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,
+"TONER CART, CANON CRG 324 II",cart,0,0,0,0,0,0,0,0,0,0,0,0,0,

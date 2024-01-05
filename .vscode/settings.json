@@ -7,9 +7,11 @@
         "fddzjkfds",
         "ofaxjigazohzueet",
         "preqform",
+        "purchaseorder",
         "serror",
         "signout",
         "taladro",
         "uidb"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
