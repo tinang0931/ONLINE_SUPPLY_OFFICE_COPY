@@ -103,29 +103,7 @@ p {
                     </span>
                     <input type="file" id="fileInput" style="display: none;">
                     <a href="#" class="btn btn-primary btn-sm">Update</a>
-                </td>
-                
-                <script>
-                    function attachFile() {
-                        // Trigger click on the file input element when the attachment icon is clicked
-                        document.getElementById('fileInput').click();
-                
-                        // Listen for changes in the file input 
-                        document.getElementById('fileInput').addEventListener('change', function() {
-                            const selectedFile = this.files[0]; // Get the selected file
-                
-                            // Perform actions with the selected file (you can upload/process/etc. here)
-                            // For example, you can display the file name or perform an AJAX upload
-                            if (selectedFile) {
-                                alert('File attached: ' + selectedFile.name);
-                                // Additional logic to handle the attached file
-                            } else {
-                                alert('No file selected.');
-                            }
-                        });
-                    }
-                </script>
-                                      
+                </td>                              
                 {% if item.id %}
                 <td class="text-center">
                     <a href="{% url 'delete' item.id %}" class="btn btn-danger btn-sm">Delete</a>
