@@ -42,6 +42,7 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 import pandas as pd
 from itertools import groupby
+from django.core.files.base import ContentFile
 
 
 def main(request):
@@ -657,6 +658,7 @@ class RequesterView(View):
                 quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
                 price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
                 
+
                 try:
                     total_cost = price * quantity
                 except TypeError:
