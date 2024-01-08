@@ -114,11 +114,13 @@ p {
             <td class="text-center" style="margin-left: 10px;">
                 <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
             </td>
-            <td class="text-center">
-                <img id="attachButton" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;" onclick="attachFile()">
-            </td>   
-            <input type="file" id="fileInput" style="display: none;">                    
-            <td class="item_total_cost text-center">{{ Attached_File }}</td>
+            <td class="text-center" onclick="attachFile()">
+                <img id="attachButton" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+              </td>
+              <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
+              <td class="item_total_cost text-center" id="attachedFileName"></td>
+              
+              
             {% endif %}
         </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
@@ -133,18 +135,30 @@ p {
     </tbody>
     </table>
 
-    <script>
-        function handleFileChange(event, itemId) {
-            const attachedFile = event.target.files[0];
-            const attachmentSection = document.getElementById(`attachment_section${itemId}`);
+    <script>   function attachFile() {
+        document.getElementById('fileInput').click();
+      }
     
-            if (attachedFile) {
-                attachmentSection.textContent = attachedFile.name; // Display the file name in the attachment section
-                // You can perform further actions with the attached file here
-            } else {
-                attachmentSection.textContent = ''; // Clear the attachment section if no file is selected
-            }
+      function showFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const attachedFileName = document.getElementById('attachedFileName');
+    
+        const file = fileInput.files[0];
+        if (file) {
+          attachedFileName.textContent = file.name;
+          attachedFileName.style.color = 'blue'; // Change the color to blue when file attached
+          attachedFileName.style.cursor = 'pointer'; // Set cursor to pointer when file attached
+          attachedFileName.onclick = function() {
+            // Open the attached file in a new tab/window (change the logic as needed)
+            window.open(URL.createObjectURL(file), '_blank');
+          };
+        } else {
+          attachedFileName.textContent = "";
+          attachedFileName.style.color = 'black'; // Change the color back to default when no file attached
+          attachedFileName.style.cursor = 'default'; // Set cursor to default when no file attached
+          attachedFileName.onclick = null; // Remove click event if no file attached
         }
+      }
     </script>
     
     <script>
