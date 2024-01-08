@@ -13,7 +13,7 @@
           th {
             padding: 5px;
             border: 1px solid #ccc;
-            background-color: #1c96c5; /* Creamy peach */
+            background-color:#1c96c5; /* Creamy peach */
           }
           
           td {
@@ -76,6 +76,9 @@
                     <div class="search">
                         <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
                     </div>
+                    <div class="add-item-button">
+                        <button class="btn btn-success" onclick="addItem()">Add Item</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,8 +86,8 @@
         <table>
             <thead>
                 <tr>
-                    <th rowspan='2'>Item & Specifications</th>
-                    <th rowspan='2'>Quantity & Unit</th> <!-- Reverted back to "Quantity & Unit" -->
+                    <th rowspan='2'>Item & Specifications</th> 
+                    <th rowspan='2'>Unit</th> <!-- Reverted back to "Quantity & Unit" -->
                     <th rowspan='2'>Estimated Budget</th>
                     <th rowspan='2'>Mode of Procurement</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
@@ -113,6 +116,7 @@
                     {% for p in items %}
                         <tr class="item-row">
                             <td><input type="checkbox">{{ p.item }}</td>
+                            <td>Can</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -127,8 +131,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td>0</td>
-                            <td><input type="text" name="unit_price" class="unit-price-input" value="400.00"></td>
+                            <td><input type="text" name="unit_price" class="unit-price-input" value="400.00" readonly></td>
                         </tr>
                     {% endfor %}
                 {% endfor %}

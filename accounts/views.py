@@ -670,8 +670,7 @@ class RequesterView(View):
                     unit=unit,
                     quantity=quantity,
                     unit_cost=price,
-                    total_cost=total_cost,  
-                    
+                    total_cost=total_cost,
                 )
 
             new_checkout.save()
@@ -707,7 +706,7 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-@authenticated_user              
+             
 def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
@@ -813,5 +812,4 @@ def delete_category(request, Category):
     items_to_delete.delete()
 
     return redirect('bac_dashboard')
-
 
