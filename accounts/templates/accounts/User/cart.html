@@ -75,7 +75,6 @@ p {
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-  
   <div>
     <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
       <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
@@ -104,11 +103,28 @@ p {
                 <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                 <td class="item_quantity text-center">{{ item.quantity }}</td>
                 <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td class="item_total_cost text-center">{{ Attached_File }}</td>
+                <td class="item_total_cost text-center">{{ attach_file }}</td>
                 <td>
-                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile" style="width: 21px; height: 21px; vertical-align: middle;">
+                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile" style="width: 21px; height: 21px; vertical-align: middle; cursor: pointer;" onclick="attachFile()">
                     <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 21px; height: 21px; vertical-align: middle;">
+                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileAttachment(event)">
                 </td>
+                
+                <script>
+                    function attachFile() {
+                        document.getElementById('fileInput').click();
+                    }
+                
+                    function handleFileAttachment(event) {
+                        const fileInput = event.target;
+                
+                        if (fileInput.files.length > 0) {
+                            const attachedFile = fileInput.files[0];
+                            alert("File attached: " + attachedFile.name);
+                            // Here, you can perform additional actions with the attached file.
+                        }
+                    }
+                </script>
                 {% if item.id %}
                 <td class="text-center">
                     <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 21px; height: 21px; vertical-align: middle;">
