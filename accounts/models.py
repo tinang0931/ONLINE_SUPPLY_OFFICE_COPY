@@ -67,8 +67,9 @@ class Checkout(models.Model):
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
     is_approve = models.BooleanField(default=False)
-    is_seen = models.BooleanField(default=False)
-
+    is_disapprove = models.BooleanField(default=False)
+    is_seen=models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
     # # ... other fields and methods ...
     # STATUS_CHOICES = (
     #     ('approve', 'approve'),
@@ -108,6 +109,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     pr_id = models.CharField(max_length=50)  
+    
     def __str__(self):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
@@ -183,3 +185,6 @@ class RequestData(models.Model):
     email = models.EmailField()
     timestamp = models.DateTimeField(auto_now_add=True)
     # Add other fields as needed
+
+
+  

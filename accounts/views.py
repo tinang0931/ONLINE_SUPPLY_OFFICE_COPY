@@ -56,7 +56,7 @@ def homepage(request):
 
 
 User = get_user_model()
-@unauthenticated_user
+
 def register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -218,18 +218,12 @@ def history(request):
     }
     return render(request, 'accounts/User/history.html', context)
 
-
-
 def tracker(request):
-    user = request.user 
-    
+    user = request.user
     all_checkouts = Checkout.objects.filter(user=user)
     feedback = Comment.objects.filter(pr_id__in=[checkout.pr_id for checkout in all_checkouts])
-  
-    context = {'feedback': feedback, 'checkout_info': all_checkouts, }
+    context = {'feedback': feedback, 'checkout_info': all_checkouts}
     return render(request, 'accounts/User/tracker.html', context)
-
-
 @authenticated_user
 def prof(request):
     return render(request, 'accounts/User/prof.html')
@@ -267,6 +261,15 @@ def bac_home(request):
             }
         else:
             checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+   
+            # Update the status-related fields
+            checkout_data_dict[pr_id]['is_approve'] = checkout.is_approve
+            checkout_data_dict[pr_id]['is_disapprove'] = checkout.is_disapprove
+            checkout_data_dict[pr_id]['is_seen'] = checkout.is_seen
+            checkout_data_dict[pr_id]['status_comment'] = latest_comment.content if latest_comment else ""
+            checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+
+   
     checkout_data = list(checkout_data_dict.values())
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', {'checkouts': checkout_data})
 
@@ -418,15 +421,12 @@ def addItem(request):
         )
         return redirect('request')
     return render(request, 'accounts/User/request.html')
-
-@authenticated_user
 def request(request):
     if request.method == 'POST':
 
         selected_rows = request.POST.getlist('selectRow')
 
         for row_id in selected_rows:
-            user = request.user
             item_name = request.POST.get(f'item_{row_id}')
             item_brand = request.POST.get(f'item_brand_{row_id}')
             unit = request.POST.get(f'unit_{row_id}')
@@ -502,7 +502,6 @@ class RequesterView(View):
                 new_checkout.save()
                 items.delete()
             return redirect('history')
-        
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
@@ -649,7 +648,6 @@ def delete_category(request, Category):
     items_to_delete.delete()
     return redirect('bac_dashboard')
 
-
 def bohome(request):
     checkouts = Checkout.objects.select_related('user').all()
     comments = Comment.objects.all()
@@ -660,7 +658,6 @@ def bohome(request):
     # Loop through each Checkout instance and gather relevant data
     for checkout in checkouts:
         pr_id = checkout.pr_id
-       
 
         # Get the latest comment for the current pr_id
         latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
@@ -674,16 +671,18 @@ def bohome(request):
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
                 'is_approve': checkout.is_approve,
-                'is_seen': checkout.is_seen,
-                'status_comment': latest_comment.content if latest_comment else "",
+                'is_disapprove': checkout.is_disapprove,
+                'is_seen': checkout.is_seen,  # Include the new field in the view
+                'comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
-                # Add more fields as needed
+                 
             }
         else:
             # If pr_id is already in the dictionary, update the entry
             # with additional information, e.g., concatenate purposes
             checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
-
+           
+            checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
     # Convert the dictionary values to a list
     checkout_data = list(checkout_data_dict.values())
 
@@ -692,7 +691,7 @@ def bohome(request):
 class PreqForm_boView(View):
     template_name = 'accounts/Admin/Budget_Officer/preqform_bo.html'
 
-    def get(self, request, pr_id,):
+    def get(self, request, pr_id):
         # Use the pr_id to retrieve the corresponding Checkout object
         checkout = get_object_or_404(Checkout, pr_id=pr_id)
 
@@ -704,63 +703,58 @@ class PreqForm_boView(View):
             'pr_id': pr_id,
             'user': checkout.user,
             'purpose': checkout.purpose,
-            'approved': checkout.is_approve,  # Include the status in the context
+            'pending': not checkout.is_approve and not checkout.is_disapprove,
+            'approved': checkout.is_approve,
+            'disapproved': checkout.is_disapprove,
             'is_seen': checkout.is_seen,
+            
         }
 
         return render(request, self.template_name, context)
 
     def post(self, request, pr_id):
-        # Access the pr_id and content from the POST data
         new_status = request.POST.get('new_status')
-        new_is_seen = request.POST.get('new_is_seen', False) 
-        # Check if both pr_id and new_status are present
+
         if pr_id and new_status:
             try:
-                # Update the status of the checkout directly
                 checkout = Checkout.objects.get(pr_id=pr_id)
-                
+
                 checkout.date_updated = timezone.now()
-                
-                checkout.is_approve = new_status 
-                checkout.is_seen = new_is_seen
+                checkout.is_seen = True
+
+                # Set is_approve and is_disapprove to False initially
+                checkout.is_approve = False
+                checkout.is_disapprove = False
+
+                if new_status.lower() == 'true':
+                    checkout.is_approve = True
+                else:
+                    checkout.is_disapprove = True
+
                 checkout.save()
 
-                # Redirect after processing
                 return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
             except Checkout.DoesNotExist:
                 return HttpResponse("Checkout not found.")
             except Exception as e:
-                # Handle exceptions, log errors, etc.
                 print(f"Error: {e}")
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
 
-def approve_checkout(request, pr_id):
-    return update_checkout_status(request, pr_id, new_status=True)
-
-def disapprove_checkout(request, pr_id):
-    return update_checkout_status(request, pr_id, new_status=False)
-def mark_as_seen(request, pr_id):
-    return update_checkout_status(request, pr_id, new_is_seen=True)
-
-def mark_as_unseen(request, pr_id):
-    return update_checkout_status(request, pr_id, new_is_seen=False)
 def update_checkout_status(request, pr_id, new_status):
     if request.method == 'POST':
         try:
-
             # Convert new_status to boolean
-            new_status = new_status.lower() == 'true'  if isinstance(new_status, str) else new_status
-            new_is_seen = new_is_seen.lower() == 'true' if isinstance(new_is_seen, str) else new_is_seen
+            new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
+
             # Update the status of the checkout directly
             checkout = get_object_or_404(Checkout, pr_id=pr_id)
             checkout.status_update_date = timezone.now()
-            checkout.is_approve = new_status 
-            checkout.is_seen = new_is_seen
+            checkout.is_approve = new_status
+            checkout.is_disapprove = not new_status
+            checkout.is_seen = True  # Mark as seen when the status is updated
             checkout.save()
-
 
             # Redirect after processing
             return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
@@ -772,19 +766,6 @@ def update_checkout_status(request, pr_id, new_status):
             return HttpResponse("An error occurred while processing the form.")
     else:
         return HttpResponse("Invalid request method.")
-def comment_submit(request):
-    if request.method == 'POST':
-        comment_content = request.POST.get('comment_content')
-        # Assuming you have a 'purchase_request' object, replace it with the actual object you are commenting on
-        purchase_request = request.objects.get(pk=request.POST.get('purchase_request_id'))
-
-        # Create a new comment and associate it with the purchase request
-        Comment.objects.create(content=comment_content, purchase_request=purchase_request)
-
-        messages.success(request, 'Comment added successfully.')
-
-    # Redirect back to the purchase request detail page or wherever appropriate
-    return redirect('purchase_request_detail', pr_id=purchase_request.pk)
 
 
 
