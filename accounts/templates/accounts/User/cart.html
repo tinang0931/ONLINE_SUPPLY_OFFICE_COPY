@@ -165,7 +165,7 @@ p {
         $(document).ready(function() {
             function calculateTotal() {
                 var totalAmount = 0;
-                $(".item_total_cost").each(function() {
+                $(".item_total_cost").each(function() { 
                     var itemCost = parseFloat($(this).text());
                     totalAmount += itemCost;
                 });
