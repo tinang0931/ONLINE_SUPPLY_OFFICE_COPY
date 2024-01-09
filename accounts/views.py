@@ -264,8 +264,6 @@ def history(request):
 
 
 @authenticated_user
-
-
 def tracker(request):
     user = request.user
     all_checkouts = Checkout.objects.filter(user=user)
