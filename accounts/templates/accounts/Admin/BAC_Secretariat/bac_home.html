@@ -63,6 +63,14 @@
   .search-form {
     justify-content: flex-end;
   }
+
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+}
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -74,14 +82,57 @@
 
 <table class="table table-bordered">
     <thead>
-        <tr>
-            <th class="text-center">Date Requested</th>
-            <th class="text-center">Requests</th>
-            <th class="text-center">Purpose</th>
-            <th class="status">Status</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">comment</th>
-        </tr>
+      <tr>
+        <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+          Date Requested
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+          PR ID
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+          Requests
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+          Purpose
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="status" onclick="sortTable(4)" style="width: 15%;">
+          Status
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+          Date
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(4)" style="width: 30%;">
+          Attachments
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+      </tr>
     </thead>
     
     <tbody>
