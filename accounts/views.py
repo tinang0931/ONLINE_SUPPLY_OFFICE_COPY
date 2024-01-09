@@ -1,5 +1,4 @@
 from audioop import reverse
-from io import BytesIO
 import json
 from django.core.exceptions import ValidationError
 from pymongo import MongoClient
@@ -11,7 +10,6 @@ from typing import ItemsView
 import logging
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
-from accounts.forms import EditItemForm
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -95,6 +93,7 @@ def Procurement(request):
 
 def bac(request):
     return render(request, 'accounts/User/bac.html')
+
 
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
@@ -365,7 +364,6 @@ def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
-
 @authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
@@ -576,7 +574,6 @@ def addItem(request):
     return render(request, 'accounts/User/request.html')
 
 
-
 def request(request):
     if request.method == 'POST':
 
@@ -614,19 +611,12 @@ def request(request):
 
         return redirect('requester')
 
-    else:
-        # Handle data fetching for GET request
-        # Connect to MongoDB
-        csv_file_path ='C:/Users/maceda.danicamae/Documents/MACEDA DANICA MAE D/INVENTORY/ONLINE_SUPPLY_OFFICE_COPY/items.csv'
-        with open(csv_file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            csv_data = list(reader)
-        
-        # Pass data to the template
-        return render(request, 'accounts/User/request.html', {'csv_data': csv_data})
-
-
-    
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all()
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 
 from django.core.exceptions import ValidationError
