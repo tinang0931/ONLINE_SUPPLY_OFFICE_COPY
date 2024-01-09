@@ -46,6 +46,59 @@
     justify-content: flex-end;
   }
 
+  .table {
+    width: 90%;
+    margin: auto;
+    table-layout: fixed;
+    position: fixed;
+  }
+
+  .table th,
+  .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    width: 15%;
+  }
+
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 10%;
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 25%;
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 20%;
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 15%;
+  }
+
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    width: 40%;
+  }
+
+  .table th {
+    background-color: rgba(0, 82, 102, 0.781); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -54,6 +107,62 @@
   <div class="search">
     <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
 </div>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+        Date Requested
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        PR ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+        Requests
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        Purpose
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Status
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+        Date
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        Attachments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+    </tr>
+  </thead>
 
 
 

@@ -75,7 +75,9 @@ p {
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-  
+<div class="container" style="text-align: center;">
+        <h1 class="title" style="margin-top: 50px; margin-bottom: 20px; margin-left: 900px;">My Purchase Request</h1>
+</div>   
   <div>
     <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
       <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
@@ -88,42 +90,76 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
-              <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
               <th class="text-center text-nowrap"></th> 
+              <th class="text-center text-nowrap"></th>
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
               <th class="text-center text-nowrap"></th>
           </tr>
       </thead>
       
       <tbody>
         {% for item in items %}
-            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
-                <td class="item_name text-center">{{ item.item }}</td>
-                <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                <td class="item_unit text-center">{{ item.unit }}</td>
-                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                <td class="item_quantity text-center">{{ item.quantity }}</td>
-                <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td class="item_total_cost text-center">{{ Attached_File }}</td>
-                <td>
-                    <img class="attach" src="{% static 'images/attachment.png' %}" alt="AttachFile">
-                    <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 35px; height: 35px; vertical-align: middle;">
-                </td>
-                {% if item.id %}
-                <td class="text-center">
-                    <img src="{% static 'images/delete.png' %}" alt="Delete" style="width: 37px; height: 37px; vertical-align: middle;">
-                </td>
-                {% endif %}
-                <td>
+        <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+            <td class="item_name text-center">{{ item.item }}</td>
+            <td class="item_description text-center">{{ item.item_brand_description }}</td>
+            <td class="item_unit text-center">{{ item.unit }}</td>
+            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+            <td class="item_quantity text-center">{{ item.quantity }}</td>
+            <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+            <td class="text-center"> 
+                <img src="{% static 'images/pen.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
+            </td>
+
+            {% if item.id %}
+            <td class="text-center" style="margin-left: 10px;">
+                <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
+            </td>
+            <td class="text-center" onclick="attachFile()">
+                <img id="attachButton" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+              </td>
+              <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
+              <td class="item_total_cost text-center" id="attachedFileName"></td>
+              
+              
+            {% endif %}
+        </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
                     <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
                     <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
+
                 </td>
             </tr>
         {% endfor %}
     </tbody>
     </table>
+
+    <script>   function attachFile() {
+        document.getElementById('fileInput').click();
+      }
+    
+      function showFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const attachedFileName = document.getElementById('attachedFileName');
+    
+        const file = fileInput.files[0];
+        if (file) {
+          attachedFileName.textContent = file.name;
+          attachedFileName.style.color = 'blue'; // Change the color to blue when file attached
+          attachedFileName.style.cursor = 'pointer'; // Set cursor to pointer when file attached
+          attachedFileName.onclick = function() {
+            // Open the attached file in a new tab/window (change the logic as needed)
+            window.open(URL.createObjectURL(file), '_blank');
+          };
+        } else {
+          attachedFileName.textContent = "";
+          attachedFileName.style.color = 'black'; // Change the color back to default when no file attached
+          attachedFileName.style.cursor = 'default'; // Set cursor to default when no file attached
+          attachedFileName.onclick = null; // Remove click event if no file attached
+        }
+      }
+    </script>
     
     <script>
         $(document).ready(function() {
@@ -139,7 +175,6 @@ p {
             calculateTotal();
         });
     </script>
-    </div>
     
     <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
         <div class="container">
