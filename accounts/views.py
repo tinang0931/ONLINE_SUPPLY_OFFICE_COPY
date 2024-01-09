@@ -782,7 +782,7 @@ def handle_uploaded_file(file):
             Category=row[0],
             Item_name=row[1],
             Item_Brand=row[2],
-            Unit=row[3],
+            Unit=row[3],   
             Price=row[4]
         )
 
@@ -821,7 +821,6 @@ def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
 
-    return redirect('bac_dashboard')
 
 
 def bohome(request):
