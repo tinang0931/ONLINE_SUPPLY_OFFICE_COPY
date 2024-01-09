@@ -61,4 +61,12 @@ urlpatterns = [
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
+   path('bo/',views.bo, name='bo'),
+   path('boabout/',views.boabout, name='boabout'),
+   path('bohistory/',views.bohistory, name='bohistory'),
+ 
+   path('bohome/',views.bohome, name='bohome'),
+   path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
+   path('approve_checkout/<pr_id>/', update_checkout_status, {'new_status': True}, name='approve_checkout'),
+   path('disapprove_checkout/<pr_id>/', update_checkout_status, {'new_status': False}, name='disapprove_checkout'),
 ]
