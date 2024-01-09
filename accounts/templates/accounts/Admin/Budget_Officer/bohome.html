@@ -28,6 +28,15 @@
     color: black; /* Adjust this to your desired text color */
   }
 
+  .table th {
+    background-color: rgba(5, 112, 139, 0.822); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
 </style>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
@@ -40,7 +49,7 @@
         <th class="text-center">Purpose</th>
         <th class="status">Status</th>
         <th class="text-center">Date</th>
-        <th class="text-center">Comment</th> <!-- Updated this line -->
+        <th class="text-center">Comment</th> 
       </tr>
     </thead>
     <tbody>
