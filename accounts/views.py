@@ -113,26 +113,34 @@ def activate(request, uidb64, token):
 
 
 
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
-        pass1 = request.POST.get('pass1')  
-
+        pass1 = request.POST.get('pass1')
+          
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
             auth_login(request, user)
             messages.success(request, "You are now logged in.")
-        else:
-                return redirect('login')
 
-        if user.user_type == 'admin':
-                return redirect('bac_home')  
-        else:
+            # Redirect based on user_type
+            if user.user_type == 'admin':
+                return redirect('admin_home')  
+            elif user.user_type == 'regular':
                 return redirect('request')
-    else:
-            messages.success(request, "Invalid login credentials. Please try again.")
-    return render(request, 'accounts/User/login.html')
-
+            elif user.user_type == 'cd':
+                return redirect('cd')
+            elif user.user_type == 'budget':
+                return redirect('bo')
+            elif user.user_type == 'bac':
+                return redirect('bac_home')
+            else:
+                return redirect('login') 
+        else:
+            messages.error(request, "Invalid login credentials. Please try again.")
+    
+    return render(request, 'accounts/User/login.html') 
 def bac_home(request):
     if not request.user.is_admin:
         return redirect('request')
