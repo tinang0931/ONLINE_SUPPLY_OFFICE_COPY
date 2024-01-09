@@ -46,12 +46,8 @@
               <div class="list-group w-100">
                 <br><br>
 
-                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'cdhome'%}">
-                  <i class='bx bx-home'></i> <span id="home" class="hidden-name">Home</span>
-                </a>
-
                 <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdpurchase'%}">
-                  <i class='bx bx-file'></i> <span id="requests" class="hidden-name">Purchase Requests</span>
+                  <i class='bx bx-shopping-bag' ></i> <span id="requests" class="hidden-name">Purchase Request</span>
                 </a>
 
 
@@ -70,7 +66,7 @@
               <div class="profile-container">
                 <a href="{% url 'prof' %}">
                 <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-                <p1 class="account_type">Admin</p1>
+                <p1 class="account_type">Campus Director</p1>
             </div>
             </div>
           </div>
@@ -208,9 +204,6 @@ margin-bottom: 30vh;
             sidebar.classList.remove('show-names');
           }
         </script>
-
-        {% block cdhome %}
-        {% endblock %}
         
         {% block cdabout %}
         {% endblock %}

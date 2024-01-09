@@ -7,8 +7,10 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
+  /* Your existing styles */
+
   .status {
-    width: 15%;
+    width: 30%;
     text-align: center;
   }
 
@@ -22,63 +24,9 @@
     color: white;
   }
 
-  .table {
-    width: 90%;
-    margin: auto;
-    table-layout: fixed;
-    position: fixed;
-  }
-
-  .table th,
-  .table td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .table th:nth-child(1),
-  .table td:nth-child(1) {
-    width: 15%;
-  }
-
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    width: 10%;
-  }
-
-  .table th:nth-child(3),
-  .table td:nth-child(3) {
-    width: 25%;
-  }
-
-  .table th:nth-child(4),
-  .table td:nth-child(4) {
-    width: 20%;
-  }
-
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    width: 15%;
-  }
-
-  .table th:nth-child(6),
-  .table td:nth-child(6) {
-    width: 25%;
-  }
-  .table th {
-    background-color: rgba(0, 53, 102, 0.845939); /* Replace the color with your specified rgba value */
-    color: white;
-    cursor: pointer;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
-
-
   .form-control {
     display: block;
-    width: 18%;
+    width: 26%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -93,26 +41,34 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
-    z-index: 1000;
   }
 
   .btn-outline-success {
-    color: #ffffff;
-    background-color: #2d83da;
+    color: #ffffff; 
+    background-color: #2d83da; 
     border-color: #000;
-    margin-left: 1680px;
-    height: 35px;
+ margin-left: 1680px;
+ height: 35px;
   }
+  
 
   .btn-outline-success:hover {
-    color: #ffffff;
-    background-color: rgb(9, 66, 222);
-    border-color: #082fdc;
+    color: #ffffff; 
+    background-color: rgb(9, 66, 222); 
+    border-color: #082fdc; 
   }
 
   .search-form {
     justify-content: flex-end;
   }
+
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+}
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -120,9 +76,9 @@
 
   <div class="search">
     <input class="form-control mb-3" type="text" placeholder="First name, Last name, Department" id="search_bar_request" oninput="filterTable()">
-  </div>
+</div>
 
-  <table class="table table-bordered">
+<table class="table table-bordered">
     <thead>
       <tr>
         <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
@@ -167,7 +123,7 @@
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        <th class="text-center" onclick="sortTable(4)" style="width: 30%;">
           Attachments
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
@@ -176,107 +132,59 @@
         </th>
       </tr>
     </thead>
-
     
     <tbody>
       {% for checkout in checkouts %}
-        <tr>
-          <td class="text-center" style="width: 15%;">{{ checkout.submission_date }}</td>
-          <td class="text-center" style="width: 20%; white-space: nowrap;">{{ checkout.pr_id|stringformat:"s" }}</td> <!-- Updated line for PR ID -->
-          <td style="width: 25%;">
-            <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong>
-            </a>
-            submitted a new purchase request on {{ checkout.submission_date }}
-          </td>
-          <td style="width: 15%;">{{ checkout.purpose }}</td>
-          <td class="badge {% if checkout.status_comment %}bg-success{% else %}no-comment{% endif %}" style="width: 10%; margin-top: 5px; margin-left: 5px; color: white;">
-            {% if checkout.status_comment %}
-              {{ checkout.status_comment }}
-            {% else %}
-              &nbsp; 
-            {% endif %}
-          </td>
-          <td style="width: 15%;">
-            {% if checkout.status_update_date %}{{ checkout.status_update_date }}{% else %}&nbsp;{% endif %}
-          </td>
-        </tr>
+          <tr>
+              <td class="text-center">{{ checkout.submission_date }}</td>
+              <td>
+                  <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+                      <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+                  </a>
+              </td>
+              <td>{{ checkout.purpose }}</td>
+              <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;" id="bohome-status">
+                      {% if checkout.is_approve %}
+                          - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                      {% else %}
+                          - not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                      {% endif %}
+              </td>
+              <td>
+                  {{ checkout.status_update_date|default:"Not available" }}
+              </td>
+          </tr>
       {% endfor %}
-    </tbody>
-    
+  
+      {% if checkouts|length == 0 %}
+          <tr>
+              <td colspan="3">
+                  <span>NO PURCHASE REQUESTS YET</span>
+              </td>
+          </tr>
+      {% endif %}
+  </tbody>
+  
   </table>
+<script>
+  function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
 
-  <script>
-    const defaultSortDirections = [1, 1, 1, 1, 1, 1];
-    let currentColumn = 0;
-    let originalRows;
-  
-    window.addEventListener('DOMContentLoaded', () => {
-      originalRows = Array.from(document.querySelector('.table').querySelectorAll('tbody tr'));
-      filterAndSortTable('', currentColumn);
-    });
-  
-    function filterAndSortTable(searchText, sortColumn) {
-      let table = document.querySelector('.table');
-      let rows = originalRows ? [...originalRows] : Array.from(table.querySelectorAll('tbody tr'));
-  
-      if (searchText.trim() !== '') {
-        rows = rows.filter(row => {
-          let textContent = Array.from(row.getElementsByTagName('td')).map(td => td.innerText).join(' ').toLowerCase();
-          return textContent.includes(searchText.toLowerCase());
-        });
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1]; 
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
       }
-  
-      sortRows(rows, sortColumn);
-  
-      table.querySelector('tbody').innerHTML = '';
-  
-      if (rows.length === 0) {
-        // Display a message when no results are found
-        table.querySelector('tbody').innerHTML = '<tr><td colspan="6" class="text-center">No results found</td></tr>';
-      } else {
-        rows.forEach(row => table.querySelector('tbody').appendChild(row));
-      }
-    }
-  
-    function sortRows(rows, sortColumn) {
-      rows.sort((a, b) => {
-        let aValue, bValue;
-  
-        if (sortColumn === 1) {
-          aValue = a.getElementsByTagName('td')[sortColumn].innerText.trim().toLowerCase();
-          bValue = b.getElementsByTagName('td')[sortColumn].innerText.trim().toLowerCase();
-        } else {
-          aValue = a.getElementsByTagName('td')[sortColumn].innerText.trim();
-          bValue = b.getElementsByTagName('td')[sortColumn].innerText.trim();
-        }
-  
-        return defaultSortDirections[sortColumn] * aValue.localeCompare(bValue, undefined, { numeric: true, sensitivity: 'base' });
-      });
-  
-      resetArrows();
-      let arrowUp = document.querySelectorAll('.sort-arrow-up')[sortColumn];
-      arrowUp.innerHTML = '▲';
-      let arrowDown = document.querySelectorAll('.sort-arrow-down')[sortColumn];
-      arrowDown.innerHTML = '▼';
-  
-      defaultSortDirections[sortColumn] = defaultSortDirections[sortColumn] * -1;
-      currentColumn = sortColumn;
-    }
-  
-    function resetArrows() {
-      document.querySelectorAll('.sort-arrow-up').forEach(arrow => arrow.innerHTML = '');
-      document.querySelectorAll('.sort-arrow-down').forEach(arrow => arrow.innerHTML = '');
-    }
-  
-    function filterTable() {
-      let searchText = document.getElementById('search_bar_request').value;
-      filterAndSortTable(searchText, currentColumn);
-    }
-  
-    function sortTable(column) {
-      filterAndSortTable('', column);
-    }
-  </script>
-  {% endblock %}
-</div>
+  }
+</script>
+{% endblock %}

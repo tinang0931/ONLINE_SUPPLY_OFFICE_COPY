@@ -14,6 +14,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
 
@@ -43,36 +44,30 @@
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
+
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
+                  <i class='bx bxs-shopping-bag' ></i> <span id="about" class="hidden-name">Purchase Request</span>
+                </a>
+               
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
-                  <i class="fas fa-file-alt"></i> <span id="about" class="hidden-name">About</span>
+                  <i class='bx bxs-info-circle' ></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 
-                <a class="list-group-item list-group-item-action p-3 border-0 history-link" href="{% url 'bohistory'%}">
-                  <i class="fas fa-info-circle"></i> <span id="history" class="hidden-name">History</span>
-                </a>
-
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
-                  <i class="fas fa-sign-out-alt"></i> <span id="logout" class="hidden-name">Logout</span>
+                  <i class='bx bx-log-in' ></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
-                <div class="profile-container">
-                  <a href="{% url 'prof' %}">
-                  <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-                  <p1 class="account_type">B.O.</p1>
               </div>
+              <div class="profile-container">
+                <a href="{% url 'prof' %}">
+                <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
+                <p1 class="account_type">B.O.</p1>
+            </div>
             </div>
           </div>
         </div>
-<style>
-.about-link,
-.history-link,
-.logout-link {
-    margin-left: -10px;
-    display: block; /* Ensure that the links are displayed as block elements */
-}
-.d-flex {
-margin-bottom: 35vh;
-}
-#sidebar {
+ 
+        <style>
+        #sidebar {
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
     overflow: hidden;
     width: 50px;
@@ -97,18 +92,28 @@ margin-bottom: 35vh;
 }
 
 .list-group-item-action:hover {
-    background-color: #123f65 !important;
+    background-color: #254b6e !important;
     border-radius: 15px !important;
     color: #f2f2f2 !important;
 }
 
 #sidebar:hover {
     width: 300px;
-    padding: 0 5px;
+    padding: 0 10px;
 }
 
 .logout-link {
-    margin-top: -10px;
+    margin-top: -590px;
+    margin-left: -10px;
+}
+.home-link {
+  margin-left: -10px;
+}
+.history-link {
+  margin-left: -10px;
+}
+.about-link {
+  margin-left: -10px;
 }
 
 .d-flex.flex-wrap.align-content-between.h-100 {
@@ -127,8 +132,6 @@ margin-bottom: 35vh;
 
 .pro {
     position: relative;
-    top: 200px;
-    z-index: 1;
     height: 45px;
     width: 45px;
     margin-left: 45%;
@@ -136,6 +139,7 @@ margin-bottom: 35vh;
     cursor: pointer;
     border-radius: 50px;
     border: 2px solid #000;
+    margin-top: 250px;
 }
 
 .list-group-item i {
@@ -153,26 +157,27 @@ margin-bottom: 35vh;
 
 .account_type {
     position: relative;
-    top: 200px;
-    left: 30px; 
+    left: 30px; /* Adjust the desired horizontal position */
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease; 
+    opacity: 0; /* Set the initial opacity to hide the element */
+    visibility: hidden; /* Set the initial visibility to hidden */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+    margin-top: 250px;
 }
+
 
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1; 
-    visibility: visible;
+    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
+    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
 }
 
 
 .sidebar:hover .account_type {
-    opacity: 1; 
-    visibility: visible; 
+    opacity: 1; /* Show the element when the sidebar is hovered */
+    visibility: visible; /* Show the element when the sidebar is hovered */
 }
         </style>
         
@@ -192,6 +197,13 @@ margin-bottom: 35vh;
         {% endblock %}
 
         {% block bohistory %}
+        {% endblock %}
+
+
+        {% block bohome %}
+        {% endblock %}
+
+        {% block bodashboard %}
         {% endblock %}
 
     </main>
