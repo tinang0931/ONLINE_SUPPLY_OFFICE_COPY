@@ -13,7 +13,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -38,11 +38,12 @@ from .models import Item
 from .models import User
 from .forms import UserForm
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt 
 import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
+
 
 
 def main(request):
@@ -94,7 +95,6 @@ def Procurement(request):
 
 def bac(request):
     return render(request, 'accounts/User/bac.html')
-
 
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
@@ -174,9 +174,15 @@ def login(request):
             else:
                 return redirect('request')
         else:
-            messages.error(request, "Invalid login credentials. Please try again.")
-    return render(request, 'accounts/User/login.html')
+                return redirect('login')
 
+        if user.user_type == 'admin':
+                return redirect('bac_home')  
+        else:
+                return redirect('request')
+    else:
+            messages.success(request, "Invalid login credentials. Please try again.")
+    return render(request, 'accounts/User/login.html')
 
 def bac_home(request):
     if not request.user.is_admin:
@@ -243,15 +249,24 @@ def reset_password(request):
 @authenticated_user
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You are now successfully logout."))
-    return redirect('homepage')
+    messages.success(request, "You are now logged out.")
+    return redirect('login')
 
 
 @authenticated_user
+@regular_user_required
 def about(request):
     return render(request, 'accounts/User/about.html')
 
+@authenticated_user
+def registration(request):
+    return render(request, 'accounts/User/registration.html')
 
+@regular_user_required
+def regular_user_only_view(request):
+    return render(request, 'accounts/User/request.html')
+
+@regular_user_required
 @authenticated_user
 def history(request):
     user = request.user
@@ -272,22 +287,22 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
+@regular_user_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
+@regular_user_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-
-@authenticated_user
+@admin_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
 @authenticated_user
-
 def bac_home(request):
     checkouts = Checkout.objects.select_related('user').all()
     comments = Comment.objects.all()
@@ -913,6 +928,48 @@ class PreqForm_boView(View):
             return HttpResponse("PR ID or new status not found in the form data.")
 
 def update_checkout_status(request, pr_id, new_status):
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+@authenticated_user
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
+
+
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def inspection(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
+
+@authenticated_user
+def property(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
+
+@authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+@authenticated_user
+def notif(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+@authenticated_user
+def abstract(request):
+    # Your view logic here
+    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+
+
+
+
+def addItem(request):
     if request.method == 'POST':
         try:
             # Convert new_status to boolean
@@ -925,6 +982,55 @@ def update_checkout_status(request, pr_id, new_status):
             checkout.is_disapprove = not new_status
             checkout.is_seen = True  # Mark as seen when the status is updated
             checkout.save()
+        user = request.user
+
+    
+        Item.objects.create(
+            user=user,
+            item=item_data,
+            item_brand_description=item_brand_description,
+            unit=unit,
+            unit_cost=unit_cost,
+            quantity=quantity,
+             # Calculate total cost based on price and quantity
+        )
+       
+
+        return redirect('request')
+
+    return render(request, 'accounts/User/request.html')
+
+@regular_user_required
+def request(request):
+    if request.method == 'POST':
+        # Retrieve selected rows from the form
+        selected_rows = request.POST.getlist('selectRow')
+
+        # Process and save data to the database
+        for row_id in selected_rows:
+            item_name = request.POST.get(f'item_{row_id}')
+            item_brand = request.POST.get(f'item_brand_{row_id}')
+            unit = request.POST.get(f'unit_{row_id}')
+            price = request.POST.get(f'price_{row_id}')
+            quantity = request.POST.get(f'quantity_{row_id}')
+
+            user = request.user
+
+            # Save the data to the CartItem model (update this based on your model)
+            items = Item.objects.create(
+                user=user,
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price,
+                quantity=quantity,
+                 # Calculate total cost based on price and quantity
+            )
+            items.save()
+            
+
+        # Redirect to a success page
+        return redirect('requester')
 
             # Redirect after processing
             return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
@@ -1048,3 +1154,55 @@ def update_checkout_status(request, pr_id, new_status):
             return HttpResponse("An error occurred while processing the form.")
     else:
         return HttpResponse("Invalid request method.")
+            # For demonstration purposes, let's assume you have a dictionary
+            # with form_type and form_data
+            form_type = request.POST.get('form_type', 'other')
+            form_data = {
+                'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
+                'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
+                'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
+                'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
+                'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
+                'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
+                'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
+                'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
+            }
+
+            response_data = form_data.get(form_type, {})
+
+            return JsonResponse(response_data)
+    
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+@admin_required
+@authenticated_user
+def bac_history(request):
+   request = Item.objects.all()
+
+   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+
+
+class GetNewRequestsView(View):
+    def get(self, request, *args, **kwargs):
+
+       
+
+          # Fetch new requests from the database based on your criteria
+        new_requests = Checkout.objects.exclude(pr_id=None)
+
+        # Serialize the data as needed
+        serialized_requests = [
+            {
+                'user_id': request.user_id,
+                'submission_date': request.submission_date,
+                # Add other fields as needed
+            }
+            for request in new_requests
+        ]
+
+        return JsonResponse({'new_requests': serialized_requests})
+
+@authenticated_user              
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
+    item.delete()
+    return redirect ('requester')

@@ -36,7 +36,7 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.is_admin = self.user_type == 'admin'
         super().save(*args, **kwargs)
-    
+   
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
@@ -50,7 +50,6 @@ class User(AbstractUser):
             self.is_admin = True
         else:
             self.is_admin = False
-
         super().save(*args, **kwargs)
     def __str__(self):
         return self.username
