@@ -43,10 +43,9 @@
     margin-left: 1300px;
   }
 
-  /* Updated styles for the search button */
   .btn-outline-success {
-    color: #ffffff; /* Text color */
-    background-color: #2d83da; /* Orange color */
+    color: #ffffff; 
+    background-color: #2d83da; 
     border-color: #000;
  margin-left: 1680px;
  height: 35px;
@@ -54,12 +53,11 @@
   
 
   .btn-outline-success:hover {
-    color: #ffffff; /* Text color on hover */
-    background-color: rgb(9, 66, 222); /* Darker shade of orange on hover */
-    border-color: #082fdc; /* Border color on hover */
+    color: #ffffff; 
+    background-color: rgb(9, 66, 222); 
+    border-color: #082fdc; 
   }
 
-  /* Move the search bar to the right */
   .search-form {
     justify-content: flex-end;
   }
@@ -176,8 +174,8 @@
       table = document.querySelector(".table");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
-          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1]; 
           if (td) {
               txtValue = td.textContent || td.innerText;
               if (txtValue.toUpperCase().indexOf(filter) > -1) {
