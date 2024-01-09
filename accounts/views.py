@@ -42,6 +42,8 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 import pandas as pd
 from itertools import groupby
+from django.contrib.auth import authenticate, login as auth_login
+
 
 
 def main(request):
@@ -111,7 +113,7 @@ def register(request):
         contact2 = request.POST['contact2']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
-        user_type = request.POST['user_type']
+        user_types = request.POST.getlist('user_type')  # Get list of selected user types
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -120,10 +122,17 @@ def register(request):
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = User.objects.create_user(username=username, email=email, password=password1)
+        user.contact1 = contact1
+        user.contact2 = contact2
         user.first_name = first_name
         user.last_name = last_name
+        user.is_active = False
         user.save()
+
+        # Assign selected user types to the user
+        for user_type in user_types:
+            user.user_types.add(user_type)
 
         current_site = get_current_site(request)
         mail_subject = 'Activation link has been sent to your email id'
@@ -141,6 +150,7 @@ def register(request):
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
         return redirect('login')
     return render(request, 'accounts/User/register.html')
+
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -161,19 +171,29 @@ def activate(request, uidb64, token):
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
-        pass1 = request.POST.get('pass1')  
+        password = request.POST.get('pass1')
 
-        user = authenticate(request, username=username, password=pass1)
-        if user is not None and user.is_active:
-            auth_login(request, user)
-            messages.success(request, "You are now logged in.")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                messages.success(request, "You are now logged in.")
 
-            if user.user_type == 'admin':
-                return redirect('admin_home')  
+                if user.user_type == 'admin':  # type: ignore
+                    return redirect('admin_home')
+                elif user.user_type == 'bac':  # type: ignore
+                    return redirect('bac_home')
+                elif user.user_type == 'campusd':  # type: ignore
+                    return redirect('campus_director_home')
+                elif user.user_type == 'budget':  # type: ignore
+                    return redirect('budget_officer_home')
+                else:
+                    return redirect('regular_user_home')  # Modify this line with your regular user home URL
             else:
-                return redirect('request')
+                messages.error(request, "Your account is inactive.")
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
+
     return render(request, 'accounts/User/login.html')
 
 
@@ -497,7 +517,7 @@ def register_user(request):
             messages.error(request, "Username or email is already in use.")
             
 
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False) 
         user.first_name = first_name
         user.last_name = last_name
         user.save()

@@ -7,9 +7,9 @@ import uuid
 import random
 
 
-
 class User(AbstractUser):
     CTU_ID_LENGTH = 10
+    
     username = models.CharField(max_length=12, unique=True, primary_key=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
@@ -20,38 +20,31 @@ class User(AbstractUser):
     password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-
         ('regular', 'Regular User'),
         ('bac', 'BAC Secretariat'),
         ('campusd', 'Campus Director'),
         ('budget', 'Budget Officer'),
         ('admin', 'Admin'),
-        
-        
     ]
 
     is_admin = models.BooleanField(default=False) 
-    def save(self, *args, **kwargs):
-        self.is_admin = self.user_type == 'admin'
-        super().save(*args, **kwargs)
-    
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
-
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+    user_types = models.CharField(max_length=10, choices=USER_TYPES)
 
     @property
     def get_user_type_display(self):
-        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
+        return dict(self.USER_TYPES).get(self.user_types, 'Unknown')
 
     def save(self, *args, **kwargs):
-        if self.user_type == 'admin':
+        if self.user_types == 'admin':
             self.is_admin = True
         else:
             self.is_admin = False
 
         super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username
+
 
 
 class Item(models.Model):
