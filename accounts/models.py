@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -180,4 +182,3 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
-

@@ -5,6 +5,7 @@ from .models import User
 
 
 
+
 class RequestItemForm(forms.ModelForm):
     class Meta:
         model = Item
@@ -14,7 +15,3 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'contact1', 'contact2', 'email', 'user_type')
-
-
-
-     
