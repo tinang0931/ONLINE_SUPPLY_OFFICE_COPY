@@ -75,9 +75,13 @@ class Checkout(models.Model):
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
     is_approve = models.BooleanField(default=False)
-    is_disapprove = models.BooleanField(default=False)
+    
     is_seen=models.BooleanField(default=False)
     comment = models.TextField(blank=True, null=True)
+    cd_approve = models.BooleanField(default=False)
+    cd_seen=models.BooleanField(default=False)
+   
+    
     # # ... other fields and methods ...
     # STATUS_CHOICES = (
     #     ('approve', 'approve'),

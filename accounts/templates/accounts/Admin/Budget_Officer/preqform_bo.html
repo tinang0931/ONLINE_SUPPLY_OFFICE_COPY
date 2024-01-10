@@ -435,20 +435,26 @@ position: ceneter;
                                 <div>
                                     <br>
                                     <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                            
+                            
+                            </form> <!-- Close the form tag here -->
                             <footer class="footer">
 
                                 <div class="icons-container">
-                                    <form method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
+                                    <form id='form_status' method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
                                         {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="aprv">Approve</button>
+                                        <input id="new_status_id" type="hidden" name="new_status">
+                                        <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+                                        <button type="button" onclick="btn_click(false)"class="disaprv">Disapprove</button>
                                     </form>
+                                    <script>
+                                        function btn_click(status){
+                                            document.getElementById('new_status_id').value = status
+                                            form = document.getElementById('form_status')
+                                            form.submit()
+                                        }
+                                    </script>
                             
-                                    <form method="post" action="{% url 'disapprove_checkout' pr_id=pr_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="disaprv">Disapprove</button>
-                                    </form>
                             
                                     <a href="#" title="Download" class="icon-link">
                                         <i class="fas fa-download"></i> 
@@ -458,19 +464,17 @@ position: ceneter;
                                     </a>
                                     
                                     <div class="input-box">
-                                        <input placeholder="....................................." name="comment_content">
+                                        <input placeholder="Type your comment" name="comment_content">
                                     </div>
-                                        <div class="send-icon">
-                                            <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
-                                        </div>
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
+                                    </div>
                                     </form>
                                         
                                 </div>
                                
                                
                             </footer>
-                            
-                            </form> <!-- Close the form tag here -->
                             <script>
                                 function setAction(action) {
                                     document.getElementById('action').value = action;

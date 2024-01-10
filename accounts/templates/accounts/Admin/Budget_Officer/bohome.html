@@ -67,10 +67,12 @@
             {{ checkout.purpose }}
           </td>
           <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
-            {% if checkout.is_approve %}
-              Approved
-            {% elif checkout.is_disapprove %}
-              Disapproved
+            {% if checkout.is_seen %}
+              {% if checkout.is_approve %}
+                Approved
+              {% else %}
+                Disapproved
+              {% endif %}
             {% else %}
               Waiting for Approval
             {% endif %}

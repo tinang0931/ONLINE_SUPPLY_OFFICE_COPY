@@ -239,15 +239,15 @@ table {
   }
 
   .footer {
-  background-color: rgba(1, 33, 67, 0.9);
-  text-align: center;
-  width: 33%;
-  height: auto;
-  bottom: 0;
-  -webkit-user-modify: read-only;
-  position: fixed;
-  z-index: 2;
-  position:fixed;
+    background-color: rgba(5, 112, 139, 0.822); 
+    text-align: center;
+    width: 33%;
+    height: auto;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+    position:fixed;
 }
 .p {
     size: 12px;
@@ -428,42 +428,44 @@ position: center;
                                 <div>
                                     <br>
                                     <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                            <footer class="footer">
+                           </form> 
+                           <footer class="footer">
 
-                                <div class="icons-container">
-                                    <form method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="aprv">Approve</button>
-                                    </form>
-                            
-                                    <form method="post" action="{% url 'disapprove_checkout' pr_id=pr_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="disaprv">Disapprove</button>
-                                    </form>
-                            
-                                    <a href="#" title="Download" class="icon-link">
-                                        <i class="fas fa-download"></i> 
-                                    </a>
-                                    <a href="javascript:window.print()" title="Print" class="icon-link">
-                                        <i class="fas fa-print"></i> 
-                                    </a>
-                                    
-                                    <div class="input-box">
-                                        <input placeholder="comment;[]" name="comment_content">
-                                    </div>
-                                        <div class="send-icon">
-                                            <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
-                                        </div>
-                                    </form>
-                                        
+                            <div class="icons-container">
+                                <form id='form_status' method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
+                                    {% csrf_token %}
+                                    <input id="new_status_id" type="hidden" name="new_status">
+                                    <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+                                    <button type="button" onclick="btn_click(false)"class="disaprv">Disapprove</button>
+                                </form>
+                                <script>
+                                    function btn_click(status){
+                                        document.getElementById('new_status_id').value = status
+                                        form = document.getElementById('form_status')
+                                        form.submit()
+                                    }
+                                </script>
+                        
+                        
+                                <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> 
+                                </a>
+                                <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> 
+                                </a>
+                                
+                                <div class="input-box">
+                                    <input placeholder="Type your comment" name="comment_content">
                                 </div>
-                               
-                               
-                            </footer>
-                            
-                            </form> <!-- Close the form tag here -->
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
+                                    </div>
+                                </form>
+                                    
+                            </div>
+                           
+                           
+                        </footer>
                             <script>
                                 function setAction(action) {
                                     document.getElementById('action').value = action;

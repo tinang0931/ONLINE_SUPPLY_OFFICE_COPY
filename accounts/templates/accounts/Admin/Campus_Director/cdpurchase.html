@@ -135,15 +135,19 @@
           <td>
             {{ checkout.purpose }}
           </td>
-          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
-            {% if checkout.is_approve %}
-              Approved
-            {% elif checkout.is_disapprove %}
-              Disapproved
+          <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
+            {% if checkout.cd_seen %}
+                {% if checkout.cd_approve %}
+                    Approved
+                {% elif checkout.cd_disapprove %}
+                    Disapproved
+                {% else %}
+                    Waiting for Approval
+                {% endif %}
             {% else %}
-              Waiting for Approval
+                Not Seen
             {% endif %}
-          </td>
+        </td>
           <td>
             {{ checkout.status_update_date|default:"Not available" }}
           </td>
