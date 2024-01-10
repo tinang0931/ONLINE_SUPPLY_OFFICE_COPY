@@ -4,7 +4,7 @@ from . import views
 from .views import *
 
 
-urlpatterns = [
+urlpatterns = [ 
    path('',views.homepage, name='homepage'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
@@ -44,9 +44,9 @@ urlpatterns = [
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
-   path('cdhome/',views.cdhome, name='cdhome'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
+   path('preqform_cd/<str:pr_id>/', PreqForm_cdView.as_view(), name='preqform_cd'),
    path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('admin_home/',views.admin_home, name='admin_home'),
@@ -61,4 +61,11 @@ urlpatterns = [
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
+   path('bo/',views.bo, name='bo'),
+   path('boabout/',views.boabout, name='boabout'),
+   path('bohistory/',views.bohistory, name='bohistory'),
+   path('bohome/',views.bohome, name='bohome'),
+   path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
+   path('approve_checkout/<pr_id>/', update_checkout_status, {'new_status': True}, name='approve_checkout'),
+   path('disapprove_checkout/<pr_id>/', update_checkout_status, {'new_status': False}, name='disapprove_checkout'),
 ]

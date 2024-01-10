@@ -107,21 +107,20 @@ p {
             <td class="item_quantity text-center">{{ item.quantity }}</td>
             <td class="item_total_cost text-center">{{ item.total_cost }}</td>
             <td class="text-center"> 
-                <img src="{% static 'images/pen.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
+                <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
             </td>
 
             {% if item.id %}
             <td class="text-center" style="margin-left: 10px;">
-                <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
+              <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
             </td>
-            <td class="text-center" onclick="attachFile()">
-                <img id="attachButton" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
-              </td>
-              <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
-              <td class="item_total_cost text-center" id="attachedFileName"></td>
-              
-              
-            {% endif %}
+            <td class="text-center" onclick="attachFile({{ item.id }})">
+              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+            </td>
+            <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
+            <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>
+          {% endif %}
+        </tr>
         </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
@@ -135,31 +134,34 @@ p {
     </tbody>
     </table>
 
-    <script>   function attachFile() {
-        document.getElementById('fileInput').click();
-      }
-    
-      function showFileName() {
-        const fileInput = document.getElementById('fileInput');
-        const attachedFileName = document.getElementById('attachedFileName');
-    
-        const file = fileInput.files[0];
-        if (file) {
-          attachedFileName.textContent = file.name;
-          attachedFileName.style.color = 'blue'; // Change the color to blue when file attached
-          attachedFileName.style.cursor = 'pointer'; // Set cursor to pointer when file attached
-          attachedFileName.onclick = function() {
-            // Open the attached file in a new tab/window (change the logic as needed)
-            window.open(URL.createObjectURL(file), '_blank');
-          };
-        } else {
-          attachedFileName.textContent = "";
-          attachedFileName.style.color = 'black'; // Change the color back to default when no file attached
-          attachedFileName.style.cursor = 'default'; // Set cursor to default when no file attached
-          attachedFileName.onclick = null; // Remove click event if no file attached
+    <script>
+        var attachmentCounter = 0; // Counter for creating unique IDs
+      
+        function attachFile(itemId) {
+          document.getElementById('fileInput_' + itemId).click();
         }
-      }
-    </script>
+      
+        function showFileName(itemId) {
+          const fileInput = document.getElementById('fileInput_' + itemId);
+          const attachedFileName = document.getElementById('attachedFileName_' + itemId);
+      
+          const file = fileInput.files[0];
+          if (file) {
+            attachedFileName.textContent = file.name;
+            attachedFileName.style.color = 'blue';
+            attachedFileName.style.cursor = 'pointer';
+            attachedFileName.onclick = function() {
+              window.open(URL.createObjectURL(file), '_blank');
+            };
+          } else {
+            attachedFileName.textContent = "";
+            attachedFileName.style.color = 'black';
+            attachedFileName.style.cursor = 'default';
+            attachedFileName.onclick = null;
+          }
+        }
+      </script>
+      
     
     <script>
         $(document).ready(function() {
