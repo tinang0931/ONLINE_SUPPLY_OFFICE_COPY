@@ -1,297 +1,338 @@
 {% load static %}
 
+{% block preqform %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    
-    <style>
-        body, h, p {
-            margin: 0;
-            padding: 0;
-            font-family: 'Times New Roman';
-        }
 
-        header {
-            background-color: #007acc; 
+    <style>
+        @page {
+    size: A4;
+    margin: 0;
+}
+
+body {
+    margin: 10mm; /* Adjust margin as needed */
+}
+@media print {
+    .send-icon, .input-box {
+        display: none;
+    }
+}
+  
+    header {
+            background-color: #007acc;
             color: white;
             padding: 10px;
         }
+       
 
-        .ctu_logo {
-            width: 190px;
-            height: auto;
-            margin-right: 20px;
-            float: left;
-            margin-top: 30px;
-        }
-        
-        .asean_logo{
-            width: 167px;
-            height: auto;
-            margin-right: 20px;
-            margin-top: 55px;
-            float: left;
-        }
-        
-        .container {
-            max-width: 800px; 
-            padding: 20px;
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0 auto; 
-        }
 
-        h {
-            font-size: 25px;
+    h4 {
+        font-size: 25px;
+        text-align: center;
+        margin-top: 5px; /* Adjusted margin */
+    }
+        
+  p {
+            font-size: 15px;
             text-align: center;
-        }
-
-        p {
-            font-size: 16px; 
-            text-align: center; 
         }
 
         a {
             color: #007acc;
-            text-decoration: underline; 
+            text-decoration: underline;
         }
 
-        a:hover {
-            text-decoration: none; 
-        }
 
-        .iso_logo {
+        .management {
             float: right;
             width: 167px;
             height: auto;
-            margin-top: 50px;
+            margin-right: 20px;
         }
 
-        .stars_logo {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-top: 145px;
+    .br {
+            margin-bottom: 20px;
         }
 
-        body {
-            font-family:'Times New Roman';
-            margin: 0;
-            padding: 0;
-        }
+.icon-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white; /* Adjust the color as needed */
+}
 
-        .content,
-        .text {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-        }
 
-        .content h,
-        .text h {
-            margin: 0; 
-            padding: 0;
-            display: inline; 
-        }
-
-        .content h span,
-        .text h span,
-        .content h1 span,
-        .text h1 span {
-            border: none; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-            display: inline; 
-            background-color: transparent; 
-            white-space: pre-wrap; 
-        }
+.input-box{
+    width: 60%;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    page-break-inside: avoid;
+}
         
-        .content, .text, .text.closing, .committee-member {
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: fit-content;
-            margin: left;
-        }
+.input-box input{
+    width: 150%;
+    height: 55px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.97);
+    border-radius: 5px;
+    border-width: 1px;
 
-        h {
-            margin-bottom: 10px;
-        }
+}
 
-        h1 {
-            font-size: 40px;
-            margin: 0;
-        }
+.send-icon {
+    position: fixed;
+    top: 92%;
+    left: 63%;
+    width: 35px;
+    height: auto;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        h2 {
-            font-size: 16px;
-            margin: 0;
-        }
+  .send-icon i {
+    line-height: 30px;
+  }
 
-        .text {
-            margin-top: 20px;
-        }
+  .footer {
+    background-color: rgba(1, 33, 67, 0.9);
+    text-align: center;
+    width: 28%;
+    height: 10%;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+    position:fixed;
+}
+.p {
+    size: 12px;
+}
 
-        .text.closing {
-            text-align: left;
-        }
+.container {
+    width: 100%;
+    max-width: 950px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px; /* Adjusted margin */
+    position: center;
 
-        .text.closing h2{
-            margin:0;
-        }
+}
 
-        .name{
-            text-align: center;
-            margin: 10px 0;
+.center-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+    z-index: 1000%;
+            
         }
+.footer-image {
+    display: block;
+    margin: auto;
+    width: 30%; /* Set the width you desire */  
+}
 
-        .name h{
-            margin: 0;
-        }
-        .committee-member {
-            margin-top: 20px;
-        }
 
-        .committee-member h2{
-            font-size: 24px;
-            text-align: center;
-            margin: 10px 0;
-        }
 
-        .member {
-            text-align: center;
-            margin: 30px 0;
-            padding: 80px;
-        }
+.icons-group {
+    display: flex;
+    justify-content: flex-end; /* Align icons to the right side */
+    position: fixed;
+}
 
-        .member hr{
-            border:none;
-            border-top: 2px solid black;
-            width: 10%
-        }
-        .member h2{
-            margin: 8px 0;
-        }
+.icons-container {
+    display: flex;
+    align-items: center;
+}
 
-        h{
-            font-family: 'Times New Roman';
-            margin: 10px 0;
-        } 
+.icon-link,
+.icon {
+    width: 30px; /* Adjust the width of the icons as needed */
+    height: 30px; /* Adjust the height of the icons as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        span{
-            display: inline-block;
-            min-width: 100px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
+.icon-link {
+    margin-left: 5px; /* Adjust the spacing between icons */
+}
 
-        span[contenteditable="true"]:empty::before{
-            color:#999;
-        }
-         
-        h:not(.no-bold) {
-            font-weight: normal;
-        }
+body, h3, p, h, div {
+        font-size: 14px; /* Adjust the font size as needed */
+    }
 
-        .committee-member h2,
-        .name h {
-            font-weight: normal;
-        }
+    .content h {
+        font-size: 15px; /* Adjust the font size as needed */
+    }
 
-        h.no-bold {
-            font-weight: normal; 
-        }
-        
-        h.no-bold b{
-            font-weight:normal ;
-        }   
-
-        .icons-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px; 
-        }
-
-        .icon-link {
-            text-decoration: none;
-            color: white;
-            display: flex;
-            align-items: center;
-            margin: 0 10px;
-            font-family: 'Times New Roman'; 
-        }
-
-        .icon-link i {
-            margin-right: 5px;
-        }
-
-        @media print {
-            .icons-container {
-                display: none;
-            }
-        }
-        
-        .input-box{
-            width: 60%;
-            margin-top: 25px;
-            margin-left: 5px;
-        }
-        
-        .input-box input{
-            width: 166%;
-            height: 60px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.97);
-            border-radius: 5px;
-        }
-
-        .footer {
-            background-color: rgba(1, 33, 67, 0.9);
-            text-align: center;
-            width: 100%;
-            height: auto;
-            bottom: 0;
-            -webkit-user-modify: read-only;
-            position: fixed;
-            z-index: 2;
-        }
-
-        .button-container{
-            margin-right: 4px;
-            float:right;
-        }
-
-        .send-button{
-            position: sticky;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            width: 61px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .icons-container{
-            display: flex;
-        }
-    </style>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-   
-</head>
+    .footer-image {
+    display: block;
+    margin: auto;
+    width: 100%; /* Adjust the width you desire, e.g., 50% or any other value */
+}
+</style>
 
 <body>
+    <div class="container page-break">
+        <div id="purchaseRequestTable" class="container-fluid">
+            <img class="center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="margin-top: 10px;">
+            <h1 style="text-align: center; font-size: 13px;"><b>OFFICE OF THE BIDS AND AWARDS COMMITTEE</b></h1>
+            <h2 style="text-align: center; font-size: 25"><b>NOTICE OF AWARD</b></h2>
+            <div class="content" style="text-align: left; margin-top: 70px;">
+                <h style="font-weight: normal; padding-left: 70px;">Date: <span contenteditable="true" id="editableDate"></span></h>
+                 </div>    
+                      <div class="content" style="text-align: left; margin-top: 70px;">
+                <h style="font-weight: normal; padding-left: 70px;">Dear Sir/Madam: <span contenteditable="true"></span></h>
+                 </div>            
+            <div class="content" style="text-align: left; margin-top: 250px;">
+                <h style="font-weight: normal; padding-left: 70px;">Very truly yours,</h>
+                <div style="margin-top: 60px;">
+                    <h style="font-weight: normal; font-size: 20px; padding-left: 140px;"><b>EINGILBERT C. BENOLIRAO, DE.ED.D</b></h>
+                        <div style="margin-top: 10px;"></div>
+                    <h style="font-weight: normal; margin-top: 5px; font-size: 18px; padding-left: 240px;">Campus Director/</h>
+                        <div style="margin-top: 10px;"></div>
+                    <h style="font-weight: normal; margin-top: 5px; font-size: 18px; padding-left: 210px;">Head of Procuring Entity</h>  
+                </div>
+                <div style="margin-top: 60px;"></div>
+                <h style="font-weight: normal; margin-top: 20px; padding-left: 180px;">Conforme:</h>
+                <div style="margin-top: 20px; text-align: center;">
+                    <h style="font-weight: normal;">(Signature over Printed Name)</h>
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <h style="font-weight: normal;">FJR IT SOLUTIONS</h>
+                    <div class="content" style="text-align: left; margin-top: 50px;">
+                        <h style="font-weight: normal; padding-left: 250px;">Date:<span contenteditable="true"></span></h>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="footer-container"></div>
+                        <img class="footer-image"src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Footer Image">
+                    </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="input-box">
+                            <input placeholder="Update the purchase request status..." name="comment_content">
+                        </div>
+                                <div class="send-icon">
+                                    <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i>Send</button>
+                                </div>
+                                <div class="icons-group">
+                                    <div class="icons-container">
+                                        <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                            <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
+                                           </a>
+                                           <a href="#" title="Select" class="icon-link">
+                                            <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
+                                           </a>
+                                           <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                               <option value="a4">A4</option>
+                                               <option value="legal">Legal</option>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>                                     
+                        </div>
+                    </footer> 
+                </form> 
+                <script>
+                    function toggleSelect() {
+                        var selectElement = document.getElementById("paperSize");
+                        selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+                    }
+                </script>
+                
+                    <script>
+                        // Wait for the document to be ready
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Function to calculate total amount
+                            function calculateTotal() {
+                                var totalAmount = 0;
+                                // Loop through each row in the table body
+                                document.querySelectorAll(".item_total_cost").forEach(function(element) {
+                                    // Get the value of each item's total cost in this row
+                                    var itemCost = parseFloat(element.textContent);
+                                    // Add the total cost of this item to the totalAmount
+                                    totalAmount += itemCost;
+                                });
+                                // Display the total amount in the designated span or div
+                                document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2); // Adjust if needed
+                            }
+                    
+                            // Call the calculateTotal function initially
+                            calculateTotal();
+                        });
+                    </script>
+                
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+                    <script>
+                        let selectedPaperSize = 'a4';
+                    
+                        function changePaperSize() {
+                            selectedPaperSize = document.getElementById('paperSize').value;
+                        }
+                    
+                        function downloadPDF() {
+                            const body = document.getElementById('purchaseRequestTable');
+                    
+                            // Add page breaks before specific elements
+                            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+                    
+                            elementsWithPageBreak.forEach((element) => {
+                                element.style.pageBreakBefore = 'always';
+                            });
+                    
+                            const footer = document.querySelector('.footer');
+                            footer.style.display = 'none';
+                    
+                            const options = {
+                                filename: 'purchase_request.pdf',
+                                image: { type: 'jpeg', quality: 0.98 },
+                                html2canvas: { scale: 2 },
+                                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+                                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+                            };
+                    
+                            html2pdf(body, options);
+                    
+                            // Reset page breaks after generating PDF
+                            elementsWithPageBreak.forEach((element) => {
+                                element.style.pageBreakBefore = 'auto';
+                            });
+                        }
+                        
+                    </script>    
+                    
+                    <script>
+                        // Function to get the content of the editable span
+                        function getDate() {
+                            var dateContent = document.getElementById("editableDate").innerText;
+                            alert("Date: " + dateContent);
+                        }
+                    </script>
     <nav>
         <img class="ctu_logo" src="{% static 'images/ctu_loogo.png' %}"  alt="logo">
         <img class="asean_logo" src="{% static 'images/asean.png' %}"  alt="logo">
@@ -363,59 +404,26 @@
             <h2 class="no-bold">Conforme : </h2>
         </div>
             <div class="member">
-                <hr> <!-- Horizontal line -->
+                <hr> 
                 <h2>(Signature over printed)</h2>
                 <br>
                 <br>
                 <h>Date: <span contenteditable="true"></span></h>
             </div>
         </div>
-
-        <div>&nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-        <div> &nbsp</div>
-</body> 
-
-
-        <footer class="footer">
-            <div class="input-box">
-                <input placeholder="Update the purchase request status...">
-            </div>
-            <div class="button-container">
-                <button class="send-button" onclick="sendMessage">
-                    <i class="fas fa-paper-plane"></i> Send
-                </button>
-            </div>
-            <div> &nbsp</div>
-            <div class="icons-container">
-                <a href="#" title="Download" class="icon-link">
-                    <i class="fas fa-download"></i> Download
-                </a>
-                <a href="javascript:window.print()" title="Print" class="icon-link">
-                    <i class="fas fa-print"></i> Print
-                </a>
-            </div>
-        </footer>
-</html>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-break"></div>
+</div>
+</body>
+        
+ {% endblock %}

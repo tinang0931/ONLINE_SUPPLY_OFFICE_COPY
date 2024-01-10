@@ -1,0 +1,135 @@
+
+    .container-fluid {
+        height: 100%; 
+      
+       
+
+    }
+
+    .container {
+        margin-top:2%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+       
+
+    }
+
+    .two-user-icon {
+        color:#003566;
+        font-size: 36px;
+        margin-right: 15px;
+      
+       
+
+    }
+
+    .user {
+        font:  'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+        letter-spacing: 1px;
+        font-size: 40px;
+        font-weight: 550px;;
+        
+    }
+
+    .search {
+        position: fixed;
+        top: 200px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        
+    }
+
+   .pending {
+       
+        top: 380px;
+        left: 50px;
+        background-color: rgb(244, 244, 3);
+        border: 0.5px solid rgb(189, 181, 28);
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 4px;
+
+        
+   }
+
+   .adduser {
+       
+       top: 380px;
+       left: 50px;
+       background-color: #44ff00;
+       border: 0.5px solid #269200;
+       text-align: center;
+       text-decoration: none;
+       display: inline-block;
+       font-size: 18px;
+       cursor: pointer;
+       border-radius: 4px;
+
+       
+  }
+  
+  .usertable {
+    overflow-x: auto;
+    
+  }
+
+  #myTable {
+    top: 25%;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #myTable thead th {
+    text-align: center;
+    min-width: 13rem;
+    padding: 8px;
+    background-color: rgba(0, 53, 102, 0.9);
+    border: 1px solid #dddddd;
+    color: #ffff;
+    letter-spacing: 1px;
+  }
+  
+  #myTable tbody td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #dddddd;
+  }
+
+
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 80%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5)
+    }
+
+    .modal-content {
+        position: fixed;
+        top: 0;
+        left: 30%;
+        padding: 20px;
+        width: 80%;
+        max-width: 600px;
+      }
+
+      .modal-footer {
+       
+        padding: 15px;
+        text-align: right;
+       
+      }
+
+
+   

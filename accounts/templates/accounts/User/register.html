@@ -16,12 +16,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
+
     <script>
         function maxLengthCheck(object, maxLength) {
             if (object.value.length > maxLength)
             object.value = object.value.slice(0, maxLength);
-            }
-        </script>
+        }
+    </script>
 
 
     <title>Registration Page</title>
@@ -29,27 +30,23 @@
 
     <style>
         .form-check-label {
-            font-family: 'system-ui', sans-serif; /* Replace 'Your Custom Font' with the desired font name */
-            /* Add any other styling properties as needed */
+            font-family: 'system-ui', sans-serif; 
         }
 
-            /* Add a solid border to form inputs */
         .form-control {
-            border: none; /* You can customize the border color */
+            border: none; 
             background: rgba(255, 255, 255, 0.486);
             border-radius: 3px;
             box-shadow: 0 0 3px black;
             width: 102%;
         }
 
-           /* Hide number input arrows in WebKit browsers (e.g., Chrome, Safari) */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none !important;
             margin: 0;
         }
 
-        /* Hide number input arrows in Firefox */
         input[type="number"] {
             -moz-appearance: textfield;
         }
@@ -61,18 +58,18 @@
      }
      .input-box label {
         display: flex;
-        align-items: center; /* Align checkbox and text vertically */
-        margin-bottom: 10px; /* Adjust the spacing between checkboxes */
+        align-items: center; 
+        margin-bottom: 10px; 
     }
 
     .input-box input[type="checkbox"] {
-        margin-right: 5px; /* Adjust the spacing between checkbox and text */
-        width: 20px; /* Adjust the width of the checkbox */
-        height: 20px; /* Adjust the height of the checkbox */
+        margin-right: 5px; 
+        width: 20px;
+        height: 20px; 
     }
 
     .register-details .details {
-        font-size: 20px; /* Adjust the font size of the title */
+        font-size: 20px; 
     }
     
     </style>
@@ -172,18 +169,24 @@
     <span class="details">Type of user</span>
 
     <div class="input-box">
-        <label class="checkbox-label" for="adminCheckbox">
-            <input type="checkbox" name="user_type" id="adminCheckbox" value="admin">
+
+        <label class="checkbox-label" for="bacCheckbox">
+            <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
+            <div class="checkbox-box">Admin</div>
+        </label>
+
+        <label class="checkbox-label" for="bacCheckbox">
+            <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
             <div class="checkbox-box">BAC Secretariat</div>
         </label>
 
         <label class="checkbox-label" for="regularCheckbox">
-            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+            <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
             <div class="checkbox-box">Campus Director</div>
         </label>
 
         <label class="checkbox-label" for="regularCheckbox">
-            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+            <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
             <div class="checkbox-box">Budget Officer</div>
         </label>
 

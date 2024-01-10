@@ -43,10 +43,9 @@
     margin-left: 1300px;
   }
 
-  /* Updated styles for the search button */
   .btn-outline-success {
-    color: #ffffff; /* Text color */
-    background-color: #2d83da; /* Orange color */
+    color: #ffffff; 
+    background-color: #2d83da; 
     border-color: #000;
  margin-left: 1680px;
  height: 35px;
@@ -54,15 +53,31 @@
   
 
   .btn-outline-success:hover {
-    color: #ffffff; /* Text color on hover */
-    background-color: rgb(9, 66, 222); /* Darker shade of orange on hover */
-    border-color: #082fdc; /* Border color on hover */
+    color: #ffffff; 
+    background-color: rgb(9, 66, 222); 
+    border-color: #082fdc; 
   }
 
-  /* Move the search bar to the right */
   .search-form {
     justify-content: flex-end;
   }
+
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+}
+
+.table th {
+    background-color: rgba(5, 90, 129, 0.822); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -74,14 +89,57 @@
 
 <table class="table table-bordered">
     <thead>
-        <tr>
-            <th class="text-center">Date Requested</th>
-            <th class="text-center">Requests</th>
-            <th class="text-center">Purpose</th>
-            <th class="status">Status</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">comment</th>
-        </tr>
+      <tr>
+        <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+          Date Requested
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+          PR ID
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+          Requests
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+          Purpose
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="status" onclick="sortTable(4)" style="width: 15%;">
+          Status
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+          Date
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(4)" style="width: 30%;">
+          Attachments
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+      </tr>
     </thead>
     
     <tbody>
@@ -96,9 +154,9 @@
               <td>{{ checkout.purpose }}</td>
               <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;" id="bohome-status">
                       {% if checkout.is_approve %}
-                          - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                          -Approve - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
                       {% else %}
-                          - Disapproved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                        Not available  - Not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
                       {% endif %}
               </td>
               <td>
@@ -125,8 +183,8 @@
       table = document.querySelector(".table");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { // Start from the second row (index 1)
-          td = tr[i].getElementsByTagName("td")[1]; // Change index to 1 for the "Requests" column
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1]; 
           if (td) {
               txtValue = td.textContent || td.innerText;
               if (txtValue.toUpperCase().indexOf(filter) > -1) {

@@ -41,7 +41,7 @@
             {% endfor %}
         </tbody>
         <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-            <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+            <button class="btn btn-primary" id="view-more-button" style="background-color: blue; top: 20%;">View More</button>
         </div>
     </table>
     
@@ -62,7 +62,6 @@
     table = document.querySelector(".table");
     tr = table.getElementsByTagName("tr");
 
-    // Start loop from index 1 to skip the header row (index 0)
     for (i = 1; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td");
       var found = false;

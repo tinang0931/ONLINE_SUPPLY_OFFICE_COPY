@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -15,27 +17,36 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
     contact2 = models.PositiveIntegerField()
-    email = models.EmailField(unique=True)
-    password1 = models.CharField(max_length=15)
-    password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
+        ('cd', 'Campus Director'),
+        ('budget', 'Budget Officer'),
+        ('bac', 'BAC'),
     ]
 
-    is_admin = models.BooleanField(default=False) 
-    def save(self, *args, **kwargs):
-        self.is_admin = self.user_type == 'admin'
-        super().save(*args, **kwargs)
-    
+    user_type = models.CharField(max_length=15, choices=USER_TYPES)
+
+    is_admin = models.BooleanField(default=False)
+    is_regular = models.BooleanField(default=False)
+    is_cd = models.BooleanField(default=False)  
+    is_budget = models.BooleanField(default=False)
+    is_bac = models.BooleanField(default=False)
+
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
+
     def save(self, *args, **kwargs):
-        if self.user_type == 'admin':
-            self.is_admin = True
-        else:
-            self.is_admin = False
+       
+        self.is_admin = self.user_type == 'admin'
+        self.is_regular = self.user_type == 'regular'
+        self.is_cd = self.user_type == 'cd'
+        self.is_budget = self.user_type == 'budget'
+        self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
     def __str__(self):
@@ -43,7 +54,7 @@ class User(AbstractUser):
 
 
 class Item(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -53,11 +64,8 @@ class Item(models.Model):
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
-    @property
-    def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
-    
-   
+
+
 
 
 class Checkout(models.Model):
@@ -89,6 +97,8 @@ class Checkout(models.Model):
         return str(self.pr_id)
 
     
+
+    
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
@@ -98,6 +108,7 @@ class CheckoutItems(models.Model):
     quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.total_cost = self.unit_cost * self.quantity
@@ -109,7 +120,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     pr_id = models.CharField(max_length=50)  
-    
     def __str__(self):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
@@ -143,7 +153,7 @@ class History(models.Model):
     date_requested = models.DateField()
     purpose = models.CharField(max_length=200)
     quantity = models.IntegerField()
-    status_description = models.CharField(max_length=100)
+    status_description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
@@ -155,9 +165,6 @@ class PurchaseRequestForm(models.Model):
      description = models.TextField()
      quantity = models.IntegerField()
      is_submitted = models.BooleanField(default=False)
-     status = models.CharField(max_length=100)
-
-    
      approved = models.BooleanField(default=False)
      disapproved = models.BooleanField(default=False)
 def __str__(self):
@@ -166,25 +173,9 @@ def __str__(self):
 
 class PurchaseRequest(models.Model):
     request_id = models.BigAutoField(primary_key=True)
-    status = models.CharField(max_length=255)
     submission_date = models.DateField()
     item = models.CharField(max_length=100)
     quantity = models.IntegerField()
     def calculate_total_cost(self):
-        # Add your logic to calculate the total cost
-        return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
-
+        return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
-
-    def update_status(self, new_status):
-        self.status = new_status
-        self.save() 
-
-class RequestData(models.Model):
-    requester_name = models.CharField(max_length=255)
-    email = models.EmailField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-    # Add other fields as needed
-
-
-  
