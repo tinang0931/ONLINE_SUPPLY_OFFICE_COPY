@@ -148,7 +148,8 @@ p {
           attachedFileName.textContent = file.name;
           attachedFileName.style.color = 'blue'; // Change the color to blue when file attached
           attachedFileName.style.cursor = 'pointer'; // Set cursor to pointer when file attached
-          attachedFileName.onclick = function() {
+          attachedFileName.onclick = function() { 
+            
             // Open the attached file in a new tab/window (change the logic as needed)
             window.open(URL.createObjectURL(file), '_blank');
           };
@@ -162,8 +163,8 @@ p {
     </script>
     
     <script>
-        $(document).ready(function() {
-            function calculateTotal() {
+        $(document).ready(function() { 
+            function calculateTotal() {    
                 var totalAmount = 0;
                 $(".item_total_cost").each(function() { 
                     var itemCost = parseFloat($(this).text());
