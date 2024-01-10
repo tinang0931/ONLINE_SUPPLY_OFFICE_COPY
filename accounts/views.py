@@ -434,29 +434,25 @@ def request(request):
 
     if request.method == 'POST':
 
-        print("jdahfasd")
-      
-        quantity = request.POST.get('quantity')
-        print(quantity)
-        item_name = request.POST.get('item_name')
-        print(item_name)
-        item_brand = request.POST.get('item_brand')
-        print(item_brand)
-        unit = request.POST.get('unit')
-        print(unit)
-        price = request.POST.get('price')
-        print(price)
-
-        Item.create(
+       for p in CSV.objects.all():  # Replace 'your_data' with the actual list of objects
             
-            quantity=quantity,
-            item =item_name,
-            item_brand_description=item_brand,
-            unit=unit,
-            unit_cost=price
-        )
+            item_name = request.POST.get(f'item_name_{p.id}')
+            print(item_name)
+            item_brand = request.POST.get(f'item_brand_{p.id}')
+            print(item_brand)
+            unit = request.POST.get(f'unit_{p.id}')
+            print(unit)
+            price = request.POST.get(f'price_{p.id}')
 
-        return redirect('request')
+            Item.objects.create(
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price
+            )
+
+            return redirect('request')
+
 
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
