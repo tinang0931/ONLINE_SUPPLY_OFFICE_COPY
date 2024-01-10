@@ -257,7 +257,6 @@ def logout_user(request):
 
 
 @authenticated_user
-@regular_user_required
 def about(request):
     return render(request, 'accounts/User/about.html')
 
@@ -269,7 +268,7 @@ def registration(request):
 def regular_user_only_view(request):
     return render(request, 'accounts/User/request.html')
 
-@regular_user_required
+
 @authenticated_user
 def history(request):
     user = request.user
@@ -300,7 +299,7 @@ def prof(request):
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-@admin_required
+@authenticated_user
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
@@ -930,7 +929,7 @@ class PreqForm_boView(View):
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
 
-def update_checkout_status(request, pr_id, new_status):
+
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
@@ -969,25 +968,22 @@ def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 
 
-
-
-
 def addItem(request):
     if request.method == 'POST':
-        try:
-            # Convert new_status to boolean
-            new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
 
-            # Update the status of the checkout directly
-            checkout = get_object_or_404(Checkout, pr_id=pr_id)
-            checkout.status_update_date = timezone.now()
-            checkout.is_approve = new_status
-            checkout.is_disapprove = not new_status
-            checkout.is_seen = True  # Mark as seen when the status is updated
-            checkout.save()
+        if quantity and quantity.isdigit():
+                quantity = int(quantity)
+        else:
+
+            print("Invalid quantity")
+            return redirect('request')
+        
         user = request.user
-
-    
         Item.objects.create(
             user=user,
             item=item_data,
@@ -995,21 +991,17 @@ def addItem(request):
             unit=unit,
             unit_cost=unit_cost,
             quantity=quantity,
-             # Calculate total cost based on price and quantity
+             total_cost=float(unit_cost) * quantity,
+            
         )
-       
-
         return redirect('request')
-
     return render(request, 'accounts/User/request.html')
 
-@regular_user_required
 def request(request):
     if request.method == 'POST':
-        # Retrieve selected rows from the form
+
         selected_rows = request.POST.getlist('selectRow')
 
-        # Process and save data to the database
         for row_id in selected_rows:
             item_name = request.POST.get(f'item_{row_id}')
             item_brand = request.POST.get(f'item_brand_{row_id}')
@@ -1017,34 +1009,37 @@ def request(request):
             price = request.POST.get(f'price_{row_id}')
             quantity = request.POST.get(f'quantity_{row_id}')
 
+        
+            if quantity and quantity.isdigit():
+                quantity = int(quantity)
+            else:
+               
+                print(f"Invalid quantity for row {row_id}")
+                continue
+
             user = request.user
 
-            # Save the data to the CartItem model (update this based on your model)
-            items = Item.objects.create(
+
+            item = Item.objects.create(
                 user=user,
                 item=item_name,
                 item_brand_description=item_brand,
                 unit=unit,
                 unit_cost=price,
                 quantity=quantity,
-                 # Calculate total cost based on price and quantity
-            )
-            items.save()
-            
 
-        # Redirect to a success page
+                total_cost=float(price) * quantity,
+            )
+            item.save()
+
         return redirect('requester')
 
-            # Redirect after processing
-            return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
-        except Checkout.DoesNotExist:
-            return HttpResponse("Checkout not found.")
-        except Exception as e:
-            # Handle exceptions, log errors, etc.
-            print(f"Error: {e}")
-            return HttpResponse("An error occurred while processing the form.")
-    else:
-        return HttpResponse("Invalid request method.")
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all()
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
@@ -1157,25 +1152,22 @@ def update_checkout_status(request, pr_id, new_status):
             return HttpResponse("An error occurred while processing the form.")
     else:
         return HttpResponse("Invalid request method.")
-            # For demonstration purposes, let's assume you have a dictionary
-            # with form_type and form_data
-            form_type = request.POST.get('form_type', 'other')
-            form_data = {
-                'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
-                'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
-                'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
-                'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
-                'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
-                'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
-                'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
-                'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
-            }
-
-            response_data = form_data.get(form_type, {})
-
-            return JsonResponse(response_data)
     
+    form_type = request.POST.get('form_type', 'other')
+    form_data = {
+        'purchase_approval': {'field1': 'Value1', 'field2': 'Value2'},
+        'resolution_approval': {'field3': 'Value3', 'field4': 'Value4'},
+        'abstract_of_bids': {'field5': 'Value5', 'field6': 'Value6'},
+        'notice_of_reward': {'field7': 'Value7', 'field8': 'Value8'},
+        'notice_to_proceed': {'field9': 'Value9', 'field10': 'Value10'},
+        'inspection_acceptance': {'field11': 'Value11', 'field12': 'Value12'},
+        'property_acknowledgment': {'field13': 'Value13', 'field14': 'Value14'},
+        'purchase_order': {'field15': 'Value15', 'field16': 'Value16'},
+        }
+    response_data = form_data.get(form_type, {})
+    return JsonResponse(response_data)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
 @admin_required
 @authenticated_user
 def bac_history(request):
