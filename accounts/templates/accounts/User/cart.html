@@ -72,7 +72,7 @@ p {
 </style>
 
 
-<form action="{% url 'requester' %}" method="post">
+<form action="{% url 'requester' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %} 
 
 <div class="container" style="text-align: center;">
@@ -133,6 +133,7 @@ p {
         {% endfor %}
     </tbody>
     </table>
+  
 
     <script>
         var attachmentCounter = 0; // Counter for creating unique IDs
