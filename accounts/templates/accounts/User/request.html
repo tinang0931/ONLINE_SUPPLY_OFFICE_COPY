@@ -214,7 +214,6 @@
             table = document.querySelector(".table-striped");
             tr = table.getElementsByTagName("tr");
 
-<<<<<<< HEAD
 
     $(document).ready(function () {
         $('.row-checkbox').on('click', function () {
@@ -250,7 +249,6 @@
                             unit,
                             price
                         });
-=======
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
@@ -259,13 +257,11 @@
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";
->>>>>>> 35f2fdea3924e6f718a9d67d5af399f7876ae683
                     }
                 }
             }
         }
 
-<<<<<<< HEAD
         updateProductTables(filteredProducts);
     });
 
@@ -273,10 +269,6 @@
     function updateProductTables(filteredProducts) {
         for (const productTable of productTables) {
             productTable.querySelector('tbody').innerHTML = ''; 
-=======
-
-
->>>>>>> 35f2fdea3924e6f718a9d67d5af399f7876ae683
 
         $(document).ready(function () {
             // Add click event to checkboxes
@@ -285,6 +277,7 @@
                 $(this).closest('tr').toggleClass('selected');
             });
         });
+  
 
         const categoryFilter = document.getElementById('category_filter');
         const productTables = document.querySelectorAll('.table table');
@@ -323,7 +316,6 @@
             updateProductTables(filteredProducts);
         });
 
-<<<<<<< HEAD
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -333,7 +325,6 @@
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
-=======
 
         function updateProductTables(filteredProducts) {
             for (const productTable of productTables) {
@@ -362,7 +353,6 @@
                     row.appendChild(priceCell);
 
                     productTable.querySelector('tbody').appendChild(row);
->>>>>>> 35f2fdea3924e6f718a9d67d5af399f7876ae683
                 }
             }
         }

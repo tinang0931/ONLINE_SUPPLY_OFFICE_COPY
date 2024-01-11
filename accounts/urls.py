@@ -59,7 +59,6 @@ urlpatterns = [
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
-<<<<<<< HEAD
    path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bo/',views.bo, name='bo'),
@@ -69,7 +68,6 @@ urlpatterns = [
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
    path('approve_checkout/<pr_id>/', update_checkout_status, {'new_status': True}, name='approve_checkout'),
    path('disapprove_checkout/<pr_id>/', update_checkout_status, {'new_status': False}, name='disapprove_checkout'),
-=======
    path('ppmp/',views.ppmp, name='ppmp'),
->>>>>>> 35f2fdea3924e6f718a9d67d5af399f7876ae683
+
 ]
