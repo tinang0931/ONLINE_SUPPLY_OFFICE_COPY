@@ -154,9 +154,9 @@
               <td>{{ checkout.purpose }}</td>
               <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;" id="bohome-status">
                       {% if checkout.is_approve %}
-                          - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                          -Approve - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
                       {% else %}
-                          - not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                        Not available  - Not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
                       {% endif %}
               </td>
               <td>

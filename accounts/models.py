@@ -17,27 +17,22 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
     contact2 = models.PositiveIntegerField()
-    email = models.EmailField(unique=True)
-    password1 = models.CharField(max_length=15)
-    password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
 
         ('regular', 'Regular User'),
-        ('bac', 'BAC Secretariat'),
-        ('campusd', 'Campus Director'),
+        ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
-        ('admin', 'Admin'),
-        
-        
+        ('bac', 'BAC'),
     ]
 
-    is_admin = models.BooleanField(default=False) 
-    def save(self, *args, **kwargs):
-        self.is_admin = self.user_type == 'admin'
-        super().save(*args, **kwargs)
-    
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+    user_type = models.CharField(max_length=15, choices=USER_TYPES)
+
+    is_admin = models.BooleanField(default=False)
+    is_regular = models.BooleanField(default=False)
+    is_cd = models.BooleanField(default=False)  
+    is_budget = models.BooleanField(default=False)
+    is_bac = models.BooleanField(default=False)
 
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
@@ -46,10 +41,12 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-        if self.user_type == 'admin':
-            self.is_admin = True
-        else:
-            self.is_admin = False
+       
+        self.is_admin = self.user_type == 'admin'
+        self.is_regular = self.user_type == 'regular'
+        self.is_cd = self.user_type == 'cd'
+        self.is_budget = self.user_type == 'budget'
+        self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
     def __str__(self):

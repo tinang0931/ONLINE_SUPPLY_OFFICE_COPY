@@ -15,106 +15,21 @@
                     <div class="search">
                         <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
                     </div>
-                    <div class="add-item-button">
-                        <button class="btn btn-success" onclick="addItem()">Add Item</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-               
-            </thead>
-            <tbody>
-                {% for category, items in grouped_data.items %}
-                    <tr>
-                        <th colspan="17">{{ category }}</th>
-                    </tr>
-                    {% for p in items %}
-                        <tr class="item-row">
-                            <td><input type="checkbox">{{ p.item }}</td>
-                            <td>Can</td>
-                            <td><input type="text" name="quantity" class="quantity-input" oninput="updateUnitPrice(this.parentNode.parentNode)"></td>
-                          
-                            <td>0</td>
-                          
-
-                   
-                            <td><input type="text" name="unit_price" class="unit-price-input" readonly></td>
-                        </tr>
-                    {% endfor %}
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var alertElement = document.querySelector('.alert.alert-danger');
+                            
+                            if (alertElement) {
+                                setTimeout(function() {
+                                    alertElement.style.display = 'none';
+                                }, 2000);
+                            }
+                        });
+                    </script>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <script>
-        function updateUnitPrice(row) {
-            // Get the quantity input element within the current row
-            const quantityInput = row.querySelector('.quantity-input');
-            
-            // Get the unit price input element within the current row
-            const unitPriceInput = row.querySelector('.unit-price-input');
-
-            // Check if the quantity input is a valid number
-            const quantity = parseFloat(quantityInput.value);
-            if (!isNaN(quantity)) {
-                // Update the unit price based on the quantity (you can customize the formula)
-                const newUnitPrice = quantity * 100; // Replace this with your formula
-                unitPriceInput.value = newUnitPrice.toFixed(2); // Round to 2 decimal places
-            }
-        }
-
-        function filterTable() {
-            // Get the search bar input value
-            const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
-            
-            // Get all table rows
-            const tableRows = document.querySelectorAll("tbody tr");
-          
-            // Hide all rows by default
-            for (const row of tableRows) {
-                row.style.display = "none";
-            }
-          
-            // Filter and show rows based on the search input and quantity
-            for (const row of tableRows) {
-                const tableData = row.querySelectorAll("td");
-                const search_value = search_bar_request;
-                let isFound = false;
-            
-                // Loop through each cell
-                for (const cell of tableData) {
-                    const cellValue = cell.textContent.toLowerCase();
-            
-                    // Check if the cell value matches the search input
-                    if (cellValue.includes(search_value)) {
-                        isFound = true;
-                        break;
-                    }
-                }
-            
-                // Show the row if at least one cell matches the search input
-                if (isFound) {
-                    row.style.display = "";
-                    updateUnitPrice(row); // Update unit price when showing the row
-                }
-            }
-        }
-
-        function addItem() {
-            // Your existing addItem function
-
-            // Additional code to update unit price for the new item
-            const tableRows = document.querySelectorAll("tbody tr");
-            const newRow = tableRows[tableRows.length - 1];
-            updateUnitPrice(newRow);
-        }
-    </script>
-    <!-- Your existing template code -->
-
-    <div class="modal-footer">
-        <button type="submit" [value="submit" class="btn btn-primary">Add to Cart</button>
-    </div>
-{% endblock %}
+</div>
+</body>
+</html>
