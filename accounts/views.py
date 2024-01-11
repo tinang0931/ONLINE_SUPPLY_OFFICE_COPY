@@ -431,35 +431,67 @@ def addItem(request):
 
 
 def request(request):
+    grouped_data = {}  # Define grouped_data outside of if conditions
 
     if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        estimate_budget = request.POST.get(f'estimate_budget')
+        mode_of_procurement = request.POST.get(f'mode_of_procurement')
+        jan = request.POST.get(f'jan')
+        feb = request.POST.get(f'feb')
+        mar = request.POST.get(f'mar')
+        apr = request.POST.get(f'apr')
+        may = request.POST.get(f'may')
+        jun = request.POST.get(f'jun')
+        jul = request.POST.get(f'jul')
+        aug = request.POST.get(f'aug')
+        sep = request.POST.get(f'sep')
+        oct = request.POST.get(f'oct')
+        nov = request.POST.get(f'nov')
+        dec = request.POST.get(f'dec')
 
-       for p in CSV.objects.all():  # Replace 'your_data' with the actual list of objects
-            
-            item_name = request.POST.get(f'item_name_{p.id}')
-            print(item_name)
-            item_brand = request.POST.get(f'item_brand_{p.id}')
-            print(item_brand)
-            unit = request.POST.get(f'unit_{p.id}')
-            print(unit)
-            price = request.POST.get(f'price_{p.id}')
+        price = request.POST.get(f'price')
 
-            Item.objects.create(
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price
-            )
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            estimate_budget=estimate_budget,
+            mode_of_procurement=mode_of_procurement,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,
+            nov=nov,
+            dec=dec,
+            unit_cost=price
+        )
 
-            return redirect('request')
-
+        return redirect('request')
 
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
-        grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
+def ppmp (request):
+    
+    items = Item.objects.all()
+
+    return render(request, 'accounts/User/ppmp.html', {'items': items})
 
 
 from django.core.exceptions import ValidationError

@@ -53,4 +53,5 @@ urlpatterns = [
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
+   path('ppmp/',views.ppmp, name='ppmp'),
 ]
