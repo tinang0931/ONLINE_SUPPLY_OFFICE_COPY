@@ -187,14 +187,7 @@ def login(request):
             messages.error(request, "Invalid login credentials. Please try again.")
     
     return render(request, 'accounts/User/login.html') 
-def bac_home(request):
-    if not request.user.is_admin:
-        return redirect('request')
 
-def request_page(request):
-    if request.user.is_admin:
-        return redirect('bac_home')
-    return render(request, 'request.html')
 
 
 def get_random_string(length, allowed_chars='0123456789'):
@@ -1123,13 +1116,17 @@ class PreqForm_cdView(View):
 
     def post(self, request, pr_id):
         new_status = request.POST.get('new_status')
+        print(new_status)
 
         if pr_id and new_status:
             try:
                 checkout = Checkout.objects.get(pr_id=pr_id)
+
                 checkout.date_updated = timezone.now()
                 checkout.cd_seen = True
-                checkout.cd_approve = False  # Set is_approve and is_disapprove to False initially
+
+                # Set cd_approve and is_disapprove to False initially
+                checkout.cd_approve = False
 
                 if new_status.lower() == 'true':
                     checkout.cd_approve = True
@@ -1144,6 +1141,7 @@ class PreqForm_cdView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
+        
 
 def update_cd_checkout_status(request, pr_id):
     if request.method == 'POST':
@@ -1151,10 +1149,10 @@ def update_cd_checkout_status(request, pr_id):
             new_status = request.POST.get("new_status")
             new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
 
-            checkout = get_object_or_404(Checkout, pr_id=pr_id, cd=True)
-            checkout.status_update_date = timezone.now()
-            checkout.cd_approve = new_status
+            checkout = get_object_or_404(Checkout, pr_id=pr_id)
+            checkout.date_updated = timezone.now()
             checkout.cd_seen = True
+            checkout.cd_approve = new_status
 
             checkout.save()
 
@@ -1166,6 +1164,7 @@ def update_cd_checkout_status(request, pr_id):
             return HttpResponse("An error occurred while processing the CD form.")
     else:
         return HttpResponse("Invalid request method.")
+
   
 
 @admin_required

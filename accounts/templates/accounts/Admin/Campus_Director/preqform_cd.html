@@ -432,7 +432,7 @@ position: center;
                            <footer class="footer">
 
                             <div class="icons-container">
-                                <form id='form_status' method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
+                                <form id='form_status' method="post" action="{% url 'cdapprovecheckout' pr_id=pr_id %}">
                                     {% csrf_token %}
                                     <input id="new_status_id" type="hidden" name="new_status">
                                     <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
@@ -455,7 +455,7 @@ position: center;
                                 </a>
                                 
                                 <div class="input-box">
-                                    <input placeholder="Type your comment" name="comment_content">
+                                    <input placeholder="Type your comment here" name="comment_content">
                                 </div>
                                     <div class="send-icon">
                                         <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
@@ -469,7 +469,7 @@ position: center;
                             <script>
                                 function setAction(action) {
                                     document.getElementById('action').value = action;
-                                    document.forms[0].submit();  // Assuming the form is the first form on the page
+                                    document.forms[0].submit();  
                                 }
                             </script>
                            

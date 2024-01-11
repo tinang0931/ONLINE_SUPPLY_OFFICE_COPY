@@ -67,5 +67,5 @@ urlpatterns = [
    path('bohome/',views.bohome, name='bohome'),
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
    path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
-   path('approve_checkout/<int:pr_id>/', views.update_cd_checkout_status, name='approve_checkout'),
+   path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
 ]

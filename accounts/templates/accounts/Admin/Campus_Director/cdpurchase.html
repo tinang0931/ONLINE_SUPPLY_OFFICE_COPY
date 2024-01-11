@@ -110,18 +110,61 @@
     <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
 </div>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="text-center">Date Requested</th>
-        <th class="text-center">Requests</th>
-        <th class="text-center">Purpose</th>
-        <th class="status">Status</th>
-        <th class="text-center">Date</th>
-        <th class="text-center">Comment</th> <!-- Updated this line -->
-      </tr>
-    </thead>
-    <tbody>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+        Date Requested
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        PR ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+        Requests
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        Purpose
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Status
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+        Comments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        Attachments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+
       {% for checkout in checkouts %}
         <tr>
           <td class="text-center">
@@ -137,16 +180,16 @@
           </td>
           <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
             {% if checkout.cd_seen %}
-                {% if checkout.cd_approve %}
-                    Approved
-                {% elif checkout.cd_disapprove %}
-                    Disapproved
-                {% else %}
-                    Waiting for Approval
-                {% endif %}
+              {% if checkout.cd_approve %}
+                Approved
+              {% else %}
+                Disapproved
+              {% endif %}
             {% else %}
-                Not Seen
+              Waiting for Approval
             {% endif %}
+          </td>
+          
         </td>
           <td>
             {{ checkout.status_update_date|default:"Not available" }}
