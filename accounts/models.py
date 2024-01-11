@@ -62,6 +62,20 @@ class Item(models.Model):
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    mode_of_procurement = models.CharField(max_length=255, blank=True, null=True)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
 
