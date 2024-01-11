@@ -4,6 +4,86 @@
 {% load static %}
 
 
-{% block bo %}
+{% block bohome %}
 
-{% endblock %}  
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+
+  .status{
+    width: 30%;
+    text-align: center;
+  }
+
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    /* Your styles for a successful status */
+    background-color: #b5e550; /* Adjust this to your desired background color */
+    color: white; /* Adjust this to your desired text color */
+}
+  
+</style>
+
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests</th>
+        <th class="text-center">Purpose</th>
+        
+        <th class="status">Status</th>
+        <th class="text-center"> Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center">
+          {{ checkout.submission_date }}
+        </td>
+        <td>
+            <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
+                <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+            </a>
+        </td>
+        <td>
+          {{ checkout.purpose }}
+        </td>
+        <td class="badge {% if checkout.is_approved %}bg-success{% else %}no-comment{% endif %}" style="margin-top: 5px; margin-left: 5px; color: black;">
+          {% if checkout.is_approve %}
+              Approved
+          {% else %}
+              Disapproved
+          {% endif %}
+        </td>
+        <td>
+          {{ checkout.status_update_date|default:"Not available" }}
+        </td>
+      </tr>
+    
+       {% endfor %}
+      
+    </tbody>
+  </table>
+  
+  
+  
+  
+</div>
+
+
+  
+
+  
+{% endblock %}

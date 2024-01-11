@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -68,14 +70,27 @@ class Item(models.Model):
 
 
 
+
 class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
+    is_approve = models.BooleanField(default=False)
+    is_disapprove = models.BooleanField(default=False)
+    is_seen=models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
+    # # ... other fields and methods ...
+    # STATUS_CHOICES = (
+    #     ('approve', 'approve'),
+    #     ('disapprove', 'disapprove'),
+      
+    #     # Add more status choices as needed
+    # )
 
-
+    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approve')
+    # status_update_date = models.DateTimeField(auto_now=True)  # This field will automatically update when the status is modified
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999)) 
@@ -83,6 +98,8 @@ class Checkout(models.Model):
 
     def __str__(self):
         return str(self.pr_id)
+
+    
 
     
 class CheckoutItems(models.Model):

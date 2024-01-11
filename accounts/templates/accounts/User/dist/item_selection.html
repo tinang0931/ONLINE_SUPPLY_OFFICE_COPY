@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Requesting Page</title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <link rel="stylesheet" href="{% static 'css/main.css' %}">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <main class="flex-shrink">
+      <div id="page-content-wrapper ">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style=" padding-bottom: 0;">
+          <div class="row w-100 m-auto">
+            <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+              <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+            </div>
+            <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                <h1 class="head text-white">Online Supply Office</h1>
+                <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+            </div>
+            <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+             
+                <a href="{% url 'profile' %}">
+                  <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
+                </a>
+                <h1 class="p1">Profile Name</h1>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+      
+      <div class="d-flex" id="wrapper">
+        <button id="sidebarToggle" class="btn btn-secondary">
+          <img src="{% static 'images/lines.png' %}" alt="Toggle Sidebar">
+      </button>
+      
+
+      <div class="sidebar" id="sidebar" style="z-index:1; opacity: 1; left: 0 !important; position: relative; height: auto;">
+        <div class="d-flex flex-wrap align-content-between h-100">
+            <div class="bg-white w-100" id="sidebar-wrapper">
+                <div class="list-group w-100">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'notification' %}">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'requester' %}">Purchase Request</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'tracker' %}">Request Tracker</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'history' %}">History</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'about' %}">About Us</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ 
+            
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 border-0" href="{% url 'login' %}">
+                  <img class="arrow_img" src="{% static 'images/arrow_right.png' %}" alt=""> Logout
+                </a>
+            </div>
+        </div>
+        <button id="sidebarToggle" class="btn btn-secondary border m-2" style="position:relative; height: 2rem !important; width: 2rem; display: none;">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+        <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
+          <div class="container">
+            <h1 class="pr text-center pt-4">SELECT ITEMS</h1>  
+          </div>
+          <form action="{% url 'requester' %}" method="post">
+            {% csrf_token %}
+            <div class="row w-100 m-auto"> 
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ps-0">
+                <div class="form-group mb-3">
+                  <label for="departmentDropdown">Choose Department:</label>
+                  <select class="form-control" id="departmentDropdown" name="departmentDropdown">
+                      <option value="option1">College of Arts and Sciences</option>
+                      <option value="option2">College of Agriculture</option>
+                      <option value="option3">College of Forestry</option>
+                      <option value="option4">College of Hospitality Management and Tourism</option>
+                      <option value="option5">College of Technology and Engineering</option>
+                      <option value="option6">College of Education</option>
+                      <option value="option7">Graduate School</option>
+                      <option value="option8">  Others please specify:</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label for="officeDropdown">Choose Office:</label>
+                  <select class="form-control" id="officeDropdown" name="officeDropdown">
+                      <option value="option1">Office 1</option>
+                      <option value="option2">Office 2</option>
+                      <option value="option3">Office 3</option>
+                      <option value="option4">Office 4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4 pe-0">
+                <div class="form-group mb-3">
+                  <label for="date">Date Needed:</label>
+                  <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+              </div>
+            </div>
+            <div class="container"> 
+              <h2 class="ps-3 text-white pt-3">Select items to request:</h2>
+              <table id="itemsTable" class="table table-bordered table-hover ">
+                <thead class="table-light">
+                  <tr>
+                    <th class="text-center">Select</th>
+                    <th>Item Code</th>
+                    <th>Item Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Your table data goes here -->
+                  <tr>
+                    <td class="text-center"><input type="checkbox" name="itemCheckbox" value="item1"></td>
+                    <td>001</td>
+                    <td>Item 1</td>
+                    <td>Each</td>
+                    <td><input type="number" class="form-control" name="itemQuantity" value="1" min="1"></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="checkbox" name="itemCheckbox" value="item2"></td>
+                    <td>002</td>
+                    <td>Item 2</td>
+                    <td>Each</td>
+                    <td><input type="number" class="form-control" name="itemQuantity" value="1" min="1"></td>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+            </div>
+            <div class="container mt-4 mb-4">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 ps-0">
+                  <button type="button" class="btn btn-primary" id="submitRequestButton">Submit Request</button>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 pe-0">
+                  <button type="reset" class="btn btn-secondary">Clear Selection</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Confirmation pop-up -->
+        <div id="confirmationPopup" class="popup">
+          <span class="popup-close" onclick="hideConfirmationPopup()">X</span>
+          <h2>Purchase Request Confirmation</h2>
+          <!-- Add your confirmation content here -->
+          <p>Your purchase request has been submitted and is being processed.</p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer" style="height: 60px;">
+
+      </div>
+    </footer>
+  </body>
+
+  <!-- Datatables and other scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const wrapper = document.getElementById('wrapper');
+
+        function toggleSidebar() {
+            wrapper.classList.toggle('sidebar-hidden');
+            sidebarToggle.classList.toggle('minimized', wrapper.classList.contains('sidebar-hidden'));
+        }
+
+        sidebarToggle.addEventListener('click', toggleSidebar);
+    });
+</script>
+
+
+      // DataTable initialization
+      $('#itemsTable').DataTable();
+
+      // Submit request button click event
+      document.getElementById('submitRequestButton').addEventListener('click', function () {
+        // Show confirmation popup
+        showConfirmationPopup();
+      });
+
+      // Function to show the confirmation popup
+      function showConfirmationPopup() {
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        confirmationPopup.style.display = 'block';
+      }
+
+      // Function to hide the confirmation popup
+      window.hideConfirmationPopup = function () {
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        confirmationPopup.style.display = 'none';
+      };
+ </script>
+</html>

@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block Procurement %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         table {
             border-collapse: collapse;
@@ -64,13 +65,21 @@
         tbody input[type="checkbox"] {
             margin-right: 5px;
         }
+
+        /* Updated CSS for unit price input */
+        tbody input[name="unit_price"] {
+            border: none;
+            outline: none;
+            pointer-events: none;
+            background-color: transparent;
+        }
     </style>
 
     <div class="container-fluid">
         <div class="subheader">
             <div class="container">
                 <div class="header">
-                    <h1 class="title" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+                    <h1 class="title">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
                     <div class="search">
                         <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
                     </div>
@@ -85,37 +94,17 @@
             <thead>
                 <tr>
                     <th rowspan='2'>Item & Specifications</th>
-                    <th rowspan='2'>Unit</th> <!-- Reverted back to "Quantity & Unit" -->
+                    <th rowspan='2'>Unit</th>
                     <th rowspan='2'>Estimated Budget</th>
                     <th rowspan='2'>Mode of Procurement</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
                     <th rowspan='2'>Unit Price</th>
                 </tr>
                 <tr>
-            <form name="frm-pin" method="post" action="pin-index.php">
-                <input type="hidden" name="mode" value="PinRequest"/>
-                <label class="w3=text-green"><b></label>
-                <select name="tot_pin_requested" onchange="calculateAmount(this.value)" required>
-                  <option value=""disabled selected></option>
-                  <option value="1"></option>
-                  <option value="2"></option> 
-                  <option value="3"></option>
-                  <option value="4"></option> 
-                  <option value="5"></option> 
-                  <option value="6"></option> 
-                  <option value="7"></option> 
-                  <option value="8"></option> 
-                  <option value="9"></option> 
-                  <option value="10"></option> 
-           </select>
-           <label><b>Unit Price</b></label>
-           <input class="w3-input w3-border name="tot_amount" id."tot-amount" type="text" readonly
-           <script></script>
-            </form>
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
-                    <th>April</th> 
+                    <th>April</th>
                     <th>May</th>
                     <th>June</th>
                     <th>July</th>
@@ -128,13 +117,14 @@
             </thead>
             <tbody>
                 {% for category, items in grouped_data.items %}
-                    <tr>
+                    <tr class="category-row">
                         <th colspan="17">{{ category }}</th>
                     </tr>
                     {% for p in items %}
-                        <tr class="item-row">
+                        <tr class="item-row" data-category="{{ category }}">
                             <td><input type="checkbox">{{ p.item }}</td>
                             <td>{{ p.unit }}</td>
+                            <td class="estimated-budget" data-total="0"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -148,8 +138,7 @@
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td><input type="text" name="unit_price" class="unit-price-input" value="400.00" readonly></td>
+                            <td><input type="text" name="unit_price" class="unit-price-input" value="400" readonly></td>
                         </tr>
                     {% endfor %}
                 {% endfor %}
@@ -158,39 +147,29 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script>
         function filterTable() {
-            // Get the search bar input value
             const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
-
-            // Get all table rows
             const tableRows = document.querySelectorAll("tbody tr");
 
-            // Hide all rows by default
             for (const row of tableRows) {
                 row.style.display = "none";
             }
 
-            // Filter and show rows based on the search input
             for (const row of tableRows) {
                 const tableData = row.querySelectorAll("td");
                 const search_value = search_bar_request;
                 let isFound = false;
 
-                // Loop through each cell
                 for (const cell of tableData) {
                     const cellValue = cell.textContent.toLowerCase();
 
-                    // Check if the cell value matches the search input
                     if (cellValue.includes(search_value)) {
                         isFound = true;
                         break;
                     }
                 }
 
-                // Show the row if at least one cell matches the search input
                 if (isFound) {
                     row.style.display = "";
                 }
@@ -198,13 +177,14 @@
         }
 
         $(document).on('input', 'tbody td[contenteditable="true"]', function () {
-            updateUnitPrice(this);
+            const unitPriceInput = this.closest('tr').querySelector('input[name="unit_price"]');
+            updateEstimatedBudget(this, unitPriceInput);
         });
 
-        function updateUnitPrice(editedCell) {
+        function updateEstimatedBudget(editedCell, unitPriceInput) {
             const row = editedCell.parentElement;
             const quantityCells = row.querySelectorAll('td[contenteditable="true"]');
-            const unitPriceCell = row.querySelector('td .unit-price-input');
+            const estimatedBudgetCell = row.querySelector('.estimated-budget');
 
             let totalQuantity = 0;
 
@@ -212,13 +192,11 @@
                 totalQuantity += parseFloat(cell.textContent) || 0;
             });
 
-            const unitPrice = 400.00; // Replace with your logic to calculate unit price based on total quantity
-            unitPriceCell.value = unitPrice.toFixed(2);
+            const unitPrice = parseFloat(unitPriceInput.value) || 0;
+            unitPriceInput.value = unitPrice.toFixed(2);
+
+            const estimatedBudget = unitPrice * totalQuantity;
+            estimatedBudgetCell.textContent = estimatedBudget.toFixed(2);
         }
     </script>
-    <!-- Your existing template code --
-
-    <div class="modal-footer">
-        <button type="submit" [value="submit" class="btn btn-primary">Add to Cart</button>
-    </div>
 {% endblock %}

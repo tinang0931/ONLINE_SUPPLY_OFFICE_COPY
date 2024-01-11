@@ -32,11 +32,6 @@
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
             
-                <a href="{% url 'profile' %}">
-                  <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
-                </a>
-                <h1 class="p1">Profile Name</h1>
-            
             </div>
           </div>
         </nav>
@@ -73,8 +68,9 @@
           </div>
         </div>
         <style>
-
-
+.d-flex {
+margin-bottom: 30vh;
+}
     #sidebar {
       transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
       overflow: hidden;
@@ -117,7 +113,7 @@
 
 
 .logout-link {
-    margin-top: -55px;
+    margin-top: -70px;
 }
 
 
@@ -175,7 +171,7 @@
 }
 .pro {
     position: relative;
-    top: 250px; 
+    top: 200px; 
     
     z-index: 1;
     height: 45px;
@@ -210,7 +206,7 @@
 
 .account_type {
     position: relative;
-    top: 250px; 
+    top: 200px; 
     left: 30px; 
     font-size: 20px;
     margin: 0;
