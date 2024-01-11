@@ -19,8 +19,6 @@
             color: white;
             padding: 10px;
         }
-       
-
     
         .logo-container {
         display: flex;
@@ -38,14 +36,12 @@
         width: 120px;
         height: 124px;
         margin-left: -141px;
-     
     }
 
     .asean_logo {
         width: 117px;
         height: 114px;
         margin-right: -136px;
-      
     }
 
 
@@ -94,8 +90,6 @@
     border-collapse: collapse; /* Ensure borders collapse into a single border */
 }
 
-/* Adjust the border color and opacity for better visibility */
-/* Adjust the border color and opacity for better visibility */
 th,
 td {
     border: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
@@ -222,22 +216,22 @@ table {
     height: 40px;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.97);
+    border: none;
     border-radius: 5px;
 }
 
 .send-icon {
     position: fixed;
     top: 90%;
-    left: 65%;
-    width: 30px;
+    left: 68%;
+    width: 40px;
     height: 30px;
     background-color: #4CAF50;
     color: white;
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 39px;
+    margin-top: 42px;
     margin-left: -80px;
 }
 
@@ -246,16 +240,16 @@ table {
   }
 
   .footer {
-  background-color: rgba(1, 33, 67, 0.9);
-  text-align: center;
-  width: 33%;
-  height: auto;
-  bottom: 0;
-  -webkit-user-modify: read-only;
-  position: fixed;
-  z-index: 2;
-  position:fixed;
-}
+    background-color: rgba(10, 99, 158, 0.637); 
+    text-align: center;
+    width: 36.5%;
+    height: auto;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+    position:fixed;
+}   
 .p {
     size: 12px;
 }
@@ -306,10 +300,11 @@ position: ceneter;
         margin-left: 5px; 
         margin-top: 5px;
         margin-bottom: 11px;
-        color: #ffa125;
-        background-color: transparent;
+        color: black;
+        background-color: rgba(10, 99, 158, 0.616);
         padding: 10px 12px; 
         border-radius: 8px;
+        border: 1px solid rgba(4, 68, 110, 0.863);
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
 
@@ -319,8 +314,6 @@ position: ceneter;
         color: #ffa125e3;
         background-color: #000000e3;
     }
-
-
 
 </style>
 
@@ -445,7 +438,7 @@ position: ceneter;
                                         {% csrf_token %}
                                         <input id="new_status_id" type="hidden" name="new_status">
                                         <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-                                        <button type="button" onclick="btn_click(false)"class="disaprv">Disapprove</button>
+                                        <button type="button" onclick="btn_click(false)"class="disaprv">Decline</button>
                                     </form>
                                     <script>
                                         function btn_click(status){
@@ -467,10 +460,10 @@ position: ceneter;
                                         <input placeholder="Type your comment" name="comment_content">
                                     </div>
                                     <div class="send-icon">
-                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
+                                        <button type="submit"><i class='bx bx-send' style="margin-top: 3px; size: 24px;"></i></button>
                                     </div>
                                     </form>
-                                        
+                                    
                                 </div>
                                
                                

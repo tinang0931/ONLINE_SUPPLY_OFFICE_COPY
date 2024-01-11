@@ -17,13 +17,11 @@
   }
 
   .bg-success {
-    /* Your styles for a successful status */
     background-color: #b5e550; /* Adjust this to your desired background color */
     color: white; /* Adjust this to your desired text color */
   }
 
   .no-comment {
-    /* Your styles for a status with no comment */
     background-color: lightgray; /* Adjust this to your desired background color */
     color: black; /* Adjust this to your desired text color */
   }
@@ -66,7 +64,7 @@
           <td>
             {{ checkout.purpose }}
           </td>
-          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
+          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white">
             {% if checkout.is_seen %}
               {% if checkout.is_approve %}
                 Approved
