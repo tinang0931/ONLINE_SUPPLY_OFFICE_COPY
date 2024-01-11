@@ -35,6 +35,17 @@
                     <div class="alert alert-danger" role="alert">
                         {{ message }}
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var alertElement = document.querySelector('.alert.alert-danger');
+                            
+                            if (alertElement) {
+                                setTimeout(function() {
+                                    alertElement.style.display = 'none';
+                                }, 2000);
+                            }
+                        });
+                    </script>
                 {% endfor %}
             {% endif %} -->
 
@@ -61,5 +72,6 @@
             </div>
         </form>
     </div>
+</div>
 </body>
 </html>

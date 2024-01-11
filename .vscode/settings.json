@@ -12,5 +12,6 @@
         "signout",
         "taladro",
         "uidb"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }

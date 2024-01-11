@@ -16,7 +16,7 @@
   }
 
   .primary-btn:hover {
-      background-color: #65a2e2; /* Change the color on hover if desired */
+      background-color: #65a2e2; /
   }
   
   .button, input, optgroup, select, textarea {
@@ -35,7 +35,6 @@ p {
 }
     #attachments {
         display:flex ;
-         /* Hide the default file input button */
     }
 
     .custom-file-upload {
@@ -49,10 +48,17 @@ p {
         font-size: 16px;
     }
 
-    /* Style for the file input container */
-    #fileInputsContainer {
-        margin-bottom: 20px;
+    .attach {
+        width: 35px;
+        height: 35px;
+        display: inline-block; 
+        vertical-align: middle;
     }
+
+    .attached-file-column {
+        text-align: center; 
+    }
+
 </style>
 
 
@@ -69,7 +75,9 @@ p {
 <form action="{% url 'requester' %}" method="post">
     {% csrf_token %} 
 
-  
+<div class="container" style="text-align: center;">
+        <h1 class="title" style="margin-top: 50px; margin-bottom: 20px; margin-left: 900px;">My Purchase Request</h1>
+</div>   
   <div>
     <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
       <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
@@ -82,104 +90,93 @@ p {
               <th class="text-center text-nowrap" style="min-width: 7rem;">Unit Cost</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Quantity</th>
               <th class="text-center text-nowrap" style="min-width: 7rem;">Total Cost</th>
+              <th class="text-center text-nowrap"></th> 
               <th class="text-center text-nowrap"></th>
-              <th class="text-center text-nowrap"></th>   
+              <th class="text-center text-nowrap" style="min-width: 7rem;">Attached File</th>
+              <th class="text-center text-nowrap"></th>
           </tr>
       </thead>
       
       <tbody>
         {% for item in items %}
-            <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
-                <td class="item_name text-center">{{ item.item }}</td>
-                <td class="item_description text-center">{{ item.item_brand_description }}</td>
-                <td class="item_unit text-center">{{ item.unit }}</td>
-                <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                <td class="item_quantity text-center">{{ item.quantity }}</td>
-                <td class="item_total_cost text-center">{{ item.total_cost }}</td>
-                <td>
-                    <a href="#" class="btn btn-primary btn-sm">Update</a>
-                </td>
-                
-                <td class="text-center">
-                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
-                </td>
-                <td>
+        <tr style="background-color: rgba(30, 150, 255, 0.3) !important; border-bottom: 0.2px solid rgba(0, 0, 0, 0.2);">
+            <td class="item_name text-center">{{ item.item }}</td>
+            <td class="item_description text-center">{{ item.item_brand_description }}</td>
+            <td class="item_unit text-center">{{ item.unit }}</td>
+            <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
+            <td class="item_quantity text-center">{{ item.quantity }}</td>
+            <td class="item_total_cost text-center">{{ item.total_cost }}</td>
+            <td class="text-center"> 
+                <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
+            </td>
+
+            {% if item.id %}
+            <td class="text-center" style="margin-left: 10px;">
+              <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
+            </td>
+            <td class="text-center" onclick="attachFile({{ item.id }})">
+              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+            </td>
+            <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
+            <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>
+          {% endif %}
+        </tr>
+        </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
                     <input type="hidden" name="item_brand_{{ item.id }}" value="{{ item.item_brand_description }}">
                     <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
                     <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
                     <input type="hidden" name="price_{{ item.id }}" value="{{ item.unit_cost }}">
+
                 </td>
             </tr>
         {% endfor %}
     </tbody>
     </table>
+
+    <script>
+        var attachmentCounter = 0; // Counter for creating unique IDs
+      
+        function attachFile(itemId) {
+          document.getElementById('fileInput_' + itemId).click();
+        }
+      
+        function showFileName(itemId) {
+          const fileInput = document.getElementById('fileInput_' + itemId);
+          const attachedFileName = document.getElementById('attachedFileName_' + itemId);
+      
+          const file = fileInput.files[0];
+          if (file) {
+            attachedFileName.textContent = file.name;
+            attachedFileName.style.color = 'blue';
+            attachedFileName.style.cursor = 'pointer';
+            attachedFileName.onclick = function() {
+              window.open(URL.createObjectURL(file), '_blank');
+            };
+          } else {
+            attachedFileName.textContent = "";
+            attachedFileName.style.color = 'black';
+            attachedFileName.style.cursor = 'default';
+            attachedFileName.onclick = null;
+          }
+        }
+      </script>
+      
     
     <script>
-        // Wait for the document to be ready
         $(document).ready(function() {
-            // Function to calculate total amount
             function calculateTotal() {
                 var totalAmount = 0;
-                // Loop through each row in the table body
                 $(".item_total_cost").each(function() {
-                    // Get the value of each item's total cost in this row
                     var itemCost = parseFloat($(this).text());
-                    // Add the total cost of this item to the totalAmount
                     totalAmount += itemCost;
                 });
-                // Display the total amount in the designated span or div
-                $("#total_amount").text(totalAmount.toFixed(2)); // Adjust if needed
+                $("#total_amount").text(totalAmount.toFixed(2)); 
             }
     
-            // Call the calculateTotal function initially
             calculateTotal();
         });
     </script>
-
-
-
-<div>
-    <div id="fileInputsContainer">
-        <input type="file" name="attachments" id="attachments" multiple accept=".pdf, .doc, .jpg, .png, .docx, .xls,  .xlsx">
-    </div>
-
-    <!-- Display attached files as clickable links -->
-    <div>
-        <p>Attached Files:</p>
-        <div id="fileLinksContainer"></div>
-    </div>
-    
-     
-
-    <!-- Add jQuery library (if not already included) -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
- 
-    <script>
-        $(document).ready(function () {
-            $('#attachments').on('change', function () {
-                var files = this.files;
-
-                // Append new file links without clearing the previous ones
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    var fileLink = $('<a class="file-link" target="_blank"></a>').attr('href', URL.createObjectURL(file)).text(file.name);
-                    $('#fileLinksContainer').append(fileLink).append('<br>');
-                }
-            });
-
-            // Click event to open the attached file in a new tab
-            $('#fileLinksContainer').on('click', 'a.file-link', function (e) {
-                e.preventDefault();
-                var filePath = $(this).attr('href');
-                window.open(filePath, '_blank');
-            });
-        });
-    </script>
-   
-</div>
-
-    </div>
     
     <footer class="fixed-bottom p-2" style="background-color:  rgba(1, 33, 67, 0.9);">
         <div class="container">
