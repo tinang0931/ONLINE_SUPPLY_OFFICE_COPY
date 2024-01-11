@@ -46,6 +46,7 @@ from django.core.files.base import ContentFile
 
 
 
+
 def main(request):
     return render(request, 'accounts/User/main.html')
 
@@ -596,48 +597,67 @@ def addItem(request):
 
 
 def request(request):
+    grouped_data = {}  # Define grouped_data outside of if conditions
+
     if request.method == 'POST':
-
-        selected_rows = request.POST.getlist('selectRow')
-
-        for row_id in selected_rows:
-            item_name = request.POST.get(f'item_{row_id}')
-            item_brand = request.POST.get(f'item_brand_{row_id}')
-            unit = request.POST.get(f'unit_{row_id}')
-            price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
-
+        item_name = request.POST.get(f'item')
         
-            if quantity and quantity.isdigit():
-                quantity = int(quantity)
-            else:
-               
-                print(f"Invalid quantity for row {row_id}")
-                continue
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        estimate_budget = request.POST.get(f'estimate_budget')
+        mode_of_procurement = request.POST.get(f'mode_of_procurement')
+        jan = request.POST.get(f'jan')
+        feb = request.POST.get(f'feb')
+        mar = request.POST.get(f'mar')
+        apr = request.POST.get(f'apr')
+        may = request.POST.get(f'may')
+        jun = request.POST.get(f'jun')
+        jul = request.POST.get(f'jul')
+        aug = request.POST.get(f'aug')
+        sep = request.POST.get(f'sep')
+        oct = request.POST.get(f'oct')
+        nov = request.POST.get(f'nov')
+        dec = request.POST.get(f'dec')
 
-            user = request.user
+        price = request.POST.get(f'price')
 
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            estimate_budget=estimate_budget,
+            mode_of_procurement=mode_of_procurement,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,
+            nov=nov,
+            dec=dec,
+            unit_cost=price
+        )
 
-            item = Item.objects.create(
-                user=user,
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price,
-                quantity=quantity,
-
-                total_cost=float(price) * quantity,
-            )
-            item.save()
-
-        return redirect('requester')
+        return redirect('request')
 
     elif request.method == 'GET':
-        csv_data = CSV.objects.all()
-        grouped_data = {}
+        csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
+def ppmp (request):
+    
+    items = Item.objects.all()
+
+    return render(request, 'accounts/User/ppmp.html', {'items': items})
 
 
 from django.core.exceptions import ValidationError
