@@ -43,11 +43,56 @@
     </table>
     </div>
   </div>
-  <div style="display: flex; justify-content: flex-end; margin-top: -90px; margin-right: 369px;">
-    <button class="btn btn-primary" id="view-more-button" style="background-color: blue; margin-top: -80px; height: 50%;">View More</button>
+<div>
+  <button class="btn" id="view-more-button">
+    <span class="button-content">View More </span>
+  </button>
+  
 </div>
 </div>
+<style>
+  .btn {
+  position: relative;
+  overflow: hidden;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 1.5rem;
+  background: #6b89a6;
+  background-size: 400%;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  margin-left: 73%;
+  margin-top: -530px;
+}
 
+.btn:hover::before {
+  transform: scaleX(1);
+}
+
+.button-content {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover .button-content {
+  color: #ffffff; /* Change this to the desired color */
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+  background: linear-gradient(130.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
+  transition: all 0.475s;
+}
+</style>
 <script>
   function highlightInput(input) {
     input.select();
