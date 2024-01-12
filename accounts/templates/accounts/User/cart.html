@@ -109,17 +109,16 @@ p {
             <td class="text-center"> 
                 <img src="{% static 'images/pen.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
             </td>
-
             {% if item.id %}
             <td class="text-center" style="margin-left: 10px;">
               <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
             </td>
             <td class="text-center" onclick="attachFile({{ item.id }})">
-              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
-            </td>
-            <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
-            <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>
-          {% endif %}
+              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="Attach File" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+              <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
+           </td>
+          <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>          
+            {% endif %}
         </tr>
         </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
@@ -139,28 +138,29 @@ p {
         var attachmentCounter = 0; // Counter for creating unique IDs
       
         function attachFile(itemId) {
-          document.getElementById('fileInput_' + itemId).click();
-        }
-      
-        function showFileName(itemId) {
-          const fileInput = document.getElementById('fileInput_' + itemId);
-          const attachedFileName = document.getElementById('attachedFileName_' + itemId);
-      
-          const file = fileInput.files[0];
-          if (file) {
+        const fileInput = document.getElementById('fileInput_' + itemId);
+        fileInput.click();
+    }
+
+    function showFileName(itemId) {
+        const fileInput = document.getElementById('fileInput_' + itemId);
+        const attachedFileName = document.getElementById('attachedFileName_' + itemId);
+
+        const file = fileInput.files[0];
+        if (file) {
             attachedFileName.textContent = file.name;
             attachedFileName.style.color = 'blue';
             attachedFileName.style.cursor = 'pointer';
-            attachedFileName.onclick = function() {
-              window.open(URL.createObjectURL(file), '_blank');
+            attachedFileName.onclick = function () {
+                window.open(URL.createObjectURL(file), '_blank');
             };
-          } else {
+        } else {
             attachedFileName.textContent = "";
             attachedFileName.style.color = 'black';
             attachedFileName.style.cursor = 'default';
             attachedFileName.onclick = null;
-          }
         }
+    }
       </script>
       
     

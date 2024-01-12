@@ -669,7 +669,7 @@ class RequesterView(View):
             items = Item.objects.all()
             purpose = request.POST.get('purpose', '') 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
-
+            
             for row in items:
                 item_id = row.id
                 item = request.POST.get(f'item_{item_id}')
