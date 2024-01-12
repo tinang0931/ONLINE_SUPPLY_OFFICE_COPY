@@ -69,5 +69,4 @@ urlpatterns = [
    path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
    path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('ppmp/',views.ppmp, name='ppmp'),
-
 ]
