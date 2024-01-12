@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
 {% load static %}
@@ -11,12 +11,20 @@
         width: 300px;
         border-radius: 20px;
     }
+
+    .table-bordered th {
+        background-color: #1c96c5;
+    }
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 class=""> CATALOGUE</h1>
+    </div>
 
     <div class="row">
         <div class="col-md-4">
@@ -26,51 +34,25 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="additem">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Create New
-                    Request</button>
-            </div>
-        </div>
+        
 
-        <div class="col-md-4">
-            <div class="ppmp">
-                <button class="btn btn-primary">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;">View My PPMP</a>
-                </button>
-            </div>
-        </div>
+        <div class="bckbtn" ><a href="{% url 'ppmp' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
 
         <div>
 
-            <table class="table table-striped table-bordered">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                     <tr>
-                        <th rowspan='2'>Item Name</th>
-                        <th rowspan='2'> Brand / Description</th>
-                        <th rowspan='2'>Unit</th>
-                        <th rowspan='2'>Estimated Budget</th>
-                        <th rowspan='2'>Mode of Procurement</th>
-                        <th colspan="12">Monthly Quantity Requirement</th>
-                        <th rowspan='2'>Unit Price</th>
-                        <th rowspan="2"> Select </th>
+                        <th >Item Name</th>
+                        <th > Brand / Description</th>
+                        <th >Unit</th>
+                        
+                       
+                        <th >Unit Price</th>
+                        <th > Select </th>
                     </tr>
-                    <tr>
-                        <th>Jan</th>
-                        <th>Feb</th>
-                        <th>Mar</th>
-                        <th>April</th>
-                        <th>May</th>
-                        <th>June</th>
-                        <th>July</th>
-                        <th>Aug</th>
-                        <th>Sept</th>
-                        <th>Oct</th>
-                        <th>Nov</th>
-                        <th>Dec</th>
-                    </tr>
-
+                    
                     </tr>
                 </thead>
                 <tbody>
@@ -94,25 +76,17 @@
                             <td>{{ p.Unit }}
                                 <input type="hidden" name="unit" value="{{ p.Unit }}">
                             </td>
-                            <td><input type="number" name="estimate_budget" value=""></td>
-                            <td><input type="text" name="mode_of_procurement" value="Not Applicable"></td>
-                            <td><input type="number" style="width: 38px;" name="jan"></td>
-                            <td><input type="number" style="width: 38px;" name="feb"></td>
-                            <td><input type="number" style="width: 38px;" name="mar"></td>
-                            <td><input type="number" style="width: 38px;" name="apr"></td>
-                            <td><input type="number" style="width: 38px;" name="may"></td>
-                            <td><input type="number" style="width: 38px;" name="jun"></td>
-                            <td><input type="number" style="width: 38px;" name="jul"></td>
-                            <td><input type="number" style="width: 38px;" name="aug"></td>
-                            <td><input type="number" style="width: 38px;" name="sep"></td>
-                            <td><input type="number" style="width: 38px;" name="oct"></td>
-                            <td><input type="number" style="width: 38px;" name="nov"></td>
-                            <td><input type="number" style="width: 38px;" name="dec"></td>
-
+                            
                             <td>{{ p.Price }}
                                 <input type="hidden" name="price" value="{{ p.Price }}">
                             </td>
-                            <td><button type="submit" class="btn btn-primary">+</button></td>
+                            <td>
+                                {% if item_submitted %}
+                                <button type="button" class="btn btn-success" disabled>Check</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary">+</button>
+                            {% endif %}
+                            </td>
 
                         </tr>
                     </form>
@@ -132,10 +106,48 @@
 
 
 
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
-        function change_val(id) {
-            document.getElementById(id).value = 0;
-        }
+        $(document).ready(function () {
+
+            function updateEstimateBudgetForRow(row) {
+
+                var unitPrice = parseFloat(row.find('[name="price"]').val());
+
+
+                var totalValue = 0;
+
+
+                row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+                    var monthValue = parseFloat($(this).val()) || 0;
+                    totalValue += monthValue;
+                });
+
+
+                var estimateBudget = totalValue * unitPrice;
+
+
+                row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
+            }
+
+
+            $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
+
+                var row = $(this).closest('tr.item-row');
+                updateEstimateBudgetForRow(row);
+            });
+
+
+            $('[name="price"]').on('input', function () {
+
+                var row = $(this).closest('tr.item-row');
+                updateEstimateBudgetForRow(row);
+            });
+        });
+
 
         function scrollToCategory() {
             var selectedCategory = document.getElementById('dropdownMenuSelect').value;
