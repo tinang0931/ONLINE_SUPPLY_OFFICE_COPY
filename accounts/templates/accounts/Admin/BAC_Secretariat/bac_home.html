@@ -153,12 +153,27 @@
               </td>
               <td>{{ checkout.purpose }}</td>
               <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;" id="bohome-status">
-                      {% if checkout.is_approve %}
-                          -Approve - Approved: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
-                      {% else %}
-                        Not available  - Not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
-                      {% endif %}
-              </td>
+                {% if checkout.is_approve %}
+                    - Approved by BO: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                {% endif %}
+                
+                {% if checkout.cd_approve %}
+                    {% if checkout.is_approve %}<br>{% endif %}
+                    -Approved by CD {% if checkout.status_comment %} {% else %} Not Available {% endif %}
+                {% endif %}
+            
+                {% if checkout.cdpurchase_status %}
+                    {% if checkout.is_approve or checkout.cd_approve %}<br>{% endif %}
+                    - CDPurchase Status: {% if checkout.cdpurchase_status_comment %} {{ checkout.cdpurchase_status_comment }} {% else %} Not Available {% endif %}
+                {% endif %}
+            
+                {% if not checkout.is_approve and not checkout.cd_approve and not checkout.cdpurchase_status %}
+                    Not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
+                {% endif %}
+            </td>
+            
+            
+            
               <td>
                   {{ checkout.status_update_date|default:"Not available" }}
               </td>
