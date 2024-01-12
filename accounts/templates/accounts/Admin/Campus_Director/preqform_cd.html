@@ -20,8 +20,6 @@
             padding: 10px;
         }
        
-
-    
         .logo-container {
         display: flex;
         align-items: center;
@@ -38,16 +36,13 @@
         width: 120px;
         height: 124px;
         margin-left: -141px;
-     
     }
 
     .asean_logo {
         width: 117px;
         height: 114px;
         margin-right: -136px;
-      
     }
-
 
     h4 {
         font-size: 25px;
@@ -141,11 +136,11 @@ table {
     
            
   .icons-container {
-                display: flex;
-                justify-content: center;
-                margin-top: 20px;
-                margin-right: 50px;
-            }
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-right: 50px;
+}
 
         .icon-link {
             margin-left: 20px;
@@ -190,9 +185,7 @@ table {
 .table-container {
         margin-top: 20px; 
         width: 80%;
-        margin-left: -16%;
-       
-        
+        margin-left: -16%; 
     }
 
 
@@ -215,7 +208,7 @@ table {
     height: 40px;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.97);
+    border: none;
     border-radius: 5px;
 }
 
@@ -239,16 +232,17 @@ table {
   }
 
   .footer {
-  background-color: rgba(1, 33, 67, 0.9);
-  text-align: center;
-  width: 33%;
-  height: auto;
-  bottom: 0;
-  -webkit-user-modify: read-only;
-  position: fixed;
-  z-index: 2;
-  position:fixed;
+    background-color: rgba(5, 112, 139, 0.822); 
+    text-align: center;
+    width: 36.5%;
+    height: auto;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+    position:fixed;
 }
+
 .p {
     size: 12px;
 }
@@ -299,8 +293,9 @@ position: center;
         margin-top: 5px;
         margin-bottom: 11px;
         color: #ffa125;
-        background-color: transparent;
+        background-color: rgba(6, 88, 109, 0.904);
         padding: 10px 12px; 
+        border: 1px solid rgba(6, 88, 109, 0.904);
         border-radius: 8px;
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
@@ -311,10 +306,8 @@ position: center;
         color: #ffa125e3;
         background-color: #000000e3;
     }
-
-
-
 </style>
+
 
 <body>
 <div class="container page-break">
@@ -428,46 +421,48 @@ position: center;
                                 <div>
                                     <br>
                                     <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                            <footer class="footer">
+                           </form> 
+                           <footer class="footer">
 
-                                <div class="icons-container">
-                                    <form method="post" action="{% url 'approve_checkout' pr_id=pr_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="aprv">Approve</button>
-                                    </form>
-                            
-                                    <form method="post" action="{% url 'disapprove_checkout' pr_id=pr_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="new_status" value="True">
-                                        <button type="submit" class="disaprv">Disapprove</button>
-                                    </form>
-                            
-                                    <a href="#" title="Download" class="icon-link">
-                                        <i class="fas fa-download"></i> 
-                                    </a>
-                                    <a href="javascript:window.print()" title="Print" class="icon-link">
-                                        <i class="fas fa-print"></i> 
-                                    </a>
-                                    
-                                    <div class="input-box">
-                                        <input placeholder="comment;[]" name="comment_content">
-                                    </div>
-                                        <div class="send-icon">
-                                            <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
-                                        </div>
-                                    </form>
-                                        
+                            <div class="icons-container">
+                                <form id='form_status' method="post" action="{% url 'cdapprovecheckout' pr_id=pr_id %}">
+                                    {% csrf_token %}
+                                    <input id="new_status_id" type="hidden" name="new_status">
+                                    <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+                                    <button type="button" onclick="btn_click(false)"class="disaprv">Decline</button>
+                                </form>
+                                <script>
+                                    function btn_click(status){
+                                        document.getElementById('new_status_id').value = status
+                                        form = document.getElementById('form_status')
+                                        form.submit()
+                                    }
+                                </script>
+                        
+                        
+                                <a href="#" title="Download" class="icon-link">
+                                    <i class="fas fa-download"></i> 
+                                </a>
+                                <a href="javascript:window.print()" title="Print" class="icon-link">
+                                    <i class="fas fa-print"></i> 
+                                </a>
+                                
+                                <div class="input-box">
+                                    <input placeholder="Type your comment here" name="comment_content">
                                 </div>
-                               
-                               
-                            </footer>
-                            
-                            </form> <!-- Close the form tag here -->
+                                    <div class="send-icon">
+                                        <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i></button>
+                                    </div>
+                                </form>
+                                    
+                            </div>
+                           
+                           
+                        </footer>
                             <script>
                                 function setAction(action) {
                                     document.getElementById('action').value = action;
-                                    document.forms[0].submit();  // Assuming the form is the first form on the page
+                                    document.forms[0].submit();  
                                 }
                             </script>
                            

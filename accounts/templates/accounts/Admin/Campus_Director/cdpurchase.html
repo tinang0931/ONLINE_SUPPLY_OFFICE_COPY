@@ -17,16 +17,11 @@
     color: black;
   }
 
-  .bg-success {
-    /* Your styles for a successful status */
-    background-color: #b5e550; /* Adjust this to your desired background color */
-    color: white; /* Adjust this to your desired text color */
-  }
 
   .no-comment {
     /* Your styles for a status with no comment */
     background-color: lightgray; /* Adjust this to your desired background color */
-    color: black; /* Adjust this to your desired text color */
+    color: black; 
   }
 
   .form-control {
@@ -110,18 +105,61 @@
     <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
 </div>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="text-center">Date Requested</th>
-        <th class="text-center">Requests</th>
-        <th class="text-center">Purpose</th>
-        <th class="status">Status</th>
-        <th class="text-center">Date</th>
-        <th class="text-center">Comment</th> <!-- Updated this line -->
-      </tr>
-    </thead>
-    <tbody>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+        Date Requested
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        PR ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+        Requests
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        Purpose
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Status
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+        Comments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        Attachments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+
       {% for checkout in checkouts %}
         <tr>
           <td class="text-center">
@@ -135,15 +173,19 @@
           <td>
             {{ checkout.purpose }}
           </td>
-          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: rgb(153, 58, 58);">
-            {% if checkout.is_approve %}
-              Approved
-            {% elif checkout.is_disapprove %}
-              Disapproved
+          <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
+            {% if checkout.cd_seen %}
+              {% if checkout.cd_approve %}
+                Approved
+              {% else %}
+                Declined
+              {% endif %}
             {% else %}
               Waiting for Approval
             {% endif %}
           </td>
+          
+        </td>
           <td>
             {{ checkout.status_update_date|default:"Not available" }}
           </td>
