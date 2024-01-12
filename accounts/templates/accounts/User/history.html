@@ -16,39 +16,41 @@
 
     <div class="table-responsive" style="margin: 0 auto;">
       <table class="table" id="create_request_table" style="border: 1px solid black;">
-        <thead>
-            <tr>
-                <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
-                <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
-                <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
-                <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                
-                <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
-                <th class="text-center text-nowrap"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in checkout_items %}
-            <tr>
-                <td>{{ item.checkout.pr_id }}</td>
-                <td>{{ item.submission_date }}</td>
-                <td>{{ item.item }}</td>
-                <td>{{ item.quantity }}</td>
-                
-                <td>{{ item.total_cost }}</td>
-                <td></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-            <button class="btn btn-primary" id="view-more-button" style="background-color: blue; top: 20%;">View More</button>
-        </div>
-    </table>
-    
-    
-    </div>
+          <thead>
+              <tr>
+                  <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+                  <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+                  <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
+                  <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                  <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+                  <th class="text-nowrap" style="min-width: 7rem;">Attachment</th>
+                  <th class="text-center text-nowrap"></th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for item in checkout_items %}
+                  <tr>
+                      <td>{{ item.checkout.pr_id }}</td>
+                      <td>{{ item.submission_date }}</td>
+                      <td>{{ item.item }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.total_cost }}</td>
+                      <td>
+                          {% if item.attachment %}
+                              <a href="{{ item.get_attachment_url }}" target="_blank">View Attachment</a>
+                          {% else %}
+                              No Attachment
+                          {% endif %}
+                      </td>
+                      <td></td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
+          <button class="btn btn-primary" id="view-more-button" style="background-color: blue; top: 20%;">View More</button>
+      </div>
   </div>
-</div>
 
 <script>
   function highlightInput(input) {

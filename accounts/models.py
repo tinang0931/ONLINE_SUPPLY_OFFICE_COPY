@@ -131,6 +131,14 @@ class CheckoutItems(models.Model):
     def save(self, *args, **kwargs):
         self.total_cost = self.unit_cost * self.quantity
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.item} - {self.item_brand_description} - {self.unit} - {self.unit_cost} - {self.quantity} - {self.total_cost}"
+
+    def get_attachment_url(self):
+        if self.attachment:
+            return self.attachment.url
+        return None
         
 
 class Comment(models.Model):

@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib import admin
 from . import views 
 from .views import *
-
+from .views import checkout_items_view
 
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
@@ -69,4 +69,5 @@ urlpatterns = [
    path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
    path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('ppmp/',views.ppmp, name='ppmp'),
+    path('checkout-items/', checkout_items_view, name='checkout_items'),
 ]
