@@ -81,8 +81,11 @@
                                 <input type="hidden" name="price" value="{{ p.Price }}">
                             </td>
                             <td>
-                               
+                                {% if item_submitted %}
+                                <button type="button" class="btn btn-success" disabled>Check</button>
+                            {% else %}
                                 <button type="submit" class="btn btn-primary">+</button>
+                            {% endif %}
                             </td>
 
                         </tr>
@@ -98,6 +101,12 @@
 
 
     </div>
+
+
+
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -217,41 +226,6 @@
             table = document.querySelector(".table-striped");
             tr = table.getElementsByTagName("tr");
 
-
-    $(document).ready(function () {
-        $('.row-checkbox').on('click', function () {
-            $(this).closest('tr').toggleClass('selected');
-        });
-    });
-
-    const categoryFilter = document.getElementById('category_filter');
-    const productTables = document.querySelectorAll('.table table');
-
-    categoryFilter.addEventListener('change', (event) => {
-        const selectedCategory = event.target.value;
-        const filteredProducts = {};
-
-        if (selectedCategory !== 'all') {
-            for (const productTable of productTables) {
-                const categoryName = productTable.querySelector('h3').textContent;
-                if (categoryName === selectedCategory) {
-                    const products = productTable.querySelectorAll('tbody tr');
-                    for (const product of products) {
-                        const itemName = product.querySelector('td:nth-child(2)').textContent;
-                        const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                        const unit = product.querySelector('td:nth-child(4)').textContent;
-                        const price = product.querySelector('td:nth-child(5)').textContent;
-
-                        if (!filteredProducts[categoryName]) {
-                            filteredProducts[categoryName] = [];
-                        }
-
-                        filteredProducts[categoryName].push({
-                            itemName,
-                            itemDescription,
-                            unit,
-                            price
-                        });
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
@@ -265,14 +239,9 @@
             }
         }
 
-        updateProductTables(filteredProducts);
-    });
 
 
-    function updateProductTables(filteredProducts) {
-        for (const productTable of productTables) {
-            productTable.querySelector('tbody').innerHTML = ''; 
-            
+
         $(document).ready(function () {
             // Add click event to checkboxes
             $('.row-checkbox').on('click', function () {
@@ -280,7 +249,6 @@
                 $(this).closest('tr').toggleClass('selected');
             });
         });
-  
 
         const categoryFilter = document.getElementById('category_filter');
         const productTables = document.querySelectorAll('.table table');
@@ -319,15 +287,6 @@
             updateProductTables(filteredProducts);
         });
 
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
 
         function updateProductTables(filteredProducts) {
             for (const productTable of productTables) {
