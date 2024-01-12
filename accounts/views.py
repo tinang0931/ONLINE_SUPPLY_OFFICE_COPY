@@ -13,7 +13,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -38,11 +38,13 @@ from .models import Item
 from .models import User
 from .forms import UserForm
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt 
 import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
+
+
 
 
 def main(request):
@@ -94,7 +96,6 @@ def Procurement(request):
 
 def bac(request):
     return render(request, 'accounts/User/bac.html')
-
 
 def homepage(request):
     return render(request, 'accounts/User/homepage.html')
@@ -179,7 +180,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('request')
+                return redirect('ppmp')
             elif user.user_type == 'cd':
                 return redirect('cd')
             elif user.user_type == 'budget':
@@ -193,15 +194,6 @@ def login(request):
     
     return render(request, 'accounts/User/login.html')
 
-
-def bac_home(request):
-    if not request.user.is_admin:
-        return redirect('request')
-
-def request_page(request):
-    if request.user.is_admin:
-        return redirect('bac_home')
-    return render(request, 'request.html')
 
 
 def get_random_string(length, allowed_chars='0123456789'):
@@ -259,13 +251,21 @@ def reset_password(request):
 @authenticated_user
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You are now successfully logout."))
-    return redirect('homepage')
+    messages.success(request, "You are now logged out.")
+    return redirect('login')
 
 
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
+@authenticated_user
+def registration(request):
+    return render(request, 'accounts/User/registration.html')
+
+@regular_user_required
+def regular_user_only_view(request):
+    return render(request, 'accounts/User/request.html')
 
 
 @authenticated_user
@@ -288,14 +288,15 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
+@regular_user_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
+@regular_user_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
-
 
 @authenticated_user
 def bac_about(request):
@@ -303,7 +304,6 @@ def bac_about(request):
 
 
 @authenticated_user
-
 def bac_home(request):
     checkouts = Checkout.objects.select_related('user').all()
     comments = Comment.objects.all()
@@ -322,15 +322,18 @@ def bac_home(request):
                 'purpose': checkout.purpose,
                 'status_comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
-                'is_approve':checkout.is_approve
+                'is_approve':checkout.is_approve,
+                'cd_approve':checkout.cd_approve,
             }
         else:
             checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
    
             # Update the status-related fields
             checkout_data_dict[pr_id]['is_approve'] = checkout.is_approve
-            checkout_data_dict[pr_id]['is_disapprove'] = checkout.is_disapprove
+            checkout_data_dict[pr_id]['cd_approve'] = checkout.cd_approve
+            
             checkout_data_dict[pr_id]['is_seen'] = checkout.is_seen
+            checkout_data_dict[pr_id]['cd_seen'] = checkout.cd_seen
             checkout_data_dict[pr_id]['status_comment'] = latest_comment.content if latest_comment else ""
             checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
 
@@ -568,15 +571,9 @@ def addItem(request):
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
 
-        if quantity and quantity.isdigit():
-                quantity = int(quantity)
-        else:
 
-            print("Invalid quantity")
-            return redirect('request')
-        
+       
         user = request.user
         Item.objects.create(
             user=user,
@@ -584,57 +581,100 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
-             total_cost=float(unit_cost) * quantity,
+      
+
             
         )
-        return redirect('request')
-    return render(request, 'accounts/User/request.html')
+        return redirect('ppmp')
+    return render(request, 'accounts/User/ppmp.html')
 
 
 def request(request):
+    grouped_data = {}  # Define grouped_data outside of if conditions
+
     if request.method == 'POST':
-
-        selected_rows = request.POST.getlist('selectRow')
-
-        for row_id in selected_rows:
-            item_name = request.POST.get(f'item_{row_id}')
-            item_brand = request.POST.get(f'item_brand_{row_id}')
-            unit = request.POST.get(f'unit_{row_id}')
-            price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
+        item_name = request.POST.get(f'item')
+        
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        
+        price = request.POST.get(f'price')
 
         
-            if quantity and quantity.isdigit():
-                quantity = int(quantity)
-            else:
-               
-                print(f"Invalid quantity for row {row_id}")
-                continue
-
-            user = request.user
 
 
-            item = Item.objects.create(
-                user=user,
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price,
-                quantity=quantity,
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
 
-                total_cost=float(price) * quantity,
-            )
-            item.save()
-
-        return redirect('requester')
+        return redirect('request')
 
     elif request.method == 'GET':
-        csv_data = CSV.objects.all()
-        grouped_data = {}
+        csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
+def ppmp (request):
+
+    if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        estimate_budget = request.POST.get(f'estimate_budget')
+        jan = request.POST.get(f'jan')
+        feb = request.POST.get(f'feb')
+        mar = request.POST.get(f'mar')
+        apr = request.POST.get(f'apr')
+        may = request.POST.get(f'may')
+        jun = request.POST.get(f'jun')
+        jul = request.POST.get(f'jul')
+        aug = request.POST.get(f'aug')
+        sep = request.POST.get(f'sep')
+        oct = request.POST.get(f'oct')
+        nov = request.POST.get(f'nov')
+        dec = request.POST.get(f'dec')
+
+        price = request.POST.get(f'price')
+
+        
+
+
+        PPMP.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            estimate_budget=estimate_budget,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,
+            nov=nov,
+            dec=dec,
+            unit_cost=price
+        )
+
+        return redirect('ppmp')
+
+    elif request.method == 'GET':
+    
+        items = Item.objects.all()
+
+    return render(request, 'accounts/User/ppmp.html', {'items': items})
 
 
 from django.core.exceptions import ValidationError
@@ -725,7 +765,7 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-             
+@authenticated_user              
 def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
@@ -801,6 +841,11 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('ppmp')
+
 
 def update_item(request, id):
     if request.method == 'POST':
@@ -824,7 +869,29 @@ def update_item(request, id):
             Price=price
         )
         return redirect('bac_dashboard')
-    
+
+def update(request, id):
+    if request.method == 'POST':
+        Item.objects.get(id=id)
+        
+        
+        item_name = request.POST.get(f'item_{id}')
+        
+        item_brand = request.POST.get(f'item_brand_{id}')
+       
+        unit = request.POST.get(f'unit_{id}')
+        
+        
+        price = request.POST.get(f'price_{id}')
+        
+
+        Item.objects.filter(id=id).update(
+           item=item_name,
+           item_brand_description=item_brand,
+           unit=unit,
+           unit_cost=price
+        )
+        return redirect('ppmp')
 
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
@@ -855,7 +922,7 @@ def bohome(request):
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
                 'is_approve': checkout.is_approve,
-                'is_disapprove': checkout.is_disapprove,
+               
                 'is_seen': checkout.is_seen,  # Include the new field in the view
                 'comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
@@ -881,15 +948,14 @@ class PreqForm_boView(View):
 
         # Get checkout items associated with the checkout
         checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-
         context = {
             'checkout_items': checkout_items,
             'pr_id': pr_id,
             'user': checkout.user,
             'purpose': checkout.purpose,
-            'pending': not checkout.is_approve and not checkout.is_disapprove,
+            'pending': not checkout.is_approve,
             'approved': checkout.is_approve,
-            'disapproved': checkout.is_disapprove,
+           
             'is_seen': checkout.is_seen,
             
         }
@@ -898,6 +964,7 @@ class PreqForm_boView(View):
 
     def post(self, request, pr_id):
         new_status = request.POST.get('new_status')
+        print(new_status)
 
         if pr_id and new_status:
             try:
@@ -908,12 +975,9 @@ class PreqForm_boView(View):
 
                 # Set is_approve and is_disapprove to False initially
                 checkout.is_approve = False
-                checkout.is_disapprove = False
 
                 if new_status.lower() == 'true':
                     checkout.is_approve = True
-                else:
-                    checkout.is_disapprove = True
 
                 checkout.save()
 
@@ -925,18 +989,21 @@ class PreqForm_boView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
+        
 
-def update_checkout_status(request, pr_id, new_status):
+def update_checkout_status(request, pr_id):
     if request.method == 'POST':
         try:
             # Convert new_status to boolean
+            new_status = request.POST.get("new_status")
             new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
+            print(new_status)
 
             # Update the status of the checkout directly
             checkout = get_object_or_404(Checkout, pr_id=pr_id)
             checkout.status_update_date = timezone.now()
             checkout.is_approve = new_status
-            checkout.is_disapprove = not new_status
+          
             checkout.is_seen = True  # Mark as seen when the status is updated
             checkout.save()
 
@@ -949,7 +1016,121 @@ def update_checkout_status(request, pr_id, new_status):
             print(f"Error: {e}")
             return HttpResponse("An error occurred while processing the form.")
     else:
-        return HttpResponse("Invalid request method.")
+        return HttpResponse("Invalid request method.")        
+        
+        
+
+
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def bids(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
+
+@authenticated_user
+def noa(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
+
+
+
+@authenticated_user
+def purchaseorder(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
+@authenticated_user
+def inspection(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
+
+@authenticated_user
+def property(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
+
+@authenticated_user
+def np(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
+@authenticated_user
+def notif(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
+@authenticated_user
+def abstract(request):
+    # Your view logic here
+    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+
+
+def addItem(request):
+    if request.method == 'POST':
+        item_data = request.POST.get('item')
+        item_brand_description = request.POST.get('item_Brand_Description')
+        unit = request.POST.get('unit')
+        unit_cost = request.POST.get('unit_Cost')
+        quantity = request.POST.get('quantity')
+
+        if quantity and quantity.isdigit():
+                quantity = int(quantity)
+        else:
+
+            print("Invalid quantity")
+            return redirect('request')
+        
+        user = request.user
+        Item.objects.create(
+            user=user,
+            item=item_data,
+            item_brand_description=item_brand_description,
+            unit=unit,
+            unit_cost=unit_cost,
+            quantity=quantity,
+             total_cost=float(unit_cost) * quantity,
+            
+        )
+        return redirect('request')
+    return render(request, 'accounts/User/request.html')
+
+def request(request):
+    if request.method == 'POST':
+
+        selected_rows = request.POST.getlist('selectRow')
+
+        for row_id in selected_rows:
+            item_name = request.POST.get(f'item_{row_id}')
+            item_brand = request.POST.get(f'item_brand_{row_id}')
+            unit = request.POST.get(f'unit_{row_id}')
+            price = request.POST.get(f'price_{row_id}')
+            quantity = request.POST.get(f'quantity_{row_id}')
+
+        
+            if quantity and quantity.isdigit():
+                quantity = int(quantity)
+            else:
+               
+                print(f"Invalid quantity for row {row_id}")
+                continue
+
+            user = request.user
+
+
+            item = Item.objects.create(
+                user=user,
+                item=item_name,
+                item_brand_description=item_brand,
+                unit=unit,
+                unit_cost=price,
+                quantity=quantity,
+
+                total_cost=float(price) * quantity,
+            )
+            item.save()
+
+        return redirect('requester')
+
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all()
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
@@ -969,17 +1150,15 @@ def cdpurchase(request):
                 'last_name': checkout.user.last_name,
                 'submission_date': checkout.submission_date,
                 'purpose': checkout.purpose,
-                'is_approve': checkout.is_approve,
-                'is_disapprove': checkout.is_disapprove,
-                'is_seen': checkout.is_seen,  
+                'cd_approve': checkout.cd_approve,
+                'cd_seen': checkout.cd_seen,
                 'comment': latest_comment.content if latest_comment else "",
                 'status_update_date': latest_comment.timestamp if latest_comment else None,
-                 
             }
         else:
             checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
-           
             checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+
     checkout_data = list(checkout_data_dict.values())
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', {'checkouts': checkout_data})
@@ -988,10 +1167,7 @@ class PreqForm_cdView(View):
     template_name = 'accounts/Admin/Campus_Director/preqform_cd.html'
 
     def get(self, request, pr_id):
-        # Use the pr_id to retrieve the corresponding Checkout object
         checkout = get_object_or_404(Checkout, pr_id=pr_id)
-
-        # Get checkout items associated with the checkout
         checkout_items = CheckoutItems.objects.filter(checkout=checkout)
 
         context = {
@@ -999,33 +1175,29 @@ class PreqForm_cdView(View):
             'pr_id': pr_id,
             'user': checkout.user,
             'purpose': checkout.purpose,
-            'pending': not checkout.is_approve and not checkout.is_disapprove,
-            'approved': checkout.is_approve,
-            'disapproved': checkout.is_disapprove,
-            'is_seen': checkout.is_seen,
-            
+            'pending': not checkout.cd_approve,
+            'approved': checkout.cd_approve,
+            'cd_seen': checkout.cd_seen,
         }
 
         return render(request, self.template_name, context)
 
     def post(self, request, pr_id):
         new_status = request.POST.get('new_status')
+        print(new_status)
 
         if pr_id and new_status:
             try:
                 checkout = Checkout.objects.get(pr_id=pr_id)
 
                 checkout.date_updated = timezone.now()
-                checkout.is_seen = True
+                checkout.cd_seen = True
 
-                # Set is_approve and is_disapprove to False initially
-                checkout.is_approve = False
-                checkout.is_disapprove = False
+                # Set cd_approve and is_disapprove to False initially
+                checkout.cd_approve = False
 
                 if new_status.lower() == 'true':
-                    checkout.is_approve = True
-                else:
-                    checkout.is_disapprove = True
+                    checkout.cd_approve = True
 
                 checkout.save()
 
@@ -1037,28 +1209,62 @@ class PreqForm_cdView(View):
                 return HttpResponse("An error occurred while processing the form.")
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
+        
 
-def update_checkout_status(request, pr_id, new_status):
+def update_cd_checkout_status(request, pr_id):
     if request.method == 'POST':
         try:
-            # Convert new_status to boolean
+            new_status = request.POST.get("new_status")
             new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
 
-            # Update the status of the checkout directly
             checkout = get_object_or_404(Checkout, pr_id=pr_id)
-            checkout.status_update_date = timezone.now()
-            checkout.is_approve = new_status
-            checkout.is_disapprove = not new_status
-            checkout.is_seen = True  # Mark as seen when the status is updated
+            checkout.date_updated = timezone.now()
+            checkout.cd_seen = True
+            checkout.cd_approve = new_status
+
             checkout.save()
 
-            # Redirect after processing
-            return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
+            return redirect(reverse('preqform_cd', kwargs={'pr_id': pr_id}))
         except Checkout.DoesNotExist:
-            return HttpResponse("Checkout not found.")
+            return HttpResponse("CD Checkout not found.")
         except Exception as e:
-            # Handle exceptions, log errors, etc.
             print(f"Error: {e}")
-            return HttpResponse("An error occurred while processing the form.")
+            return HttpResponse("An error occurred while processing the CD form.")
     else:
         return HttpResponse("Invalid request method.")
+
+  
+
+@admin_required
+@authenticated_user
+def bac_history(request):
+   request = Item.objects.all()
+
+   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
+
+
+class GetNewRequestsView(View):
+    def get(self, request, *args, **kwargs):
+
+       
+
+          # Fetch new requests from the database based on your criteria
+        new_requests = Checkout.objects.exclude(pr_id=None)
+
+        # Serialize the data as needed
+        serialized_requests = [
+            {
+                'user_id': request.user_id,
+                'submission_date': request.submission_date,
+                # Add other fields as needed
+            }
+            for request in new_requests
+        ]
+
+        return JsonResponse({'new_requests': serialized_requests})
+
+@authenticated_user              
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
+    item.delete()
+    return redirect ('requester')
