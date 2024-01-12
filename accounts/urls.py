@@ -60,15 +60,12 @@ urlpatterns = [
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('update_user/<int:user_id>/', update_user, name='update_user'),
- # type: ignore
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('bohome/',views.bohome, name='bohome'),
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
    path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
-   path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('delete/<int:id>/', views.delete, name='delete'),
-   path('update/<int:id>/', views.update, name='update'),
-   path('ppmp/',views.ppmp, name='ppmp'),
+  
 ]
