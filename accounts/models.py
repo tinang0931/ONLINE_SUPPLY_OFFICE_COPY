@@ -17,36 +17,35 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
     contact2 = models.PositiveIntegerField()
-    email = models.EmailField(unique=True)
-    password1 = models.CharField(max_length=15)
-    password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
-        ('regular', 'Regular User'),
-        ('bac', 'BAC Secretariat'),
-        ('campusd', 'Campus Director'),
-        ('budget', 'Budget Officer'),
         ('admin', 'Admin'),
+        ('regular', 'Regular User'),
+        ('cd', 'Campus Director'),
+        ('budget', 'Budget Officer'),
+        ('bac', 'BAC'),
     ]
 
-    is_admin = models.BooleanField(default=False) 
-    user_types = models.CharField(max_length=10, choices=USER_TYPES)
+    user_type = models.CharField(max_length=15, choices=USER_TYPES)
 
-    @property
-    def get_user_type_display(self):
-        return dict(self.USER_TYPES).get(self.user_types, 'Unknown')
+    is_admin = models.BooleanField(default=False)
+    is_regular = models.BooleanField(default=False)
+    is_cd = models.BooleanField(default=False)  
+    is_budget = models.BooleanField(default=False)
+    is_bac = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if self.user_types == 'admin':
-            self.is_admin = True
-        else:
-            self.is_admin = False
+       
+        self.is_admin = self.user_type == 'admin'
+        self.is_regular = self.user_type == 'regular'
+        self.is_cd = self.user_type == 'cd'
+        self.is_budget = self.user_type == 'budget'
+        self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
-
 
 
 class Item(models.Model):

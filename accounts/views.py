@@ -114,18 +114,24 @@ def register(request):
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
 
+
+        # Check if passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
+
+        # Check if the username or email is already in use
         if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
+        # Create a new user account
         user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
 
+        # Send an activation email
         current_site = get_current_site(request)
         mail_subject = 'Activation link has been sent to your email id'
         message = render_to_string('accounts/User/acc_active_email.html', {
@@ -139,8 +145,9 @@ def register(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
+
         messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('login')
+        return redirect('login')  # Redirect to the login page upon successful registration
     return render(request, 'accounts/User/register.html')
 
 def activate(request, uidb64, token):
@@ -158,23 +165,32 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
-        pass1 = request.POST.get('pass1')  
-
+        pass1 = request.POST.get('pass1')
+          
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
             auth_login(request, user)
             messages.success(request, "You are now logged in.")
 
+            # Redirect based on user_type
             if user.user_type == 'admin':
                 return redirect('admin_home')  
-            else:
+            elif user.user_type == 'regular':
                 return redirect('request')
+            elif user.user_type == 'cd':
+                return redirect('cd')
+            elif user.user_type == 'budget':
+                return redirect('bo')
+            elif user.user_type == 'bac':
+                return redirect('bac_home')
+            else:
+                return redirect('login') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
+    
     return render(request, 'accounts/User/login.html')
 
 
@@ -470,17 +486,6 @@ def user(request):
 
 
 
-# def update_user(request, username):
-#     user = get_object_or_404(User, username=username)
-
-#     if request.method == 'POST':
-#         form = UserForm(request.POST, instance=user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('user')
-#     else:
-#         form = UserForm(instance=user) 
-#         return render(request, 'accounts/Admin/System_Admin/user.html', {'form': form})
 
 def register_user(request):
     if request.method == "POST":
@@ -522,23 +527,32 @@ def register_user(request):
         messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
         return redirect('user')
     
-   
-
-
 
 def update_user(request, username):
-    user = get_object_or_404(User, username=username)
+    if request.method == 'POSt':
+        user = User.objects.get(username=username)
 
+        username = request.POST.get()
+        
+        item_brand = request.POST.get(f'item_brand_{id}')
+       
+        unit = request.POST.get(f'unit_{id}')
+        
+        
+        price = request.POST.get(f'price_{id}')
+    print(request.POST)  # Check if the data is received correctly
+    user = get_object_or_404(User, id=username)
+    form = UserForm(request.POST or None, instance=user)
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
+            return JsonResponse({'success': True})
         else:
-            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
+            print(form.errors)
+            return JsonResponse({'success': False, 'errors': form.errors})
     else:
-        form = UserForm(instance=user) 
-        return render(request, 'edit_user.html', {'form': form, 'user': user})
+        return JsonResponse({'success': False, 'errors': 'Invalid request method'})
+
 
 
    
