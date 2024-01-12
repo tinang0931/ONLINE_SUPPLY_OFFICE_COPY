@@ -684,7 +684,6 @@ class RequesterView(View):
                 except TypeError:
                     total_cost = Decimal('0.00')
 
-
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
                     item=item,
@@ -1201,3 +1200,6 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+
+
