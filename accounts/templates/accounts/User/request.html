@@ -130,6 +130,7 @@
 
 
 
+    
 
 
     <script>
@@ -289,9 +290,10 @@
     });
 
 
-    function updateProductTables(filteredProducts) {
-        for (const productTable of productTables) {
+    function updateProductTables(filteredProducts) {};
+        for (const productTable of productTables) {};
             productTable.querySelector('tbody').innerHTML = ''; 
+            
 
         $(document).ready(function () {
             // Add click event to checkboxes
@@ -300,9 +302,9 @@
                 $(this).closest('tr').toggleClass('selected');
             });
         });
-  
 
-        const categoryFilter = document.getElementById('category_filter');
+
+        const categoryFilter = document.getElementById('category_filter') ();
         const productTables = document.querySelectorAll('.table table');
 
         categoryFilter.addEventListener('change', (event) => {

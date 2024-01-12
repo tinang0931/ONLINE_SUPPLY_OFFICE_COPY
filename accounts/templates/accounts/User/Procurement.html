@@ -17,11 +17,11 @@
         }
 
         th {
-            background-color: #1c96c5; /* Creamy peach */
+            background-color: #1c96c5; 
         }
 
         td {
-            background-color: #f2e6f0; /* Light pink */
+            background-color: #f2e6f0;
         }
 
         .category-header {
@@ -61,12 +61,12 @@
             position: right;
         }
 
-        /* Added CSS for checkbox alignment */
+        
         tbody input[type="checkbox"] {
             margin-right: 5px;
         }
 
-        /* Updated CSS for unit price input */
+        
         tbody input[name="unit_price"] {
             border: none;
             outline: none;
@@ -87,6 +87,11 @@
                         <button class="btn btn-success" onclick="addItem()">Add Item</button>
                     </div>
                 </div>
+                <div class="year-dropdown">
+                    <label for="selectYear">Select Year:</label>
+                    <select id="selectYear"></select>
+                </div>
+                
             </div>
         </div>
 
@@ -125,7 +130,7 @@
                             <td><input type="checkbox">{{ p.item }}</td>
                             <td>{{ p.unit }}</td>
                             <td class="estimated-budget" data-total="0"></td>
-                            <td contenteditable="true"> <!-- Add mode of procurement input here --></td>
+                            <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -148,6 +153,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+        
         function filterTable() {
             const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
             const tableRows = document.querySelectorAll("tbody tr");
@@ -175,6 +181,7 @@
                 }
             }
         }
+        
 
         $(document).on('input', 'tbody td[contenteditable="true"]', function () {
             const unitPriceInput = this.closest('tr').querySelector('input[name="unit_price"]');
@@ -197,6 +204,39 @@
 
             const estimatedBudget = unitPrice * totalQuantity;
             estimatedBudgetCell.textContent = estimatedBudget.toFixed(2);
+
+            function filterTable() {
+    const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
+    const selectedYear = document.getElementById("selectYear").value;
+    const tableRows = document.querySelectorAll("tbody tr");
+
+    // Rest of the existing code...
+
+    for (const row of tableRows) {
+        const tableData = row.querySelectorAll("td");
+        const search_value = search_bar_request;
+        let isFound = false;
+
+        // Check for the selected year in your data and apply the search logic
+        if (row.dataset.category.includes(selectedYear)) {
+            for (const cell of tableData) {
+                const cellValue = cell.textContent.toLowerCase();
+
+                if (cellValue.includes(search_value)) {
+                    isFound = true;
+                    break;
+                }
+            }
         }
+
+        if (isFound) {
+            row.style.display = "";
+        }
+    }
+}
+
+        }
+        
+
     </script>
 {% endblock %}
