@@ -112,7 +112,43 @@
                             <td>{{ p.Price }}
                                 <input type="hidden" name="price" value="{{ p.Price }}">
                             </td>
-                            <td><button type="submit" class="btn btn-primary">+</button></td>
+                            <td><button type="submit" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none" class="svg-icon"><g stroke-width="1.5" stroke-linecap="round" stroke="#de8a2a"><circle r="7.5" cy="10" cx="10"></circle><path d="m9.99998 7.5v5"></path><path d="m7.5 9.99998h5"></path></g></svg>
+                                <span class="lable"></span>
+                              </button></td>
+
+<style>
+.ppmp {
+    margin-top: -9%;
+}
+.btn-primary {
+  background: #134472;
+  border: none;
+}
+
+.btn-primary .svg-icon {
+  fill: white; /* Set the desired color */
+}
+
+.btn-primary:hover {
+  background: #1b1b1cea;
+}
+
+.btn-primary:hover .svg-icon {
+  animation: rotate 1.3s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+</style>
 
                         </tr>
                     </form>
