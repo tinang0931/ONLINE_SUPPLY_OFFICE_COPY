@@ -1,0 +1,85 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
+
+{% load static %}
+
+
+{% block ppmp %}
+
+
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 class="pr text-center pt-4"> My PPMP</h1>
+    </div>
+
+
+    <div class="table-responsive">
+
+        <form action="{% url 'ppmp' %}" method="post">
+
+            <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th rowspan='2'>Item Name</th>
+                        <th rowspan='2'> Brand / Description</th>
+                        <th rowspan='2'>Unit</th>
+                        <th rowspan='2'>Estimated Budget</th>
+                        <th rowspan='2'>Mode of Procurement</th>
+                        <th colspan="12">Monthly Quantity Requirement</th>
+                        <th rowspan='2'>Unit Price</th>
+
+                    </tr>
+                    <tr>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>April</th>
+                        <th>May</th>
+                        <th>June</th>
+                        <th>July</th>
+                        <th>Aug</th>
+                        <th>Sept</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                    </tr>
+
+                    </tr>
+                </thead>
+                <tbody>
+                <tbody>
+                    {% for p in items %}
+                    <tr>
+                        <td>{{ p.item }}</td>
+                        <td>{{ p.item_brand_description }} </td>
+                        <td>{{ p.unit }}</td>
+                        <td>{{ p.estimated_budget }}</td>
+                        <td>{{ p.mode_of_procurement }}</td>
+                        <td>{{ p.jan }}</td>
+                        <td>{{ p.feb }}</td>
+                        <td>{{ p.mar }}</td>
+                        <td>{{ p.apr }}</td>
+                        <td>{{ p.may }}</td>
+                        <td>{{ p.jun }}</td>
+                        <td>{{ p.jul }}</td>
+                        <td>{{ p.aug }}</td>
+                        <td>{{ p.sep }}</td>
+                        <td>{{ p.oct }}</td>
+                        <td>{{ p.nov }}</td>
+                        <td>{{ p.dec }}</td>
+                        <td>{{ p.unit_cost }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success m-2 float-right">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
