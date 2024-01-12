@@ -126,7 +126,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('bac_home')  
             else:
-                return redirect('request')
+                return redirect('ppmp')
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     return render(request, 'accounts/User/login.html')
@@ -426,7 +426,7 @@ def addItem(request):
              total_cost=float(unit_cost) * quantity,
             
         )
-        return redirect('request')
+        return redirect('ppmp')
     return render(request, 'accounts/User/request.html')
 
 
@@ -454,6 +454,9 @@ def request(request):
         dec = request.POST.get(f'dec')
 
         price = request.POST.get(f'price')
+
+        
+
 
         Item.objects.create(
             user=request.user,
