@@ -579,9 +579,7 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-      
-
-            
+  
         )
         return redirect('ppmp')
     return render(request, 'accounts/User/ppmp.html')
@@ -1055,79 +1053,6 @@ def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 
-
-def addItem(request):
-    if request.method == 'POST':
-        item_data = request.POST.get('item')
-        item_brand_description = request.POST.get('item_Brand_Description')
-        unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
-
-        if quantity and quantity.isdigit():
-                quantity = int(quantity)
-        else:
-
-            print("Invalid quantity")
-            return redirect('request')
-        
-        user = request.user
-        Item.objects.create(
-            user=user,
-            item=item_data,
-            item_brand_description=item_brand_description,
-            unit=unit,
-            unit_cost=unit_cost,
-            quantity=quantity,
-             total_cost=float(unit_cost) * quantity,
-            
-        )
-        return redirect('request')
-    return render(request, 'accounts/User/request.html')
-
-def request(request):
-    if request.method == 'POST':
-
-        selected_rows = request.POST.getlist('selectRow')
-
-        for row_id in selected_rows:
-            item_name = request.POST.get(f'item_{row_id}')
-            item_brand = request.POST.get(f'item_brand_{row_id}')
-            unit = request.POST.get(f'unit_{row_id}')
-            price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
-
-        
-            if quantity and quantity.isdigit():
-                quantity = int(quantity)
-            else:
-               
-                print(f"Invalid quantity for row {row_id}")
-                continue
-
-            user = request.user
-
-
-            item = Item.objects.create(
-                user=user,
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price,
-                quantity=quantity,
-
-                total_cost=float(price) * quantity,
-            )
-            item.save()
-
-        return redirect('requester')
-
-    elif request.method == 'GET':
-        csv_data = CSV.objects.all()
-        grouped_data = {}
-        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
-            grouped_data[key] = list(group)
-    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
