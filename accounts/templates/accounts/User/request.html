@@ -81,11 +81,8 @@
                                 <input type="hidden" name="price" value="{{ p.Price }}">
                             </td>
                             <td>
-                                {% if item_submitted %}
-                                <button type="button" class="btn btn-success" disabled>Check</button>
-                            {% else %}
+                               
                                 <button type="submit" class="btn btn-primary">+</button>
-                            {% endif %}
                             </td>
 
                         </tr>
@@ -101,12 +98,6 @@
 
 
     </div>
-
-
-
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -281,7 +272,7 @@
     function updateProductTables(filteredProducts) {
         for (const productTable of productTables) {
             productTable.querySelector('tbody').innerHTML = ''; 
-
+            
         $(document).ready(function () {
             // Add click event to checkboxes
             $('.row-checkbox').on('click', function () {
