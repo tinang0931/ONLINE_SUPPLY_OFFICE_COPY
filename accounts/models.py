@@ -44,11 +44,20 @@ class User(AbstractUser):
 
 class Item(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField()
+    submission_date = models.DateField(auto_now_add=True)
+
+class PPMP(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     jan = models.IntegerField(default=0)
@@ -63,7 +72,6 @@ class Item(models.Model):
     oct = models.IntegerField(default=0)
     nov = models.IntegerField(default=0)
     dec = models.IntegerField(default=0)
-    mode_of_procurement = models.CharField(max_length=255, blank=True, null=True)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 

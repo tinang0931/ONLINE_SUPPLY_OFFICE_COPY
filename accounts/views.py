@@ -406,15 +406,9 @@ def addItem(request):
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
 
-        if quantity and quantity.isdigit():
-                quantity = int(quantity)
-        else:
 
-            print("Invalid quantity")
-            return redirect('request')
-        
+       
         user = request.user
         Item.objects.create(
             user=user,
@@ -422,12 +416,12 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
-             total_cost=float(unit_cost) * quantity,
+      
+
             
         )
         return redirect('ppmp')
-    return render(request, 'accounts/User/request.html')
+    return render(request, 'accounts/User/ppmp.html')
 
 
 def request(request):
@@ -438,8 +432,38 @@ def request(request):
         
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
+        
+        price = request.POST.get(f'price')
+
+        
+
+
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+
+        return redirect('request')
+
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all().order_by('Category')
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
+def ppmp (request):
+
+    if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
         estimate_budget = request.POST.get(f'estimate_budget')
-        mode_of_procurement = request.POST.get(f'mode_of_procurement')
         jan = request.POST.get(f'jan')
         feb = request.POST.get(f'feb')
         mar = request.POST.get(f'mar')
@@ -458,13 +482,12 @@ def request(request):
         
 
 
-        Item.objects.create(
+        PPMP.objects.create(
             user=request.user,
             item=item_name,
             item_brand_description=item_brand,
             unit=unit,
             estimate_budget=estimate_budget,
-            mode_of_procurement=mode_of_procurement,
             jan=jan,
             feb=feb,
             mar=mar,
@@ -480,19 +503,11 @@ def request(request):
             unit_cost=price
         )
 
-        return redirect('request')
+        return redirect('ppmp')
 
     elif request.method == 'GET':
-        csv_data = CSV.objects.all().order_by('Category')
-        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
-            grouped_data[key] = list(group)
-
-    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
-
-
-def ppmp (request):
     
-    items = Item.objects.all()
+        items = Item.objects.all()
 
     return render(request, 'accounts/User/ppmp.html', {'items': items})
 
@@ -591,11 +606,7 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-@authenticated_user              
-def delete(request, id):
-    item = Item.objects.get(id = id)
-    item.delete()
-    return redirect ('requester')
+
 
 def add_new_item(request):
     if request.method == 'POST':
@@ -667,6 +678,11 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('ppmp')
+
 
 def update_item(request, id):
     if request.method == 'POST':
@@ -690,7 +706,29 @@ def update_item(request, id):
             Price=price
         )
         return redirect('bac_dashboard')
-    
+
+def update(request, id):
+    if request.method == 'POST':
+        Item.objects.get(id=id)
+        
+        
+        item_name = request.POST.get(f'item_{id}')
+        
+        item_brand = request.POST.get(f'item_brand_{id}')
+       
+        unit = request.POST.get(f'unit_{id}')
+        
+        
+        price = request.POST.get(f'price_{id}')
+        
+
+        Item.objects.filter(id=id).update(
+           item=item_name,
+           item_brand_description=item_brand,
+           unit=unit,
+           unit_cost=price
+        )
+        return redirect('ppmp')
 
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)

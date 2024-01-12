@@ -10,7 +10,17 @@
     .table-bordered th {
         background-color: #1c96c5;
     }
+
+    .item-actions {
+        display: none;
+    }
+
+    tr:hover .item-actions {
+        display: flex;
+    }
+
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -29,7 +39,7 @@
                     Customize Item</button>
             </div>
         </div>
-
+    
         <div class="col-md-1 mb-0">
             <div class="ppmp">
                 <button class="btn btn-primary">
@@ -39,17 +49,20 @@
         </div>
     </div>
 
+    
+    
+
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
             <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
         </div>
-    
+
         <div class="col-md-1 ml-auto text-left">
             <h5> TOTAL : 100,000 </h5>
         </div>
     </div>
-    
-    
+
+
 
 
     <div class="table-responsive">
@@ -92,9 +105,24 @@
                 <tbody>
                     {% for p in items %}
                     <tr class="item-row" id="{{ p.id }}">
-                        <td>{{ p.item }}</td>
-                        <td>{{ p.item_brand_description }} </td>
-                        <td>{{ p.unit }}</td>
+
+                        <td>
+                            <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                            <input id="item_{{ p.id }}" type="text" value="{{ p.item }}"
+                                oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+                        <td>
+                            <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                            <input id="item_brand_{{ p.id }}" type="text" value="{{ p.item_brand_description }}"
+                                oninput="change_val('item_brand_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+                        <td>
+                            <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                            <input id="unit_{{ p.id }}" type="text" value="{{ p.unit }}"
+                                oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+
+
                         <td><input type="number" name="estimate_budget"></td>
 
                         <td><input type="number" style="width: 38px;" name="jan"></td>
@@ -109,18 +137,50 @@
                         <td><input type="number" style="width: 38px;" name="oct"></td>
                         <td><input type="number" style="width: 38px;" name="nov"></td>
                         <td><input type="number" style="width: 38px;" name="dec"></td>
-                        
 
-                        <td>{{ p.unit_cost }}
-                            <input type="hidden" name="price" value="{{ p.unit_cost }}">
-                        </td>
                         <td>
-                            <a href="#" class="edit-icon" style="text-align: center;" onclick="editItem('{{ item.id }}')">
-                                <i class="fas fa-edit text-primary"></i></a>
-                            <a href="#" class="delete-icon" onclick="deleteItem('{{ item.id }}')"> <i class="fas fa-trash text-danger"></i></a>
+                            <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                            <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                                oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                         </td>
 
-                        
+
+
+                        <td>
+                            <div class="item-actions" style="text-align: center; gap: 20px">
+                                <a href="#" class="edit-icon" style="text-align: center;"
+                                    onclick="editItem('{{ p.id }}')">
+                                    <i class="fas fa-edit text-primary"></i></a>
+
+
+                                <form action="{% url 'update' p.id %}" method="post">
+
+                                    {% csrf_token %}
+                                    <input id="form_item_{{ p.id }}" type="hidden" name="item_{{ p.id }}"
+                                        value="{{ p.item }}">
+                                    <input id="form_item_brand_{{ p.id }}" type="hidden" name="item_brand_{{ p.id }}"
+                                        value="{{ p.item_brand_description }}">
+                                    <input id="form_unit_{{ p.id }}" type="hidden" name="unit_{{ p.id }}"
+                                        value="{{ p.unit }}">
+                                    <input id="form_price_{{ p.id }}" type="number" style="display: none;"
+                                        name="price_{{ p.id }}" value="{{ p.unit_cost }}">
+
+                                    <button type="submit" class="save-icon" style="display: none;"><i
+                                            class="fas fa-check text-success"></i></button>
+                                    <button type="button" class="cancel-icon" style="display: none;"><i
+                                            class="fas fa-times text-danger"></i></button>
+
+                                </form>
+
+
+
+                                {% if p.id %}
+                                <a href="{% url 'delete' p.id %}" class="delete-icon"><i
+                                        class="fas fa-trash-alt text-danger"></i></a>
+                                {% endif %}
+
+                            </div>
+                        </td>
 
 
                     </tr>
@@ -171,10 +231,7 @@
                         <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="Quantity">Quantity</label>
-                        <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                    </div>
+
 
                     <div class="modal-footer">
                         <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
@@ -189,6 +246,55 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
+
+    function editItem(itemId) {
+        // Assuming each row has a unique identifier, you can use it to target specific elements
+        var row = document.getElementById(itemId);
+
+        // Toggle visibility of elements
+        var editIcon = row.querySelector('.edit-icon');
+        var saveButton = row.querySelector('.save-icon');
+        var cancelButton = row.querySelector('.cancel-icon');
+        var editInputs = row.querySelectorAll('.edit-input');
+        var editableSpans = row.querySelectorAll('.editable');
+
+        // Show/hide elements
+        editIcon.style.display = 'none';
+        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
+        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
+
+        // Show input fields for editing
+        editInputs.forEach(function (input) {
+            input.style.display = 'block';  // Adjust display style based on your styling
+        });
+
+        // Hide the spans displaying current values
+        editableSpans.forEach(function (span) {
+            span.style.display = 'none';  // Adjust display style based on your styling
+        });
+
+        // Add event listener to the cancel button
+        cancelButton.addEventListener('click', function () {
+            // Reset the form to its initial state
+            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+            editInputs.forEach(function (input) {
+                input.style.display = 'none';
+            });
+            editableSpans.forEach(function (span) {
+                span.style.display = 'inline-block';  // Adjust display style based on your styling
+            });
+        });
+
+        // Trigger the form submission
+        saveButton.addEventListener('click', function () {
+            // Assuming you have a form element in the row
+            var form = row.querySelector('form');
+            form.submit();
+        });
+    }
+
     $(document).ready(function () {
 
         function updateEstimateBudgetForRow(row) {
@@ -228,7 +334,9 @@
 
 
 </script>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 

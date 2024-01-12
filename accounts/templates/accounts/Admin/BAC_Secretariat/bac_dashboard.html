@@ -360,9 +360,7 @@
               
 
               {% if item.id %}
-              <a href="#" class="edit-icon" style="text-align: center;" onclick="editItem('{{ item.id }}')">
-                <i class="fas fa-edit text-primary"></i></a>
-
+              <a href="{% url 'delete_item' item.id %}" class="delete-icon"><i class="fas fa-trash-alt text-danger"></i></a>
               {% endif %}
 
             </div>
