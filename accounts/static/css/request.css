@@ -91,18 +91,37 @@
   }
 
   .cart {
-    top: 24vh; 
+    top: 24%;  /* Use percentage instead of vh */
     position: fixed;
     z-index: 100000;
-    left: 80vw; 
+    left: 80%;  /* Use percentage instead of vw */
 }
 
 @media (max-width: 768px) {
     .cart {
-        top: 10vh; 
-        left: 70vw; 
+        top: 10%;  /* Use percentage instead of vh */
+        left: 70%;  /* Use percentage instead of vw */
     }
 }
+.row {
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+}
+
+/* Other styles for the row... */
+
+@media (max-width: 768px) {
+    .row {
+        margin-top: 1%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Other styles for the row in smaller screens... */
+}
+
+
 
   .row {
       margin-top: 1%;

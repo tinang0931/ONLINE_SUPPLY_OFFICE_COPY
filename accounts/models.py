@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -15,27 +17,22 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
     contact2 = models.PositiveIntegerField()
-    email = models.EmailField(unique=True)
-    password1 = models.CharField(max_length=15)
-    password2 = models.CharField(max_length=15)
 
     USER_TYPES = [
 
         ('regular', 'Regular User'),
-        ('bac', 'BAC Secretariat'),
-        ('campusd', 'Campus Director'),
+        ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
-        ('admin', 'Admin'),
-        
-        
+        ('bac', 'BAC'),
     ]
 
-    is_admin = models.BooleanField(default=False) 
-    def save(self, *args, **kwargs):
-        self.is_admin = self.user_type == 'admin'
-        super().save(*args, **kwargs)
-    
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+    user_type = models.CharField(max_length=15, choices=USER_TYPES)
+
+    is_admin = models.BooleanField(default=False)
+    is_regular = models.BooleanField(default=False)
+    is_cd = models.BooleanField(default=False)  
+    is_budget = models.BooleanField(default=False)
+    is_bac = models.BooleanField(default=False)
 
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
@@ -44,10 +41,12 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-        if self.user_type == 'admin':
-            self.is_admin = True
-        else:
-            self.is_admin = False
+       
+        self.is_admin = self.user_type == 'admin'
+        self.is_regular = self.user_type == 'regular'
+        self.is_cd = self.user_type == 'cd'
+        self.is_budget = self.user_type == 'budget'
+        self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
     def __str__(self):
@@ -63,6 +62,21 @@ class Item(models.Model):
     quantity = models.IntegerField()
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    mode_of_procurement = models.CharField(max_length=255, blank=True, null=True)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+
 
 
 
@@ -70,12 +84,28 @@ class Item(models.Model):
 
 class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
+    is_approve = models.BooleanField(default=False)
+    
+    is_seen=models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
+    cd_approve = models.BooleanField(default=False)
+    cd_seen=models.BooleanField(default=False)
+   
+    
+    # # ... other fields and methods ...
+    # STATUS_CHOICES = (
+    #     ('approve', 'approve'),
+    #     ('disapprove', 'disapprove'),
+      
+    #     # Add more status choices as needed
+    # )
 
-
+    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approve')
+    # status_update_date = models.DateTimeField(auto_now=True)  # This field will automatically update when the status is modified
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999)) 
@@ -83,6 +113,8 @@ class Checkout(models.Model):
 
     def __str__(self):
         return str(self.pr_id)
+
+    
 
     
 class CheckoutItems(models.Model):
