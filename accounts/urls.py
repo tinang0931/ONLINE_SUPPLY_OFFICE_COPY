@@ -36,7 +36,6 @@ urlpatterns = [
    path('property/',views.property, name='property'),
    path('abstract/',views.abstract, name='abstract'),
    path('history/',views.history, name='history'),
-   path('delete/<int:id>/', delete, name='delete'),
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),

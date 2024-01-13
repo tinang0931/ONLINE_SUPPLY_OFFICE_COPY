@@ -158,3 +158,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rlphtzn@gmail.com'  
 EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  
 AUTH_USER_MODEL = 'accounts.User'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
