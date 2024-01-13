@@ -18,7 +18,6 @@
     tr:hover .item-actions {
         display: flex;
     }
-
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -39,7 +38,7 @@
                     Customize Item</button>
             </div>
         </div>
-    
+
         <div class="col-md-1 mb-0">
             <div class="ppmp">
                 <button class="btn btn-primary">
@@ -49,8 +48,8 @@
         </div>
     </div>
 
-    
-    
+
+
 
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
@@ -104,86 +103,91 @@
                 <tbody>
                 <tbody>
                     {% for p in items %}
-                    <tr class="item-row" id="{{ p.id }}">
 
-                        <td>
-                            <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                            <input id="item_{{ p.id }}" type="text" value="{{ p.item }}"
-                                oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
-                        <td>
-                            <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                            <input id="item_brand_{{ p.id }}" type="text" value="{{ p.item_brand_description }}"
-                                oninput="change_val('item_brand_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
-                        <td>
-                            <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                            <input id="unit_{{ p.id }}" type="text" value="{{ p.unit }}"
-                                oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
+                    <form action="{% url 'ppmp' %}" method="post">
+                        {% csrf_token %}
+                        <tr class="item-row" id="{{ p.id }}">
 
-
-                        <td><input type="number" name="estimate_budget"></td>
-
-                        <td><input type="number" style="width: 38px;" name="jan"></td>
-                        <td><input type="number" style="width: 38px;" name="feb"></td>
-                        <td><input type="number" style="width: 38px;" name="mar"></td>
-                        <td><input type="number" style="width: 38px;" name="apr"></td>
-                        <td><input type="number" style="width: 38px;" name="may"></td>
-                        <td><input type="number" style="width: 38px;" name="jun"></td>
-                        <td><input type="number" style="width: 38px;" name="jul"></td>
-                        <td><input type="number" style="width: 38px;" name="aug"></td>
-                        <td><input type="number" style="width: 38px;" name="sep"></td>
-                        <td><input type="number" style="width: 38px;" name="oct"></td>
-                        <td><input type="number" style="width: 38px;" name="nov"></td>
-                        <td><input type="number" style="width: 38px;" name="dec"></td>
-
-                        <td>
-                            <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                            <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
+                            <td>
+                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
+                            <td>
+                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
+                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
+                                    style="display: none">
+                            </td>
+                            <td>
+                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
 
 
+                            <td><input type="number" name="estimate_budget"></td>
 
-                        <td>
-                            <div class="item-actions" style="text-align: center; gap: 20px">
-                                <a href="#" class="edit-icon" style="text-align: center;"
-                                    onclick="editItem('{{ p.id }}')">
-                                    <i class="fas fa-edit text-primary"></i></a>
+                            <td><input type="number"  style="width: 38px;" name="jan"></td>
+                            <td><input type="number" style="width: 38px;" name="feb"></td>
+                            <td><input type="number" style="width: 38px;" name="mar"></td>
+                            <td><input type="number" style="width: 38px;" name="apr"></td>
+                            <td><input type="number" style="width: 38px;" name="may"></td>
+                            <td><input type="number" style="width: 38px;" name="jun"></td>
+                            <td><input type="number" style="width: 38px;" name="jul"></td>
+                            <td><input type="number" style="width: 38px;" name="aug"></td>
+                            <td><input type="number" style="width: 38px;" name="sep"></td>
+                            <td><input type="number" style="width: 38px;" name="oct"></td>
+                            <td><input type="number" style="width: 38px;" name="nov"></td>
+                            <td><input type="number" style="width: 38px;" name="dec"></td>
 
-
-                                <form action="{% url 'update' p.id %}" method="post">
-
-                                    {% csrf_token %}
-                                    <input id="form_item_{{ p.id }}" type="hidden" name="item_{{ p.id }}"
-                                        value="{{ p.item }}">
-                                    <input id="form_item_brand_{{ p.id }}" type="hidden" name="item_brand_{{ p.id }}"
-                                        value="{{ p.item_brand_description }}">
-                                    <input id="form_unit_{{ p.id }}" type="hidden" name="unit_{{ p.id }}"
-                                        value="{{ p.unit }}">
-                                    <input id="form_price_{{ p.id }}" type="number" style="display: none;"
-                                        name="price_{{ p.id }}" value="{{ p.unit_cost }}">
-
-                                    <button type="submit" class="save-icon" style="display: none;"><i
-                                            class="fas fa-check text-success"></i></button>
-                                    <button type="button" class="cancel-icon" style="display: none;"><i
-                                            class="fas fa-times text-danger"></i></button>
-
-                                </form>
+                            <td>
+                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
 
 
 
-                                {% if p.id %}
-                                <a href="{% url 'delete' p.id %}" class="delete-icon"><i
-                                        class="fas fa-trash-alt text-danger"></i></a>
-                                {% endif %}
-
-                            </div>
-                        </td>
+                            <td>
+                                <div class="item-actions" style="text-align: center; gap: 20px">
+                                    <a href="#" class="edit-icon" style="text-align: center;"
+                                        onclick="editItem('{{ p.id }}')">
+                                        <i class="fas fa-edit text-primary"></i></a>
 
 
-                    </tr>
+                                    <form action="{% url 'update' p.id %}" method="post">
+
+                                        {% csrf_token %}
+                                        <input id="form_item_{{ p.id }}" type="hidden" name="item_{{ p.id }}"
+                                            value="{{ p.item }}">
+                                        <input id="form_item_brand_{{ p.id }}" type="hidden"
+                                            name="item_brand_{{ p.id }}" value="{{ p.item_brand_description }}">
+                                        <input id="form_unit_{{ p.id }}" type="hidden" name="unit_{{ p.id }}"
+                                            value="{{ p.unit }}">
+                                        <input id="form_price_{{ p.id }}" type="number" style="display: none;"
+                                            name="price_{{ p.id }}" value="{{ p.unit_cost }}">
+
+                                        <button type="submit" class="save-icon" style="display: none;"><i
+                                                class="fas fa-check text-success"></i></button>
+                                        <button type="button" class="cancel-icon" style="display: none;"><i
+                                                class="fas fa-times text-danger"></i></button>
+
+                                    </form>
+
+
+
+                                    {% if p.id %}
+                                    <a href="{% url 'delete' p.id %}" class="delete-icon"><i
+                                            class="fas fa-trash-alt text-danger"></i></a>
+                                    {% endif %}
+
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    </form>
                     {% endfor %}
 
                 </tbody>
