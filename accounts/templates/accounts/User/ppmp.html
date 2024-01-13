@@ -18,38 +18,7 @@
     tr:hover .item-actions {
         display: flex;
     }
-</style>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
-<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
-
-    <div class="container">
-        <h1 class="pr text-center pt-4" style="margin-left: 15%;"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
-    </div>
-
-    <div class="row">
-        <div class="col-md-1 mb-0">
-            <div class="additem">
-                    <button type="button" class="custom" data-toggle="modal" data-target="#addItemModal">
-                        <span>Customize Item</span>
-                      </button>
-            </div>
-        </div>
-
-        <div class="col-md-1 mb-0">
-            <div class="ppmp">
-            <button class="ctalogue" <a href="{% url 'request' %}"></a>
-                <span>Catalogue</span>
-              </button>
-              
-        </div>
-    </div>
-    <style>
-        .additem {
+    .additem {
             margin-left: 10px;
         }
         .btn btn-primary {
@@ -205,7 +174,7 @@
   content: " ";
   width: 0%;
   height: 100%;
-  background: #1c96c5;
+  background: #4be77a;
   position: absolute;
   transition: all 0.4s ease-in-out;
   right: 0;
@@ -249,10 +218,35 @@
   }
 }
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
+    <div class="container">
+        <h1 class="pr text-center pt-4" style="margin-left: 15%;"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+    </div>
 
+    <div class="row">
+        <div class="col-md-1 mb-0">
+            <div class="additem">
+                    <button type="button" class="custom" data-toggle="modal" data-target="#addItemModal">
+                        <span>Customize Item</span>
+                      </button>
+            </div>
+        </div>
+
+        <div class="col-md-1 mb-0">
+            <div class="ppmp">
+            <button class="ctalogue" <a href="{% url 'request' %}"></a>
+                <span>Catalogue</span>
+              </button>
+              
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
             <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>

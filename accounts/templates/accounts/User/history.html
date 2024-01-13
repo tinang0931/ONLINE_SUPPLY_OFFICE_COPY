@@ -11,7 +11,19 @@
     <div class="col-6 col-sm-6 col-md-5 col-lg-3">
       <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">   
     </div>
-
+    <div>
+      <a style="--clr: #144472" class="button" id="view-more-button">
+        <span class="button__icon-wrapper">
+            <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+            </svg>
+            
+            <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+            </svg>
+        </span>
+    </a>
+    </div>
     <div class="table-responsive" style="margin: 0 auto;">
       <table class="table" id="create_request_table" style="border: 1px solid black;">
         <thead>
@@ -41,54 +53,64 @@
     </table>
     </div>
   </div>
-<div>
-  <button class="btn" id="view-more-button">
-    <span class="button-content">View More </span>
-  </button>
-  
-</div>
 </div>
 <style>
-  .btn {
-  position: relative;
+.button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  background-color: var(--clr);
+  color: #fff; /* Default text color */
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: .525rem 1.05rem; /* 30% smaller padding */
+  padding-left: 15px; /* Adjusted left padding */
+  white-space: nowrap;
   overflow: hidden;
-  height: 3rem;
-  padding: 0 2rem;
-  border-radius: 1.5rem;
-  background: #6b89a6;
-  background-size: 400%;
-  color: #000000;
-  border: none;
-  cursor: pointer;
-  margin-left: 73%;
-  margin-top: -530px;
+  text-overflow: ellipsis;
+  transition: background-color .3s;
+  margin-top: -55%;
+  margin-left: 95%;
+  border-radius: 28px; /* 30% smaller border-radius */
 }
 
-.btn:hover::before {
-  transform: scaleX(1);
-}
-
-.button-content {
+.button__icon-wrapper {
+  flex-shrink: 0;
+  width: 17.5px; /* 30% smaller width */
+  height: 17.5px; /* 30% smaller height */
   position: relative;
-  z-index: 1;
+  color: var(--clr);
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
 }
 
-.btn:hover .button-content {
-  color: #ffffff; /* Change this to the desired color */
+.button:hover {
+  background-color: #1c96c5;
+  color: #fff; /* Text color when hovered */
 }
 
-.btn::before {
-  content: "";
+.button:hover .button__icon-wrapper {
+  color: #000;
+}
+
+.button__icon-svg--copy {
   position: absolute;
-  top: 0;
-  left: 0;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  width: 100%;
-  height: inherit;
-  border-radius: inherit;
-  background: linear-gradient(130.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
-  transition: all 0.475s;
+  transform: translate(-150%, 150%);
+}
+
+.button:hover .button__icon-svg:first-child {
+  transition: transform .3s ease-in-out;
+  transform: translate(150%, -150%);
+}
+
+.button:hover .button__icon-svg--copy {
+  transition: transform .3s ease-in-out .1s;
+  transform: translate(0);
 }
 </style>
 <script>
