@@ -40,35 +40,35 @@
 
         <div>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                    <tr>
-                        <th >Item Name</th>
-                        <th > Brand / Description</th>
-                        <th >Unit</th>
-                        
-                       
-                        <th >Unit Price</th>
-                        <th > Select </th>
-                    </tr>
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                <tbody>
-                    {% for category, items in grouped_data.items %}
-                    <tr class="category-row">
-                        <th colspan="20">{{ category }}</th>
-                    </tr>
-
-                    {% for p in items %}
-
-                    <form action="{% url 'request' %}" method="post">
-                        {% csrf_token %}
-                        <tr class="item-row" id="{{ p.id }}">
-                            <td>{{ p.Item_name }}
-                                <input type="hidden" name="item" value="{{ p.Item_name }}">
+                {% for category, items in grouped_data.items %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="6" class="text-center">{{ category }}</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Items</th>
+                            <th scope="col">Item Brand Description</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr class="table-row" id="{{ item.id }}">
+                            <td>{{ item.Item_name }}</td>
+                            <td>{{ item.Item_Brand }}</td>
+                            <td>{{ item.Unit }}</td>
+                            <td>{{ item.Price }}</td>
+                            <td><input type="number" name="quantity_{{ item.id }}" value="" min="1"  style="width: 50px; text-align: center" ></td>
+                            <td>
+                                <input type="hidden" name="item_{{ row.ITEMS }}" value="{{ row.ITEMS }}">
+                                <input type="hidden" name="item_brand_{{ row.ITEMS }}" value="{{ row.ITEM_BRAND }}">
+                                <input type="hidden" name="unit_{{ row.ITEMS }}" value="{{ row.UNIT }}">
+                                <input type="hidden" name="price_{{ row.ITEMS }}" value="{{ row.PRICE }}">
+                                <input type="checkbox" name="selectRow" class="row-checkbox" value="{{ row.ITEMS }}">
                             </td>
                             <td>{{ p.Item_Brand }}
                                 <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
@@ -100,6 +100,40 @@
         </div>
 
 
+
+                    <div class="form-group">
+                        <label for="Item">Item</label>
+                        <input type="text" class="form-control" id="Item" name="item" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Item_Brand_Description">Item Brand/Description</label>
+                        <input type="text" class="form-control" id="Item_Brand_Description"
+                            name="item_Brand_Description" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <input type="text" class="form-control" id="Unit" name="unit" required>
+                    </div>
+
+                          <div class="form-group"> 
+                              <label for="Unit">Unit Cost</label>
+                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="Quantity">Quantity</label>
+                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                          </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 

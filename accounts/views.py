@@ -1197,21 +1197,77 @@ def delete_item(request, id):
     return redirect ('requester')
 
 def ppmpbo(request):
-    # Your view logic goes here
+    ppmpcheckouts = ppmpCheckout.objects.select_related('user').all()
+    
+    def get(self, request, pr_id):
+        # Use the pr_id to retrieve the corresponding Checkout object
+        checkout = get_object_or_404(ppmpCheckout, pr_id=pr_id)
+
+        # Get checkout items associated with the checkout
+        ppmpcheckout_items = ppmpCheckoutItems.objects.filter(checkout=checkout)
+        context = {
+            'ppmpcheckout_items': ppmpcheckout_items,
+            'pr_id': pr_id,
+            'user': checkout.user,
+            'purpose': checkout.purpose,
+            
+            
+            
+            
+            'pending': not checkout.bo_approve,
+            'approved': ppmpcheckout.bo_approve,
+            'bo_seen': ppmpcheckout.bo_seen,
+            
+        }
     return render(request, 'accounts/Admin/Budget_Officer/ppmpbo.html')
 class ppmpboform(View):
-    template_name = 'ppmpboform.html'  # Specify the template name
+    template_name = 'accounts/Admin/Budget_Officer/ppmpboform.html'
 
     def get(self, request, pr_id):
-        # Your logic for handling GET requests goes here
+        # Use the pr_id to retrieve the corresponding Checkout object
+        ppmpcheckout = get_object_or_404(ppmpCheckout, pr_id=pr_id)
+
+        # Get checkout items associated with the checkout
+        ppmpcheckout_items = ppmpCheckoutItems.objects.filter(checkout=checkout)
         context = {
+            'checkout_items': checkout_items,
             'pr_id': pr_id,
-            # Add any additional context variables you need
+            'user': ppmpcheckout.user,
+            'purpose': ppmpcheckout.purpose,
+            'pending': not ppmpcheckout.bo_approve,
+            'approved': ppmpcheckout.bo_approve,
+           
+            'is_seen': ppmpcheckout.bo_seen,
+            
         }
+
         return render(request, self.template_name, context)
 
     def post(self, request, pr_id):
-        # Your logic for handling POST requests goes here
-        # Typically, you'll handle form submissions and data processing
-        # Redirect or render as needed
-        pass  # Placeholder, replace with your actual implementation
+        new_status = request.POST.get('new_status')
+        print(new_status)
+
+        if pr_id and new_status:
+            try:
+                ppmpcheckout = ppmpCheckout.objects.get(pr_id=pr_id)
+
+                ppmpcheckout.date_updated = timezone.now()
+                ppmpcheckout.bo_seen = True
+
+                # Set is_approve and is_disapprove to False initially
+                ppmpcheckout.bo_approve = False
+
+                if new_status.lower() == 'true':
+                    ppmpcheckout.bo_approve = True
+
+                ppmpcheckout.save()
+
+                return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
+            except ppmpCheckout.DoesNotExist:
+                return HttpResponse("Checkout not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or new status not found in the form data.")
+        

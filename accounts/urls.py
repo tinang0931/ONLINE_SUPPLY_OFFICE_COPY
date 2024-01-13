@@ -63,8 +63,11 @@ urlpatterns = [
    path('bohistory/',views.bohistory, name='bohistory'),
    path('bohome/',views.bohome, name='bohome'),
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
-   path('approve_checkout/<pr_id>/', update_checkout_status, {'new_status': True}, name='approve_checkout'),
-   path('disapprove_checkout/<pr_id>/', update_checkout_status, {'new_status': False}, name='disapprove_checkout'),
+   path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
+   path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
+   path('delete/<int:id>/', views.delete, name='delete'),
+   path('update/<int:id>/', views.update, name='update'),
+   path('ppmp/',views.ppmp, name='ppmp'),
    path('ppmpbo/', views.ppmpbo, name='ppmpbo'),
    path('ppmpboform/<str:pr_id>/', ppmpboform.as_view(), name='ppmpboform'),
 ]
