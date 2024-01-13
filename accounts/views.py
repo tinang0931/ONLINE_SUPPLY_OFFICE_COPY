@@ -175,7 +175,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('request')
+                return redirect('ppmp')
             elif user.user_type == 'cd':
                 return redirect('cd')
             elif user.user_type == 'budget':
@@ -183,6 +183,7 @@ def login(request):
             elif user.user_type == 'bac':
                 return redirect('bac_home')
             else:
+                
                 return redirect('login') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
@@ -568,15 +569,9 @@ def addItem(request):
         item_brand_description = request.POST.get('item_Brand_Description')
         unit = request.POST.get('unit')
         unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
 
-        if quantity and quantity.isdigit():
-                quantity = int(quantity)
-        else:
 
-            print("Invalid quantity")
-            return redirect('request')
-        
+       
         user = request.user
         Item.objects.create(
             user=user,
@@ -584,12 +579,10 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-            quantity=quantity,
-             total_cost=float(unit_cost) * quantity,
-            
+  
         )
-        return redirect('request')
-    return render(request, 'accounts/User/request.html')
+        return redirect('ppmp')
+    return render(request, 'accounts/User/ppmp.html')
 
 
 def request(request):
@@ -600,8 +593,38 @@ def request(request):
         
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
+        
+        price = request.POST.get(f'price')
+
+        
+
+
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+
+        return redirect('request')
+
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all().order_by('Category')
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
+
+    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
+def ppmp (request):
+
+    if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
         estimate_budget = request.POST.get(f'estimate_budget')
-        mode_of_procurement = request.POST.get(f'mode_of_procurement')
         jan = request.POST.get(f'jan')
         feb = request.POST.get(f'feb')
         mar = request.POST.get(f'mar')
@@ -617,13 +640,15 @@ def request(request):
 
         price = request.POST.get(f'price')
 
-        Item.objects.create(
+        
+
+
+        PPMP.objects.create(
             user=request.user,
             item=item_name,
             item_brand_description=item_brand,
             unit=unit,
             estimate_budget=estimate_budget,
-            mode_of_procurement=mode_of_procurement,
             jan=jan,
             feb=feb,
             mar=mar,
@@ -639,19 +664,11 @@ def request(request):
             unit_cost=price
         )
 
-        return redirect('request')
+        return redirect('ppmp')
 
     elif request.method == 'GET':
-        csv_data = CSV.objects.all().order_by('Category')
-        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
-            grouped_data[key] = list(group)
-
-    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
-
-
-def ppmp (request):
     
-    items = Item.objects.all()
+        items = Item.objects.all()
 
     return render(request, 'accounts/User/ppmp.html', {'items': items})
 
@@ -744,7 +761,7 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
     
 
-             
+@authenticated_user              
 def delete(request, id):
     item = Item.objects.get(id = id)
     item.delete()
@@ -820,6 +837,11 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('ppmp')
+
 
 def update_item(request, id):
     if request.method == 'POST':
@@ -843,7 +865,29 @@ def update_item(request, id):
             Price=price
         )
         return redirect('bac_dashboard')
-    
+
+def update(request, id):
+    if request.method == 'POST':
+        Item.objects.get(id=id)
+        
+        
+        item_name = request.POST.get(f'item_{id}')
+        
+        item_brand = request.POST.get(f'item_brand_{id}')
+       
+        unit = request.POST.get(f'unit_{id}')
+        
+        
+        price = request.POST.get(f'price_{id}')
+        
+
+        Item.objects.filter(id=id).update(
+           item=item_name,
+           item_brand_description=item_brand,
+           unit=unit,
+           unit_cost=price
+        )
+        return redirect('ppmp')
 
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
@@ -1010,79 +1054,6 @@ def abstract(request):
     # Your view logic here
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
 
-
-def addItem(request):
-    if request.method == 'POST':
-        item_data = request.POST.get('item')
-        item_brand_description = request.POST.get('item_Brand_Description')
-        unit = request.POST.get('unit')
-        unit_cost = request.POST.get('unit_Cost')
-        quantity = request.POST.get('quantity')
-
-        if quantity and quantity.isdigit():
-                quantity = int(quantity)
-        else:
-
-            print("Invalid quantity")
-            return redirect('request')
-        
-        user = request.user
-        Item.objects.create(
-            user=user,
-            item=item_data,
-            item_brand_description=item_brand_description,
-            unit=unit,
-            unit_cost=unit_cost,
-            quantity=quantity,
-             total_cost=float(unit_cost) * quantity,
-            
-        )
-        return redirect('request')
-    return render(request, 'accounts/User/request.html')
-
-def request(request):
-    if request.method == 'POST':
-
-        selected_rows = request.POST.getlist('selectRow')
-
-        for row_id in selected_rows:
-            item_name = request.POST.get(f'item_{row_id}')
-            item_brand = request.POST.get(f'item_brand_{row_id}')
-            unit = request.POST.get(f'unit_{row_id}')
-            price = request.POST.get(f'price_{row_id}')
-            quantity = request.POST.get(f'quantity_{row_id}')
-
-        
-            if quantity and quantity.isdigit():
-                quantity = int(quantity)
-            else:
-               
-                print(f"Invalid quantity for row {row_id}")
-                continue
-
-            user = request.user
-
-
-            item = Item.objects.create(
-                user=user,
-                item=item_name,
-                item_brand_description=item_brand,
-                unit=unit,
-                unit_cost=price,
-                quantity=quantity,
-
-                total_cost=float(price) * quantity,
-            )
-            item.save()
-
-        return redirect('requester')
-
-    elif request.method == 'GET':
-        csv_data = CSV.objects.all()
-        grouped_data = {}
-        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
-            grouped_data[key] = list(group)
-    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
