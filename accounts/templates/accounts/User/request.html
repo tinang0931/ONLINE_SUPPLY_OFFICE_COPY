@@ -33,8 +33,8 @@
 }
 
 .bckbtn img {
-  width: 43px;  /* Adjust the width of the image as needed */
-  height: 40px; /* Adjust the height of the image as needed */
+  width: 25px;  /* Adjust the width of the image as needed */
+  height: 25px; /* Adjust the height of the image as needed */
   transition: all 0.3s ease-in-out;
 }
 
@@ -127,9 +127,9 @@
                             </td>
                             <td>
                                 {% if item_submitted %}
-                                <button type="button" class="btn btn-success" disabled>Check</button>
                             {% else %}
-                                <button type="submit" class="btn btn-primary">+</button>
+                            <button type="submit"> Add
+                            </button>
                             {% endif %}
                             </td>
 
@@ -146,6 +146,46 @@
 
 
     </div>
+    <style>
+       button {
+  padding: 5px 10px; /* Adjusted padding */
+  border: unset;
+  border-radius: 15px;
+  color: #212121;
+  z-index: 1;
+  background: #e8e8e8;
+  position: relative;
+  font-weight: 1000;
+  font-size: 14px; /* Adjusted font size */
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #212121;
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+}
+
+button:hover {
+  color: #e8e8e8;
+}
+
+button:hover::before {
+  width: 100%;
+}
+    </style>
 
 
 
