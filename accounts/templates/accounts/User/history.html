@@ -14,60 +14,110 @@
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
 
     <div class="col-6 col-sm-6 col-md-5 col-lg-3">
-     
-      <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 1px solid black;">
-   
+      <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">   
     </div>
-    <div class="table-responsive" style="margin: 0 auto; width: 100%;">
-      <table class="table" id="create_request_table" style="border: 1px solid black; width: 100%;">
-
-          <thead>
-              <tr>
-                  <th class="text-nowrap" style="min-width: 15rem; border: 1px solid black;">Purchase Request ID</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Date Requested</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Item Name</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Quantity</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Amount</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Attachment</th>
-                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Status</th> <!-- New column added -->
-              </tr>
-          </thead>
-          <tbody>
-              {% for item in checkout_items %}
-                  <tr>
-                      <td style="border: 1px solid black;">{{ item.checkout.pr_id }}</td>
-                      <td style="border: 1px solid black;">{{ item.submission_date }}</td>
-                      <td style="border: 1px solid black;">{{ item.item }}</td>
-                      <td style="border: 1px solid black;">{{ item.quantity }}</td>
-                      <td style="border: 1px solid black;">{{ item.total_cost }}</td>
-                          {% if item.attachment %}
-                              <a href="{{ item.get_attachment_url }}" target="_blank">View Attachment</a>
-                          {% else %}
-                              No Attachment
-                          {% endif %}
-                      </td>
-                      <td style="border: 1px solid black;">{{ item.status }}</td> <!-- Content for the new column -->
-                  </tr>
-              {% endfor %}
-              
-              <!-- Extra Row -->
-              <tr>
-                  <td style="border: 1px solid black;"></td>
-                  <td style="border: 1px solid black;"></td>
-                  <td style="border: 1px solid black;"></td>
-                  <td style="border: 1px solid black;"></td>
-                  <td style="border: 1px solid black;"></td>
-                  <td style="border: 1px solid black;"></td>
-              </tr>
-          </tbody>
-      </table>
-  </div> 
-  <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-right: 20px;">
-    <button class="btn btn-primary" id="view-more-button" style="background-color: #28A745; color: white;">View More</button>
+    <div>
+      <a style="--clr: #144472" class="button" id="view-more-button">
+        <span class="button__icon-wrapper">
+            <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+            </svg>
+            
+            <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+            </svg>
+        </span>
+    </a>
+    </div>
+    <div class="table-responsive" style="margin: 0 auto;">
+      <table class="table" id="create_request_table" style="border: 1px solid black;">
+        <thead>
+            <tr>
+                <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
+                <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
+                <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
+                <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
+                
+                <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
+                <th class="text-center text-nowrap"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in checkout_items %}
+            <tr>
+                <td>{{ item.checkout.pr_id }}</td>
+                <td>{{ item.submission_date }}</td>
+                <td>{{ item.item }}</td>
+                <td>{{ item.quantity }}</td>
+                
+                <td>{{ item.total_cost }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div>
 </div>
-    </div>
-  
+<style>
+.button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  background-color: var(--clr);
+  color: #fff; /* Default text color */
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: .525rem 1.05rem; /* 30% smaller padding */
+  padding-left: 15px; /* Adjusted left padding */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color .3s;
+  margin-top: -55%;
+  margin-left: 95%;
+  border-radius: 28px; /* 30% smaller border-radius */
+}
 
+.button__icon-wrapper {
+  flex-shrink: 0;
+  width: 17.5px; /* 30% smaller width */
+  height: 17.5px; /* 30% smaller height */
+  position: relative;
+  color: var(--clr);
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.button:hover {
+  background-color: #1c96c5;
+  color: #fff; /* Text color when hovered */
+}
+
+.button:hover .button__icon-wrapper {
+  color: #000;
+}
+
+.button__icon-svg--copy {
+  position: absolute;
+  transform: translate(-150%, 150%);
+}
+
+.button:hover .button__icon-svg:first-child {
+  transition: transform .3s ease-in-out;
+  transform: translate(150%, -150%);
+}
+
+.button:hover .button__icon-svg--copy {
+  transition: transform .3s ease-in-out .1s;
+  transform: translate(0);
+}
+</style>
 <script>
   function highlightInput(input) {
     input.select();
