@@ -51,47 +51,7 @@ def main(request):
     return render(request, 'accounts/User/main.html')
 
 
-def Procurement(request):
-    class proc:
-        def __init__(self, category, item,unit,budget,jan,feb,march,april,may,june,july,aug,sep,oct,nov,dec,price) -> None:
-            self.category = category
-            self.item = item,
-            self.unit = unit,
-            self.budget = budget,
-            self.jan = jan,
-            self.feb = feb,
-            self.march = march,
-            self.april = april,
-            self.may = may,
-            self.june = june,
-            self.july = july,
-            self.aug = aug,
-            self.sep = sep,
-            self.oct = oct,
-            self.nov = nov,
-            self.dec = dec,
-            self.price = price
-    
-    procure = []
-    df = pd.read_csv('categories.csv')
-    categories = df['categories']
-    for c in categories:
-        cat = pd.read_csv(f'categories\{c}.csv')
-        for index, row in cat.iterrows():
-            p = proc(c, row['item'], row['unit'],row['budget'],row['jan'],row['feb'],row['march'],row['april'],row['may'],row['june'],row['july'],row['aug'],row['sep'],row['oct'],row['nov'],row['dec'],row['price'])
-            procure.append(p)
-    
-    
-    grouped_data = {}
-    for item in procure:
-        category = item.category
-        if category not in grouped_data:
-            grouped_data[category] = []
-        grouped_data[category].append(item)
-    context = {
-        'grouped_data':grouped_data
-    }
-    return render(request, 'accounts/User/Procurement.html', context)
+
 
 
 def bac(request):
@@ -175,7 +135,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('ppmp')
+                return redirect('myppmp')
             elif user.user_type == 'cd':
                 return redirect('cd')
             elif user.user_type == 'budget':
@@ -617,33 +577,28 @@ def request(request):
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
 
-def ppmp (request):
-
+def ppmp(request):
     if request.method == 'POST':
-        item_name = request.POST.get(f'item')
         
-        item_brand = request.POST.get(f'item_brand')
-        unit = request.POST.get(f'unit')
-        estimate_budget = request.POST.get(f'estimate_budget')
-        jan = request.POST.get(f'jan')
-        feb = request.POST.get(f'feb')
-        mar = request.POST.get(f'mar')
-        apr = request.POST.get(f'apr')
-        may = request.POST.get(f'may')
-        jun = request.POST.get(f'jun')
-        jul = request.POST.get(f'jul')
-        aug = request.POST.get(f'aug')
-        sep = request.POST.get(f'sep')
-        oct = request.POST.get(f'oct')
-        nov = request.POST.get(f'nov')
-        dec = request.POST.get(f'dec')
+        item_name = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        estimate_budget = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
+        price = request.POST.get('price')
 
-        price = request.POST.get(f'price')
-
-        
-
-
-        PPMP.objects.create(
+        CheckoutItems.objects.create(
             user=request.user,
             item=item_name,
             item_brand_description=item_brand,
@@ -698,7 +653,7 @@ class RequesterView(View):
 
     def post(self, request):
         if request.method == 'POST':
-            # Fetch data from the Item model
+            
             items = Item.objects.all()
             purpose = request.POST.get('purpose', '') 
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
@@ -938,29 +893,13 @@ def bohome(request):
 class PreqForm_boView(View):
     template_name = 'accounts/Admin/Budget_Officer/preqform_bo.html'
 
-    def get(self, request, pr_id):
-        # Use the pr_id to retrieve the corresponding Checkout object
-        checkout = get_object_or_404(Checkout, pr_id=pr_id)
-
-        # Get checkout items associated with the checkout
-        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-        context = {
-            'checkout_items': checkout_items,
-            'pr_id': pr_id,
-            'user': checkout.user,
-            'purpose': checkout.purpose,
-            'pending': not checkout.is_approve,
-            'approved': checkout.is_approve,
-           
-            'is_seen': checkout.is_seen,
-            
-        }
-
-        return render(request, self.template_name, context)
+    def get(self, request):
+        items = CheckoutItems.objects.all()
+        return render(request, self.template_name, {'items': items})
 
     def post(self, request, pr_id):
         new_status = request.POST.get('new_status')
-        print(new_status)
+  
 
         if pr_id and new_status:
             try:
