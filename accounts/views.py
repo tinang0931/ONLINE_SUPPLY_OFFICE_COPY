@@ -40,7 +40,6 @@ from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
-import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
 
@@ -667,23 +666,28 @@ class RequesterView(View):
         if request.method == 'POST':
             # Fetch data from the Item model
             items = Item.objects.all()
-            purpose = request.POST.get('purpose', '') 
+            purpose = request.POST.get('purpose', '')
+            uploaded_file = request.FILES.get('fileInput')  # Assuming 'fileInput' is the input field name in your form
+
+            # Create a new Checkout instance
             new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
+
+            # If a file is uploaded, associate it with the Checkout
+            if uploaded_file:
+                new_checkout.attachment = uploaded_file
 
             for row in items:
                 item_id = row.id
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
-                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
-                
+                quantity = int(request.POST.get(f'quantity_{item_id}', 0))
+                price = Decimal(request.POST.get(f'price_{item_id}', '0.00'))
 
                 try:
                     total_cost = price * quantity
                 except TypeError:
                     total_cost = Decimal('0.00')
-
 
                 CheckoutItems.objects.create(
                     checkout=new_checkout,
@@ -1201,3 +1205,23 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+def ppmpbo(request):
+    # Your view logic goes here
+    return render(request, 'accounts/Admin/Budget_Officer/ppmpbo.html')
+class ppmpboform(View):
+    template_name = 'ppmpboform.html'  # Specify the template name
+
+    def get(self, request, pr_id):
+        # Your logic for handling GET requests goes here
+        context = {
+            'pr_id': pr_id,
+            # Add any additional context variables you need
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, pr_id):
+        # Your logic for handling POST requests goes here
+        # Typically, you'll handle form submissions and data processing
+        # Redirect or render as needed
+        pass  # Placeholder, replace with your actual implementation

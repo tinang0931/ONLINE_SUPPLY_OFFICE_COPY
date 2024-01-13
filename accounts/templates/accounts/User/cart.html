@@ -133,34 +133,58 @@ p {
         {% endfor %}
     </tbody>
     </table>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>
-        var attachmentCounter = 0; // Counter for creating unique IDs
-      
-        function attachFile(itemId) {
-          document.getElementById('fileInput_' + itemId).click();
-        }
-      
-        function showFileName(itemId) {
-          const fileInput = document.getElementById('fileInput_' + itemId);
-          const attachedFileName = document.getElementById('attachedFileName_' + itemId);
-      
-          const file = fileInput.files[0];
-          if (file) {
+<script>
+    var attachmentCounter = 0; // Counter for creating unique IDs
+
+    function attachFile(itemId) {
+        document.getElementById('fileInput_' + itemId).click();
+    }
+
+    function showFileName(itemId) {
+        const fileInput = document.getElementById('fileInput_' + itemId);
+        const attachedFileName = document.getElementById('attachedFileName_' + itemId);
+
+        const file = fileInput.files[0];
+        if (file) {
             attachedFileName.textContent = file.name;
             attachedFileName.style.color = 'blue';
             attachedFileName.style.cursor = 'pointer';
             attachedFileName.onclick = function() {
-              window.open(URL.createObjectURL(file), '_blank');
+                window.open(URL.createObjectURL(file), '_blank');
             };
-          } else {
+
+            // Save the file to the database
+            saveFileToDatabase(file, itemId);
+        } else {
             attachedFileName.textContent = "";
             attachedFileName.style.color = 'black';
             attachedFileName.style.cursor = 'default';
             attachedFileName.onclick = null;
-          }
         }
-      </script>
+    }
+
+    function saveFileToDatabase(file, itemId) {
+        var formData = new FormData();
+        formData.append('file', file);
+
+        $.ajax({
+            type: 'POST',
+            url: '/save_file/',  // Replace with the actual URL to handle file upload on your server
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('File saved successfully:', response);
+                // You can handle the response as needed
+            },
+            error: function(error) {
+                console.error('Error saving file:', error);
+            }
+        });
+    }
+</script>
       
     
     <script>

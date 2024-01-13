@@ -2,8 +2,6 @@ from django.urls import path
 from django.contrib import admin
 from . import views 
 from .views import *
-
-
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
@@ -68,4 +66,6 @@ urlpatterns = [
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
    path('approve_checkout/<pr_id>/', update_checkout_status, {'new_status': True}, name='approve_checkout'),
    path('disapprove_checkout/<pr_id>/', update_checkout_status, {'new_status': False}, name='disapprove_checkout'),
+   path('ppmpbo/', views.ppmpbo, name='ppmpbo'),
+   path('ppmpboform/<str:pr_id>/', ppmpboform.as_view(), name='ppmpboform'),
 ]

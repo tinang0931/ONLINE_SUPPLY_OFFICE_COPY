@@ -77,7 +77,7 @@ class Checkout(models.Model):
     is_approve = models.BooleanField(default=False)
     is_disapprove = models.BooleanField(default=False)
     is_seen=models.BooleanField(default=False)
-    comment = models.TextField(blank=True, null=True)
+   
     # # ... other fields and methods ...
     # STATUS_CHOICES = (
     #     ('approve', 'approve'),
@@ -179,3 +179,17 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
+    
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+
+class dComment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+
+    def __str__(self):
+        return f'{self.author.username} - {self.content}'

@@ -48,6 +48,10 @@
                 <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
                   <i class='bx bxs-shopping-bag' ></i> <span id="about" class="hidden-name">Purchase Request</span>
                 </a>
+
+                <a class="list-group-item list-group-item-action p-3 border-0 ppmpbo-link" href="{% url 'ppmpbo'%}">
+                  <i class='bx bxs-file'></i> <span id="ppmpbo" class="hidden-name">PPMPBO</span>
+                </a>
                
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
                   <i class='bx bxs-info-circle' ></i> <span id="about" class="hidden-name">About</span>
@@ -194,6 +198,9 @@
         </script>
         
         {% block boabout %}
+        {% endblock %}
+
+        {% block ppmpbo %}
         {% endblock %}
 
         {% block bohistory %}
