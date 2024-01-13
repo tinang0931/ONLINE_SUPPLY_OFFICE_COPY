@@ -4,52 +4,67 @@
 
 {% block history %}
 
+<style>
+.table-responsive th {
+  background-color: #1c96c5;
+}
+</style>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
 
     <div class="col-6 col-sm-6 col-md-5 col-lg-3">
      
-       <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+      <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 1px solid black;">
    
     </div>
-
     <div class="table-responsive" style="margin: 0 auto; width: 100%;">
       <table class="table" id="create_request_table" style="border: 1px solid black; width: 100%;">
+
           <thead>
               <tr>
-                  <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
-                  <th class="text-nowrap" style="min-width: 7rem;">Date Requested</th>
-                  <th class="text-nowrap" style="min-width: 7rem;">Item Name</th>
-                  <th class="text-nowrap" style="min-width: 7rem;">Quantity</th>
-                  <th class="text-nowrap" style="min-width: 7rem;">Amount</th>
-                  <th class="text-nowrap" style="min-width: 7rem;">Attachment</th>
-                  <th class="text-center text-nowrap"></th>
+                  <th class="text-nowrap" style="min-width: 15rem; border: 1px solid black;">Purchase Request ID</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Date Requested</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Item Name</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Quantity</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Amount</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Attachment</th>
+                  <th class="text-nowrap" style="min-width: 7rem; border: 1px solid black;">Status</th> <!-- New column added -->
               </tr>
           </thead>
           <tbody>
               {% for item in checkout_items %}
                   <tr>
-                      <td>{{ item.checkout.pr_id }}</td>
-                      <td>{{ item.submission_date }}</td>
-                      <td>{{ item.item }}</td>
-                      <td>{{ item.quantity }}</td>
-                      <td>{{ item.total_cost }}</td>
-                      <td>
+                      <td style="border: 1px solid black;">{{ item.checkout.pr_id }}</td>
+                      <td style="border: 1px solid black;">{{ item.submission_date }}</td>
+                      <td style="border: 1px solid black;">{{ item.item }}</td>
+                      <td style="border: 1px solid black;">{{ item.quantity }}</td>
+                      <td style="border: 1px solid black;">{{ item.total_cost }}</td>
                           {% if item.attachment %}
                               <a href="{{ item.get_attachment_url }}" target="_blank">View Attachment</a>
                           {% else %}
                               No Attachment
                           {% endif %}
                       </td>
-                      <td></td>
+                      <td style="border: 1px solid black;">{{ item.status }}</td> <!-- Content for the new column -->
                   </tr>
               {% endfor %}
+              
+              <!-- Extra Row -->
+              <tr>
+                  <td style="border: 1px solid black;"></td>
+                  <td style="border: 1px solid black;"></td>
+                  <td style="border: 1px solid black;"></td>
+                  <td style="border: 1px solid black;"></td>
+                  <td style="border: 1px solid black;"></td>
+                  <td style="border: 1px solid black;"></td>
+              </tr>
           </tbody>
-        </table>
-        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-right: 20px;">
-            <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
-        </div>
+      </table>
+  </div> 
+  <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-right: 20px;">
+    <button class="btn btn-primary" id="view-more-button" style="background-color: #28A745; color: white;">View More</button>
+</div>
     </div>
   
 
