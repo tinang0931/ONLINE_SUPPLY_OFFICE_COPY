@@ -14,8 +14,8 @@
    
     </div>
 
-    <div class="table-responsive" style="margin: 0 auto;">
-      <table class="table" id="create_request_table" style="border: 1px solid black;">
+    <div class="table-responsive" style="margin: 0 auto; width: 100%;">
+      <table class="table" id="create_request_table" style="border: 1px solid black; width: 100%;">
           <thead>
               <tr>
                   <th class="text-nowrap" style="min-width: 15rem;">Purchase Request ID</th>
@@ -46,11 +46,12 @@
                   </tr>
               {% endfor %}
           </tbody>
-      </table>
-      <div style="display: flex; justify-content: flex-end; margin-top: 20px; margin-right: 20px;">
-          <button class="btn btn-primary" id="view-more-button" style="background-color: blue; top: 20%;">View More</button>
-      </div>
-  </div>
+        </table>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-right: 20px;">
+            <button class="btn btn-primary" id="view-more-button" style="background-color: blue;">View More</button>
+        </div>
+    </div>
+  
 
 <script>
   function highlightInput(input) {

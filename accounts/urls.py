@@ -70,5 +70,5 @@ urlpatterns = [
    path('delete/<int:id>/', views.delete, name='delete'),
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
-    path('checkout-items/', checkout_items_view, name='checkout_items'),
+   path('checkout-items/', checkout_items_view, name='checkout_items'),
 ]
