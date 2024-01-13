@@ -1190,6 +1190,3 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
-
-
-
