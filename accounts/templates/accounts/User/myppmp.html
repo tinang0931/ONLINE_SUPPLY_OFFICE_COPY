@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block ppmp %}
+{% block myppmp %}
 
 <style>
     .table-bordered th {
@@ -18,230 +18,6 @@
     tr:hover .item-actions {
         display: flex;
     }
-
-    .additem {
-        margin-left: 10px;
-    }
-    .btn {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: -107%;
-        margin-top: 15%;
-    }
-
-
-    .ctalogue {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: -107%;
-        margin-top: 15%;
-    }
-
-    .ctalogue:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
-
-    .ctalogue:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .ctalogue span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .ctalogue:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-
-    .custom {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 19.6px;
-        /* Adjusted border-radius for 40% increase */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 5%;
-        margin-top: -5%;
-    }
-
-    .custom:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
-
-    .custom:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .custom span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 5.82px 9.25px;
-        /* Adjusted padding for 40% increase */
-        color: #fff;
-        font-size: 0.69em;
-        /* Adjusted font-size for 40% increase */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .custom:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    .submt {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: none;
-        /* Removed shadow */
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 95.6%;
-        margin-top: 1%;
-    }
-
-    .submt:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #4be77a;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
-
-    .submt:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .submt span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .submt:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -252,26 +28,23 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
 
     <div class="row">
+
         <div class="col-md-1 mb-0">
-            <div class="additem">
-                <button type="button" class="custom" data-toggle="modal" data-target="#addItemModal">
-                    <span>Customize Item</span>
+            <div class="ppmp">
+                <button class="btn btn-primary">
+                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
                 </button>
             </div>
         </div>
-
-        <div class="col-md-1 mb-0">
-            
-                <button class="btn btn-primary">
-                    <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;"> + Catalogue </a>
-                </button>
-           
-        </div>
     </div>
+
+
+
+
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
             <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
@@ -336,9 +109,9 @@
                             </td>
                             <td>
                                 <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                                    value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
-                                    class="edit-input" style="display: none">
+                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
+                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
+                                    style="display: none">
                             </td>
                             <td>
                                 <span class="editable" data-field="Unit">{{ p.unit }}</span>
@@ -349,7 +122,7 @@
 
                             <td><input type="number" name="estimate_budget"></td>
 
-                            <td><input type="number" style="width: 38px;" name="jan"></td>
+                            <td><input type="number"  style="width: 38px;" name="jan"></td>
                             <td><input type="number" style="width: 38px;" name="feb"></td>
                             <td><input type="number" style="width: 38px;" name="mar"></td>
                             <td><input type="number" style="width: 38px;" name="apr"></td>
@@ -413,9 +186,7 @@
 
                 </tbody>
             </table>
-            <button class="submt">
-                <span>Submit</span>
-            </button>
+            <button type="submit" class="btn btn-success m-2 float-right">Submit</button>
         </form>
     </div>
 </div>
