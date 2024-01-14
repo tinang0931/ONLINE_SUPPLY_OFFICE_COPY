@@ -17,7 +17,7 @@ urlpatterns = [
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/', RequesterView.as_view(), name='requester'),
-   path('request/',views.request, name='request'),
+   path('catalogue/',views.catalogue, name='catalogue'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
@@ -69,4 +69,5 @@ urlpatterns = [
    path('delete/<int:id>/', views.delete, name='delete'),
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
+   path('myppmp/', views.myppmp, name='myppmp'),
 ]

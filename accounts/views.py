@@ -545,7 +545,7 @@ def addItem(request):
     return render(request, 'accounts/User/ppmp.html')
 
 
-def request(request):
+def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
 
     if request.method == 'POST':
@@ -567,7 +567,7 @@ def request(request):
             unit_cost=price
         )
 
-        return redirect('request')
+        return redirect('catalogue')
 
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
@@ -576,14 +576,17 @@ def request(request):
 
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
+def myppmp (request):
+    return render(request, 'accounts/User/myppmp.html')
+
 
 def ppmp(request):
     if request.method == 'POST':
-        
-        item_name = request.POST.get('item')
-        item_brand = request.POST.get('item_brand')
-        unit = request.POST.get('unit')
-        estimate_budget = request.POST.get('estimate_budget')
+
+        item_name = request.POST.get(f'item')
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        estimate_budget = request.POST.get(f'estimate_budget')
         jan = request.POST.get('jan')
         feb = request.POST.get('feb')
         mar = request.POST.get('mar')
@@ -596,7 +599,7 @@ def ppmp(request):
         oct = request.POST.get('oct')
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
-        price = request.POST.get('price')
+        price = request.POST.get(f'price')
 
         CheckoutItems.objects.create(
             user=request.user,
@@ -851,44 +854,46 @@ def delete_category(request, Category):
 
 
 def bohome(request):
-    checkouts = Checkout.objects.select_related('user').all()
-    comments = Comment.objects.all()
+    checkouts = CheckoutItems.objects.all()
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkouts})
+    # checkouts = Checkout.objects.select_related('user').all()
+    # comments = Comment.objects.all()
 
-    # Create a dictionary to store the results, using pr_id as keys
-    checkout_data_dict = {}
+    # # Create a dictionary to store the results, using pr_id as keys
+    # checkout_data_dict = {}
 
-    # Loop through each Checkout instance and gather relevant data
-    for checkout in checkouts:
-        pr_id = checkout.pr_id
+    # # Loop through each Checkout instance and gather relevant data
+    # for checkout in checkouts:
+    #     pr_id = checkout.pr_id
 
-        # Get the latest comment for the current pr_id
-        latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+    #     # Get the latest comment for the current pr_id
+    #     latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
 
-        if pr_id not in checkout_data_dict:
-            # If pr_id is not in the dictionary, create a new entry
-            checkout_data_dict[pr_id] = {
-                'pr_id': pr_id,
-                'first_name': checkout.user.first_name,
-                'last_name': checkout.user.last_name,
-                'submission_date': checkout.submission_date,
-                'purpose': checkout.purpose,
-                'is_approve': checkout.is_approve,
+    #     if pr_id not in checkout_data_dict:
+    #         # If pr_id is not in the dictionary, create a new entry
+    #         checkout_data_dict[pr_id] = {
+    #             'pr_id': pr_id,
+    #             'first_name': checkout.user.first_name,
+    #             'last_name': checkout.user.last_name,
+    #             'submission_date': checkout.submission_date,
+    #             'purpose': checkout.purpose,
+    #             'is_approve': checkout.is_approve,
                
-                'is_seen': checkout.is_seen,  # Include the new field in the view
-                'comment': latest_comment.content if latest_comment else "",
-                'status_update_date': latest_comment.timestamp if latest_comment else None,
+    #             'is_seen': checkout.is_seen,  # Include the new field in the view
+    #             'comment': latest_comment.content if latest_comment else "",
+    #             'status_update_date': latest_comment.timestamp if latest_comment else None,
                  
-            }
-        else:
-            # If pr_id is already in the dictionary, update the entry
-            # with additional information, e.g., concatenate purposes
-            checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+    #         }
+    #     else:
+    #         # If pr_id is already in the dictionary, update the entry
+    #         # with additional information, e.g., concatenate purposes
+    #         checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
            
-            checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
-    # Convert the dictionary values to a list
-    checkout_data = list(checkout_data_dict.values())
+    #         checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+    # # Convert the dictionary values to a list
+    # checkout_data = list(checkout_data_dict.values())
 
-    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
+    # return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
 
 class PreqForm_boView(View):
     template_name = 'accounts/Admin/Budget_Officer/preqform_bo.html'

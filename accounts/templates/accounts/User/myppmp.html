@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block ppmp %}
+{% block myppmp %}
 
 <style>
     .table-bordered th {
@@ -28,21 +28,15 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
 
     <div class="row">
-        <div class="col-md-1 mb-0">
-            <div class="additem">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal"> +
-                    Customize Item</button>
-            </div>
-        </div>
 
         <div class="col-md-1 mb-0">
             <div class="ppmp">
                 <button class="btn btn-primary">
-                    <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;"> + Catalogue </a>
+                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
                 </button>
             </div>
         </div>

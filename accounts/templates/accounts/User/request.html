@@ -64,7 +64,7 @@
 
                     {% for p in items %}
 
-                    <form action="{% url 'request' %}" method="post">
+                    <form action="{% url 'catalogue' %}" method="post">
                         {% csrf_token %}
                         <tr class="item-row" id="{{ p.id }}">
                             <td>{{ p.Item_name }}
