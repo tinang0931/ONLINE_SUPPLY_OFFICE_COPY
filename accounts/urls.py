@@ -17,7 +17,7 @@ urlpatterns = [
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
    path('requester/', RequesterView.as_view(), name='requester'),
-   path('request/',views.request, name='request'),
+   path('catalogue/',views.catalogue, name='catalogue'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
    path('tracker/',views.tracker, name='tracker'),
@@ -54,7 +54,6 @@ urlpatterns = [
    path('add_new_item/', add_new_item, name='add_new_item'),
    path('update_item/<int:id>/', views.update_item, name='update_item'),
    path('upload_file/',views.upload_file, name='upload_file'),
-   path('Procurement/',views.Procurement, name='Procurement'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
@@ -64,9 +63,11 @@ urlpatterns = [
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('bohome/',views.bohome, name='bohome'),
-   path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
-   path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
+   path('preqform_bo/', PreqForm_boView.as_view(), name='preqform_bo'),
+   path('approve_checkout/', views.update_checkout_status, name='approve_checkout'),
+   path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('delete/<int:id>/', views.delete, name='delete'),
-   
-  
+   path('update/<int:id>/', views.update, name='update'),
+   path('ppmp/',views.ppmp, name='ppmp'),
+   path('myppmp/', views.myppmp, name='myppmp'),
 ]
