@@ -111,7 +111,10 @@ class Checkout(models.Model):
     def __str__(self):
         return str(self.pr_id)
 
-    
+class PR(models.Model):
+    attachment = 
+
+      
 
     
 class CheckoutItems(models.Model):
@@ -138,7 +141,7 @@ class CheckoutItems(models.Model):
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
+ 
 
     # def save(self, *args, **kwargs):
     #     self.total_cost = self.unit_cost * self.quantity
