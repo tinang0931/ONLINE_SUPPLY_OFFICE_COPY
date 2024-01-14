@@ -67,5 +67,6 @@ urlpatterns = [
    path('preqform_bo/<str:pr_id>/', PreqForm_boView.as_view(), name='preqform_bo'),
    path('approve_checkout/<pr_id>/', views.update_checkout_status, name='approve_checkout'),
    path('delete/<int:id>/', views.delete, name='delete'),
+   
   
 ]
