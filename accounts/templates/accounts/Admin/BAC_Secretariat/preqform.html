@@ -20,7 +20,6 @@
         }
        
 
-    
     .logo-container {
         display: flex;
         align-items: center;
@@ -74,11 +73,9 @@
             height: auto;
             margin-right: 20px;
         }
-
     .br {
             margin-bottom: 20px;
         }
-
 table {
     text-align: center;
     width: 100%;
@@ -263,7 +260,7 @@ justify-content: center;
 align-items: center;
 margin: 0 auto;
 margin-top: 10px; /* Adjusted margin */
-position: ceneter;
+position: relative;
 
 }
 
@@ -359,7 +356,20 @@ position: ceneter;
         display: none;
     }
 }
+
+
+.page {
+    break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    page-break-before: auto;
+    page-break-after: auto;
+}
+
 </style>
+</head>
+
 <body>
 <div class="container page-break">
     <div id="selectedFundCluster"></div>
@@ -370,10 +380,10 @@ position: ceneter;
                 <h><b>Entity Name:</b></h> &nbsp &nbsp
                 <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
                 <h><b>Fund Cluster:</b></h>
-               <select id="fundClusterSelect">
-                <option value="gaaResearch">GAA</option>
-                <option value="stfResearch">STF</option>
-               </select>
+                <select id="fundClusterSelect">
+                    <option value="gaa">GAA</option>
+                    <option value="stf">STF</option>
+                </select>
             </div>
             <div class="table-container">
                 <div class="justify-content">
@@ -431,14 +441,12 @@ position: ceneter;
                                         </tr>
                                         {% endif %}
                                       {% endfor %}              
-                                      
                                     <!-- Move the TOTAL row below the Unit Cost -->
                                     <tr>
                                         <td colspan="4"></td>
                                         <td style="text-align: right;">TOTAL</td>
                                         <td id="totalCostCell" style="text-align: center;" colspan="2">{{ total_cost }}</td>
                                     </tr>
-                                    
                                     <tr>
                                         <td colspan="7" style="text-align: left; vertical-align: top;">
                                           <b> Funds Available: </b> 
@@ -483,16 +491,16 @@ position: ceneter;
                                                        <select id="paperSize" onchange="changePaperSize()" style="display: none;">
                                                            <option value="a4">A4</option>
                                                            <option value="legal">Legal</option>
-                                                        </div>
-                                                    </div>
-                                                    </a>
-                                                </select>
+                                                                 </div>
+                                                            </div>
+                                                        </a>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>                                     
-                                    </div>
+                                         </div>                                     
+                                     </div>
                                 </footer> 
-                            </form> 
+                             </form> 
                         </div>
                     </div>
                 </div>
@@ -500,25 +508,64 @@ position: ceneter;
         </div>
     </div>
 </div>
+
+
+<div class="page-break">
+
+<div class="container page">
+    <!-- Content for the second page-->
+    <h2>Continuation of Purchase Request</h2>
+    <p>Additional details or content for the second page</p>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+<script>
+    function downloadPDF() {
+        const body = document.getElementById('purchaseRequestTable');
+
+        // Ensure all page-break divs are set to 'always' before generating PDF
+        const elementsWithPageBreak = body.querySelectorAll('.page-break');
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'always';
+        });
+
+        // Create a new container for the second page content
+        const secondPageContainer = document.createElement('div');
+        secondPageContainer.className = 'container page';
+        secondPageContainer.innerHTML = `
+            <h2>Continuation of Purchase Request</h2>
+            <p>Additional details or content for the second page</p>
+        `;
+
+        // Append the second page container to the body
+        body.appendChild(secondPageContainer);
+
+        // ... (rest of your existing code for the PDF generation)
+
+        // Reset page break after generating PDF
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'auto';
+        });
+    }
+</script>
 <script>
     document.getElentById("fundclusterSelect").value = "stfResearch";
 </script>
-
 <script>
     function toggleSelect() {
         var selectElement = document.getElementById("paperSize");
         selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
     }
 </script>
-
     <script>
         // Wait for the document to be ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to calculate total amount
+            // Function to calculate total amounts
             function calculateTotal() {
                 var totalAmount = 0;
                 // Loop through each row in the table body
-                document.querySelectorAll(".item_total_cost").forEach(function(element) {
+                document.querySelectorAll(".item_total_cost").forEach(function(element) {s
                     // Get the value of each item's total cost in this row
                     var itemCost = parseFloat(element.textContent);
                     // Add the total cost of this item to the totalAmount
@@ -539,7 +586,6 @@ position: ceneter;
         function changePaperSize() {
             selectedPaperSize = document.getElementById('paperSize').value;
         }
-    
         function downloadPDF() {
             const body = document.getElementById('purchaseRequestTable');
             const elementsWithPageBreak = body.querySelectorAll('.page-break');
@@ -566,11 +612,9 @@ position: ceneter;
                 element.style.pageBreakBefore = 'auto';
             });
         }
-        
     </script>
-
-
 </body> 
 </html>
 
- {% endblock %}
+  
+{% endblock %}
