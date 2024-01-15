@@ -31,12 +31,11 @@
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-
-            
             </div>
           </div>
         </nav>
       </div>
+    </main>
       <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
       <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
@@ -45,20 +44,18 @@
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
-
                 <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdpurchase'%}">
-                  <i class='bx bx-shopping-bag' ></i> <span id="requests" class="hidden-name">Purchase Request</span>
+                  <i class='bx bx-shopping-bag'></i> <span id="requests" class="hidden-name">Purchase Request</span>
                 </a>
-
-
+                
                 <a class="list-group-item list-group-item-action p-3 border-0 resolution-link" href="{% url 'cdresolution'%}">
-                  <i class='bx bx-detail'></i> <span id="resolution" class="hidden-name">Resolution</span>
+                  <i class='bx bx-file'></i> <span id="resolution" class="hidden-name">Resolution</span>
                 </a>
-
+                
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'cdabout'%}">
-                  <i class='bx bx-info-circle'></i> <span id="about" class="hidden-name">About</span>
+                  <i class='bx bx-info-circle'></i></i> <span id="about" class="hidden-name">About</span>
                 </a>
-
+                
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class='bx bx-log-out'></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
@@ -66,14 +63,15 @@
               <div class="profile-container">
                 <a href="{% url 'prof' %}">
                 <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-                <p1 class="account_type">C.D.</p1>
+                {% comment %} <p1 class="account_type">C.D.</p1> {% endcomment %}
             </div>
             </div>
           </div>
         </div>
         <style>
           .d-flex {
-margin-bottom: 30vh;
+            height: 85vh;
+            margin-bottom: 0;
 }
           #sidebar {
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
@@ -112,11 +110,12 @@ margin-bottom: 30vh;
 }
 
 .logout-link {
-    margin-top: -70px;
+    margin-top: 65px;
     margin-left: -10px;
 }
 .about-link {
   margin-left: -10px;
+
 }
 .resolution-link {
   margin-left: -10px;
@@ -143,19 +142,18 @@ margin-bottom: 30vh;
 }
 
 .pro {
-    position: relative;
-    top: 200px;
-    z-index: 1;
-    height: 45px;
-    width: 45px;
-    margin-left: 20%; 
-    transition: height 0.3s ease, width 0.3s ease;
-    cursor: pointer;
-    border-radius: 50px;
-    border: 2px solid #000;
-    margin-top: 20px;
+  position: relative;
+  top: 430px;
+  z-index: 1;
+  height: 45px;
+  width: 45px;
+  margin-left: 4%;
+  transition: height 0.3s ease, width 0.3s ease;
+  cursor: pointer;
+  border-radius: 50px;
+  border: 2px solid #000;
+  margin-top: 20px;
 }
-
 .list-group-item i {
     transform: scale(1.4);
     display: inline-block;
