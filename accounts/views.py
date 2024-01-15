@@ -666,8 +666,9 @@ class RequesterView(View):
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
-                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
+                quantity = int(request.POST.get(f'quantity_{item_id}', 0))
+                price = Decimal(request.POST.get(f'price_{item_id}', '0.00'))
+
                 
 
                 try:
@@ -688,9 +689,11 @@ class RequesterView(View):
             new_checkout.save()
             items.delete()
             return redirect('history')
+        
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
+    
 
 
 @authenticated_user

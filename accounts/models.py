@@ -9,7 +9,6 @@ from bson import ObjectId
 
 
 
-
 class User(AbstractUser):
     CTU_ID_LENGTH = 10
     username = models.CharField(max_length=12, unique=True, primary_key=True)
@@ -209,3 +208,4 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
+
