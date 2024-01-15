@@ -343,10 +343,7 @@
               
 
               {% if item.id %}
-              <a href="{% url 'delete_item' item.id %}" style="text-align: center;">
-                <i class="fas fa-trash-alt text-danger"></i>
-              </a>
-
+              <a href="{% url 'delete_item' item.id %}" class="delete-icon"><i class="fas fa-trash-alt text-danger"></i></a>
               {% endif %}
 
             </div>

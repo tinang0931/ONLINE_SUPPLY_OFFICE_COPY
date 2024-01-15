@@ -55,13 +55,35 @@ class User(AbstractUser):
 
 class Item(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField()
+    submission_date = models.DateField(auto_now_add=True)
+
+class PPMP(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
 
@@ -75,19 +97,12 @@ class Checkout(models.Model):
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
     is_approve = models.BooleanField(default=False)
-    is_disapprove = models.BooleanField(default=False)
+    
     is_seen=models.BooleanField(default=False)
     comment = models.TextField(blank=True, null=True)
-    # # ... other fields and methods ...
-    # STATUS_CHOICES = (
-    #     ('approve', 'approve'),
-    #     ('disapprove', 'disapprove'),
-      
-    #     # Add more status choices as needed
-    # )
-
-    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approve')
-    # status_update_date = models.DateTimeField(auto_now=True)  # This field will automatically update when the status is modified
+    cd_approve = models.BooleanField(default=False)
+    cd_seen=models.BooleanField(default=False)
+   
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999)) 
@@ -101,18 +116,33 @@ class Checkout(models.Model):
     
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+
     attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.total_cost = self.unit_cost * self.quantity
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.total_cost = self.unit_cost * self.quantity
+    #     super().save(*args, **kwargs)
         
 
 class Comment(models.Model):
