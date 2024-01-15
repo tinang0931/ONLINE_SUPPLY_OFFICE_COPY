@@ -244,7 +244,7 @@ height: 100%;
   cursor: pointer;
   border: 2px solid #ffffff;
 	border-radius: 50%;
-	padding: 7px;
+	padding: 1px;
 }
 
 .username {
@@ -294,7 +294,7 @@ color: #4190ED;
 }
 
 .back:hover {
-  transform: scale(1.2); /* Make the icon 50% smaller */
+  transform: scale(1.2); 
 }
 
 .fname {
@@ -470,9 +470,10 @@ button.learn-more.clicked {
 }
 
 button.learn-more:hover {
-  background-color: #ffe2bde3; /* Change to the desired hover color */
-  color: #ffffff; /* Text color on hover */
+  background-color: #ffe2bde3; 
+  color: #ffffff; 
 }
+
 .pro_file-picture {
   
   width: 178px;
@@ -526,20 +527,21 @@ button.learn-more:hover {
   transform: translate(-50%, -50%);
   border-radius: 20px;
 }
-/* Button styles */
+
+
 button[type="button"] {
   background-color: #282936;
   color: #fff;
   border: none;
-  padding: 5px 10px; /* Adjust the padding to make the button smaller */
+  padding: 5px 10px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 14px; /* Reduce the font size to make the text smaller */
+  font-size: 14px; 
   transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Button hover effect */
+
 button[type="button"]:hover {
   background-color: #ffa125e3;
-  transform: scale(0.9); /* Reduce the scale to make it 10% smaller on hover */
+  transform: scale(0.9); 
 }

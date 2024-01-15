@@ -35,6 +35,7 @@
             <th>Forms</th>
             <th>Status</th>
             <th>Date</th>
+            <th>comment</th>
             
           </tr>
         </thead>
@@ -43,7 +44,6 @@
     <tr>
         <td>{{ item.pr_id }}</td>
         
-        <!-- Debugging: Display the checkout_info for the current item -->
         {% for i in checkout_info %}
             {% if i.pr_id == item.pr_id %}
                 <td>{{ i.purpose }}</td>
@@ -52,7 +52,7 @@
         {% endfor %}
 
         <td>Purchase Request Approval</td>
-        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px">{{ item.content }}</td>
+        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: rgb(243, 233, 233);">{{ item.content }}</td>
         <td>{{ item.timestamp }}</td>
     </tr>
 {% endfor %}

@@ -49,6 +49,7 @@ body{
     top: 160px;
 }
 
+
 .wrapper h1 {
     color: #003566;
     font-size: 45px;
@@ -206,7 +207,7 @@ form .register-details .category{
 }
 
 
-@media (max-width: 500px) {
+@media (max-width: 100px) {
     .container {
         max-width: 100%;
     }

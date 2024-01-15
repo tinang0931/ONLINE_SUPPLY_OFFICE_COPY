@@ -105,6 +105,7 @@ body {
 
 #wrapper{
   background-color: #ffffff;
+  background-size: 100%
 
 }
 
@@ -131,6 +132,7 @@ p{
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  height: 100px;
 }
 
 
@@ -140,11 +142,19 @@ padding: 0px !important;
 
 
 .ctu_logo{
-  vertical-align: middle;
-  height: 220px;
-  padding: 3px;
-  display: inline-flex;
-}
+  padding: 6px;
+  position: absolute;
+  left: 26px; 
+  top: 2px; 
+  width: 100px;
+  height: 100px;
+  margin:  3px; 
+  }
+  .user {
+    font-size: 20px;
+    padding: 10px;
+    right: 20%;
+  }
 
 
 .background{
@@ -163,11 +173,16 @@ height: 100%;
 
 
 .profile_img {
+  padding: 10px;
+  position: absolute;
+  left: 1745px; 
+  top: 10px; 
   margin-right: 30px;
-  width: 120px;
-  height: 120px;
+  width: 300px;
+  height: 84px;
   border-radius: 50%;
 }
+
 
 
 .list-group {
@@ -192,6 +207,7 @@ height: 100%;
   flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
+  padding: 10px;
 }
 
 
@@ -216,6 +232,7 @@ height: 100%;
   line-height: 30px;
   letter-spacing: 0.1em;
   color: #000;
+  background-color: #f2f2f2 !important;
 }
 
 
@@ -233,7 +250,7 @@ height: 100%;
 .sidebar {
   transition: all 1s;
   -webkit-transition: all 1s;
-  border-right: 2px solid black;
+  
 }
 
 #sidebar-wrapper {
@@ -252,7 +269,7 @@ height: 100%;
 }
 
 #sidebar-wrapper .list-group-item {
-  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+  white-space: nowrap; 
 }
 
 #page-content-wrapper {
@@ -260,23 +277,22 @@ height: 100%;
 }
 
 #sidebar-wrapper {
-  position: relative; /* Ensure the parent container has a position */
+  position: relative; 
 }
 
 #sidebar-wrapper .list-group-item.logout-link {
   position: absolute;
-  top: 220%; /* Adjust the top position as needed */
+  top: 215%; 
 }
 
 #sidebar-wrapper .list-group-item.logout-link i {
-  margin-right: 10px; /* Adjust the margin as needed for icon spacing */
+  margin-right: 10px; 
 }
 
 
 body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-left: 0;
 }
-
 
 @media (min-width: 800px) {
   #sidebar-wrapper {
@@ -303,18 +319,36 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   color: white;
   font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
   margin-left: 0%;
-  font-size: 60px;
+  font-size: 48px;
 }
 
+.profile-pic {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  padding: 3px;
+  margin-top: 40px;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid #141313;
+  border-radius: 50%;
+  padding: 7px;
+}
+
+
+  .ctu_logo {
+    position: absolute;
+    left: 26px; 
+    top: 13px; 
+    width: 80px;
+    height: 77px;
+    margin: 0 3px;
+  }
+  
 
 .cart_icon{
   height: 40px;
   color: #000;
-}
-
-
-.dropdown-item{
-  text-align: left;
 }
 
 
@@ -333,8 +367,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   justify-content: space-around;
   visibility: visible;
   content-visibility: auto;
+  height: 50px;
 }
-
+/static/images/left-arrow-square.png.png
 
 .arrow_img {
   height: 30px;
@@ -363,8 +398,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   position: fixed;
   z-index: 2;
 }
-
-
 .form-group{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -3283,40 +3316,54 @@ button {
   border-top: 15px solid #ccc;
 }
 
+
 .table-striped thead {
   background-color: blue;
   color: white; 
 }
+
 
 .fab.fa-facebook {
   color: white;
   transition: color 0.3s ease;
 }
 
+
 .fab.fa-facebook:hover {
   color: #1877f2;
 }
+
+
 .fab.fa-twitter {
   color: white;
   transition: color 0.3s ease;
 }
+
+
 .fab.fa-twitter:hover {
   color:  #1da1f2;
 }
+
+
 .fab.fa-instagram {
   color: white;
   transition: color 0.3s ease;
 }
+
 
 .fab.fa-instagram:hover {
   background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
   -webkit-background-clip: text;
   color: transparent;
 }
+
+
 .fab.fa-youtube {
   color: white;
   transition: color 0.3s ease;
 }
+
+
 .fab.fa-youtube:hover {
   color:  #FF0000;
 }

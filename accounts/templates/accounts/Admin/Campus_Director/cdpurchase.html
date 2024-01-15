@@ -1,0 +1,229 @@
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
+
+
+{% load static %}
+
+{% block cdpurchase %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  .status {
+    width: 30%;
+    text-align: center;
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+
+  .no-comment {
+    /* Your styles for a status with no comment */
+    background-color: lightgray; /* Adjust this to your desired background color */
+    color: black; 
+  }
+
+  .form-control {
+    display: block;
+    width: 18%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    border-radius: 20px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1300px;
+  }
+
+  .search-form {
+    justify-content: flex-end;
+  }
+
+  .table {
+    width: 90%;
+    margin: auto;
+    table-layout: fixed;
+    position: fixed;
+  }
+
+  .table th,
+  .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    width: 15%;
+  }
+
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 10%;
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 25%;
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 20%;
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 15%;
+  }
+
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    width: 40%;
+  }
+
+  .table th {
+    background-color: rgba(5, 112, 139, 0.822); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+</style>
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+  <div class="search">
+    <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+        Date Requested
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        PR ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+        Requests
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        Purpose
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Status
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+        Comments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        Attachments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+
+      {% for checkout in checkouts %}
+        <tr>
+          <td class="text-center">
+            {{ checkout.submission_date }}
+          </td>
+          <td>
+            <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
+              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+            </a>
+          </td>
+          <td>
+            {{ checkout.purpose }}
+          </td>
+          <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
+            {% if checkout.cd_seen %}
+              {% if checkout.cd_approve %}
+                Approved
+              {% else %}
+                Declined
+              {% endif %}
+            {% else %}
+              Waiting for Approval
+            {% endif %}
+          </td>
+          
+        </td>
+          <td>
+            {{ checkout.status_update_date|default:"Not available" }}
+          </td>
+          <td>
+            {% if checkout.pr_id == preqform_cd.pr_id %}
+              {{ checkout.comment|default:"No comment" }}
+            {% else %}
+              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
+              No relevant comment available
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script>
+  function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) { 
+          td = tr[i].getElementsByTagName("td")[1]; 
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+  }
+</script>
+
+{% endblock %}

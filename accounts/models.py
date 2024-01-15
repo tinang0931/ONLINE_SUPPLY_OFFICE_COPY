@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 import uuid
 import random
+from bson import ObjectId
+
 
 
 
@@ -17,7 +19,7 @@ class User(AbstractUser):
     contact2 = models.PositiveIntegerField()
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
         ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
@@ -32,6 +34,12 @@ class User(AbstractUser):
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
 
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
+
     def save(self, *args, **kwargs):
        
         self.is_admin = self.user_type == 'admin'
@@ -41,22 +49,42 @@ class User(AbstractUser):
         self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
-
     def __str__(self):
         return self.username
+
+
 class Item(models.Model):
-    
     user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField(default=1)
     submission_date = models.DateField(auto_now_add=True)
 
-    @property
-    def total_cost(self):
-        return Decimal(str(self.unit_cost)) * self.quantity
+class PPMP(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+
 
 
 
@@ -64,74 +92,90 @@ class Item(models.Model):
 
 class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     purpose = models.CharField(max_length=255, blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
+    is_approve = models.BooleanField(default=False)
     
-
-    # ... other fields and methods ...
-
-
+    is_seen=models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
+    cd_approve = models.BooleanField(default=False)
+    cd_seen=models.BooleanField(default=False)
+   
     @property
     def combined_id(self):
-        random_number = str(random.randint(10000000, 99999999))  # Generates an 8-digit number
+        random_number = str(random.randint(10000000, 99999999)) 
         return f"{str(self.pr_id)}_{random_number}"
 
     def __str__(self):
         return str(self.pr_id)
 
     
+
+    
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField(default=1)
-    
     submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))  # Add total_cost field
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        # Calculate total_cost before saving
-        self.total_cost = self.unit_cost * self.quantity
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.total_cost = self.unit_cost * self.quantity
+    #     super().save(*args, **kwargs)
         
+
 class Comment(models.Model):
     content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
-    pr_id = models.CharField(max_length=50)  # Add pr_id field
-
+    pr_id = models.CharField(max_length=50)  
     def __str__(self):
         return f"Comment by {self.pr_id} at {self.timestamp}"
     
 
-class CsvFile(models.Model):
-    CATEGORY = models.CharField(max_length=255)
-    ITEM_BRAND = models.CharField(max_length=255)
-    ITEMS = models.CharField(max_length=255)
-    UNIT = models.CharField(max_length=50)
-    PRICE = models.DecimalField(max_digits=10, decimal_places=2)
+class CSV(models.Model):
+    id = models.AutoField(primary_key=True)
+    Category = models.CharField(max_length=255)
+    Item_name = models.CharField(max_length=255)
+    Item_Brand = models.CharField(max_length=255)
+    Unit = models.CharField(max_length=50)
+    Price = models.DecimalField(max_digits=10, decimal_places=2)
 
-
-class Notification(models.Model):
-    username = models.CharField(max_length=255)
-    submission_date = models.DateField()
-    # Add other fields as needed
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return f"{self.username} - {self.submission_date}"
+        return self.name
+
 
 class VerificationCode(models.Model):
     email = models.EmailField()
     code = models.CharField(max_length=4)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return f'Code: {self.code} for {self.email}'
+
 
 class History(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -141,9 +185,6 @@ class History(models.Model):
     quantity = models.IntegerField()
     status_description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-  
-
-
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
     
@@ -156,8 +197,6 @@ class PurchaseRequestForm(models.Model):
      is_submitted = models.BooleanField(default=False)
      approved = models.BooleanField(default=False)
      disapproved = models.BooleanField(default=False)
-
-    
 def __str__(self):
          return self.item_name
 
@@ -167,10 +206,6 @@ class PurchaseRequest(models.Model):
     submission_date = models.DateField()
     item = models.CharField(max_length=100)
     quantity = models.IntegerField()
-    # Add other fields as needed
-
     def calculate_total_cost(self):
-        # Add your logic to calculate the total cost
-        return self.quantity * self.unit_cost  # Adjust this according to your actual calculation
-
+        return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)

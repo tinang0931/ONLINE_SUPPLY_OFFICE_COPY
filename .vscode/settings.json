@@ -1,3 +1,17 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "cSpell.words": [
+        "defaultdb",
+        "djongo",
+        "dsfsdfsdfdsfds",
+        "fddzjkfds",
+        "ofaxjigazohzueet",
+        "preqform",
+        "purchaseorder",
+        "serror",
+        "signout",
+        "taladro",
+        "uidb"
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }

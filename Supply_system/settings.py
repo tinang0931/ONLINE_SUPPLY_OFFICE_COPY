@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$0$us08g%r@266))x3tyr5_hg0c1&k6u9ak#2zaj=(!!i-d^r+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [' 192.168.110.27','172.28.20.119', '127.0.0.1']
+ALLOWED_HOSTS = ['172.28.52.133','172.28.20.119', '127.0.0.1']
 
 # Application definition
 
@@ -51,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+
 ]
 
 
@@ -152,7 +154,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # SMTP server for Gmail
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'rlphtzn@gmail.com'  # Your Gmail email address
-EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  # Your Gmail password or app-specific password
-
+EMAIL_HOST_USER = 'rlphtzn@gmail.com'  
+EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  
 AUTH_USER_MODEL = 'accounts.User'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
