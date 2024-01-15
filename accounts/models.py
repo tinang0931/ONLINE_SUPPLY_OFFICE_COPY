@@ -111,12 +111,6 @@ class Checkout(models.Model):
     def __str__(self):
         return str(self.pr_id)
 
-class PR(models.Model):
-    attachment = 
-
-      
-
-    
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
