@@ -139,7 +139,7 @@ def login(request):
             elif user.user_type == 'cd':
                 return redirect('cd')
             elif user.user_type == 'budget':
-                return redirect('bo')
+                return redirect('bohome')
             elif user.user_type == 'bac':
                 return redirect('bac_home')
             else:
@@ -227,12 +227,10 @@ def regular_user_only_view(request):
 @authenticated_user
 def history(request):
     user = request.user
-    all_checkouts = Checkout.objects.filter(user=user)
-    all_checkout_items = CheckoutItems.objects.filter(checkout__in=all_checkouts)
-    context = {
-        'checkout_items': all_checkout_items,
-    }
-    return render(request, 'accounts/User/history.html', context)
+    checkouts = Checkout.objects.filter(user=user)
+
+    
+    return render(request, 'accounts/User/history.html', {'checkouts': checkouts})
 
 
 @authenticated_user
@@ -581,53 +579,68 @@ def myppmp (request):
 
 
 def ppmp(request):
+    
     if request.method == 'POST':
-
-        item_name = request.POST.get(f'item')
-        item_brand = request.POST.get(f'item_brand')
-        unit = request.POST.get(f'unit')
-        estimate_budget = request.POST.get(f'estimate_budget')
-        jan = request.POST.get('jan')
-        feb = request.POST.get('feb')
-        mar = request.POST.get('mar')
-        apr = request.POST.get('apr')
-        may = request.POST.get('may')
-        jun = request.POST.get('jun')
-        jul = request.POST.get('jul')
-        aug = request.POST.get('aug')
-        sep = request.POST.get('sep')
-        oct = request.POST.get('oct')
-        nov = request.POST.get('nov')
-        dec = request.POST.get('dec')
-        price = request.POST.get(f'price')
-
-        CheckoutItems.objects.create(
+        new_checkout = Checkout.objects.create(
             user=request.user,
-            item=item_name,
-            item_brand_description=item_brand,
-            unit=unit,
-            estimate_budget=estimate_budget,
-            jan=jan,
-            feb=feb,
-            mar=mar,
-            apr=apr,
-            may=may,
-            jun=jun,
-            jul=jul,
-            aug=aug,
-            sep=sep,
-            oct=oct,
-            nov=nov,
-            dec=dec,
-            unit_cost=price
         )
+        items = request.POST.getlist('item')
+        item_brands = request.POST.getlist('item_brand')
+        units = request.POST.getlist('unit')
+        estimate_budgets = request.POST.getlist('estimate_budget')
+        jans = request.POST.getlist('jan')
+        febs = request.POST.getlist('feb')
+        mars = request.POST.getlist('mar')
+        aprs = request.POST.getlist('apr')
+        mays = request.POST.getlist('may')
+        juns = request.POST.getlist('jun')
+        juls = request.POST.getlist('jul')
+        augs = request.POST.getlist('aug')
+        seps = request.POST.getlist('sep')
+        octs = request.POST.getlist('oct')
+        novs = request.POST.getlist('nov')
+        decs = request.POST.getlist('dec')
+        prices = request.POST.getlist('price')
 
-        return redirect('ppmp')
+        
+
+        for i in range(len(items)):
+            CheckoutItems.objects.create(
+                checkout=new_checkout,
+                item=items[i],
+                item_brand_description=item_brands[i],
+                unit=units[i],
+                estimate_budget=estimate_budgets[i],
+                jan=jans[i],
+                feb=febs[i],
+                mar=mars[i],
+                apr=aprs[i],
+                may=mays[i],
+                jun=juns[i],
+                jul=juls[i],
+                aug=augs[i],
+                sep=seps[i],
+                oct=octs[i],
+                nov=novs[i],
+                dec=decs[i],
+                unit_cost=prices[i]
+            )
+
+        pr_id = new_checkout.combined_id
+
+        # Update the new_checkout object with the generated pr_id
+        new_checkout.pr_id = pr_id
+        new_checkout.save()
+       
+
+        return redirect('history')
+
+
 
     elif request.method == 'GET':
     
         items = Item.objects.all()
-
+    
     return render(request, 'accounts/User/ppmp.html', {'items': items})
 
 
@@ -676,7 +689,7 @@ class RequesterView(View):
                     total_cost = Decimal('0.00')
 
 
-                CheckoutItems.objects.create(
+                PR.objects.create(
                     checkout=new_checkout,
                     item=item,
                     item_brand_description=item_brand,
@@ -822,6 +835,7 @@ def update_item(request, id):
             Unit=unit,
             Price=price
         )
+        
         return redirect('bac_dashboard')
 
 def update(request, id):
@@ -845,6 +859,7 @@ def update(request, id):
            unit=unit,
            unit_cost=price
         )
+        
         return redirect('ppmp')
 
 def delete_category(request, Category):
@@ -854,8 +869,30 @@ def delete_category(request, Category):
 
 
 def bohome(request):
-    checkouts = CheckoutItems.objects.all()
-    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkouts})
+    checkouts = Checkout.objects.select_related('user').all()
+  
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'submission_date': checkout.submission_date,
+            'user': checkout.user,
+            'pr_id': checkout.pr_id,
+            'last_updated': checkout.last_updated,
+            'status': checkout.status,  
+            
+            'comment': checkout.comment,  # Replace with the actual attribute names
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        
+    }
+
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
+
     # checkouts = Checkout.objects.select_related('user').all()
     # comments = Comment.objects.all()
 
@@ -894,72 +931,72 @@ def bohome(request):
     # checkout_data = list(checkout_data_dict.values())
 
     # return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
-
-class PreqForm_boView(View):
-    template_name = 'accounts/Admin/Budget_Officer/preqform_bo.html'
-
-    def get(self, request):
-        items = CheckoutItems.objects.all()
-        return render(request, self.template_name, {'items': items})
-
-    def post(self, request, pr_id):
-        new_status = request.POST.get('new_status')
-  
-
-        if pr_id and new_status:
-            try:
-                checkout = Checkout.objects.get(pr_id=pr_id)
-
-                checkout.date_updated = timezone.now()
-                checkout.is_seen = True
-
-                # Set is_approve and is_disapprove to False initially
-                checkout.is_approve = False
-
-                if new_status.lower() == 'true':
-                    checkout.is_approve = True
-
-                checkout.save()
-
-                return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
-            except Checkout.DoesNotExist:
-                return HttpResponse("Checkout not found.")
-            except Exception as e:
-                print(f"Error: {e}")
-                return HttpResponse("An error occurred while processing the form.")
-        else:
-            return HttpResponse("PR ID or new status not found in the form data.")
-        
-
-def update_checkout_status(request, pr_id):
+def bo_approve(request, pr_id):
     if request.method == 'POST':
-        try:
-            # Convert new_status to boolean
-            new_status = request.POST.get("new_status")
-            new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
-            print(new_status)
+        new_status = request.POST.get('new_status')
+        comment_content = request.POST.get('comment_content')
 
-            # Update the status of the checkout directly
-            checkout = get_object_or_404(Checkout, pr_id=pr_id)
-            checkout.status_update_date = timezone.now()
-            checkout.is_approve = new_status
-          
-            checkout.is_seen = True  # Mark as seen when the status is updated
-            checkout.save()
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        estimate = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
 
-            # Redirect after processing
-            return redirect(reverse('preqform_bo', kwargs={'pr_id': pr_id}))
-        except Checkout.DoesNotExist:
-            return HttpResponse("Checkout not found.")
-        except Exception as e:
-            # Handle exceptions, log errors, etc.
-            print(f"Error: {e}")
-            return HttpResponse("An error occurred while processing the form.")
-    else:
-        return HttpResponse("Invalid request method.")        
-        
-        
+        checkout = Checkout.objects.get(pr_id=pr_id)
 
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+            estimate_budget=estimate,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,
+            nov=nov,
+            dec=dec,
+            
+        )
+
+        # Update Checkout model
+        Checkout.objects.filter(pr_id=pr_id).update(
+            status=new_status,
+            comment=comment_content
+        )
+
+        return redirect('bohome')
+
+    elif request.method == 'GET':
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkouts': checkouts,
+            'checkout_items': checkout_items,
+            'pr_id': pr_id,
+     }
+
+    return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+
+   
 
 @authenticated_user
 def purchaseorder(request):

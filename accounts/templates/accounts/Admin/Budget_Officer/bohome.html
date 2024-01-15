@@ -45,49 +45,43 @@
         <th class="text-center">Date Requested</th>
         <th class="text-center">Requests for Approval</th>
         <th class="status">Status</th>
-        <th class="text-center">Date</th>
         <th class="text-center">Comment</th> 
       </tr>
     </thead>
     <tbody>
       {% for checkout in checkouts %}
-        <tr>
-          <td class="text-center">
-            {{ checkout.submission_date }}
-          </td>
-          <td>
-            <a href="{% url 'preqform_bo'  %}">
-              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-            </a>
-          </td>
-          
-          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white">
-            {% if checkout.is_seen %}
-              {% if checkout.is_approve %}
-                Approved
-              {% else %}
-                Declined
-              {% endif %}
-            {% else %}
-              Waiting for Approval
-            {% endif %}
-          </td>
-          <td>
-            {{ checkout.status_update_date|default:"Not available" }}
-          </td>
-          <td>
-            {% if checkout.pr_id == preqform_bo.pr_id %}
-              {{ checkout.comment|default:"No comment" }}
-            {% else %}
-              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
-              No relevant comment available
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
+      <tr>
+        <td class="text-center">
+          {{ checkout.submission_date }}
+        </td>
+        <td>
+          <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a ppmp request for approval on {{ checkout.submission_date }}
+          </a>
+        </td>
+    
+        <td >
+          {% if checkout.status %}
+              {{ checkout.status }}
+          {% elif checkout.new_status %}
+              {{ checkout.new_status }}
+          {% else %}
+              Pending
+          {% endif %}
+      </td>
+        <td class="text-center">
+          {% if checkout.comment %}
+            {{ checkout.comment }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    
+  </tbody>
+  
+  
   </table>
 </div>
-</div>
+
 
 {% endblock %}
