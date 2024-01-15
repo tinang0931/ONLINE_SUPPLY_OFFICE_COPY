@@ -15,6 +15,51 @@
     .table-bordered th {
         background-color: #1c96c5;
     }
+    .ctu_logo {
+        margin-top: -13%;
+    }
+    .welcome {
+        margin-left: 10%;
+    }
+    .bckbtn {
+  display: inline-block;
+  position: relative;
+}
+
+.bckbtn a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.bckbtn img {
+  width: 25px;  /* Adjust the width of the image as needed */
+  height: 25px; /* Adjust the height of the image as needed */
+  transition: all 0.3s ease-in-out;
+}
+
+.bckbtn:hover img {
+  transform: translateX(-5px);
+  filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
+}
+
+.bckbtn::before {
+  content: "";
+  position: absolute;
+  top: -5px; /* Adjust the position higher or lower based on your preference */
+  right: 0;
+  bottom: -5px; /* Adjust the bottom position as needed */
+  left: 0;
+  background-color: #6a89a5; /* Set the background color */
+  border-radius: 20px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.bckbtn:hover::before {
+  opacity: 1;
+}
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -23,7 +68,7 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class=""> CATALOGUE</h1>
+        <h1 style="margin-left: 45%;"> CATALOGUE</h1>
     </div>
 
     <div class="row">
@@ -36,7 +81,7 @@
 
         
 
-        <div class="bckbtn" ><a href="{% url 'ppmp' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+        <div class="bckbtn" ><a href="{% url 'ppmp' %}"><img src="{% static 'images/previous_189252.png' %}" ></a></div>
 
         <div>
 
@@ -64,7 +109,7 @@
 
                     {% for p in items %}
 
-                    <form action="{% url 'request' %}" method="post">
+                    <form action="{% url 'catalogue' %}" method="post">
                         {% csrf_token %}
                         <tr class="item-row" id="{{ p.id }}">
                             <td>{{ p.Item_name }}
@@ -82,9 +127,9 @@
                             </td>
                             <td>
                                 {% if item_submitted %}
-                                <button type="button" class="btn btn-success" disabled>Check</button>
                             {% else %}
-                                <button type="submit" class="btn btn-primary">+</button>
+                            <button type="submit"> ➕
+                            </button>
                             {% endif %}
                             </td>
 
@@ -101,6 +146,46 @@
 
 
     </div>
+    <style>
+       button {
+  padding: 5px 10px; /* Adjusted padding */
+  border: unset;
+  border-radius: 15px;
+  color: #212121;
+  z-index: 1;
+  background: #e8e8e8;
+  position: relative;
+  font-weight: 1000;
+  font-size: 14px; /* Adjusted font size */
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #1c96c5;
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+}
+
+button:hover {
+  color: #e8e8e8; /* Change color to white when hovered */
+}
+
+button:hover::before {
+  width: 100%;
+}
+    </style>
 
 
 
