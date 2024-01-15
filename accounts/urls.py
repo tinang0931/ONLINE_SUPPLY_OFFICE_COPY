@@ -45,7 +45,7 @@ urlpatterns = [
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
-   path('preqform_cd/<str:pr_id>/', PreqForm_cdView.as_view(), name='preqform_cd'),
+   path('preqform_cd/<str:pr_id>/', views.preqform_cd, name='preqform_cd'),
    path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('admin_home/',views.admin_home, name='admin_home'),
@@ -69,4 +69,5 @@ urlpatterns = [
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
+   path('purchase/', views.purchase, name='purchase'),
 ]

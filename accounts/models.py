@@ -131,8 +131,10 @@ class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
-    status = models.CharField(max_length=20, default="Pending")
-    comment = models.TextField(blank=True, null=True) 
+    bo_status = models.CharField(max_length=20, default="Pending")
+    bo_comment = models.TextField(blank=True, null=True) 
+    cd_status = models.CharField(max_length=20, default="Pending")
+    cd_comment = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now_add=True)
 
 

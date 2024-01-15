@@ -60,18 +60,25 @@
           </a>
         </td>
     
-        <td >
-          {% if checkout.status %}
-              {{ checkout.status }}
+        <td class="text-center">
+          {% if checkout.bo_status %}
+              <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                  {{ checkout.bo_status }}
+              </span>
           {% elif checkout.new_status %}
-              {{ checkout.new_status }}
+              <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                  {{ checkout.new_status }}
+              </span>
           {% else %}
-              Pending
+              <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+                  Pending
+              </span>
           {% endif %}
       </td>
+      
         <td class="text-center">
-          {% if checkout.comment %}
-            {{ checkout.comment }}
+          {% if checkout.bo_comment %}
+            {{ checkout.bo_comment }}
           {% endif %}
         </td>
       </tr>
