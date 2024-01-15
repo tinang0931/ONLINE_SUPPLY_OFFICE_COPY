@@ -37,14 +37,13 @@
 
 </style>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+  <h1 class="pr text-center pt-4"> PPMP REQUESTS FOR APPROVAL</h1>
 
   <table class="table table-bordered">
     <thead>
       <tr>
         <th class="text-center">Date Requested</th>
-        <th class="text-center">Requests</th>
-        <th class="text-center">Purpose</th>
+        <th class="text-center">Requests for Approval</th>
         <th class="status">Status</th>
         <th class="text-center">Date</th>
         <th class="text-center">Comment</th> 
@@ -57,13 +56,11 @@
             {{ checkout.submission_date }}
           </td>
           <td>
-            <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
+            <a href="{% url 'preqform_bo'  %}">
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-          <td>
-            {{ checkout.purpose }}
-          </td>
+          
           <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white">
             {% if checkout.is_seen %}
               {% if checkout.is_approve %}
