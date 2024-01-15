@@ -121,9 +121,9 @@ table {
             p {
             margin: 0;
             padding: 0;
-            align-content: center;
-            justify-content: center;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             }
 
             .container-fluid {
@@ -210,19 +210,20 @@ table {
 }
         
 .input-box input{
-    width: 150%;
-    height: 55px;
+    width: 46%;
+    height: 50px;
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.97);
     border-radius: 5px;
     border-width: 1px;
+    position: absolute;
 
 }
 
 .send-icon {
     position: fixed;
-    top: 92%;
+    top: 92.4%;
     left: 63%;
     width: 35px;
     height: auto;
@@ -231,6 +232,7 @@ table {
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
+    display: fixed;
 }
 
   .send-icon i {
@@ -238,15 +240,15 @@ table {
   }
 
   .footer {
+    position: fixed;
     background-color: rgba(1, 33, 67, 0.9);
     text-align: center;
-    width: 30%;
+    margin-top: auto;
+    width: 36.5%;
     height: 10%;
     bottom: 0;
     -webkit-user-modify: read-only;
-    position: fixed;
     z-index: 2;
-    position:fixed;
 }
 .p {
     size: 12px;
@@ -263,7 +265,8 @@ justify-content: center;
 align-items: center;
 margin: 0 auto;
 margin-top: 10px; /* Adjusted margin */
-position: ceneter;
+position: center;
+min-height: 100%;
 
 }
 
@@ -279,7 +282,8 @@ position: ceneter;
 .footer-image {
     display: block;
     margin: auto;
-    width: 115%; /* Set the width you desire */
+    height: 100%;
+    width: auto; 
 }
 
 .footer-container:after {
@@ -306,7 +310,7 @@ position: ceneter;
     }
 
     .input-box, .icons-container {
-        display: none; /* Hide the input box and icons in the footer when printing */
+        display: none;
     }
 }
 
@@ -314,6 +318,8 @@ position: ceneter;
     display: flex;
     justify-content: flex-end; /* Align icons to the right side */
     position: fixed;
+    padding-left: 70px;
+    padding-top: 12px;
 }
 
 .icons-container {
@@ -467,27 +473,22 @@ position: ceneter;
                                 </div>
                                 <footer class="footer">
                                     <div class="input-box">
-                                        <input placeholder="Update the purchase request status..." name="comment_content">
+                                        </a><input placeholder="Update the purchase request status..." name="comment_content">
                                     </div>
                                             <div class="send-icon">
                                                 <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i>Send</button>
                                             </div>
                                             <div class="icons-group">
-                                                <div class="icons-container">
-                                                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                                        <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
-                                                       </a>
-                                                       <a href="#" title="Select" class="icon-link">
-                                                        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
-                                                       </a>
-                                                       <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                                                           <option value="a4">A4</option>
-                                                           <option value="legal">Legal</option>
-                                                        </div>
-                                                    </div>
-                                                    </a>
+                                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                                    <img class="icon" src="{% static 'svg/download.svg' %}" alt="Download" onclick="downloadPDF()">
+                                                </a>
+                                                <a href="#" title="Select" class="icon-link" onclick="toggleSelect()">
+                                                    <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
+                                                </a>
+                                                <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                                    <option value="a4">A4</option>
+                                                    <option value="legal">Legal</option>
                                                 </select>
-                                                </div>
                                             </div>
                                         </div>                                     
                                     </div>
