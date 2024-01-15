@@ -43,7 +43,7 @@ import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
-
+from .models import CheckoutItems
 
 
 
@@ -1178,3 +1178,26 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+def checkout_items_view(request):
+    checkout_items = CheckoutItems.objects.all()
+    context = {'checkout_items': checkout_items}
+    return render(request, 'attachment/checkout_items.html', context)
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import PurchaseRequestForm
+from .models import PurchaseRequest
+
+def request_view(request):
+    if request.method == 'POST':
+        form = PurchaseRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Your additional logic here
+            return redirect('success_page')  # Redirect to a success page or another view
+    else:
+        form = PurchaseRequestForm()
+
+    context = {'form': form}
+    return render(request, 'history.html', context)

@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib import admin
 from . import views 
 from .views import *
-
+from .views import checkout_items_view
 
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
