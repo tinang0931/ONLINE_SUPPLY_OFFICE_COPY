@@ -46,6 +46,10 @@
                 <br><br>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
+                  <i class='bx bxs-folder-open' ></i> <span id="about" class="hidden-name">PPMP</span>
+                </a>
+
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
                   <i class='bx bxs-shopping-bag' ></i> <span id="about" class="hidden-name">Purchase Request</span>
                 </a>
                
@@ -207,6 +211,9 @@
         {% endblock %}
 
         {% block bodashboard %}
+        {% endblock %}
+
+        {% block borequest %}
         {% endblock %}
 
     </main>

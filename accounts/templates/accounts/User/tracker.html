@@ -30,40 +30,47 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
-            <th>Purchase Request No.</th>
-            <th>Purpose </th>
-            <th>Forms</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>comment</th>
-            
-          </tr>
+            <th rowspan="2" class="text-center">PPMP REQUEST NO.</th>
+            <th colspan="2" class="text-center">STATUS</th>
+            <th colspan="2" class="text-center">COMMENT</th>
+            <th rowspan="2" class="text-center">LAST UPDATED</th>
+        </tr>
+        <tr>
+            <th class="text-center">BUDGET OFFICER</th>
+            <th class="text-center">CAMPUS DIRECTOR</th>
+            <th class="text-center">BUDGET OFFICER</th>
+            <th class="text-center">CAMPUS DIRECTOR</th>
+        </tr>
+        
+          
         </thead>
         <tbody>
-          {% for item in feedback %}
-    <tr>
-        <td>{{ item.pr_id }}</td>
-        
-        {% for i in checkout_info %}
-            {% if i.pr_id == item.pr_id %}
-                <td>{{ i.purpose }}</td>
-                
-            {% endif %}
-        {% endfor %}
 
-        <td>Purchase Request Approval</td>
-        <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: rgb(243, 233, 233);">{{ item.content }}</td>
-        <td>{{ item.timestamp }}</td>
-    </tr>
-{% endfor %}
-
-          {% if feedback|length == 0 %}
+        {% for p in checkouts %}
             <tr>
-                <td colspan="3">
-                    <span >NO REQUEST YET</span>
-                </td>
+                <td> {{ p.pr_id }}</td>
+                <td class="text-center">
+                  {% if p.bo_status %}
+                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.bo_status }}</span>
+                  {% else %}
+                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                  {% endif %}
+              </td>
+              <td class="text-center">
+                  {% if p.cd_status %}
+                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.cd_status }}</span>
+                  {% else %}
+                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                  {% endif %}
+              </td>
+              
+              
+                <td class="text-center"> {{ p.bo_comment }}</td>
+                <td class="text-center"> {{ p.cd_comment }}</td>
+                <td> {{ p.last_updated }}</td>
+                
             </tr>
-        {% endif %}
+        {% endfor %}
 
         </tbody>
       </table>
