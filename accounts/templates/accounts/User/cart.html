@@ -126,6 +126,12 @@ p {
             <td class="item_quantity text-center">{{ item.quantity }}</td>
             <td class="item_total_cost text-center">{{ item.total_cost }}</td>
             <td class="text-center"> 
+              <form method="post" action="{% url 'attach_file' item.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="attached_file" style="display: none;" onchange="this.form.submit()">
+        <img src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;" onclick="document.getElementsByName('attached_file')[0].click()">
+    </form>
+
                 <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
             </td>
 
