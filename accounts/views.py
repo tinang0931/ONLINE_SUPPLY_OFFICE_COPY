@@ -36,7 +36,6 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .models import User
-from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
@@ -1190,10 +1189,6 @@ def checkout_items_view(request):
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
 
-# views.py
-from django.shortcuts import render, redirect
-from .forms import PurchaseRequestForm
-from .models import PurchaseRequest
 
 def request_view(request):
     if request.method == 'POST':
