@@ -18,33 +18,6 @@
     tr:hover .item-actions {
         display: flex;
     }
-    
-    .custom-dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .custom-dropdown select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        width: 85px; 
-        padding:8px;
-        border: 2px solid transparent;
-        cursor: pointer;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 8 8"><path fill="black" d="M0 0l4 4 4-4H0z"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 25px center;
-        transition: border-color 0.3s ease;
-        vertical-align: middle;
-    }
-
-    .custom-dropdown select:hover{
-        border-color: #1c96c5;
-        
-
-    }
-
 
     .additem {
         margin-left: 10px;
@@ -271,35 +244,12 @@
     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
-
-
-    <div class="custom-dropdown mx-auto float-right">
-        <div>
-            
-        </div>
-        <label for="year_select"></label>
-        <span id="selectedYearIndicator"></span>
-        <select id="year_select" class="form-control" onchange="filterTableByYear()">
-        <script>
-                const currentYear = new Date().getFullYear();
-                const startYear = 2022;
-                const endYear = 2030;
-                
-                for (let year = startYear; year <= endYear; year++) {
-                
-                    
-                    document.write(`<option value="${year}">${year}</option>`);
-                }
-            </script>
-        
-        </select>
-    
-    </div>
 
     <div class="container">
         <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
@@ -324,11 +274,11 @@
     </div>
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
-            <h2> TOTAL ESTIMATED BUDGET : 1,000,000 </h2>
+            <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
         </div>
 
         <div class="col-md-1 ml-auto text-left">
-            <h4> TOTAL : 100,000 </h4>
+            <h5> TOTAL : 100,000 </h5>
         </div>
     </div>
 
@@ -469,150 +419,5 @@
 
     </div>
 </div>
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <form action="{% url 'addItem' %}" method="post">
-                    {% csrf_token %}
-
-
-
-                    <div class="form-group">
-                        <label for="Item">Item</label>
-                        <input type="text" class="form-control" id="Item" name="item" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Item_Brand_Description">Item Brand/Description</label>
-                        <input type="text" class="form-control" id="Item_Brand_Description"
-                            name="item_Brand_Description" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit</label>
-                        <input type="text" class="form-control" id="Unit" name="unit" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit Cost</label>
-                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                    </div>
-
-
-
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-
-    function editItem(itemId) {
-    
-        var row = document.getElementById(itemId);
-
-        var editIcon = row.querySelector('.edit-icon');
-        var saveButton = row.querySelector('.save-icon');
-        var cancelButton = row.querySelector('.cancel-icon');
-        var editInputs = row.querySelectorAll('.edit-input');
-        var editableSpans = row.querySelectorAll('.editable');
-
-        editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  
-        cancelButton.style.display = 'inline-block';  
-
-    
-        editInputs.forEach(function (input) {
-            input.style.display = 'block'; 
-        });
-
-    
-        editableSpans.forEach(function (span) {
-            span.style.display = 'none';  
-        });
-
-        cancelButton.addEventListener('click', function () {
-        
-            editIcon.style.display = 'inline-block';  
-            saveButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-            editInputs.forEach(function (input) {
-                input.style.display = 'none';
-            });
-            editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  
-            });
-        });
-
-    
-        saveButton.addEventListener('click', function () {
-            
-            var form = row.querySelector('form');
-            form.submit();
-        });
-    }
-
-    $(document).ready(function () {
-
-        function updateEstimateBudgetForRow(row) {
-
-            var unitPrice = parseFloat(row.find('[name="price"]').val());
-
-
-            var totalValue = 0;
-
-
-            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
-                var monthValue = parseFloat($(this).val()) || 0;
-                totalValue += monthValue;
-            });
-
-
-            var estimateBudget = totalValue * unitPrice;
-
-
-            row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
-        }
-
-
-        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-
-
-        $('[name="price"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-    });
-
-
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 
 {% endblock %}
