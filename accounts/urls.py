@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views 
 from .views import *
-
+from .views import checkout_items_view
 
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
@@ -48,8 +48,9 @@ urlpatterns = [
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
+   path('cdppmp/',views.cdppmp, name='cdppmp'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
-   path('preqform_cd/<str:pr_id>/', PreqForm_cdView.as_view(), name='preqform_cd'),
+   path('preqform_cd/<str:pr_id>/', views.preqform_cd, name='preqform_cd'),
    path('resolution/',views.resolution, name='resolution'),
    path('bac_dashboard/',views.bac_dashboard, name='bac_dashboard'),
    path('admin_home/',views.admin_home, name='admin_home'),
@@ -65,13 +66,14 @@ urlpatterns = [
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bo/',views.bo, name='bo'),
    path('boabout/',views.boabout, name='boabout'),
+   path('borequest/',views.borequest, name='borequest'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('bohome/',views.bohome, name='bohome'),
-   path('preqform_bo/', PreqForm_boView.as_view(), name='preqform_bo'),
-   path('approve_checkout/', views.update_checkout_status, name='approve_checkout'),
+   path('bo_approve/<str:pr_id>/', views.bo_approve, name='bo_approve'),
    path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('delete/<int:id>/', views.delete, name='delete'),
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
+   path('purchase/', views.purchase, name='purchase'),
 ]

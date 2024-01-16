@@ -328,8 +328,6 @@
             color: #ffa125e3;
             background-color: #000000e3;
         }
-
-       
     </style>
 
 <body>
@@ -368,42 +366,44 @@
                     <p><strong> Projects, Programs and Activities (PAPs)</strong></p>
                 </div>
 
-                <table class="table  table-bordered">
-                    <thead>
-                        <tr>
-                        <tr>
-                            <th rowspan='2'>Item Name</th>
-                            <th rowspan='2'> Brand / Description</th>
-                            <th rowspan='2'>Unit</th>
-                            <th rowspan='2'>Estimated Budget</th>
-                            <th colspan="12">Monthly Quantity Requirement</th>
-                            <th rowspan='2'>Unit Price</th>
-                           
 
-                        </tr>
-                        <tr>
-                            <th>Jan</th>
-                            <th>Feb</th>
-                            <th>Mar</th>
-                            <th>April</th>
-                            <th>May</th>
-                            <th>June</th>
-                            <th>July</th>
-                            <th>Aug</th>
-                            <th>Sept</th>
-                            <th>Oct</th>
-                            <th>Nov</th>
-                            <th>Dec</th>
-                        </tr>
+                <form action="{% url 'bo_approve' pr_id=pr_id %}" method="post" id="form_id">
+                    {% csrf_token %}
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tbody>
-                        {% for p in items %}
+                    <table class="table  table-bordered">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th rowspan='2'>Item Name</th>
+                                <th rowspan='2'> Brand / Description</th>
+                                <th rowspan='2'>Unit</th>
+                                <th rowspan='2'>Estimated Budget</th>
+                                <th colspan="12">Monthly Quantity Requirement</th>
+                                <th rowspan='2'>Unit Price</th>
 
-                        <form action="{% url 'ppmp' %}" method="post">
-                            {% csrf_token %}
+
+
+                            </tr>
+                            <tr>
+                                <th>Jan</th>
+                                <th>Feb</th>
+                                <th>Mar</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>Aug</th>
+                                <th>Sept</th>
+                                <th>Oct</th>
+                                <th>Nov</th>
+                                <th>Dec</th>
+                            </tr>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in checkout_items %}
+
                             <tr class="item-row" id="{{ p.id }}">
 
                                 <td>
@@ -426,6 +426,8 @@
                                         style="display: none">
                                 </td>
 
+
+
                                 <td>{{ p.estimate_budget }}</td>
                                 <td>{{ p.jan }}</td>
                                 <td>{{ p.feb }}</td>
@@ -439,10 +441,6 @@
                                 <td>{{ p.oct }}</td>
                                 <td>{{ p.nov }}</td>
                                 <td>{{ p.dec }}</td>
-
-
-                               
-
                                 <td>
                                     <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
                                     <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
@@ -450,72 +448,68 @@
                                         style="display: none">
                                 </td>
 
+                                <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
+                                <input type="hidden" name="jan" value="{{ p.jan }}">
+                                <input type="hidden" name="feb" value="{{ p.feb }}">
+                                <input type="hidden" name="mar" value="{{ p.mar }}">
+                                <input type="hidden" name="apr" value="{{ p.apr }}">
+                                <input type="hidden" name="may" value="{{ p.may }}">
+                                <input type="hidden" name="jun" value="{{ p.jun }}">
+                                <input type="hidden" name="jul" value="{{ p.jul }}">
+                                <input type="hidden" name="aug" value="{{ p.aug }}">
+                                <input type="hidden" name="sep" value="{{ p.sep }}">
+                                <input type="hidden" name="oct" value="{{ p.oct }}">
+                                <input type="hidden" name="nov" value="{{ p.nov }}">
+                                <input type="hidden" name="dec" value="{{ p.dec }}">
+
+
+
                             </tr>
 
                             {% endfor %}
-                        </form>
-                    </tbody>
-                    </tbody>
-                </table>
+
+                        </tbody>
+
+                    </table>
 
 
 
-                <div>
-                    <br>
-                    <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                    <div>
+                        <br>
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
 
 
-                    </form> <!-- Close the form tag here -->
-                    <footer class="footer">
-
-                        <div class="icons-container">
-                            <form id='form_status' method="post" action="{% url 'approve_checkout' %}">
-                                {% csrf_token %}
+                        <footer class="footer">
+                            <div class="icons-container">
+                                <div class="input-box">
+                                    <input placeholder="Type your comment" name="comment_content" id="comment_input"
+                                        required>
+                                </div>
                                 <input id="new_status_id" type="hidden" name="new_status">
                                 <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
                                 <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-                            </form>
-                            <script>
-                                function btn_click(status) {
-                                    document.getElementById('new_status_id').value = status
-                                    form = document.getElementById('form_status')
-                                    form.submit()
-                                }
-                            </script>
 
-
-                            <a href="#" title="Download" class="icon-link">
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="javascript:window.print()" title="Print" class="icon-link">
-                                <i class="fas fa-print"></i>
-                            </a>
-
-                            <div class="input-box">
-                                <input placeholder="Type your comment" name="comment_content">
-                            </div>
-                            <div class="send-icon">
-                                <button type="submit"><i class="fas fa-paper-plane"
-                                        style="margin-top: 3px;"></i></button>
-                            </div>
-                            </form>
-
-                        </div>
-
-
-                    </footer>
-                    <script>
-                        function setAction(action) {
-                            document.getElementById('action').value = action;
-                            document.forms[0].submit();  // Assuming the form is the first form on the page
-                        }
-                    </script>
-
-                </div>
-
-
+                                
+                                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                        <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
+                                            onclick="downloadPDF()">
+                                    </a>
+                                    <a href="#" title="Select" class="icon-link">
+                                        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
+                                            onclick="toggleSelect()">
+                                    </a>
+                                    <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                        <option value="a4">A4</option>
+                                        <option value="legal">Legal</option>
+                                </div>
+                        </footer>
+                    </div>
+                </form>
             </div>
+
+
         </div>
+    </div>
     </div>
     <div> &nbsp</div>
     <div> &nbsp</div>
@@ -524,7 +518,69 @@
     <div> &nbsp</div>
     <div> &nbsp</div>
     <div> &nbsp</div>
-</body>
+
+    <script>
+        let selectedPaperSize = 'a4';
+    
+        function changePaperSize() {
+            selectedPaperSize = document.getElementById('paperSize').value;
+        }
+        function downloadPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+            const footer = document.querySelector('.footer');
+            footer.style.display = 'none';
+    
+            const options = {
+                filename: 'PPMP.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'landscape' },
+                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+            };
+    
+            html2pdf(body, options);
+    
+            // Reset page breaks after generating PDF
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+        }
+    </script>
+    
+    <script>
+        function toggleSelect() {
+            var selectElement = document.getElementById("paperSize");
+            selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+        }
+    </script>
+
+    <script>
+        function btn_click(approve) {
+            // Get the comment input element by its ID
+            var commentInput = document.getElementById('comment_input');
+
+            // Check if the comment is not empty
+            if (commentInput.value.trim() === "") {
+                alert("Please provide a comment.");
+                return;
+            }
+
+            // Get the hidden input element by its ID
+            var newStatusInput = document.getElementById('new_status_id');
+
+            // Set the value based on the 'approve' parameter
+            newStatusInput.value = approve ? 'approved' : 'disapproved';
+
+            // Submit the form programmatically
+            var form = document.getElementById('form_id');
+            form.submit();
+        }
+    </script>
 
 </html>
 
