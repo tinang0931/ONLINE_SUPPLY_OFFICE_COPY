@@ -722,7 +722,7 @@ def requester (request):
     elif request.method == 'GET':
         items = PR_Items.objects.all()
 
-        return render(request, 'accounts/User/requester.html', {'items': items})
+        return render(request, 'accounts/User/pr_items.html', {'items': items})
 
 @authenticated_user
 def item_list(request):
