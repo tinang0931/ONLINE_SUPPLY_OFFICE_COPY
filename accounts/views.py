@@ -598,7 +598,6 @@ def ppmp(request):
 
 from django.db import transaction
 
-@transaction.atomic
 def purchase(request):
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
@@ -610,9 +609,13 @@ def purchase(request):
 
         try:
             with transaction.atomic():
+                new_checkout = PR_ID.objects.create(
+                user=request.user,
+        )
                 
                 metadata = FileMetadata.objects.create(filename=uploaded_file.name)
                 PR.objects.create(
+                    checkout=new_checkout,
                     metadata=metadata,
                     file=uploaded_file,
                     item=item,
@@ -621,6 +624,11 @@ def purchase(request):
                     unit_cost=price,
                     purpose=purpose
                 )
+
+                pr_id = new_checkout.combined_id
+
+                new_checkout.pr_id = pr_id
+                new_checkout.save()
 
               
                 PR_Items.objects.all().delete()
