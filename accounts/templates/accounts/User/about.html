@@ -3,6 +3,11 @@
 {% load static %}
 
 {% block about %}
+<style>
+  .logout-link, .pro, .account_type {
+    display: none;
+}
+</style>
 
         <div class="container-fluid" style=" height: 68vh; overflow-y: auto; overflow-x: hidden; ">
           <div class="container">
@@ -32,13 +37,13 @@
         <div class="row">
           <div class="col-md-4">
             <h5>Contact Us:</h5>
-            <p>Cellphone # :093456738652</p>
-            <p>Telephone # : (02) 123-4567</p>
+            <p class="cp-no">Cellphone # :093456738652</p>
+            <p class="tp-no">Telephone # : (02) 123-4567</p>
       
           </div>
           <div class="col-md-4">
             <h5>Mail Us:</h5>
-            <p>inventory@gmail.com</p>
+            <a class="mail" href="mailto:inventory@gmail.com">inventory@gmail.com</a>
             
           </div>
           <div class="col-md-4">
@@ -56,6 +61,12 @@
                 <i class="fab fa-youtube"></i>
             </a>
         </div>
+        <style>
+          .mail {
+            text-decoration: none;
+            color: white;
+          }
+        </style>
         
 
           <p></p>

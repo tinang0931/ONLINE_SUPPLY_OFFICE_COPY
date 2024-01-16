@@ -5,27 +5,42 @@
 {% block cart %}
 
 <style>
-  .primary-btn {
-      background-color: rgb(52, 129, 211); 
-      color: #ffffff; 
-      padding: 10px 20px; 
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 120px;
-  }
+button {
+  display: flex;
+  height: 2em;
+  width: 90px;
+  align-items: center;
+  justify-content: center;
+  background-color: #6a89a5; /* Set the desired button color */
+  border-radius: 20px;
+  letter-spacing: 1px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  border: none;
+  color: #fff; /* Set the text color */
+}
 
-  .primary-btn:hover {
-      background-color: #65a2e2; /
-  }
-  
-  .button, input, optgroup, select, textarea {
-    margin: 0;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    color: rgb(35, 91, 245);
-    text-decoration: underline;
+button > svg {
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 20px;
+  transition: all 0.4s ease-in;
+}
+
+button:hover > svg {
+  font-size: 1.2em;
+  transform: translateX(-5px);
+}
+
+button:hover {
+  box-shadow: 5px 5px 20px #d1d1d1, -5px -5px 20px #ffffff; /* Adjusted the shadow */
+  transform: translateY(-2px);
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  text-align: left;
 }
 
 p {
@@ -69,18 +84,23 @@ p {
   .cart_table tbody tr td {
     vertical-align: middle;
   }
+
 </style>
 
 
-<form action="{% url 'requester' %}" method="post">
-    {% csrf_token %} 
+<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
 
 <div class="container" style="text-align: center;">
         <h1 class="title" style="margin-top: 50px; margin-bottom: 20px; margin-left: 900px;">My Purchase Request</h1>
 </div>   
   <div>
     <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
-      <div class="bckbtn" ><a href="{% url 'request' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+      <div class="bckbtn" ><a href="{% url 'myppmp' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+      <button>
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+        <span>Back</span>
+      </button>
       <table class="cart_table" id="create_request_table" style="background-color: none; ">
         <thead style="background-color: rgba(0, 50, 102, 0.8);    font-size: 1.2rem; font-family: sans-serif; color: rgb(246, 239, 239); text-align: center; height: 3rem; border: 0.5px solid #060000">
           <tr>
@@ -192,9 +212,9 @@ p {
                         <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="file" name="file">
+    <button type="submit">➕</button>
+</form>
                     </div>
                 </div>
             </div>
