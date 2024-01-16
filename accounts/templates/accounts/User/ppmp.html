@@ -18,19 +18,97 @@
     tr:hover .item-actions {
         display: flex;
     }
+    
+    .custom-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .custom-dropdown select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 85px; 
+        padding:8px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 8 8"><path fill="black" d="M0 0l4 4 4-4H0z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 25px center;
+        transition: border-color 0.3s ease;
+        vertical-align: middle;
+    }
+
+    .custom-dropdown select:hover{
+        border-color: #1c96c5;
+        
+
+    }
+
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
+
+    <div class="custom-dropdown mx-auto float-right">
+        <div>
+            
+        </div>
+        <label for="year_select"></label>
+        <span id="selectedYearIndicator"></span>
+        <select id="year_select" class="form-control" onchange="filterTableByYear()">
+        <script>
+                const currentYear = new Date().getFullYear();
+                const startYear = 2022;
+                const endYear = 2030;
+                
+                for (let year = startYear; year <= endYear; year++) {
+                
+                    
+                    document.write(`<option value="${year}">${year}</option>`);
+                }
+            </script>
+        
+        </select>
+    
+    </div>
+
     <div class="container">
         <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
+
+    <div class="row">
+    
+    </div>
+
+    <div class="row">
+    
+    </div>
+
+    <div class="table-responsive">
+
+    </div>
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+        aria-hidden="true">
+    
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
     <div class="row">
         <div class="col-md-1 mb-0">
@@ -54,11 +132,11 @@
 
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
+            <h2> TOTAL ESTIMATED BUDGET : 1,000,000 </h2>
         </div>
 
         <div class="col-md-1 ml-auto text-left">
-            <h5> TOTAL : 100,000 </h5>
+            <h4> TOTAL : 100,000 </h4>
         </div>
     </div>
 
@@ -248,48 +326,45 @@
 <script>
 
     function editItem(itemId) {
-        // Assuming each row has a unique identifier, you can use it to target specific elements
+    
         var row = document.getElementById(itemId);
 
-        // Toggle visibility of elements
         var editIcon = row.querySelector('.edit-icon');
         var saveButton = row.querySelector('.save-icon');
         var cancelButton = row.querySelector('.cancel-icon');
         var editInputs = row.querySelectorAll('.edit-input');
         var editableSpans = row.querySelectorAll('.editable');
 
-        // Show/hide elements
         editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
+        saveButton.style.display = 'inline-block';  
+        cancelButton.style.display = 'inline-block';  
 
-        // Show input fields for editing
+    
         editInputs.forEach(function (input) {
-            input.style.display = 'block';  // Adjust display style based on your styling
+            input.style.display = 'block'; 
         });
 
-        // Hide the spans displaying current values
+    
         editableSpans.forEach(function (span) {
-            span.style.display = 'none';  // Adjust display style based on your styling
+            span.style.display = 'none';  
         });
 
-        // Add event listener to the cancel button
         cancelButton.addEventListener('click', function () {
-            // Reset the form to its initial state
-            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
+        
+            editIcon.style.display = 'inline-block';  
             saveButton.style.display = 'none';
             cancelButton.style.display = 'none';
             editInputs.forEach(function (input) {
                 input.style.display = 'none';
             });
             editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  // Adjust display style based on your styling
+                span.style.display = 'inline-block';  
             });
         });
 
-        // Trigger the form submission
+    
         saveButton.addEventListener('click', function () {
-            // Assuming you have a form element in the row
+            
             var form = row.querySelector('form');
             form.submit();
         });
