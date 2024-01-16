@@ -76,7 +76,7 @@
   }
 
   .table th:nth-child(3),
-  .table td:nth-child(3) {
+  ..table td:nth-child(3) {
     width: 30%;
   }
 
@@ -124,7 +124,13 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      
+      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        PR ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
       <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
         Requests
         <span class="sort-arrow">
@@ -132,37 +138,34 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Budget Officer Status
+      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        Purpose
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
       <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Budget Officer Comment
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-      
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Campus Director Status
+        Status
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
       <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-        
-       Campus Director Comments
+        Comments
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-
+      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
+        Attachments
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
     </tr>
   </thead>
 
@@ -176,42 +179,31 @@
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-
-          <td class="text-center">
-            <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;" >
-                {{ checkout.bo_status }}
-            </span>
-        </td>
-          <td class="text-center">
-            {% if checkout.bo_comment %}
-              {{ checkout.bo_comment }}
+          <td>
+            {{ checkout.purpose }}
+          </td>
+          <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
+            {% if checkout.cd_seen %}
+              {% if checkout.cd_approve %}
+                Approved
+              {% else %}
+                Declined
+              {% endif %}
             {% else %}
-              No comments
+              Waiting for Approval
             {% endif %}
           </td>
           
-          <td class="text-center">
-            {% if checkout.cd_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.cd_status }}
-                </span>
-            {% elif checkout.new_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.new_status }}
-                </span>
-            {% else %}
-                <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
-                    Pending
-                </span>
-            {% endif %}
         </td>
-        
-        
-          <td class="text-center">
-            {% if checkout.cd_comment %}
-              {{ checkout.cd_comment }}
+          <td>
+            {{ checkout.status_update_date|default:"Not available" }}
+          </td>
+          <td>
+            {% if checkout.pr_id == preqform_cd.pr_id %}
+              {{ checkout.comment|default:"No comment" }}
             {% else %}
-              No comments
+              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
+              No relevant comment available
             {% endif %}
           </td>
         </tr>
