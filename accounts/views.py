@@ -373,6 +373,10 @@ def bo(request):
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
+@authenticated_user
+def borequest(request):
+    return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
+
 
 @authenticated_user
 def bohistory(request):
@@ -389,7 +393,9 @@ def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
 
 
-
+@authenticated_user
+def cdppmp(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
 
 
 @authenticated_user
