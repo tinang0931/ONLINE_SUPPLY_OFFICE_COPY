@@ -637,7 +637,56 @@ def ppmp(request):
     return render(request, 'accounts/User/ppmp.html', {'items': items})
 
 def purchase(request):
-    return render(request, 'accounts/User/purchase.html')
+    if request.method == 'POST':
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('unit_cost')
+
+        PR_Items.objects.create(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+        return redirect('requester')
+    elif request.method == 'GET':
+        items = PR_Items.objects.all()
+
+        return render(request, 'accounts/User/purchase.html', {'items': items})
+    
+
+def approved_ppmp(request):
+    if request.method == 'POST':
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('unit_cost')
+
+        PR_Items.objects.create(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+ 
+        )
+
+        return redirect('approved_ppmp')
+    
+
+        
+
+
+    elif request.method == 'GET':
+        checkout = Checkout.objects.get()
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+        context = {
+            'checkout_items': checkout_items,
+            'checkout': checkout,
+        }
+    
+        return render(request, 'accounts/User/approved_ppmp.html', context)
+    
 
 
 from django.core.exceptions import ValidationError
@@ -655,53 +704,25 @@ def validate_file_size(value):
 
     if value.size > max_size:
         raise ValidationError(_("File size exceeds the maximum allowed size (5 MB)"))
+@authenticated_user
+def requester (request):
+    if request.method == 'POST':
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('unit_cost')
 
-class RequesterView(View):
-    template_name = 'accounts/User/cart.html'
+        PR_Items.objects.create(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+        return redirect('requester')
+    elif request.method == 'GET':
+        items = PR_Items.objects.all()
 
-    def get(self, request):
-        items = Item.objects.all()
-        return render(request, self.template_name, {'items': items})
-
-    def post(self, request):
-        if request.method == 'POST':
-            
-            items = Item.objects.all()
-            purpose = request.POST.get('purpose', '') 
-            new_checkout = Checkout.objects.create(user=request.user, pr_id=self.generate_pr_id(), purpose=purpose)
-
-            for row in items:
-                item_id = row.id
-                item = request.POST.get(f'item_{item_id}')
-                item_brand = request.POST.get(f'item_brand_{item_id}')
-                unit = request.POST.get(f'unit_{item_id}')
-                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
-                price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
-                
-
-                try:
-                    total_cost = price * quantity
-                except TypeError:
-                    total_cost = Decimal('0.00')
-
-
-                PR.objects.create(
-                    checkout=new_checkout,
-                    item=item,
-                    item_brand_description=item_brand,
-                    unit=unit,
-                    quantity=quantity,
-                    unit_cost=price,
-                    total_cost=total_cost,
-                )
-
-            new_checkout.save()
-            items.delete()
-            return redirect('history')
-    def generate_pr_id(self):
-        random_number = str(random.randint(10000000, 99999999))
-        return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-
+        return render(request, 'accounts/User/requester.html', {'items': items})
 
 @authenticated_user
 def item_list(request):
@@ -714,19 +735,6 @@ def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
-
-class GetNewRequestsView(View):
-    def get(self, request, *args, **kwargs):
-        new_requests = Checkout.objects.exclude(pr_id=None)
-        serialized_requests = [
-            {
-                'user_id': request.user_id,
-                'submission_date': request.submission_date,
-            }
-            for request in new_requests
-        ]
-        return JsonResponse({'new_requests': serialized_requests})
-    
 
 @authenticated_user              
 def delete(request, id):
@@ -1008,9 +1016,7 @@ def noa(request):
 
 
 
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
+
 
 @authenticated_user
 def inspection(request):
