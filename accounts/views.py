@@ -693,7 +693,6 @@ class RequesterView(View):
     def generate_pr_id(self):
         random_number = str(random.randint(10000000, 99999999))
         return f"{random_number}_{timezone.now().strftime('%Y%m%d%H%M%S')}"
-    
 
 
 @authenticated_user
@@ -792,7 +791,7 @@ def handle_uploaded_file(file):
         )
 
 
-def delete_item(request, id):
+def delete_item(request, id):  
     item = CSV.objects.get(id=id)
     item.delete()
     return redirect('bac_dashboard')
@@ -943,7 +942,7 @@ def update_checkout_status(request, pr_id):
 
             # Update the status of the checkout directly
             checkout = get_object_or_404(Checkout, pr_id=pr_id)
-            checkout.status_update_date = timezone.now()
+            checkout.status_update_date = timezone.now()  #ignore
             checkout.is_approve = new_status
           
             checkout.is_seen = True  # Mark as seen when the status is updated
@@ -1119,7 +1118,6 @@ class GetNewRequestsView(View):
 
           # Fetch new requests from the database based on your criteria
         new_requests = Checkout.objects.exclude(pr_id=None)
-
         # Serialize the data as needed
         serialized_requests = [
             {
@@ -1133,7 +1131,8 @@ class GetNewRequestsView(View):
         return JsonResponse({'new_requests': serialized_requests})
 
 @authenticated_user              
-def delete_item(request, id):
-    item = Item.objects.get(id = id)
+def delete_item(request, item_id):
+    item = Item.objects.get(Item, id=item_id)
     item.delete()
-    return redirect ('requester')
+    
+    # Redirect back to the same page
