@@ -12,49 +12,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
-        header {
+  
+    header {
             background-color: #007acc;
             color: white;
             padding: 10px;
         }
+       
+
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .ctu_logo {
+        width: 120px;
+        height: 124px;
+        margin-left: -141px;
+     
+    }
+
+    .asean_logo {
+        width: 117px;
+        height: 114px;
+        margin-right: -136px;
+      
+    }
 
 
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .ctu_logo {
-            width: 120px;
-            height: 124px;
-            margin-left: -141px;
-
-        }
-
-        .asean_logo {
-            width: 117px;
-            height: 114px;
-            margin-right: -136px;
-
-        }
-
-
-        h4 {
-            font-size: 25px;
-            text-align: center;
-            margin-top: 10px;
-            /* Adjusted margin */
-        }
-
-        p {
+    h4 {
+        font-size: 25px;
+        text-align: center;
+        margin-top: 10px; /* Adjusted margin */
+    }
+        
+  p {
             font-size: 15px;
             text-align: center;
         }
@@ -75,330 +75,315 @@
             margin-right: 20px;
         }
 
-        .br {
+    .br {
             margin-bottom: 20px;
         }
 
-        table {
-            text-align: center;
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
+table {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse; 
+}
 
-        /* Adjust the border color and opacity for better visibility */
-        /* Adjust the border color and opacity for better visibility */
-        th,
-        td {
-            border: 1px solid rgba(0, 0, 0, 0.5);
-            /* Set border color to black with reduced opacity */
-            text-align: left;
-            /* Center text within cells */
-            font-size: 12px;
-            /* Adjust the font size as needed */
-            height: 50px;
-            padding: 8px;
-            /* Adjust the padding for better visibility */
-        }
+/* Adjust the border color and opacity for better visibility */
+/* Adjust the border color and opacity for better visibility */
+th,
+td {
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
+    text-align: left; /* Center text within cells */
+    font-size: 12px; /* Adjust the font size as needed */
+    height: 50px;
+    padding: 8px; /* Adjust the padding for better visibility */
+}
 
-        th {
-            background-color: #f2f2f2;
-            /* Set a background color for header cells */
-        }
+th {
+    background-color: #f2f2f2; /* Set a background color for header cells */
+}
 
-        /* Add a hover effect to highlight rows */
-        tr:hover {
-            background-color: #f5f5f5;
-            /* Adjust the background color as needed */
-        }
+/* Add a hover effect to highlight rows */
+tr:hover {
+    background-color: #f5f5f5; /* Adjust the background color as needed */
+}
 
-        /* Add borders to the vertical sides of th and td, excluding the last cell in each row */
-        th:not(:last-child),
-        td:not(:last-child) {
-            border-right: 1px solid rgba(0, 0, 0, 0.5);
-            /* Set border color to black with reduced opacity */
-        }
+/* Add borders to the vertical sides of th and td, excluding the last cell in each row */
+th:not(:last-child),
+td:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.5); /* Set border color to black with reduced opacity */
+}
 
-        /* Make the outer border thicker */
-        table {
-            border: 2px solid #000000;
-            /* Set the outer border color and thickness */
-        }
-
+/* Make the outer border thicker */
+table {
+    border: 2px solid #000000; /* Set the outer border color and thickness */
+}
         body,
-        h3,
-        p {
+            h3,
+            p {
             margin: 0;
             padding: 0;
-            align-content: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            }
 
-        .container-fluid {
+            .container-fluid {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-        }
-
-        .table-and-comment {
+            }
+            .table-and-comment {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
-        }
-
-
-        .icons-container {
+                }
+    
+           
+  .icons-container {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
             margin-right: 50px;
-        }
+            }
 
         .icon-link {
             margin-left: 20px;
             text-decoration: none;
-            color: white;
+            color: white; 
         }
 
 
-        .logo-container-left,
-        .logo-container-right {
-            width: 48%;
+    .logo-container-left,
+    .logo-container-right {
+        width: 48%; 
+    }
+
+    .logo-container-left img,
+    .logo-container-right img {
+        width: 100%; 
+    }
+
+    .heading-container {
+    text-align: center;
+    font-size: 10;
+}
+
+.heading-container h3 {
+    font-size: 1.5em; 
+}
+
+.heading-container h2 {
+    font-size: 2em; 
+}
+
+.heading-container p {
+    font-size: 1em; 
+}
+
+.heading-container a {
+    font-size: 1em; 
+}
+
+
+.table-container {
+        margin-top: 20px; 
+        width: 80%;
+        margin-left: -9%;
+       
+       
+    }
+
+
+.icon-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white; 
+}
+
+
+.input-box{
+    width: 60%;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    page-break-inside: avoid;
+    display: fixed;
+}
+        
+.input-box input{
+    width: 45.5%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.97);
+    border-radius: 5px;
+    border-width: 1px;
+    display: fixed;
+    position:absolute;
+
+}
+
+.send-icon {
+    position: fixed;
+    top: 92.4%;
+    left: 63%;
+    width: 35px;
+    height: auto;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    display: fixed;
+}
+
+  .send-icon i {
+    line-height: 30px;
+  }
+
+  .footer {
+    position: fixed;
+    background-color: rgba(1, 33, 67, 0.9);
+    text-align: center;
+    margin-top: auto;
+    width: 36.5%;
+    height: 10%;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    z-index: 2;
+    display: fixed;
+}
+.p {
+    size: 12px;
+}
+
+.container {
+width: 100%;
+max-width: 950px;
+padding: 10px;
+text-align: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+margin-top: 10px; /* Adjusted margin */
+position: center;
+min-height: 100%;
+
+}
+
+.center-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+    z-index: 1000%;
+            
         }
+.footer-image {
+    display: block;
+    margin: auto;
+    height: 100%;
+    width: auto; 
+}
 
-        .logo-container-left img,
-        .logo-container-right img {
-            width: 100%;
-        }
+.footer-container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
-        .heading-container {
-            text-align: center;
-            font-size: 10;
-        }
-
-        .heading-container h3 {
-            font-size: 1.5em;
-        }
-
-        .heading-container h2 {
-            font-size: 2em;
-        }
-
-        .heading-container p {
-            font-size: 1em;
-        }
-
-        .heading-container a {
-            font-size: 1em;
-        }
+.subpage {
+    padding: 1cm;
+    border: 5px red solid;
+    height: 300mm;
+  }
+  
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
 
 
-        .table-container {
-            margin-top: 20px;
-            width: 80%;
-            margin-left: -9%;
+  @media print {
+    .footer {
+        display: none; /* Hide the footer when printing */
+    }
 
+    .input-box, .icons-container {
+        display: none;
+    }
+}
 
-        }
+.icons-group {
+    display: flex;
+    justify-content: flex-end; /* Align icons to the right side */
+    position: fixed;
+}
 
+.icons-container {
+    display: flex;
+    align-items: center;
+}
 
-        .icon-link {
-            margin-left: 20px;
-            text-decoration: none;
-            color: white;
-        }
+.icon-link,
+.icon {
+    width: 30px; /* Adjust the width of the icons as needed */
+    height: 30px; /* Adjust the height of the icons as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 4px;
+    padding-top: 8px;
+    margin-left: 145px;
+}
 
+.icon-link {
+    margin-left: 5px; /* Adjust the spacing between icons */
+}
 
-        .input-box {
-            width: 60%;
-            margin-top: 25px;
-            margin-left: 50px;
-            margin-right: 50px;
-            page-break-inside: avoid;
-        }
+.icon {
+    cursor: pointer;
+}
 
-        .input-box input {
-            width: 150%;
-            height: 55px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.97);
-            border-radius: 5px;
-            border-width: 1px;
+/* Add margin to the second and subsequent icons */
+.icon-link + .icon-link,
+.icon + .icon {
+    margin-left: 5px; /* Adjust the spacing between icons */
+}
 
-        }
+.no-page-break {
+    page-break-before: avoid;
+}
+    
+@media print {
+    #fundclusterselect::-ms-expand {
+        display: none;
+    }
+}
 
-        .send-icon {
-            position: fixed;
-            top: 92%;
-            left: 63%;
-            width: 35px;
-            height: auto;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .send-icon i {
-            line-height: 30px;
-        }
-
-        .footer {
-            background-color: rgba(1, 33, 67, 0.9);
-            text-align: center;
-            width: 30%;
-            height: 10%;
-            bottom: 0;
-            -webkit-user-modify: read-only;
-            position: fixed;
-            z-index: 2;
-            position: fixed;
-        }
-
-        .p {
-            size: 12px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 950px;
-            padding: 10px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            margin-top: 10px;
-            /* Adjusted margin */
-            position: ceneter;
-
-        }
-
-        .center-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 100%;
-            height: auto;
-            z-index: 1000%;
-
-        }
-
-        .footer-image {
-            display: block;
-            margin: auto;
-            width: 115%;
-            /* Set the width you desire */
-        }
-
-        .footer-container:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .subpage {
-            padding: 1cm;
-            border: 5px red solid;
-            height: 300mm;
-        }
-
-        @page {
-            size: A4;
-            margin: 20mm;
-        }
-
-
-        @media print {
-            .footer {
-                display: none;
-                /* Hide the footer when printing */
-            }
-
-            .input-box,
-            .icons-container {
-                display: none;
-                /* Hide the input box and icons in the footer when printing */
-            }
-        }
-
-        .icons-group {
-            display: flex;
-            justify-content: flex-end;
-            /* Align icons to the right side */
-            position: fixed;
-        }
-
-        .icons-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .icon-link,
-        .icon {
-            width: 30px;
-            /* Adjust the width of the icons as needed */
-            height: 30px;
-            /* Adjust the height of the icons as needed */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .icon-link {
-            margin-left: 5px;
-            /* Adjust the spacing between icons */
-        }
-
-        .icon {
-            cursor: pointer;
-        }
-
-        /* Add margin to the second and subsequent icons */
-        .icon-link+.icon-link,
-        .icon+.icon {
-            margin-left: 5px;
-            /* Adjust the spacing between icons */
-        }
-
-        .no-page-break {
-            page-break-before: avoid;
-        }
-
-        @media print {
-            #fundclusterselect::-ms-expand {
-                display: none;
-            }
-        }
-
-        @media print {
-            #fundClusterSelect {
-                display: none;
-            }
-        }
-    </style>
-
+@media print {
+    #fundClusterSelect {
+        display: none;
+    }
+}
+</style>
 <body>
-    <div class="container page-break">
-        <div id="selectedFundCluster"></div>
-        <div id="purchaseRequestTable" class="container-fluid">
-            <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
-            <h1 style="margin-top: -15px; font-size: 25px;"><b>PURCHASE REQUEST</b></h1>
-            <div
-                style="display: flex; justify-content: space-between; margin-left: -auto; margin-top: 3; margin-bottom: -4%;">
+<div class="container page-break">
+    <div id="selectedFundCluster"></div>
+    <div id="purchaseRequestTable" class="container-fluid">
+        <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
+        <h1 style="margin-top: -15px; font-size: 25px;"><b>PURCHASE REQUEST</b></h1>
+        <div style="display: flex; justify-content: space-between; margin-left: -auto; margin-top: 3; margin-bottom: -4%;">
                 <h><b>Entity Name:</b></h> &nbsp &nbsp
-                <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-                &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
                 <h><b>Fund Cluster:</b></h>
-                <select id="fundClusterSelect">
-                    <option value="gaaResearch">GAA</option>
-                    <option value="stfResearch">STF</option>
-                </select>
+               <select id="fundClusterSelect">
+                <option value="gaaResearch">GAA</option>
+                <option value="stfResearch">STF</option>
+               </select>
             </div>
             <div class="table-container">
                 <div class="justify-content">
@@ -408,23 +393,20 @@
                                 {% csrf_token %}
                                 <table class="table-bordered table-fixed" style="width: 115%" position="center">
                                     <tr>
-                                        <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office/Section:<span
-                                                contenteditable="true"></span>
-
+                                        <th
+                                        colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office/Section:<span contenteditable="true"></span>
+                                
                                             </span>
                                         </th>
                                         <th colspan="2">PR No.:<u>{{ pr_id }}</u> <span contenteditable="true" ;
-                                                id="editableField"></span><br><br>Responsibility Center Code: <span
-                                                contenteditable="true"
+                                                id="editableField"></span><br><br>Responsibility Center Code: <span contenteditable="true" 
                                                 style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                                 oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
                                             </span>
                                         </th>
-                                        <th colspan="2">Date: {{ latest_checkout.submission_date }} <span
-                                                contenteditable="true" ; id="editableField"
-                                                style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
-                                                oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';"></span>
-                                        </th>
+                                        <th colspan="2">Date: {{ latest_checkout.submission_date }}  <span contenteditable="true" ; id="editableField"
+                                        style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
+                                        oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';"></span></th>
                                         <input type="hidden" name="pr_id" value="{{ pr_id }}">
                                     </tr>
                                     <tr style="text-align: center;">
@@ -442,127 +424,106 @@
                                     <tr></tr>
                                     <tr></tr>
                                     {% for item in checkout_items %}
-                                    {% if forloop.counter <= 10 %} {# Display only the first 10 items per page #} <tr>
+                                    {% if forloop.counter <= 10 %} {# Display only the first 10 items per page #}
+                                      <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td class="item_unit text-center">{{ item.unit }}</td>
-                                        <td class="item_description text-center">{{ item.item }} - {{
-                                            item.item_brand_description }}</td>
+                                        <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
                                         <td class="item_quantity text-center">{{ item.quantity }}</td>
                                         <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
                                         <td class="item_total_cost text-center">{{item.total_cost }}</td>
-                                        <input type="hidden" name="item_{{ item.id }}"
-                                            value="{{ item.stock_or_property }}">
-                                        <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
-                                        <input type="hidden" name="description_{{ item.id }}"
-                                            value="{{ item.item_description }}">
-                                        <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
-                                        <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
-                                        <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
+                                            <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
+                                            <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
+                                            <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
+                                            <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
+                                            <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
+                                            <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
                                         </tr>
                                         {% endif %}
-                                        {% endfor %}
-
-                                        <!-- Move the TOTAL row below the Unit Cost -->
-                                        <tr>
-                                            <td colspan="4"></td>
-                                            <td style="text-align: right;">TOTAL</td>
-                                            <td id="totalCostCell" style="text-align: center;" colspan="2">{{ total_cost
-                                                }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="7" style="text-align: left; vertical-align: top;">
-                                                <b> Funds Available: </b>
-                                                <div style="text-align: center; display: block; margin-top: 5px;"><b>Mr.
-                                                        BETHANY URACA</b><br>Budget Officer<br><span
-                                                        style="border: none; outline: none; text-decoration: underline"></span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                        <tr>
-                                            <td colspan="7" style="text-align: left; vertical-align: top;">
-                                                <b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ purpose }} <span
-                                                    contenteditable="true"
-                                                    style="border: none; outline: none; text-decoration: underline"></span>
-                                            </td>
-                                        </tr>
-                                        <td colspan="3">
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Requested
-                                                by:</b><br><b>Signature:</b><br><b>Printed
-                                                Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <b><u>{{user.first_name}} {{user.last_name}}</b></u><br><b>Designation</b>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Chair,
-                                                BSIT & BIT-CT (OsGin)</br> <span contenteditable="false"
-                                                    style="border: none; outline: none;" id="requestedByField"></span>
+                                      {% endfor %}              
+                                      
+                                    <!-- Move the TOTAL row below the Unit Cost -->
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td style="text-align: right;">TOTAL</td>
+                                        <td id="totalCostCell" style="text-align: center;" colspan="2">{{ total_cost }}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="7" style="text-align: left; vertical-align: top;">
+                                          <b> Funds Available: </b> 
+                                          <div style="text-align: center; display: block; margin-top: 5px;"><b>Mr. BETHANY URACA</b><br>Budget Officer<br><span style="border: none; outline: none; text-decoration: underline"></span></div>
                                         </td>
-                                        <td colspan="3" style="text-align: left;"><b>Approved
-                                                by:</b><br><br><b><u>EINGILBERT C. BENOLIRAO,
-                                                    Dev.Ed.D</b></u><br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus
-                                                Director</b></span>
+                                    </tr>     
+                                    <tr>
+                                        <tr>
+                                            <td colspan="7" style="text-align: left; vertical-align: top;"><b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ purpose }} <span contenteditable="true" style="border: none; outline: none; text-decoration: underline"></span></td>
+                                        </tr>
+                                        <td colspan="3" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Requested by:</b><br><b>Signature:</b><br><b>Printed Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><u>{{user.first_name}} {{user.last_name}}</b></u><br><b>Designation</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Chair, BSIT & BIT-CT (OsGin)</br> <span contenteditable="false"
+                                                style="border: none; outline: none;" id="requestedByField"></span></td>
+                                                <td colspan="3" style="text-align: left;"><b>Approved by:</b><br><br><b><u>EINGILBERT C. BENOLIRAO, Dev.Ed.D</b></u><br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</b></span>
+                                                </div>
+                                            </span>
                                         </td>
                                     </tr>
-
                                 </table>
-
                             </div>
-                            
-
-                <div class="page-break">
-                    <br>
-                    <div class="footer-container"></div>
-                    <img class="footer-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Footer Image">
-                </div>
-            </div>
-            <footer class="footer">
-                <div class="input-box">
-                    <input placeholder="Update the purchase request status..." name="comment_content">
-                </div>
-                <div class="send-icon">
-                    <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i>Send</button>
-                </div>
-                <div class="icons-group">
-                    <div class="icons-container">
-                        <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                            <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
-                                onclick="downloadPDF()">
-                        </a>
-                        <a href="#" title="Select" class="icon-link">
-                            <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
-                                onclick="toggleSelect()">
-                        </a>
-                        <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                            <option value="a4">A4</option>
-                            <option value="legal">Legal</option>
-                        
-                        </select>
+                         </div>
+                    <div class="page-break">
+                                    <br>
+                                    <div class="footer-container"></div>
+                                    <img class="footer-image"src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Footer Image">
+                                    </div>
+                                </div>
+                                <footer class="footer">
+                                    <div class="input-box">
+                                        <input placeholder="Update the purchase request status..." name="comment_content">
+                                    </div>
+                                            <div class="send-icon">
+                                                <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i>Send</button>
+                                            </div>
+                                            <div class="icons-group">
+                                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                                    <img class="icon" src="{% static 'svg/download.svg' %}" alt="Download" onclick="downloadPDF()">
+                                                </a>
+                                                <a href="#" title="Select" class="icon-link" onclick="toggleSelect()">
+                                                    <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
+                                                </a>
+                                                <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                                    <option value="a4">A4</option>
+                                                    <option value="legal">Legal</option>
+                                                </select>
+                                            </div>
+                                        </div>                                     
+                                    </div>
+                                </footer> 
+                            </form> 
+                        </div>
                     </div>
                 </div>
-            </footer>
-
+            </div>
         </div>
     </div>
+</div>
+<script>
+    document.getElentById("fundclusterSelect").value = "stfResearch";
+</script>
 
-      
-    <script>
-        document.getElentById("fundclusterSelect").value = "stfResearch";
-    </script>
-
-    <script>
-        function toggleSelect() {
-            var selectElement = document.getElementById("paperSize");
-            selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
-        }
-    </script>
+<script>
+    function toggleSelect() {
+        var selectElement = document.getElementById("paperSize");
+        selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+    }
+</script>
 
     <script>
         // Wait for the document to be ready
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Function to calculate total amount
             function calculateTotal() {
                 var totalAmount = 0;
                 // Loop through each row in the table body
-                document.querySelectorAll(".item_total_cost").forEach(function (element) {
+                document.querySelectorAll(".item_total_cost").forEach(function(element) {
                     // Get the value of each item's total cost in this row
                     var itemCost = parseFloat(element.textContent);
                     // Add the total cost of this item to the totalAmount
@@ -571,7 +532,7 @@
                 // Display the total amount in the designated span or div
                 document.getElementById("totalCostCell").textContent = totalAmount.toFixed(2); // Adjust if needed
             }
-
+    
             calculateTotal();
         });
     </script>
@@ -579,22 +540,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
     <script>
         let selectedPaperSize = 'a4';
-
+    
         function changePaperSize() {
             selectedPaperSize = document.getElementById('paperSize').value;
         }
-
+    
         function downloadPDF() {
             const body = document.getElementById('purchaseRequestTable');
             const elementsWithPageBreak = body.querySelectorAll('.page-break');
-
+    
             elementsWithPageBreak.forEach((element) => {
                 element.style.pageBreakBefore = 'always';
             });
-
+    
             const footer = document.querySelector('.footer');
             footer.style.display = 'none';
-
+    
             const options = {
                 filename: 'purchase_request.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
@@ -602,20 +563,19 @@
                 jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
                 pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
             };
-
+    
             html2pdf(body, options);
-
+    
             // Reset page breaks after generating PDF
             elementsWithPageBreak.forEach((element) => {
                 element.style.pageBreakBefore = 'auto';
             });
         }
-
+        
     </script>
 
 
-</body>
-
+</body> 
 </html>
 
-{% endblock %}
+ {% endblock %}
