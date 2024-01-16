@@ -18,33 +18,26 @@
     tr:hover .item-actions {
         display: flex;
     }
-    .ppmp_btn {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
-  background: #1c96c5;
-  color: white;
-  border-radius: 4px;
-  transition: all 0.3s; /* Added transition for smoother animation */
-  margin-top: 3.5%; /* Adjusted margin-top */
-}
 
-.ppmp_btn:hover {
-  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
-}
+    #yearDropdown {
+        background-color: #144472;
+        color: whitesmoke ;
+        margin: 30px;
+        border: none;
+        border-radius: 15px;
+        margin-right: -190%;
+        transition: all 0.5s ease;
+    }
 
-.ppmp_btn:active {
-  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
-}
+    #yearDropdown.button{
+        text-align: left;
+    }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh; /* This assumes you want to center vertically as well */
-}
+    #yearDropdown:hover{
+        background: #0a81b1;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -52,14 +45,44 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <div class="custom-dropdown mx-auto float text-right">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Select Year
+            </button>
+    
+            <div class="dropdown-menu" aria-labelledby="yearDropdown">
+                <a class="dropdown-item" href="#">2022</a>
+                <a class="dropdown-item" href="#">2023</a>
+                <a class="dropdown-item" href="#">2024</a>
+                <a class="dropdown-item" href="#">2025</a>
+                <a class="dropdown-item" href="#">2026</a>
+                <a class="dropdown-item" href="#">2027</a>
+                <a class="dropdown-item" href="#">2028</a>
+                <a class="dropdown-item" href="#">2029</a>
+                <a class="dropdown-item" href="#">2030</a>
+            </div>
+        </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function () {
+                var selectedYear = $(this).text();
+                $('#yearDropdown').html(selectedYear + ' <span class="caret"></span>');
+            });
+        });
+    </script>
+    
+    
 
     <div class="row">
 
         <div class="col-md-1 mb-0">
             <div class="ppmp">
-                <button class="ppmp_btn">
+                <button class="btn btn-primary">
                     <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
                 </button>
             </div>
@@ -153,6 +176,9 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
 

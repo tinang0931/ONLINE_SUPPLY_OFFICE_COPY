@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block myppmp %}
+{% block purchase %}
 
 <style>
     .table-bordered th {
@@ -18,7 +18,44 @@
     tr:hover .item-actions {
         display: flex;
     }
+    button {
+        float: right;
+        padding: 5px 10px;
+        border: unset;
+        color: #212121;
+        z-index: 1;
+        background: #e8e8e8;
+        position: relative;
+        font-weight: 1000;
+        font-size: 14px;
+        transition: all 250ms;
+        overflow: hidden;
+    }
+
+    button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+
+        background-color: #1c96c5;
+        z-index: -1;
+        transition: all 250ms;
+    }
+
+    button:hover {
+        color: #e8e8e8;
+        /* Change color to white when hovered */
+    }
+
+    button:hover::before {
+        width: 100%;
+    }
 </style>
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -36,7 +73,7 @@
         <div class="col-md-1 mb-0">
             <div class="ppmp">
                 <button class="btn btn-primary">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
+                    <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;">  PPMP </a>
                 </button>
             </div>
         </div>
@@ -44,235 +81,62 @@
 
     <div class="table-responsive">
 
-        <form action="{% url 'ppmp' %}" method="post">
+        
+        <form action="{% url 'purchase'  %}" method="post">
+            {% csrf_token %}
 
+            <button type="submit">ADD TO PR</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                <tr>
+                    <th >Item Name</th>
+                    <th > Brand / Description</th>
+                    <th >Unit</th>
+                    
+                   
+                    <th >Unit Price</th>
+                    <th > Select </th>
+                </tr>
+                
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                
 
+                {% for p in items %}
 
-            <table class="table  table-bordered">
-                <thead>
-                    <tr>
-                    <tr>
-                        <th rowspan='2'>Item Name</th>
-                        <th rowspan='2'> Brand / Description</th>
-                        <th rowspan='2'>Unit</th>
-                        <th rowspan='2'>Estimated Budget</th>
-                        <th colspan="12">Monthly Quantity Requirement</th>
-                        <th rowspan='2'>Unit Price</th>
-                        <th rowspan="2">Action</th>
-
+                    <tr class="item-row" id="{{ p.id }}">
+                        <td>{{ p.item }}
+                            <input type="hidden" name="item" value="{{ p.item }}">
+                        </td>
+                        <td>{{ p.item_brand_description }}
+                            <input type="hidden" name="item_brand" value="{{ p.item_brand_description }}">
+                        </td>
+                        <td>{{ p.unit }}
+                            <input type="hidden" name="unit" value="{{ p.unit }}">
+                        </td>
+                        
+                        <td>{{ p.unit_cost }}
+                            <input type="hidden" name="unit_cost" value="{{ p.unit_cost }}">
+                        </td>
                     </tr>
-                    <tr>
-                        <th>Jan</th>
-                        <th>Feb</th>
-                        <th>Mar</th>
-                        <th>April</th>
-                        <th>May</th>
-                        <th>June</th>
-                        <th>July</th>
-                        <th>Aug</th>
-                        <th>Sept</th>
-                        <th>Oct</th>
-                        <th>Nov</th>
-                        <th>Dec</th>
-                    </tr>
+              
+                {% endfor %}
+           
+            </tbody>
+        </table>
+    
+        </form>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for p in items %}
-
-                  
-                        <tr class="item-row" id="{{ p.id }}">
-
-                            <td>
-                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
-                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
-                                    style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>{{ p.estimate_budget }}</td>
-                            <td>{{ p.jan }}</td>
-                            <td>{{ p.feb }}</td>
-                            <td>{{ p.mar }}</td>
-                            <td>{{ p.apr }}</td>
-                            <td>{{ p.may }}</td>
-                            <td>{{ p.jun }}</td>
-                            <td>{{ p.jul }}</td>
-                            <td>{{ p.aug }}</td>
-                            <td>{{ p.sep }}</td>
-                            <td>{{ p.oct }}</td>
-                            <td>{{ p.nov }}</td>
-                            <td>{{ p.dec }}</td>
-
-
-                           
-
-                            <td>
-                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-
-
-
-                            <td>
-                                <div class="item-actions" style="text-align: center; gap: 20px">
-                                    <a href="#" class="edit-icon" style="text-align: center;"
-                                        onclick="editItem('{{ p.id }}')">
-                                        <i class="fas fa-edit text-primary"></i></a>
-
-
-                                    <form action="{% url 'update' p.id %}" method="post">
-
-                                        {% csrf_token %}
-                                        <input id="form_item_{{ p.id }}" type="hidden" name="item_{{ p.id }}"
-                                            value="{{ p.item }}">
-                                        <input id="form_item_brand_{{ p.id }}" type="hidden"
-                                            name="item_brand_{{ p.id }}" value="{{ p.item_brand_description }}">
-                                        <input id="form_unit_{{ p.id }}" type="hidden" name="unit_{{ p.id }}"
-                                            value="{{ p.unit }}">
-                                        <input id="form_price_{{ p.id }}" type="number" style="display: none;"
-                                            name="price_{{ p.id }}" value="{{ p.unit_cost }}">
-
-                                        <button type="submit" class="save-icon" style="display: none;"><i
-                                                class="fas fa-check text-success"></i></button>
-                                        <button type="button" class="cancel-icon" style="display: none;"><i
-                                                class="fas fa-times text-danger"></i></button>
-
-                                    </form>
-
-
-
-                                    {% if p.id %}
-                                    <a href="{% url 'delete' p.id %}" class="delete-icon"><i
-                                            class="fas fa-trash-alt text-danger"></i></a>
-                                    {% endif %}
-
-                                </div>
-                            </td>
-
-
-                        </tr>
-                    </form>
-                    {% endfor %}
-
-                </tbody>
-            </table>
-      
     </div>
 </div>
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <form action="{% url 'addItem' %}" method="post">
-                    {% csrf_token %}
-
-
-
-                    <div class="form-group">
-                        <label for="Item">Item</label>
-                        <input type="text" class="form-control" id="Item" name="item" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Item_Brand_Description">Item Brand/Description</label>
-                        <input type="text" class="form-control" id="Item_Brand_Description"
-                            name="item_Brand_Description" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit</label>
-                        <input type="text" class="form-control" id="Unit" name="unit" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit Cost</label>
-                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                    </div>
-
-
-
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
 
-    function editItem(itemId) {
-        // Assuming each row has a unique identifier, you can use it to target specific elements
-        var row = document.getElementById(itemId);
 
-        // Toggle visibility of elements
-        var editIcon = row.querySelector('.edit-icon');
-        var saveButton = row.querySelector('.save-icon');
-        var cancelButton = row.querySelector('.cancel-icon');
-        var editInputs = row.querySelectorAll('.edit-input');
-        var editableSpans = row.querySelectorAll('.editable');
-
-        // Show/hide elements
-        editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
-
-        // Show input fields for editing
-        editInputs.forEach(function (input) {
-            input.style.display = 'block';  // Adjust display style based on your styling
-        });
-
-        // Hide the spans displaying current values
-        editableSpans.forEach(function (span) {
-            span.style.display = 'none';  // Adjust display style based on your styling
-        });
-
-        // Add event listener to the cancel button
-        cancelButton.addEventListener('click', function () {
-            // Reset the form to its initial state
-            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
-            saveButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-            editInputs.forEach(function (input) {
-                input.style.display = 'none';
-            });
-            editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  // Adjust display style based on your styling
-            });
-        });
-
-        // Trigger the form submission
-        saveButton.addEventListener('click', function () {
-            // Assuming you have a form element in the row
-            var form = row.querySelector('form');
-            form.submit();
-        });
-    }
 
     $(document).ready(function () {
 

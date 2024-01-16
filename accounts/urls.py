@@ -16,7 +16,7 @@ urlpatterns = [
    path('register_user/',views.register_user, name='register_user'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('requester/', RequesterView.as_view(), name='requester'),
+   path('requester/', views.requester, name='requester'),
    path('catalogue/',views.catalogue, name='catalogue'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
@@ -72,4 +72,5 @@ urlpatterns = [
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
    path('purchase/', views.purchase, name='purchase'),
+   path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
 ]
