@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block bohome %}
+{% block borequest %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
@@ -37,7 +37,7 @@
 
 </style>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4"> PPMP REQUESTS FOR APPROVAL</h1>
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
 
   <table class="table table-bordered">
     <thead>
@@ -56,7 +56,7 @@
         </td>
         <td>
           <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
-            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a ppmp request for approval on {{ checkout.submission_date }}
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
           </a>
         </td>
     

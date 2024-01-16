@@ -16,31 +16,13 @@ class RequestItemForm(forms.ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = (
-            'username', 
-            'first_name', 
-            'last_name', 
-            'contact1', 
-            'contact2', 
-            'email', 
-            'user_type'
-        )
-        
-        widgets = {
-            'username': forms.NumberInput(attrs={'placeholder': 'CTUID'}),
-            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
-            'contact1': forms.TextInput(attrs={'placeholder': 'Contact No.'}),
-            'contact2': forms.TextInput(attrs={'placeholder': 'Contact No.'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Email Add'}),
-            'user_type': forms.Select(
-                choices=[
-                    ('admin', 'Admin'),
-                    ('regular', 'Regular User'),
-                    ('cd', 'Campus Director'),
-                    ('budget', 'Budget Officer'),
-                    ('bac', 'BAC'),
-                ],
-                attrs={'placeholder': 'User Type'},
-            ),
-        }
+        fields = ('username', 'first_name', 'last_name', 'contact1', 'contact2', 'email', 'user_type')
+
+# forms.py
+from django import forms
+from .models import PurchaseRequest
+
+class PurchaseRequestForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseRequest
+        fields = ['item_name', 'item_brand', 'unit', 'price', 'file']

@@ -17,11 +17,10 @@
     color: black;
   }
 
-
   .no-comment {
     /* Your styles for a status with no comment */
     background-color: lightgray; /* Adjust this to your desired background color */
-    color: black; 
+    color: black;
   }
 
   .form-control {
@@ -39,17 +38,24 @@
     border-radius: 20px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
+    background-color: transparent; /* Remove background color */
+    box-shadow: none; /* Remove box shadow */
   }
 
   .search-form {
     justify-content: flex-end;
   }
 
+  .table-container {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   .table {
-    width: 90%;
+    width: 100%;
     margin: auto;
     table-layout: fixed;
-    position: fixed;
+    position: relative;
   }
 
   .table th,
@@ -71,12 +77,12 @@
 
   .table th:nth-child(3),
   .table td:nth-child(3) {
-    width: 25%;
+    width: 30%;
   }
 
   .table th:nth-child(4),
   .table td:nth-child(4) {
-    width: 20%;
+    width: 25%;
   }
 
   .table th:nth-child(5),
@@ -90,22 +96,25 @@
   }
 
   .table th {
-    background-color: rgba(5, 112, 139, 0.822); 
+    background-color: rgba(5, 112, 139, 0.822);
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
   }
-
 </style>
+
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
-  <div class="search">
-    <input class="form-control mb-3" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()">
+  
+  <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
+    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 101%; color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #05708BD2;">
 </div>
 
-<table class="table table-bordered">
+  <div class="table-container">
+    <table class="table table-bordered">
   <thead>
     <tr>
       <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
@@ -115,13 +124,7 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
-        PR ID
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
+      
       <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
         Requests
         <span class="sort-arrow">
@@ -129,34 +132,37 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
-        Purpose
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Budget Officer Status
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
       <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Status
+        Budget Officer Comment
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+      
+      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        Campus Director Status
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
       <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-        Comments
+        
+       Campus Director Comments
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="text-center" onclick="sortTable(4)" style="width: 25%;">
-        Attachments
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
+
     </tr>
   </thead>
 
@@ -170,31 +176,42 @@
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-          <td>
-            {{ checkout.purpose }}
-          </td>
-          <td class="badge {% if checkout.cd_seen %}bg-success{% elif checkout.cd_approve %}bg-success{% elif checkout.cd_disapprove %}bg-danger{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white;">
-            {% if checkout.cd_seen %}
-              {% if checkout.cd_approve %}
-                Approved
-              {% else %}
-                Declined
-              {% endif %}
+
+          <td class="text-center">
+            <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;" >
+                {{ checkout.bo_status }}
+            </span>
+        </td>
+          <td class="text-center">
+            {% if checkout.bo_comment %}
+              {{ checkout.bo_comment }}
             {% else %}
-              Waiting for Approval
+              No comments
             {% endif %}
           </td>
           
-        </td>
-          <td>
-            {{ checkout.status_update_date|default:"Not available" }}
-          </td>
-          <td>
-            {% if checkout.pr_id == preqform_cd.pr_id %}
-              {{ checkout.comment|default:"No comment" }}
+          <td class="text-center">
+            {% if checkout.cd_status %}
+                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                    {{ checkout.cd_status }}
+                </span>
+            {% elif checkout.new_status %}
+                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                    {{ checkout.new_status }}
+                </span>
             {% else %}
-              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
-              No relevant comment available
+                <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+                    Pending
+                </span>
+            {% endif %}
+        </td>
+        
+        
+          <td class="text-center">
+            {% if checkout.cd_comment %}
+              {{ checkout.cd_comment }}
+            {% else %}
+              No comments
             {% endif %}
           </td>
         </tr>

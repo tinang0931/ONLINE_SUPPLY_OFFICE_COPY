@@ -28,7 +28,7 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"> PURCHASE REQUEST </h1>
     </div>
 
     <div class="row">
@@ -44,6 +44,9 @@
 
     <div class="table-responsive">
 
+        <form action="{% url 'ppmp' %}" method="post">
+
+
 
             <table class="table  table-bordered">
                 <thead>
@@ -55,7 +58,8 @@
                         <th rowspan='2'>Estimated Budget</th>
                         <th colspan="12">Monthly Quantity Requirement</th>
                         <th rowspan='2'>Unit Price</th>
-                        
+                        <th rowspan="2">Action</th>
+
                     </tr>
                     <tr>
                         <th>Jan</th>
@@ -119,8 +123,47 @@
                                     oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
 
+
+
+                            <td>
+                                <div class="item-actions" style="text-align: center; gap: 20px">
+                                    <a href="#" class="edit-icon" style="text-align: center;"
+                                        onclick="editItem('{{ p.id }}')">
+                                        <i class="fas fa-edit text-primary"></i></a>
+
+
+                                    <form action="{% url 'update' p.id %}" method="post">
+
+                                        {% csrf_token %}
+                                        <input id="form_item_{{ p.id }}" type="hidden" name="item_{{ p.id }}"
+                                            value="{{ p.item }}">
+                                        <input id="form_item_brand_{{ p.id }}" type="hidden"
+                                            name="item_brand_{{ p.id }}" value="{{ p.item_brand_description }}">
+                                        <input id="form_unit_{{ p.id }}" type="hidden" name="unit_{{ p.id }}"
+                                            value="{{ p.unit }}">
+                                        <input id="form_price_{{ p.id }}" type="number" style="display: none;"
+                                            name="price_{{ p.id }}" value="{{ p.unit_cost }}">
+
+                                        <button type="submit" class="save-icon" style="display: none;"><i
+                                                class="fas fa-check text-success"></i></button>
+                                        <button type="button" class="cancel-icon" style="display: none;"><i
+                                                class="fas fa-times text-danger"></i></button>
+
+                                    </form>
+
+
+
+                                    {% if p.id %}
+                                    <a href="{% url 'delete' p.id %}" class="delete-icon"><i
+                                            class="fas fa-trash-alt text-danger"></i></a>
+                                    {% endif %}
+
+                                </div>
+                            </td>
+
+
                         </tr>
-               
+                    </form>
                     {% endfor %}
 
                 </tbody>
@@ -128,11 +171,108 @@
       
     </div>
 </div>
+<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form action="{% url 'addItem' %}" method="post">
+                    {% csrf_token %}
+
+
+
+                    <div class="form-group">
+                        <label for="Item">Item</label>
+                        <input type="text" class="form-control" id="Item" name="item" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Item_Brand_Description">Item Brand/Description</label>
+                        <input type="text" class="form-control" id="Item_Brand_Description"
+                            name="item_Brand_Description" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Unit">Unit</label>
+                        <input type="text" class="form-control" id="Unit" name="unit" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Unit">Unit Cost</label>
+                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
 
+    function editItem(itemId) {
+        // Assuming each row has a unique identifier, you can use it to target specific elements
+        var row = document.getElementById(itemId);
 
+        // Toggle visibility of elements
+        var editIcon = row.querySelector('.edit-icon');
+        var saveButton = row.querySelector('.save-icon');
+        var cancelButton = row.querySelector('.cancel-icon');
+        var editInputs = row.querySelectorAll('.edit-input');
+        var editableSpans = row.querySelectorAll('.editable');
+
+        // Show/hide elements
+        editIcon.style.display = 'none';
+        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
+        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
+
+        // Show input fields for editing
+        editInputs.forEach(function (input) {
+            input.style.display = 'block';  // Adjust display style based on your styling
+        });
+
+        // Hide the spans displaying current values
+        editableSpans.forEach(function (span) {
+            span.style.display = 'none';  // Adjust display style based on your styling
+        });
+
+        // Add event listener to the cancel button
+        cancelButton.addEventListener('click', function () {
+            // Reset the form to its initial state
+            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+            editInputs.forEach(function (input) {
+                input.style.display = 'none';
+            });
+            editableSpans.forEach(function (span) {
+                span.style.display = 'inline-block';  // Adjust display style based on your styling
+            });
+        });
+
+        // Trigger the form submission
+        saveButton.addEventListener('click', function () {
+            // Assuming you have a form element in the row
+            var form = row.querySelector('form');
+            form.submit();
+        });
+    }
 
     $(document).ready(function () {
 
