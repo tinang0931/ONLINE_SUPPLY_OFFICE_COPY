@@ -18,6 +18,30 @@
     tr:hover .item-actions {
         display: flex;
     }
+    .ppmp_btn {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-top: 3.5%; /* Adjusted margin-top */
+}
+
+.ppmp_btn:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+
+.ppmp_btn:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh; /* This assumes you want to center vertically as well */
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -35,7 +59,7 @@
 
         <div class="col-md-1 mb-0">
             <div class="ppmp">
-                <button class="btn btn-primary">
+                <button class="ppmp_btn">
                     <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
                 </button>
             </div>
