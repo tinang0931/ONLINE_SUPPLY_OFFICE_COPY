@@ -177,6 +177,18 @@
               <td>
                   {{ checkout.status_update_date|default:"Not available" }}
               </td>
+              <td>
+                {{ checkout.status_update_date|default:"Not available" }}
+              </td>
+           
+              <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}">
+                {% if item.attached_file %}
+                    <a href="{{ item.attached_file.url }}" target="_blank">{{ item.attached_file.name }}</a>
+                {% else %}
+                    No file attached
+                {% endif %}
+            </td>
+              
           </tr>
       {% endfor %}
   

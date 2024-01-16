@@ -114,7 +114,6 @@ class Checkout(models.Model):
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
@@ -134,8 +133,6 @@ class CheckoutItems(models.Model):
     nov = models.IntegerField(default=0)
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-
- 
 
     # def save(self, *args, **kwargs):
     #     self.total_cost = self.unit_cost * self.quantity

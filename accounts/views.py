@@ -43,6 +43,8 @@ import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
+from bson import Binary
+from .forms import CheckoutItemsForm
 
 
 
@@ -50,6 +52,9 @@ from django.core.files.base import ContentFile
 def main(request):
     return render(request, 'accounts/User/main.html')
 
+
+def request(request):
+    return render(request, 'accounts/User/request.html')
 
 
 
@@ -544,7 +549,6 @@ def addItem(request):
         return redirect('ppmp')
     return render(request, 'accounts/User/ppmp.html')
 
-
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
 
@@ -666,7 +670,11 @@ class RequesterView(View):
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
+                quantity_str = request.POST.get(f'quantity_{item_id}')
+                try:
+                    quantity = int(quantity_str) if quantity_str and quantity_str.isdigit() else 0
+                except ValueError:
+                    quantity = 0
                 price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
                 
 
@@ -1134,4 +1142,5 @@ class GetNewRequestsView(View):
 def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
-    return redirect ('requester')
+    return redirect('requester')
+    

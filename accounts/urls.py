@@ -1,5 +1,7 @@
 from django.urls import path
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views 
 from .views import *
 
@@ -8,8 +10,10 @@ urlpatterns = [
    path('',views.homepage, name='homepage'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
-   path('bac/',views.bac, name='bac'),
-   path('addItem/',views.addItem, name='addItem'),
+   path('bac/', views.bac, name='bac'),
+   path('request/', views.request, name='request'),
+   path('addItem/', views.addItem, name='addItem'),
+   path('requestItem/',views.requestItem, name='requestItem'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
