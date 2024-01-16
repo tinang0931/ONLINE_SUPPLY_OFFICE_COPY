@@ -75,9 +75,12 @@
                     <div class="bg-#6C757D w-100" id="sidebar-wrapper">
                         <div class="list-group w-100">
                             <br><br>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp'%}">
-                                <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">My
-                                    PPMP</span>
+
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'myppmp'%}">
+                                <i class='bx bx-folder-open' ></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase'%}">
+                                <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
                             </a>
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
                                 <i class='bx bx-location-plus'></i> <span id="requestTracker"
@@ -106,6 +109,10 @@
 
 
             <style>
+                .d-flex {
+                    height: 90vh;
+                    margin-bottom: 0;
+        }
                 #sidebar {
                     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
                     overflow: hidden;
@@ -170,6 +177,7 @@
                     cursor: pointer;
                     border-radius: 50px;
                     border: 2px solid #000;
+                    display: none;
                 }
 
                 .list-group-item i {
@@ -200,6 +208,7 @@
                     /* Set the initial visibility to hidden */
                     transition: opacity 0.3s ease, visibility 0.3s ease;
                     /* Add a transition effect */
+                    display: none
                 }
 
                 .sidebar:hover .account_type,
@@ -253,7 +262,8 @@
             {% block about %}
             {% endblock %}
 
-            {% block ppmp %}
+
+            {% block myppmp %}
             {% endblock %}
 
             {% block cart %}

@@ -1,0 +1,183 @@
+{% extends "accounts/User/main.html" %}
+
+
+{% load static %}
+
+
+{% block myppmp %}
+
+<style>
+    .table-bordered th {
+        background-color: #1c96c5;
+    }
+
+    .item-actions {
+        display: none;
+    }
+
+    tr:hover .item-actions {
+        display: flex;
+    }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-1 mb-0">
+            <div class="ppmp">
+                <button class="btn btn-primary">
+                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+
+
+            <table class="table  table-bordered">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th rowspan='2'>Item Name</th>
+                        <th rowspan='2'> Brand / Description</th>
+                        <th rowspan='2'>Unit</th>
+                        <th rowspan='2'>Estimated Budget</th>
+                        <th colspan="12">Monthly Quantity Requirement</th>
+                        <th rowspan='2'>Unit Price</th>
+                        
+                    </tr>
+                    <tr>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>April</th>
+                        <th>May</th>
+                        <th>June</th>
+                        <th>July</th>
+                        <th>Aug</th>
+                        <th>Sept</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                    </tr>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in items %}
+
+                  
+                        <tr class="item-row" id="{{ p.id }}">
+
+                            <td>
+                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
+                            <td>
+                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
+                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
+                                    style="display: none">
+                            </td>
+                            <td>
+                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
+                            <td>{{ p.estimate_budget }}</td>
+                            <td>{{ p.jan }}</td>
+                            <td>{{ p.feb }}</td>
+                            <td>{{ p.mar }}</td>
+                            <td>{{ p.apr }}</td>
+                            <td>{{ p.may }}</td>
+                            <td>{{ p.jun }}</td>
+                            <td>{{ p.jul }}</td>
+                            <td>{{ p.aug }}</td>
+                            <td>{{ p.sep }}</td>
+                            <td>{{ p.oct }}</td>
+                            <td>{{ p.nov }}</td>
+                            <td>{{ p.dec }}</td>
+
+
+                           
+
+                            <td>
+                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                            </td>
+
+                        </tr>
+               
+                    {% endfor %}
+
+                </tbody>
+            </table>
+      
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+
+
+    $(document).ready(function () {
+
+        function updateEstimateBudgetForRow(row) {
+
+            var unitPrice = parseFloat(row.find('[name="price"]').val());
+
+
+            var totalValue = 0;
+
+
+            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+                var monthValue = parseFloat($(this).val()) || 0;
+                totalValue += monthValue;
+            });
+
+
+            var estimateBudget = totalValue * unitPrice;
+
+
+            row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
+        }
+
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
+
+            var row = $(this).closest('tr.item-row');
+            updateEstimateBudgetForRow(row);
+        });
+
+
+        $('[name="price"]').on('input', function () {
+
+            var row = $(this).closest('tr.item-row');
+            updateEstimateBudgetForRow(row);
+        });
+    });
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+{% endblock %}

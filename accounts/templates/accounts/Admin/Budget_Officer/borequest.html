@@ -1,0 +1,94 @@
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
+
+{% load static %}
+
+{% block borequest %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  .status {
+    width: 30%;
+    text-align: center;
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    background-color: #b5e550; /* Adjust this to your desired background color */
+    color: white; /* Adjust this to your desired text color */
+  }
+
+  .no-comment {
+    background-color: lightgray; /* Adjust this to your desired background color */
+    color: black; /* Adjust this to your desired text color */
+  }
+
+  .table th {
+    background-color: rgba(10, 99, 158, 0.637); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+</style>
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests for Approval</th>
+        <th class="status">Status</th>
+        <th class="text-center">Comment</th> 
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center">
+          {{ checkout.submission_date }}
+        </td>
+        <td>
+          <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+          </a>
+        </td>
+    
+        <td class="text-center">
+          {% if checkout.bo_status %}
+              <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                  {{ checkout.bo_status }}
+              </span>
+          {% elif checkout.new_status %}
+              <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+                  {{ checkout.new_status }}
+              </span>
+          {% else %}
+              <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+                  Pending
+              </span>
+          {% endif %}
+      </td>
+      
+        <td class="text-center">
+          {% if checkout.bo_comment %}
+            {{ checkout.bo_comment }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    
+  </tbody>
+  
+  
+  </table>
+</div>
+
+
+{% endblock %}

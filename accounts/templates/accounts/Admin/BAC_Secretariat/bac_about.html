@@ -6,7 +6,6 @@
 
 {% block bac_about %}
 
-
         <div class="container-fluid" style=" height: 80vh; overflow-y: auto; overflow-x: hidden;">
           <div class="container">
             <h1 class="pr text-center pt-4">ABOUT THE SYSTEM</h1> 
@@ -60,11 +59,21 @@
             </a>
         </div>
         <style>
-          .footer {
-            padding-top: 20px;
+          body {
+          overflow: hidden;
           }
+
+          html {
+           overflow: hidden;
+            }
+
+          .footer {
+              height: 30%;
+            }
+            .logout-link, .pro, .account_type {
+    display: none !important;
+}
         </style>
-        
 
           <p></p>
           <p></p>
