@@ -295,18 +295,6 @@ class PreqFormView(View):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, pr_id):
-        content = request.POST.get('comment_content')
-        if pr_id and content:
-            try:
-                Comment.objects.create(content=content, timestamp=timezone.now(), pr_id=pr_id)
-                return redirect(reverse('preqform', kwargs={'pr_id': pr_id}))
-            except Exception as e:
-                print(f"Error: {e}")
-                return HttpResponse("An error occurred while processing the form.")
-        else:
-            return HttpResponse("PR ID or comment content not found in the form data.")
-        
 
 @authenticated_user
 def np(request):
@@ -433,19 +421,6 @@ def user(request):
     return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
 
 
-
-# def update_user(request, username):
-#     user = get_object_or_404(User, username=username)
-
-#     if request.method == 'POST':
-#         form = UserForm(request.POST, instance=user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('user')
-#     else:
-#         form = UserForm(instance=user) 
-#         return render(request, 'accounts/Admin/System_Admin/user.html', {'form': form})
-
 def register_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -487,9 +462,6 @@ def register_user(request):
         return redirect('user')
     
    
-
-
-
 def update_user(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -621,39 +593,57 @@ def ppmp(request):
 
         pr_id = new_checkout.combined_id
 
-        # Update the new_checkout object with the generated pr_id
         new_checkout.pr_id = pr_id
         new_checkout.save()
-       
-
         return redirect('tracker')
-
-
-
     elif request.method == 'GET':
     
         items = Item.objects.all()
     
     return render(request, 'accounts/User/ppmp.html', {'items': items})
 
+
+
+from django.db import transaction
+
+@transaction.atomic
 def purchase(request):
     if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('unit_cost')
+        purpose = request.POST.get('purpose')
 
-        PR_Items.objects.create(
-            item=item,
-            item_brand_description=item_brand,
-            unit=unit,
-            unit_cost=price
-        )
-        return redirect('requester')
+        try:
+            with transaction.atomic():
+                
+                metadata = FileMetadata.objects.create(filename=uploaded_file.name)
+                PR.objects.create(
+                    metadata=metadata,
+                    file=uploaded_file,
+                    item=item,
+                    item_brand_description=item_brand,
+                    unit=unit,
+                    unit_cost=price,
+                    purpose=purpose
+                )
+
+              
+                PR_Items.objects.all().delete()
+
+        except Exception as e:
+            print(f"Error creating PR: {e}")
+           
+            return redirect('purchase') 
+
+        return redirect('purchase')
+
     elif request.method == 'GET':
         items = PR_Items.objects.all()
-
         return render(request, 'accounts/User/purchase.html', {'items': items})
+
     
 
 def approved_ppmp(request):
@@ -672,11 +662,6 @@ def approved_ppmp(request):
         )
 
         return redirect('approved_ppmp')
-    
-
-        
-
-
     elif request.method == 'GET':
         checkout = Checkout.objects.get()
         checkout_items = CheckoutItems.objects.filter(checkout=checkout)
@@ -687,42 +672,6 @@ def approved_ppmp(request):
     
         return render(request, 'accounts/User/approved_ppmp.html', context)
     
-
-
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-
-def validate_file_extension(value):
-    valid_extensions = ['.pdf', '.doc', '.docx', '.jpg', '.png', '.xls', '.xlsx']
-    extension = value.lower().split('.')[-1]
-
-    if extension not in valid_extensions:
-        raise ValidationError(_("File type is not supported. Supported types: .pdf, .doc, .docx, .jpg, .png, .xls, .xlsx"))
-
-def validate_file_size(value):
-    max_size = 5 * 1024 * 1024  # 5 MB
-
-    if value.size > max_size:
-        raise ValidationError(_("File size exceeds the maximum allowed size (5 MB)"))
-@authenticated_user
-def requester (request):
-    if request.method == 'POST':
-        item = request.POST.get('item')
-        item_brand = request.POST.get('item_brand')
-        unit = request.POST.get('unit')
-        price = request.POST.get('unit_cost')
-
-        PR_Items.objects.create(
-            item=item,
-            item_brand_description=item_brand,
-            unit=unit,
-            unit_cost=price
-        )
-        return redirect('requester')
-    elif request.method == 'GET':
-        items = PR_Items.objects.all()
-
-        return render(request, 'accounts/User/pr_items.html', {'items': items})
 
 @authenticated_user
 def item_list(request):
@@ -897,44 +846,6 @@ def bohome(request):
 
     return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
 
-    # checkouts = Checkout.objects.select_related('user').all()
-    # comments = Comment.objects.all()
-
-    # # Create a dictionary to store the results, using pr_id as keys
-    # checkout_data_dict = {}
-
-    # # Loop through each Checkout instance and gather relevant data
-    # for checkout in checkouts:
-    #     pr_id = checkout.pr_id
-
-    #     # Get the latest comment for the current pr_id
-    #     latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
-
-    #     if pr_id not in checkout_data_dict:
-    #         # If pr_id is not in the dictionary, create a new entry
-    #         checkout_data_dict[pr_id] = {
-    #             'pr_id': pr_id,
-    #             'first_name': checkout.user.first_name,
-    #             'last_name': checkout.user.last_name,
-    #             'submission_date': checkout.submission_date,
-    #             'purpose': checkout.purpose,
-    #             'is_approve': checkout.is_approve,
-               
-    #             'is_seen': checkout.is_seen,  # Include the new field in the view
-    #             'comment': latest_comment.content if latest_comment else "",
-    #             'status_update_date': latest_comment.timestamp if latest_comment else None,
-                 
-    #         }
-    #     else:
-    #         # If pr_id is already in the dictionary, update the entry
-    #         # with additional information, e.g., concatenate purposes
-    #         checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
-           
-    #         checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
-    # # Convert the dictionary values to a list
-    # checkout_data = list(checkout_data_dict.values())
-
-    # return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
 def bo_approve(request, pr_id):
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
@@ -1014,10 +925,6 @@ def bids(request):
 def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
-
-
-
-
 @authenticated_user
 def inspection(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
@@ -1059,9 +966,7 @@ def cdpurchase(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user
-        
-        
+        'user': request.user      
     }
     
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
@@ -1111,8 +1016,6 @@ def preqform_cd(request, pr_id):
             dec=dec,
             
         )
-
-        # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
             cd_comment=comment_content
@@ -1130,31 +1033,6 @@ def preqform_cd(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
-       
-
-def update_cd_checkout_status(request, pr_id):
-    if request.method == 'POST':
-        try:
-            new_status = request.POST.get("new_status")
-            new_status = new_status.lower() == 'true' if isinstance(new_status, str) else new_status
-
-            checkout = get_object_or_404(Checkout, pr_id=pr_id)
-            checkout.date_updated = timezone.now()
-            checkout.cd_seen = True
-            checkout.cd_approve = new_status
-
-            checkout.save()
-
-            return redirect(reverse('preqform_cd', kwargs={'pr_id': pr_id}))
-        except Checkout.DoesNotExist:
-            return HttpResponse("CD Checkout not found.")
-        except Exception as e:
-            print(f"Error: {e}")
-            return HttpResponse("An error occurred while processing the CD form.")
-    else:
-        return HttpResponse("Invalid request method.")
-
-  
 
 @admin_required
 @authenticated_user
@@ -1164,25 +1042,6 @@ def bac_history(request):
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
 
-class GetNewRequestsView(View):
-    def get(self, request, *args, **kwargs):
-
-       
-
-          # Fetch new requests from the database based on your criteria
-        new_requests = Checkout.objects.exclude(pr_id=None)
-
-        # Serialize the data as needed
-        serialized_requests = [
-            {
-                'user_id': request.user_id,
-                'submission_date': request.submission_date,
-                # Add other fields as needed
-            }
-            for request in new_requests
-        ]
-
-        return JsonResponse({'new_requests': serialized_requests})
 
 @authenticated_user              
 def delete_item(request, id):
