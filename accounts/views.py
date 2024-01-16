@@ -43,6 +43,7 @@ import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
+from .models import appr_ppmp
 
 
 
@@ -384,6 +385,17 @@ def bo(request):
 
 
 @authenticated_user
+def buppmp(request):
+    return render(request, 'accounts/Admin/Budget_Officer/buppmp.html')
+
+
+@authenticated_user
+def buppmpform(request):
+    return render(request, 'accounts/Admin/Budget_Officer/buppmpform.html')
+
+
+
+@authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
@@ -404,8 +416,22 @@ def cdabout(request):
 
 
 @authenticated_user
+def cdppmp(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
+
+
+@authenticated_user
+def cdppmpform(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdppmpform.html')
+
+@authenticated_user
 def cdpurchase(request):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html')
+
+@authenticated_user
+def cdppmp(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
+
 
 
 @authenticated_user
@@ -540,6 +566,7 @@ def addItem(request):
             unit=unit,
             unit_cost=unit_cost,
   
+
         )
         return redirect('ppmp')
     return render(request, 'accounts/User/ppmp.html')
@@ -1048,6 +1075,41 @@ class PreqForm_cdView(View):
         }
 
         return render(request, self.template_name, context)
+    
+    def cdppmp(request):
+        ppmp = appr_ppmp.objects.select_related('user').all()
+        comments = Comment.objects.all()
+
+        ppmp_data_dict = {}
+
+        for appr_ppmp in ppmp: 
+            user = appr_ppmp.user
+
+            latest_comment  = comments.filter().order_by('-timestamp').first()
+
+            if user not in ppmp_data_dict:
+                ppmp_data_dict[user] = {
+                    'user' : user,
+                    'date_requested' : appr_ppmp.date_requested,
+                    'status_update_date': latest_comment.timestamp if latest_comment else None,
+                    'comment': latest_comment.content if latest_comment else "",
+                    }
+            else:
+                ppmp_data_dict[user]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+
+                ppmp_data =list(ppmp_data_dict.values())   
+
+                return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', {'ppmp': ppmp_data})
+  
+
+
+
+
+
+
+
+
+        
 
     def post(self, request, pr_id):
         new_status = request.POST.get('new_status')
@@ -1135,3 +1197,163 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+
+
+
+def buppmp(request):
+    checkouts = CheckoutItems.objects.all()
+    return render(request, 'accounts/Admin/Budget_Officer/buppmp.html', {'checkouts': checkouts})
+    # checkouts = Checkout.objects.select_related('user').all()
+    # comments = Comment.objects.all()
+
+    # # Create a dictionary to store the results, using pr_id as keys
+    # checkout_data_dict = {}
+
+    # # Loop through each Checkout instance and gather relevant data
+    # for checkout in checkouts:
+    #     pr_id = checkout.pr_id
+
+    #     # Get the latest comment for the current pr_id
+    #     latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+
+    #     if pr_id not in checkout_data_dict:
+    #         # If pr_id is not in the dictionary, create a new entry
+    #         checkout_data_dict[pr_id] = {
+    #             'pr_id': pr_id,
+    #             'first_name': checkout.user.first_name,
+    #             'last_name': checkout.user.last_name,
+    #             'submission_date': checkout.submission_date,
+    #             'purpose': checkout.purpose,
+    #             'is_approve': checkout.is_approve,
+               
+    #             'is_seen': checkout.is_seen,  # Include the new field in the view
+    #             'comment': latest_comment.content if latest_comment else "",
+    #             'status_update_date': latest_comment.timestamp if latest_comment else None,
+                 
+    #         }
+    #     else:
+    #         # If pr_id is already in the dictionary, update the entry
+    #         # with additional information, e.g., concatenate purposes
+    #         checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+           
+    #         checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+    # # Convert the dictionary values to a list
+    # checkout_data = list(checkout_data_dict.values())
+
+    # return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
+
+class buppmpformView(View):
+    template_name = 'accounts/Admin/Budget_Officer/buppmpform.html'
+
+    def get(self, request):
+        items = CheckoutItems.objects.all()
+        return render(request, self.template_name, {'items': items})
+
+    def post(self, request, pr_id):
+        new_status = request.POST.get('new_status')
+  
+
+        if pr_id and new_status:
+            try:
+                checkout = Checkout.objects.get(pr_id=pr_id)
+
+                checkout.date_updated = timezone.now()
+                checkout.bup_seen = True
+
+                # Set is_approve and is_disapprove to False initially
+                checkout.bup_approve = False
+
+                if new_status.lower() == 'true':
+                    checkout.bup_approve = True
+
+                checkout.save()
+
+                return redirect(reverse('buppmpform', kwargs={'pr_id': pr_id}))
+            except Checkout.DoesNotExist:
+                return HttpResponse("Checkout not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or new status not found in the form data.")
+        
+
+
+def cdppmp(request):
+    checkouts = CheckoutItems.objects.all()
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', {'checkouts': checkouts})
+    # checkouts = Checkout.objects.select_related('user').all()
+    # comments = Comment.objects.all()
+ 
+    # # Create a dictionary to store the results, using pr_id as keys
+    # checkout_data_dict = {}
+
+    # # Loop through each Checkout instance and gather relevant data
+    # for checkout in checkouts:
+    #     pr_id = checkout.pr_id
+
+    #     # Get the latest comment for the current pr_id
+    #     latest_comment = comments.filter(pr_id=pr_id).order_by('-timestamp').first()
+
+    #     if pr_id not in checkout_data_dict:
+    #         # If pr_id is not in the dictionary, create a new entry
+    #         checkout_data_dict[pr_id] = {
+    #             'pr_id': pr_id,
+    #             'first_name': checkout.user.first_name,
+    #             'last_name': checkout.user.last_name,
+    #             'submission_date': checkout.submission_date,
+    #             'purpose': checkout.purpose,
+    #             'is_approve': checkout.is_approve,
+               
+    #             'is_seen': checkout.is_seen,  # Include the new field in the view
+    #             'comment': latest_comment.content if latest_comment else "",
+    #             'status_update_date': latest_comment.timestamp if latest_comment else None,
+                 
+    #         }
+    #     else:
+    #         # If pr_id is already in the dictionary, update the entry
+    #         # with additional information, e.g., concatenate purposes
+    #         checkout_data_dict[pr_id]['purpose'] += f", {checkout.purpose}"
+           
+    #         checkout_data_dict[pr_id]['status_update_date'] = latest_comment.timestamp if latest_comment else None
+    # # Convert the dictionary values to a list
+    # checkout_data = list(checkout_data_dict.values())
+
+    # return render(request, 'accounts/Admin/Budget_Officer/bohome.html', {'checkouts': checkout_data})
+
+class cdppmpform(View):
+     template_name = 'accounts/Admin/Campus_Director/cdppmpform.html'
+
+     def get(self, request):
+        items = CheckoutItems.objects.all()
+        return render(request, self.template_name, {'items': items})
+
+     def post(self, request, pr_id):
+        new_status = request.POST.get('new_status')
+  
+
+        if pr_id and new_status:
+            try:
+                checkout = Checkout.objects.get(pr_id=pr_id)
+
+                checkout.date_updated = timezone.now()
+                checkout.bup_seen = True
+
+                # Set is_approve and is_disapprove to False initially
+                checkout.bup_approve = False
+
+                if new_status.lower() == 'true':
+                    checkout.bup_approve = True
+
+                checkout.save()
+
+                return redirect(reverse('cdppmpform', kwargs={'pr_id': pr_id}))
+            except Checkout.DoesNotExist:
+                return HttpResponse("Checkout not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+                return HttpResponse("An error occurred while processing the form.")
+        else:
+            return HttpResponse("PR ID or new status not found in the form data.")
+        

@@ -49,10 +49,14 @@
                   <i class='bx bxs-shopping-bag' ></i> <span id="about" class="hidden-name">Purchase Request</span>
                 </a>
                
+                <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'buppmp'%}">
+                  <i class='bx bx-shopping-bag' ></i> <span id="requests" class="hidden-name">PPMP Request</span>
+                </a>
+
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
                   <i class='bx bxs-info-circle' ></i> <span id="about" class="hidden-name">About</span>
                 </a>
-                
+
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class='bx bx-log-in' ></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
@@ -200,6 +204,10 @@
         {% endblock %}
 
         {% block bohistory %}
+        {% endblock %}
+        
+        
+        {% block buppmp %}
         {% endblock %}
 
 

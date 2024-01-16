@@ -44,6 +44,7 @@ urlpatterns = [
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
+   path('cdppmp/',views.cdppmp, name='cdppmp'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('preqform_cd/<str:pr_id>/', PreqForm_cdView.as_view(), name='preqform_cd'),
    path('resolution/',views.resolution, name='resolution'),
@@ -70,4 +71,12 @@ urlpatterns = [
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
+   path('buppmp/', views.buppmp, name='buppmp'),
+   path('buppmpform/', buppmpformView.as_view, name='buppmpform'),
+   
+
+   path('cdppmp/', views.cdppmp, name='cdppmp'),
+   path('cdppmpform/', cdppmpform.as_view, name='cdppmpform'),       
+        
+        
 ]
