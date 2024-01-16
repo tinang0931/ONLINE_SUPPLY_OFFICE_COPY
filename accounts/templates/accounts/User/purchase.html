@@ -18,6 +18,15 @@
     tr:hover .item-actions {
         display: flex;
     }
+
+    .container{
+      text-align: center;
+    }
+
+    .pr {
+      margin-right: 300px;
+    }
+    
     button {
         float: right;
         padding: 5px 10px;
@@ -47,7 +56,6 @@
 
     button:hover {
         color: #e8e8e8;
-        /* Change color to white when hovered */
     }
 
     button:hover::before {
@@ -60,7 +68,6 @@
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -68,11 +75,10 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4" style="margin-right: 300px;"> PURCHASE REQUEST</h1>
+        <h1 class="pr text-center pt-4"> PURCHASE REQUEST</h1>
     </div>
 
     <div class="row">
-
         <div class="col-md-1 mb-0">
             <div class="ppmp">
                 <button class="btn btn-primary">
@@ -120,13 +126,7 @@
         </tbody>
       </table>
     
-
-
-
     <script>
-
-      
-        
             document.addEventListener('DOMContentLoaded', function () {
                 // Attach click event to the icon, which will trigger the hidden file input
                 document.querySelectorAll('.file-attachment label').forEach(function (label) {
