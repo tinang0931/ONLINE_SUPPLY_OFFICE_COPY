@@ -112,14 +112,41 @@ class PPMP(models.Model):
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
-class PR(models.Model):
-    attachment = models.FileField(upload_to='pr/')
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
+class PR_Items(models.Model):
+    checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+
+
+class PR_ID (models.Model):
+    pr_id = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    submission_date = models.DateField(default=timezone.now)
+
+    @property
+    def combined_id(self):
+        random_number = str(random.randint(10000000, 99999999)) 
+        return f"{str(self.pr_id)}{random_number}"
+
+    def __str__(self):
+        return str(self.pr_id)
+
+class FileMetadata(models.Model):
+    filename = models.CharField(max_length=255)
+
+class PR(models.Model):
+    metadata = models.ForeignKey(FileMetadata, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploads/')
+    checkout = models.ForeignKey('PR_ID', on_delete=models.CASCADE)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    purpose = models.TextField(blank=True, null=True)
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     
@@ -142,7 +169,7 @@ class Checkout(models.Model):
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999)) 
-        return f"{str(self.pr_id)}_{random_number}"
+        return f"{str(self.pr_id)}{random_number}"
 
     def __str__(self):
         return str(self.pr_id)
@@ -229,12 +256,4 @@ class PurchaseRequest(models.Model):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
 
-# models.py
-from django.db import models
 
-class PurchaseRequest(models.Model):
-    item_name = models.CharField(max_length=255)
-    item_brand = models.CharField(max_length=255)
-    unit = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    file = models.FileField(upload_to='uploads/', blank=True, null=True)
