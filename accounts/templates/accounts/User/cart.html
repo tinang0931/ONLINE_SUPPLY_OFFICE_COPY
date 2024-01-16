@@ -88,7 +88,7 @@ p {
 </style>
 
 
-<form action="{% url 'request' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'requester' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
 
 <div class="container" style="text-align: center;">
@@ -96,7 +96,7 @@ p {
 </div>   
   <div>
     <div class=" cart table-responsive" style="height: 69vh; overflow-y: auto; overflow-x: hidden; justify-content: center; margin-left: 40%; width: 100%; margin-top: 5%;" >
-      <div class="bckbtn" ><a href="{% url 'myppmp' %}"><img src="{% static 'images/left-arrow-square.png.png' %}" ></a></div>
+      <div class="bckbtn" ><a href="{% url 'myppmp' %}"></div>
       <button>
         <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
         <span>Back</span>
@@ -127,19 +127,18 @@ p {
             <td class="item_quantity text-center">{{ item.quantity }}</td>
             <td class="item_total_cost text-center">{{ item.total_cost }}</td>
             <td class="text-center"> 
-                <img src="{% static 'images/edit.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
+                <img src="{% static 'images/pen.png' %}" alt="Edit" style="width: 22px; height: 22px; margin-right: 20px; vertical-align: middle;">
             </td>
-
             {% if item.id %}
             <td class="text-center" style="margin-left: 10px;">
               <img src="{% static 'images/trash.png' %}" alt="Delete" style="width: 22px; height: 22px; vertical-align: middle;">
             </td>
             <td class="text-center" onclick="attachFile({{ item.id }})">
-              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="AttachFile" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
-            </td>
-            <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
-            <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>
-          {% endif %}
+              <img id="attachButton_{{ item.id }}" class="attach" src="{% static 'images/link.png' %}" alt="Attach File" style="width: 22px; height: 22px; vertical-align: middle; margin-bottom: 3px; transform: rotate(-45deg); cursor: pointer;">
+              <input type="file" id="fileInput_{{ item.id }}" style="display: none;" onchange="showFileName({{ item.id }})">
+           </td>
+          <td class="item_total_cost text-center" id="attachedFileName_{{ item.id }}"></td>          
+            {% endif %}
         </tr>
         </td>
                     <input type="hidden" name="item_{{ item.id }}" value="{{ item.item }}">
@@ -153,33 +152,36 @@ p {
         {% endfor %}
     </tbody>
     </table>
+</form>
+  
 
     <script>
         var attachmentCounter = 0; // Counter for creating unique IDs
       
         function attachFile(itemId) {
-          document.getElementById('fileInput_' + itemId).click();
-        }
-      
-        function showFileName(itemId) {
-          const fileInput = document.getElementById('fileInput_' + itemId);
-          const attachedFileName = document.getElementById('attachedFileName_' + itemId);
-      
-          const file = fileInput.files[0];
-          if (file) {
+        const fileInput = document.getElementById('fileInput_' + itemId);
+        fileInput.click();
+    }
+
+    function showFileName(itemId) {
+        const fileInput = document.getElementById('fileInput_' + itemId);
+        const attachedFileName = document.getElementById('attachedFileName_' + itemId);
+
+        const file = fileInput.files[0];
+        if (file) {
             attachedFileName.textContent = file.name;
             attachedFileName.style.color = 'blue';
             attachedFileName.style.cursor = 'pointer';
-            attachedFileName.onclick = function() {
-              window.open(URL.createObjectURL(file), '_blank');
+            attachedFileName.onclick = function () {
+                window.open(URL.createObjectURL(file), '_blank');
             };
-          } else {
+        } else {
             attachedFileName.textContent = "";
             attachedFileName.style.color = 'black';
             attachedFileName.style.cursor = 'default';
             attachedFileName.onclick = null;
-          }
         }
+    }
       </script>
       
     
@@ -221,7 +223,7 @@ p {
         </div>
     </footer>   
   </div>
-</form>
+
 
 
 {% endblock %}
