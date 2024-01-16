@@ -62,6 +62,32 @@ class Item(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     submission_date = models.DateField(auto_now_add=True)
 
+class appr_ppmp(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    submission_date = models.DateField(auto_now_add=True)
+    jan = models.IntegerField(default=0)
+    feb = models.IntegerField(default=0)
+    mar = models.IntegerField(default=0)
+    apr = models.IntegerField(default=0)
+    may = models.IntegerField(default=0)
+    jun = models.IntegerField(default=0)
+    jul = models.IntegerField(default=0)
+    aug = models.IntegerField(default=0)
+    sep = models.IntegerField(default=0)
+    oct = models.IntegerField(default=0)
+    nov = models.IntegerField(default=0)
+    dec = models.IntegerField(default=0)
+    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    status = models.CharField(max_length=20, default="Pending")
+    comment = models.TextField(blank=True, null=True)
+      
+
+
 class PPMP(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     id = models.AutoField(primary_key=True)
@@ -86,23 +112,33 @@ class PPMP(models.Model):
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
-
+class PR(models.Model):
+    attachment = models.FileField(upload_to='pr/')
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    item = models.CharField(max_length=255, blank=True, null=True)
+    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    submission_date = models.DateField(auto_now_add=True)
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    
 
 
 
 class Checkout(models.Model):
+
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
-    purpose = models.CharField(max_length=255, blank=True, null=True)
-    date_updated = models.DateField(auto_now=True)
-    is_approve = models.BooleanField(default=False)
-    
-    is_seen=models.BooleanField(default=False)
-    comment = models.TextField(blank=True, null=True)
-    cd_approve = models.BooleanField(default=False)
-    cd_seen=models.BooleanField(default=False)
-   
+    bo_status = models.CharField(max_length=20, default="Pending")
+    bo_comment = models.TextField(blank=True, null=True) 
+    cd_status = models.CharField(max_length=20, default="Pending")
+    cd_comment = models.TextField(blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=True)
+
+
+
     @property
     def combined_id(self):
         random_number = str(random.randint(10000000, 99999999)) 
@@ -116,14 +152,10 @@ class Checkout(models.Model):
     
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    submission_date = models.DateField(auto_now_add=True)
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     jan = models.IntegerField(default=0)
     feb = models.IntegerField(default=0)
     mar = models.IntegerField(default=0)
@@ -138,21 +170,8 @@ class CheckoutItems(models.Model):
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
-    # def save(self, *args, **kwargs):
-    #     self.total_cost = self.unit_cost * self.quantity
-    #     super().save(*args, **kwargs)
-        
-
-class Comment(models.Model):
-    content = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField()
-    pr_id = models.CharField(max_length=50)  
-    def __str__(self):
-        return f"Comment by {self.pr_id} at {self.timestamp}"
-    
+   
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
@@ -209,3 +228,13 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
+
+# models.py
+from django.db import models
+
+class PurchaseRequest(models.Model):
+    item_name = models.CharField(max_length=255)
+    item_brand = models.CharField(max_length=255)
+    unit = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    file = models.FileField(upload_to='uploads/', blank=True, null=True)
