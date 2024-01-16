@@ -7,6 +7,9 @@
 {% block ppmp %}
 
 <style>
+    .ctu_logo {
+margin-top: -13%;
+    }
     .table-bordered th {
         background-color: #1c96c5;
     }
@@ -39,209 +42,58 @@
         margin-top: 15%;
     }
 
+.custom {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-top: 3.5%; /* Adjusted margin-top */
+}
 
-    .ctalogue {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: -107%;
-        margin-top: 15%;
-    }
+.custom:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .ctalogue:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
+.custom:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
+.catalogue {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-top: 3.5%; /* Adjusted margin-top */
+  margin-left: -117%;
+}
 
-    .ctalogue:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
+.catalogue:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .ctalogue span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .ctalogue:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-
-    .custom {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 19.6px;
-        /* Adjusted border-radius for 40% increase */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 5%;
-        margin-top: -5%;
-    }
-
-    .custom:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
-
-    .custom:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .custom span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 5.82px 9.25px;
-        /* Adjusted padding for 40% increase */
-        color: #fff;
-        font-size: 0.69em;
-        /* Adjusted font-size for 40% increase */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .custom:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
+.catalogue:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
     .submt {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: none;
-        /* Removed shadow */
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 95.6%;
-        margin-top: 1%;
-    }
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-left: 96%;
+}
 
-    .submt:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #4be77a;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
+.submt:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .submt:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .submt span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .submt:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
+.submt:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -266,7 +118,7 @@
 
         <div class="col-md-1 mb-0">
             
-                <button class="btn btn-primary">
+                <button class="catalogue">
                     <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
                 </button>
            
@@ -414,7 +266,7 @@
 
             </tbody>
         </table>
-        <button type="submit" class="btn btn-success m-2 float-right">Submit</button>
+        <button type="submit" class="submt">Submit</button>
         </form>
 
     </div>
