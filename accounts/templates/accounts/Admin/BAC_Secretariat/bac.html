@@ -60,8 +60,8 @@
                 </a>
                 <div class="profile-container">
                   <a href="{% url 'bac_prof' %}">
-                  <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-              <p1 class="account_type">BAC</p1>
+                  <!-- <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a> -->
+              <!-- <p1 class="account_type">BAC</p1> -->
                 </div>
               </div>
             </div>
@@ -175,7 +175,7 @@ margin-bottom: 30vh;
 #sidebar.show-names a {
     padding-left: 10px;
 }
-.pro {
+/*.pro {
     position: relative;
     top: 200px; 
     
@@ -187,7 +187,8 @@ margin-bottom: 30vh;
     cursor: pointer;
     border-radius: 50px;
     border: 2px solid #000;
-}
+}*/
+
 
 
 #sidebar:hover .pro {
@@ -227,6 +228,10 @@ margin-bottom: 30vh;
 .pro:hover + .account_type {
     opacity: 1;
     visibility: visible; 
+}
+
+.item-actions {
+  display: none;
 }
 
 
