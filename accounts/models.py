@@ -228,13 +228,3 @@ class PurchaseRequest(models.Model):
     def calculate_total_cost(self):
         return self.quantity * self.unit_cost  
     total_cost = property(calculate_total_cost)
-
-# models.py
-from django.db import models
-
-class PurchaseRequest(models.Model):
-    item_name = models.CharField(max_length=255)
-    item_brand = models.CharField(max_length=255)
-    unit = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    file = models.FileField(upload_to='uploads/', blank=True, null=True)
