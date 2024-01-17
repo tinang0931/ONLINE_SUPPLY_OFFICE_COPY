@@ -122,18 +122,24 @@ class PR_Items(models.Model):
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
-class PR_ID (models.Model):
+class Pr_identifier(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
 
-    @property
-    def combined_id(self):
-        random_number = str(random.randint(10000000, 99999999)) 
-        return f"{str(self.pr_id)}{random_number}"
+    def save(self, *args, **kwargs):
+        # If pr_id is not set, generate a new one
+        if not self.pr_id:
+            self.pr_id = self.generate_unique_pr_id()
+        super().save(*args, **kwargs)
+
+    def generate_unique_pr_id(self):
+        random_number = str(random.randint(10000000, 99999999))
+        return f"PR{random_number}"
 
     def __str__(self):
         return str(self.pr_id)
+
 
 class FileMetadata(models.Model):
     filename = models.CharField(max_length=255)
@@ -141,7 +147,7 @@ class FileMetadata(models.Model):
 class PR(models.Model):
     metadata = models.ForeignKey(FileMetadata, on_delete=models.CASCADE)
     file = models.FileField(upload_to='uploads/')
-    checkout = models.ForeignKey('PR_ID', on_delete=models.CASCADE)
+    checkout = models.ForeignKey('Pr_identifier', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)

@@ -596,54 +596,10 @@ def ppmp(request):
 
 
 
-from django.db import transaction
-
 def purchase(request):
-    if request.method == 'POST':
-        uploaded_file = request.FILES.get('file')
-        item = request.POST.get('item')
-        item_brand = request.POST.get('item_brand')
-        unit = request.POST.get('unit')
-        price = request.POST.get('unit_cost')
-        purpose = request.POST.get('purpose')
 
-        try:
-            with transaction.atomic():
-                new_checkout = PR_ID.objects.create(
-                user=request.user,
-        )
-                
-                metadata = FileMetadata.objects.create(filename=uploaded_file.name)
-                PR.objects.create(
-                    checkout=new_checkout,
-                    metadata=metadata,
-                    file=uploaded_file,
-                    item=item,
-                    item_brand_description=item_brand,
-                    unit=unit,
-                    unit_cost=price,
-                    purpose=purpose
-                )
-
-                pr_id = new_checkout.combined_id
-
-                new_checkout.pr_id = pr_id
-                new_checkout.save()
-
-              
-                PR_Items.objects.all().delete()
-
-        except Exception as e:
-            print(f"Error creating PR: {e}")
-           
-            return redirect('purchase') 
-
-        return redirect('purchase')
-
-    elif request.method == 'GET':
         items = PR_Items.objects.all()
         return render(request, 'accounts/User/purchase.html', {'items': items})
-
     
 
 def approved_ppmp(request):
