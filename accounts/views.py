@@ -279,19 +279,19 @@ def bac_about(request):
 
 
 
-def bac_home(request, pr_id):
+def bac_home(request):
   
-    checkout = get_object_or_404(Pr_identifier, pk=pr_id)
-
-
-    checkout_items = PR.objects.filter(checkout=checkout)
+    checkouts = Pr_identifier.objects.select_related('user').all()
 
     context = {
-        'checkout_items': checkout_items,
-        'checkout': checkout
+        'checkouts': checkouts,
+        'user': request.user,
+        
+
     }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+
 def preqform(request, pr_id):
     
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
