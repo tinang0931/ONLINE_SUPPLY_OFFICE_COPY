@@ -6,6 +6,7 @@ from decimal import Decimal
 import uuid
 import random
 from bson import ObjectId
+from bson import ObjectId
 
 
 
@@ -123,22 +124,10 @@ class PR_Items(models.Model):
 
 
 class Pr_identifier(models.Model):
-    pr_id = models.CharField(max_length=50, unique=True)
+    pr_id = models.CharField(max_length=7, primary_key=True, default=str(ObjectId()), editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
 
-    def save(self, *args, **kwargs):
-        # If pr_id is not set, generate a new one
-        if not self.pr_id:
-            self.pr_id = self.generate_unique_pr_id()
-        super().save(*args, **kwargs)
-
-    def generate_unique_pr_id(self):
-        random_number = str(random.randint(10000000, 99999999))
-        return f"PR{random_number}"
-
-    def __str__(self):
-        return str(self.pr_id)
 
 
 class FileMetadata(models.Model):

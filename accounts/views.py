@@ -278,23 +278,23 @@ def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@authenticated_user
-def bac_home(request):
-   
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
-from django.urls import reverse
-class PreqFormView(View):
-    template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
-    def get(self, request, pr_id):
-        checkout = Checkout.objects.get(pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-        context = {
-            'checkout_items': checkout_items,
-            'pr_id': pr_id,
-            'user': checkout.user,
-            
-        }
-        return render(request, self.template_name, context)
+
+def bac_home(request, pr_id):
+  
+    checkout = get_object_or_404(Pr_identifier, pk=pr_id)
+
+
+    checkout_items = PR.objects.filter(checkout=checkout)
+
+    context = {
+        'checkout_items': checkout_items,
+        'checkout': checkout
+    }
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+def preqform(request, pr_id):
+    
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
 
 
 @authenticated_user
@@ -597,10 +597,47 @@ def ppmp(request):
 
 
 def purchase(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
+        items = request.POST.get('item')
+        item_brands = request.POST.get('item_brand')
+        units = request.POST.get('unit')
+        prices = request.POST.get('unit_cost')
+        purpose = request.POST.get('purpose')
 
+       
+        pr_id = generate_auto_pr_id()
+
+       
+        user = request.user
+        pr_identifier = Pr_identifier.objects.create(pr_id=pr_id, user=user)
+
+        metadata = FileMetadata.objects.create(filename=uploaded_file.name)
+
+       
+        PR.objects.create(
+            checkout=pr_identifier,
+            metadata=metadata,
+            file=uploaded_file,
+            item=items,
+            item_brand_description=item_brands,
+            unit=units,
+            unit_cost=prices,
+            purpose=purpose
+        )
+
+        return redirect('purchase')
+    elif request.method == 'GET':
+       
         items = PR_Items.objects.all()
         return render(request, 'accounts/User/purchase.html', {'items': items})
-    
+
+from bson import ObjectId
+
+def generate_auto_pr_id():
+    # Generate a unique pr_id using ObjectId
+    pr_id = str(ObjectId())
+    return pr_id
 
 def approved_ppmp(request):
     if request.method == 'POST':
