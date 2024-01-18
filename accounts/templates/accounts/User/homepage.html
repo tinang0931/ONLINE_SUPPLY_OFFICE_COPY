@@ -11,21 +11,23 @@
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
     <title>Landing Page</title>
 
-  </head>
-  <style>
-    body {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            window.location.href = "{% url 'login' %}";
+          }
+        });
 
-    .container {
-        position: relative;
-        text-align: center;
-    }
-  </style>
+        document.addEventListener("click", function () {
+          window.location.href = "{% url 'login' %}";
+        });
+      });
+    </script>
+
+
+  </head>
+
 
   <body>
     <div class="container">
@@ -37,15 +39,7 @@
       <div class="parallelogram2"></div>
       <div class="triangle-down2"></div>
       <h1 class="cot">CTU-AC <br> SUPPLY OFFICE <br> REQUEST MONITORING <br> SYSTEM</h1>
-      <div class="login">
-        <div class="login">
-          <a href="{% url 'login' %}">
-            <img class="arrow" src="{% static 'images/double_arrow.png' %}" >
-          </a>
-        </div>
-        
-          
-      </div>
+      <div class="login"></div>
        
 
     </div>
