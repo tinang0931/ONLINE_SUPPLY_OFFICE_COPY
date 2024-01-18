@@ -635,7 +635,6 @@ def approved_ppmp(request):
         }
     
         return render(request, 'accounts/User/approved_ppmp.html', context)
-    
 
 @authenticated_user
 def item_list(request):
