@@ -56,8 +56,8 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-def homepage(request):
-    return render(request, 'accounts/User/homepage.html')
+def landing(request):
+    return render(request, 'accounts/User/landing.html')
 
 
 User = get_user_model()
@@ -277,23 +277,28 @@ def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@authenticated_user
+
 def bac_home(request):
-   
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
-from django.urls import reverse
-class PreqFormView(View):
-    template_name = 'accounts/Admin/BAC_Secretariat/preqform.html'
-    def get(self, request, pr_id):
-        checkout = Checkout.objects.get(pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-        context = {
-            'checkout_items': checkout_items,
-            'pr_id': pr_id,
-            'user': checkout.user,
-            
-        }
-        return render(request, self.template_name, context)
+  
+    checkouts = Pr_identifier.objects.select_related('user').all()
+
+    context = {
+        'checkouts': checkouts,
+        'user': request.user,
+        
+    }
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+
+def preqform(request, pr_id):
+ 
+    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    context = {
+        'pr_identifier': pr_identifier,
+        'user': request.user,
+    }
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
 
 @authenticated_user
@@ -316,9 +321,6 @@ def noa(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
 
 
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 
 @authenticated_user
@@ -330,10 +332,6 @@ def inspection(request):
 def property(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
 
-
-@authenticated_user
-def np(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
 
 @authenticated_user
@@ -400,9 +398,6 @@ def resolution(request):
 def profile_html(request):
     return render(request, 'profile.html')
 
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
 
 @authenticated_user
 def admin_home(request):
@@ -604,11 +599,50 @@ def ppmp(request):
 
 
 
-def purchase(request):
 
+def purchase(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
+
+        items = request.POST.get('item')
+        item_brands = request.POST.get('item_brand')
+        units = request.POST.get('unit')
+        prices = request.POST.get('unit_cost')
+        purpose = request.POST.get('purpose')
+
+
+        user = request.user
+        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=generate_auto_pr_id())
+        
+
+        metadata = FileMetadata.objects.create(filename=uploaded_file.name)
+
+       
+        PR.objects.create(
+            
+            pr_identifier=pr_identifier,
+            metadata=metadata,
+            file=uploaded_file,
+            item=items,
+            item_brand_description=item_brands,
+            unit=units,
+            unit_cost=prices,
+            purpose=purpose
+        )
+       
+
+        return redirect('purchase')
+    elif request.method == 'GET':
+       
         items = PR_Items.objects.all()
         return render(request, 'accounts/User/purchase.html', {'items': items})
-    
+
+from bson import ObjectId
+
+def generate_auto_pr_id():
+    # Generate a unique pr_id using ObjectId
+    pr_id = str(ObjectId())
+    return pr_id
 
 def approved_ppmp(request):
     if request.method == 'POST':
@@ -648,11 +682,6 @@ def bac_history(request):
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
 
-@authenticated_user              
-def delete(request, id):
-    item = Item.objects.get(id = id)
-    item.delete()
-    return redirect ('requester')
 
 def add_new_item(request):
     if request.method == 'POST':
@@ -797,17 +826,16 @@ def bohome(request):
             'pr_id': checkout.pr_id,
             'last_updated': checkout.last_updated,
             'bo_status': checkout.bo_status,  
-            
-            'bo_comment': checkout.bo_comment,  # Replace with the actual attribute names
+            'bo_comment': checkout.bo_comment,
         }
         checkout_data.append(checkout_dict)
 
-    context = {
-        'checkouts': checkout_data,
-        
-    }
+        context = {
+            'checkouts': checkout_data,
+            
+        }
 
-    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
+        return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
 
 def bo_approve(request, pr_id):
     if request.method == 'POST':
@@ -873,40 +901,6 @@ def bo_approve(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
-
-   
-
-@authenticated_user
-def purchaseorder(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
-
-@authenticated_user
-def bids(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bids.html')
-
-@authenticated_user
-def noa(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/noa.html')
-
-@authenticated_user
-def inspection(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/inspection.html')
-
-@authenticated_user
-def property(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/property.html')
-
-@authenticated_user
-def np(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
-@authenticated_user
-def notif(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/notif.html')
-@authenticated_user
-def abstract(request):
-    # Your view logic here
-    return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
-
 
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
@@ -996,15 +990,6 @@ def preqform_cd(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
-
-@admin_required
-@authenticated_user
-def bac_history(request):
-   request = Item.objects.all()
-
-   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
-
-
 
 @authenticated_user              
 def delete_item(request, id):

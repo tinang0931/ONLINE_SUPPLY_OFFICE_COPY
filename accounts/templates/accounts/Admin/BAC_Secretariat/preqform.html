@@ -18,8 +18,6 @@
             padding: 10px;
         }
 
-
-
         .logo-container {
             display: flex;
             align-items: center;
@@ -36,14 +34,12 @@
             width: 120px;
             height: 124px;
             margin-left: -141px;
-
         }
 
         .asean_logo {
             width: 117px;
             height: 114px;
             margin-right: -136px;
-
         }
 
 
@@ -51,11 +47,10 @@
             font-size: 25px;
             text-align: center;
             margin-top: 10px;
-            /* Adjusted margin */
         }
 
         p {
-            font-size: 15px;
+            font-size: 12px;
             text-align: center;
         }
 
@@ -79,15 +74,21 @@
             margin-bottom: 20px;
         }
 
+        .content p {
+            text-align: left;
+            margin-right: 1000px;
+        }
+
         table {
+            font-weight: bold;
             text-align: center;
+            position: center;
             width: 100%;
             margin-top: 20px;
             border-collapse: collapse;
+            /* Ensure borders collapse into a single border */
         }
 
-        /* Adjust the border color and opacity for better visibility */
-        /* Adjust the border color and opacity for better visibility */
         th,
         td {
             border: 1px solid rgba(0, 0, 0, 0.5);
@@ -125,14 +126,13 @@
             /* Set the outer border color and thickness */
         }
 
+
+
         body,
         h3,
         p {
             margin: 0;
             padding: 0;
-            align-content: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
         .container-fluid {
@@ -151,15 +151,17 @@
 
         .icons-container {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             margin-top: 20px;
             margin-right: 50px;
         }
 
         .icon-link {
             margin-left: 20px;
+            margin-top: 16px;
             text-decoration: none;
             color: white;
+            /* Adjust the color as needed */
         }
 
 
@@ -197,8 +199,9 @@
 
         .table-container {
             margin-top: 20px;
+            /* Adjust the margin-top as needed */
             width: 80%;
-            margin-left: -9%;
+            margin-left: -16%;
 
 
         }
@@ -208,39 +211,39 @@
             margin-left: 20px;
             text-decoration: none;
             color: white;
+            /* Adjust the color as needed */
         }
 
 
         .input-box {
-            width: 60%;
-            margin-top: 25px;
-            margin-left: 50px;
-            margin-right: 50px;
-            page-break-inside: avoid;
+            width: auto;
+            margin-top: 1px;
+            margin-left: 16px;
+            margin-right: 20px;
         }
 
         .input-box input {
-            width: 150%;
-            height: 55px;
+            width: 100%;
+            height: 40px;
             padding: 10px;
             box-sizing: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.97);
+            border: none;
             border-radius: 5px;
-            border-width: 1px;
-
         }
 
         .send-icon {
             position: fixed;
-            top: 92%;
-            left: 63%;
-            width: 35px;
-            height: auto;
+            top: 90%;
+            left: 65%;
+            width: 30px;
+            height: 30px;
             background-color: #4CAF50;
             color: white;
             text-align: center;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 39px;
+            margin-left: -80px;
         }
 
         .send-icon i {
@@ -248,10 +251,10 @@
         }
 
         .footer {
-            background-color: rgba(1, 33, 67, 0.9);
+            background-color: rgba(10, 99, 158, 0.637);
             text-align: center;
-            width: 30%;
-            height: 10%;
+            width: 36.5%;
+            height: auto;
             bottom: 0;
             -webkit-user-modify: read-only;
             position: fixed;
@@ -274,114 +277,58 @@
             align-items: center;
             margin: 0 auto;
             margin-top: 10px;
-            /* Adjusted margin */
             position: ceneter;
 
         }
 
-        .center-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 100%;
-            height: auto;
-            z-index: 1000%;
-
-        }
-
-        .footer-image {
-            display: block;
-            margin: auto;
-            width: 115%;
-            /* Set the width you desire */
-        }
-
-        .footer-container:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
 
         .subpage {
             padding: 1cm;
             border: 5px red solid;
-            height: 300mm;
+            height: 256mm;
+            outline: 2cm #FFEAEA solid;
         }
 
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 0;
         }
 
 
         @media print {
             .footer {
                 display: none;
-                /* Hide the footer when printing */
             }
 
             .input-box,
             .icons-container {
                 display: none;
-                /* Hide the input box and icons in the footer when printing */
             }
         }
 
-        .icons-group {
-            display: flex;
-            justify-content: flex-end;
-            /* Align icons to the right side */
-            position: fixed;
-        }
-
-        .icons-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .icon-link,
-        .icon {
-            width: 30px;
-            /* Adjust the width of the icons as needed */
-            height: 30px;
-            /* Adjust the height of the icons as needed */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .icon-link {
+        .aprv,
+        .disaprv {
+            font-size: 15px;
+            margin-right: 5px;
             margin-left: 5px;
-            /* Adjust the spacing between icons */
+            margin-top: 5px;
+            margin-bottom: 11px;
+            color: #ffa125e3;
+            background-color: rgba(9, 87, 139, 0.616);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(9, 87, 139, 0.616);
+            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
 
-        .icon {
-            cursor: pointer;
-        }
 
-        /* Add margin to the second and subsequent icons */
-        .icon-link+.icon-link,
-        .icon+.icon {
-            margin-left: 5px;
-            /* Adjust the spacing between icons */
-        }
-
-        .no-page-break {
-            page-break-before: avoid;
-        }
-
-        @media print {
-            #fundclusterselect::-ms-expand {
-                display: none;
-            }
-        }
-
-        @media print {
-            #fundClusterSelect {
-                display: none;
-            }
+        .aprv:hover,
+        .disaprv:hover {
+            color: #ffa125e3;
+            background-color: #000000e3;
         }
     </style>
+
 
 <body>
     <div class="container page-break">
@@ -406,6 +353,7 @@
                         <div class="mx-auto">
                             <form action="" method="post">
                                 {% csrf_token %}
+
                                 <table class="table-bordered table-fixed" style="width: 115%" position="center">
                                     <tr>
                                         <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office/Section:<span
@@ -413,17 +361,15 @@
 
                                             </span>
                                         </th>
-                                        <th colspan="2">PR No.:<u>{{ pr_id }}</u> <span contenteditable="true" ;
+                                        <th colspan="2">PR No.:<u>{{ pr_identifier.pr_id }}</u> <span
+                                                contenteditable="true" ;
                                                 id="editableField"></span><br><br>Responsibility Center Code: <span
                                                 contenteditable="true"
                                                 style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
                                                 oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';">
                                             </span>
                                         </th>
-                                        <th colspan="2">Date: {{ latest_checkout.submission_date }} <span
-                                                contenteditable="true" ; id="editableField"
-                                                style="text-decoration: underline; border-bottom: 1px solid black; display: inline-block; width: 20%;"
-                                                oninput="this.style.borderBottom = (this.innerText.trim() === '') ? '1px solid black' : 'none';"></span>
+                                        <th colspan="2">Date: <u>{{ pr_identifier.submission_date }}</u>
                                         </th>
                                         <input type="hidden" name="pr_id" value="{{ pr_id }}">
                                     </tr>
@@ -441,26 +387,27 @@
                                     </tr>
                                     <tr></tr>
                                     <tr></tr>
-                                    {% for item in checkout_items %}
+
+                                    {% for pr in pr_identifier.pr_set.all %}
                                     {% if forloop.counter <= 10 %} {# Display only the first 10 items per page #} <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td class="item_unit text-center">{{ item.unit }}</td>
-                                        <td class="item_description text-center">{{ item.item }} - {{
-                                            item.item_brand_description }}</td>
-                                        <td class="item_quantity text-center">{{ item.quantity }}</td>
-                                        <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                                        <td class="item_total_cost text-center">{{item.total_cost }}</td>
-                                        <input type="hidden" name="item_{{ item.id }}"
-                                            value="{{ item.stock_or_property }}">
-                                        <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
-                                        <input type="hidden" name="description_{{ item.id }}"
-                                            value="{{ item.item_description }}">
-                                        <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
-                                        <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
-                                        <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
+                                        <td class="item_unit text-center">{{ pr.unit }}</td>
+                                        <td class="item_description text-center">{{ pr.item }} - {{pr.item_brand_description }}</td>
+                                        <td class="item_quantity text-center">{{ pr.quantity }}</td>
+                                        <td class="item_unit_cost text-center">{{ pr.unit_cost }}</td>
+                                        <td class="item_total_cost text-center">{{ pr.total_cost }}</td>
+                                        <input type="hidden" name="item"
+                                            value="{{ pr.stock_or_property }}">
+                                        <input type="hidden" name="unit" value="{{ pr.unit }}">
+                                        <input type="hidden" name="description"
+                                            value="{{ pr.item_description }}">
+                                        <input type="hidden" name="quantity" value="{{ pr.quantity }}">
+                                        <input type="hidden" name="unit_cost" value="{{ pr.unit_cost }}">
+                                        <input type="hidden" name="total_cost" value="{{pr.total_cost }}">
                                         </tr>
                                         {% endif %}
-                                        {% endfor %}
+                                   
+
 
                                         <!-- Move the TOTAL row below the Unit Cost -->
                                         <tr>
@@ -482,7 +429,7 @@
                                         <tr>
                                         <tr>
                                             <td colspan="7" style="text-align: left; vertical-align: top;">
-                                                <b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ purpose }} <span
+                                                <b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ pr.purpose }} <span
                                                     contenteditable="true"
                                                     style="border: none; outline: none; text-decoration: underline"></span>
                                             </td>
@@ -501,50 +448,77 @@
                                                     Dev.Ed.D</b></u><br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus
                                                 Director</b></span>
                                         </td>
-                                    </tr>
+                                        </tr>
+                                        {% endfor %}
 
                                 </table>
 
-                            </div>
-                            
 
-                <div class="page-break">
-                    <br>
-                    <div class="footer-container"></div>
-                    <img class="footer-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Footer Image">
+                        </div>
+
+
+                        <div class="page-break">
+                            <br>
+                            <div class="footer-container"></div>
+                            <img class="footer-image" src="{% static 'images/CTU-DocFooter-1.png' %}"
+                                alt="Footer Image">
+                        </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="icons-container">
+                            <div class="input-box">
+                                <input placeholder="Type your comment" name="comment_content" id="comment_input"
+                                    required>
+                            </div>
+                            <input id="new_status_id" type="hidden" name="new_status">
+                            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+                            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+
+                            
+                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                    <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
+                                        onclick="downloadPDF()">
+                                </a>
+                                <a href="#" title="Select" class="icon-link">
+                                    <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
+                                        onclick="toggleSelect()">
+                                </a>
+                                <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                    <option value="a4">A4</option>
+                                    <option value="legal">Legal</option>
+                            </div>
+                    </footer>
+                    </form>
+
                 </div>
             </div>
-            <footer class="footer">
-                <div class="input-box">
-                    <input placeholder="Update the purchase request status..." name="comment_content">
-                </div>
-                <div class="send-icon">
-                    <button type="submit"><i class="fas fa-paper-plane" style="margin-top: 3px;"></i>Send</button>
-                </div>
-                <div class="icons-group">
-                    <div class="icons-container">
-                        <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                            <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
-                                onclick="downloadPDF()">
-                        </a>
-                        <a href="#" title="Select" class="icon-link">
-                            <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
-                                onclick="toggleSelect()">
-                        </a>
-                        <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                            <option value="a4">A4</option>
-                            <option value="legal">Legal</option>
-                        
-                        </select>
-                    </div>
-                </div>
-            </footer>
-
         </div>
     </div>
 
-      
+
+
     <script>
+        function btn_click(approve) {
+            // Get the comment input element by its ID
+            var commentInput = document.getElementById('comment_input');
+
+            // Check if the comment is not empty
+            if (commentInput.value.trim() === "") {
+                alert("Please provide a comment.");
+                return;
+            }
+
+            // Get the hidden input element by its ID
+            var newStatusInput = document.getElementById('new_status_id');
+
+            // Set the value based on the 'approve' parameter
+            newStatusInput.value = approve ? 'approved' : 'disapproved';
+
+            // Submit the form programmatically
+            var form = document.getElementById('form_id');
+            form.submit();
+        }
+        
         document.getElentById("fundclusterSelect").value = "stfResearch";
     </script>
 
