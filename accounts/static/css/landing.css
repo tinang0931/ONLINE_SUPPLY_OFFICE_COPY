@@ -75,8 +75,8 @@ body {
     position: fixed;
     border-bottom: 100vh solid #003566e8;
     border-right: 0 solid transparent;
-    border-left: 5vw solid transparent; 
-    transform: rotate(132deg);
+    border-left: 6vw solid transparent; 
+    transform: rotate(131deg);
     height: 0;
     width: 0; 
     right: 20vh;
@@ -94,7 +94,7 @@ body {
     border-right: 1vw solid transparent; 
     height: 0;
     width: 0; 
-    right: 4vh;
+    right: 4.5vh;
     top: 0;
     opacity: 0.97;
 }
