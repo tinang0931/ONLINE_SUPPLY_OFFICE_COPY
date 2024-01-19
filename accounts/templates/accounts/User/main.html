@@ -79,8 +79,8 @@
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'myppmp'%}">
                                 <i class='bx bx-folder-open' ></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp'%}">
-                                <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">Create My PPMP</span>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase'%}">
+                                <i class='bx bx-book-add'></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
                             </a>
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
                                 <i class='bx bx-location-plus'></i> <span id="requestTracker"
@@ -109,6 +109,10 @@
 
 
             <style>
+                .d-flex {
+                    height: 90vh;
+                    margin-bottom: 0;
+        }
                 #sidebar {
                     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
                     overflow: hidden;
@@ -258,13 +262,11 @@
             {% block about %}
             {% endblock %}
 
-            {% block ppmp %}
-            {% endblock %}
 
             {% block myppmp %}
             {% endblock %}
 
-            {% block cart %}
+            {% block purchase %}
             {% endblock %}
 
         {% block Procurement %}

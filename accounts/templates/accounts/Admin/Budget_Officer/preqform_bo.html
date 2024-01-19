@@ -151,22 +151,20 @@
 
 
         .icons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Center vertically */
-    margin-top: 20px;
-    max-width: 80%; /* Adjust the max-width as needed */
-    margin-right: auto; /* Push it to the left as much as possible */
-    margin-left: auto; /* Push it to the right as much as possible */
-}
-.icon-link {
-    margin-left: 20px;
-    text-decoration: none;
-    color: white;
-    /* Adjust the color as needed */
-    display: flex;
-    align-items: center; /* Center the content vertically */
-}
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-right: 50px;
+        }
+
+        .icon-link {
+            margin-left: 20px;
+            margin-top: 16px;
+            text-decoration: none;
+            color: white;
+            /* Adjust the color as needed */
+        }
+
 
         .logo-container-left,
         .logo-container-right {
@@ -219,13 +217,12 @@
 
 
         .input-box {
-    width: auto;
-    margin-top: 1px;
-    margin-left: 16px;
-    margin-right: 20px;
-    display: flex;
-    align-items: center; /* Center the content vertically */
-}
+            width: auto;
+            margin-top: 1px;
+            margin-left: 16px;
+            margin-right: 20px;
+        }
+
         .input-box input {
             width: 100%;
             height: 40px;
@@ -234,37 +231,37 @@
             border: none;
             border-radius: 5px;
         }
+
         .send-icon {
-    position: fixed;
-    top: 90%;
-    left: 65%;
-    width: 30px;
-    height: 30px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 39px;
-    margin-left: -80px;
-    display: flex;
-    align-items: center; /* Center the content vertically */
-}
+            position: fixed;
+            top: 90%;
+            left: 65%;
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 39px;
+            margin-left: -80px;
+        }
+
         .send-icon i {
             line-height: 30px;
         }
-        .footer {
-    background-color: rgba(10, 99, 158, 0.637);
-    text-align: center;
-    width: 36.5%;
-    height: auto;
-    bottom: 0;
-    -webkit-user-modify: read-only;
-    position: fixed;
-    z-index: 2;
-    left: 30%; /* Adjust the left margin as needed */
-}
 
+        .footer {
+            background-color: rgba(10, 99, 158, 0.637);
+            text-align: center;
+            width: 36.5%;
+            height: auto;
+            bottom: 0;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+            position: fixed;
+        }
 
         .p {
             size: 12px;
@@ -274,7 +271,7 @@
             width: 100%;
             max-width: 950px;
             padding: 10px;
-            text-align: left;
+            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -331,10 +328,6 @@
             color: #ffa125e3;
             background-color: #000000e3;
         }
-        .header-image {
-    margin-left: -30px; /* Adjust the margin as needed */
-}
-     
     </style>
 
 <body>
@@ -344,57 +337,73 @@
                 <div class="container">
                     <div class="pdf-page size-a4">
                         <nav>
-                            <img class=" center-image" src="/static/images/CTU-DocHeader-1.png" alt="Header Image">
+                            <img class="ctu_logo" style="float: left;" src="{% static 'images/ctu_loogo.png' %}"
+                                alt="logo">
+                            <img class="asean_logo" style="float: right;" src="{% static 'images/asean.png' %}"
+                                alt="logo">
                         </nav>
                         <page size="a4">
+                            <p class="heading-paragraph">Republic of the Philippines</p>
+                            <p class="heading-paragraph no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></p>
+                            <p class="heading-paragraph">ARGAO CAMPUS</p>
+                            <p class="heading-paragraph">Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
+                            <div>
+                                <p class="heading-paragraph">Website: <a
+                                        href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
+                                <p class="heading-paragraph">Email: <a
+                                        href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
+                                <p class="heading-paragraph">Phone No.: (032) 4858-290/4865-109 loc 1700 Fax No.: (032)
+                                    4858-290</p>
                             </div>
                         </page>
                     </div>
                 </div>
                 <h><b>PROJECT PROCUREMENT MANAGEMENT PLAN (2023) </b></h>
-                <div class="container" style="margin-left: -35%;">
-                    <p>End-User / Unit : <strong><u>CTU-GINATILAN EXTENSION CAMPUS</u></strong></p>
-                    <p>Charged to : <strong contenteditable="true" id="chargedTo">______________</strong>( GAA, STF, IGP )</p>
-                    </p>
+
+                <div class="container">
+                    <p>End-User / Unit : <strong>CTU-GINATILAN eXTENSION CAMPUS</strong></p>
+                    <p>Charged to : <strong> ( GAA, STF, IGP )</strong></p>
                     <p><strong> Projects, Programs and Activities (PAPs)</strong></p>
                 </div>
 
-                <table class="table  table-bordered">
-                    <thead>
-                        <tr>
-                        <tr>
-                            <th rowspan='2'>Item Name</th>
-                            <th rowspan='2'> Brand / Description</th>
-                            <th rowspan='2'>Unit</th>
-                            <th rowspan='2'>Estimated Budget</th>
-                            <th colspan="12">Monthly Quantity Requirement</th>
-                            <th rowspan='2'>Unit Price</th>
-                           
 
-                        </tr>
-                        <tr>
-                            <th>Jan</th>
-                            <th>Feb</th>
-                            <th>Mar</th>
-                            <th>April</th>
-                            <th>May</th>
-                            <th>June</th>
-                            <th>July</th>
-                            <th>Aug</th>
-                            <th>Sept</th>
-                            <th>Oct</th>
-                            <th>Nov</th>
-                            <th>Dec</th>
-                        </tr>
+                <form action="{% url 'bo_approve' pr_id=pr_id %}" method="post" id="form_id">
+                    {% csrf_token %}
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tbody>
-                        {% for p in items %}
+                    <table class="table  table-bordered">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th rowspan='2'>Item Name</th>
+                                <th rowspan='2'> Brand / Description</th>
+                                <th rowspan='2'>Unit</th>
+                                <th rowspan='2'>Estimated Budget</th>
+                                <th colspan="12">Monthly Quantity Requirement</th>
+                                <th rowspan='2'>Unit Price</th>
 
-                        <form action="{% url 'ppmp' %}" method="post">
-                            {% csrf_token %}
+
+
+                            </tr>
+                            <tr>
+                                <th>Jan</th>
+                                <th>Feb</th>
+                                <th>Mar</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>Aug</th>
+                                <th>Sept</th>
+                                <th>Oct</th>
+                                <th>Nov</th>
+                                <th>Dec</th>
+                            </tr>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in checkout_items %}
+
                             <tr class="item-row" id="{{ p.id }}">
 
                                 <td>
@@ -417,6 +426,8 @@
                                         style="display: none">
                                 </td>
 
+
+
                                 <td>{{ p.estimate_budget }}</td>
                                 <td>{{ p.jan }}</td>
                                 <td>{{ p.feb }}</td>
@@ -430,10 +441,6 @@
                                 <td>{{ p.oct }}</td>
                                 <td>{{ p.nov }}</td>
                                 <td>{{ p.dec }}</td>
-
-
-                               
-
                                 <td>
                                     <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
                                     <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
@@ -441,119 +448,68 @@
                                         style="display: none">
                                 </td>
 
+                                <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
+                                <input type="hidden" name="jan" value="{{ p.jan }}">
+                                <input type="hidden" name="feb" value="{{ p.feb }}">
+                                <input type="hidden" name="mar" value="{{ p.mar }}">
+                                <input type="hidden" name="apr" value="{{ p.apr }}">
+                                <input type="hidden" name="may" value="{{ p.may }}">
+                                <input type="hidden" name="jun" value="{{ p.jun }}">
+                                <input type="hidden" name="jul" value="{{ p.jul }}">
+                                <input type="hidden" name="aug" value="{{ p.aug }}">
+                                <input type="hidden" name="sep" value="{{ p.sep }}">
+                                <input type="hidden" name="oct" value="{{ p.oct }}">
+                                <input type="hidden" name="nov" value="{{ p.nov }}">
+                                <input type="hidden" name="dec" value="{{ p.dec }}">
+
+
+
                             </tr>
 
                             {% endfor %}
-                        </form>
-                        
-                    </tbody>
-                    </tbody>
-                </table>
 
-                <div class="content-below-table">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
-                        <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
-                        <span id="totalBudget" class="total-budget-value">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
-                            Note: Technical Specifications for each Item/Project being<br><br>
-                        </span>
-                    </div>
+                        </tbody>
+
+                    </table>
+
+
 
                     <div>
-                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
-                        <strong>Prepared and Submitted by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Certified Fund Available: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approved:</strong>
-                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div>
-                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
-                        <strong><u>GLICERIO A. BAGUIA</u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MARY ANN P. GONZAGA. C.P.A. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</strong>
-                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-                    </div>
-                    <div>
-                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
-                        <strong>End-User &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accountant 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
-                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div>
-                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
-                        <strong>Date Prepared:</strong>
-                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-                    </div>
-                </div>
-                    <br>
-                    <br>
-                    <br>
-                 
-                </div>
-                <br>
-                <br>
+                        <br>
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
 
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                </form>
 
-                <footer class="footer">
-
-                        <div class="icons-container">
-                            <form id='form_status' method="post" action="{% url 'approve_checkout' %}">
-                                {% csrf_token %}
+                        <footer class="footer">
+                            <div class="icons-container">
+                                <div class="input-box">
+                                    <input placeholder="Type your comment" name="comment_content" id="comment_input"
+                                        required>
+                                </div>
                                 <input id="new_status_id" type="hidden" name="new_status">
                                 <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
                                 <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-                            </form>
-                            <script>
-                                function btn_click(status) {
-                                    document.getElementById('new_status_id').value = status
-                                    form = document.getElementById('form_status')
-                                    form.submit()
-                                }
-                            </script>
 
-
-                            <a href="#" title="Download" class="icon-link">
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="javascript:window.print()" title="Print" class="icon-link">
-                                <i class="fas fa-print"></i>
-                            </a>
-
-                            <div class="input-box">
-                                <input placeholder="Type your comment" name="comment_content">
-                            </div>
-                            <div class="send-icon">
-                                <button type="submit"><i class="fas fa-paper-plane"
-                                        style="margin-top: 3px;"></i></button>
-                            </div>
-                            </form>
-
-                        </div>
-                        
-
-
-                    </footer>
-                    <script>
-                        function setAction(action) {
-                            document.getElementById('action').value = action;
-                            document.forms[0].submit();  // Assuming the form is the first form on the page
-                        }
-                    </script>
-                    
-
-                </div>
-                
-
-
+                                
+                                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                        <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
+                                            onclick="downloadPDF()">
+                                    </a>
+                                    <a href="#" title="Select" class="icon-link">
+                                        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
+                                            onclick="toggleSelect()">
+                                    </a>
+                                    <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                        <option value="a4">A4</option>
+                                        <option value="legal">Legal</option>
+                                </div>
+                        </footer>
+                    </div>
+                </form>
             </div>
+
+
         </div>
+    </div>
     </div>
     <div> &nbsp</div>
     <div> &nbsp</div>
@@ -562,8 +518,69 @@
     <div> &nbsp</div>
     <div> &nbsp</div>
     <div> &nbsp</div>
-</body>
 
+    <script>
+        let selectedPaperSize = 'a4';
+    
+        function changePaperSize() {
+            selectedPaperSize = document.getElementById('paperSize').value;
+        }
+        function downloadPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+            const footer = document.querySelector('.footer');
+            footer.style.display = 'none';
+    
+            const options = {
+                filename: 'PPMP.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'landscape' },
+                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+            };
+    
+            html2pdf(body, options);
+    
+            // Reset page breaks after generating PDF
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+        }
+    </script>
+    
+    <script>
+        function toggleSelect() {
+            var selectElement = document.getElementById("paperSize");
+            selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+        }
+    </script>
+
+    <script>
+        function btn_click(approve) {
+            // Get the comment input element by its ID
+            var commentInput = document.getElementById('comment_input');
+
+            // Check if the comment is not empty
+            if (commentInput.value.trim() === "") {
+                alert("Please provide a comment.");
+                return;
+            }
+
+            // Get the hidden input element by its ID
+            var newStatusInput = document.getElementById('new_status_id');
+
+            // Set the value based on the 'approve' parameter
+            newStatusInput.value = approve ? 'approved' : 'disapproved';
+
+            // Submit the form programmatically
+            var form = document.getElementById('form_id');
+            form.submit();
+        }
+    </script>
 
 </html>
 
