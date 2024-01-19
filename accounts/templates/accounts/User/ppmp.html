@@ -270,9 +270,21 @@ margin-top: -13%;
             </tbody>
         </table>
         <button type="submit" class="submt">Submit</button>
+
         </form>
+        <button type="button" class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
     </div>
 </div>
+
+<script>
+
+    function toggleNewItemRow(category) {
+        var newRow = document.getElementById('new-item-row-' + category);
+        newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
+      } 
+
+
+</script>
 
 {% endblock %}
