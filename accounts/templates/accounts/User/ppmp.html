@@ -7,6 +7,9 @@
 {% block ppmp %}
 
 <style>
+    .ctu_logo {
+margin-top: -13%;
+    }
     .table-bordered th {
         background-color: #1c96c5;
     }
@@ -39,209 +42,61 @@
         margin-top: 15%;
     }
 
+.custom {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-top: 3.5%; /* Adjusted margin-top */
+  border: 1px solid black;
+}
 
-    .ctalogue {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: -107%;
-        margin-top: 15%;
-    }
+.custom:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .ctalogue:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
+.custom:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
+.catalogue {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-top: 3.5%; /* Adjusted margin-top */
+  margin-left: -117%;
+  border: 1px solid black;
+}
 
-    .ctalogue:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
+.catalogue:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .ctalogue span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .ctalogue:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-
-    .custom {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 19.6px;
-        /* Adjusted border-radius for 40% increase */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 5%;
-        margin-top: -5%;
-    }
-
-    .custom:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #1c96c5;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
-
-    .custom:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .custom span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 5.82px 9.25px;
-        /* Adjusted padding for 40% increase */
-        color: #fff;
-        font-size: 0.69em;
-        /* Adjusted font-size for 40% increase */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .custom:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
+.catalogue:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
     .submt {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        /* Adjusted border-radius for smaller size */
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: none;
-        /* Removed shadow */
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: 95.6%;
-        margin-top: 1%;
-    }
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-left: 96%;
+  border: 1px solid black;
+}
 
-    .submt:after {
-        content: " ";
-        width: 0%;
-        height: 100%;
-        background: #4be77a;
-        position: absolute;
-        transition: all 0.4s ease-in-out;
-        right: 0;
-    }
+.submt:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
 
-    .submt:hover::after {
-        right: auto;
-        left: 0;
-        width: 100%;
-    }
-
-    .submt span {
-        text-align: center;
-        text-decoration: none;
-        width: 100%;
-        padding: 8.82px 12.25px;
-        /* Adjusted padding for 30% smaller size */
-        color: #fff;
-        font-size: 0.55em;
-        /* Adjusted font-size for 30% smaller size */
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        z-index: 20;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .submt:hover span {
-        color: #183153;
-        animation: scaleUp 0.3s ease-in-out;
-    }
-
-    @keyframes scaleUp {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(0.95);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
+.submt:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -266,7 +121,7 @@
 
         <div class="col-md-1 mb-0">
             
-                <button class="btn btn-primary">
+                <button class="catalogue">
                     <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
                 </button>
            
@@ -414,158 +269,10 @@
 
             </tbody>
         </table>
-        <button type="submit" class="btn btn-success m-2 float-right">Submit</button>
+        <button type="submit" class="submt">Submit</button>
         </form>
 
     </div>
 </div>
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <form action="{% url 'addItem' %}" method="post">
-                    {% csrf_token %}
-
-
-
-                    <div class="form-group">
-                        <label for="Item">Item</label>
-                        <input type="text" class="form-control" id="Item" name="item" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Item_Brand_Description">Item Brand/Description</label>
-                        <input type="text" class="form-control" id="Item_Brand_Description"
-                            name="item_Brand_Description" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit</label>
-                        <input type="text" class="form-control" id="Unit" name="unit" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit Cost</label>
-                        <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                    </div>
-
-
-
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-
-    function editItem(itemId) {
-        // Assuming each row has a unique identifier, you can use it to target specific elements
-        var row = document.getElementById(itemId);
-
-        // Toggle visibility of elements
-        var editIcon = row.querySelector('.edit-icon');
-        var saveButton = row.querySelector('.save-icon');
-        var cancelButton = row.querySelector('.cancel-icon');
-        var editInputs = row.querySelectorAll('.edit-input');
-        var editableSpans = row.querySelectorAll('.editable');
-
-        // Show/hide elements
-        editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
-
-        // Show input fields for editing
-        editInputs.forEach(function (input) {
-            input.style.display = 'block';  // Adjust display style based on your styling
-        });
-
-        // Hide the spans displaying current values
-        editableSpans.forEach(function (span) {
-            span.style.display = 'none';  // Adjust display style based on your styling
-        });
-
-        // Add event listener to the cancel button
-        cancelButton.addEventListener('click', function () {
-            // Reset the form to its initial state
-            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
-            saveButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-            editInputs.forEach(function (input) {
-                input.style.display = 'none';
-            });
-            editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  // Adjust display style based on your styling
-            });
-        });
-
-        // Trigger the form submission
-        saveButton.addEventListener('click', function () {
-            // Assuming you have a form element in the row
-            var form = row.querySelector('form');
-            form.submit();
-        });
-    }
-
-    $(document).ready(function () {
-
-        function updateEstimateBudgetForRow(row) {
-
-            var unitPrice = parseFloat(row.find('[name="price"]').val());
-
-
-            var totalValue = 0;
-
-
-            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
-                var monthValue = parseFloat($(this).val()) || 0;
-                totalValue += monthValue;
-            });
-
-
-            var estimateBudget = totalValue * unitPrice;
-
-
-            row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
-        }
-
-
-        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-
-
-        $('[name="price"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-    });
-
-
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 
 {% endblock %}

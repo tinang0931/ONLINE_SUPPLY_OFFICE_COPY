@@ -18,85 +18,81 @@
     tr:hover .item-actions {
         display: flex;
     }
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-    .transparent-bg {
-        background-color: transparent !important;
-        border-color: transparent !important;
-    }
-    .transparent-bg:focus,
-    .transparent-bg:active {
-        outline-color: transparent !important;
-        box-shadow: none !important;
-    }
-    .dots {
-        font-size: 14px;
-        color: #1c96c5;
-    }
-    
-    #textContainer {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #ffffff;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        padding: 1px;
-    }
-    .dropdown:hover #textContainer {
-        display: block;
+
+    #yearDropdown {
+        background-color: #1c96c5;
+        color: whitesmoke ;
+        margin: 30px;
+        border: none;
+        border-radius: 15px;
+        margin-right: -190%;
+        transition: all 0.5s ease;
     }
 
-    .dropdown:hover #textContainer a {
-        color: #FFA600;
+    #yearDropdown.button{
+        text-align: left;
     }
-    element.style {
-        border: 2px solid #05708BD2;
+
+    #yearDropdown:hover{
+        background: #144472;
     }
-    .form-control {
-        display: block;
-        width: 18%;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: var(--bs-body-color);
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-clip: padding-box;
-        border-radius: 20px;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        margin-left: auto; /* Set margin-left to auto for right alignment */
-        margin-right: 10px; /* Add margin-right for spacing */
-        background-color: transparent;
-        box-shadow: none;
-    }
-      body{
-        overflow:hidden;
-      }
-      html{
-        overflow:hidden;
-      }
-    
+
+    .ppmp button {
+  background-color: #1c96c5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ppmp button:hover {
+  background-color: #144472;
+  color: #fff;
+}
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-    <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN</h1>
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <div class="custom-dropdown mx-auto float text-right">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Select Year
+            </button>
     
-    <div class="search" style="position: relative; display: flex; align-items: center; justify-content: flex-start; margin-left: 1531px; margin-top: 1%;">
-        <i class="fas fa-search" style="position: absolute; left: 9vh; color: #1c96c5; border-radius: 25px;"></i>
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1c96c5; flex: 1; border-radius: 25px; ">
+            <div class="dropdown-menu" aria-labelledby="yearDropdown">
+                <a class="dropdown-item" href="#">2022</a>
+                <a class="dropdown-item" href="#">2023</a>
+                <a class="dropdown-item" href="#">2024</a>
+                <a class="dropdown-item" href="#">2025</a>
+                <a class="dropdown-item" href="#">2026</a>
+                <a class="dropdown-item" href="#">2027</a>
+                <a class="dropdown-item" href="#">2028</a>
+                <a class="dropdown-item" href="#">2029</a>
+                <a class="dropdown-item" href="#">2030</a>
+            </div>
+        </div>
     </div>
     
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function () {
+                var selectedYear = $(this).text();
+                $('#yearDropdown').html(selectedYear + ' <span class="caret"></span>');
+            });
+        });
+    </script>
     
+    
+
     <div class="row">
 
         <div class="col-md-1 mb-0">
@@ -198,6 +194,9 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
 
