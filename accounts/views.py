@@ -701,6 +701,26 @@ def add_new_item(request):
 
         new_item.save()
         return redirect('bac_dashboard')
+    
+def user_add_new_item(request):
+    if request.method == 'POST':
+        
+        new_item_name = request.POST.get('new_item_name')
+        new_item_brand = request.POST.get('new_item_brand')
+        new_item_unit = request.POST.get('new_item_unit')
+        new_item_price = request.POST.get('item_unit_price')
+        
+
+        new_item = Item(
+            item=new_item_name,
+            item_brand_description=new_item_brand,
+            unit=new_item_unit,
+            unit_cost=new_item_price,
+            
+        )
+
+        new_item.save()
+        return redirect('ppmp')
 
 
 
