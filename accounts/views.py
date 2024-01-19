@@ -56,8 +56,8 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-def homepage(request):
-    return render(request, 'accounts/User/homepage.html')
+def landing(request):
+    return render(request, 'accounts/User/landing.html')
 
 
 User = get_user_model()
