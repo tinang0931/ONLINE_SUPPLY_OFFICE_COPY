@@ -29,6 +29,19 @@ body {
     top: 0;
 }
 
+
+.trapezoid,
+.parallelogram1,
+.triangle-up,
+.triangle-down,
+.parallelogram2,
+.triangle-down2,
+.cot {
+    position: fixed;
+    height: 100vh;
+    opacity: 0.97;
+}
+
 .trapezoid {
     position: fixed;
     border-bottom: 100vh solid #003566e8;
