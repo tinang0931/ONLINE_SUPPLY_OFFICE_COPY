@@ -602,7 +602,7 @@ def ppmp(request):
 
 def purchase(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES.get('file')
+        # uploaded_file = request.FILES.get('file')
 
         items = request.POST.get('item')
         item_brands = request.POST.get('item_brand')
@@ -615,14 +615,14 @@ def purchase(request):
         pr_identifier = Pr_identifier.objects.create(user=user, pr_id=generate_auto_pr_id())
         
 
-        metadata = FileMetadata.objects.create(filename=uploaded_file.name)
+        # metadata = FileMetadata.objects.create(filename=uploaded_file.name)
 
        
         PR.objects.create(
             
             pr_identifier=pr_identifier,
-            metadata=metadata,
-            file=uploaded_file,
+            # metadata=metadata,
+            # file=uploaded_file,
             item=items,
             item_brand_description=item_brands,
             unit=units,
@@ -1023,15 +1023,3 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
-def request_view(request):
-    if request.method == 'POST':
-        form = PurchaseRequestForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Your additional logic here
-            return redirect('success_page')  # Redirect to a success page or another view
-    else:
-        form = PurchaseRequestForm()
-
-    context = {'form': form}
-    return render(request, 'history.html', context)

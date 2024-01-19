@@ -94,7 +94,7 @@
           </tr>
           {% endfor %}
         </tbody>
-      </table>
+     
     
 
 
@@ -103,25 +103,32 @@
 
       
         
-            document.addEventListener('DOMContentLoaded', function () {
-                // Attach click event to the icon, which will trigger the hidden file input
-                document.querySelectorAll('.file-attachment label').forEach(function (label) {
-                    label.addEventListener('click', function () {
-                        var inputId = this.getAttribute('for');
-                        document.getElementById(inputId).click();
-                    });
-                });
-        
-                // Attach change event to the file input elements
-                document.querySelectorAll('.file-attachment input[type="file"]').forEach(function (fileInput) {
-                    fileInput.addEventListener('change', function () {
-                        // Handle the file attachment here
-                        var fileName = this.files[0].name;
-                        console.log('Selected file:', fileName);
-                    });
-                });
+      document.addEventListener('DOMContentLoaded', function () {
+        // Attach click event to the icon, which will trigger the hidden file input
+        document.querySelectorAll('.file-attachment label').forEach(function (label) {
+            label.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default label behavior
+    
+                var inputId = this.getAttribute('for');
+                var fileInput = document.getElementById(inputId);
+    
+                // Trigger a click on the file input only if it's not active
+                if (!fileInput.value) {
+                    fileInput.click();
+                }
             });
-     
+        });
+    
+        // Attach change event to the file input elements
+        document.querySelectorAll('.file-attachment input[type="file"]').forEach(function (fileInput) {
+            fileInput.addEventListener('change', function () {
+                // Handle the file attachment here
+                var fileName = this.files[0].name;
+                console.log('Selected file:', fileName);
+            });
+        });
+    });
+    
       $(document).ready(function () {
         function calculateTotal() {
           var totalAmount = 0;
@@ -159,6 +166,7 @@
         </div>
       </div>
     </footer>
+    </table>
     </form>
 </div>
 
