@@ -1,124 +1,129 @@
-.body {
-    margin: 0px;
-    padding: 0px;
-    box-sizing:border-box;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     overflow: hidden;
-    width: 100%;
-    height: 100;
-    position:absolute;
-
 }
 
 .container {
+    position: relative;
+    text-align: center;
     min-height: 100vh;
     background-repeat: no-repeat;
     background-color: #ffffff;
-    top: 0px;
 }
 
 .frame {
     background-image: url("/static/images/cargao.png");
     background-size: cover;
     background-repeat: no-repeat;
-    width: 1773px;
-    height: 1080px;
+    width: 100%; 
+    height: 100vh;
     position: fixed;
     overflow: visible;
-    left: 320px;
-    top: 0px;
+    left: 0%;
+    top: 0;
 }
 
 .trapezoid {
     position: fixed;
-    border-bottom: 1079px solid #003566;
-    border-left: 0px solid transparent;
-    border-right: 1250px solid transparent;
-    height: 0px;
-    width: 300px;
-    left: 0px;
-    top: 0px;
-    opacity: 97%;
+    border-bottom: 100vh solid #003566;
+    border-left: 0 solid transparent;
+    border-right: 50vw solid transparent; 
+    height: 0;
+    width: 20vw; 
+    left: 0;
+    top: 0;
+    opacity: 0.97;
 }
+
 
 .parallelogram1 {
-    width: 20px;
-    height: 1078px;
-    transform: skew(48deg);
-    background: #ffffff;
     position: fixed;
-    left: 900px;
-    top: 0px;
+    transform: skew(45deg);
+    background: #ffffff;
+    border-bottom: 100vh solid white;
+    border-left: 0 solid transparent;
+    border-right: 1vw solid transparent; 
+    height: 0;
+    width: 0; 
+    left: 89vh;
+    top: 0;
+    opacity: 0.97;
 }
+
 
 .triangle-up {
-    width: 0;
-    height: 0;
-    border-left: 45px solid transparent;
-    border-right: 45px solid transparent;
-    border-bottom: 1079px solid #f48c06;
     position: fixed;
-    left: 900px;
-    top: 0px;
-    transform: skew(49deg);
+    border-bottom: 100vh solid #f48c06;
+    border-left: 0 solid transparent;
+    border-right: 2.5vw solid transparent; 
+    transform: skew(45deg);
     opacity: 95%;
+    height: 0;
+    width: 0; 
+    left: 91vh;
+    top: 0;
 }
+
 
 .triangle-down {
-    width: 0;
-    height: 0;
-    border-left: 600px solid transparent;
-    border-right: 0px solid transparent;
-    border-top: 550px solid #f48c06;
     position: fixed;
-    left: 1500px;
-    top: 0px;
-    opacity: 80%;
+    border-bottom: 100vh solid #003566;
+    border-right: 0 solid transparent;
+    border-left: 5vw solid transparent; 
+    transform: rotate(132deg);
+    height: 0;
+    width: 0; 
+    right: 20vh;
+    bottom: 11vw;
+    opacity: 0.97;
 }
+
 
 .parallelogram2 {
-    width: 15px;
-    transform: skew(48deg);
-    background: #fff;
-    height: 640px;
     position: fixed;
-    left: 1850px;
-   
+    transform: skew(43deg);
+    background: #ffffff;
+    border-bottom: 100vh solid white;
+    border-left: 0 solid transparent;
+    border-right: 1vw solid transparent; 
+    height: 0;
+    width: 0; 
+    right: 4vh;
+    top: 0;
+    opacity: 0.97;
 }
+
 
 .triangle-down2 {
-    width: 0;
-    height: 0;
-    border-left: 35px solid transparent;
-    border-right: 40px solid transparent;
-    border-top: 550px solid #003566;
     position: fixed;
-    left: 1740px;
-    top: 0px;
-    transform: skew(50deg);
+    border-bottom: 100vh solid #f48c06;
+    border-left: 0 solid transparent;
+    border-right: 30vw solid transparent; 
+    transform: rotate(168deg);
     opacity: 95%;
-
+    height: 0;
+    width: 0; 
+    left: 78vw;
+    bottom: 10vh;
 }
+
 
 .cot {
     position: fixed;
-    width: 685px;
-    height: 318px;
-    left: 10px;
-    top: 220px;
+    width: 40%; 
+    height: 20%;
+    left: .2%; 
+    top: 19%; 
     font-family: Verdana;
     font-style: normal;
-    font-weight: 600;
-    font-size: 69px;
-    line-height: 100px;
+    font-weight: 600; 
+    font-size: 4vw; 
+    line-height: 1.5; 
     color: #ffff;
-    text-align: center;
-}
-
-
-.arrow {
-    position: fixed;
-    top: 880px;
-    left: 950px;
-    width: 75px;
 }
