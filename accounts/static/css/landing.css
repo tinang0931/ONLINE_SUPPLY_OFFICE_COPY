@@ -31,7 +31,7 @@ body {
 
 .trapezoid {
     position: fixed;
-    border-bottom: 100vh solid #003566;
+    border-bottom: 100vh solid #003566e8;
     border-left: 0 solid transparent;
     border-right: 50vw solid transparent; 
     height: 0;
@@ -45,13 +45,13 @@ body {
 .parallelogram1 {
     position: fixed;
     transform: skew(45deg);
-    background: #ffffff;
+    background: #ffffffef;
     border-bottom: 100vh solid white;
     border-left: 0 solid transparent;
-    border-right: 1vw solid transparent; 
+    border-right: 1.5vw solid transparent; 
     height: 0;
     width: 0; 
-    left: 89vh;
+    left: 87vh;
     top: 0;
     opacity: 0.97;
 }
@@ -59,21 +59,21 @@ body {
 
 .triangle-up {
     position: fixed;
-    border-bottom: 100vh solid #f48c06;
+    border-bottom: 100vh solid #f48d06e7;
     border-left: 0 solid transparent;
-    border-right: 2.5vw solid transparent; 
+    border-right: 2vw solid transparent; 
     transform: skew(45deg);
     opacity: 95%;
     height: 0;
     width: 0; 
-    left: 91vh;
+    left: 89.5vh;
     top: 0;
 }
 
 
 .triangle-down {
     position: fixed;
-    border-bottom: 100vh solid #003566;
+    border-bottom: 100vh solid #003566e8;
     border-right: 0 solid transparent;
     border-left: 5vw solid transparent; 
     transform: rotate(132deg);
