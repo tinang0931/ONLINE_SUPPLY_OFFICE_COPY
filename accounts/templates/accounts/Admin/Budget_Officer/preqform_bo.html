@@ -151,20 +151,22 @@
 
 
         .icons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-right: 50px;
-        }
-
-        .icon-link {
-            margin-left: 20px;
-            margin-top: 16px;
-            text-decoration: none;
-            color: white;
-            /* Adjust the color as needed */
-        }
-
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically */
+    margin-top: 20px;
+    max-width: 80%; /* Adjust the max-width as needed */
+    margin-right: auto; /* Push it to the left as much as possible */
+    margin-left: auto; /* Push it to the right as much as possible */
+}
+.icon-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    /* Adjust the color as needed */
+    display: flex;
+    align-items: center; /* Center the content vertically */
+}
 
         .logo-container-left,
         .logo-container-right {
@@ -217,12 +219,13 @@
 
 
         .input-box {
-            width: auto;
-            margin-top: 1px;
-            margin-left: 16px;
-            margin-right: 20px;
-        }
-
+    width: auto;
+    margin-top: 1px;
+    margin-left: 16px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center; /* Center the content vertically */
+}
         .input-box input {
             width: 100%;
             height: 40px;
@@ -231,37 +234,37 @@
             border: none;
             border-radius: 5px;
         }
-
         .send-icon {
-            position: fixed;
-            top: 90%;
-            left: 65%;
-            width: 30px;
-            height: 30px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 39px;
-            margin-left: -80px;
-        }
-
+    position: fixed;
+    top: 90%;
+    left: 65%;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 39px;
+    margin-left: -80px;
+    display: flex;
+    align-items: center; /* Center the content vertically */
+}
         .send-icon i {
             line-height: 30px;
         }
-
         .footer {
-            background-color: rgba(10, 99, 158, 0.637);
-            text-align: center;
-            width: 36.5%;
-            height: auto;
-            bottom: 0;
-            -webkit-user-modify: read-only;
-            position: fixed;
-            z-index: 2;
-            position: fixed;
-        }
+    background-color: rgba(10, 99, 158, 0.637);
+    text-align: center;
+    width: 36.5%;
+    height: auto;
+    bottom: 0;
+    -webkit-user-modify: read-only;
+    position: fixed;
+    z-index: 2;
+    left: 30%; /* Adjust the left margin as needed */
+}
+
 
         .p {
             size: 12px;
@@ -271,7 +274,7 @@
             width: 100%;
             max-width: 950px;
             padding: 10px;
-            text-align: center;
+            text-align: left;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -328,8 +331,10 @@
             color: #ffa125e3;
             background-color: #000000e3;
         }
-
-       
+        .header-image {
+    margin-left: -30px; /* Adjust the margin as needed */
+}
+     
     </style>
 
 <body>
@@ -339,32 +344,18 @@
                 <div class="container">
                     <div class="pdf-page size-a4">
                         <nav>
-                            <img class="ctu_logo" style="float: left;" src="{% static 'images/ctu_loogo.png' %}"
-                                alt="logo">
-                            <img class="asean_logo" style="float: right;" src="{% static 'images/asean.png' %}"
-                                alt="logo">
+                            <img class=" center-image" src="/static/images/CTU-DocHeader-1.png" alt="Header Image">
                         </nav>
                         <page size="a4">
-                            <p class="heading-paragraph">Republic of the Philippines</p>
-                            <p class="heading-paragraph no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></p>
-                            <p class="heading-paragraph">ARGAO CAMPUS</p>
-                            <p class="heading-paragraph">Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                            <div>
-                                <p class="heading-paragraph">Website: <a
-                                        href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                                <p class="heading-paragraph">Email: <a
-                                        href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                                <p class="heading-paragraph">Phone No.: (032) 4858-290/4865-109 loc 1700 Fax No.: (032)
-                                    4858-290</p>
                             </div>
                         </page>
                     </div>
                 </div>
                 <h><b>PROJECT PROCUREMENT MANAGEMENT PLAN (2023) </b></h>
-
-                <div class="container">
-                    <p>End-User / Unit : <strong>CTU-GINATILAN eXTENSION CAMPUS</strong></p>
-                    <p>Charged to : <strong> ( GAA, STF, IGP )</strong></p>
+                <div class="container" style="margin-left: -35%;">
+                    <p>End-User / Unit : <strong><u>CTU-GINATILAN EXTENSION CAMPUS</u></strong></p>
+                    <p>Charged to : <strong contenteditable="true" id="chargedTo">______________</strong>( GAA, STF, IGP )</p>
+                    </p>
                     <p><strong> Projects, Programs and Activities (PAPs)</strong></p>
                 </div>
 
@@ -454,19 +445,63 @@
 
                             {% endfor %}
                         </form>
+                        
                     </tbody>
                     </tbody>
                 </table>
 
-
-
-                <div>
+                <div class="content-below-table">
                     <br>
-                    <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                    <br>
+                    <br>
+                    <br>
+                    <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
+                        <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
+                        <span id="totalBudget" class="total-budget-value">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
+                            Note: Technical Specifications for each Item/Project being<br><br>
+                        </span>
+                    </div>
 
+                    <div>
+                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
+                        <strong>Prepared and Submitted by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Certified Fund Available: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approved:</strong>
+                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
+                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
+                        <strong><u>GLICERIO A. BAGUIA</u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MARY ANN P. GONZAGA. C.P.A. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</strong>
+                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+                    </div>
+                    <div>
+                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
+                        <strong>End-User &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accountant 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
+                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
+                        <div class="total-budget-container" style="text-align: left; margin-left: -10%;"> <!-- Adjust margin-left as needed -->
+                        <strong>Date Prepared:</strong>
+                        <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+                    </div>
+                </div>
+                    <br>
+                    <br>
+                    <br>
+                 
+                </div>
+                <br>
+                <br>
 
-                    </form> <!-- Close the form tag here -->
-                    <footer class="footer">
+                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                </form>
+
+                <footer class="footer">
 
                         <div class="icons-container">
                             <form id='form_status' method="post" action="{% url 'approve_checkout' %}">
@@ -501,6 +536,7 @@
                             </form>
 
                         </div>
+                        
 
 
                     </footer>
@@ -510,8 +546,10 @@
                             document.forms[0].submit();  // Assuming the form is the first form on the page
                         }
                     </script>
+                    
 
                 </div>
+                
 
 
             </div>
@@ -525,6 +563,7 @@
     <div> &nbsp</div>
     <div> &nbsp</div>
 </body>
+
 
 </html>
 
