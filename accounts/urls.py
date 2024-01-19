@@ -5,7 +5,7 @@ from .views import *
 from .views import checkout_items_view
 
 urlpatterns = [ 
-   path('',views.homepage, name='homepage'),
+   path('',views.landing, name='landing'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
    path('bac/',views.bac, name='bac'),
