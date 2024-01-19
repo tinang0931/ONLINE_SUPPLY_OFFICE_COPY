@@ -24,41 +24,52 @@ body {
     z-index: -1;
 }
 
-
 .title {
     position: absolute;
     font-family: Verdana;
-    top: 10%;
-    left: 5%;
-    font-size: 2em;
+    top: 5%; /* Change this value as needed */
+    left: 1.5%; /* Change this value as needed */
+    font-size: 3vw; /* Use viewport width as a relative unit for font size */
     font-weight: bold;
     color: white;
+    transform-origin: left top; /* Set the transform origin to the top-left corner */
 }
 
 
+
+/* Base styles for wrapper */
 .wrapper {
-    width: 50%;
-    max-width: 80vw; /* Set a maximum width in viewport units */
-    max-height: 80vh; /* Set a maximum height in viewport units */
-    margin: auto; /* Center the wrapper */
+    width: 30%;
+    max-width: 60vw;
+    max-height: 60vh;
+    margin: auto;
     background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
-    padding: 5vw 5vh; /* Set padding using viewport units */
+    padding: 5vw 5vh;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    overflow: hidden; /* Prevent content overflow */
+    overflow: hidden;
 }
 
+/* Responsive adjustments using media queries */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 50%;
+        max-width: none;
+        padding: 5vw;
+    }
+}
 
+/* Styles for icon container */
 .icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
+/* Styles for heading */
 .wrapper h1 {
     color: #003566;
     font-size: 2em;
@@ -66,12 +77,11 @@ body {
     margin-bottom: 35px;
 }
 
-
+/* Styles for input box */
 .wrapper .input-box {
     width: 100%;
     margin: 15px 0;
 }
-
 
 .input-box input {
     width: 100%;
@@ -86,23 +96,20 @@ body {
     transition: all 0.5s ease;
 }
 
-
 .input-box input:hover {
     color: #003566;
 }
 
-
-.wrapper .input-box input:focus,
-.wrapper .input-box input:valid {
+.input-box input:focus,
+.input-box input:valid {
     border-color: #003566;
 }
 
-
+/* Styles for forgot link */
 .wrapper .forgot {
     font-size: 17px;
     margin-left: 5%;
 }
-
 
 .forgot a {
     font-size: 17px;
@@ -111,12 +118,11 @@ body {
     text-decoration: none;
 }
 
-
 .forgot a:hover {
     text-decoration: underline;
 }
 
-
+/* Styles for button */
 .wrapper .btn {
     width: 100%;
     height: 30px;
@@ -134,19 +140,17 @@ body {
     transition-duration: 0.5s;
 }
 
-
 .wrapper .btn:hover {
     color: white;
     background-color: #ffa125e3;
 }
 
-
+/* Styles for register link */
 .register-link {
     font-size: 17px;
     text-align: center;
     margin-top: 20px;
 }
-
 
 .register-link p a {
     font-size: 17px;
@@ -154,7 +158,6 @@ body {
     color: black;
     text-decoration: underline;
 }
-
 
 .register-link p a:hover {
     text-decoration: underline;
