@@ -20,7 +20,7 @@
     }
 
     #yearDropdown {
-        background-color: #144472;
+        background-color: #1c96c5;
         color: whitesmoke ;
         margin: 30px;
         border: none;
@@ -34,8 +34,14 @@
     }
 
     #yearDropdown:hover{
-        background: #0a81b1;
+        background: #16789d;
     }
+
+    .button "btn.btn-primary:hover{
+        background: #16789d; 
+    }
+
+    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -82,8 +88,8 @@
 
         <div class="col-md-1 mb-0">
             <div class="ppmp">
-                <button class="btn btn-primary">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
+                <button class="btn btn-primary" style="background-color: #1c96c5;>
+                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; "> Create PPMP </a>
                 </button>
             </div>
         </div>

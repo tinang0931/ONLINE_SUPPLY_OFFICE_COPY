@@ -29,7 +29,7 @@ from django.contrib.auth import get_user_model
 from .tokens import account_activation_token
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
-from django.contrib import messages 
+from django.contrib import messages
 from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
