@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib import admin
 from . import views 
 from .views import *
-
+from .views import checkout_items_view
 
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
@@ -43,6 +43,7 @@ urlpatterns = [
    path('cd/',views.cd, name='cd'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
+   path('cdppmp/',views.cdppmp, name='cdppmp'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('preqform_cd/<str:pr_id>/', views.preqform_cd, name='preqform_cd'),
    path('resolution/',views.resolution, name='resolution'),
@@ -60,6 +61,7 @@ urlpatterns = [
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bohome/',views.bohome, name='bohome'),
    path('boabout/',views.boabout, name='boabout'),
+   path('borequest/',views.borequest, name='borequest'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('bac_home/<int:pr_id>/', views.bac_home, name='bac_home'),
    path('bo_approve/<str:pr_id>/', views.bo_approve, name='bo_approve'),

@@ -18,44 +18,23 @@
     tr:hover .item-actions {
         display: flex;
     }
-    button {
-        float: right;
-        padding: 5px 10px;
-        border: unset;
-        color: #212121;
-        z-index: 1;
-        background: #e8e8e8;
-        position: relative;
-        font-weight: 1000;
-        font-size: 14px;
-        transition: all 250ms;
-        overflow: hidden;
-    }
-
-    button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0;
-
-        background-color: #1c96c5;
-        z-index: -1;
-        transition: all 250ms;
-    }
-
-    button:hover {
-        color: #e8e8e8;
-        /* Change color to white when hovered */
-    }
-
-    button:hover::before {
-        width: 100%;
-    }
     .table-bordered th {
         background-color: #1c96c5;
     }
+    .pp_mp button {
+  background-color: #1c96c5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pp_mp button:hover {
+  background-color: #144472;
+  color: #fff;
+}
+
 </style>
 
 
@@ -74,7 +53,7 @@
     <div class="row">
 
         <div class="col-md-1 mb-0">
-            <div class="ppmp">
+            <div class="pp_mp">
                 <button class="btn btn-primary">
                     <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;">  PPMP </a>
                 </button>

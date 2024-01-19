@@ -36,14 +36,13 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .models import User
-from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
 import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
-
+from .models import CheckoutItems
 
 
 
@@ -359,6 +358,10 @@ def bo(request):
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
 
+@authenticated_user
+def borequest(request):
+    return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
+
 
 @authenticated_user
 def bohistory(request):
@@ -373,6 +376,11 @@ def cd(request):
 @authenticated_user
 def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
+
+
+@authenticated_user
+def cdppmp(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
 
 
 @authenticated_user
@@ -661,7 +669,6 @@ def approved_ppmp(request):
         }
     
         return render(request, 'accounts/User/approved_ppmp.html', context)
-    
 
 @authenticated_user
 def item_list(request):
@@ -989,3 +996,22 @@ def delete_item(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
+
+def checkout_items_view(request):
+    checkout_items = CheckoutItems.objects.all()
+    context = {'checkout_items': checkout_items}
+    return render(request, 'attachment/checkout_items.html', context)
+
+
+def request_view(request):
+    if request.method == 'POST':
+        form = PurchaseRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Your additional logic here
+            return redirect('success_page')  # Redirect to a success page or another view
+    else:
+        form = PurchaseRequestForm()
+
+    context = {'form': form}
+    return render(request, 'history.html', context)

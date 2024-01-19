@@ -18,9 +18,41 @@
     tr:hover .item-actions {
         display: flex;
     }
+
+    #yearDropdown {
+        background-color: #1c96c5;
+        color: whitesmoke ;
+        margin: 30px;
+        border: none;
+        border-radius: 15px;
+        margin-right: -190%;
+        transition: all 0.5s ease;
+    }
+
+    #yearDropdown.button{
+        text-align: left;
+    }
+
+    #yearDropdown:hover{
+        background: #144472;
+    }
+
+    .ppmp button {
+  background-color: #1c96c5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ppmp button:hover {
+  background-color: #144472;
+  color: #fff;
+}
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -28,8 +60,38 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <div class="custom-dropdown mx-auto float text-right">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Select Year
+            </button>
+    
+            <div class="dropdown-menu" aria-labelledby="yearDropdown">
+                <a class="dropdown-item" href="#">2022</a>
+                <a class="dropdown-item" href="#">2023</a>
+                <a class="dropdown-item" href="#">2024</a>
+                <a class="dropdown-item" href="#">2025</a>
+                <a class="dropdown-item" href="#">2026</a>
+                <a class="dropdown-item" href="#">2027</a>
+                <a class="dropdown-item" href="#">2028</a>
+                <a class="dropdown-item" href="#">2029</a>
+                <a class="dropdown-item" href="#">2030</a>
+            </div>
+        </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function () {
+                var selectedYear = $(this).text();
+                $('#yearDropdown').html(selectedYear + ' <span class="caret"></span>');
+            });
+        });
+    </script>
+    
+    
 
     <div class="row">
 
@@ -129,6 +191,9 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
 
