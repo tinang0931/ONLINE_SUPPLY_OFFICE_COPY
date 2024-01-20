@@ -385,31 +385,24 @@
                                         <th>Unit Cost</th>
                                         <th>Total Cost</th>
                                     </tr>
-                                    <tr></tr>
-                                    <tr></tr>
+                                    
 
                                     {% for pr in pr_identifier.pr_set.all %}
-                                    {% if forloop.counter <= 10 %} {# Display only the first 10 items per page #} <tr>
+                                    {% if forloop.counter <= 10 %} 
+                                    <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td class="item_unit text-center">{{ pr.unit }}</td>
                                         <td class="item_description text-center">{{ pr.item }} - {{pr.item_brand_description }}</td>
                                         <td class="item_quantity text-center">{{ pr.quantity }}</td>
                                         <td class="item_unit_cost text-center">{{ pr.unit_cost }}</td>
                                         <td class="item_total_cost text-center">{{ pr.total_cost }}</td>
-                                        <input type="hidden" name="item"
-                                            value="{{ pr.stock_or_property }}">
-                                        <input type="hidden" name="unit" value="{{ pr.unit }}">
-                                        <input type="hidden" name="description"
-                                            value="{{ pr.item_description }}">
-                                        <input type="hidden" name="quantity" value="{{ pr.quantity }}">
-                                        <input type="hidden" name="unit_cost" value="{{ pr.unit_cost }}">
-                                        <input type="hidden" name="total_cost" value="{{pr.total_cost }}">
-                                        </tr>
+                                        
+                                    </tr>
                                         {% endif %}
                                    
 
 
-                                        <!-- Move the TOTAL row below the Unit Cost -->
+                                      
                                         <tr>
                                             <td colspan="4"></td>
                                             <td style="text-align: right;">TOTAL</td>
