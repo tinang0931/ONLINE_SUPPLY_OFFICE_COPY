@@ -24,102 +24,107 @@ body {
     z-index: -1;
 }
 
-
 .title {
     position: absolute;
     font-family: Verdana;
-    top: 10%;
-    left: 5%;
-    font-size: 2em;
+    top: 5%; 
+    left: 1.5%; 
+    font-size: 3vw; 
     font-weight: bold;
     color: white;
+    transform-origin: left top; 
 }
 
 
+
 .wrapper {
-    width: 50vh;
-    max-width: 80vw;
-    max-height: 80vh;
+    width: 30%;
+    max-width: 60vw;
+    max-height: 60vh;
     margin: auto;
     background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
-    padding: 5vw 5vh;
+    padding: 5vw;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
     overflow: hidden;
 }
 
+/* Responsive adjustments using media queries */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 80%; /* Adjusted for smaller screens */
+        max-width: none;
+        padding: 8vw; /* Adjusted padding for smaller screens */
+    }
+}
 
+/* Styles for icon container */
 .icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
+/* Styles for heading */
 .wrapper h1 {
     color: #003566;
     font-size: 2em;
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 2vw; /* Adjusted margin for smaller screens */
 }
 
-
+/* Styles for input box */
 .wrapper .input-box {
     width: 100%;
-    margin: 15px 0;
+    margin: 2vw 0; /* Adjusted margin for smaller screens */
 }
-
 
 .input-box input {
     width: 100%;
-    height: 40px;
+    height: 4vw; /* Adjusted height for smaller screens */
     background: rgba(255, 255, 255, 0.486);
     border: none;
     outline: none;
     border-radius: 5px;
-    font-size: 14px;
-    padding: 10px;
+    font-size: 1.5vw; /* Adjusted font size for smaller screens */
+    padding: 1vw; /* Adjusted padding for smaller screens */
     box-shadow: 0 0 3px;
     transition: all 0.5s ease;
 }
-
 
 .input-box input:hover {
     color: #003566;
 }
 
-
-.wrapper .input-box input:focus,
-.wrapper .input-box input:valid {
+.input-box input:focus,
+.input-box input:valid {
     border-color: #003566;
 }
 
-
+/* Styles for forgot link */
 .wrapper .forgot {
-    font-size: 17px;
+    font-size: 1.7vw; /* Adjusted font size for smaller screens */
     margin-left: 5%;
 }
 
-
 .forgot a {
-    font-size: 17px;
-    margin-left: 15px;
+    font-size: 1.7vw; /* Adjusted font size for smaller screens */
+    margin-left: 3vw; /* Adjusted margin for smaller screens */
     color: black;
     text-decoration: none;
 }
-
 
 .forgot a:hover {
     text-decoration: underline;
 }
 
-
+/* Styles for button */
 .wrapper .btn {
     width: 100%;
-    height: 30px;
+    height: 3vw; /* Adjusted height for smaller screens */
     background: #fc8f01;
     outline: none;
     border-radius: 10px;
@@ -127,34 +132,31 @@ body {
     cursor: pointer;
     color: black;
     font-weight: 250;
-    font-size: 17px;
-    margin-top: 20px;
+    font-size: 1.7vw; /* Adjusted font size for smaller screens */
+    margin-top: 2vw; /* Adjusted margin for smaller screens */
     text-align: center;
-    line-height: 14px;
+    line-height: 1.4;
     transition-duration: 0.5s;
 }
-
 
 .wrapper .btn:hover {
     color: white;
     background-color: #ffa125e3;
 }
 
-
+/* Styles for register link */
 .register-link {
-    font-size: 17px;
+    font-size: 1.7vw; /* Adjusted font size for smaller screens */
     text-align: center;
-    margin-top: 20px;
+    margin-top: 2vw; /* Adjusted margin for smaller screens */
 }
 
-
 .register-link p a {
-    font-size: 17px;
+    font-size: 1.7vw; /* Adjusted font size for smaller screens */
     font-weight: 200;
     color: black;
     text-decoration: underline;
 }
-
 
 .register-link p a:hover {
     text-decoration: underline;

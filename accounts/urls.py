@@ -71,5 +71,5 @@ urlpatterns = [
    path('myppmp/', views.myppmp, name='myppmp'),
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
-   
+   path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
 ]

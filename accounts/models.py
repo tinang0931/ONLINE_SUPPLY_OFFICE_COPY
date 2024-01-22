@@ -125,6 +125,7 @@ class PR_Items(models.Model):
 
 class FileMetadata(models.Model):
     filename = models.CharField(max_length=255)
+    file = models.FileField(upload_to='file_uploads/')
 
 class PR(models.Model):
     metadata = models.ForeignKey(FileMetadata, on_delete=models.CASCADE)
