@@ -4,7 +4,7 @@
 {% load static %}
 
 
-{% block request %}
+{% block approved_ppmp %}
 
 <style>
     .search input {
@@ -15,60 +15,69 @@
     .table-bordered th {
         background-color: #1c96c5;
     }
+
     .ctu_logo {
         margin-top: -13%;
     }
+
     .welcome {
         margin-left: 10%;
     }
+
     .bckbtn {
-  display: inline-block;
-  position: relative;
-}
+        display: inline-block;
+        position: relative;
+    }
 
-.bckbtn a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
+    .bckbtn a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
 
-.bckbtn img {
-  width: 25px;  /* Adjust the width of the image as needed */
-  height: 25px; /* Adjust the height of the image as needed */
-  transition: all 0.3s ease-in-out;
-}
+    .bckbtn img {
+        width: 25px;
+        /* Adjust the width of the image as needed */
+        height: 25px;
+        /* Adjust the height of the image as needed */
+        transition: all 0.3s ease-in-out;
+    }
 
-.bckbtn:hover img {
-  transform: translateX(-5px);
-  filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
-}
+    .bckbtn:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+        /* Adjust the brightness for a highlight effect */
+    }
 
-.bckbtn::before {
-  content: "";
-  position: absolute;
-  top: -5px; /* Adjust the position higher or lower based on your preference */
-  right: 0;
-  bottom: -5px; /* Adjust the bottom position as needed */
-  left: 0;
-  background-color: #6a89a5; /* Set the background color */
-  border-radius: 20px;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.3s ease-in-out;
-}
+    .bckbtn::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        /* Adjust the position higher or lower based on your preference */
+        right: 0;
+        bottom: -5px;
+        /* Adjust the bottom position as needed */
+        left: 0;
+        background-color: #6a89a5;
+        /* Set the background color */
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
 
-.bckbtn:hover::before {
-  opacity: 1;
-}
+    .bckbtn:hover::before {
+        opacity: 1;
+    }
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 45%;"> CATALOGUE</h1>
+        <h1 style="margin-left: 45%;"> APPROVED PPMP</h1>
     </div>
 
     <div class="row">
@@ -79,112 +88,84 @@
             </div>
         </div>
 
-        
 
-        <div class="bckbtn" ><a href="{% url 'ppmp' %}"><img src="{% static 'images/previous_189252.png' %}" ></a></div>
+
+        <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/previous_189252.png' %}"></a>
+        </div>
 
         <div>
-
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                    <tr>
-                        <th >Item Name</th>
-                        <th > Brand / Description</th>
-                        <th >Unit</th>
-                        
-                       
-                        <th >Unit Price</th>
-                        <th > Select </th>
-                    </tr>
-                    
+                        <th>Item Name</th>
+                        <th>Brand / Description</th>
+                        <th>Unit</th>
+                        <th>Unit Price</th>
+                        <th>Select</th>
                     </tr>
                 </thead>
                 <tbody>
-                <tbody>
-                    {% for category, items in grouped_data.items %}
-                    <tr class="category-row">
-                        <th colspan="20">{{ category }}</th>
-                    </tr>
-
-                    {% for p in items %}
-
-                    <form action="{% url 'catalogue' %}" method="post">
+                    {% for p in checkout_items %}
+                    <form action="{% url 'approved_ppmp'  %}" method="post" class="item-form">
                         {% csrf_token %}
-                        <tr class="item-row" id="{{ p.id }}">
-                            <td>{{ p.Item_name }}
-                                <input type="hidden" name="item" value="{{ p.Item_name }}">
-                            </td>
-                            <td>{{ p.Item_Brand }}
-                                <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
-                            </td>
-                            <td>{{ p.Unit }}
-                                <input type="hidden" name="unit" value="{{ p.Unit }}">
-                            </td>
-                            
-                            <td>{{ p.Price }}
-                                <input type="hidden" name="price" value="{{ p.Price }}">
-                            </td>
+                        <tr class="item-row" id="row{{ p.id }}">
+                            <td>{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
+                            <td>{{ p.item_brand_description }}<input type="hidden" name="item_brand" value="{{ p.item_brand_description }}"></td>
+                            <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
+                            <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>
                             <td>
-                                {% if item_submitted %}
-                            {% else %}
-                            <button type="submit"> ➕
-                            </button>
-                            {% endif %}
+                                <button type="submit">➕</button>
                             </td>
-
                         </tr>
                     </form>
                     {% endfor %}
-                    {%endfor%}
                 </tbody>
             </table>
-
-
-
         </div>
-
-
-    </div>
+        
+        
     <style>
-       button {
-  padding: 5px 10px; /* Adjusted padding */
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e8e8e8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 14px; /* Adjusted font size */
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
-}
+        button {
+            padding: 5px 10px;
+            /* Adjusted padding */
+            border: unset;
+            border-radius: 15px;
+            color: #212121;
+            z-index: 1;
+            background: #e8e8e8;
+            position: relative;
+            font-weight: 1000;
+            font-size: 14px;
+            /* Adjusted font size */
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+            box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+            transition: all 250ms;
+            overflow: hidden;
+        }
 
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #1c96c5;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-}
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            border-radius: 15px;
+            background-color: #1c96c5;
+            z-index: -1;
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+            box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+            transition: all 250ms;
+        }
 
-button:hover {
-  color: #e8e8e8; /* Change color to white when hovered */
-}
+        button:hover {
+            color: #e8e8e8;
+            /* Change color to white when hovered */
+        }
 
-button:hover::before {
-  width: 100%;
-}
+        button:hover::before {
+            width: 100%;
+        }
     </style>
 
 

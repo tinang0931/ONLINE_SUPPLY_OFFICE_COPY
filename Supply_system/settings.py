@@ -162,3 +162,7 @@ EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'
 AUTH_USER_MODEL = 'accounts.User'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
+
+MEDIA_DIR = BASE_DIR / 'media'
+
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
