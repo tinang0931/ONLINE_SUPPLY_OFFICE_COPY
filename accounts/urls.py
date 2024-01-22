@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import include, path
 from django.contrib import admin
 from . import views 
 from .views import *
-from .views import checkout_items_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [ 
    path('',views.homepage, name='homepage'),
@@ -73,11 +75,15 @@ urlpatterns = [
    path('myppmp/', views.myppmp, name='myppmp'),
    path('buppmp/', views.buppmp, name='buppmp'),
    path('buppmpform/', buppmpformView.as_view, name='buppmpform'),
+   path('upload/', views.upload, name='upload'),
+   path('upload/', model_form_upload, name='model_form_upload'),
    
-
    path('cdppmp/', views.cdppmp, name='cdppmp'),
    path('cdppmpform/', cdppmpform.as_view, name='cdppmpform'),       
         
         
    path('purchase/', views.purchase, name='purchase'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

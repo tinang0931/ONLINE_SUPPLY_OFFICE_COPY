@@ -36,7 +36,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .models import User
-from .forms import UserForm
+from .forms import DocumentForm, UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
@@ -44,8 +44,8 @@ import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import appr_ppmp
-
 from .models import CheckoutItems
+from .forms import UploadFileForm
 
 
 
@@ -80,8 +80,9 @@ def register(request):
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
+        
         if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
-            messages.error(request, "Username or email is already in use.")
+            messages.error(request, "This CTU ID is alrready registered.")
             return render(request, 'accounts/User/register.html')
 
         user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
@@ -704,7 +705,13 @@ class RequesterView(View):
                 item = request.POST.get(f'item_{item_id}')
                 item_brand = request.POST.get(f'item_brand_{item_id}')
                 unit = request.POST.get(f'unit_{item_id}')
-                quantity = int(request.POST.get(f'quantity_{item_id}', 0)) 
+                quantity_str = request.POST.get(f'quantity_{item_id}', '')
+                try:
+                    quantity = int(quantity_str)
+                except ValueError:
+                    # Handle the case where the conversion to int fails
+                    # You may want to set a default value or handle it in a way that makes sense for your application
+                    quantity = 0
                 price = Decimal(request.POST.get(f'price_{item_id}', '0.00')) 
                 
 
@@ -1435,3 +1442,42 @@ class cdppmpform(View):
         else:
             return HttpResponse("PR ID or new status not found in the form data.")
         
+
+@authenticated_user
+def uploadFile(request):
+    if request.method == "POST":
+        form =UploadFileForm(request.POST, request.FILES)
+        if form.is_valid:()
+        handleuploadedFile(request.FILES['file'])
+        return redirect('requester')
+    else:
+        form = UploadFileForm()
+    return render(request, 'accounts/User/cart.html', {"form": form})
+
+
+def handleuploadedFile(f):
+    with open("some/file/name.txt", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+def upload(request):
+    return render(request, 'accounts/User/upload.html')
+
+def model_form_upload(request):
+    uploaded_file_url = None
+
+    if request.method == 'POST':
+
+
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            document = form.save()
+            uploaded_file_url = document.document.url
+            return render(request, 'core/model_form_upload.html', {'form': form, 'uploaded_file_url': uploaded_file_url})
+
+    else:
+        form = DocumentForm()
+        
+
+    return render(request, 'core/model_form_upload.html', {'form': form, 'uploaded_file_url': uploaded_file_url})

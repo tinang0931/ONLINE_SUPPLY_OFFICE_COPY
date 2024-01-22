@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Document, Item
 from .models import User
 from django.forms import ModelForm
 from django.http import JsonResponse
@@ -19,10 +19,12 @@ class UserForm(ModelForm):
         fields = ('username', 'first_name', 'last_name', 'contact1', 'contact2', 'email', 'user_type')
 
 # forms.py
-from django import forms
-from .models import PurchaseRequest
 
-class PurchaseRequestForm(forms.ModelForm):
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
+
+class DocumentForm(forms.ModelForm):
     class Meta:
-        model = PurchaseRequest
-        fields = ['item_name', 'item_brand', 'unit', 'price', 'file']
+        model = Document
+        fields = ('description', 'document', )
