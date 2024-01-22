@@ -18,7 +18,6 @@
   }
 
   .no-comment {
-    /* Your styles for a status with no comment */
     background-color: lightgray; /* Adjust this to your desired background color */
     color: black;
   }
@@ -166,56 +165,50 @@
     </tr>
   </thead>
 
-      {% for checkout in checkouts %}
-        <tr>
-          <td class="text-center">
-            {{ checkout.submission_date }}
-          </td>
-          <td>
-            <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-            </a>
-          </td>
+  {% for checkout in checkouts %}
+  <tr>
+    <!-- Other columns ... -->
 
-          <td class="text-center">
-            <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;" >
-                {{ checkout.bo_status }}
-            </span>
-        </td>
-          <td class="text-center">
-            {% if checkout.bo_comment %}
-              {{ checkout.bo_comment }}
-            {% else %}
-              No comments
-            {% endif %}
-          </td>
-          
-          <td class="text-center">
-            {% if checkout.cd_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.cd_status }}
-                </span>
-            {% elif checkout.new_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.new_status }}
-                </span>
-            {% else %}
-                <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
-                    Pending
-                </span>
-            {% endif %}
-        </td>
-        
-        
-          <td class="text-center">
-            {% if checkout.cd_comment %}
-              {{ checkout.cd_comment }}
-            {% else %}
-              No comments
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
+    <!-- CD Status column -->
+    <td class="text-center">
+      {% if checkout.cd_status %}
+        <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+          {{ checkout.cd_status }}
+        </span>
+      {% elif checkout.new_status %}
+        <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+          {{ checkout.new_status }}
+        </span>
+      {% else %}
+        <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+          Pending
+        </span>
+      {% endif %}
+    </td>
+
+    <!-- CD Comment column -->
+    <td class="text-center">
+      {% if checkout.cd_comment %}
+        {{ checkout.cd_comment }}
+      {% else %}
+        No comments
+      {% endif %}
+    </td>
+
+    <!-- Actions column -->
+    <td class="text-center">
+      {% if checkout.cd_status == 'Pending' %}
+        <button onclick="approveRequest('{{ checkout.id }}')">
+          <i class="fas fa-check-circle"></i> <!-- Replace this with your icon -->
+        </button>
+        <button onclick="declineRequest('{{ checkout.id }}')">
+          <i class="fas fa-times-circle"></i> <!-- Replace this with your icon -->
+        </button>
+      {% endif %}
+    </td>
+  </tr>
+{% endfor %}
+
     </tbody>
   </table>
 </div>
