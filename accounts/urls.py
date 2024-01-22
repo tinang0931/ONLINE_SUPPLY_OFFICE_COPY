@@ -72,4 +72,4 @@ urlpatterns = [
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
    path('purchase/', views.purchase, name='purchase'),
-]
+]  

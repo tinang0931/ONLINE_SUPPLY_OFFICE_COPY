@@ -53,10 +53,10 @@
         </thead>
         <tbody>
 
-        {% for p in checkouts %}
-            <tr>
-                <td> {{ p.pr_id }}</td>
-                <td class="text-center">
+          {% for p in checkouts %}
+          <tr>
+              <td>{{ p.pr_id }}</td>
+              <td class="text-center">
                   {% if p.bo_status %}
                       <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.bo_status }}</span>
                   {% else %}
@@ -70,15 +70,22 @@
                       <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
                   {% endif %}
               </td>
+              <td class="text-center">{{ p.bo_comment }}</td>
+              <td class="text-center">{{ p.cd_comment }}</td>
+              <td>{{ p.last_updated }}</td>
               
-              
-                <td class="text-center"> {{ p.bo_comment }}</td>
-                <td class="text-center"> {{ p.cd_comment }}</td>
-                <td> {{ p.last_updated }}</td>
-                
-            </tr>
-        {% endfor %}
-
+              <!-- Add a form for replying to comments -->
+              <td>
+                  <form method="post" action="{% url 'reply_view' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="parent_comment_id" value="{{ p.bo_comment.id }}">
+                      <textarea name="reply_text" placeholder="Reply to comment"></textarea>
+                      <button type="submit">Reply</button>
+                  </form>
+              </td>
+          </tr>
+      {% endfor %}
+      
         </tbody>
       </table>
       
