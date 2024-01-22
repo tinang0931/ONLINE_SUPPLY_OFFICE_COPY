@@ -124,7 +124,7 @@ def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
-          
+        
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
             auth_login(request, user)
@@ -600,36 +600,38 @@ def ppmp(request):
 
 
 
+from django.core.files.base import ContentFile
+
 def purchase(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES.get('file')
-
-        items = request.POST.get('item')
-        item_brands = request.POST.get('item_brand')
-        units = request.POST.get('unit')
-        prices = request.POST.get('unit_cost')
+        files = request.FILES.getlist('files[]')
+        items = request.POST.getlist('items[]')
+        item_brands = request.POST.getlist('item_brands[]')
+        units = request.POST.getlist('units[]')
+        prices = request.POST.getlist('prices[]')
         purpose = request.POST.get('purpose')
 
-
+        pr_id = generate_auto_pr_id()
         user = request.user
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=generate_auto_pr_id())
-        
+        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id)
 
-        metadata = FileMetadata.objects.create(filename=uploaded_file.name)
-
-       
-        PR.objects.create(
+        for i in range(len(items)):
+            uploaded_file = files[i]
+            metadata = FileMetadata.objects.create(filename=uploaded_file.name)
             
-            pr_identifier=pr_identifier,
-            metadata=metadata,
-            file=uploaded_file,
-            item=items,
-            item_brand_description=item_brands,
-            unit=units,
-            unit_cost=prices,
-            purpose=purpose
-        )
-       
+            # Save the file content to the FileField using save()
+            metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+
+            PR.objects.create(
+                metadata=metadata,
+                file=metadata.file,
+                pr_identifier=pr_identifier,
+                item=items[i],
+                item_brand_description=item_brands[i],
+                unit=units[i],
+                unit_cost=prices[i],
+                purpose=purpose
+            )
 
         return redirect('purchase')
     elif request.method == 'GET':
@@ -701,6 +703,26 @@ def add_new_item(request):
 
         new_item.save()
         return redirect('bac_dashboard')
+    
+def user_add_new_item(request):
+    if request.method == 'POST':
+        
+        new_item_name = request.POST.get('new_item_name')
+        new_item_brand = request.POST.get('new_item_brand')
+        new_item_unit = request.POST.get('new_item_unit')
+        new_item_price = request.POST.get('item_unit_price')
+        
+
+        new_item = Item(
+            item=new_item_name,
+            item_brand_description=new_item_brand,
+            unit=new_item_unit,
+            unit_cost=new_item_price,
+            
+        )
+
+        new_item.save()
+        return redirect('ppmp')
 
 
 
@@ -1003,15 +1025,3 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
-def request_view(request):
-    if request.method == 'POST':
-        form = PurchaseRequestForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Your additional logic here
-            return redirect('success_page')  # Redirect to a success page or another view
-    else:
-        form = PurchaseRequestForm()
-
-    context = {'form': form}
-    return render(request, 'history.html', context)
