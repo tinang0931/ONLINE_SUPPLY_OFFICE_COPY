@@ -37,18 +37,18 @@ body {
 
 
 .wrapper {
-    width: 50%;
-    max-width: 80vw; /* Set a maximum width in viewport units */
-    max-height: 80vh; /* Set a maximum height in viewport units */
-    margin: auto; /* Center the wrapper */
+    width: 50vh;
+    max-width: 80vw;
+    max-height: 80vh;
+    margin: auto;
     background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
-    padding: 5vw 5vh; /* Set padding using viewport units */
+    padding: 5vw 5vh;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    overflow: hidden; /* Prevent content overflow */
+    overflow: hidden;
 }
 
 

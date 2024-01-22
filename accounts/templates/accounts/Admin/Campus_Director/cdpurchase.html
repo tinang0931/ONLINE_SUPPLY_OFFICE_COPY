@@ -114,6 +114,11 @@ cursor: pointer;
   footer{
     height:30%;
   }
+  .fa-check-circle,
+  .fa-times-circle,
+  .fa-hourglass-half {
+    cursor: help;
+  }
   
 </style>
 
@@ -151,7 +156,7 @@ cursor: pointer;
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="status" onclick="sortTable(3)" style="width: 15%;">
         Budget Officer Comment
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
@@ -159,52 +164,45 @@ cursor: pointer;
         </span>
       </th>
       
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="text-center" onclick="sortTable(5)" style="width: 15%;">
         Campus Director Status
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-        
-       Campus Director Comments
+
+      <!-- Your existing header column for Campus Director Comments -->
+      <th class="status" onclick="sortTable(6)" style="width: 25%;">
+        Campus Director Comments
         <span class="sort-arrow">
-<span class="sort-arrow-up"></span>
+          <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-
     </tr>
   </thead>
 
-      {% for checkout in checkouts %}
-        <tr>
+  <tbody>
+    {% for checkout in checkouts %}
+  <tr>
           <td class="text-center">
-            <!-- Add a clock icon for the time -->
             <i class="far fa-clock" id="clock-icon" style="margin-right: 5px;"></i>
             {{ checkout.submission_date }}
-        </td>
+          </td>
           <td>
             <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-
-           
           <td class="text-center">
-            <span class="badge" style="font-size: 16px;">
-              {% if checkout.bo_status == 'approved' %}
-                <!-- Add the approved icon here with green color and tooltip text -->
-                <i class="fas fa-check-circle" style="color: green;" title="Approved"></i>
-              {% elif checkout.bo_status == 'declined' %}
-                <!-- Add the declined icon here with red color and tooltip text -->
-                <i class="fas fa-times-circle" style="color: red;" title="Declined"></i>
-              {% else %}
-                <!-- Add the none icon here with gray color and tooltip text -->
-                <i class="far fa-question-circle" style="color: gray;" title="None"></i>
-              {% endif %}
-            </span>
+            {% if checkout.bo_status == 'approved' %}
+              <i class="fas fa-check-circle text-success" title="Approved"></i>
+            {% elif checkout.bo_status == 'declined' %}
+              <i class="fas fa-times-circle text-danger" title="Declined"></i>
+            {% else %}
+              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
+            {% endif %}
           </td>
           <td class="text-center">
             {% if checkout.bo_comment %}
@@ -213,36 +211,30 @@ cursor: pointer;
               No comments
             {% endif %}
           </td>
-             
           <td class="text-center">
-            {% if checkout.cd_status %}
-              <span class="badge" style="color: black; font-size: 16px;">
-                <!-- Approved icon -->
-                <i class="fas fa-check-circle" style="color: green; margin-left: 5px;" title="Approved"></i>
-              </span>
-            {% elif checkout.new_status %}
-              <span class="badge" style="color: black; font-size: 16px;">
-                <!-- Declined icon -->
-                <i class="fas fa-times-circle" style="color: red; margin-left: 5px;" title="Declined"></i>
-              </span>
+            {% if checkout.cd_status == 'approved' %}
+              <i class="fas fa-check-circle text-success" title="Approved"></i>
+            {% elif checkout.cd_status == 'declined' %}
+              <i class="fas fa-times-circle text-danger" title="Declined"></i>
+            {% elif checkout.cd_status == 'pending' %}
+              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
             {% else %}
-              <!-- Circular loading spinner for pending state -->
-              <i class="fas fa-circle-notch fa-spin" style="color: #FFA500; font-size: 18px;" title="Pending"></i>
-              <!-- Pending icon -->
-              <i class="fas fa-hourglass-half" style="color: #FFA500; margin-left: 5px;" title="Pending"></i>
+              <i class="fas fa-hourglass-half text-warning" title="Pending - Debug: {{ checkout.cd_status }}"></i>
             {% endif %}
           </td>
-           
+          
           <td class="text-center">
             {% if checkout.cd_comment %}
               {{ checkout.cd_comment }}
             {% else %}
-              No comments
+              No comments  
             {% endif %}
           </td>
+          
+          
         </tr>
       {% endfor %}
-    </tbody>
+      </tbody>
   </table>
 </div>
 </div>
@@ -267,6 +259,7 @@ cursor: pointer;
           }
       }
   }
+
 </script>
 
 {% endblock %}

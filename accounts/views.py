@@ -1015,3 +1015,5 @@ def request_view(request):
 
     context = {'form': form}
     return render(request, 'history.html', context)
+
+

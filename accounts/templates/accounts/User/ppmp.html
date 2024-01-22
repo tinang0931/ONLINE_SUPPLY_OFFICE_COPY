@@ -42,16 +42,17 @@ margin-top: -13%;
         margin-top: 15%;
     }
 
-.custom {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
-  background: #1c96c5;
-  color: white;
-  border-radius: 4px;
-  transition: all ease.5s; /* Added transition for smoother animation */
-  margin-top: 3.5%; /* Adjusted margin-top */
-  border: none;
-}
+    .custom {
+        font-size: 12px;
+        padding: 0.60em 4em;
+        background: #1c96c5;
+        color: white;
+        border-radius: 4px;
+        transition: all ease.5s;
+        margin-top: 3.5vh;
+        border: none;
+        margin-left: -3px;
+    }
 
 .custom:hover {
   background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
@@ -61,15 +62,15 @@ margin-top: -13%;
   transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
 }
 .catalogue {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
-  background: #1c96c5;
-  color: white;
-  border-radius: 4px;
-  transition: all ease 0.5s; /* Added transition for smoother animation */
-  margin-top: 3.5%; /* Adjusted margin-top */
-  margin-left: -117%;
-  border: none;
+    font-size: 12px;
+    padding: 0.60em 5.05em;
+    background: #1c96c5;
+    color: white;
+    border-radius: 4px;
+    transition: all ease 0.5s;
+    margin-top: -20vh    ;
+    margin-left: 9vh;
+    border: none;
 }
 
 .catalogue:hover {
@@ -79,16 +80,17 @@ margin-top: -13%;
 .catalogue:active {
   transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
 }
-    .submt {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
-  background: #1c96c5;
-  color: white;
-  border-radius: 4px;
-  transition: all ease.5s; /* Added transition for smoother animation */
-  margin-left: 96%;
-  border: none;
-}
+.submt {
+    font-size: 12px; /* Adjusted font size to 30% smaller */
+    padding: 0.60em 1.05em; /* Adjusted padding to 30% smaller */
+    background: #1c96c5;
+    color: white;
+    border-radius: 4px;
+    transition: all ease 0.5s; /* Added transition for smoother animation */
+    margin-left: 1805px; /* Adjusted margin-left to move the button to the left */
+    border: none;
+    margin-bottom: 20px;
+  }
 
 .submt:hover {
   background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
@@ -97,6 +99,46 @@ margin-top: -13%;
 .submt:active {
   transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
 }
+.bck {
+    position: fixed;
+    bottom: 50px; /* Adjust the top position as needed */
+    left: 20px; /* Adjust the left position as needed */
+}
+  
+  .bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .bck img {
+    width: 30px;  
+    height: 30px; /* Adjust the height of the image as needed */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .bck:hover img {
+    transform: translateX(-5px);
+    filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
+  }
+  
+  .bck::before {
+    content: "";
+    position: absolute;
+    top: -5px; /* Adjust the position higher or lower based on your preference */
+    right: 0;
+    bottom: -5px; /* Adjust the bottom position as needed */
+    left: 0;
+    border-radius: 20px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .bck:hover::before {
+    opacity: 1;
+  }
+ 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -104,12 +146,15 @@ margin-top: -13%;
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
-
+<div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
     <div class="container">
         <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
-
+    <div class="bck">
+        <a href="{% url 'myppmp' %}">
+            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+        </a>
+    </div>
     <div class="row">
         <div class="col-md-1 mb-2">
             <div class="additem">
@@ -118,20 +163,17 @@ margin-top: -13%;
                 </button>
             </div>
         </div>
-
+    
         <div class="col-md-1 mb-0">
-            
-                <button class="catalogue">
-                    <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
-                </button>
-           
+            <button class="catalogue">
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+            </button>
         </div>
-    </div>
-    <div class="row">
+    
         <div class="col-md-4 ml-auto text-right">
             <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
         </div>
-
+    
         <div class="col-md-1 ml-auto text-left">
             <h5> TOTAL : 100,000 </h5>
         </div>
@@ -231,7 +273,7 @@ margin-top: -13%;
                             <div class="item-actions" style="text-align: center; gap: 20px">
                                 <a href="#" class="edit-icon" style="text-align: center;"
                                     onclick="editItem('{{ p.id }}')">
-                                    <i class="fas fa-edit text-primary"></i></a>
+                                    <i class="fas fa-pencil-alt text-primary"></i></a>
 
 
                                 <!-- <form action="{% url 'update' p.id %}" method="post">
@@ -256,8 +298,9 @@ margin-top: -13%;
 
 
                                 {% if p.id %}
-                                <a href="{% url 'delete' p.id %}" class="delete-icon"><i
-                                        class="fas fa-trash-alt text-danger"></i></a>
+                                <a href="{% url 'delete' p.id %}" class="delete-icon"><i>
+                                    <i class="fas fa-trash text-danger"></i></a>
+
                                 {% endif %}
 
                             </div>
