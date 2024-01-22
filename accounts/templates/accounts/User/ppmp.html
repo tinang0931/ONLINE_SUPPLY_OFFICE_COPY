@@ -42,65 +42,73 @@
 
    
     .catalogue {
-        background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+        background: #1c96c5;
+        padding: 5px 15px;
         color: white;
         text-decoration: none;
         margin-left: 20px;
+        border: none;
+        border-radius: 20px;
     }
+
     .custom:hover,
     .catalogue:hover,
     .submt:hover {
-        background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+        transition: all ease .5s;
+        background: #144472;
     }
 
-.submt:active {
-  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
-}
-.bck {
-  display: inline-block;
-  position: relative;
-  margin-left: 10px
-}
 
-.bck a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.bck img {
-  width: 30px;  /* Adjust the width of the image as needed */
-  height: 30px; /* Adjust the height of the image as needed */
-  transition: all 0.3s ease-in-out;
-}
-
-.bck:hover img {
-  transform: translateX(-5px);
-  filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
-}
-
-.bck::before {
-  content: "";
-  position: absolute;
-  top: -5px; /* Adjust the position higher or lower based on your preference */
-  right: 0;
-  bottom: -5px; /* Adjust the bottom position as needed */
-  left: 0;
-  background-color: #6a89a5; /* Set the background color */
-  border-radius: 20px;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.bck:hover::before {
-  opacity: 1;
-}
     .custom:active,
     .catalogue:active,
     .submt:active {
         transform: translate(0em, 0.14em);
     }
+
+
+.bck {
+    display: inline-block;
+    position: relative;
+    margin-left: 10px
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+
+.bck img {
+    width: 30px; 
+    height: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.bck:hover img {
+    transform: translateX(-5px);
+    filter: brightness(1.2);
+}
+
+
+.bck::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 10px; 
+    left: 0;
+    background-color: #6a89a5; 
+    border-radius: 20px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+.bck:hover::before {
+    opacity: 1;
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -111,19 +119,18 @@
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"> PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
 
-    <div >
+    <div class="row">
         <div class="col-md-1 mb-0">
-            <button class="catalogue" style="color: white; text-decoration: none;">
-                <a href="{% url 'catalogue' %}" >Catalogue </a>
+            <button class="catalogue">
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
         </div>
-        <div class="bck" ><a href="{% url 'myppmp' %}"><img src="{% static 'images/previous_189252.png' %}" ></a></div>
     </div>
 
-
+    <div class="bck" ><a href="{% url 'myppmp' %}"><img src="{% static 'images/previous_189252.png' %}" ></a></div>
 
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
@@ -135,7 +142,11 @@
         </div>
     </div>
 
+
+
+
     <div class="table-responsive">
+
         <form action="{% url 'ppmp' %}" method="post">
             {% csrf_token %}
 
