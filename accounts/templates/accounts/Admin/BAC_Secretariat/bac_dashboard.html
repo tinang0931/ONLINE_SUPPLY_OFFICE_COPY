@@ -159,6 +159,7 @@ th {
   padding: 20px;
 }
 
+
   </style>
 </head>
 
@@ -267,7 +268,7 @@ th {
     <table class="category-table" id="table-{{ category }}">
       <thead>
         <tr>
-          <th colspan="6" class="text-center">
+          <th colspan="6" class="text-center" style="width: 100%; text-align:center">
             {{ category }}
             <a href="#" onclick="confirmDeleteCategory('{{ category }}')">
                 <i class="fas fa-trash-alt text-danger"></i>
@@ -309,10 +310,10 @@ th {
         </tr>
         <tr>
           <th></th>
-          <th class="text-center">Item Name</th>
-          <th class="text-center">Item Brand/Description</th>
-          <th class="text-center">Unit</th>
-          <th class="text-center">Price</th>
+          <th class="text-center" style="width: 20%;">Item Name</th>
+          <th class="text-center" style="width: 40%;">Item Brand/Description</th>
+          <th class="text-center" style="width: 11%;">Unit</th>
+          <th class="text-center" style="width: 11%;">Price</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
