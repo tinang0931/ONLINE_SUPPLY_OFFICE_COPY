@@ -901,7 +901,7 @@ def bo_approve(request, pr_id):
             jul=jul,
             aug=aug,
             sep=sep,
-            oct=oct,
+            oct=oct,   
             nov=nov,
             dec=dec,
             
@@ -919,7 +919,7 @@ def bo_approve(request, pr_id):
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
         context = {
-            'checkouts': checkouts,
+            'checkout': checkouts,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
      }

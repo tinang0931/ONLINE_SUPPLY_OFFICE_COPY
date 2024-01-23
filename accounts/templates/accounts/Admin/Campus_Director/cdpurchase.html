@@ -4,6 +4,8 @@
 {% load static %}
 
 {% block cdpurchase %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
@@ -98,14 +100,29 @@
   .table th {
     background-color: rgba(5, 112, 139, 0.822);
     color: white;
-    cursor: pointer;
+cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
   }
+  body{
+    overflow:hidden;
+  }
+  html{
+    overflow:hidden;
+  }
+  footer{
+    height:30%;
+  }
+  .fa-check-circle,
+  .fa-times-circle,
+  .fa-hourglass-half {
+    cursor: help;
+  }
+  
 </style>
 
-<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style="height: 50vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
   
   <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
@@ -139,7 +156,7 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="status" onclick="sortTable(3)" style="width: 15%;">
         Budget Officer Comment
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
@@ -147,41 +164,46 @@
         </span>
       </th>
       
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="text-center" onclick="sortTable(5)" style="width: 15%;">
         Campus Director Status
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-        
-       Campus Director Comments
+
+      <!-- Your existing header column for Campus Director Comments -->
+      <th class="status" onclick="sortTable(6)" style="width: 25%;">
+        Campus Director Comments
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
         </span>
       </th>
-
     </tr>
   </thead>
 
-      {% for checkout in checkouts %}
-        <tr>
+  <tbody>
+    {% for checkout in checkouts %}
+  <tr>
           <td class="text-center">
+            <i class="far fa-clock" id="clock-icon" style="margin-right: 5px;"></i>
             {{ checkout.submission_date }}
           </td>
           <td>
-            <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
+ 
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
           </td>
-
           <td class="text-center">
-            <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;" >
-                {{ checkout.bo_status }}
-            </span>
-        </td>
+            {% if checkout.bo_status == 'approved' %}
+              <i class="fas fa-check-circle text-success" title="Approved"></i>
+            {% elif checkout.bo_status == 'declined' %}
+              <i class="fas fa-times-circle text-danger" title="Declined"></i>
+            {% else %}
+              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
+            {% endif %}
+          </td>
           <td class="text-center">
             {% if checkout.bo_comment %}
               {{ checkout.bo_comment }}
@@ -189,34 +211,30 @@
               No comments
             {% endif %}
           </td>
-          
           <td class="text-center">
-            {% if checkout.cd_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.cd_status }}
-                </span>
-            {% elif checkout.new_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.new_status }}
-                </span>
+            {% if checkout.cd_status == 'approved' %}
+              <i class="fas fa-check-circle text-success" title="Approved"></i>
+            {% elif checkout.cd_status == 'declined' %}
+              <i class="fas fa-times-circle text-danger" title="Declined"></i>
+            {% elif checkout.cd_status == 'pending' %}
+              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
             {% else %}
-                <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
-                    Pending
-                </span>
+              <i class="fas fa-hourglass-half text-warning" title="Pending - Debug: {{ checkout.cd_status }}"></i>
             {% endif %}
-        </td>
-        
-        
+          </td>
+          
           <td class="text-center">
             {% if checkout.cd_comment %}
               {{ checkout.cd_comment }}
             {% else %}
-              No comments
+              No comments  
             {% endif %}
           </td>
+          
+          
         </tr>
       {% endfor %}
-    </tbody>
+      </tbody>
   </table>
 </div>
 </div>
@@ -241,6 +259,7 @@
           }
       }
   }
+
 </script>
 
 {% endblock %}
