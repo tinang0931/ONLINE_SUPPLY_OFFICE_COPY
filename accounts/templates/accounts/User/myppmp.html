@@ -19,20 +19,24 @@
         display: flex;
     }
 
-.custom-dropdown .btn {
-    background-color: #1c96c5;
-    color: whitesmoke;
-    border: none;
-    transition: all 0.5s ease;
-    text-align: left; /* Align text to the left */
-    position: absolute;
-    top: 180px;
-    right: 10px;
-    padding: 5px 10px;
-}
-
+    .custom-dropdown .btn {
+        position: fixed;
+        top: 26vh; /* Adjust the top value as needed */
+        right: 3vh; /* Adjust the right value as needed */
+        z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
+        background-color: #1c96c5;
+        color: whitesmoke;
+        border: none;
+        transition: all 0.5s ease;
+        text-align: left;
+        padding: 5px 10px;
+    }
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #f08f12; /* Set the desired background color for hover */
+        color: whitesmoke; /* Set the desired text color for hover */
+    }
 .custom-dropdown .btn:hover {
-    background: #144472;
+    background: #033768;
 }
 
 .ppmp button {
@@ -48,8 +52,16 @@
     background-color: #144472;
     color: #fff;
 }
-
-
+body{
+    overflow:hidden;
+  }
+  html{
+    overflow:hidden;
+  }
+  .d-flex {
+    height: 85vh;
+    margin-bottom: 1;
+}
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -57,16 +69,16 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-<div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
         <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
-        <div class="custom-dropdown mx-auto float text-right">
+        <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                    aria-haspopup="true" aria-expanded="false">
                 Select Year
             </button>
-            <div class="dropdown-menu" aria-labelledby="yearDropdown">
+            <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
                 <a class="dropdown-item" href="#">2022</a>
                 <a class="dropdown-item" href="#">2023</a>
                 <a class="dropdown-item" href="#">2024</a>
@@ -89,6 +101,10 @@
                 var selectedYear = $(this).text();
                 $('.btn#yearDropdown').text(selectedYear);
             });
+        });
+
+        document.getElementById('yearDropdown').addEventListener('click', function() {
+            this.style.backgroundColor = '#144472';
         });
     </script>
     
