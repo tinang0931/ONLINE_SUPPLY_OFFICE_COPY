@@ -71,7 +71,7 @@
           <th>Item Name</th>
           <th>Brand / Description</th>
           <th>Unit</th>
-          <th>Unit Price</th>
+          <th>Unit Price</th> 
           <th></th>
 
         </tr>
@@ -148,6 +148,35 @@
           calculateTotal();
         });
       </script>
+
+<script>
+  $(document).ready(function () {
+
+    // Function to calculate and update the total amount
+    function calculateTotal() {
+      var totalAmount = 0;
+
+      // Iterate through each row in the table
+      $("input[name^='prices']").each(function () {
+        var unitCost = parseFloat($(this).val()) || 0;
+        totalAmount += unitCost;
+      });
+
+      // Display the total amount in the specified element
+      $("#total_amount").text(totalAmount.toFixed(2));
+    }
+
+    // Initial calculation when the document is ready
+    calculateTotal();
+
+    // Event handler for input changes (unit cost)
+    $("input[name^='prices']").on('input', function () {
+      calculateTotal(); // Recalculate the total amount when the unit cost changes
+    });
+
+  });
+</script>
+
 
       <footer class="fixed-bottom p-2"
         style="overflow-y: auto; overflow-x: hidden; background-color:  rgba(1, 33, 67, 0.9);">
