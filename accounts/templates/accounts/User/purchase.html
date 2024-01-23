@@ -50,7 +50,7 @@ textarea.form-control {
 
   .col-md-4 .text-right button.btn.btn-primary {
     border-radius: 8%;
-
+  }
 
 </style>
 
@@ -87,7 +87,7 @@ textarea.form-control {
           <th>Brand / Description</th>
           <th>Unit</th>
           <th>Unit Price</th>
-
+          <th>Attachment</th>
         </tr>
       </thead>
       <tbody>
@@ -102,7 +102,6 @@ textarea.form-control {
               id="unit_{{ item.id }}"></td>
           <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
               id="unit_cost_{{ item.id }}"></td>
-
           <td>
             <div class="file-attachment">
               <label for="fileInput{{ item.id }}" style="cursor: pointer;">
