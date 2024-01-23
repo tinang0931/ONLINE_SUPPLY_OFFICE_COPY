@@ -595,7 +595,9 @@ def ppmp(request):
     
         items = Item.objects.all()
     
-    return render(request, 'accounts/User/ppmp.html', {'items': items})
+        return render(request, 'accounts/User/ppmp.html', {'items': items})
+
+
 
 
 

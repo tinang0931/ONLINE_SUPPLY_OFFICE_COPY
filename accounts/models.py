@@ -200,6 +200,16 @@ class CheckoutItems(models.Model):
     attached_file = models.FileField(upload_to='checkout_items_files/', null=True, blank=True)
     def __str__(self):
         return f"{self.pk} - {self.attached_file.name if self.attached_file else 'No file'}"
+    
+    @property
+    def combined_id(self):
+        random_number = str(random.randint(10000000, 99999999)) 
+        return f"{str(self.id)}{random_number}"
+
+
+    def __str__(self):
+        return str(self.pr_id)
+
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
