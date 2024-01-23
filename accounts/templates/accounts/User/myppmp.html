@@ -97,8 +97,8 @@
 
         <div class="col-md-1 mb-0">
             <div class="ppmp">
-                <button class="btn btn-primary" style="background-color: #1c96c5;>
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; "> Create PPMP </a>
+                <button class="btn btn-primary">
+                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;"> Create PPMP </a>
                 </button>
             </div>
         </div>
@@ -139,7 +139,7 @@
                 <tbody>
                     {% for p in items %}
 
-                  
+                
                         <tr class="item-row" id="{{ p.id }}">
 
                             <td>
@@ -173,7 +173,6 @@
                             <td>{{ p.dec }}</td>
 
 
-                           
 
                             <td>
                                 <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
@@ -182,12 +181,12 @@
                             </td>
 
                         </tr>
-               
+            
                     {% endfor %}
 
                 </tbody>
             </table>
-      
+    
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
