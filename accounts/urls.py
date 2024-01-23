@@ -72,4 +72,5 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
+   path('preform_approved/', views.preform_approved, name='preform_approved'),
 ]

@@ -300,6 +300,11 @@ def preqform(request, pr_id):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
+def preform_approved(request, pr_id):
+    
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
+
 
 @authenticated_user
 def np(request):
@@ -532,10 +537,17 @@ def catalogue (request):
 
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
-def myppmp (request):
-    items = CheckoutItems.objects.all()
+def myppmp(request):
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved')
 
-    return render(request, 'accounts/User/myppmp.html', {'items': items})
+    # Get Checkoutitems for the approved Checkouts
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+    context = {
+        'approved_items': approved_items,
+    }
+   
+    return render(request, 'accounts/User/myppmp.html', context)
 
 
 def ppmp(request):
@@ -663,13 +675,12 @@ def approved_ppmp(request):
 
         return redirect('approved_ppmp')
     elif request.method == 'GET':
-        checkout = Checkout.objects.get()
+        checkout = get_object_or_404(Checkout)
         checkout_items = CheckoutItems.objects.filter(checkout=checkout)
         context = {
             'checkout_items': checkout_items,
             'checkout': checkout,
         }
-    
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
 @authenticated_user
@@ -847,7 +858,7 @@ def bohome(request):
             'user': checkout.user,
             'pr_id': checkout.pr_id,
             'last_updated': checkout.last_updated,
-            'bo_status': checkout.bo_status,  
+            'bo_status': checkout.bo_status,     
             'bo_comment': checkout.bo_comment,
         }
         checkout_data.append(checkout_dict)
@@ -905,11 +916,13 @@ def bo_approve(request, pr_id):
             
         )
 
-        # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
             bo_comment=comment_content
+            
         )
+
+
 
         return redirect('bohome')
 
