@@ -1003,15 +1003,15 @@ def preqform_cd(request, pr_id):
         return redirect('cdpurchase')
 
     elif request.method == 'GET':
-        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
-        context = {
-            'checkouts': checkouts,
-            'checkout_items': checkout_items,
-            'pr_id': pr_id,
-     }
+            checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+            checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+            context = {
+                'checkouts': checkouts,
+                'checkout_items': checkout_items,
+                'pr_id': pr_id,
+            }
 
-    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+            return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_item(request, id):
