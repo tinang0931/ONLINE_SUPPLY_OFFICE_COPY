@@ -271,10 +271,7 @@ button:hover::before {
 
                 <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
                         {% csrf_token %}
-
-
 
                         <div class="form-group">
                             <label for="Item">Item</label>
