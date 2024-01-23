@@ -27,136 +27,209 @@ body {
 .title {
     position: absolute;
     font-family: Verdana;
-    top: 5%; 
-    left: 1.5%; 
-    font-size: 3vw; 
-    font-weight: bold;
+    top: 6%;
+    left: 1.5%;
+    font-size: 3vw;
+    font-weight: bold; 
     color: white;
-    transform-origin: left top; 
+    transform-origin: left top;
 }
-
 
 
 .wrapper {
-    width: 30%;
-    max-width: 60vw;
+    width: 25%;
+    max-width: 30%;
     max-height: 60vh;
     margin: auto;
-    background: rgba(255, 255, 255, 0.938);
+    margin-top: 27vh;
+    background: rgba(255, 255, 255, 0.884);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     color: rgba(0, 0, 0, 0.815);
-    padding: 5vw;
-    border-radius: 10px;
+    padding: 3vw;
+    border-radius: 15px;
     border-style: solid;
     border-width: 2px;
-    overflow: hidden;
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.5s ease;
 }
 
-/* Responsive adjustments using media queries */
-@media screen and (max-width: 768px) {
+
+.wrapper {
+    overflow-y: hidden; 
+}
+
+
+.wrapper:hover {
+    overflow-y: auto; 
+}
+
+
+.wrapper::-webkit-scrollbar {
+    width: 5px;
+    transition: width 0.5s;
+}
+
+
+.wrapper::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+
+.wrapper.scrolled {
+    scrollbar-color: #888 rgba(255, 255, 255, 0.815);
+}
+
+
+.wrapper:hover::-webkit-scrollbar {
+    width: 2px;
+}
+
+
+.wrapper:hover .scrolled {
+    scrollbar-color: #888 rgba(255, 255, 255, 0.815);
+}
+
+
+@media screen and (max-width: 30%) {
     .wrapper {
-        width: 80%; /* Adjusted for smaller screens */
-        max-width: none;
-        padding: 8vw; /* Adjusted padding for smaller screens */
+        width: 80%;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+
+    .wrapper h1 {
+        font-size: 1.5em;
+        margin-bottom: 1vw;
+    }
+
+
+    .input-box input {
+        height: 3vw;
+        font-size: 1.2vw;
+        padding: 0.5vw;
+    }
+
+
+    .wrapper .btn {
+        height: 2.5vw;
+        font-size: 1.2vw;
+        margin-top: 1vw;
+    }
+
+
+    .register-link {
+        margin-top: 1vw;
+    }
+
+
+    .register-link p a {
+        font-size: 1.2vw;
     }
 }
 
-/* Styles for icon container */
-.icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-/* Styles for heading */
 .wrapper h1 {
     color: #003566;
-    font-size: 2em;
+    font-size: 2.3em;
     text-align: center;
-    margin-bottom: 2vw; /* Adjusted margin for smaller screens */
+    margin-bottom: 3vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
-/* Styles for input box */
+
 .wrapper .input-box {
     width: 100%;
-    margin: 2vw 0; /* Adjusted margin for smaller screens */
+    margin: 1vw 0;
 }
 
+
 .input-box input {
+    font-family: 'Poppins', sans-serif;
     width: 100%;
-    height: 4vw; /* Adjusted height for smaller screens */
-    background: rgba(255, 255, 255, 0.486);
+    height: 2vw;
     border: none;
     outline: none;
-    border-radius: 5px;
-    font-size: 1.5vw; /* Adjusted font size for smaller screens */
-    padding: 1vw; /* Adjusted padding for smaller screens */
+    border-radius: 20px;
+    border-bottom-width: 2px;
+    font-size: 85%;
+    padding: 1vw;
     box-shadow: 0 0 3px;
     transition: all 0.5s ease;
 }
 
+
 .input-box input:hover {
     color: #003566;
 }
+
 
 .input-box input:focus,
 .input-box input:valid {
     border-color: #003566;
 }
 
-/* Styles for forgot link */
-.wrapper .forgot {
-    font-size: 1.7vw; /* Adjusted font size for smaller screens */
-    margin-left: 5%;
-}
 
 .forgot a {
-    font-size: 1.7vw; /* Adjusted font size for smaller screens */
-    margin-left: 3vw; /* Adjusted margin for smaller screens */
+    font-size: .8vw;
+    font-weight: 500;
+    margin-left: 2vw;
     color: black;
     text-decoration: none;
 }
+
 
 .forgot a:hover {
     text-decoration: underline;
 }
 
-/* Styles for button */
+
 .wrapper .btn {
+    padding: 5px 30px;
+    font-family: 'Poppins', sans-serif;
     width: 100%;
-    height: 3vw; /* Adjusted height for smaller screens */
-    background: #fc8f01;
+    background: #f38c06;
     outline: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
+    border-radius: 50px;
     cursor: pointer;
-    color: black;
-    font-weight: 250;
-    font-size: 1.7vw; /* Adjusted font size for smaller screens */
-    margin-top: 2vw; /* Adjusted margin for smaller screens */
+    color: white;
+    font-weight: 500;
+    font-size: 1.1em; 
+    margin-top: 1em;
     text-align: center;
-    line-height: 1.4;
+    line-height: normal;
     transition-duration: 0.5s;
+    font-style: normal;
+    min-height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2));
 }
+
+
 
 .wrapper .btn:hover {
-    color: white;
-    background-color: #ffa125e3;
+    color: #f38c06;
+    background-color: white;
+    border: 1px solid #f38c06;
 }
 
-/* Styles for register link */
+
 .register-link {
-    font-size: 1.7vw; /* Adjusted font size for smaller screens */
+    font-size: .8vw;
     text-align: center;
-    margin-top: 2vw; /* Adjusted margin for smaller screens */
+    margin-top: 1vw;
 }
+
 
 .register-link p a {
-    font-size: 1.7vw; /* Adjusted font size for smaller screens */
-    font-weight: 200;
+    font-size: .8vw;
+    font-weight: 400;
     color: black;
-    text-decoration: underline;
+    text-decoration: none;
 }
+
 
 .register-link p a:hover {
     text-decoration: underline;
