@@ -36,6 +36,22 @@
     background-color: #144472;
     color: #fff;
   }
+
+textarea.form-control {
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    margin-right: 850px;
+    resize: vertical;
+    box-sizing: border-box; 
+    border: .5px solid #ccc; 
+    border-radius: 3%;
+  }
+
+  .col-md-4 .text-right button.btn.btn-primary {
+    border-radius: 8%;
+
+
 </style>
 
 
@@ -47,9 +63,8 @@
 
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
-  <div class="container">
-    <h1 class="pr text-center pt-4" style="margin-right: 300px;"> PURCHASE REQUEST</h1>
-  </div>
+  <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+    <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
 
   <div class="row">
 
@@ -72,7 +87,6 @@
           <th>Brand / Description</th>
           <th>Unit</th>
           <th>Unit Price</th>
-          <th>Attachment</th>
 
         </tr>
       </thead>
@@ -161,7 +175,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="text-center" style="color:#FFFFFF">
+              <div class="text-right" style="color:#FFFFFF">
                 <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
               </div>
             </div>
