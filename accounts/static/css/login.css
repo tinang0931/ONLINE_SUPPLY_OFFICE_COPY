@@ -155,12 +155,12 @@ body {
     border: none;
     outline: none;
     border-radius: 20px;
-    border-bottom: 2px solid; /* Changed from border-bottom-width to border-bottom */
+    border-bottom: 2px solid; 
     font-size: 85%;
     padding: 1vw;
     box-shadow: 0 0 3px;
     transition: all 0.5s ease;
-    border-color: transparent; /* Set initial border color to transparent */
+    border-color: transparent; 
 }
 
 .input-box input:hover {
@@ -169,7 +169,7 @@ body {
 
 .input-box input:focus,
 .input-box input:valid {
-    border-color: #003566; /* Change the border color on focus and when input is valid */
+    border-color: #003566; 
 }
 
 
