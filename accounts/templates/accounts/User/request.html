@@ -7,9 +7,14 @@
 {% block request %}
 
 <style>
+ 
+
     .search input {
         width: 300px;
         border-radius: 20px;
+    }
+    .table-bordered  {
+        height:100%;
     }
 
     .table-bordered th {
@@ -59,15 +64,28 @@
 
 .bckbtn:hover::before {
   opacity: 1;
+  
 }
+.table-bordered {
+    max-height: 700px;
+    overflow-y: auto;
+    margin-bottom: 20px; 
+  }
+  
+  
+  @media only screen and (max-width: 768px) {
+    .table-bordered {
+        max-height:400px;  
+    }
+  }
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
-
-    <div class="container">
+<div class="container-fluid" style=" height: 83vh; overflow-y: auto; overflow-x: hidden;">
+<div class="all">
+     <div class="container">
         <h1 style="margin-left: 45%;"> CATALOGUE</h1>
     </div>
 
@@ -80,12 +98,12 @@
         </div>
 
         
-
+   
         <div class="bckbtn" ><a href="{% url 'ppmp' %}"><img src="{% static 'images/previous_189252.png' %}" ></a></div>
 
         <div>
-
-            <table class="table table-bordered">
+</div>
+            <table class="table table-bordered custom-table">
                 <thead>
                     <tr>
                     <tr>

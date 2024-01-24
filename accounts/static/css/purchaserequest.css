@@ -85,7 +85,7 @@
     font-weight: var(--bs-body-font-weight);
     color: var(--bs-body-color);
     text-align: var(--bs-body-text-align);
-    
+   
   }
   .navbar {
     position: relative;

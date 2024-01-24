@@ -214,8 +214,8 @@ class PurchaseRequestForm(models.Model):
      description = models.TextField()
      quantity = models.IntegerField()
      is_submitted = models.BooleanField(default=False)
-     approved = models.BooleanField(default=False)
-     disapproved = models.BooleanField(default=False)
+     approved = models.BooleanField(default=True)
+    
 def __str__(self):
          return self.item_name
 
