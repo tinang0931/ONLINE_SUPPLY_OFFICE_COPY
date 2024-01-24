@@ -179,44 +179,38 @@ cursor: pointer;
 
     </div>
     <style>
-       button {
-  padding: 5px 10px; /* Adjusted padding */
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e8e8e8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 14px; /* Adjusted font size */
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
-}
-
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #1c96c5;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-}
-
-button:hover {
-  color: #e8e8e8; /* Change color to white when hovered */
-}
-
-button:hover::before {
-  width: 100%;
-}
+        button {
+            padding: 2px 6px;
+            border: unset;
+            border-radius: 8px; 
+            color: #f08f12;
+            z-index: 1;
+            background: #033768;
+            position: relative;
+            font-weight: 700; 
+            font-size: 12px;   
+            overflow: hidden;
+          }
+          
+          button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            border-radius: 8px; 
+            background-color: #f08f12;
+            z-index: -1;
+          }
+          
+          button:hover {
+            color: #f08f12;
+          }
+          
+          button:hover::before {
+            width: 100%;
+          }
     </style>
 
 
