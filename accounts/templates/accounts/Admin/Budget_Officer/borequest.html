@@ -3,6 +3,8 @@
 {% load static %}
 
 {% block borequest %}
+<link rel="stylesheet" href="{% static 'path/to/font-awesome/css/all.min.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
@@ -61,17 +63,25 @@
         </td>
     
         <td class="text-center">
-          {% if checkout.bo_status %}
+          {% if checkout.bo_status == 'approved' %}
               <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                  {{ checkout.bo_status }}
+                  <i class="fas fa-check-circle"></i> Approved
               </span>
-          {% elif checkout.new_status %}
+          {% elif checkout.bo_status == 'declined' %}
+              <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+                  <i class="fas fa-times-circle"></i> Declined
+              </span>
+          {% elif checkout.new_status == 'approved' %}
               <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                  {{ checkout.new_status }}
+                  <i class="fas fa-check-circle"></i> Approved
+              </span>
+          {% elif checkout.new_status == 'declined' %}
+              <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+                  <i class="fas fa-times-circle"></i> Declined
               </span>
           {% else %}
-              <span class="badge" style="color: black; font-size: 16px;">
-                  Pending
+              <span class="badge" style="background-color: orange; color: white; padding: 8px 12px; font-size: 16px;">
+                  <i class="fas fa-hourglass-half"></i> Pending
               </span>
           {% endif %}
       </td>

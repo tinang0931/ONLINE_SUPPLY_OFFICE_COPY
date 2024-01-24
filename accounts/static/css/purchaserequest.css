@@ -85,7 +85,7 @@
     font-weight: var(--bs-body-font-weight);
     color: var(--bs-body-color);
     text-align: var(--bs-body-text-align);
-   
+    
   }
   .navbar {
     position: relative;
@@ -100,9 +100,7 @@
   }
   .container-fluid col-2 {
   padding: 0px !important;
-  
-  } 
-  
+
   img,
   svg {
     vertical-align: middle;
@@ -132,7 +130,6 @@
   width: 100%;
   height: 100%;
   }
-  
   .list-group {
     --bs-list-group-color: #212529;
     --bs-list-group-bg: #fff;
@@ -317,7 +314,7 @@
   color: #000000;
   }
   #account-id {
-  color: #4190ED;
+  color: #4190ED;13
   }
   .fname {
   border: 2px solid #4190ED;

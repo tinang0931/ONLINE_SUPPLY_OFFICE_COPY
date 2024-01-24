@@ -1,22 +1,22 @@
 from django.urls import path
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views 
 from .views import *
 from .views import checkout_items_view
 
 urlpatterns = [ 
-   path('',views.homepage, name='homepage'),
+   path('',views.landing, name='landing'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
-   path('bac/',views.bac, name='bac'),
-   path('addItem/',views.addItem, name='addItem'),
+   path('bac/', views.bac, name='bac'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
    path('register_user/',views.register_user, name='register_user'),
    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
    path('logout_user/',views.logout_user, name='logout_user'),
-   path('requester/', RequesterView.as_view(), name='requester'),
    path('catalogue/',views.catalogue, name='catalogue'),
    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
    path('verify-code/', views.verify_code, name='verify_code'),
@@ -28,7 +28,7 @@ urlpatterns = [
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_home/',views.bac_home, name='bac_home'),
    path('prof/',views.prof, name='prof'),
-   path('preqform/<str:pr_id>/', PreqFormView.as_view(), name='preqform'),
+   path('preqform/<str:pr_id>/', views.preqform, name='preqform'),
    path('np/',views.np, name='np'),
    path('bids/',views.bids, name='bids'),
    path('noa/',views.noa, name='noa'),
@@ -60,16 +60,18 @@ urlpatterns = [
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
-   path('bo/',views.bo, name='bo'),
+   path('bohome/',views.bohome, name='bohome'),
    path('boabout/',views.boabout, name='boabout'),
    path('borequest/',views.borequest, name='borequest'),
    path('bohistory/',views.bohistory, name='bohistory'),
-   path('bohome/',views.bohome, name='bohome'),
+   path('bac_home/<int:pr_id>/', views.bac_home, name='bac_home'),
    path('bo_approve/<str:pr_id>/', views.bo_approve, name='bo_approve'),
-   path('cdapprovecheckout/<pr_id>/', update_cd_checkout_status, name='cdapprovecheckout'),
    path('delete/<int:id>/', views.delete, name='delete'),
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
    path('myppmp/', views.myppmp, name='myppmp'),
    path('purchase/', views.purchase, name='purchase'),
+   path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
+   path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
+   
 ]

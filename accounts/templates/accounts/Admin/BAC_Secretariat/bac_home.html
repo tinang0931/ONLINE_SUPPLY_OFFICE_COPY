@@ -44,18 +44,18 @@
   }
 
   .btn-outline-success {
-    color: #ffffff; 
-    background-color: #2d83da; 
+    color: #ffffff;
+    background-color: #2d83da;
     border-color: #000;
- margin-left: 1680px;
- height: 35px;
+    margin-left: 1680px;
+    height: 35px;
   }
-  
+
 
   .btn-outline-success:hover {
-    color: #ffffff; 
-    background-color: rgb(9, 66, 222); 
-    border-color: #082fdc; 
+    color: #ffffff;
+    background-color: rgb(9, 66, 222);
+    border-color: #082fdc;
   }
 
   .search-form {
@@ -67,17 +67,16 @@
     margin-top: 5px;
     margin-left: 5px;
     color: green;
-}
+  }
 
-.table th {
-    background-color: rgba(5, 90, 129, 0.822); 
+  .table th {
+    background-color: rgba(5, 90, 129, 0.822);
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
   }
-
 </style>
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
@@ -87,7 +86,7 @@
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
 </div>
 
-<table class="table table-bordered">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
@@ -132,83 +131,63 @@
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(4)" style="width: 30%;">
-          Attachments
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
+
       </tr>
     </thead>
-    
+
     <tbody>
       {% for checkout in checkouts %}
-          <tr>
-              <td class="text-center">{{ checkout.submission_date }}</td>
-              <td>
-                  <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-                      <strong>{{ checkout.first_name }} {{ checkout.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-                  </a>
-              </td>
-              <td>{{ checkout.purpose }}</td>
-              <td class="badge bg-success" style="margin-top: 5px; margin-left: 5px; color: white;" id="bohome-status">
-                {% if checkout.is_approve %}
-                    - Approved by BO: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
-                {% endif %}
-                
-                {% if checkout.cd_approve %}
-                    {% if checkout.is_approve %}<br>{% endif %}
-                    -Approved by CD {% if checkout.status_comment %} {% else %} Not Available {% endif %}
-                {% endif %}
-            
-                {% if checkout.cdpurchase_status %}
-                    {% if checkout.is_approve or checkout.cd_approve %}<br>{% endif %}
-                    - CDPurchase Status: {% if checkout.cdpurchase_status_comment %} {{ checkout.cdpurchase_status_comment }} {% else %} Not Available {% endif %}
-                {% endif %}
-            
-                {% if not checkout.is_approve and not checkout.cd_approve and not checkout.cdpurchase_status %}
-                    Not Available: {% if checkout.status_comment %} {{ checkout.status_comment }} {% else %} Not Available {% endif %}
-                {% endif %}
+        <tr>
+            <td class="text-center">{{ checkout.submission_date }}
+
             </td>
-            
-            
-            
-              <td>
-                  {{ checkout.status_update_date|default:"Not available" }}
-              </td>
-          </tr>
+            <td>{{ checkout.pr_id }}</td>
+            <td>
+              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+                  <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+                  request on {{ checkout.submission_date }}
+                </a>
+            </td>
+
+            {% for pr in checkout.pr_set.all %}
+            <td>{{ pr.purpose }}</td>
+            {% endfor %}
+
+            <td>
+              {{ checkout.status_update_date|default:"Pending" }}
+            </td>
+        </tr>
       {% endfor %}
-  
+
       {% if checkouts|length == 0 %}
-          <tr>
-              <td colspan="3">
-                  <span>NO PURCHASE REQUESTS YET</span>
-              </td>
-          </tr>
+      <tr>
+        <td colspan="3">
+          <span>NO PURCHASE REQUESTS YET</span>
+        </td>
+      </tr>
       {% endif %}
-  </tbody>
-  
+    </tbody>
+
   </table>
-<script>
-  function filterTable() {
+  <script>
+    function filterTable() {
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("search_bar_request");
       filter = input.value.toUpperCase();
       table = document.querySelector(".table");
       tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { 
-          td = tr[i].getElementsByTagName("td")[1]; 
-          if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-              } else {
-                  tr[i].style.display = "none";
-              }
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
           }
+        }
       }
-  }
-</script>
-{% endblock %}
+    }
+  </script>
+  {% endblock %}

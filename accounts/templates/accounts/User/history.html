@@ -10,29 +10,21 @@
 }
 </style>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <div class="container">
+
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
     <br>
     <div class="col-6 col-sm-6 col-md-5 col-lg-3 mr-auto">
-      <div class="search" style="position: relative; float: right; margin-right: 300px; margin-top: 1%; width: 300px; ">
-        <i class="fas fa-search" style="position: absolute; top: 38%; transform: translateY(-50%); left: 85%; color: #1C96C5;"></i>
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1C96C5; border-radius: 25px; margin-top: 1%">
+      <div class="search" style="position: relative; float: right; margin-right: 320px; margin-top: 1%; width: 300px; ">
+        <i class="fas fa-search" style="position: absolute; top: 38%; transform: translateY(-50%); left: 85%; color: #1C96C5; margin-left: 71%;"></i>
+        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1C96C5; border-radius: 25px; margin-top: 1%; margin-left: 71%;">
     </div>
   </div>
-    <div style="margin-left: 128%;">
-      <a style="--clr: #144472" class="button" id="view-more-button">
-          <span class="button__icon-wrapper">
-              <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                  <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-              </svg>
-              <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                  <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-              </svg>
-          </span>
-      </a>
-  </div>
-    </div>
+  <button class="view_more" id="view-more-button">
+    View More 
+</button>
+
     <div class="table-responsive" style="margin: 0 auto; overflow-x: auto;">
+      
   <table class="table" id="create_request_table" style="border-collapse: collapse; width: 100%;">
     <thead>
       <tr>
@@ -63,65 +55,27 @@
   </div>
 </div>
 <style>
-.button {
-  line-height: 1;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: .75rem;
-  background-color: var(--clr);
-  color: #fff; /* Default text color */
-  border-radius: 10rem;
-  font-weight: 600;
-  padding: .525rem 1.05rem; /* 30% smaller padding */
-  padding-left: 15px; /* Adjusted left padding */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: background-color .3s;
-  margin-top: -55%;
-  margin-left: 95%;
-  border-radius: 28px; /* 30% smaller border-radius */
+ .view_more {
+  font-size: 12px; /* Adjusted font size to 30% smaller */
+  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
+  background: #1c96c5;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s; /* Added transition for smoother animation */
+  margin-left: 94.7%; /* Adjusted margin-top */
+  margin-top: -5%;
 }
 
-.button__icon-wrapper {
-  flex-shrink: 0;
-  width: 17.5px; /* 30% smaller width */
-  height: 17.5px; /* 30% smaller height */
-  position: relative;
-  color: var(--clr);
-  background-color: #fff;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+.view_more:hover {
+  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
 }
 
-.button:hover {
-  background-color: #1c96c5;
-  color: #fff; /* Text color when hovered */
-}
-
-.button:hover .button__icon-wrapper {
-  color: #000;
-}
-
-.button__icon-svg--copy {
-  position: absolute;
-  transform: translate(-150%, 150%);
-}
-
-.button:hover .button__icon-svg:first-child {
-  transition: transform .3s ease-in-out;
-  transform: translate(150%, -150%);
-}
-
-.button:hover .button__icon-svg--copy {
-  transition: transform .3s ease-in-out .1s;
-  transform: translate(0);
+.view_more:active {
+  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
 }
 .input-group {
   width: 300px; /* Adjust the width as needed */
+  margin-right: auto; /* Move to the left */
 }
 
 .form-control {
@@ -131,6 +85,7 @@
 .btn-outline-secondary {
   border-radius: 5px;
 }
+
 .input-group:hover {
   border-color: #144472;
 }
@@ -140,12 +95,14 @@
   color: #fff; /* Text color on hover */
   border-color: #144472;
 }
+
 #search_bar_request:hover {
   border-color: #144472;
 }
+
 .container-fluid {
-    position: relative; /* Make the container a reference for absolute positioning */
-  }
+  position: relative; /* Make the container a reference for absolute positioning */
+}
 </style>
 <script>
   function highlightInput(input) {
