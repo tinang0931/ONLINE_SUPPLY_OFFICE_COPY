@@ -14,6 +14,14 @@
   .item-received {
     margin: 20px auto;
   }
+  .table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -44,31 +52,28 @@
         </thead>
         <tbody>
 
-        {% for p in checkouts %}
-            <tr>
-                <td> {{ p.pr_id }}</td>
-                <td class="text-center">
+          {% for p in checkouts %}
+          <tr>
+              <td>{{ p.pr_id }}</td>
+              <td class="text-center">
                   {% if p.bo_status %}
-                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.bo_status }}</span>
+                      <i class="fas fa-check-circle text-success" style="font-size: 16px;"></i>
                   {% else %}
-                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                      <i class="fas fa-hourglass-half text-warning" style="font-size: 16px;"></i>
                   {% endif %}
               </td>
               <td class="text-center">
                   {% if p.cd_status %}
-                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.cd_status }}</span>
+                      <i class="fas fa-check-circle text-success" style="font-size: 16px;"></i>
                   {% else %}
-                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                      <i class="fas fa-hourglass-half text-warning" style="font-size: 16px;"></i>
                   {% endif %}
               </td>
-              
-              
-                <td class="text-center"> {{ p.bo_comment }}</td>
-                <td class="text-center"> {{ p.cd_comment }}</td>
-                <td> {{ p.last_updated }}</td>
-                
-            </tr>
-        {% endfor %}
+              <td class="text-center">{{ p.bo_comment }}</td>
+              <td class="text-center">{{ p.cd_comment }}</td>
+              <td>{{ p.last_updated }}</td>
+          </tr>
+      {% endfor %}
 
         </tbody>
       </table>

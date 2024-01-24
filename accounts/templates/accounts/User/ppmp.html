@@ -49,7 +49,7 @@
         overflow: hidden;
         cursor: pointer;
         border: none;
-        margin-left: -107%;
+        margin-left: -109%;
         margin-top: 15%;
         padding: 10px 20px;
         font-size: 16px;
@@ -133,6 +133,17 @@
     .add-btn {
      margin-left: 1800px; 
     }
+    .table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .bg-none {
+    background: none !important;
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -346,10 +357,11 @@
                 </tbody>
             </table>
 
-            <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
-                <i class="fas fa-plus-circle"></i>
-            </button>
-            
+            <div class="d-flex justify-content-end">
+                <button type="button" class="add-btn btn-sm mt-2 mb-2 bg-none border-0" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
+                    <i class="fas fa-plus-circle fa-lg text-primary" style="font-size: 20px;"></i>
+                </button>
+            </div>
     </div>
 </div>
 

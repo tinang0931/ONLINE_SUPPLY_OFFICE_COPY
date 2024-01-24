@@ -7,10 +7,28 @@
 {% block request %}
 
 <style>
-    .search input {
-        width: 300px;
-        border-radius: 20px;
-    }
+  
+    .form-control {
+        display: block;
+        width: 18%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-clip: padding-box;
+        border-radius: 22px;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        margin-left: 128vh;
+        background-color: transparent; 
+        box-shadow: none; 
+      }
+      .search-form {
+        justify-content: flex-end;
+      }
 
     .table-bordered th {
         background-color: #1c96c5;
@@ -61,6 +79,17 @@
 .bckbtn:hover::before {
   opacity: 1;
 }
+.d-flex {
+    height: 85vh;
+}
+.table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -74,13 +103,12 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="search">
-                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request"
-                    oninput="filterTable()">
-            </div>
+            
+  <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%; border-radius: 20px">
+    <i class="fas fa-search" style="position: absolute; top: 2.2vh; transform: translateY(-50%); left: 131vh; color: #1c96c5;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1c96c5">
+</div>
         </div>
-
-        
 
         <div class="bckbtn">
             <a href="{% url 'ppmp' %}">

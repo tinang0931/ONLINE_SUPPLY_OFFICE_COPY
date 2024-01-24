@@ -21,10 +21,10 @@
 
     .custom-dropdown .btn {
         position: fixed;
-        top: 26vh; /* Adjust the top value as needed */
-        right: 3vh; /* Adjust the right value as needed */
-        z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
-        background-color: #1c96c5;
+        top: 26vh; 
+        right: 3vh; 
+        z-index: 1000; 
+        background-color: #134472;
         color: whitesmoke;
         border: none;
         transition: all 0.5s ease;
@@ -32,11 +32,11 @@
         padding: 5px 10px;
     }
     .dropdown-menu .dropdown-item:hover {
-        background-color: #f08f12; /* Set the desired background color for hover */
-        color: whitesmoke; /* Set the desired text color for hover */
+        background-color: #f08f12;
+        color: whitesmoke; 
     }
 .custom-dropdown .btn:hover {
-    background: #033768;
+    background: #f08f12;
 }
 
 .ppmp button {
@@ -50,7 +50,7 @@
 
 .ppmp button:hover {
     background-color: #144472;
-    color: #fff;
+    color: #f08f12;
 }
 body{
     overflow:hidden;
@@ -62,7 +62,14 @@ body{
     height: 85vh;
     margin-bottom: 1;
 }
-
+.table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -113,7 +120,7 @@ body{
     <div class="row">
         <div class="col-md-1 mb-0">
             <div class="dropdown">
-                <span class="dots" style="color: #1c96c5; cursor: pointer;" onclick="toggleText(event)">&#8226;&#8226;&#8226;</span>
+                <span class="dots" style="color: #033768; cursor: pointer;" onclick="toggleText(event)">&#8226;&#8226;&#8226;</span>
                 <div id="textContainer" style="display: none; width: 98px; text-align: center; background-color: #f08f12; border-radius: 10px;" onclick="stopPropagation(event)">
                     <a href="{% url 'ppmp' %}" style="color: black; text-decoration: none; white-space: nowrap;">Create PPMP</a>
                 </div>

@@ -14,29 +14,28 @@
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
     <br>
     <div class="col-6 col-sm-6 col-md-5 col-lg-3 mr-auto">
-      <div class="search" style="position: relative; float: right; margin-right: 320px; margin-top: 1%; width: 300px; ">
-        <i class="fas fa-search" style="position: absolute; top: 38%; transform: translateY(-50%); left: 85%; color: #1C96C5; margin-left: 71%;"></i>
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1C96C5; border-radius: 25px; margin-top: 1%; margin-left: 71%;">
-    </div>
+      <div class="search" style="position: absolute; top: -3vh; left: 160vh; width: 300px; ">
+        <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); color: #1C96C5; left: 14px;"></i>
+        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1C96C5; border-radius: 25px;">
+      </div>
   </div>
-  <button class="view_more" id="view-more-button">
-    View More 
-</button>
+  <button class="view_more" id="view-more-button" style="position: absolute; top: 14vh; right: 2vh;">
+    <i class="fas fa-angle-double-down"></i> View More
+  </button>
+  <div class="table-responsive" style="overflow-x: auto; max-height: 50vh; margin-top: 7vh;">
 
-    <div class="table-responsive" style="margin: 0 auto; overflow-x: auto;">
-      
-  <table class="table" id="create_request_table" style="border-collapse: collapse; width: 100%;">
-    <thead>
-      <tr>
-        <th class="text-nowrap" style="min-width: 15rem; border: 1px solid white; text-align: center;">Purchase Request ID</th>
-        <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Date Requested</th>
-        <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Item Name</th>
-        <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Quantity</th>
-        <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Amount</th>
-        <th class="text-center text-nowrap" style="border: 1px solid white; text-align: center;">Attachments</th>
-      </tr>
-    </thead>
-    <tbody>
+    <table class="table" id="create_request_table" style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr>
+          <th class="text-nowrap" style="min-width: 15rem; border: 1px solid white; text-align: center;">Purchase Request ID</th>
+          <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Date Requested</th>
+          <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Item Name</th>
+          <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Quantity</th>
+          <th class="text-nowrap" style="min-width: 7rem; border: 1px solid white; text-align: center;">Amount</th>
+          <th class="text-center text-nowrap" style="border: 1px solid white; text-align: center;">Attachments</th>
+        </tr>
+      </thead>
+      <tbody>
       {% for item in checkout_items %}
       <tr>
         <td style="border: 1px solid white; text-align: center;">{{ item.checkout.pr_id }}</td>
@@ -55,27 +54,25 @@
   </div>
 </div>
 <style>
- .view_more {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
-  background: #1c96c5;
-  color: white;
-  border-radius: 4px;
-  transition: all 0.3s; /* Added transition for smoother animation */
-  margin-left: 94.7%; /* Adjusted margin-top */
-  margin-top: -5%;
+  
+  .view_more {
+    background-color: #134472;
+    color: #fff;
+    border: none;
+    padding: 3px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.view_more:hover {
-  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
-}
-
-.view_more:active {
-  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
+.view_more i {
+    margin-right: 5px;
 }
 .input-group {
-  width: 300px; /* Adjust the width as needed */
-  margin-right: auto; /* Move to the left */
+  width: 300px; 
+  margin-right: auto; 
 }
 
 .form-control {
@@ -92,7 +89,7 @@
 
 .input-group:hover .btn-outline-secondary:hover {
   background-color: #144472;
-  color: #fff; /* Text color on hover */
+  color: #fff;
   border-color: #144472;
 }
 
@@ -101,7 +98,15 @@
 }
 
 .container-fluid {
-  position: relative; /* Make the container a reference for absolute positioning */
+  position: relative; 
+}
+.table th {
+  background-color: #1c96c5;
+  color: white;
+cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 </style>
 <script>
@@ -136,13 +141,7 @@
 </script>
 
 
-
-  
-
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 {% endblock %}
+
