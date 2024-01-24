@@ -58,7 +58,6 @@ urlpatterns = [
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
-   path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bohome/',views.bohome, name='bohome'),
    path('boabout/',views.boabout, name='boabout'),
@@ -73,5 +72,5 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-   path('preform_approved/', views.preform_approved, name='preform_approved'),
+   path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
 ]

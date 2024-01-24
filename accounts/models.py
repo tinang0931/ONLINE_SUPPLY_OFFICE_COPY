@@ -142,6 +142,8 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    status = models.CharField(max_length=20, default="Pending")
+    comment = models.TextField(blank=True, null=True)
 
     def generate_pr_id(self):
         pr_id = str(uuid.uuid4().int)[:8]

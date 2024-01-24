@@ -351,7 +351,7 @@
                 <div class="justify-content">
                     <div class="col-md-12">
                         <div class="mx-auto">
-                            <form action=" {% url 'preform_approved' %}   " method="post">
+                            <form action="{% url 'preqform' pr_identifier.pr_id %}" method="post" id="form_id">
                                 {% csrf_token %}
 
                                 <table class="table-bordered table-fixed" style="width: 115%" position="center">
@@ -361,7 +361,10 @@
 
                                             </span>
                                         </th>
-                                        <th colspan="2">PR No.:<u>{{ pr_identifier.pr_id }}</u> <span
+                                        <input type="hidden" name="pr_id" value="{{ pr_identifier.pr_id }}">
+                                        <th colspan="2">PR No.:<u>{{ pr_identifier.pr_id }}</u> 
+                                            
+                                            <span
                                                 contenteditable="true" ;
                                                 id="editableField"></span><br><br>Responsibility Center Code: <span
                                                 contenteditable="true"
@@ -387,19 +390,16 @@
                                     </tr>
 
 
-                                    {% for pr in pr_identifier.pr_set.all %}
-                                    {% if forloop.counter == 1 %} {# Display only for the first PR #}
+                                    {% for pr_item in pr_items %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td class="item_unit text-center">{{ pr.unit }}</td>
-                                        <td class="item_description text-center">{{ pr.item }} - {{ pr.item_brand_description }}</td>
-                                        <td class="item_quantity text-center">{{ pr.quantity }}</td>
-                                        <td class="item_unit_cost text-center">{{ pr.unit_cost }}</td>
-                                        <td class="item_total_cost text-center">{{ pr.total_cost }}</td>
+                                        <td style="text-align: center;">{{ forloop.counter }}</td>
+                                        <td class="item_unit text-center">{{ pr_item.unit }}</td>
+                                        <td class="item_description text-center">{{ pr_item.item }} - {{ pr_item.item_brand_description }}</td>
+                                        <td class="item_quantity text-center">{{ pr_item.quantity }}</td>
+                                        <td class="item_unit_cost text-center">{{ pr_item.unit_cost }}</td>
+                                        <td class="item_total_cost text-center">{{ pr_item.unit_cost }}</td>
                                     </tr>
-                                    {% endif %}
                                     {% endfor %}
-
 
 
 
@@ -407,7 +407,8 @@
                                     <tr>
                                         <td colspan="4"></td>
                                         <td style="text-align: right;">TOTAL</td>
-                                        <td id="totalCostCell" style="text-align: center;" colspan="2">{{ pr_identifier.total_cost
+                                        <td id="totalCostCell" style="text-align: center;" colspan="2">{{
+                                            pr_identifier.total_cost
                                             }}</td>
                                     </tr>
 
@@ -421,18 +422,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                    <tr>
-                                        <td colspan="7" style="text-align: left; vertical-align: top;">
-                                            <b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ pr_identifier.purpose }} <span
-                                                contenteditable="true"
-                                                style="border: none; outline: none; text-decoration: underline"></span>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="7" style="text-align: left; vertical-align: top;">
+                                                {% if pr_items %}
+                                                    <b><u>Purpose:</u></b>&nbsp;&nbsp;&nbsp;&nbsp;{{ pr_items.first.purpose }}
+                                                    <span contenteditable="true" style="border: none; outline: none; text-decoration: underline"></span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
                                     <td colspan="3">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Requested
                                             by:</b><br><b>Signature:</b><br><b>Printed
                                             Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <b><u>{{user.first_name}} {{user.last_name}}</b></u><br><b>Designation</b>
+                                        <b><u> {{ pr_identifier.user.first_name }} {{ pr_identifier.user.last_name }}</u></b><br><b>Designation</b>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Chair,
                                             BSIT & BIT-CT (OsGin)</br> <span contenteditable="false"
                                                 style="border: none; outline: none;" id="requestedByField"></span>
@@ -482,40 +484,39 @@
                                 <option value="legal">Legal</option>
                         </div>
                     </footer>
-                    </form>
-
                 </div>
-            </div>
+            </form>
         </div>
-    </div>
+           
+ 
+    
+                    
 
 
 
-    <script>
-        function btn_click(approve) {
-            // Get the comment input element by its ID
-            var commentInput = document.getElementById('comment_input');
 
-            // Check if the comment is not empty
-            if (commentInput.value.trim() === "") {
-                alert("Please provide a comment.");
-                return;
+        <script>
+            function btn_click(approve) {
+                // Get the comment input element by its ID
+                var commentInput = document.getElementById('comment_input');
+    
+                // Check if the comment is not empty
+                if (commentInput.value.trim() === "") {
+                    alert("Please provide a comment.");
+                    return;
+                }
+    
+                // Get the hidden input element by its ID
+                var newStatusInput = document.getElementById('new_status_id');
+    
+                // Set the value based on the 'approve' parameter
+                newStatusInput.value = approve ? 'approved' : 'disapproved';
+    
+                // Submit the form programmatically
+                var form = document.getElementById('form_id');
+                form.submit();
             }
-
-            // Get the hidden input element by its ID
-            var newStatusInput = document.getElementById('new_status_id');
-
-            // Set the value based on the 'approve' parameter
-            newStatusInput.value = approve ? 'approved' : 'disapproved';
-
-            // Submit the form programmatically
-            var form = document.getElementById('form_id');
-            form.submit();
-        }
-
-        document.getElentById("fundclusterSelect").value = "stfResearch";
-    </script>
-
+        </script>
     <script>
         function toggleSelect() {
             var selectElement = document.getElementById("paperSize");

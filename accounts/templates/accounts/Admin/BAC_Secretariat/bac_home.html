@@ -90,79 +90,65 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
-          Date Requested
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
-          PR ID
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
-          Requests
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
-          Purpose
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="status" onclick="sortTable(4)" style="width: 15%;">
-          Status
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-          Date
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
+
+        <th class="text-center">Date</th>
+        <th class="text-center">PR ID</th>
+        <th class="text-center">Requestor</th>
+        <th class="text-center">Purpose</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Comment </th>
 
       </tr>
     </thead>
 
     <tbody>
       {% for checkout in checkouts %}
-        <tr>
-            <td class="text-center">{{ checkout.submission_date }}
+      <tr>
+        <td class="text-center">{{ checkout.submission_date }}
 
-            </td>
-            <td>{{ checkout.pr_id }}</td>
-            <td>
-              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-                  <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
-                  request on {{ checkout.submission_date }}
-                </a>
-            </td>
+        </td>
+        <td>{{ checkout.pr_id }}</td>
+        <td>
+          <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+            request on {{ checkout.submission_date }}
+          </a>
+        </td>
 
-            {% for pr in checkout.pr_set.all %}
-            <td>{{ pr.purpose }}</td>
-            {% endfor %}
+        <td>
+          {{ checkout.pr_set.first.purpose }}
+        </td>
 
-            <td>
-              {{ checkout.status_update_date|default:"Pending" }}
-            </td>
-        </tr>
+
+
+
+
+        <td class="text-center">
+
+          {% if checkout.status == 'Pending' %}
+          <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+            Pending
+          </span>
+          {% else %}
+          <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+            {{ checkout.status }}
+          </span>
+          {% endif %}
+
+        </td>
+        <td class="text-center">
+          {% if checkout.comment %}
+          {{ checkout.comment }}
+          {% else %}
+          No comment yet
+          {% endif %}
+        </td>
+      </tr>
       {% endfor %}
 
       {% if checkouts|length == 0 %}
       <tr>
-        <td colspan="3">
+        <td colspan="5">
           <span>NO PURCHASE REQUESTS YET</span>
         </td>
       </tr>

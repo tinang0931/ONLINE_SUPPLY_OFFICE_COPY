@@ -291,19 +291,32 @@ def bac_home(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
 
 def preqform(request, pr_id):
- 
-    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
-    context = {
-        'pr_identifier': pr_identifier,
-        'user': request.user,
-    }
+
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+        comment = request.POST.get('comment_content')
+
+        Pr_identifier.objects.filter(pr_id=pr_id).update(
+            status=new_status,
+            comment=comment
+            
+        )
+        return redirect('bac_home')
+    
+    elif request.method == 'GET':
+        pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+        pr_items = PR.objects.filter(pr_identifier=pr_identifier)
+
+        context = {
+            'pr_identifier': pr_identifier,
+            'pr_items': pr_items,
+            'user_first_name': request.user.first_name,
+            'user_last_name': request.user.last_name,
+            'user': request.user,
+        }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
-def preform_approved(request, pr_id):
-    
-
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html')
 
 
 @authenticated_user
@@ -462,20 +475,6 @@ def register_user(request):
         return redirect('user')
     
    
-def update_user(request, username):
-    user = get_object_or_404(User, username=username)
-
-    if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
-        else:
-            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
-    else:
-        form = UserForm(instance=user) 
-        return render(request, 'edit_user.html', {'form': form, 'user': user})
-
 
    
 def delete_user(request, username):
@@ -503,6 +502,7 @@ def addItem(request):
   
         )
         return redirect('ppmp')
+    
     return render(request, 'accounts/User/ppmp.html')
 
 
@@ -622,6 +622,7 @@ def purchase(request):
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
         purpose = request.POST.get('purpose')
+        total = request.POST.get('total_cost')
 
         pr_id = generate_auto_pr_id()
         user = request.user
@@ -642,10 +643,11 @@ def purchase(request):
                 item_brand_description=item_brands[i],
                 unit=units[i],
                 unit_cost=prices[i],
-                purpose=purpose
+                purpose=purpose,
+                total_cost=total
             )
 
-        return redirect('purchase')
+        return redirect('purchasetracker')
     elif request.method == 'GET':
        
         items = PR_Items.objects.all()
@@ -912,10 +914,9 @@ def bo_approve(request, pr_id):
             sep=sep,
             oct=oct,
             nov=nov,
-            dec=dec,
-            
+            dec=dec,     
         )
-
+        
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
             bo_comment=comment_content
@@ -1036,5 +1037,16 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
+
+
+def purchasetracker(request):
+    tracker = Pr_identifier.objects.select_related('user').all()
+    context = {
+        'tracker': tracker
+
+    }
+
+
+    return render(request, 'accounts/User/purchasetracker.html', context)
 
 

@@ -50,7 +50,7 @@ textarea.form-control {
 
   .col-md-4 .text-right button.btn.btn-primary {
     border-radius: 8%;
-
+  }
 
 </style>
 
@@ -88,6 +88,8 @@ textarea.form-control {
           <th>Unit</th>
           <th>Unit Price</th>
 
+          <th>Attachment</th>
+
         </tr>
       </thead>
       <tbody>
@@ -121,6 +123,29 @@ textarea.form-control {
 
       <script>
 
+        document.addEventListener('DOMContentLoaded', function () {
+          // Attach change event to the unit cost input elements
+          document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
+            unitCostInput.addEventListener('change', function () {
+              calculateTotal();
+            });
+          });
+      
+          // Calculate total on page load
+          calculateTotal();
+      
+          function calculateTotal() {
+            var totalAmount = 0;
+            $('input[name="prices[]"]').each(function () {
+              var itemCost = parseFloat($(this).val());
+              if (!isNaN(itemCost)) {
+                totalAmount += itemCost;
+              }
+            });
+            $("#total_amount").text(totalAmount.toFixed(2));
+          }
+        });
+
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -149,18 +174,7 @@ textarea.form-control {
           });
       });
 
-        $(document).ready(function () {
-          function calculateTotal() {
-            var totalAmount = 0;
-            $(".item_total_cost").each(function () {
-              var itemCost = parseFloat($(this).text());
-              totalAmount += itemCost;
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
 
-          calculateTotal();
-        });
       </script>
 
       <footer class="fixed-bottom p-2"
@@ -176,7 +190,7 @@ textarea.form-control {
             </div>
             <div class="col-md-4">
               <div class="text-right" style="color:#FFFFFF">
-                <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                <span >Total Amount: ₱<span id="total_amount">0.00</span></span>
               </div>
             </div>
             <div class="col-md-4">
