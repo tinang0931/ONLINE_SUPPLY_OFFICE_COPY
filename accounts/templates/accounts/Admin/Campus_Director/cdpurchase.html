@@ -191,10 +191,10 @@ cursor: pointer;
             {{ checkout.submission_date }}
           </td>
           <td>
-            <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+           
+                <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
             </a>
-          </td>
+        </td>        
           <td class="text-center">
             {% if checkout.bo_status == 'approved' %}
               <i class="fas fa-check-circle text-success" title="Approved"></i>
@@ -229,9 +229,7 @@ cursor: pointer;
             {% else %}
               No comments  
             {% endif %}
-          </td>
-          
-          
+          </td> 
         </tr>
       {% endfor %}
       </tbody>
@@ -241,25 +239,24 @@ cursor: pointer;
 
 <script>
   function filterTable() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search_bar_request");
-      filter = input.value.toUpperCase();
-      table = document.querySelector(".table");
-      tr = table.getElementsByTagName("tr");
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search_bar_request");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".table");
+    tr = table.getElementsByTagName("tr");
 
-      for (i = 1; i < tr.length; i++) { 
-          td = tr[i].getElementsByTagName("td")[1]; 
-          if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-              } else {
-                  tr[i].style.display = "none";
-              }
-          }
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
       }
+    }
   }
-
 </script>
 
 {% endblock %}

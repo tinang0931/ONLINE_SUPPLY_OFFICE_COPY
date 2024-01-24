@@ -73,5 +73,6 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-  path('preqform_cd/<int:pr_id>/', views.preqform_cd, name='preqform_cd'),
+   path('preqform_cd/<int:pr_id>/', views.preqform_cd, name='preqform_cd'),
+
 ]
