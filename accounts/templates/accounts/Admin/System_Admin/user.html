@@ -6,17 +6,114 @@
 {% block user %}
 
 
+<style>
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
 
+    .modal-content {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%; /* Adjust the width as needed */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #333; /* Dark gray color for close icon */
+    }
+
+    .user-details {
+        margin-bottom: 20px;
+    }
+    .input {
+        padding:none;
+    }
+
+    .input-box {
+        margin-bottom: 5px;
+    }
+
+    .input-box  {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ddd; 
+        border-radius: 4px;
+        background-color: #f9f9f9; /* Light gray background */
+        color: #333; /* Dark gray text color */
+    }
+
+    .register-details {
+        display: fixed;
+        flex-direction: row; /* Align checkboxes horizontally */
+        justify-content: space-between; /* Adjust as needed */
+        align-items: center; /* Center checkboxes vertically */
+        margin-bottom: 15px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        margin-right: 15px; /* Add margin between checkboxes */
+    }
+
+    .checkbox-box {
+        margin-left: 5px;
+        color: #007bff; /* Blue color for checkbox label */
+    }
+
+    .modal-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 15px;
+    }
+
+    /* Style for the submit button */
+    .btn-primary {
+        background-color: #28a745; /* Green background */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+
+    
+    
+</style>
 <div class="container-fluid" style="height: 68vh;">
     <div class="container">
         <i class="fas fa-user-friends two-user-icon"></i> 
         <h1 class="user">USERS</h1>
     </div>
     <div class="search">
-        <input class="form-control mb-3" type="text" placeholder="Search..." id="search_bar_request" oninput="filterTable()">
+        <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 85%; color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
     </div>
     
-<button class="adduser" onclick="openModal()">+Add User</button>
+    <button class="adduser" onclick="openModal()" style="background-color: #28a745; color: white; font-size: 16px; margin-left: 2px;">
+        <span class="bi bi-person-plus"></span> Add User
+      </button>
+      
+
 
                 <div class="usertable table-responsive">
                     
