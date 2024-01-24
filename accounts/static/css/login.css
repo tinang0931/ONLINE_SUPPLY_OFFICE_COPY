@@ -196,7 +196,7 @@ body {
     outline: none;
     border-radius: 50px;
     cursor: pointer;
-    color: white;
+    color: black;
     font-weight: 500;
     font-size: 1.1em; 
     margin-top: 1em;
@@ -210,9 +210,9 @@ body {
 
 
 .wrapper .btn:hover {
-    color: #f38c06;
-    background-color: white;
-    border: 1px solid #f38c06;
+    color: white;
+    background-color: #003566;
+    border: none;
 }
 
 
