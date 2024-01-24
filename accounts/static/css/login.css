@@ -189,31 +189,28 @@ body {
 
 
 .wrapper .btn {
-    padding: 5px 30px;
-    font-family: 'Poppins', sans-serif;
     width: 100%;
-    background: #f38c06;
-    outline: none;
-    border-radius: 50px;
-    cursor: pointer;
-    color: black;
+    padding: 7px 10px;
+    font-size: 1.1em;
     font-weight: 500;
-    font-size: 1.1em; 
-    margin-top: 1em;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     line-height: normal;
-    transition-duration: 0.5s;
-    font-style: normal;
-    min-height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2));
+    background: #f38c06;
+    color: black;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: none;
+    margin-top: 1.5em;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 }
-
-
 
 .wrapper .btn:hover {
     color: white;
     background-color: #003566;
-    border: none;
+    transform: translateY(.5%);
 }
+
 
 
 .register-link {
