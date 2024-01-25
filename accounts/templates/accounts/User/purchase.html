@@ -80,7 +80,7 @@ textarea.form-control {
   <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="border: 2px solid #ccc; ">
       <thead>
         <tr>
           <th>Item Name</th>

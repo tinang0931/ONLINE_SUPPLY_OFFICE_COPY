@@ -51,15 +51,18 @@
   .table-container {
     width: 100%;
     overflow-x: hidden;
-  }
+}
 
-  .table {
+.table {
     width: 100%;
+    max-height: 500px; /* Set your desired maximum height here */
     margin: auto;
     table-layout: fixed;
-    position: relative;
-  }
-
+    position: sticky;
+    overflow-x: auto; /* Add this line for vertical scrolling if needed */
+    border-collapse: collapse; /* Add this line for better border rendering */
+    border: 2px solid #ccc; /* Set the border properties as needed */
+}
   .table th,
   .table td {
     white-space: nowrap;
@@ -119,18 +122,25 @@ cursor: pointer;
   .fa-hourglass-half {
     cursor: help;
   }
-  
+  .pr {
+   
+    padding: 10px; /* Adjust padding as needed */
+    
+    top: 0;
+    z-index: 1000; /* Adjust z-index as needed */
+}
 </style>
 
-<div class="container-fluid" style="height: 50vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
   
-  <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
+  <div class="search" style="position: sticky; float: right; margin-right: 70px; margin-top: 1%;">
     <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 101%; color: #05708BD2;"></i>
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #05708BD2;">
 </div>
 
   <div class="table-container">
+    <div class="table-wrapper">
     <table class="table table-bordered">
   <thead>
     <tr>
@@ -238,7 +248,7 @@ cursor: pointer;
   </table>
 </div>
 </div>
-
+</div>
 <script>
   function filterTable() {
       var input, filter, table, tr, td, i, txtValue;
