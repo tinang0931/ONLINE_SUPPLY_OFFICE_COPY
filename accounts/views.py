@@ -13,7 +13,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required, bac_required, cd_required, budget_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -213,7 +213,7 @@ def logout_user(request):
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
-
+@regular_user_required
 @authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
@@ -222,7 +222,7 @@ def registration(request):
 def regular_user_only_view(request):
     return render(request, 'accounts/User/request.html')
 
-
+@regular_user_required
 @authenticated_user
 def history(request):
     user = request.user
@@ -231,7 +231,7 @@ def history(request):
     
     return render(request, 'accounts/User/history.html', {'checkouts': checkouts})
 
-
+@regular_user_required
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.select_related('user').all()
@@ -273,12 +273,14 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 @authenticated_user
+@bac_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-
+@bac_required
 def bac_home(request):
+    
   
     checkouts = Pr_identifier.objects.select_related('user').all()
 
@@ -289,7 +291,7 @@ def bac_home(request):
     }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
-
+@bac_required
 def preqform(request, pr_id):
  
     pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
@@ -300,12 +302,12 @@ def preqform(request, pr_id):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
-
+@bac_required
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
-
+@bac_required
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
@@ -342,47 +344,49 @@ def notif(request):
 @authenticated_user
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+@bac_required
 @authenticated_user
 def bac_prof(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html')
+@bac_required
 @authenticated_user
 def bac_profile(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_profile.html')
-
+@budget_required
 @authenticated_user
 def bo(request):
     return render(request, 'accounts/Admin/Budget_Officer/bo.html')
 
-
+@budget_required
 @authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
-
+@budget_required
 @authenticated_user
 def borequest(request):
     return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
 
-
+@budget_required
 @authenticated_user
 def bohistory(request):
     return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
 
-
+@cd_required
 @authenticated_user
 def cd(request):
     return render(request, 'accounts/Admin/Campus_Director/cd.html')
 
-
+@cd_required
 @authenticated_user
 def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
 
-
+@cd_required
 @authenticated_user
 def cdppmp(request):
     return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
 
-
+@cd_required
 @authenticated_user
 def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
@@ -393,23 +397,18 @@ def resolution(request):
     return render(request, 'accounts/Admin/Campus_Director/resolution.html')
 
 
-
-@authenticated_user
-def profile_html(request):
-    return render(request, 'profile.html')
-
-
+@admin_required
 @authenticated_user
 def admin_home(request):
     return render(request, 'accounts/Admin/System_Admin/admin_home.html')
 
 
-
+@admin_required
 @authenticated_user
 def adminabout(request):
     return render(request, 'accounts/Admin/System_Admin/adminabout.html')
 
-
+@admin_required
 @authenticated_user
 def user(request):
     users = User.objects.all()
@@ -500,7 +499,7 @@ def addItem(request):
         return redirect('ppmp')
     return render(request, 'accounts/User/ppmp.html')
 
-
+@regular_user_required
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
 
@@ -531,13 +530,13 @@ def catalogue (request):
             grouped_data[key] = list(group)
 
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
-
+@regular_user_required
 def myppmp (request):
     items = CheckoutItems.objects.all()
 
     return render(request, 'accounts/User/myppmp.html', {'items': items})
 
-
+@regular_user_required
 def ppmp(request):
     
     if request.method == 'POST':
@@ -601,7 +600,7 @@ def ppmp(request):
 
 
 from django.core.files.base import ContentFile
-
+@regular_user_required
 def purchase(request):
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
@@ -726,8 +725,7 @@ def user_add_new_item(request):
 
 
 
-
-
+@bac_required
 def bac_dashboard(request):
     if request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
@@ -770,7 +768,7 @@ def handle_uploaded_file(file):
         )
 
 
-def delete_item(request, id):  
+def delete_item(request, id):
     item = CSV.objects.get(id=id)
     item.delete()
     return redirect('bac_dashboard')
@@ -834,7 +832,7 @@ def delete_category(request, Category):
     items_to_delete.delete()
 
 
-
+@budget_required
 def bohome(request):
     checkouts = Checkout.objects.select_related('user').all()
   
@@ -923,7 +921,7 @@ def bo_approve(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
-
+@cd_required
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
   
@@ -1013,36 +1011,9 @@ def preqform_cd(request, pr_id):
 
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
-@admin_required
-@authenticated_user
-def bac_history(request):
-   request = Item.objects.all()
-
-   return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
-
-
-class GetNewRequestsView(View):
-    def get(self, request, *args, **kwargs):
-
-       
-
-          # Fetch new requests from the database based on your criteria
-        new_requests = Checkout.objects.exclude(pr_id=None)
-        # Serialize the data as needed
-        serialized_requests = [
-            {
-                'user_id': request.user_id,
-                'submission_date': request.submission_date,
-                # Add other fields as needed
-            }
-            for request in new_requests
-        ]
-
-        return JsonResponse({'new_requests': serialized_requests})
-
 @authenticated_user              
-def delete_item(request, item_id):
-    item = Item.objects.get(Item, id=item_id)
+def delete_item(request, id):
+    item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
 
@@ -1050,5 +1021,3 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
-
-

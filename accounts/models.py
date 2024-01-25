@@ -10,6 +10,7 @@ from bson import ObjectId
 
 
 
+
 class User(AbstractUser):
     CTU_ID_LENGTH = 10
     username = models.CharField(max_length=12, unique=True, primary_key=True)
@@ -231,25 +232,3 @@ class History(models.Model):
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
     
-
-class PurchaseRequestForm(models.Model):
-     user = models.ForeignKey(User, on_delete=models.CASCADE)
-     item_name = models.CharField(max_length=100)
-     description = models.TextField()
-     quantity = models.IntegerField()
-     is_submitted = models.BooleanField(default=False)
-     approved = models.BooleanField(default=False)
-     disapproved = models.BooleanField(default=False)
-def __str__(self):
-         return self.item_name
-
-
-class PurchaseRequest(models.Model):
-    request_id = models.BigAutoField(primary_key=True)
-    submission_date = models.DateField()
-    item = models.CharField(max_length=100)
-    quantity = models.IntegerField()
-    def calculate_total_cost(self):
-        return self.quantity * self.unit_cost  
-    total_cost = property(calculate_total_cost)
-

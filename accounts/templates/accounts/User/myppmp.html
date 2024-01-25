@@ -49,7 +49,84 @@
     color: #fff;
 }
 
+.chat-box-btn-container {
+        position: fixed;
+        top: 30%;
+        right: 10px;
+        transform: translateY(-50%);
+        z-index: 1000;
+    }
 
+    .chat-box {
+        position: fixed;
+        transform: translateY(-50%);
+        z-index: 1000;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: none;
+    }
+    .chat-box {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .chat-body {
+            padding: 10px;
+            overflow-y: auto;
+            height: 340px;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.chat-input {
+    padding-right: 30px;
+}
+
+.chat-input::placeholder {
+    color: transparent; 
+}
+
+.send {
+    position: absolute;
+    right: 8px;
+}
+.comment-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+    
+.comment-input .chat-input {
+    flex: 1;
+}
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
