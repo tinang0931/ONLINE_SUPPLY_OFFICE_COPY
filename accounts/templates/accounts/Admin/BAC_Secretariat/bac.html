@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
 
   <body>
@@ -45,161 +46,120 @@
               <div class="list-group w-100">
                 <br><br>
                 <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bac_home'%}">
-                  <i class='bx bx-home' ></i> <span id="purchaseRequest" class="hidden-name">Home</span>
+                  <i class="bi bi-house"></i> <span id="purchaseRequest" class="hidden-name">Home</span>
                 </a>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 dashboard-link" href="{% url 'bac_dashboard'%}">
-                  <i class='bx bx-customize' ></i> <span id="dashboard" class="hidden-name">Items</span>
+                  <i class="bi bi-grid"></i> <span id="dashboard" class="hidden-name">Items</span>
                 </a>
                 
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'bac_about'%}">
-                  <i class='bx bx-info-circle' ></i> <span id="about" class="hidden-name">About</span>
+                  <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
-                  <i class='bx bx-log-out' ></i> <span id="logout" class="hidden-name">Logout</span>
+                  <i class="bi bi-box-arrow-left"></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
-                <div class="profile-container">
-                  <a href="{% url 'bac_prof' %}">
-                  <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-              <p1 class="account_type">BAC</p1>
+                 <div class="profile-container">
+                 <a href="{% url 'bac_prof' %}">
+                  <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a> 
+             <p1 class="account_type">BAC</p1> 
                 </div>
               </div>
             </div>
           </div>
         </div>
        
-        <style>
-.bx bx-home {
-  margin-left: 5px;
+            <style>
+          .d-flex {
+            margin-bottom: 18vh;
+          }
+        #sidebar {
+    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+    overflow: hidden;
+    width: 50px;
 }
-.d-flex {
-margin-bottom: 30vh;
-}
-    #sidebar {
-      transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-      overflow: hidden;
-      width: 50px;
-    }   
 
 #sidebar.show-names {
-    width: 400px;
+    width: 300px;
     padding: 0 20px;
 }
-
 
 .hidden-name {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
-
 #sidebar.show-names .hidden-name {
     opacity: 1;
 }
 
-
 .list-group-item-action {
-    transition: background-color 0.5s ease-in-out, border-radius 0.5s ease-in-out, color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
 }
-
 
 .list-group-item-action:hover {
-    background-color: #244a6e !important;
-    border-radius: 15px !important;
-    color: #f2f2f2 !important;
+  background-color: #254b6e !important;
+  border-radius: 5px !important;
+  color: #f2f2f2 !important;
+  transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
 }
+
 
 
 #sidebar:hover {
     width: 300px;
-    padding: 0 10px;
+    padding: 0 6px;
 }
-
 
 .logout-link {
-    margin-top: -70px;
-    margin-left: -20px;
+    margin-top: 195px;
+    margin-left: -10px;
+    width:242px;
 }
-
+.dashboard-link {
+  margin-left: -10px;
+  width:242px;
+}
+.home-link {
+  margin-left: -10px;
+  width:242px;
+}
+.about-link {
+  margin-left: -10px;
+  width:242px;
+}
 
 .d-flex.flex-wrap.align-content-between.h-100 {
     background-color: #f2f2f2;
 }
 
-
 .list-group-item-action:not(:hover) span {
     color: black !important;
 }
 
-
-#sidebar a {
-    color: #000000;
-    text-decoration: none;
-    padding: 10px 0; 
-    display: block; 
-    transition: color 0.5s ease-in-out; 
+.ctu_logo {
+    position: relative;
+    top: 3px;
+    z-index: 1;
 }
 
-
-#sidebar a:hover {
-    color: #fff; 
-}
-
-
-#sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 50px;
-    
-}
-
-
-#sidebar.show-names,
-#sidebar:hover {
-    width: 280px;
-    padding: 0 20px;
-}
-
-#sidebar .logout-link,
-#sidebar .list-group-item-action,
-#sidebar .d-flex.flex-wrap.align-content-between.h-100,
-#sidebar .profile-container,
-#sidebar .account_type {
-    margin-left: -10px;
-}
-
-#sidebar a {
-    padding-left: 10px;
-}
-
-#sidebar.show-names a {
-    padding-left: 10px;
-}
 .pro {
     position: relative;
-    top: 200px; 
-    
-    z-index: 1;
     height: 45px;
     width: 45px;
-    margin-left: 47px;
-    transition: height 0.3s ease, width 0.3s ease, top 0.3s ease; 
+    margin-left: 45%;
+    transition: height 0.3s ease, width 0.3s ease;
     cursor: pointer;
     border-radius: 50px;
     border: 2px solid #000;
+    margin-top: 450px;
+    display: none;
 }
-
-
-#sidebar:hover .pro {
-    margin-left: 55px; 
-}
-
 
 .list-group-item i {
     transform: scale(1.4);
     display: inline-block;
 }
-
 
 .profile-container {
     display: flex;
@@ -209,34 +169,38 @@ margin-bottom: 30vh;
     margin: 0;
 }
 
-
 .account_type {
     position: relative;
-    top: 200px; 
-    left: 30px; 
+    left: 30px; /* Adjust the desired horizontal position */
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease, top 0.3s ease; 
+    opacity: 0; /* Set the initial opacity to hide the element */
+    visibility: hidden; /* Set the initial visibility to hidden */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+    margin-top: 450px;
+    display: none;
 }
 
 
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1;
-    visibility: visible; 
+    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
+    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
 }
 
 
 .sidebar:hover .account_type {
-    opacity: 1; 
-    visibility: visible; 
+    opacity: 1; /* Show the element when the sidebar is hovered */
+    visibility: visible; /* Show the element when the sidebar is hovered */
 }
-#sidebar .logout-link, #sidebar .list-group-item-action, #sidebar .d-flex.flex-wrap.align-content-between.h-100, #sidebar .profile-container, #sidebar .account_type {
-  margin-left: -5px;
-}
+body {
+  overflow: hidden;
+  }
+
+  html {
+   overflow: hidden;
+    }
 </style>
         <script>
           const savedImageUrl = localStorage.getItem('profileImage');
