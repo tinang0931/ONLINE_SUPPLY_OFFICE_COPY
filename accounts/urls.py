@@ -1,5 +1,7 @@
 from django.urls import path
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views 
 from .views import *
 from .views import checkout_items_view
@@ -8,8 +10,7 @@ urlpatterns = [
    path('',views.landing, name='landing'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
-   path('bac/',views.bac, name='bac'),
-   path('addItem/',views.addItem, name='addItem'),
+   path('bac/', views.bac, name='bac'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -72,4 +73,5 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
+   
 ]

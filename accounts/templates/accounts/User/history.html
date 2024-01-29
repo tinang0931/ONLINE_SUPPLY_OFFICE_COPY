@@ -13,12 +13,14 @@
 
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
     <br>
+   
     <div class="col-6 col-sm-6 col-md-5 col-lg-3 mr-auto">
-      <div class="search" style="position: relative; float: right; margin-right: 320px; margin-top: 1%; width: 300px; ">
-        <i class="fas fa-search" style="position: absolute; top: 38%; transform: translateY(-50%); left: 85%; color: #1C96C5; margin-left: 71%;"></i>
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #1C96C5; border-radius: 25px; margin-top: 1%; margin-left: 71%;">
+       <div class="search" style="position: relative; text-align: right;">
+        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; margin-left: 5px display: inline-block;width:80%;">
+        <i class="fas fa-search" style="position: absolute; top: 50%; right: 100px; transform: translateY(-50%); color: #05708BD2;"></i>
     </div>
   </div>
+  
   <button class="view_more" id="view-more-button">
     View More 
 </button>
@@ -56,23 +58,17 @@
 </div>
 <style>
  .view_more {
-  font-size: 12px; /* Adjusted font size to 30% smaller */
-  padding: 0.21em 1.05em; /* Adjusted padding to 30% smaller */
   background: #1c96c5;
+  padding: 5px 15px;
   color: white;
-  border-radius: 4px;
-  transition: all 0.3s; /* Added transition for smoother animation */
-  margin-left: 94.7%; /* Adjusted margin-top */
-  margin-top: -5%;
-}
+  text-decoration: none;
+  margin-right: 0;
+  border: none;
+  border-radius: 5px;
+  margin-top: 1%;
+ }
 
-.view_more:hover {
-  background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
-}
 
-.view_more:active {
-  transform: translate(0em, 0.14em); /* Adjusted translation for 30% smaller */
-}
 .input-group {
   width: 300px; /* Adjust the width as needed */
   margin-right: auto; /* Move to the left */
