@@ -155,6 +155,47 @@ textarea.form-control {
           var itemId = deleteIcon.getAttribute('data-id');
           handleDeleteClick(itemId);
         });
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Brand / Description</th>
+          <th>Unit</th>
+          <th>Unit Price</th>
+          <th>Attachment</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for item in items %}
+        <tr>
+          <td>{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
+              id="item_{{ item.id }}"></td>
+          <td>{{ item.item_brand_description }} <input type="text" name="item_brands[]"
+              value="{{ item.item_brand_description }}" style="display:none;" id="item_brand_{{ item.id }}"></td>
+          <td>{{ item.unit }} <input type="text" name="units[]" value="{{ item.unit }}" style="display:none;"
+              id="unit_{{ item.id }}"></td>
+          <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
+              id="unit_cost_{{ item.id }}"></td>
+          <td>
+            <div class="file-attachment">
+              <label for="fileInput{{ item.id }}" style="cursor: pointer;">
+                  <img src="{% static 'images/link.png' %}" alt="Attach File">
+              </label>
+              <input type="file" id="fileInput{{ item.id }}" name="files[]" accept=".pdf, .doc, .docx" style="display: none;">
+          </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+<!-- Add this script at the end of your HTML body -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Attach change event to the unit cost input elements
+    document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
+      unitCostInput.addEventListener('change', function () {
+        calculateTotal();
       });
     });
   </script>

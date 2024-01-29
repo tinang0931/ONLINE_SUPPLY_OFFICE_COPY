@@ -527,6 +527,19 @@
                             {% comment %} <form id='form_status' method="post" action="{% url 'approve_checkout' %}"> {% endcomment %}
 
                                 {% csrf_token %}
+                    </table>
+
+
+
+                    <div>
+                        <br>
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+
+                        <footer class="footer">
+                            <div class="icons-container">
+                                <div class="input-box">
+                                    <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
+                                </div>
                                 <input id="new_status_id" type="hidden" name="new_status">
                                 <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
                                 <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
@@ -612,6 +625,81 @@ html2pdf().set({
             </div>
         </div>
     </body>
+    </div>
+    </div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+    <div> &nbsp</div>
+
+    <script>
+        let selectedPaperSize = 'a4';
+    
+        function changePaperSize() {
+            selectedPaperSize = document.getElementById('paperSize').value;
+        }
+        function downloadPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+            const footer = document.querySelector('.footer');
+            footer.style.display = 'none';
+    
+            const options = {
+                filename: 'PPMP.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'landscape' },
+                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+            };
+    
+            html2pdf(body, options);
+    
+            // Reset page breaks after generating PDF
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+        }
+    </script>
+    
+    <script>
+        function toggleSelect() {
+            var selectElement = document.getElementById("paperSize");
+            selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+        }
+    </script>
+
+    <script>
+        function btn_click(approve) {
+            // Get the comment input element by its ID
+            var commentInput = document.getElementById('comment_input');
+    
+            // Check if the comment is not empty
+            if (commentInput.value.trim() === "") {
+                alert("Please provide a comment.");
+                return;
+            }
+    
+            // Get the hidden input element by its ID
+            var newStatusInput = document.getElementById('new_status_id');
+    
+            // Set the value based on the 'approve' parameter
+            newStatusInput.value = approve ? 'approved' : 'declined';
+    
+            // Submit the form programmatically
+            var form = document.getElementById('form_id');
+            form.submit();
+        }
+    </script>
+
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+
+
 {% endblock %}
