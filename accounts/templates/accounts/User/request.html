@@ -256,7 +256,7 @@ button:hover::before {
 
                 <div class="modal-body">
 
-                    <form action="{% url 'addItem' %}" method="post">
+                    {% comment %} <form action="{% url 'addItem' %}" method="post"> {% endcomment %}
                         {% csrf_token %}
 
 

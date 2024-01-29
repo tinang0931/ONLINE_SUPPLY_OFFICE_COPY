@@ -51,167 +51,117 @@ textarea.form-control {
   .col-md-4 .text-right button.btn.btn-primary {
     border-radius: 8%;
 
+  }
 
 </style>
 
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
-<div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
-
+<div class="container-fluid" style="height: 74vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
     <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
 
-  <div class="row">
-
-    <div class="col-md-1 mb-0">
-      <div class="pp_mp">
-        <button class="btn btn-primary">
-          <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;"> PPMP </a>
-        </button>
+    <div class="row">
+      <div class="col-md-1 mb-0">
+        <div class="pp_mp">
+          <button class="btn btn-primary">
+            <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;"> PPMP </a>
+          </button>
+        </div>
       </div>
     </div>
+
+    <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Brand Description</th>
+            <th>Unit</th>
+            <th>Unit Cost</th>
+            <th>File Attachment</th>
+            <th>Actions</th> 
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
+                id="item_{{ item.id }}"></td>
+            <td>{{ item.item_brand_description }} <input type="text" name="item_brands[]"
+                value="{{ item.item_brand_description }}" style="display:none;" id="item_brand_{{ item.id }}"></td>
+            <td>{{ item.unit }} <input type="text" name="units[]" value="{{ item.unit }}" style="display:none;"
+                id="unit_{{ item.id }}"></td>
+            <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}"
+                style="display:none;" id="unit_cost_{{ item.id }}"></td>
+
+            <td>
+              <div class="file-attachment">
+                <label for="fileInput{{ item.id }}" style="cursor: pointer;">
+                  <img src="{% static 'images/link.png' %}" alt="Attach File">
+                </label>
+                <input type="file" id="fileInput{{ item.id }}" name="files[]" accept=".pdf, .doc, .docx"
+                  style="display: none;">
+              </div>
+            </td>
+            <td>
+              <div class="item-actions" style="text-align: center; gap: 20px">
+                <a href="#" class="edit-icon" style="text-align: center;" data-id="{{ item.id }}">
+                  <i class="fas fa-edit text-privacy"></i>
+                </a>
+
+                <a href="#" class="delete-icon" style="text-align: center;" data-id="{{ item.id }}">
+                  <i class="fas fa-trash text-danger"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
   </div>
 
-  <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Item Name</th>
-          <th>Brand / Description</th>
-          <th>Unit</th>
-          <th>Unit Price</th>
+  <script>
+    // Function to handle edit action
+    function handleEditClick(itemId) {
+      // Replace this with your actual edit logic using the itemId
+      console.log('Edit clicked for item with ID:', itemId);
+    }
 
-        </tr>
-      </thead>
-      <tbody>
+    // Function to handle delete action
+    function handleDeleteClick(itemId) {
+      // Replace this with your actual delete logic using the itemId
+      console.log('Delete clicked for item with ID:', itemId);
+    }
 
-        {% for item in items %}
-        <tr>
-          <td>{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
-              id="item_{{ item.id }}"></td>
-          <td>{{ item.item_brand_description }} <input type="text" name="item_brands[]"
-              value="{{ item.item_brand_description }}" style="display:none;" id="item_brand_{{ item.id }}"></td>
-          <td>{{ item.unit }} <input type="text" name="units[]" value="{{ item.unit }}" style="display:none;"
-              id="unit_{{ item.id }}"></td>
-          <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
-              id="unit_cost_{{ item.id }}"></td>
+    // Add event listeners for edit and delete icons
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.edit-icon').forEach(function (editIcon) {
+        editIcon.addEventListener('click', function (event) {
+          event.preventDefault();
+          var itemId = editIcon.getAttribute('data-id');
+          handleEditClick(itemId);
+        });
+      });
 
-          <td>
-            <div class="file-attachment">
-              <label for="fileInput{{ item.id }}" style="cursor: pointer;">
-                  <img src="{% static 'images/link.png' %}" alt="Attach File">
-              </label>
-              <input type="file" id="fileInput{{ item.id }}" name="files[]" accept=".pdf, .doc, .docx" style="display: none;">
-          </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-
-<!-- Add this script at the end of your HTML body -->
-<!-- Add this script at the end of your HTML body -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Attach change event to the unit cost input elements
-    document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
-      unitCostInput.addEventListener('change', function () {
-        calculateTotal();
+      document.querySelectorAll('.delete-icon').forEach(function (deleteIcon) {
+        deleteIcon.addEventListener('click', function (event) {
+          event.preventDefault();
+          var itemId = deleteIcon.getAttribute('data-id');
+          handleDeleteClick(itemId);
+        });
       });
     });
-
-    // Calculate total on page load
-    calculateTotal();
-
-    function calculateTotal() {
-      var totalAmount = 0;
-      $('input[name="prices[]"]').each(function () {
-        var itemCost = parseFloat($(this).val());
-        if (!isNaN(itemCost)) {
-          totalAmount += itemCost;
-        }
-      });
-      $("#total_amount").text(totalAmount.toFixed(2));
-    }
-  });
-</script>
-
-
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          // Attach click event to the icon, which will trigger the hidden file input
-          document.querySelectorAll('.file-attachment label').forEach(function (label) {
-              label.addEventListener('click', function (event) {
-                  event.preventDefault(); // Prevent default label behavior
+  </script>
   
-                  var inputId = this.getAttribute('for');
-                  var fileInput = document.getElementById(inputId);
+  {% endblock %}
+
+
+
+
   
-                  // Trigger a click on the file input only if it's not active
-                  if (!fileInput.value) {
-                      fileInput.click();
-                  }
-              });
-          });
-  
-          // Attach change event to the file input elements
-          document.querySelectorAll('.file-attachment input[type="file"]').forEach(function (fileInput) {
-              fileInput.addEventListener('change', function () {
-                  // Handle the file attachment here
-                  var fileName = this.files[0].name;
-                  console.log('Selected file:', fileName);
-              });
-          });
-      });
-
-        $(document).ready(function () {
-          function calculateTotal() {
-            var totalAmount = 0;
-            $(".item_total_cost").each(function () {
-              var itemCost = parseFloat($(this).text());
-              totalAmount += itemCost;
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
-
-          calculateTotal();
-        });
-      </script>
-
-      <footer class="fixed-bottom p-2"
-        style="overflow-y: auto; overflow-x: hidden; background-color:  rgba(1, 33, 67, 0.9);">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="purpose" style="color:#FFFFFF">Purpose:</label>
-                <textarea class="form-control" id="purpose" placeholder="Purpose" name="purpose" contenteditable="true"
-                  style="resize: vertical;"></textarea>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="text-right" style="color:#FFFFFF">
-                <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="text-right">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </table>
-  </form>
-</div>
-
-
-
-{% endblock %}

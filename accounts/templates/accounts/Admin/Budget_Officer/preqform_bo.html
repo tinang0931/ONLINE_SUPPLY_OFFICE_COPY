@@ -383,50 +383,35 @@
                     <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
                     <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
                 </div>
-                <h><b>PROJECT PROCUREMENT MANAGEMENT PLAN (2023) </b></h>
-
-                <div class="container">
-                    <p>End-User / Unit : <strong>CTU-GINATILAN eXTENSION CAMPUS</strong></p>
-                    <p>Charged to : <strong> ( GAA, STF, IGP )</strong></p>
-                    <p><strong> Projects, Programs and Activities (PAPs)</strong></p>
-                </div>
-
-
-                <form action="{% url 'bo_approve' pr_id=pr_id %}" method="post" id="form_id">
-                    {% csrf_token %}
-
-                    <table class="table  table-bordered">
-                        <thead>
-                            <tr>
-                            <tr>
-                                <th rowspan='2'>Item Name</th>
-                                <th rowspan='2'> Brand / Description</th>
-                                <th rowspan='2'>Unit</th>
-                                <th rowspan='2'>Estimated Budget</th>
-                                <th colspan="12">Monthly Quantity Requirement</th>
-                                <th rowspan='2'>Unit Price</th>
-
-
-
-                            </tr>
-                            <tr>
-                                <th>Jan</th>
-                                <th>Feb</th>
-                                <th>Mar</th>
-                                <th>April</th>
-                                <th>May</th>
-                                <th>June</th>
-                                <th>July</th>
-                                <th>Aug</th>
-                                <th>Sept</th>
-                                <th>Oct</th>
-                                <th>Nov</th>
-                                <th>Dec</th>
-                            </tr>
-
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                    <thead>
+    <tr>
+        <th rowspan="2" style="background-color:  #fff942f0; color: black; text-align: center;">Item Name</th>
+        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Brand / Description</th>
+        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit</th>
+        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Estimated Budget</th>
+        <th colspan="12" style="background-color:  #FFFA42; color: black; text-align: center;">Monthly Quantity Requirement</th>
+        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit Price</th>
+    </tr>
+    <tr>
+        <th style="background-color: #FFFA42; color: black;">Jan</th>
+        <th style="background-color: #FFFA42; color: black;">Feb</th>
+        <th style="background-color: #FFFA42; color: black;">Mar</th>
+        <th style="background-color: #FFFA42; color: black;">April</th>
+        <th style="background-color: #FFFA42; color: black;">May</th>
+        <th style="background-color: #FFFA42; color: black;">June</th>
+        <th style="background-color: #FFFA42; color: black;">July</th>
+        <th style="background-color: #FFFA42; color: black;">Aug</th>
+        <th style="background-color: #FFFA42; color: black;">Sept</th>
+        <th style="background-color: #FFFA42; color: black;">Oct</th>
+        <th style="background-color: #FFFA42; color: black;">Nov</th>
+        <th style="background-color: #FFFA42; color: black;">Dec</th>
+    </tr>
+</thead>
+<tbody>
+    <!-- Your table body content goes here -->
+</tbody>
                             {% for p in checkout_items %}
                             <tr class="item-row" id="{{ p.id }}">
                                 <td>
@@ -630,3 +615,4 @@ html2pdf().set({
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 {% endblock %}
+
