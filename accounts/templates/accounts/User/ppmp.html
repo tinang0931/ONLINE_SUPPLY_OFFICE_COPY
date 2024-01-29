@@ -447,41 +447,45 @@
     });
 
     function updateTotalForAllItems() {
-        var totalValue = 0;
-    
-        // Iterate over each item row
-        $('tr.item-row').each(function() {
-            var row = $(this);
-            var unitPrice = parseFloat(row.find('[name="price"]').val());
-            var rowTotalValue = 0;
-    
-            // Iterate over months in the current row
-            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
-                var monthValue = parseFloat($(this).val()) || 0;
-                rowTotalValue += monthValue;
-            });
-    
-            var rowTotal = rowTotalValue * unitPrice;
-            totalValue += rowTotal;
+    var totalValue = 0;
+
+    $('tr.item-row').each(function() {
+        var row = $(this);
+        var unitPrice = parseFloat(row.find('[name="price"]').val());
+        var rowTotalValue = 0;
+
+        row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
+            var monthValue = parseFloat($(this).val()) || 0;
+            rowTotalValue += monthValue;
         });
-    
-        $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
+
+        var rowTotal = rowTotalValue * unitPrice;
+        totalValue += rowTotal;
+    });
+
+    var allocatedBudget = 20000; // Set your allocated budget here
+
+    if (totalValue >= allocatedBudget) {
+        alert('Budget limit reached! Further input is disabled.');
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', true);
+    } else {
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', false);
     }
-    
-    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
-        updateTotalForAllItems();
-    });
-    
-    $('[name="price"]').on('input', function() {
-        updateTotalForAllItems();
-    });
-    
-    // Initial calculation when the page loads
+
+    $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
+}
+
+$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
     updateTotalForAllItems();
+});
 
-    
+$('[name="price"]').on('input', function() {
+    updateTotalForAllItems();
+});
 
-    
+updateTotalForAllItems();
 
 
 </script>
