@@ -92,14 +92,14 @@
 
         th,
         td {
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            border: 0.5px solid rgba(0, 0, 0, 0.5);
             /* Set border color to black with reduced opacity */
             text-align: left;
             /* Center text within cells */
             font-size: 12px;
             /* Adjust the font size as needed */
             height: 50px;
-            padding: 8px;
+            padding: 6px;
             /* Adjust the padding for better visibility */
         }
 
@@ -117,13 +117,13 @@
         /* Add borders to the vertical sides of th and td, excluding the last cell in each row */
         th:not(:last-child),
         td:not(:last-child) {
-            border-right: 1px solid rgba(0, 0, 0, 0.5);
+            border-right: 0px solid rgba(0, 0, 0, 0.5);
             /* Set border color to black with reduced opacity */
         }
 
         /* Make the outer border thicker */
         table {
-            border: 2px solid #000000;
+            border: 3px solid #000000;
             /* Set the outer border color and thickness */
         }
 
@@ -165,16 +165,6 @@
             /* Adjust the color as needed */
         }
 
-
-        .logo-container-left,
-        .logo-container-right {
-            width: 48%;
-        }
-
-        .logo-container-left img,
-        .logo-container-right img {
-            width: 100%;
-        }
 
         .heading-container {
             text-align: center;
@@ -224,7 +214,7 @@
         }
 
         .input-box input {
-            width: 100%;
+            width: 150%;
             height: 40px;
             padding: 10px;
             box-sizing: border-box;
@@ -254,13 +244,13 @@
         .footer {
             background-color: rgba(10, 99, 158, 0.637);
             text-align: center;
-            width: 36.5%;
+            width: 30%;
             height: auto;
             bottom: 0;
             -webkit-user-modify: read-only;
             position: fixed;
             z-index: 2;
-            position: fixed;
+            left: 0%;
         }
 
         .p {
@@ -268,9 +258,9 @@
         }
 
         .container {
-            width: 100%;
+            width: 90%;
             max-width: 950px;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -328,39 +318,74 @@
             color: #ffa125e3;
             background-color: #000000e3;
         }
-    </style>
 
+        .landscape-table {
+        width: 100%;
+        max-width: none;
+        transform: rotate(-90deg);
+        transform-origin: 0 0;
+        white-space: nowrap;
+        height: 800px; /* Adjust the height as needed */
+    }
+
+    .landscape-table th,
+    .landscape-table td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .landscape-table th {
+        background-color: #f2f2f2;
+    }
+
+    .center-heading {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 20px;
+        line-height: 1.5; /* Adjust the line-height for vertical centering */
+    }
+
+    .signatures {
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .signatures p {
+        margin: 20px; /* Remove default margin for the paragraphs */
+    }
+
+    .total-budget-container {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    .total-budget-text {
+        text-align: left;
+    }
+
+    
+
+</style>
+
+       
+    </style>
 <body>
     <div class="container page-break">
         <div id="purchaseRequestTable" class="container-fluid">
             <div class="container" style="border: b;">
-                <div class="container">
-                    <div class="pdf-page size-a4">
-                        <nav>
-                            <img class="ctu_logo" style="float: left;" src="{% static 'images/ctu_loogo.png' %}"
-                                alt="logo">
-                            <img class="asean_logo" style="float: right;" src="{% static 'images/asean.png' %}"
-                                alt="logo">
-                        </nav>
-                        <page size="a4">
-                            <p class="heading-paragraph">Republic of the Philippines</p>
-                            <p class="heading-paragraph no-bold"><b>CEBU TECHNOLOGICAL UNIVERSITY</b></p>
-                            <p class="heading-paragraph">ARGAO CAMPUS</p>
-                            <p class="heading-paragraph">Ed Kintanar Street Lamacan Argao, Cebu Philippines</p>
-                            <div>
-                                <p class="heading-paragraph">Website: <a
-                                        href="http://www.argao.ctu.edu.ph">http://www.argao.ctu.edu.ph</a></p>
-                                <p class="heading-paragraph">Email: <a
-                                        href="mailto:ctu.argao@yahoo.com">ctu.argao@yahoo.com</a></p>
-                                <p class="heading-paragraph">Phone No.: (032) 4858-290/4865-109 loc 1700 Fax No.: (032)
-                                    4858-290</p>
-                            </div>
-                        </page>
-                    </div>
+                <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
+                <h1 class="center-heading"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
+                <div class="container" style="text-align: left; display: inline-block; margin-left: -200px; margin-top: 20px; ">
+                    <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
+                    <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
+                    <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
                 </div>
                 <h><b>PROJECT PROCUREMENT MANAGEMENT PLAN (2023) </b></h>
 
-                <div class="container">                  
+                <div class="container">
                     <p>End-User / Unit : <strong>CTU-GINATILAN eXTENSION CAMPUS</strong></p>
                     <p>Charged to : <strong> ( GAA, STF, IGP )</strong></p>
                     <p><strong> Projects, Programs and Activities (PAPs)</strong></p>
@@ -403,9 +428,7 @@
                         </thead>
                         <tbody>
                             {% for p in checkout_items %}
-
                             <tr class="item-row" id="{{ p.id }}">
-
                                 <td>
                                     <span class="editable" data-field="Item_name">{{ p.item }}</span>
                                     <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
@@ -426,13 +449,11 @@
                                         style="display: none">
                                 </td>
 
-
-
                                 <td>{{ p.estimate_budget }}</td>
                                 <td>{{ p.jan }}</td>
                                 <td>{{ p.feb }}</td>
                                 <td>{{ p.mar }}</td>
-                                <td>{{ p.apr }}</td>
+                                <td>{{ p.apr }}</td>                                                                                    
                                 <td>{{ p.may }}</td>
                                 <td>{{ p.jun }}</td>
                                 <td>{{ p.jul }}</td>
@@ -446,146 +467,166 @@
                                     <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
                                         oninput="change_val('price_{{ p.id }}')" class="edit-input"
                                         style="display: none">
-                                </td>
-
-                                <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
-                                <input type="hidden" name="jan" value="{{ p.jan }}">
-                                <input type="hidden" name="feb" value="{{ p.feb }}">
-                                <input type="hidden" name="mar" value="{{ p.mar }}">
-                                <input type="hidden" name="apr" value="{{ p.apr }}">
-                                <input type="hidden" name="may" value="{{ p.may }}">
-                                <input type="hidden" name="jun" value="{{ p.jun }}">
-                                <input type="hidden" name="jul" value="{{ p.jul }}">
-                                <input type="hidden" name="aug" value="{{ p.aug }}">
-                                <input type="hidden" name="sep" value="{{ p.sep }}">
-                                <input type="hidden" name="oct" value="{{ p.oct }}">
-                                <input type="hidden" name="nov" value="{{ p.nov }}">
-                                <input type="hidden" name="dec" value="{{ p.dec }}">
-
-
-
-                            </tr>
-
+                                    </td>
+                                  </tr>
                             {% endfor %}
+                        </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>          
+        <div class="content-below-table">
+            <div class="total-budget-container">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
+                <span id="totalBudget" class="total-budget-value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+                    <br>
+                    <br>
+                    <br>
+                </span>
+            </div>
+            <div>
+                <div style="text-align: center; margin-right: 140px;">
+                    <strong>Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              
+                        <strong>Certified Fund Available:</strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved:</strong>
+                    </div>          
+            </div>
+            <br>
+            <br>
+            <br>
+            <div>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;<u>GLICERIO A. BAGUIA</u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp; <u> MARY ANN P. GONZAGA. C.P.A. </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong> <u> JEAN F. PUERTO, Dev.Ed.D.,Ph.D. </u> </strong>
+                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+            </div>
+            <div>
+                <strong>End-User  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Accountant 1  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
+                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div>
+                <div style="text-align: left;">
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
+                    <br>
+                    <br>
+                    <br>
+                </div>                
+                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+            </div>
+        </div>
+        <br>
+                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+                    </form> <!-- Close the form tag here -->
+                    <div class="page-break">  
+                    <footer class="footer">
+                        <div class="icons-container">
+                            <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                                <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
+                               </a>
+                               <a href="#" title="Select" class="icon-link">
+                                <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
+                               </a>
+                               <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                   <option value="a4">A4</option>
+                                   <option value="legal">Legal</option>
 
-                        </tbody>
+                            {% comment %} <form id='form_status' method="post" action="{% url 'approve_checkout' %}"> {% endcomment %}
 
-                    </table>
-
-
-
-                    <div>
-                        <br>
-                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-
-
-                        <footer class="footer">
-                            <div class="icons-container">
-                                <div class="input-box">
-                                    <input placeholder="Type your comment" name="comment_content" id="comment_input"
-                                        required>
-                                </div>
+                                {% csrf_token %}
                                 <input id="new_status_id" type="hidden" name="new_status">
                                 <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
                                 <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-
-                                
-                                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                        <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select"
-                                            onclick="downloadPDF()">
-                                    </a>
-                                    <a href="#" title="Select" class="icon-link">
-                                        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select"
-                                            onclick="toggleSelect()">
-                                    </a>
-                                    <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                                        <option value="a4">A4</option>
-                                        <option value="legal">Legal</option>
+                            </form>
+                            <script>
+                                function btn_click(status) {
+                                    document.getElementById('new_status_id').value = status
+                                    form = document.getElementById('form_status')
+                                    form.submit()
+                                }
+                            </script>
+                            <div class="input-box">
+                                <input placeholder="Type your comment" name="comment_content">
+                            </div>
+                            <div class="send-icon">
+                                <button type="submit"><i class="fas fa-paper-plane"
+                                        style="margin-top: 3px;"></i></button>
                                 </div>
-                        </footer>
+                            </form>
+                        </div>
+                    </footer>
+                <script>
+                        function setAction(action) {
+                            document.getElementById('action').value = action;
+                            document.forms[0].submit();  // Assuming the form is the first form on the page
+                        }
+ </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+<script>
+    let selectedPaperSize = 'a4';
+
+    function changePaperSize() {
+        selectedPaperSize = document.getElementById('paperSize').value;
+    }
+    function downloadPDF() {
+        const body = document.getElementById('purchaseRequestTable');
+        const elementsWithPageBreak = body.querySelectorAll('.page-break');
+
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'always';
+        });
+        const footer = document.querySelector('.footer');
+        footer.style.display = 'none';
+
+        const options = {
+            filename: 'PPMP.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+        };
+
+        html2pdf(body, options);
+
+        // Reset page breaks after generating PDF
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'auto';
+        });
+    }
+    html2pdf().set({ 
+  pagebreak: { mode: 'avoid-all', before: '#page2el' }
+});
+
+// Enable all 'modes', with no explicit elements.
+html2pdf().set({
+  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+});
+
+// No modes, only explicit elements.
+html2pdf().set({
+  pagebreak: { before: '.beforeClass', after: ['#after1', '#after2'], avoid: 'img' }
+});
+
+</script>
+<script>
+    function toggleSelect() {           
+        var selectElement = document.getElementById("paperSize");
+        selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
+    }
+</script>
                     </div>
-                </form>
+                </div>
             </div>
-
-
         </div>
-    </div>
-    </div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-    <div> &nbsp</div>
-
-    <script>
-        let selectedPaperSize = 'a4';
-    
-        function changePaperSize() {
-            selectedPaperSize = document.getElementById('paperSize').value;
-        }
-        function downloadPDF() {
-            const body = document.getElementById('purchaseRequestTable');
-            const elementsWithPageBreak = body.querySelectorAll('.page-break');
-    
-            elementsWithPageBreak.forEach((element) => {
-                element.style.pageBreakBefore = 'always';
-            });
-            const footer = document.querySelector('.footer');
-            footer.style.display = 'none';
-    
-            const options = {
-                filename: 'PPMP.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'landscape' },
-                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-            };
-    
-            html2pdf(body, options);
-    
-            // Reset page breaks after generating PDF
-            elementsWithPageBreak.forEach((element) => {
-                element.style.pageBreakBefore = 'auto';
-            });
-        }
-    </script>
-    
-    <script>
-        function toggleSelect() {
-            var selectElement = document.getElementById("paperSize");
-            selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
-        }
-    </script>
-
-    <script>
-        function btn_click(approve) {
-            // Get the comment input element by its ID
-            var commentInput = document.getElementById('comment_input');
-
-            // Check if the comment is not empty
-            if (commentInput.value.trim() === "") {
-                alert("Please provide a comment.");
-                return;
-            }
-
-            // Get the hidden input element by its ID
-            var newStatusInput = document.getElementById('new_status_id');
-
-            // Set the value based on the 'approve' parameter
-            newStatusInput.value = approve ? 'approved' : 'disapproved';
-
-            // Submit the form programmatically
-            var form = document.getElementById('form_id');
-            form.submit();
-        }
-    </script>
-
+    </body>
 </html>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-
-
-
 {% endblock %}

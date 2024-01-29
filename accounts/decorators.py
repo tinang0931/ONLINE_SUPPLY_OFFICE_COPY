@@ -21,7 +21,7 @@ def authenticated_user(view_func):
     """
     def wrapper_func(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('login')  # Redirect to the login page if the user is not authenticated
+            return redirect('login') 
         else:
             return view_func(request, *args, **kwargs)
     
@@ -29,51 +29,18 @@ def authenticated_user(view_func):
 
 
 
-def regular_user_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'regular':
-            return view_func(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden("You don't have permission to access this page.")
-
-    return _wrapped_view
-def admin_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'admin':
-            return view_func(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden("You don't have permission to access this page.")
-
-    return _wrapped_view
-
-def cd_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'cd':
-            return view_func(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden("You don't have permission to access this page.")
-
-    return _wrapped_view
-
-def budget_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'budget':
-            return view_func(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden("You don't have permission to access this page.")
-
-    return _wrapped_view
-
-def bac_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'bac':
-            return view_func(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden("You don't have permission to access this page.")
-
-    return _wrapped_view
+def user_type_required(user_type):
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            if request.user.is_authenticated and request.user.user_type == user_type:
+                return view_func(request, *args, **kwargs)
+            else:
+                return HttpResponseForbidden("You don't have permission to access this page.")
+        return _wrapped_view
+    return decorator
+regular_user_required = user_type_required('regular')
+budget_required = user_type_required('budget')
+bac_required = user_type_required('bac')
+cd_required = user_type_required('cd')
+admin_required = user_type_required('admin')

@@ -14,30 +14,33 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
       <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
   </head>
 
   <body>
-    <main class="flex-shrink">
-      <div id="page-content-wrapper ">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="row w-100 m-auto">
-            <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-              <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-            </div>
-            <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                <h1 class="head">Supply Office Request Monitoring System</h1>
-                <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-            </div>
-            <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-            </div>
-          </div>
-        </nav>
+    
+      <main class="flex-shrink">
+        <div id="page-content-wrapper">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+              <div class="row w-100 m-auto">
+                  <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                      <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+                  </div>
+                  <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                      <h1 class="head">Supply Office Request Monitoring System</h1>
+                      <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+                  </div>
+                  <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+                  </div>
+              </div>
+          </nav>
       </div>
-    </main>
-      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-      <div class="d-flex" id="wrapper">
+  </main>
+  <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+  <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
           <div class="d-flex flex-wrap align-content-between h-100">
@@ -45,23 +48,23 @@
               <div class="list-group w-100">
                 <br><br>
                 <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdpurchase'%}">
-                  <i class='bx bx-shopping-bag'></i> <span id="requests" class="hidden-name">Purchase Request</span>
+                  <i class="bi bi-bag-check"></i> <span id="requests" class="hidden-name">Purchase Request</span>
                 </a>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdppmp'%}">
-                  <i class='bx bx-folder-open'></i> <span id="requests" class="hidden-name">PPMP</span>
+                  <i class="bi bi-file-earmark-post"></i> <span id="requests" class="hidden-name">PPMP</span>
                 </a>
                 
                 <a class="list-group-item list-group-item-action p-3 border-0 resolution-link" href="{% url 'cdresolution'%}">
-                  <i class='bx bx-file'></i> <span id="resolution" class="hidden-name">Resolution</span>
+                  <i class="bi bi-file-earmark-text"></i> <span id="resolution" class="hidden-name">Resolution</span>
                 </a>
                 
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'cdabout'%}">
-                  <i class='bx bx-info-circle'></i></i> <span id="about" class="hidden-name">About</span>
+                  <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
                 
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
-                  <i class='bx bx-log-out'></i> <span id="logout" class="hidden-name">Logout</span>
+                  <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
                 </a>
               </div>
               <div class="profile-container">
@@ -73,9 +76,13 @@
           </div>
         </div>
         <style>
+          #sidebar-wrapper .list-group-item.logout-link {
+            position: absolute;
+            top: 78vh;
+        }
           .d-flex {
             height: 85vh;
-            margin-bottom: 0;
+            margin-bottom: 1;
 }
           #sidebar {
     transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
@@ -103,36 +110,42 @@
 
 .list-group-item-action:hover {
     background-color: #093a68 !important;
-    border-radius: 15px !important;
+    border-radius: 5px !important;
     color: #f2f2f2 !important;
 }
 
 
 #sidebar:hover {
     width: 300px;
-    padding: 0 10px;
+    padding: 0 6px;
 }
 
 .logout-link {
-    margin-top: 65px;
+    margin-bottom: 1%;
     margin-left: -10px;
+    width: 245px;
 }
 .about-link {
   margin-left: -10px;
+  width: 245px;
 
 }
 .resolution-link {
   margin-left: -10px;
+  width: 245px;
 }
 .purchase-requests-link {
   margin-left: -10px;
+  width: 245px;
 }
 .home-link {
   margin-left: -10px;
+  width: 245px;
 }
 
 .d-flex.flex-wrap.align-content-between.h-100 {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
+  overflow: hidden;
 }
 
 .list-group-item-action:not(:hover) span {
@@ -147,16 +160,17 @@
 
 .pro {
   position: relative;
-  top: 430px;
+  top: 359px;
   z-index: 1;
   height: 45px;
   width: 45px;
-  margin-left: 4%;
+  margin-left: 6%;
   transition: height 0.3s ease, width 0.3s ease;
   cursor: pointer;
   border-radius: 50px;
   border: 2px solid #000;
   margin-top: 20px;
+  display:none;
 }
 .list-group-item i {
     transform: scale(1.4);
@@ -169,7 +183,8 @@
     justify-content: center;
     width: 90%;
     margin: 0;
-    margin-left: 10px;
+    margin-left: 0px;
+    display: none;
 }
 
 .account_type {
@@ -195,6 +210,8 @@
     opacity: 1;
     visibility: visible;
 }
+
+
         </style>
         
         <script>
