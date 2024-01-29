@@ -11,6 +11,7 @@ urlpatterns = [
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
    path('bac/', views.bac, name='bac'),
+   path('baclanding/', views.baclanding, name='baclanding'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -73,5 +74,4 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-   
 ]

@@ -114,7 +114,7 @@ th {
       justify-content: center;
       align-items: center;
       z-index: 999;
-  }
+    }
 
   .confirmation-box {
       background-color: #fff;
@@ -122,6 +122,7 @@ th {
       border-radius: 8px;
       text-align: center;
   }
+
     .form-control {
     display: block;
     width: 100%;
@@ -135,7 +136,7 @@ th {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 10px;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;]
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 
     .btn-primary {
@@ -143,7 +144,7 @@ th {
     border-radius: 5px;
     background-color: #007bff;
     border-color: #007bff;
-}
+    }
 
 .btn-success {
     color: #fff;
@@ -151,6 +152,7 @@ th {
     border-color: #28a745;
     border-radius: 5px;
 }
+
 .sticky-container {
   position: fixed;
   top: 20;
@@ -158,20 +160,19 @@ th {
   background-color: #f1f1f1;
   padding: 20px;
 }
+
 .table-container {
   max-height: 700px;
   overflow-y: auto;
   margin-bottom: 20px; 
-  
 }
+
 .hidden-label {
   display: none;
  padding: 6px 12px;
 }
- 
-
-
   </style>
+  
 </head>
 
 <body> 
@@ -186,23 +187,21 @@ th {
       <button class="btn btn-success" type="submit" style=" margin-left: 2px;">
         <i class="fas fa-file-upload"></i> Upload
       </button>
-
-
     </form>
     <br>
 
     <div class="dropdown" style="width: 45%; border: 2px;">
       <div>
-        <div class="container" onclick="showOptions()" style="user-select: none; background-color:#f08f12;margin-left: 20px; border-radius: 5px; margin:1px; width: 810px;">Select Category</div>
+        <div class="container" onmouseover="changeBackgroundColor('#033768')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color:#1c96c5; color: white; margin-left: 20px; border-radius: 5px; margin:1px; width: 810px; transition: background-color 0.3s;">ALL CATEGORIES</div>
       </div>
-
+    
       <div id="options" class="d-none position-absolute z-1 bg-white "
         style="user-select: none; width: 100%; max-height: 200px; overflow-y: auto; text-align: center; ">
-        <div class="option" onclick="selectCategory('all')">All Categories</div>
+        <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
         {% for category, items in grouped_data.items %}
         <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
         {% endfor %}
-
+    
         <div>
           <div id="newInputField" class="option hidden">
             <form method="post" action="{% url 'bac_dashboard' %}">
@@ -214,11 +213,29 @@ th {
         </div>
       </div>
       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Retrieve selected category from localStorage if available
+          var selectedCategory = localStorage.getItem("selectedCategory");
+          if (selectedCategory) {
+            selectCategory(selectedCategory);
+          }
+        });
+    
+        function changeBackgroundColor(color) {
+          var container = document.querySelector('.container');
+          container.style.backgroundColor = color;
+        }
+    
+        function restoreBackgroundColor() {
+          var container = document.querySelector('.container');
+          container.style.backgroundColor = '#1c96c5';
+        }
+    
         function showInputField() {
           var newInputField = document.getElementById("newInputField");
           newInputField.classList.toggle("hidden");
         }
-      
+    
         function showOptions() {
           var options = document.getElementById("options");
           if (options.classList.contains("d-none")) {
@@ -227,48 +244,57 @@ th {
             options.classList.add("d-none");
           }
         }
-      
+    
         function selectCategory(category) {
           var tables = document.querySelectorAll('.category-table');
           var addButtons = document.querySelectorAll('.add-btn');
-      
-          tables.forEach(function (table) {
+          var container = document.querySelector('.container');
+    
+          tables.forEach(function(table) {
             table.style.display = 'none';
           });
-      
-          addButtons.forEach(function (button) {
+    
+          addButtons.forEach(function(button) {
             button.style.display = 'none';
           });
-      
+    
           if (category === 'all') {
-            tables.forEach(function (table) {
+            tables.forEach(function(table) {
               table.style.display = '';
             });
-      
-            addButtons.forEach(function (button) {
+    
+            addButtons.forEach(function(button) {
               button.style.display = '';
             });
+    
+            container.textContent = 'ALL CATEGORIES';
           } else {
             var selectedTable = document.getElementById('table-' + category);
             var addButton = document.getElementById('add-btn-' + category);
-      
+    
             if (selectedTable && addButton) {
               selectedTable.style.display = '';
               addButton.style.display = '';
+              container.textContent = category;
             }
           }
-      
+    
+          localStorage.setItem("selectedCategory", category);
+    
           var options = document.getElementById("options");
           options.classList.add("d-none");
+    
+          restoreBackgroundColor(); 
         }
-
+    
         function toggleNewItemRow(category) {
           var newRow = document.getElementById('new-item-row-' + category);
           newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
         }
       </script>
-
     </div>
+    
+    
     <div class="table-container">
   
     {% for category, items in grouped_data.items %}
