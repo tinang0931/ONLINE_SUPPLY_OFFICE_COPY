@@ -169,13 +169,15 @@
     </div>
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
+            <h5> TOTAL ALLOCATED BUDGET : 20,000 </h5>
         </div>
     
-        <div class="col-md-1 ml-auto text-left">
-            <h5 style="font-size: 18px;"> TOTAL : 100,000 </h5>
-        </div>
-    </div>
+        <div class="row">
+            <div class="col-md-4 ml-auto text-right">
+              <label for="estimate_budget"> TOTAL AMOUNT :</label>
+              <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+            </div>
+          </div>
 
     <div class="row">
         <div class="col-md-1 mb-0">
@@ -456,6 +458,47 @@
             updateEstimateBudgetForRow(row);
         });
     });
+
+    function updateTotalForAllItems() {
+    var totalValue = 0;
+
+    $('tr.item-row').each(function() {
+        var row = $(this);
+        var unitPrice = parseFloat(row.find('[name="price"]').val());
+        var rowTotalValue = 0;
+
+        row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
+            var monthValue = parseFloat($(this).val()) || 0;
+            rowTotalValue += monthValue;
+        });
+
+        var rowTotal = rowTotalValue * unitPrice;
+        totalValue += rowTotal;
+    });
+
+    var allocatedBudget = 20000; // Set your allocated budget here
+
+    if (totalValue >= allocatedBudget) {
+        alert('Budget limit reached! Further input is disabled.');
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', true);
+    } else {
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', false);
+    }
+
+    $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
+}
+
+$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    updateTotalForAllItems();
+});
+
+$('[name="price"]').on('input', function() {
+    updateTotalForAllItems();
+});
+
+updateTotalForAllItems();
 
 
 </script>
