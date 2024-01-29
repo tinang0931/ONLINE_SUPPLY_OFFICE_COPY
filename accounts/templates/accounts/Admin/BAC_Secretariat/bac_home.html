@@ -5,6 +5,7 @@
 {% block bac_home %}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
   /* Your existing styles */
@@ -26,7 +27,7 @@
 
   .form-control {
     display: block;
-    width: 26%;
+    width: 18%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -42,7 +43,7 @@
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
   }
-
+  
   .btn-outline-success {
     color: #ffffff;
     background-color: #2d83da;
@@ -89,49 +90,55 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+        <th class="text-center" onclick="sortTable(0)" style="width: 10%;">
           Date Requested
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
-        </th>
-        <th class="text-center" onclick="sortTable(1)" style="width: 20%;">
+        </th> 
+        <th class="text-center" onclick="sortTable(1)" style="width: 10%;">
           PR ID
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+        <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
           Requests
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(3)" style="width: 25%;">
+        <th class="text-center" onclick="sortTable(3)" style="width: 10%;">
           Purpose
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="status" onclick="sortTable(4)" style="width: 15%;">
+        <th class="status" onclick="sortTable(4)" style="width: 10%;">
           Status
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
+        <th class="text-center" onclick="sortTable(5)" style="width: 10%;">
           Date
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-
+        <th class="text-center" onclick="sortTable(6)" style="width: 10%;">
+          Attachments
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
       </tr>
     </thead>
 
