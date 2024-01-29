@@ -140,7 +140,7 @@ def login(request):
             elif user.user_type == 'budget':
                 return redirect('bohome')
             elif user.user_type == 'bac':
-                return redirect('bac_home')
+                return redirect('bac_dashboard')
             else:
                 
                 return redirect('login') 
@@ -278,7 +278,7 @@ def bac_about(request):
 
 
 
-def bac_home(request):
+def cdpurchaseapproval(request):
   
     checkouts = Pr_identifier.objects.select_related('user').all()
 
@@ -288,7 +288,10 @@ def bac_home(request):
         
     }
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchaseapproval.html', context)
+
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
 
 def preqform(request, pr_id):
 

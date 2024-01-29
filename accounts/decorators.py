@@ -47,3 +47,33 @@ def admin_required(view_func):
             return HttpResponseForbidden("You don't have permission to access this page.")
 
     return _wrapped_view
+
+def cd_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.user_type == 'cd':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You don't have permission to access this page.")
+
+    return _wrapped_view
+
+def budget_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.user_type == 'budget':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You don't have permission to access this page.")
+
+    return _wrapped_view
+
+def bac_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.user_type == 'bac':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You don't have permission to access this page.")
+
+    return _wrapped_view

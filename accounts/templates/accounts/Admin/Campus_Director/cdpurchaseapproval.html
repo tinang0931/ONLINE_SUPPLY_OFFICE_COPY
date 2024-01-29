@@ -1,0 +1,180 @@
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
+
+{% load static %}
+
+{% block cdpurchaseapproval %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  /* Your existing styles */
+
+  .status {
+    width: 30%;
+    text-align: center;
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    background-color: #9ee800;
+    color: white;
+  }
+
+  .form-control {
+    display: block;
+    width: 26%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid #343a40;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1300px;
+  }
+
+  .btn-outline-success {
+    color: #ffffff;
+    background-color: #2d83da;
+    border-color: #000;
+    margin-left: 1680px;
+    height: 35px;
+  }
+
+
+  .btn-outline-success:hover {
+    color: #ffffff;
+    background-color: rgb(9, 66, 222);
+    border-color: #082fdc;
+  }
+
+  .search-form {
+    justify-content: flex-end;
+  }
+
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+  }
+
+  .table th {
+    background-color: rgba(5, 90, 129, 0.822);
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+</style>
+
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+
+  <div class="search">
+    <input class="form-control mb-3" type="text" placeholder="First name, Last name, Department" id="search_bar_request"
+      oninput="filterTable()">
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+
+        <th class="text-center">Date</th>
+        <th class="text-center">PR ID</th>
+        <th class="text-center">Requestor</th>
+        <th class="text-center">Purpose</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Comment </th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center">{{ checkout.submission_date }}
+
+        </td>
+        <td>{{ checkout.pr_id }}</td>
+        <td>
+          <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+            request on {{ checkout.submission_date }}
+          </a>
+        </td>
+
+        <td>
+          {{ checkout.pr_set.first.purpose }}
+        </td>
+
+
+
+
+
+        <td class="text-center">
+
+          {% if checkout.status == 'Pending' %}
+          <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
+            Pending
+          </span>
+          {% else %}
+          <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
+            {{ checkout.status }}
+          </span>
+          {% endif %}
+
+        </td>
+        <td class="text-center">
+          {% if checkout.comment %}
+          {{ checkout.comment }}
+          {% else %}
+          No comment yet
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+
+      {% if checkouts|length == 0 %}
+      <tr>
+        <td colspan="5">
+          <span>NO PURCHASE REQUESTS YET</span>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+
+  </table>
+  <script>
+    function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+  {% endblock %}
