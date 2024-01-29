@@ -18,27 +18,37 @@
     tr:hover .item-actions {
         display: flex;
     }
+    .custom-dropdown .btn,
+.custom-dropdown .btn:active,
+.custom-dropdown .btn:focus {
+    position: fixed;
+    top: 25.8vh; /* Adjust the top value as needed */
+    right: 3vh; /* Adjust the right value as needed */
+    z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
+    background-color: #1c96c5;
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    text-align: left;
+    padding: 5px 10px;
+}
 
-    .custom-dropdown .btn {
-        position: fixed;
-        top: 26vh; /* Adjust the top value as needed */
-        right: 3vh; /* Adjust the right value as needed */
-        z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
-        background-color: #1c96c5;
-        color: whitesmoke;
-        border: none;
-        transition: all 0.5s ease;
-        text-align: left;
-        padding: 5px 10px;
-    }
+.dropdown-menu .dropdown-item:hover {
+    background-color: #1c96c5;
+    color: whitesmoke;
+}
+
+.custom-dropdown .btn:hover {
+    background: #1c96c5;
+}
+
     .dropdown-menu .dropdown-item:hover {
-        background-color: #f08f12; /* Set the desired background color for hover */
+        background-color: #1c96c5; /* Set the desired background color for hover */
         color: whitesmoke; /* Set the desired text color for hover */
     }
 .custom-dropdown .btn:hover {
-    background: #033768;
-}
-
+    background: #1c96c5;
+} 
 .ppmp button {
     background-color: #1c96c5;
     color: white;
@@ -49,9 +59,13 @@
 }
 
 .ppmp button:hover {
-    background-color: #144472;
+    background-color: #1c96c5;
     color: #fff;
 }
+.pr {
+    margin-left: 20px !important; /* Adjust the value as needed */
+}
+
 body{
     overflow:hidden;
   }
@@ -75,7 +89,7 @@ body{
         <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
         <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                    aria-haspopup="true" aria-expanded="false" style="margin-top: -10px; background-color: #1c96c5;">
                 Select Year
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
@@ -113,13 +127,11 @@ body{
     <div class="row">
 
         <div class="col-md-1 mb-0">
-            <div class="dropdown">
-                <span class="dots" style="color: #1c96c5; cursor: pointer;" onclick="toggleText()">&#8226;&#8226;&#8226;</span>
-                <div id="textContainer" style="display: none; width: 98px; text-align: center; background-color: #f08f12; border-radius: 4px;">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
-                </div>
+            <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
             </div>
-        </div>
+        </div>        
+        
         
         <script>
             function toggleText() {
