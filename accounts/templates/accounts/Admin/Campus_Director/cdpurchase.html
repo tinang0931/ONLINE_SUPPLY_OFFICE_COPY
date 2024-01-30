@@ -69,7 +69,7 @@
 
   .table th:nth-child(1),
   .table td:nth-child(1) {
-    width: 15%;
+    width: 10%;
   }
 
   .table th:nth-child(2),
@@ -84,17 +84,17 @@
 
   .table th:nth-child(4),
   .table td:nth-child(4) {
-    width: 25%;
+    width: 10%;
   }
 
   .table th:nth-child(5),
   .table td:nth-child(5) {
-    width: 15%;
+    width: 10%;
   }
 
   .table th:nth-child(6),
   .table td:nth-child(6) {
-    width: 40%;
+    width: 10%;
   }
 
   .table th {
@@ -122,119 +122,73 @@ cursor: pointer;
   
 </style>
 
-<div class="container-fluid" style="height: 50vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS FOR APPROVAL</strong> </h1>
+
   
-  <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 101%; color: #05708BD2;"></i>
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #05708BD2;">
+  <div class="search" style="position: relative; text-align: right;">
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
+
 
   <div class="table-container">
     <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
-        Date Requested
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-      
-      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
-        Requests
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Budget Officer Status
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-      <th class="status" onclick="sortTable(3)" style="width: 15%;">
-        Budget Officer Comment
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-      
-      <th class="text-center" onclick="sortTable(5)" style="width: 15%;">
-        Campus Director Status
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
-
-      <!-- Your existing header column for Campus Director Comments -->
-      <th class="status" onclick="sortTable(6)" style="width: 25%;">
-        Campus Director Comments
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
+      <th class="text-center">Date Requested</th>
+      <th class="text-center">PR ID</th>
+      <th class="text-center">Requests for Approval</th>
+      <th class="status">Status</th>
+      <th class="text-center">Comment</th> 
     </tr>
   </thead>
 
   <tbody>
     {% for checkout in checkouts %}
-  <tr>
-          <td class="text-center">
-            <i class="far fa-clock" id="clock-icon" style="margin-right: 5px;"></i>
-            {{ checkout.submission_date }}
-          </td>
-          <td>
- 
-              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
-            </a>
-          </td>
-          <td class="text-center">
-            {% if checkout.bo_status == 'approved' %}
-              <i class="fas fa-check-circle text-success" title="Approved"></i>
-            {% elif checkout.bo_status == 'declined' %}
-              <i class="fas fa-times-circle text-danger" title="Declined"></i>
-            {% else %}
-              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
-            {% endif %}
-          </td>
-          <td class="text-center">
-            {% if checkout.bo_comment %}
-              {{ checkout.bo_comment }}
-            {% else %}
-              No comments
-            {% endif %}
-          </td>
-          <td class="text-center">
-            {% if checkout.cd_status == 'approved' %}
-              <i class="fas fa-check-circle text-success" title="Approved"></i>
-            {% elif checkout.cd_status == 'declined' %}
-              <i class="fas fa-times-circle text-danger" title="Declined"></i>
-            {% elif checkout.cd_status == 'pending' %}
-              <i class="fas fa-hourglass-half text-warning" title="Pending"></i>
-            {% else %}
-              <i class="fas fa-hourglass-half text-warning" title="Pending - Debug: {{ checkout.cd_status }}"></i>
-            {% endif %}
-          </td>
-          
-          <td class="text-center">
-            {% if checkout.cd_comment %}
-              {{ checkout.cd_comment }}
-            {% else %}
-              No comments  
-            {% endif %}
-          </td>
-          
-          
-        </tr>
-      {% endfor %}
-      </tbody>
+    <tr>
+      <td class="text-center">
+        {{ checkout.submission_date }}
+      </td>
+
+      <td class="text-center">
+        {{ checkout.pr_id }}
+      </td> 
+
+      <td>
+        <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
+          <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+        </a>
+      </td>
+
+  
+  
+      <td class="text-center">
+        {% if checkout.bo_status %}
+            <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
+                <i class="fas fa-check-circle" style="background-color: transparent;"></i>
+            </span>
+        {% elif checkout.new_status %}
+            <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
+                <i class="fas fa-check-circle" style="background-color: transparent;"></i>
+            </span>
+        {% else %}
+            <span class="badge" style="color: red; padding: 8px 12px; font-size: 16px;">
+                <i class="fas fa-clock" style="background-color: transparent;"></i>
+            </span>
+        {% endif %}
+    </td>
+    
+      <td class="text-center">
+        {% if checkout.bo_comment %}
+          {{ checkout.bo_comment }}
+        {% endif %}
+      </td>
+      
+    </tr>
+  {% endfor %}
+  
+</tbody>
   </table>
 </div>
 </div>

@@ -42,7 +42,7 @@
                   }
               </script>
               </a>
-              <h1 class="user">Username</h1>
+              
               <script>
                   var fullName = localStorage.getItem('fullName') || 'Username';
                   document.querySelector('.user').textContent = fullName;
@@ -62,6 +62,10 @@
         {% endblock %}
 
         {% block np %}
+        {% endblock %}
+
+
+        {% block cdpurchase_approval %}
         {% endblock %}
 
 

@@ -61,7 +61,6 @@ urlpatterns = [
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bohome/',views.bohome, name='bohome'),
    path('boabout/',views.boabout, name='boabout'),
-   path('borequest/',views.borequest, name='borequest'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cdpurchaseapproval/', views.cdpurchaseapproval, name='cdpurchaseapproval'),
    path('bac_home/',views.bac_home, name='bac_home'),
