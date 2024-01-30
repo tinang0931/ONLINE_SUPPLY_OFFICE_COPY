@@ -14,13 +14,21 @@
   .item-received {
     margin: 20px auto;
   }
-  .table th {
+
+  .table-bordered th {
     background-color: #1c96c5;
-    color: white;
-cursor: pointer;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  }
+
+  .item-actions {
+    display: none;
+  }
+
+  tr:hover .item-actions {
+    display: flex;
+  }
+
+  .table-bordered th {
+    background-color: #1c96c5;
   }
 </style>
 

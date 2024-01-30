@@ -11,6 +11,7 @@ urlpatterns = [
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
    path('bac/', views.bac, name='bac'),
+   path('baclanding/', views.baclanding, name='baclanding'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -23,7 +24,7 @@ urlpatterns = [
    path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
    path('bac_prof/',views.bac_prof, name='bac_prof'),
-    path('bac_profile/',views.bac_profile, name='bac_profile'),
+   path('bac_profile/',views.bac_profile, name='bac_profile'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_home/',views.bac_home, name='bac_home'),
@@ -73,6 +74,4 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-   path('preqform_cd/<int:pr_id>/', views.preqform_cd, name='preqform_cd'),
-
 ]
