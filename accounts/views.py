@@ -1012,5 +1012,3 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
-
-
