@@ -39,19 +39,6 @@
     background: #f08f12;
 }
 
-.ppmp button {
-    background-color: #1c96c5;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.ppmp button:hover {
-    background-color: #144472;
-    color: #f08f12;
-}
 body{
     overflow:hidden;
   }
@@ -70,7 +57,24 @@ cursor: pointer;
     top: 0;
     z-index: 2;
   }
-
+  .btn-primary:focus,
+  .btn-primary:active {
+      background-color: #033768 !important;
+      border-color: #033768 !important;
+      box-shadow: none !important;
+  }
+  
+  .btn-primary:hover i,
+  .btn-primary:focus i,
+  .btn-primary:active i {
+      color: whitesmoke !important;
+  }
+  
+  .btn-primary:hover span,
+  .btn-primary:focus span,
+  .btn-primary:active span {
+      color: whitesmoke !important;
+  }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -119,15 +123,11 @@ cursor: pointer;
     
 
     <div class="row">
-        <div class="col-md-1 mb-0">
-            <div class="dropdown">
-                <span class="dots" style="color: #033768; cursor: pointer;" onclick="toggleText()">&#8226;&#8226;&#8226;</span>
-                <div id="textContainer" style="display: none; width: 98px; text-align: center; background-color: #f08f12; border-radius: 4px;">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
-                </div>
-            </div>
-        </div>
-    
+    <div class="col-md-1 mb-0">
+        <a href="{% url 'ppmp' %}" class="btn btn-primary" style="border-radius: 5px; background-color: #033768; border-color: #033768;">
+            <i class="bi bi-plus-lg" style="color: whitesmoke;"></i> <span style="color: whitesmoke;">Create PPMP</span>
+        </a>
+    </div>
         <script>
             function toggleText(event) {
                 var textContainer = document.getElementById("textContainer");

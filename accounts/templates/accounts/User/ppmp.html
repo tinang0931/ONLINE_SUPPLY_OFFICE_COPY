@@ -173,23 +173,24 @@ cursor: pointer;
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">
+                    <i class="fas fa-shopping-cart"></i> Catalogue
+                </a>
             </button>
+            
         </div>
     </div>
 
     
     <div class="row">
-        <div class="text-left">
-            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
+        <div class="col-md-6 text-left">
+            <h5><strong>TOTAL ALLOCATED BUDGET: 1,000,000</strong></h5>
         </div>
-        <div class="text-center">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
+        <div class="col-md-6 text-center">
+            <label for="estimate_budget"><strong>TOTAL AMOUNT:</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
     </div>
-    
-
 
     <div class="table-responsive">
 
