@@ -85,8 +85,14 @@
                             </a>
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
                                 <i class="bi bi-geo-alt"></i> <span id="requestTracker"
-                                    class="hidden-name">Request Tracker</span>
+                                    class="hidden-name">PPMP Tracker</span>
                             </a>
+
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchasetracker'%}">
+                                <i class='bx bx-location-plus'></i> <span id="requestTracker"
+                                    class="hidden-name">Purchase Tracker</span>
+                            </a>
+
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
                                 <i class="bi bi-clock-history"></i> <span id="history" class="hidden-name">History</span>
                             </a>
@@ -256,6 +262,9 @@
             {% endblock %}
 
             {% block tracker %}
+            {% endblock %}
+
+            {% block purchasetracker %}
             {% endblock %}
 
             {% block history %}
