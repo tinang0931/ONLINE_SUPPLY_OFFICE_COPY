@@ -192,7 +192,7 @@ th {
 
     <div class="dropdown" style="width: 45%; border: 2px;">
       <div>
-        <div class="container" onmouseover="changeBackgroundColor('#033768')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color:#1c96c5; color: white; margin-left: 20px; border-radius: 5px; margin:1px; width: 810px; transition: background-color 0.3s;">ALL CATEGORIES</div>
+        <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; margin-left: 20px; border-radius: 5px; margin:1px; width: 810px; transition: background-color 0.3s;">ALL CATEGORIES</div>
       </div>
     
       <div id="options" class="d-none position-absolute z-1 bg-white "
@@ -227,7 +227,7 @@ th {
     
         function restoreBackgroundColor() {
           var container = document.querySelector('.container');
-          container.style.backgroundColor = '#1c96c5';
+          container.style.backgroundColor = 'rgba(5, 90, 129, 0.822)';
         }
     
         function showInputField() {
@@ -299,7 +299,6 @@ th {
     {% for category, items in grouped_data.items %}
 
     <table class="category-table" id="table-{{ category }}" style="margin-bottom: 120px; ">
-      <!-- Your table code here -->
         <tr>
           <th colspan="6" class="text-center" style="width: 100%; text-align:center">
             {{ category }}
