@@ -106,7 +106,7 @@ body{
             
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -121,11 +121,10 @@ body{
             this.style.backgroundColor = '#144472';
         });
     </script>
-    
-    
+
+   
 
     <div class="row">
-
         <div class="col-md-1 mb-0">
             <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                 <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
@@ -174,59 +173,59 @@ body{
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in items %}
+                    {% for p in approved_items %}
 
                   
                         <tr class="item-row" id="{{ p.id }}">
 
-                            <td>
-                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
-                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
-                                    style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>{{ p.estimate_budget }}</td>
-                            <td>{{ p.jan }}</td>
-                            <td>{{ p.feb }}</td>
-                            <td>{{ p.mar }}</td>
-                            <td>{{ p.apr }}</td>
-                            <td>{{ p.may }}</td>
-                            <td>{{ p.jun }}</td>
-                            <td>{{ p.jul }}</td>
-                            <td>{{ p.aug }}</td>
-                            <td>{{ p.sep }}</td>
-                            <td>{{ p.oct }}</td>
-                            <td>{{ p.nov }}</td>
-                            <td>{{ p.dec }}</td>
+                    <td>
+                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                            class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>{{ p.estimate_budget }}</td>
+                    <td>{{ p.jan }}</td>
+                    <td>{{ p.feb }}</td>
+                    <td>{{ p.mar }}</td>
+                    <td>{{ p.apr }}</td>
+                    <td>{{ p.may }}</td>
+                    <td>{{ p.jun }}</td>
+                    <td>{{ p.jul }}</td>
+                    <td>{{ p.aug }}</td>
+                    <td>{{ p.sep }}</td>
+                    <td>{{ p.oct }}</td>
+                    <td>{{ p.nov }}</td>
+                    <td>{{ p.dec }}</td>
 
 
-                           
 
-                            <td>
-                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
 
-                        </tr>
-               
-                    {% endfor %}
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
 
-                </tbody>
-            </table>
-      
-    </div>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
 </div>
+</div>
+       
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
