@@ -67,7 +67,7 @@
         margin-left: 0;
         border: none;
         border-radius: 5px;
-        margin-top: -10vh;
+        margin-top: 15%;
     }
 
     .custom:hover,
@@ -86,72 +86,50 @@
 
 
     .bck {
-    position: fixed;
-    bottom: 80vh; /* Adjust the bottom value as needed */
-    left: 0;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 1;
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.bck a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-
-.bck img {
-    width: 30px;
-    height: 30px;
-    transition: all 0.3s ease-in-out;
-}
-
-.bck::before {
-    content: "";
-    position: absolute;
-    top: -5px;
-    right: 0;
-    bottom: -5px;
-    left: 0;
-    border-radius: 20px;
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.bck:hover::before {
-    opacity: 1;
-}
-
-#add-btn-{{ category }} {
-    position: fixed;
-    top: 37.5vh; /* Adjust the top value as needed */
-    left: 1.7vh; /* Adjust the left value as needed */
-    z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
-    display: flex;
-    align-items: center;
-    background-color: #1c96c5;
-    color: whitesmoke;
-    border: none;
-    transition: all 0.5s ease;
-    text-align: center;
-    padding: 5px;
-    border-radius: 4px;
-}
-
-#add-btn-{{ category }}:hover {
-    background: #144472;
-}
-
-#add-btn-{{ category }} i {
-    margin-right: 5px;
-    margin-left: auto; /* Auto margin to push the icon to the right */
-}
-.table-responsive {
-    margin-top: -5vh; /* Adjust the margin-top value as needed to move the table upward */
-}
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        background-color: #your-color; 
+        border-radius: 10px;
+        padding: 10px;
+        z-index: 1;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+    }
+    
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    .bck:hover::before {
+        opacity: 1;
+    }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -168,26 +146,34 @@
             <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
         </a>
     </div>
-    <div class="row">
-        <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ALLOCATED BUDGET : 20,000 </h5>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-4 ml-auto text-right">
-              <label for="estimate_budget"> TOTAL AMOUNT :</label>
-              <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-            </div>
-          </div>
+   
+
+    <div class="bck">
+        <a href="{% url 'myppmp' %}">
+            <img src="{% static 'images/previous_189252.png' %}">
+        </a>
+    </div>
+
 
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none; top: 50%;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
         </div>
     </div>
 
+    
+    <div class="row">
+        <div class="text-left">
+            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
+        </div>
+        <div class="text-center">
+            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
+            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+        </div>
+    </div>
+    
 
 
     <div class="table-responsive">
