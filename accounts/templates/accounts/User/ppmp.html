@@ -130,6 +130,9 @@
     .bck:hover::before {
         opacity: 1;
     }
+    .table-responsive {
+    margin-top: -1vh; /* Adjust the margin-top value as needed to move the table upward */
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -167,12 +170,10 @@
     <div class="row">
         <div class="text-left">
             <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        </div>
-        <div class="text-center">
+        <div class="text-center" style="margin-top: -9vh;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
-    </div>
     
 
 
