@@ -49,11 +49,13 @@ def main(request):
     return render(request, 'accounts/User/main.html')
 
 
-
-
-
 def bac(request):
     return render(request, 'accounts/User/bac.html')
+
+
+def baclanding(request):
+    return render(request, 'accounts/User/baclanding.html')
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -498,21 +500,17 @@ def addItem(request):
         return redirect('ppmp')
     return render(request, 'accounts/User/ppmp.html')
 
+
 @regular_user_required
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
-
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
-        
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
-        
         price = request.POST.get(f'price')
 
         
-
-
         Item.objects.create(
             user=request.user,
             item=item_name,
@@ -527,13 +525,14 @@ def catalogue (request):
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+
+
 @regular_user_required
 def myppmp (request):
     items = CheckoutItems.objects.all()
-
     return render(request, 'accounts/User/myppmp.html', {'items': items})
+
 
 @regular_user_required
 def ppmp(request):
@@ -732,8 +731,6 @@ def bac_dashboard(request):
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
         
-    
-
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
     elif request.method == 'POST':
@@ -782,17 +779,11 @@ def update_item(request, id):
     if request.method == 'POST':
         CSV.objects.get(id=id)
         
-        
         item_name = request.POST.get(f'item_{id}')
-        
         item_brand = request.POST.get(f'item_brand_{id}')
-       
         unit = request.POST.get(f'unit_{id}')
-        
-        
         price = request.POST.get(f'price_{id}')
-        
-
+    
         CSV.objects.filter(id=id).update(
             Item_name=item_name,
             Item_Brand=item_brand,
@@ -1020,5 +1011,3 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
-
-
