@@ -13,7 +13,7 @@ from django.core.cache import cache
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required
+from .decorators import unauthenticated_user, authenticated_user, admin_required, regular_user_required, bac_required, cd_required, budget_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -50,11 +50,13 @@ def main(request):
     return render(request, 'accounts/User/main.html')
 
 
-
-
-
 def bac(request):
     return render(request, 'accounts/User/bac.html')
+
+
+def baclanding(request):
+    return render(request, 'accounts/User/baclanding.html')
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -213,7 +215,7 @@ def logout_user(request):
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
-
+@regular_user_required
 @authenticated_user
 def registration(request):
     return render(request, 'accounts/User/registration.html')
@@ -222,7 +224,7 @@ def registration(request):
 def regular_user_only_view(request):
     return render(request, 'accounts/User/request.html')
 
-
+@regular_user_required
 @authenticated_user
 def history(request):
     user = request.user
@@ -231,7 +233,7 @@ def history(request):
     
     return render(request, 'accounts/User/history.html', {'checkouts': checkouts})
 
-
+@regular_user_required
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.select_related('user').all()
@@ -273,12 +275,14 @@ def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 @authenticated_user
+@bac_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-
+@bac_required
 def bac_home(request):
+    
   
     checkouts = Pr_identifier.objects.select_related('user').all()
 
@@ -289,7 +293,7 @@ def bac_home(request):
     }
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
-
+@bac_required
 def preqform(request, pr_id):
  
     pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
@@ -300,12 +304,12 @@ def preqform(request, pr_id):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
 
-
+@bac_required
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
 
-
+@bac_required
 @authenticated_user
 def purchaseorder(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/purchaseorder.html')
@@ -342,47 +346,49 @@ def notif(request):
 @authenticated_user
 def abstract(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/abstract.html')
+@bac_required
 @authenticated_user
 def bac_prof(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html')
+@bac_required
 @authenticated_user
 def bac_profile(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_profile.html')
-
+@budget_required
 @authenticated_user
 def bo(request):
     return render(request, 'accounts/Admin/Budget_Officer/bo.html')
 
-
+@budget_required
 @authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
-
+@budget_required
 @authenticated_user
 def borequest(request):
     return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
 
-
+@budget_required
 @authenticated_user
 def bohistory(request):
     return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
 
-
+@cd_required
 @authenticated_user
 def cd(request):
     return render(request, 'accounts/Admin/Campus_Director/cd.html')
 
-
+@cd_required
 @authenticated_user
 def cdabout(request):
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
 
-
+@cd_required
 @authenticated_user
 def cdppmp(request):
     return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
 
-
+@cd_required
 @authenticated_user
 def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
@@ -393,23 +399,18 @@ def resolution(request):
     return render(request, 'accounts/Admin/Campus_Director/resolution.html')
 
 
-
-@authenticated_user
-def profile_html(request):
-    return render(request, 'profile.html')
-
-
+@admin_required
 @authenticated_user
 def admin_home(request):
     return render(request, 'accounts/Admin/System_Admin/admin_home.html')
 
 
-
+@admin_required
 @authenticated_user
 def adminabout(request):
     return render(request, 'accounts/Admin/System_Admin/adminabout.html')
 
-
+@admin_required
 @authenticated_user
 def user(request):
     users = User.objects.all()
@@ -501,20 +502,16 @@ def addItem(request):
     return render(request, 'accounts/User/ppmp.html')
 
 
+@regular_user_required
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
-
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
-        
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
-        
         price = request.POST.get(f'price')
 
         
-
-
         Item.objects.create(
             user=request.user,
             item=item_name,
@@ -529,15 +526,16 @@ def catalogue (request):
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-
     return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
 
+
+@regular_user_required
 def myppmp (request):
     items = CheckoutItems.objects.all()
-
     return render(request, 'accounts/User/myppmp.html', {'items': items})
 
 
+@regular_user_required
 def ppmp(request):
     
     if request.method == 'POST':
@@ -600,36 +598,38 @@ def ppmp(request):
 
 
 
+from django.core.files.base import ContentFile
+@regular_user_required
 def purchase(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES.get('file')
-
-        items = request.POST.get('item')
-        item_brands = request.POST.get('item_brand')
-        units = request.POST.get('unit')
-        prices = request.POST.get('unit_cost')
+        files = request.FILES.getlist('files[]')
+        items = request.POST.getlist('items[]')
+        item_brands = request.POST.getlist('item_brands[]')
+        units = request.POST.getlist('units[]')
+        prices = request.POST.getlist('prices[]')
         purpose = request.POST.get('purpose')
 
-
+        pr_id = generate_auto_pr_id()
         user = request.user
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=generate_auto_pr_id())
-        
+        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id)
 
-        metadata = FileMetadata.objects.create(filename=uploaded_file.name)
-
-       
-        PR.objects.create(
+        for i in range(len(items)):
+            uploaded_file = files[i]
+            metadata = FileMetadata.objects.create(filename=uploaded_file.name)
             
-            pr_identifier=pr_identifier,
-            metadata=metadata,
-            file=uploaded_file,
-            item=items,
-            item_brand_description=item_brands,
-            unit=units,
-            unit_cost=prices,
-            purpose=purpose
-        )
-       
+            # Save the file content to the FileField using save()
+            metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+
+            PR.objects.create(
+                metadata=metadata,
+                file=metadata.file,
+                pr_identifier=pr_identifier,
+                item=items[i],
+                item_brand_description=item_brands[i],
+                unit=units[i],
+                unit_cost=prices[i],
+                purpose=purpose
+            )
 
         return redirect('purchase')
     elif request.method == 'GET':
@@ -701,11 +701,30 @@ def add_new_item(request):
 
         new_item.save()
         return redirect('bac_dashboard')
+    
+def user_add_new_item(request):
+    if request.method == 'POST':
+        
+        new_item_name = request.POST.get('new_item_name')
+        new_item_brand = request.POST.get('new_item_brand')
+        new_item_unit = request.POST.get('new_item_unit')
+        new_item_price = request.POST.get('item_unit_price')
+        
+
+        new_item = Item(
+            item=new_item_name,
+            item_brand_description=new_item_brand,
+            unit=new_item_unit,
+            unit_cost=new_item_price,
+            
+        )
+
+        new_item.save()
+        return redirect('ppmp')
 
 
 
-
-
+@bac_required
 def bac_dashboard(request):
     if request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
@@ -713,8 +732,6 @@ def bac_dashboard(request):
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
         
-    
-
         return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
 
     elif request.method == 'POST':
@@ -763,17 +780,11 @@ def update_item(request, id):
     if request.method == 'POST':
         CSV.objects.get(id=id)
         
-        
         item_name = request.POST.get(f'item_{id}')
-        
         item_brand = request.POST.get(f'item_brand_{id}')
-       
         unit = request.POST.get(f'unit_{id}')
-        
-        
         price = request.POST.get(f'price_{id}')
-        
-
+    
         CSV.objects.filter(id=id).update(
             Item_name=item_name,
             Item_Brand=item_brand,
@@ -812,7 +823,7 @@ def delete_category(request, Category):
     items_to_delete.delete()
 
 
-
+@budget_required
 def bohome(request):
     checkouts = Checkout.objects.select_related('user').all()
   
@@ -877,7 +888,7 @@ def bo_approve(request, pr_id):
             jul=jul,
             aug=aug,
             sep=sep,
-            oct=oct,
+            oct=oct,   
             nov=nov,
             dec=dec,
             
@@ -895,13 +906,13 @@ def bo_approve(request, pr_id):
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
         context = {
-            'checkouts': checkouts,
+            'checkout': checkouts,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
      }
 
     return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
-
+@cd_required
 def cdpurchase(request):
     checkouts = Checkout.objects.select_related('user').all()
   
@@ -1001,17 +1012,3 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
-
-
-def request_view(request):
-    if request.method == 'POST':
-        form = PurchaseRequestForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Your additional logic here
-            return redirect('success_page')  # Redirect to a success page or another view
-    else:
-        form = PurchaseRequestForm()
-
-    context = {'form': form}
-    return render(request, 'history.html', context)
