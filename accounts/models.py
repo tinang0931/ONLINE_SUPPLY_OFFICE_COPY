@@ -142,6 +142,8 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    status = models.CharField(max_length=20, default="Pending")
+    comment = models.TextField(blank=True, null=True)
 
     def generate_pr_id(self):
         pr_id = str(uuid.uuid4().int)[:8]
@@ -172,9 +174,6 @@ class Checkout(models.Model):
     def __str__(self):
         return str(self.pr_id)
 
-    
-
-    
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
@@ -194,6 +193,7 @@ class CheckoutItems(models.Model):
     nov = models.IntegerField(default=0)
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+
 
 
    

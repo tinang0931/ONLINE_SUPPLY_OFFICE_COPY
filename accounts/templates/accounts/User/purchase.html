@@ -167,18 +167,7 @@ textarea.form-control {
           });
       });
 
-        $(document).ready(function () {
-          function calculateTotal() {
-            var totalAmount = 0;
-            $(".item_total_cost").each(function () {
-              var itemCost = parseFloat($(this).text());
-              totalAmount += itemCost;
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
 
-          calculateTotal();
-        });
       </script>
 
 <script>
@@ -223,7 +212,7 @@ textarea.form-control {
             </div>
             <div class="col-md-4">
               <div class="text-right" style="color:#FFFFFF">
-                <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                <span >Total Amount: ₱<span id="total_amount">0.00</span></span>
               </div>
             </div>
             <div class="col-md-4">
