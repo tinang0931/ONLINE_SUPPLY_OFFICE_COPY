@@ -67,7 +67,7 @@
         margin-left: 0;
         border: none;
         border-radius: 5px;
-        margin-top: 15%;
+        margin-top: -10vh;
     }
 
     .custom:hover,
@@ -87,9 +87,8 @@
 
     .bck {
     position: fixed;
-    bottom: 67vh; /* Adjust the bottom value as needed */
+    bottom: 80vh; /* Adjust the bottom value as needed */
     left: 0;
-    background-color: #your-color; 
     border-radius: 10px;
     padding: 10px;
     z-index: 1;
@@ -150,7 +149,9 @@
     margin-right: 5px;
     margin-left: auto; /* Auto margin to push the icon to the right */
 }
-
+.table-responsive {
+    margin-top: -5vh; /* Adjust the margin-top value as needed to move the table upward */
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -182,7 +183,7 @@
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none; top: 50%;">Catalogue </a>
             </button>
         </div>
     </div>
