@@ -66,14 +66,7 @@
               <td>{{ p.last_updated }}</td>
               
               <!-- Add a form for replying to comments -->
-              <td>
-                  <form method="post" action="{% url 'reply_view' %}">
-                      {% csrf_token %}
-                      <input type="hidden" name="parent_comment_id" value="{{ p.bo_comment.id }}">
-                      <textarea name="reply_text" placeholder="Reply to comment"></textarea>
-                      <button type="submit">Reply</button>
-                  </form>
-              </td>
+              
           </tr>
       {% endfor %}
       

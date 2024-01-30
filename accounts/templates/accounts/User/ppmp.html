@@ -156,13 +156,54 @@
 
     <div class="row">
         <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
-        </div>
-    
-        <div class="col-md-1 ml-auto text-left">
-            <h5 style="font-size: 18px;"> TOTAL : 100,000 </h5>
+            <select id="selectYear">
+                <option value="select year">Select Year</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2024">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2032</option>
+                <!-- Add more years as needed -->
+            </select>
         </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function (e) {
+                e.stopPropagation(); 
+                var selectedYear = $(this).text();
+                $('.btn#yearDropdown').text(selectedYear);
+            });
+        });
+
+        document.getElementById('yearDropdown').addEventListener('click', function() {
+            this.style.backgroundColor = '#144472';
+        });
+    </script>
+
+
+    <div class="row">
+        <div class="col-md-4 ml-auto text-right">
+            <h5> TOTAL ALLOCATED BUDGET : 1,000 </h5>
+        </div>
+
+        
+    
+        <div class="row">
+            <div class="col-md-4 ml-auto text-right">
+              <label for="estimate_budget"> TOTAL AMOUNT :</label>
+              <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+            </div>
+          </div>
+         
+
 
     <div class="row">
         <div class="col-md-1 mb-0">
@@ -350,6 +391,7 @@
     </div>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
@@ -444,8 +486,51 @@
         });
     });
 
+    function updateTotalForAllItems() {
+        var totalValue = 0;
+    
+        // Iterate over each item row
+        $('tr.item-row').each(function() {
+            var row = $(this);
+            var unitPrice = parseFloat(row.find('[name="price"]').val());
+            var rowTotalValue = 0;
+    
+            // Iterate over months in the current row
+            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
+                var monthValue = parseFloat($(this).val()) || 0;
+                rowTotalValue += monthValue;
+            });
+    
+            var rowTotal = rowTotalValue * unitPrice;
+            totalValue += rowTotal;
+        });
+    
+        // Update the estimate_budget input field
+        $('#estimate_budget').val(totalValue.toFixed(2));
+    
+        // Check if the total exceeds the maximum budget
+        var maxBudget = 1000; // Maximum budget value
+        if (totalValue > maxBudget) {
+            $('.row .col-md-4.ml-auto.text-right h5').css('color', 'red').text('TOTAL ESTIMATED BUDGET is 1000: ' + totalValue.toFixed(2) + ' (Out of Budget)');
+        } else {
+            $('.row .col-md-4.ml-auto.text-right h5').css('color', '').text('TOTAL ESTIMATED BUDGET is 1000: ' + totalValue.toFixed(2));
+        }
+    }
+    
+    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+    
+    $('[name="price"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+    
+    // Initial calculation when the page loads
+    updateTotalForAllItems();
+
 
 </script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
