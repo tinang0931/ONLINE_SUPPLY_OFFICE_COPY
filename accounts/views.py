@@ -778,6 +778,11 @@ def delete(request, id):
     item.delete()
     return redirect('ppmp')
 
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('purchase')
+
 
 def update_item(request, id):
     if request.method == 'POST':
@@ -1010,6 +1015,7 @@ def preqform_cd(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+
 
 @authenticated_user              
 def delete_item(request, id):

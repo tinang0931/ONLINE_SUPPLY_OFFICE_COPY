@@ -149,7 +149,7 @@
                 </a>
             </td>
 
-            {% for pr in checkout.pr_set.all %}
+            {% comment %} {% for pr in checkout.pr_set.all %} {% endcomment %}
             <td>{{ pr.purpose }}</td>
             {% endfor %}
 
@@ -157,7 +157,7 @@
               {{ checkout.status_update_date|default:"Pending" }}
             </td>
         </tr>
-      {% endfor %}
+      {% comment %} {% endfor %} {% endcomment %}
 
       {% if checkouts|length == 0 %}
       <tr>

@@ -1,0 +1,82 @@
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
+
+
+{% load static %}
+
+{% block cdpurchase %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+    @media (min-width: 800px) {
+        #sidebar-wrapper {
+          margin-left: 0;
+        }
+      
+      
+        #page-content-wrapper {
+          min-width: 0;
+          width: 100%;
+        }
+      }
+    
+      body{
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        background:
+            linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
+            background-size: cover;
+            background-attachment: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+      }
+            
+      
+    .main{
+        flex-shrink: 0; 
+        width: 100%;
+        height: 100%;
+    }
+        .bg-light {
+            --bs-bg-opacity: 1;
+            background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%) !important;
+        }   
+    
+    
+        .p1 {
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 25px;
+            text-align: center;
+        }
+      
+      
+        .head {
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+            margin-left: 0%;
+            font-size: 48px;
+        } 
+      
+      
+        .ctu_logo {
+            position: absolute;
+            left: 26px; 
+            top: 13px; 
+            width: 80px;
+            height: 77px;
+            margin: 0 3px;
+        }
+      
+    
+</style>
+
+{% endblock %}

@@ -214,7 +214,7 @@
         }
 
         .input-box input {
-            width: 150%;
+            width: 100%;
             height: 40px;
             padding: 10px;
             box-sizing: border-box;
@@ -234,7 +234,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 39px;
-            margin-left: -80px;
+            margin-left: -750px;
         }
 
         .send-icon i {
@@ -366,8 +366,16 @@
         text-align: left;
     }
 
-    
+    @media (max-width: 768px) {
+        /* Your responsive styles for smaller screens */
+    }
 
+    .footer-image {
+        display: block;
+        margin: auto;
+        width: 115%; /* Set the width you desire */
+    }
+    
 </style>
 
        
@@ -459,13 +467,14 @@
                     </tbody>
                 </table>
             </div>
-        </div>          
+        </div>    
+        <div class="page-break"></div>      
         <div class="content-below-table">
             <div class="total-budget-container">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
                 <span id="totalBudget" class="total-budget-value">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
                     <br>
                     <br>
                     <br>
@@ -479,50 +488,50 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved:</strong>
                     </div>          
-            </div>
-            <br>
-            <br>
-            <br>
-            <div>
-                <strong>&nbsp;&nbsp;&nbsp;&nbsp;<u>GLICERIO A. BAGUIA</u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 </div>
+             <br>
+         <br>
+    <br>
+<div>
+                <strong><u>GLICERIO A. BAGUIA</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp; <u> MARY ANN P. GONZAGA. C.P.A. </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <strong> <u> JEAN F. PUERTO, Dev.Ed.D.,Ph.D. </u> </strong>
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-            </div>
-            <div>
+                <span id="totalBudget"> </span>
+    </div>
+<div>
                 <strong>End-User  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Accountant 1  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-            </div>
+                <span id="totalBudget"> </span>
+                </div>
             <br>
-            <br>
-            <br>
-            <div>
-                <div style="text-align: left;">
+         <br>
+     <br>
+<div>
+<div style="text-align: left;">
                     <strong>&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
                     <br>
                     <br>
                     <br>
-                </div>                
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-            </div>
-        </div>
-        <br>
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                    </form> <!-- Close the form tag here -->
-                    <div class="page-break">  
-                    <footer class="footer">
-                        <div class="icons-container">
-                            <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
-                               </a>
-                               <a href="#" title="Select" class="icon-link">
-                                <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
-                               </a>
-                               <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                                   <option value="a4">A4</option>
-                                   <option value="legal">Legal</option>
+            </div>                
+                <span id="totalBudget"> </span>
+         </div>
+    </div>
+<br>
+    <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
+    </form> 
+    <div class="page-break">  
+    <footer class="footer">
+    <div class="icons-container">
+    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+         <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
+     </a>
+     <a href="#" title="Select" class="icon-link">
+        <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
+    </a>
+    <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+            <option value="a4">A4</option>
+                    <option value="legal">Legal</option>
 
                             {% comment %} <form id='form_status' method="post" action="{% url 'approve_checkout' %}"> {% endcomment %}
 
@@ -548,10 +557,13 @@
                             </form>
                         </div>
                     </footer>
+
+                    <div class="html2pdf__page-break"></div>
+
                 <script>
                         function setAction(action) {
                             document.getElementById('action').value = action;
-                            document.forms[0].submit();  // Assuming the form is the first form on the page
+                            document.forms[0].submit();  
                         }
  </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
@@ -566,7 +578,7 @@
         const elementsWithPageBreak = body.querySelectorAll('.page-break');
 
         elementsWithPageBreak.forEach((element) => {
-            element.style.pageBreakBefore = 'always';
+            element.style.pageBreakBefore = 'always'
         });
         const footer = document.querySelector('.footer');
         footer.style.display = 'none';
@@ -576,12 +588,10 @@
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-        };
+            pagebreak: { mode: 'css', avoid: '.page-break' } 
 
         html2pdf(body, options);
 
-        // Reset page breaks after generating PDF
         elementsWithPageBreak.forEach((element) => {
             element.style.pageBreakBefore = 'auto';
         });
@@ -590,23 +600,23 @@
   pagebreak: { mode: 'avoid-all', before: '#page2el' }
 });
 
-// Enable all 'modes', with no explicit elements.
 html2pdf().set({
   pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
 });
 
-// No modes, only explicit elements.
 html2pdf().set({
   pagebreak: { before: '.beforeClass', after: ['#after1', '#after2'], avoid: 'img' }
 });
 
 </script>
 <script>
+
     function toggleSelect() {           
         var selectElement = document.getElementById("paperSize");
         selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
     }
 </script>
+
                     </div>
                 </div>
             </div>
@@ -615,4 +625,6 @@ html2pdf().set({
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 {% endblock %}
+
+
 

@@ -47,6 +47,7 @@
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
+
                 <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'cdpurchase'%}">
                   <i class="bi bi-bag-check"></i> <span id="requests" class="hidden-name">Purchase Request</span>
                 </a>
@@ -225,7 +226,7 @@
             sidebar.classList.remove('show-names');
           }
         </script>
-        
+
         {% block cdabout %}
         {% endblock %}
 
