@@ -18,27 +18,37 @@
     tr:hover .item-actions {
         display: flex;
     }
+    .custom-dropdown .btn,
+.custom-dropdown .btn:active,
+.custom-dropdown .btn:focus {
+    position: fixed;
+    top: 25.8vh; /* Adjust the top value as needed */
+    right: 3vh; /* Adjust the right value as needed */
+    z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
+    background-color: #1c96c5;
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    text-align: left;
+    padding: 5px 10px;
+}
 
-    .custom-dropdown .btn {
-        position: fixed;
-        top: 26vh; /* Adjust the top value as needed */
-        right: 3vh; /* Adjust the right value as needed */
-        z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
-        background-color: #1c96c5;
-        color: whitesmoke;
-        border: none;
-        transition: all 0.5s ease;
-        text-align: left;
-        padding: 5px 10px;
-    }
+.dropdown-menu .dropdown-item:hover {
+    background-color: #1c96c5;
+    color: whitesmoke;
+}
+
+.custom-dropdown .btn:hover {
+    background: #1c96c5;
+}
+
     .dropdown-menu .dropdown-item:hover {
-        background-color: #f08f12; /* Set the desired background color for hover */
+        background-color: #1c96c5; /* Set the desired background color for hover */
         color: whitesmoke; /* Set the desired text color for hover */
     }
 .custom-dropdown .btn:hover {
-    background: #033768;
-}
-
+    background: #1c96c5;
+} 
 .ppmp button {
     background-color: #1c96c5;
     color: white;
@@ -49,9 +59,13 @@
 }
 
 .ppmp button:hover {
-    background-color: #144472;
+    background-color: #1c96c5;
     color: #fff;
 }
+.pr {
+    margin-left: 20px !important; /* Adjust the value as needed */
+}
+
 body{
     overflow:hidden;
   }
@@ -75,7 +89,7 @@ body{
         <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
         <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                    aria-haspopup="true" aria-expanded="false" style="margin-top: -10px; background-color: #1c96c5;">
                 Select Year
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
@@ -92,7 +106,7 @@ body{
             
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -107,19 +121,16 @@ body{
             this.style.backgroundColor = '#144472';
         });
     </script>
-    
-    
+
+   
 
     <div class="row">
-
         <div class="col-md-1 mb-0">
-            <div class="dropdown">
-                <span class="dots" style="color: #1c96c5; cursor: pointer;" onclick="toggleText()">&#8226;&#8226;&#8226;</span>
-                <div id="textContainer" style="display: none; width: 98px; text-align: center; background-color: #f08f12; border-radius: 4px;">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
-                </div>
+            <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
             </div>
-        </div>
+        </div>        
+        
         
         <script>
             function toggleText() {
@@ -161,40 +172,40 @@ body{
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in items %}
+                    {% for p in approved_items %}
 
                   
                         <tr class="item-row" id="{{ p.id }}">
 
-                            <td>
-                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
-                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
-                                    style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>{{ p.estimate_budget }}</td>
-                            <td>{{ p.jan }}</td>
-                            <td>{{ p.feb }}</td>
-                            <td>{{ p.mar }}</td>
-                            <td>{{ p.apr }}</td>
-                            <td>{{ p.may }}</td>
-                            <td>{{ p.jun }}</td>
-                            <td>{{ p.jul }}</td>
-                            <td>{{ p.aug }}</td>
-                            <td>{{ p.sep }}</td>
-                            <td>{{ p.oct }}</td>
-                            <td>{{ p.nov }}</td>
-                            <td>{{ p.dec }}</td>
+                    <td>
+                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                            class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>{{ p.estimate_budget }}</td>
+                    <td>{{ p.jan }}</td>
+                    <td>{{ p.feb }}</td>
+                    <td>{{ p.mar }}</td>
+                    <td>{{ p.apr }}</td>
+                    <td>{{ p.may }}</td>
+                    <td>{{ p.jun }}</td>
+                    <td>{{ p.jul }}</td>
+                    <td>{{ p.aug }}</td>
+                    <td>{{ p.sep }}</td>
+                    <td>{{ p.oct }}</td>
+                    <td>{{ p.nov }}</td>
+                    <td>{{ p.dec }}</td>
 
                             <td>
                                 <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
@@ -204,11 +215,23 @@ body{
                         </tr>
                     {% endfor %}
 
-                </tbody>
-            </table>
-      
-    </div>
+
+
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
 </div>
+</div>
+       
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

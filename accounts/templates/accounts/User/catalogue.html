@@ -121,43 +121,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tbody>
-                    {% for category, items in grouped_data.items %}
-                    <tr class="category-row">
-                        <th colspan="20">{{ category }}</th>
-                    </tr>
 
-                    {% for p in items %}
-
-                    <form action="{% url 'catalogue' %}" method="post">
-                        {% csrf_token %}
-                        <tr class="item-row" id="{{ p.id }}">
-                            <td>{{ p.Item_name }}
-                                <input type="hidden" name="item" value="{{ p.Item_name }}">
-                            </td>
-                            <td>{{ p.Item_Brand }}
-                                <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
-                            </td>
-                            <td>{{ p.Unit }}
-                                <input type="hidden" name="unit" value="{{ p.Unit }}">
-                            </td>
-                            
-                            <td>{{ p.Price }}
-                                <input type="hidden" name="price" value="{{ p.Price }}">
-                            </td>
-                            <td>
-                                {% if item_submitted %}
-                            {% else %}
-                            <button type="submit"> ➕
-                            </button>
-                            {% endif %}
-                            </td>
-
+                    
+                        {% for category, items in grouped_data.items %}
+                        <tr class="category-row">
+                            <th colspan="20">{{ category }}</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                    {%endfor%}
-                </tbody>
+                    
+                        {% for p in items %}
+                    
+                        <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
+                            {% csrf_token %}
+                            <tr class="item-row" id="{{ p.id }}">
+                                <td>{{ p.Item_name }}
+                                    <input type="hidden" name="item" value="{{ p.Item_name }}">
+                                </td>
+                                <td>{{ p.Item_Brand }}
+                                    <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
+                                </td>
+                                <td>{{ p.Unit }}
+                                    <input type="hidden" name="unit" value="{{ p.Unit }}">
+                                </td>
+                    
+                                <td>{{ p.Price }}
+                                    <input type="hidden" name="price" value="{{ p.Price }}">
+                                </td>
+                                <td>
+                                    {% if item_submitted %}
+                                    {% else %}
+                                    <button type="submit" onclick="hideRow('{{ p.id }}')"> ➕ </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
             </table>
 
 
@@ -261,7 +260,6 @@ button:hover::before {
                 table.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    </script>
 
     <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
         aria-hidden="true">
