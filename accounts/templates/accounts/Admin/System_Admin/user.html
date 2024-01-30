@@ -6,376 +6,550 @@
 {% block user %}
 
 
+<style>
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
 
+    .modal-content {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%; /* Adjust the width as needed */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #333; /* Dark gray color for close icon */
+    }
+
+    .user-details {
+        margin-bottom: 20px;
+    }
+    .input {
+        padding:none;
+    }
+
+    .input-box {
+        margin-bottom: 5px;
+    }
+
+    .input-box  {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ddd; 
+        border-radius: 4px;
+        background-color: #f9f9f9; /* Light gray background */
+        color: #333; /* Dark gray text color */
+    }
+
+    .register-details {
+        display: fixed;
+        flex-direction: row; /* Align checkboxes horizontally */
+        justify-content: space-between; /* Adjust as needed */
+        align-items: center; /* Center checkboxes vertically */
+        margin-bottom: 15px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        margin-right: 15px; /* Add margin between checkboxes */
+    }
+
+    .checkbox-box {
+        margin-left: 5px;
+        color: #007bff; /* Blue color for checkbox label */
+    }
+
+    .modal-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 15px;
+    }
+
+    /* Style for the submit button */
+    .btn-primary {
+        background-color: #28a745; /* Green background */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+
+    
+    
+</style>
 <div class="container-fluid" style="height: 68vh;">
     <div class="container">
-        <i class="fas fa-user-friends two-user-icon"></i>
+        <i class="fas fa-user-friends two-user-icon"></i> 
         <h1 class="user">USERS</h1>
     </div>
     <div class="search">
-        <input class="form-control mb-3" type="text" placeholder="Search..." id="search_bar_request"
-            oninput="filterTable()">
+        <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 85%; color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
     </div>
-
-    <button class="adduser" onclick="openModal()">+Add User</button>
-
-    <div class="usertable table-responsive">
-
-        <table id="myTable" class="usertable">
-            <thead>
-
-                <tr>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">CTU ID</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">FIRST NAME</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">LAST NAME</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">EMAIL</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 1</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 2</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">ROLE</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">ACTION</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
+    
+    <button class="adduser" onclick="openModal()" style="background-color: #28a745; color: white; font-size: 16px; margin-left: 2px;">
+        <span class="bi bi-person-plus"></span> Add User
+      </button>
+      
 
 
-                {% for user in users %}
-                <tr id="{{ user.id }}" class="user-row">
-                    <td>
-                        <span class="editable" data-field="username">{{ user.username }}</span>
-                        <input type="text" id="username_{{ user.id }}" oninput="change_val('username_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="first_name">{{ user.first_name }}</span>
-                        <input type="text" id="first_name_{{ user.id }}"
-                            oninput="change_val('first_name_{{ user.id }}')" class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="last_name">{{ user.last_name }}</span>
-                        <input type="text" id="last_name_{{ user.id }}" oninput="change_val('last_name_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="email">{{ user.email }}</span>
-                        <input type="text" id="email_{{ user.id }}" oninput="change_val('email_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="contact1">{{ user.contact1 }}</span>
-                        <input type="text" id="contact1_{{ user.id }}" oninput="change_val('contact1_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="contact2">{{ user.contact2 }}</span>
-                        <input type="text" id="contact2_{{ user.id }}" oninput="change_val('contact2_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="user_type">{{ user.user_type }}</span>
-                        <input type="text" id="user_type_{{ user.id }}" oninput="change_val('user_type_{{ user.id }}')"
-                            class="edit-input" style="display: none;">
-                    </td>
-                    <script>
+                <div class="usertable table-responsive">
+                    
+                    <table id="myTable" class="usertable">
+                        <thead>
 
-                        function change_val(id) {
-                            input = document.getElementById(id);
-                            form_input = document.getElementById('form_' + id);
-                            form_input.value = input.value;
-                        }
-                    </script>
+                            <tr>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CTU ID</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">FIRST NAME</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">LAST NAME</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">EMAIL</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 1</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. 2</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">ROLE</th>
+                                <th class="text-center text-nowrap" style="min-width: 13rem;">ACTION</th>
+                            </tr>
 
-                    <td>
-                        <div style="display: flex; justify-content: center; gap: 20px;">
-                            <button class="edit-icon" style="text-align: center;" onclick="editUser('{{ user.id }}')">
-                                <i class="fas fa-edit text-primary"></i>
-                            </button>
-                            <form action="{% url 'update_user' user.username %}" method="post">
+                        </thead>
 
-                                {% csrf_token %}
-                                <input id="form_username_{{ user.id }}" type="hidden" name="username_{{ user.id }}"
-                                    value="{{ user.username }}">
-                                <input id="form_first_name_{{ user.id }}" type="hidden" name="first_name_{{ user.id }}"
-                                    value="{{ user.first_name }}">
-                                <input id="form_last_name_{{ user.id }}" type="hidden" name="last_name_{{ user.id }}"
-                                    value="{{ user.last_name }}">
-                                <input id="form_email_{{ user.id }}" type="number" style="display: none;"
-                                    name="email_{{ user.id }}" value="{{ user.email }}">
-                                <input id="form_contact1_{{ user.id }}" type="number" style="display: none;"
-                                    name="contact1_{{ user.id }}" value="{{ user.contact1 }}">
-                                <input id="form_contact2_{{ user.id }}" type="number" style="display: none;"
-                                    name="contact2_{{ user.id }}" value="{{ user.contact2 }}">
-                                <input id="form_user_type_{{ user.id }}" type="number" style="display: none;"
-                                    name="user_type_{{ user.id }}" value="{{ user.user_type }}">
+                        <tbody>
 
-                                <button class="save-icon" style="text-align: center; display: none;"
-                                    onclick="saveUser('{{ user.id }}')">
-                                    <i class="fas fa-save text-success"></i>
-                                </button>
-                                <button class="cancel-icon" style="text-align: center; display: none;"
-                                    onclick="cancelEdit('{{ user.id }}')">
-                                    <i class="fas fa-times text-danger"></i>
-                                </button>
-
-                            </form>
                             
+                            {% for user in users %}
+                            <tr id="user_row_{{ user.id }}" class="user-row">
+                                <td>
+                                    <span class="editable" data-field="username">{{ user.username }}</span>
+                                    <input id="username{{ user.id }}" type="text" value="{{ user.username }}" oninput="change_val('username{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="first_name">{{ user.first_name }}</span>
+                                    <input id="first_name{{ user.id }}" type="text" value="{{ user.first_name }}" oninput="change_val('first_name{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="last_name">{{ user.last_name }}</span>
+                                    <input id="last_name{{ user.id }}" type="text" value="{{ user.last_name }}" oninput="change_val('last_name{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="email">{{ user.email }}</span>
+                                    <input id="email{{ user.id }}" type="text" value="{{ user.email }}" oninput="change_val('email{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="contact1">{{ user.contact1 }}</span>
+                                    <input id="contact1{{ user.id }}" type="text" value="{{ user.contact1 }}" oninput="change_val('contact1{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="contact2">{{ user.contact2 }}</span>
+                                    <input id="contact2{{ user.id }}" type="text" value="{{ user.contact2 }}" oninput="change_val('contact2{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+                                <td>
+                                    <span class="editable" data-field="user_type">{{ user.user_type }}</span>
+                                    <input id="user_type{{ user.id }}" type="text" value="{{ user.user_type }}" oninput="change_val('user_type{{ user.id }}')" class="edit-input" style="display: none">
+                                </td>
+
+                                <td>
+                                    <div style="display: flex; justify-content: center; gap: 20px;">
+
+                                        <a href="" class="edit-icon" style="text-align: center;" onclick="editUser('{{ user.id }}')">
+                                            <i class="fas fa-edit text-primary"></i>
+                                        </a>
+
+                                        <form method="post" id="userForm_{{ user.id }}">
+                                                        {% csrf_token %}
+                                                        <input id="form_username_{{ user.id }}" type="hidden" name="username_{{ user.id }}" value="{{ user.username }}"> 
+                                                        <input  id="form_first_name_{{ user.id }}" type="hidden" name="first_name_{{ user.id }}" value="{{ user.first_name }}">
+                                                        <input id="form_last_name_{{ user.id }}" type="hidden" name="last_name_{{ user.id }}" value="{{ user.last_name }}">
+                                                        <input id="form_email_{{ user.id }}" type="hidden" name="email_{{ user.id }}" value="{{ user.email }}">
+                                                        <input id="form_contact1_{{ user.id }}" type="hidden" name="contact1_{{ user.id }}" value="{{ user.contact1 }}">
+                                                        <input id="form_contact2_{{ user.id }}" type="hidden" name="contact2_{{ user.id }}" value="{{ user.contact2 }}">
+                                                        <input id="form_user_type_{{ user.id }}" type="hidden" name="user_type_{{ user.id }}" value="{{ user.user_type }}">
+                                                        
+                                                        <button type="submit" class="save-icon" style="display: none;"><i class="fas fa-check text-success"></i></button>
+                                                        <button type="button" class="cancel-icon" style="display: none;"><i class="fas fa-times text-danger" onclick="cancelEdit('{{ user.id }}')"></i></button>
+                                                        
+                                         </form>
+
+                                         
+
+                                        
+               
+                                        
+                                               
+                                        {% if user.username %}
+
+                                        <a href="{% url 'delete_user' user.username %}" style="text-align: center;">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                        </a>
+                                        {% endif %}
+                                       
+                                    </div>
+                                </td>
+                                
+                                
+
+                            </tr>
+
+                            
+                            {% endfor %}
+
+                        </tbody>
+
+                        
+                    </table>
+                </div>
+
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                      <span class="close" onclick="closeModal()">&times;</span>
+
+                        <h5 class="modal-title" >Add User</h5>
+
+                        <form action="{% url 'register_user' %}" method="post">
+                            {% csrf_token %}
+                        
+                                    <div class="user-details">
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="number" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
+                                        </div>
+                                        <script>
+                                            function maxLengthCheck(object, maxLength) {
+                                                if (object.value.length > maxLength)
+                                                object.value = object.value.slice(0, maxLength);
+                                                }
+                                            </script>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="email" name="email" placeholder="Email:" required>
+                                        </div>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="text" name="fname" placeholder="First Name:" required>
+                                        </div>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="text" name="lname" placeholder="Last Name:" required>
+                                        </div>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="number" name="contact1" placeholder="Contact No. 1:" required oninput="maxLengthCheck(this, 12)">
+                                        </div>
+                                        <script>
+                                            function maxLengthCheck(object, maxLength) {
+                                                if (object.value.length > maxLength)
+                                                object.value = object.value.slice(0, maxLength);
+                                                }
+                                            </script>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="number" name="contact2" placeholder="Contact 2:" required oninput="maxLengthCheck(this, 12)">
+                                        </div>
+                                        <script>
+                                            function maxLengthCheck(object, maxLength) {
+                                                if (object.value.length > maxLength)
+                                                object.value = object.value.slice(0, maxLength);
+                                                }
+                                            </script>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="password" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                                        </div>
+                                        <script>
+                                            function maxLengthCheck(object, maxLength) {
+                                                if (object.value.length > maxLength)
+                                                object.value = object.value.slice(0, maxLength);
+                                                }
+                                            </script>
+                        
+                                        <div class="input-box">
+                                            <span class="details"></span>
+                                            <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+                                        </div>
+                                        <script>
+                                            function maxLengthCheck(object, maxLength) {
+                                                if (object.value.length > maxLength)
+                                                object.value = object.value.slice(0, maxLength);
+                                                }
+                                            </script>
+                        
+                                            <div class="register-details">
+                                    <span class="details">Type of user</span>
+                                
+                                    <div class="input-box">
+                                
+                                        <label class="checkbox-label" for="bacCheckbox">
+                                            <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
+                                            <div class="checkbox-box">Admin</div>
+                                        </label>
+                                
+                                        <label class="checkbox-label" for="bacCheckbox">
+                                            <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
+                                            <div class="checkbox-box">BAC Secretariat</div>
+                                        </label>
+                                
+                                        <label class="checkbox-label" for="regularCheckbox">
+                                            <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
+                                            <div class="checkbox-box">Campus Director</div>
+                                        </label>
+                                
+                                        <label class="checkbox-label" for="regularCheckbox">
+                                            <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
+                                            <div class="checkbox-box">Budget Officer</div>
+                                        </label>
+                                
+                                        <label class="checkbox-label" for="regularCheckbox">
+                                            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+                                            <div class="checkbox-box">Regular User</div>
+                                        </label>
+
+                                
                         </div>
-
-                        {% if user.username %}
-
-                        <a href="{% url 'delete_user' user.username %}" style="text-align: center;">
-                            <i class="fas fa-trash-alt text-danger"></i>
-                        </a>
-                        {% endif %}
-
-                    </td>
-
-
-
-                </tr>
-
-
-                {% endfor %}
-
-            </tbody>
-
-
-        </table>
-    </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-
-            <h5 class="modal-title">Add User</h5>
-
-            <form action="{% url 'register_user' %}" method="post">
-                {% csrf_token %}
-
-                <div class="user-details">
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="username" placeholder="CTU ID:" required
-                            oninput="maxLengthCheck(this, 11)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="email" name="email" placeholder="Email:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="fname" placeholder="First Name:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="lname" placeholder="Last Name:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="contact1" placeholder="Contact No. 1:" required
-                            oninput="maxLengthCheck(this, 12)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="contact2" placeholder="Contact 2:" required
-                            oninput="maxLengthCheck(this, 12)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass1" placeholder="Password:" required
-                            oninput="maxLengthCheck(this, 15)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass2" placeholder="Confirm Password:" required
-                            oninput="maxLengthCheck(this, 15)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="register-details">
-                        <span class="details">Type of user</span>
-
-                        <div class="input-box">
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
-                                <div class="checkbox-box">Admin</div>
-                            </label>
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
-                                <div class="checkbox-box">BAC Secretariat</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
-                                <div class="checkbox-box">Campus Director</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
-                                <div class="checkbox-box">Budget Officer</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
-                                <div class="checkbox-box">Regular User</div>
-                            </label>
-
-
-                        </div>
-
-
-
+                    
+            
+            
                         <div class="modal-footer ">
-                            <button type="submit" value="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" value ="submit" class="btn btn-primary" >Register</button>
 
-            </form>
+                    </form>  
+  
 
-
-
-
-
-        </div>
+    
 
 
-        <script>
+</div>
 
 
-            function filterTable() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("search_bar_request");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable"); // Replace 'your_table_id' with the actual ID of your table
-                tr = table.getElementsByTagName("tr");
+<script>
+     function change_val(id) {
+    input = document.getElementById(id);
+    form_input = document.getElementById('form_' + id);
+    form_input.value = input.value;
+  }
 
-                for (i = 0; i < tr.length; i++) {
-                    tdCTU = tr[i].getElementsByTagName("td")[0]; // CTU ID column
-                    tdFirstName = tr[i].getElementsByTagName("td")[1]; // First name column
-                    tdLastName = tr[i].getElementsByTagName("td")[2]; // Last name column
+  function editUser(userId) {
+    var editIcon = document.querySelector('.edit-icon[data-user-id="' + userId + '"]');
+    var saveButton = document.querySelector('.save-icon[data-user-id="' + userId + '"]');
+    var cancelButton = document.querySelector('.cancel-icon[data-user-id="' + userId + '"]');
+    var editInputs = document.querySelectorAll('.edit-input[data-user-id="' + userId + '"]');
+    var editableSpans = document.querySelectorAll('.editable[data-user-id="' + userId + '"]');
 
-                    if (tdCTU || tdFirstName || tdLastName) {
-                        txtValueCTU = tdCTU.textContent || tdCTU.innerText;
-                        txtValueFirstName = tdFirstName.textContent || tdFirstName.innerText;
-                        txtValueLastName = tdLastName.textContent || tdLastName.innerText;
+    editIcon.style.display = 'none';
+    saveButton.style.display = 'inline-block';
+    cancelButton.style.display = 'inline-block';
 
-                        if (
-                            txtValueCTU.toUpperCase().indexOf(filter) > -1 ||
-                            txtValueFirstName.toUpperCase().indexOf(filter) > -1 ||
-                            txtValueLastName.toUpperCase().indexOf(filter) > -1
-                        ) {
-                            tr[i].style.display = ""; // Show the row if a match is found in any of the columns
-                        } else {
-                            tr[i].style.display = "none"; // Hide the row if no match is found
-                        }
-                    }
+    editInputs.forEach(function(input) {
+        input.style.display = 'block';
+    });
+
+    editableSpans.forEach(function(span) {
+        span.style.display = 'none';
+    });
+
+    cancelButton.addEventListener('click', function() {
+        editIcon.style.display = 'inline-block';
+        saveButton.style.display = 'none';
+        cancelButton.style.display = 'none';
+
+        editInputs.forEach(function(input) {
+            input.style.display = 'none';
+        });
+
+        editableSpans.forEach(function(span) {
+            span.style.display = 'inline-block';
+        });
+    });
+
+    saveButton.addEventListener('click', function() {
+        var form = document.getElementById('userForm_' + userId);
+        form.submit();
+    });
+}
+
+
+
+
+</script>
+
+<script>
+    // Get the modal element
+    const modal = document.getElementById('myModal');
+  
+    // Function to open the modal
+    function openModal() {
+      modal.style.display = 'block';
+    }
+  
+    // Function to close the modal
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+  
+    // Close the modal if the user clicks outside the modal content
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+
+
+
+<!-- 
+<script>
+
+    var editButtons = document.querySelectorAll('.edit-icon');
+    editButtons.forEach(function(editIcon) {
+        editIcon.addEventListener('click', function(event) {
+            var currentRow = event.currentTarget.closest('.user-row');
+            editUser(currentRow);
+        });
+    });
+
+
+    function editUser(userId) {
+        var row = document.getElementById(userId);
+
+        var editIcon = row.querySelector('.edit-icon');
+        var saveButton = row.querySelector('.save-icon');
+        var cancelButton = row.querySelector('.cancel-icon');
+        var editInputs = row.querySelectorAll('.edit-input');
+        var editableSpans = row.querySelectorAll('.editable');
+
+        editIcon.style.display = 'none';
+        saveButton.style.display = 'inline-block'; 
+        cancelButton.style.display = 'inline-block'; 
+
+  
+        editInputs.forEach(function(input) {
+            input.style.display = 'block'; 
+        });
+
+        editableSpans.forEach(function(span) {
+            span.style.display = 'none';  
+        });
+
+        
+        cancelButton.addEventListener('click', function() {
+           
+            editIcon.style.display = 'inline-block'; 
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+
+            editInputs.forEach(function(input) {
+                input.style.display = 'none';
+            });
+            editableSpans.forEach(function(span) {
+                span.style.display = 'inline-block';  
+            });
+        });
+
+        
+        saveButton.addEventListener('click', function() {
+            var formData = new FormData();
+            var csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            editInputs.forEach(function(input) {
+                formData.append(input.name, input.value);
+            });
+
+            fetch('/update_user/{{ user.id }}/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
                 }
-            }
+            })
+            .then(data => {
+                if (data.success) {
+                    
+                    editableSpans.forEach(function(span, index) {
+                        span.textContent = editInputs[index].value;
+                        span.style.display = 'inline-block';
+                        editInputs[index].style.display = 'none';
+                    });
 
-            function editUser(userId) {
-                var row = document.getElementById(userId);
-
-                var editIcon = row.querySelector('.edit-icon');
-                var saveButton = row.querySelector('.save-icon');
-                var cancelButton = row.querySelector('.cancel-icon');
-                var editInputs = row.querySelectorAll('.edit-input');
-                var editableSpans = row.querySelectorAll('.editable');
-
-                editIcon.style.display = 'none';
-                saveButton.style.display = 'inline-block';  
-                cancelButton.style.display = 'inline-block';  
-
-                editInputs.forEach(function (input) {
-                    input.style.display = 'block';  
-                });
-
-                editableSpans.forEach(function (span) {
-                    span.style.display = 'none';  
-                });
-
-                cancelButton.addEventListener('click', function () {
-                    editIcon.style.display = 'inline-block';  
                     saveButton.style.display = 'none';
                     cancelButton.style.display = 'none';
-                    editInputs.forEach(function (input) {
-                        input.style.display = 'none';
-                    });
-                    editableSpans.forEach(function (span) {
-                        span.style.display = 'inline-block';  
-                    });
-                });
-
-                saveButton.addEventListener('click', function () {
+                } else {
                     
-                    var form = row.querySelector('form');
-                    form.submit();
-                });
-            }
-        </script>
-
-        <script>
-            // Get the modal element
-            const modal = document.getElementById('myModal');
-
-            // Function to open the modal
-            function openModal() {
-                modal.style.display = 'block';
-            }
-
-            // Function to close the modal
-            function closeModal() {
-                modal.style.display = 'none';
-            }
-
-            // Close the modal if the user clicks outside the modal content
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
+                    console.error('Error updating user:', data.errors);
+                    
                 }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                
+            });
+        });
+    }
+
+    function deleteUser(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+        fetch(`/delete_user/${userId}/`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+               
+                console.log('User deleted successfully');
+                
+                window.location.reload(); 
+                
+            } else {
+                throw new Error('Failed to delete user');
             }
-        </script>
+        })
+        .catch(error => {
+            console.error('There was a problem deleting the user:', error);
+            
+        });
+    }
+}
+
+    
 
 
+</script>
+ -->
 
 
-
-        {% endblock %}
-        {% block admin_home %}
-        {% endblock %}
+{% endblock %}
+{% block admin_home %}
+{% endblock %}
