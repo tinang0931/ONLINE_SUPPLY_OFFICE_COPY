@@ -5,9 +5,187 @@
 {% block bac_home %}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+
+  .status {
+    width: 30%;
+    text-align: center;
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    background-color: #9ee800;
+    color: white;
+  }
+
+  .form-control {
+    display: block;
+    width: 18%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid #343a40;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1300px;
+  }
+  
+  .btn-outline-success {
+    color: #ffffff;
+    background-color: #2d83da;
+    border-color: #000;
+    margin-left: 1680px;
+    height: 35px;
+  }
 
 
 
 
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+  }
 
+  .table th {
+    background-color: rgba(5, 90, 129, 0.822);
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+</style>
+
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4">PURCHASE REQUESTS</h1>
+  <div class="search" style="position: relative; float: right; margin-right: 190px; margin-top: 1%;">
+    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 108%; color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
+</div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center" onclick="sortTable(0)" style="width: 10%;">
+          Date Requested
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th> 
+        <th class="text-center" onclick="sortTable(1)" style="width: 10%;">
+          PR ID
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
+          Requests
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(3)" style="width: 10%;">
+          Purpose
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="status" onclick="sortTable(4)" style="width: 10%;">
+          Status
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(5)" style="width: 10%;">
+          Date
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+        <th class="text-center" onclick="sortTable(6)" style="width: 10%;">
+          Attachments
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for checkout in checkouts %}
+        <tr>
+            <td class="text-center">{{ checkout.submission_date }}
+
+            </td>
+            <td>{{ checkout.pr_id }}</td>
+            <td>
+              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
+                  <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+                  request on {{ checkout.submission_date }}
+                </a>
+            </td>
+
+            {% for pr in checkout.pr_set.all %}
+            <td>{{ pr.purpose }}</td>
+            {% endfor %}
+
+            <td>
+              {{ checkout.status_update_date|default:"Pending" }}
+            </td>
+        </tr>
+      {% endfor %}
+
+      {% if checkouts|length == 0 %}
+      <tr>
+        <td colspan="3">
+          <span>NO PURCHASE REQUESTS YET</span>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+
+  </table>
+  <script>
+    function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
   {% endblock %}
