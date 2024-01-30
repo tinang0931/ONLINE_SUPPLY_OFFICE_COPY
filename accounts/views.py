@@ -1000,7 +1000,7 @@ def preqform_cd(request, pr_id):
             'checkouts': checkouts,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-     }
+    }
 
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 

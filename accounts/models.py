@@ -196,7 +196,7 @@ class CheckoutItems(models.Model):
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
-   
+
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
