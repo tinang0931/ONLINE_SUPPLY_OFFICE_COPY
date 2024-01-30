@@ -53,9 +53,9 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-
+@bac_required
 def baclanding(request):
-    return render(request, 'accounts/User/baclanding.html')
+    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
 
 
 def landing(request):
@@ -274,7 +274,6 @@ def prof(request):
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-@authenticated_user
 @bac_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
