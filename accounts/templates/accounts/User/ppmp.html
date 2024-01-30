@@ -89,7 +89,6 @@
         position: fixed;
         bottom: 50px;
         left: 0;
-        background-color: #your-color; 
         border-radius: 10px;
         padding: 10px;
         z-index: 1;
@@ -130,6 +129,33 @@
     .bck:hover::before {
         opacity: 1;
     }
+    
+    .custom-dropdown .btn::after{
+        display:none;
+    }
+    
+    .custom-dropdown .btn {
+        position: fixed;
+        top: 8vh; 
+        right: 3vh; 
+        z-index: 1000;
+        background-color: #1c96c5;
+        color: whitesmoke;
+        border: none;
+        transition: all 0.5s ease;
+        text-align: center;
+        padding: 5px 10px;
+        padding-right: 30px;
+        width: 120px;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #1c96c5;
+        color: whitesmoke; 
+    }
+    .custom-dropdown .btn:hover {
+        background-color: #1c96c5;
+    }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -155,25 +181,40 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ALLOCATED BUDGET : 20,000 </h5>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-4 ml-auto text-right">
-              <label for="estimate_budget"> TOTAL AMOUNT :</label>
-              <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-            </div>
-          </div>
-
-    <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
                 <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
         </div>
     </div>
-
+    <div class="custom-dropdown mx-auto">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Select Year
+        </button>
+        <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
+            <a class="dropdown-item" href="#" data-year="2022">2022</a>
+            <a class="dropdown-item" href="#" data-year="2023">2023</a>
+            <a class="dropdown-item" href="#" data-year="2024">2024</a>
+            <a class="dropdown-item" href="#" data-year="2025">2025</a>
+            <a class="dropdown-item" href="#" data-year="2026">2026</a>
+            <a class="dropdown-item" href="#" data-year="2027">2027</a>
+            <a class="dropdown-item" href="#" data-year="2028">2028</a>
+            <a class="dropdown-item" href="#" data-year="2029">2029</a>
+            <a class="dropdown-item" href="#" data-year="2030">2030</a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="text-left">
+            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
+        </div>
+        <div class="text-center">
+            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
+            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+        </div>
+    </div>
+    
 
 
     <div class="table-responsive">
@@ -463,7 +504,7 @@
         totalValue += rowTotal;
     });
 
-    var allocatedBudget = 20000; // Set your allocated budget here
+    var allocatedBudget = 90000; // Set your allocated budget here
 
     if (totalValue >= allocatedBudget) {
         alert('Budget limit reached! Further input is disabled.');
@@ -486,8 +527,35 @@ $('[name="price"]').on('input', function() {
 });
 
 updateTotalForAllItems();
+</script>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-item').on('click', function (e) {
+            e.stopPropagation(); 
+            var selectedYear = $(this).text();
+            updateButtonStyle(selectedYear);
+            hideDropdown();
+    });
 
+    document.getElementById('yearDropdown').addEventListener('click', function() {
+        this.style.backgroundColor = '#1c96c5';
+    });
+
+    function updateButtonStyle(selectedYear) {
+            $('.dropdown-item').removeClass('selected');
+            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
+            
+        }
+
+    function hideDropdown() {
+        $('.custom-dropdown').removeClass('show');
+        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+    }
+});
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
