@@ -26,7 +26,6 @@ body{
         
 }
 
-
 .upper{
     position: absolute;
     font-family: Verdana;
@@ -75,6 +74,18 @@ body{
     margin: 20px 0 12px 0;
 }
 
+.form-check-label {
+    font-family: 'system-ui', sans-serif;
+}
+
+.form-control {
+    border: none;
+    background: rgba(255, 255, 255, 0.486);
+    border-radius: 3px;
+    box-shadow: 0 0 3px black;
+    width: 102%;
+}
+
 
 form .user-details .input-box{
     margin-bottom: 15px;
@@ -113,8 +124,7 @@ form .user-details .input-box{
     border-color: #003566;
 }
 
-
-form .register-details .user-title{
+ form .register-details .user-title{
     color: #003566;
     font-size: 20px;
     font-weight: 600;
@@ -145,87 +155,63 @@ form .register-details .category{
     transition: all 0.5s ease;
 }
 
+.form-check-label {
+    font-family: 'system-ui', sans-serif;
+}
 
- #dot-1:checked ~ .category label .one,
- #dot-2:checked ~ .category label .two{    
-    border-color: #ccc;
-    background-color: #003566;
- }
+.form-control {
+    border: none;
+    background: rgba(255, 255, 255, 0.486);
+    border-radius: 3px;
+    box-shadow: 0 0 3px black;
+    width: 102%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.container {
+    width: 900px;
 
 
- form input[type="radio"]{
+
+}
+
+.input-box label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.input-box input[type="radio"] {
     display: none;
- }
+    /* Hide the actual radio buttons */
+}
 
-
- .container .btn {
-    justify-content: center;
-    width: 100%;
-    height: 35px;
-    background: #fc8f01;
-    outline: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
+.input-box .radio-box {
+    display: inline-block;
+    width: 7vh;
+    /* Set the desired width */
+    height: 3vh;
+    /* Set the desired height */
+    border: 1px solid #ccc;
+    padding: 5px;
     cursor: pointer;
-    color: black;
-    font-weight: 250;
-    font-size: 19px;
-    margin-top: 50px;
-    text-align: center;
-    line-height: 5px;
-    transition-duration: 0.5s;
+}
+
+.input-box .radio-label {
+    white-space: nowrap;
 }
 
 
-.container .btn:hover{
-    color: white;
-    background-color: #ffa125e3;
-}
-
-
-.container .login-link {
-    font: 17px;
-    color: black;
-    text-align: center;
-    display: flex;
-    justify-content: flex-start;
-}
-
-
-.login-link p a {
-    font-size: 17px;
-    font-weight: 200;
-    color: black;
-    text-decoration: underline;
-}
-
-
-.login-link p a:hover {
-    text-decoration: underline;
-    color: #007bff;
-    transition: all 0.5s ease;
-}
-
-
-@media (max-width: 100px) {
-    .container {
-        max-width: 100%;
-    }
-
-    form .user-details .input-box {
-        width: 100%;
-    }
-
-    form .register-details .category {
-        width: 100%;
-    }
-
-    .container form .user-details {
-        max-height: 300px;
-        overflow-y: scroll;
-    }
-
-    .user-details::-webkit-scrollbar {
-        width: 0;
-    }
+.input-box input[type="radio"]:checked + .radio-box {
+    background-color: #e0e0e0 !important;
+  
+   
 }
