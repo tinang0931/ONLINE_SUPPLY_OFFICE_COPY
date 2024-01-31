@@ -26,7 +26,7 @@
 
   .form-control {
     display: block;
-    width: 18%;
+    width: 13%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -40,7 +40,7 @@
     border: var(--bs-border-width) solid #343a40;
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1300px;
+    margin-left: 1500px;
   }
   
   .btn-outline-success {
@@ -73,94 +73,106 @@
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"><strong>PPMP of the Users</strong></h1>
-  <div class="search" style="position: relative; float: right; margin-right: 190px; margin-top: 1%;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 108%; color: #05708BD2;"></i>
+  <div class="search" style="position: relative; float: left; margin-left: ; margin-top: 1%;">
+    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); right:0%; color: #05708BD2;"></i>
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
 </div>
 
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="text-center" onclick="sortTable(0)" style="width: 10%;">
-          Date Requested
+        <th class="text-center" onclick="sortTable(0)"  rowspan="2">
+          User ID
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th> 
-        <th class="text-center" onclick="sortTable(1)" style="width: 10%;">
-          PR ID
+        <th class="text-center" onclick="sortTable(1)"  rowspan="2">
+          PPMP NO.
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
-          Requests
+        <th class="text-center" onclick="sortTable(2)"  rowspan="2">
+          Username 
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(3)" style="width: 10%;">
-          Purpose
+        <th class="text-center" onclick="sortTable(3)"  rowspan="2">
+          Date Requested
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="status" onclick="sortTable(4)" style="width: 10%;">
+        <th class="status" onclick="sortTable(4)"  colspan="2">
           Status
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(5)" style="width: 10%;">
-          Date
+
+        <th class="status" onclick="sortTable(4)"  colspan="2">
+          Comment
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(6)" style="width: 10%;">
-          Attachments
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
+
       </tr>
+      <tr>
+        <th style="text-align: center;">Budget Officer</th>
+        <th style="text-align: center;">Campus Director</th>
+        <th style="text-align: center;">Budget Officer</th>
+        <th style="text-align: center;">Campus Director</th>
+      </tr>
+
+      
+        
+      
     </thead>
 
     <tbody>
+      {% if checkouts %}
       {% for checkout in checkouts %}
-        <tr>
-            <td class="text-center">{{ checkout.submission_date }}
+      <tr>
+        <td style="text-align: center;">{{ checkout.user }}</td>
+        <td style="text-align: center;">{{ checkout.pr_id }}</td>
+        <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
+        <td style="text-align: center;">{{ checkout.submission_date }}</td>
+        <td class="text-center">
+          {% if checkout.bo_status %}
+              
+          <span class="fas fa-circle text-success">  {{ checkout.bo_status }}</span>
 
-            </td>
-            <td>{{ checkout.pr_id }}</td>
-            <td>
-              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-                  <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
-                  request on {{ checkout.submission_date }}
-                </a>
-            </td>
+          {% endif %}
+      </td>
+      
+      <td class="text-center">
+        {% if checkout.cd_status %}
+              
+        <span class="fas fa-circle text-success">  {{ checkout.cd_status }}</span>
 
-            {% for pr in checkout.pr_set.all %}
-            <td>{{ pr.purpose }}</td>
-            {% endfor %}
-
-            <td>
-              {{ checkout.status_update_date|default:"Pending" }}
-            </td>
-        </tr>
+        {% endif %}
+      </td>
+        <td >{{ checkout.bo_comment }}</td>
+        <td>{{ checkout.cd_comment }}</td>
+      </tr>
       {% endfor %}
 
-      {% if checkouts|length == 0 %}
+
+      {% else %}
+
+  
       <tr>
-        <td colspan="3">
-          <span>NO PURCHASE REQUESTS YET</span>
+        <td colspan="8">
+          <span >NO PPMP YET</span>
         </td>
       </tr>
       {% endif %}
