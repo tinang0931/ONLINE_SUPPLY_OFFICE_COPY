@@ -62,6 +62,11 @@ def bac_request(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html')
 
 
+@cd_required
+def cdlanding(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
+
+
 @regular_user_required
 def userlanding(request):
     return render(request, 'accounts/User/userlanding.html')
@@ -149,7 +154,7 @@ def login(request):
             elif user.user_type == 'regular':
                 return redirect('userlanding')
             elif user.user_type == 'cd':
-                return redirect('cdpurchase')
+                return redirect('cdlanding')
             elif user.user_type == 'budget':
                 return redirect('budget-landing')
             elif user.user_type == 'bac':
@@ -226,6 +231,7 @@ def logout_user(request):
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
 @regular_user_required
 @authenticated_user
 def registration(request):

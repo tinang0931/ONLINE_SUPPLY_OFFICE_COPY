@@ -49,7 +49,7 @@
         overflow: hidden;
         cursor: pointer;
         border: none;
-        margin-left: -109%;
+        margin-left: -107%;
         margin-top: 15%;
         padding: 10px 20px;
         font-size: 16px;
@@ -60,14 +60,14 @@
 
    
     .catalogue {
-        background: #033768;
+        background: #1c96c5;
         padding: 5px 15px;
         color: white;
         text-decoration: none;
         margin-left: 0;
         border: none;
         border-radius: 5px;
-        margin-top: 15%;
+        margin-top: -5%;
     }
 
     .custom:hover,
@@ -84,9 +84,6 @@
         transform: translate(0em, 0.14em);
     }
 
-
-    
-    
     .bck a {
         display: flex;
         align-items: center;
@@ -120,9 +117,38 @@
     .bck:hover::before {
         opacity: 1;
     }
+    
     .table-responsive {
-    margin-top: -1vh; /* Adjust the margin-top value as needed to move the table upward */
-}
+    margin-top: -6vh; 
+    }
+
+    .custom-dropdown .btn::after{
+        display:none;
+    }
+   
+    .custom-dropdown .btn {
+        position: fixed;
+        top: 3vh;
+        right: 3vh;
+        z-index: 1000;
+        background-color: #1c96c5;
+        color: whitesmoke;
+        border: none;
+        transition: all 0.5s ease;
+        padding: 5px 10px;
+        padding-right: 30px;
+        width: 120px;
+    }
+
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #1c96c5;
+        color: whitesmoke;
+    }
+    .custom-dropdown .btn:hover {
+        background-color: #1c96c5;
+    }
+
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -132,7 +158,7 @@
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
     <div class="container">
-        <h1 class="pr text-center pt-4"> CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
     <div class="bck">
         <a href="{% url 'myppmp' %}">
@@ -140,29 +166,41 @@
         </a>
     </div>
    
-
-   
-
-
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;"> View Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
-            
         </div>
     </div>
 
-    
+    <div class="custom-dropdown mx-auto">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Select Year
+        </button>
+        <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
+            <a class="dropdown-item" href="#" data-year="2022">2022</a>
+            <a class="dropdown-item" href="#" data-year="2023">2023</a>
+            <a class="dropdown-item" href="#" data-year="2024">2024</a>
+            <a class="dropdown-item" href="#" data-year="2025">2025</a>
+            <a class="dropdown-item" href="#" data-year="2026">2026</a>
+            <a class="dropdown-item" href="#" data-year="2027">2027</a>
+            <a class="dropdown-item" href="#" data-year="2028">2028</a>
+            <a class="dropdown-item" href="#" data-year="2029">2029</a>
+            <a class="dropdown-item" href="#" data-year="2030">2030</a>
+        </div>
+    </div>
+   
     <div class="row">
-        <div class="text-left">
+        <div class=" col-md-6 text-left">
             <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        <div class="text-center" style="margin-top: -9vh;">
+        </div>
+        <div class="col-md-6 text-center" style="margin-top: -5vh;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
-    
-
+    </div>
 
     <div class="table-responsive">
 
@@ -337,11 +375,10 @@
             </button>
             
 
-            <div class="d-flex justify-content-end">
-                <button type="button" class="add-btn btn-sm mt-2 mb-2 bg-none border-0" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
-                    <i class="fas fa-plus-circle fa-lg text-primary" style="font-size: 20px;"></i>
-                </button>
-            </div>
+            <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
+                <i class="fas fa-plus-circle"></i>
+            </button>
+            
     </div>
 </div>
 
@@ -468,20 +505,50 @@
     }
 
     $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
-}
+    }
 
-$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
+    $('[name="price"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
     updateTotalForAllItems();
-});
-
-$('[name="price"]').on('input', function() {
-    updateTotalForAllItems();
-});
-
-updateTotalForAllItems();
-
-
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-item').on('click', function (e) {
+            e.stopPropagation();
+            var selectedYear = $(this).text();
+            updateButtonStyle(selectedYear);
+            hideDropdown();
+    });
+
+
+    document.getElementById('yearDropdown').addEventListener('click', function() {
+        this.style.backgroundColor = '#1c96c5';
+    });
+
+
+    function updateButtonStyle(selectedYear) {
+            $('.dropdown-item').removeClass('selected');
+            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
+           
+        }
+
+
+    function hideDropdown() {
+        $('.custom-dropdown').removeClass('show');
+        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+    }
+});
+</script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

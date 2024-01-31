@@ -18,90 +18,62 @@
     tr:hover .item-actions {
         display: flex;
     }
-    .custom-dropdown .btn,
-.custom-dropdown .btn:active,
-.custom-dropdown .btn:focus {
-    position: fixed;
-    top: 25.8vh; /* Adjust the top value as needed */
-    right: 3vh; /* Adjust the right value as needed */
-    z-index: 1000; /* Set a higher z-index to make sure it stays above other elements */
-    background-color: #1c96c5;
-    color: whitesmoke;
-    border: none;
-    transition: all 0.5s ease;
-    text-align: left;
-    padding: 5px 10px;
-}
 
-.dropdown-menu .dropdown-item:hover {
-    background-color: #1c96c5;
-    color: whitesmoke;
-}
+    .ppmp button {
+        background-color: #1c96c5;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
 
-.custom-dropdown .btn:hover {
-    background: #1c96c5;
-}
+    .ppmp button:hover {
+        background-color: #1c96c5;
+        color: #fff;
+    }
+    .pr {
+        margin-left: 20px !important; /* Adjust the value as needed */
+    }
+
+    body{
+        overflow:hidden;
+    }
+    html{
+        overflow:hidden;
+    }
+    .d-flex {
+        height: 85vh;
+        margin-bottom: 1;
+    }
+    .custom-dropdown .btn::after{
+        display:none;
+    }
+   
+    .custom-dropdown .btn {
+        position: fixed;
+        top: 31vh;
+        right: 2vh;
+        z-index: 1000;
+        background-color: #1c96c5;
+        color: whitesmoke;
+        border: none;
+        transition: all 0.5s ease;
+        padding: 5px 10px;
+        padding-right: 30px;
+        width: 120px;
+    }
+
 
     .dropdown-menu .dropdown-item:hover {
-        background-color: #1c96c5; /* Set the desired background color for hover */
-        color: whitesmoke; /* Set the desired text color for hover */
+        background-color: #1c96c5;
+        color: whitesmoke;
     }
-.custom-dropdown .btn:hover {
-    background: #1c96c5;
-} 
-.ppmp button {
-    background-color: #1c96c5;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
+    .custom-dropdown .btn:hover {
+        background-color: #1c96c5;
+    }
 
-.ppmp button:hover {
-    background-color: #1c96c5;
-    color: #fff;
-}
-.pr {
-    margin-left: 20px !important; /* Adjust the value as needed */
-}
 
-body{
-    overflow:hidden;
-  }
-  html{
-    overflow:hidden;
-  }
-  .d-flex {
-    height: 85vh;
-    margin-bottom: 1;
-}
-.table th {
-    background-color: #1c96c5;
-    color: white;
-cursor: pointer;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-  .btn-primary:focus,
-  .btn-primary:active {
-      background-color: #033768 !important;
-      border-color: #033768 !important;
-      box-shadow: none !important;
-  }
-  
-  .btn-primary:hover i,
-  .btn-primary:focus i,
-  .btn-primary:active i {
-      color: whitesmoke !important;
-  }
-  
-  .btn-primary:hover span,
-  .btn-primary:focus span,
-  .btn-primary:active span {
-      color: whitesmoke !important;
-  }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -114,21 +86,20 @@ cursor: pointer;
         <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
         <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="margin-top: -10px; background-color: #1c96c5;">
+                    aria-haspopup="true" aria-expanded="false">
                 Select Year
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
-                <a class="dropdown-item" href="#">2022</a>
-                <a class="dropdown-item" href="#">2023</a>
-                <a class="dropdown-item" href="#">2024</a>
-                <a class="dropdown-item" href="#">2025</a>
-                <a class="dropdown-item" href="#">2026</a>
-                <a class="dropdown-item" href="#">2027</a>
-                <a class="dropdown-item" href="#">2028</a>
-                <a class="dropdown-item" href="#">2029</a>
-                <a class="dropdown-item" href="#">2030</a>
+                <a class="dropdown-item" href="#" data-year="2022">2022</a>
+                <a class="dropdown-item" href="#" data-year="2023">2023</a>
+                <a class="dropdown-item" href="#" data-year="2024">2024</a>
+                <a class="dropdown-item" href="#" data-year="2025">2025</a>
+                <a class="dropdown-item" href="#" data-year="2026">2026</a>
+                <a class="dropdown-item" href="#" data-year="2027">2027</a>
+                <a class="dropdown-item" href="#" data-year="2028">2028</a>
+                <a class="dropdown-item" href="#" data-year="2029">2029</a>
+                <a class="dropdown-item" href="#" data-year="2030">2030</a>
             </div>
-            
         </div>
     </div>
 
@@ -147,8 +118,6 @@ cursor: pointer;
         });
     </script>
 
-   
-
     <div class="row">
         <div class="col-md-1 mb-0">
             <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
@@ -158,17 +127,13 @@ cursor: pointer;
         
         
         <script>
-            function toggleText(event) {
+            function toggleText() {
                 var textContainer = document.getElementById("textContainer");
                 textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
-                event.stopPropagation(); // Stop the event propagation to prevent closing when clicking inside the dropdown
-            }
-    
-            function stopPropagation(event) {
-                event.stopPropagation(); // Stop the event propagation to prevent closing when clicking inside the dropdown content
             }
         </script>
-    </div>
+        
+
     <div class="table-responsive">
 
 
@@ -295,8 +260,37 @@ cursor: pointer;
             updateEstimateBudgetForRow(row);
         });
     });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-item').on('click', function (e) {
+            e.stopPropagation();
+            var selectedYear = $(this).text();
+            updateButtonStyle(selectedYear);
+            hideDropdown();
+    });
 
 
+    document.getElementById('yearDropdown').addEventListener('click', function() {
+        this.style.backgroundColor = '#1c96c5';
+    });
+
+
+    function updateButtonStyle(selectedYear) {
+            $('.dropdown-item').removeClass('selected');
+            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
+           
+        }
+
+
+    function hideDropdown() {
+        $('.custom-dropdown').removeClass('show');
+        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+    }
+});
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
