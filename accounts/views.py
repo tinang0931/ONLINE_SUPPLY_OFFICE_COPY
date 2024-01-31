@@ -141,9 +141,7 @@ def login(request):
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
             auth_login(request, user)
-            messages.success(request, "You are now logged in.")
-
-            # Redirect based on user_type
+            
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':

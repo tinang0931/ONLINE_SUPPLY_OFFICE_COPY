@@ -26,13 +26,13 @@
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
             
-            {% if messages %}
+           
                 {% for message in messages %}
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger " style="text-align: center;"  role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
-            {% endif %}
+            
 
             <h1>Sign In</h1>
 
