@@ -85,9 +85,11 @@
   .box-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100%;
     flex-direction: column;
-    margin-left: 45%;
+    margin-left: auto; 
+    margin-right: auto;
     margin-top: 5%;
 }
     
@@ -110,7 +112,7 @@
 .box i {
     margin-right: 5px;
     position: absolute;
-    left: 46%;
+    left: 37%;
     font-size: 24px;
     border-radius: 50%;
     border: 2px solid white;
@@ -121,7 +123,7 @@
 }
 
 .box:hover {
-  background-color: #ffffff; 
+  background-color: #6585a2; 
   color: #003566;
   text-decoration: none; 
 }
