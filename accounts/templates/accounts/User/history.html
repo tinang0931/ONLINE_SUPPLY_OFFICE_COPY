@@ -4,11 +4,9 @@
 
 {% block history %}
 
-<style>
-.table-responsive th {
-  background-color: #1c96c5;
-}
-</style>
+<link rel="stylesheet" href="{% static 'css/history.css' %}">
+
+
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
 
     <h1 class="pr text-center pt-4">PURCHASE REQUEST HISTORY</h1>
@@ -16,7 +14,7 @@
    
     <div class="col-6 col-sm-6 col-md-5 col-lg-3 mr-auto">
        <div class="search" style="position: relative; text-align: right;">
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; margin-left: 5px display: inline-block;width:80%;">
+        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; margin-left: 5px display inline-block;width:80%">
         <i class="fas fa-search" style="position: absolute; top: 50%; right: 100px; transform: translateY(-50%); color: #05708BD2;"></i>
     </div>
   </div>
@@ -56,50 +54,6 @@
     </div>
   </div>
 </div>
-<style>
- .view_more {
-  background: #1c96c5;
-  padding: 5px 15px;
-  color: white;
-  text-decoration: none;
-  margin-right: 0;
-  border: none;
-  border-radius: 5px;
-  margin-top: 1%;
- }
-
-
-.input-group {
-  width: 300px; /* Adjust the width as needed */
-  margin-right: auto; /* Move to the left */
-}
-
-.form-control {
-  border-radius: 5px;
-}
-
-.btn-outline-secondary {
-  border-radius: 5px;
-}
-
-.input-group:hover {
-  border-color: #144472;
-}
-
-.input-group:hover .btn-outline-secondary:hover {
-  background-color: #144472;
-  color: #fff; /* Text color on hover */
-  border-color: #144472;
-}
-
-#search_bar_request:hover {
-  border-color: #144472;
-}
-
-.container-fluid {
-  position: relative; /* Make the container a reference for absolute positioning */
-}
-</style>
 <script>
   function highlightInput(input) {
     input.select();

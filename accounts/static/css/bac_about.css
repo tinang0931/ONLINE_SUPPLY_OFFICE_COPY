@@ -1,0 +1,14 @@
+body {
+    overflow: hidden;
+    }
+
+    html {
+     overflow: hidden;
+      }
+
+    .footer {
+        height: 35%;
+      }
+      .logout-link, .pro, .account_type {
+display: none !important;
+}
