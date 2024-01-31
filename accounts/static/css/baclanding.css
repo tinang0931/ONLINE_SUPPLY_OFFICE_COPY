@@ -1,0 +1,136 @@
+body {
+    background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+@media (min-width: 800px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+  
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+}
+
+    .bg-light {
+        background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0.151) 170.25%) !important;
+    }   
+
+    .p1 {
+        color: white;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 25px;
+        text-align: center;
+    }
+  
+    .head {
+        color: white;
+        font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+        margin-top: 5%;
+        font-size: 48px;
+    } 
+  
+    .ctu_logo {
+        position: absolute;
+        left: 0; 
+        top: 13px; 
+        width: 45%;
+        margin-top: 5%;
+        z-index: 2;
+    }
+  
+    .welcome{
+        background-color: #f59a23e7!important;
+        color: #003566;
+        text-align: center !important;
+        margin: 0%;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        height: 70px;
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-around;
+        visibility: visible;
+        content-visibility: auto;
+        height: 50px;
+        margin-left: 5%;
+        width: 100%;
+    }
+
+    .box-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    
+    .box {
+        width: 20%;
+        height: 8%;
+        background-color: #003566;
+        margin: -90px auto 130px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: 'Roboto';
+        font-size: 20px;
+        font-weight: 600;
+        border: 1px solid white;
+        border-radius: 10px;
+        color: white;
+        position: relative;
+        transition: background-color 0.8s ease;
+        overflow: hidden;
+        text-decoration: none;
+    }
+    
+    .box:hover {
+        background-color: white;
+        color: #003566;
+        text-decoration: none;
+        border: 2px solid #003566;
+    }
+    
+    .box i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 26px;
+        border: 1px solid #003566;
+        border-radius: 50%;
+        border: 1px solid white;
+        background-color: transparent;
+        padding: 5px;
+        text-decoration: none;
+    }
+    
+    .box:hover i {
+        border-color: #003566;
+        color: #003566;
+        text-decoration: none;
+    }
+    
+    .box a {
+        text-decoration: none;
+        color: inherit;
+        padding: 5px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .box a:hover {
+        text-decoration: none;
+        color: #003566;
+    }    
