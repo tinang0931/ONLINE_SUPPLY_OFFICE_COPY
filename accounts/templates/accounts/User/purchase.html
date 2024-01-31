@@ -30,6 +30,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 10px;
   }
 
   .pp_mp button:hover {
@@ -63,7 +64,7 @@ textarea.form-control {
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
   <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-    <h1 class="pr text-center pt-4">PURCHASE REQUEST</h1>
+    <h1 class="pr text-center pt-4"><strong>CREATE PURCHASE REQUEST</strong></h1>
 
   <div class="row">
 
@@ -176,14 +177,14 @@ textarea.form-control {
           <div class="row align-items-center">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="purpose" style="color:#FFFFFF">Purpose:</label>
-                <textarea class="form-control" id="purpose" placeholder="Purpose" name="purpose" contenteditable="true"
-                  style="resize: vertical;"></textarea>
+                <label for="purpose" style="color:#FFFFFF" >Purpose:</label>
+                <textarea class="form-control" id="purpose" placeholder="Ex. FOR HR DEPARTMENT" name="purpose" contenteditable="true"
+                  style="resize: vertical;" required></textarea>
               </div>
             </div>
             <div class="col-md-4">
               <div class="text-right" style="color:#FFFFFF">
-                <span >Total Amount: ₱<span id="total_amount">0.00</span></span>
+                <span >Total Amount: ₱<span id="total_amount" name="total_cost">0.00</span></span>
               </div>
             </div>
             <div class="col-md-4">
