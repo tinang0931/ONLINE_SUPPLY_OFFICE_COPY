@@ -1,5 +1,7 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
+{% extends }
+
 
 {% load static %}
 
@@ -123,7 +125,7 @@
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 45%;"> CATALOGUE</h1>
+        <h1 style="margin-left: 45%;"> <strong> CATALOGUE </strong></h1>
     </div>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
@@ -148,7 +150,7 @@
                         <th > Brand / Description</th>
                         <th >Unit</th>
                         
-                       
+                    
                         <th >Unit Price</th>
                         <th > Select </th>
                     </tr>

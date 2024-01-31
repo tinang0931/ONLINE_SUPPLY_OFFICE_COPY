@@ -20,16 +20,13 @@
 
   .bg-success {
     background-color: #b5e550;
-    /* Adjust this to your desired background color */
     color: white;
-    /* Adjust this to your desired text color */
   }
 
   .no-comment {
     background-color: lightgray;
-    /* Adjust this to your desired background color */
     color: black;
-    /* Adjust this to your desired text color */
+
   }
 
   .table th {
@@ -52,20 +49,16 @@
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
     border: 2px solid #05708BD2;
-    /* Set border color */
   }
 
   .form-control:focus {
     border-color: #87CEEB;
-    /* Light blue color code */
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    /* Optional: Add a subtle box-shadow */
   }
 
   .form-control::selection {
     background-color: #05708BD2;
     color: #fff;
-    /* Set text color in the selection */
   }
 
   .search-form {
@@ -76,15 +69,12 @@
     position: sticky;
     top: 0;
     background-color: #ffffff;
-    /* You can adjust the background color as needed */
     z-index: 1000;
-    /* Adjust the z-index to make sure it's above other elements on the page */
     padding: 10px;
-    /* Adjust the padding as needed */
   }
 </style>
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS FOR APPROVAL</strong></h1>
+  <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS </strong></h1>
 
 
   <div class="search" style="position: relative; text-align: right;">
@@ -101,7 +91,7 @@
       <tr>
         <th class="text-center">Date Requested</th>
         <th class="text-center">Requests for Approval</th>
-        <th class="text-center">PR ID</th>
+        <th class="text-center">PPMP ID</th>
         <th class="status">Status</th>
         <th class="text-center">Comment</th>
       </tr>
@@ -114,14 +104,16 @@
           {{ checkout.submission_date }}
         </td>
         <td>
-          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
-            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+          
+            {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase
             request on {{ checkout.submission_date }}
-          </a>
+          
         </td>
 
         <td class="text-center">
-          {{ checkout.pr_id }}
+          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}"><strong>{{ checkout.pr_id }}</strong></a>
+          
+       
         </td>
 
         <td class="text-center">

@@ -116,7 +116,7 @@
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"> <strong>PPMP REQUESTS FOR APPROVAL</strong> </h1>
+  <h1 class="pr-heading text-center pt-4"> <strong>PPMP REQUESTS </strong> </h1>
 
   
   <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
@@ -143,6 +143,16 @@
           <span class="sort-arrow-down"></span>
         </span>
       </th>
+
+      <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
+        PPMP ID
+        <span class="sort-arrow">
+          <span class="sort-arrow-up"></span>
+          <span class="sort-arrow-down"></span>
+        </span>
+      </th>
+
+
       <th class="status" onclick="sortTable(4)" style="width: 15%;">
         Budget Officer Status
         <span class="sort-arrow">
@@ -183,8 +193,14 @@
             {{ checkout.submission_date }}
           </td>
           <td>
+            
+             {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a ppmp request for approval on {{ checkout.submission_date }}
+            
+          </td>
+
+          <td class="text-center">
             <a href="{% url 'cdppmp_approval' pr_id=checkout.pr_id %}">
-              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a ppmp request for approval on {{ checkout.submission_date }}
+              <strong>{{ checkout.pr_id }}</strong>
             </a>
           </td>
 
