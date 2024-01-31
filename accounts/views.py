@@ -69,6 +69,8 @@ def userlanding(request):
 def landing(request):
     return render(request, 'accounts/User/landing.html')
 
+def budget_landing(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
 
 User = get_user_model()
 @unauthenticated_user
@@ -1107,6 +1109,7 @@ def cdpurchase(request):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
 def preqform_cd(request, pr_id):
+    checkout = get_object_or_404(Checkout, pr_id=pr_id)
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
@@ -1159,15 +1162,17 @@ def preqform_cd(request, pr_id):
         return redirect('cdpurchase')
 
     elif request.method == 'GET':
-        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
-        context = {
-            'checkouts': checkouts,
-            'checkout_items': checkout_items,
-            'pr_id': pr_id,
-     }
+            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+            context = {
+                'checkouts': checkout,
+                'checkout_items': checkout_items,
+                'pr_id': pr_id,
+            }
+            
+            print("pr_id:", pr_id)
 
-    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+
+            return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_item(request, id):

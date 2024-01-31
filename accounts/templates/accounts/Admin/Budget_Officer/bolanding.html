@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/baclanding.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://fonts.google.com/icons"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>Budget Officer Landing Page</title>
+</head>
+
+<body>
+    <main class="flex-shrink">
+        <div id="page-content-wrapper">
+
+            <div class="row w-100 m-auto">
+              <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+              </div>
+              <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                  <h1 class="head">Supply Office Request Monitoring System</h1>
+                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+              </div>
+              <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+              
+              </div>
+            </div>
+          </nav>
+        </div>
+        <h1 class="welcome">Welcome! You are signed in as a Budget Officer.</h1>
+        <div class="d-flex" id="wrapper">
+          <div class="box-container">
+              <a href="{% url 'bohome'%}"> 
+                  <div class="box ppmp">
+                      <i class="bi bi-file-earmark-post"></i>
+                      <span id="myPpmp" class="hidden-name">PPMP</span>  
+                  </div>
+              </a>
+              <a href="{% url 'boabout'%}">
+                <div class="box about">
+                  <i class="bi bi-file-earmark-text"></i> <!-- Updated icon -->
+                  <span id="about" class="hidden-name">PURCHASE REQUEST</span>
+              </div>
+            </a>
+              <a href="{% url 'about'%}">
+                <div class="box about">
+                  <i class="bi bi-clock-history"></i> <!-- Updated icon -->
+                  <span id="about" class="hidden-name">HISTORY</span>
+              </div>
+            </a>
+              <a href="{% url 'boabout'%}">
+                  <div class="box about">
+                      <i class="bi bi-info-circle"></i> 
+                      <span id="about" class="hidden-name">ABOUT</span>
+                  </div>
+              </a>
+          </div>
+      </div>
+  </main>
+        <style>
+          @media (min-width: 800px) {
+            #sidebar-wrapper {
+              margin-left: 0;
+            }
+          
+          
+            #page-content-wrapper {
+              min-width: 0;
+              width: 100%;
+            }
+          }
+        
+          body {
+            background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%,
+                rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%,
+                rgba(0, 53, 102, 0) 170.25%);
+            background-size: cover;
+            background-attachment: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            margin: 0;
+        }
+        
+          .flex-wrap {
+            height: 105%;
+            width: 100%;
+            margin: 0;
+        }
+        
+         
+          
+            /* .bg-light {
+                --bs-bg-opacity: 1;
+                background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%) !important;
+          
+               
+            }    */
+        
+           
+        
+            .p1 {
+                color: white;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 25px;
+                text-align: center;
+            }
+          
+          
+            .head {
+                color: white;
+                font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+                font-size: 48px;
+                margin-top: 5%;
+            } 
+          
+          
+            .ctu_logo {
+                position: absolute;
+                width: 45%;
+                left: 0;
+                margin-top: 5%;
+                z-index: 100;
+            }
+            .navbar {
+              margin-bottom: 0; /* Remove the default margin */
+          }
+          
+            .welcome {
+              background-color: #f59a23e7!important;
+              color: #003566;
+              text-align: center !important;
+              margin: 0%;
+              font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+              font-size: 24px;
+              font-weight: 600;
+              height: 70px;
+              display: flex;
+              align-content: center;
+              flex-wrap: wrap;
+              flex-direction: column;
+              justify-content: space-around;
+              visibility: visible;
+              content-visibility: auto;
+              height: 50px;
+              margin-left: 5%;
+              width: 100%;
+          }
+        
+          .box-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            flex-direction: column;
+            margin-left: 45%;
+            margin-top: 5%;
+        }
+            
+            .box {     
+            width: 499px;
+            height: 80px;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            color: #ffffff;
+            background-color: transparent;
+        }
+        
+        .box i {
+            margin-right: 5px;
+            position: absolute;
+            left: 46%;
+            /* transform: translateY(-50%); */
+            font-size: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background-color: #e3952d; 
+            padding: 0.5%;
+            /* text-decoration: none; */
+            margin: 10px 0;
+           
+        }
+        
+        .box:hover {
+          background-color: #ffffff; 
+          color: #003566;
+          text-decoration: none; 
+      }
+        
+        
+            
+            .ppmp,.about,.history,.purchase request{
+                font-weight: 700px;
+                border: 1px solid #ffffff;
+                border-radius: 10px;
+                color: #ffffff;
+                background-color: #003566;
+                margin: 10px 0;
+            }
+        
+        
+            .logout{
+                font-weight: 700px;
+                border: 1px solid #ffffff;
+                border-radius: 10px;
+                color: #ffffff;
+                background-color: #003566;
+                margin: 10px 0;
+        
+            }
+            .container-fluid {
+              padding: 0;
+          }
+        </style>
