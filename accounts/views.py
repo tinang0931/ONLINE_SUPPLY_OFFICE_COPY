@@ -479,6 +479,13 @@ def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
 
 
+@cd_required
+@authenticated_user
+def purchase_cd(request):
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html')
+
+
+
 @authenticated_user
 def resolution(request):
     return render(request, 'accounts/Admin/Campus_Director/resolution.html')

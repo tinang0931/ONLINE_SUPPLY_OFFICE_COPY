@@ -46,6 +46,7 @@ urlpatterns = [
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('preqform_cd/',views.preqform_cd, name='preqform_cd'),
+   path('purchase_cd/',views.purchase_cd, name='purchase_cd'),
    path('cdppmp/',views.cdppmp, name='cdppmp'),
    path('cdresolution/',views.cdresolution, name='cdresolution'),
    path('preqform_cd/<str:pr_id>/', views.preqform_cd, name='preqform_cd'),
