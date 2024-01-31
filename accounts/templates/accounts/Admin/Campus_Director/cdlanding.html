@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/baclanding.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cdlanding.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>BAC Landing Page</title>
+    <title>Campus Director Landing Page</title>
 </head>
 
 <body>
@@ -38,25 +38,25 @@
             </div>
           </nav>
         </div>
-        <h1 class="welcome">Welcome! You are signed in as a BAC Secretariat.</h1>
+        <h1 class="welcome">Welcome! You are signed in as a Campus Director.</h1>
         <div class="box-container">
             <div class="box ppmp"> 
-                <a href="{% url 'bac_home' %}"> 
+                <a href="{% url 'cdppmp' %}"> 
                     <i class="bi bi-file-earmark-medical"></i> PPMP
                 </a> 
             </div>
             <div class="box pr"> 
-                <a href="{% url 'bac_request' %}"> 
+                <a href="{% url 'cdpurchase' %}"> 
                     <i class="bi bi-bag"></i> PR
                 </a> 
             </div>
             <div class="box catalogue">
-                <a href="{% url 'bac_dashboard' %}"> 
-                    <i class="bi bi-book-half"></i> CATALOGUE
+                <a href="{% url 'cdresolution' %}"> 
+                    <i class="bi bi-card-heading"></i> RESOLUTION
                 </a> 
             </div>
             <div class="box about"> 
-                <a href="{% url 'bac_about' %}"> 
+                <a href="{% url 'cdabout' %}"> 
                     <i class="bi bi-info-circle"></i> ABOUT
                 </a> 
             </div>

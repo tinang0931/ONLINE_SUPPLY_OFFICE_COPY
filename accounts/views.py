@@ -55,14 +55,32 @@ def main(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-
+@bac_required
 def baclanding(request):
-    return render(request, 'accounts/User/baclanding.html')
+    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
+
+def bac_request(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html')
+
+
+@cd_required
+def cdlanding(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
+
+
+@regular_user_required
+def userlanding(request):
+    return render(request, 'accounts/User/userlanding.html')
 
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
 
+
+@budget_required
+def budget_landing(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
 
 User = get_user_model()
 @unauthenticated_user
@@ -122,8 +140,6 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-
-
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -138,13 +154,13 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('myppmp')
+                return redirect('userlanding')
             elif user.user_type == 'cd':
-                return redirect('cdpurchase')
+                return redirect('cdlanding')
             elif user.user_type == 'budget':
-                return redirect('bohome')
+                return redirect('budget-landing')
             elif user.user_type == 'bac':
-                return redirect('bac_dashboard')
+                return redirect('baclanding')
             else:
                 
                 return redirect('login') 
@@ -217,6 +233,7 @@ def logout_user(request):
 @authenticated_user
 def about(request):
     return render(request, 'accounts/User/about.html')
+
 @regular_user_required
 @authenticated_user
 def registration(request):
@@ -276,7 +293,6 @@ def prof(request):
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
-@authenticated_user
 @bac_required
 def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
@@ -681,7 +697,9 @@ def ppmp(request):
     
         items = Item.objects.all()
     
-    return render(request, 'accounts/User/ppmp.html', {'items': items})
+        return render(request, 'accounts/User/ppmp.html', {'items': items})
+
+
 
 
 
@@ -1102,6 +1120,7 @@ def cdpurchase(request):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
 def preqform_cd(request, pr_id):
+    checkout = get_object_or_404(Checkout, pr_id=pr_id)
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
@@ -1161,8 +1180,17 @@ def preqform_cd(request, pr_id):
             'checkout_items': checkout_items,
             'pr_id': pr_id,
     }
+            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+            context = {
+                'checkouts': checkout,
+                'checkout_items': checkout_items,
+                'pr_id': pr_id,
+            }
+            
+            print("pr_id:", pr_id)
 
-    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+
+            return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_item(request, id):
@@ -1176,6 +1204,7 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
+@regular_user_required
 def purchasetracker(request):
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
@@ -1185,5 +1214,3 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
-
-
