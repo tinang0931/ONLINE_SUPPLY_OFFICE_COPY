@@ -57,6 +57,9 @@ def bac(request):
 def baclanding(request):
     return render(request, 'accounts/User/baclanding.html')
 
+def userlanding(request):
+    return render(request, 'accounts/User/userlanding.html')
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -136,7 +139,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('myppmp')
+                return redirect('userlanding')
             elif user.user_type == 'cd':
                 return redirect('cdpurchase')
             elif user.user_type == 'budget':
@@ -679,7 +682,9 @@ def ppmp(request):
     
         items = Item.objects.all()
     
-    return render(request, 'accounts/User/ppmp.html', {'items': items})
+        return render(request, 'accounts/User/ppmp.html', {'items': items})
+
+
 
 
 
