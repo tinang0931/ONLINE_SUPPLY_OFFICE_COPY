@@ -76,7 +76,32 @@ body{
     height: 85vh;
     margin-bottom: 1;
 }
-
+.table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .btn-primary:focus,
+  .btn-primary:active {
+      background-color: #033768 !important;
+      border-color: #033768 !important;
+      box-shadow: none !important;
+  }
+  
+  .btn-primary:hover i,
+  .btn-primary:focus i,
+  .btn-primary:active i {
+      color: whitesmoke !important;
+  }
+  
+  .btn-primary:hover span,
+  .btn-primary:focus span,
+  .btn-primary:active span {
+      color: whitesmoke !important;
+  }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -133,13 +158,17 @@ body{
         
         
         <script>
-            function toggleText() {
+            function toggleText(event) {
                 var textContainer = document.getElementById("textContainer");
                 textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
+                event.stopPropagation(); // Stop the event propagation to prevent closing when clicking inside the dropdown
+            }
+    
+            function stopPropagation(event) {
+                event.stopPropagation(); // Stop the event propagation to prevent closing when clicking inside the dropdown content
             }
         </script>
-        
-
+    </div>
     <div class="table-responsive">
 
 
