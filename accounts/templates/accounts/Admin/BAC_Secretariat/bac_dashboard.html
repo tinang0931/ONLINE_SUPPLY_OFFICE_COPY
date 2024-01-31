@@ -171,6 +171,17 @@ th {
   display: none;
  padding: 6px 12px;
 }
+
+
+.add-btn:hover {
+    background-color: #4574a0;
+}
+
+.add-btn:hover {
+    background-color: #4574a0;
+}
+
+
   </style>
   
 </head>
@@ -421,12 +432,11 @@ th {
               <button type="submit" class="save-btn btn-success">Save</button>
             </td>
           </form>
-        </tr>
-
-      </tbody>
+        </tr>`
+        
     </table>
-    <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
+    <button class="add-btn btn-primary float-right mt-2 mb-4" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
     {% endfor %}
 
   </div>
