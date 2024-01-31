@@ -89,7 +89,6 @@
         position: fixed;
         bottom: 50px;
         left: 0;
-        background-color: #your-color; 
         border-radius: 10px;
         padding: 10px;
         z-index: 1;
@@ -130,6 +129,7 @@
     .bck:hover::before {
         opacity: 1;
     }
+
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -141,6 +141,22 @@
     <div class="container">
         <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
+
+    
+<div class="select">
+    <select class="form-select" id="month" name="month" style="width: 150px; float: right;">
+        <option value="">Select Year</option>
+        <option value="01">2023</option>
+        <option value="02">2024</option>
+        <option value="03">2025</option>
+        <option value="04">2026</option>
+        <option value="05">2027</option>
+        <option value="06">2028</option>
+        <option value="07">2029</option>
+        <option value="08">2030</option>
+    </select>
+</div>
+    
     <div class="bck">
         <a href="{% url 'myppmp' %}">
             <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
