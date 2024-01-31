@@ -24,13 +24,14 @@
   }
 
   .pp_mp button {
-    background-color: #1c96c5;
+    background-color: #033768;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 5px 10px; 
+    border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
-  }
+}
+
 
   .pp_mp button:hover {
     background-color: #144472;
@@ -51,7 +52,14 @@ textarea.form-control {
   .col-md-4 .text-right button.btn.btn-primary {
     border-radius: 8%;
   }
-
+  .table th {
+    background-color: #1c96c5;
+    color: white;
+cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 </style>
 
 
@@ -69,9 +77,11 @@ textarea.form-control {
 
     <div class="col-md-1 mb-0">
       <div class="pp_mp">
-        <button class="btn btn-primary">
-          <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;"> PPMP </a>
-        </button>
+        <button class="btn btn-primary" style="margin-top: 10px; margin-bottom: 5px; border-radius: 5px;">
+          <a href="{% url 'approved_ppmp'  %}" style="color: white; text-decoration: none;">
+              <i class="fas fa-file-alt"></i> PPMP
+          </a>
+      </button>
       </div>
     </div>
   </div>
@@ -167,18 +177,7 @@ textarea.form-control {
           });
       });
 
-        $(document).ready(function () {
-          function calculateTotal() {
-            var totalAmount = 0;
-            $(".item_total_cost").each(function () {
-              var itemCost = parseFloat($(this).text());
-              totalAmount += itemCost;
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
 
-          calculateTotal();
-        });
       </script>
 
       <footer class="fixed-bottom p-2"
@@ -194,7 +193,7 @@ textarea.form-control {
             </div>
             <div class="col-md-4">
               <div class="text-right" style="color:#FFFFFF">
-                <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                <span >Total Amount: ₱<span id="total_amount">0.00</span></span>
               </div>
             </div>
             <div class="col-md-4">

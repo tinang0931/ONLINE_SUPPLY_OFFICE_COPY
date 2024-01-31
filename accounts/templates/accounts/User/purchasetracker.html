@@ -1,0 +1,72 @@
+{% extends "accounts/User/main.html" %}
+
+{% block purchasetracker %}
+<style>
+  .custom-f {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pad {
+    padding: 0px !important;
+  }
+
+  .item-received {
+    margin: 20px auto;
+  }
+</style>
+
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <div class="container">
+    <h1 class="pr text-center pt-4">PURCHASE STATUS</h1>
+  </div>
+  <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
+    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
+  </div>
+  <div class="custom-f row w-100 m-auto border text-start text-dark">
+    <div class="pad col">
+      <table class="table table-bordered" style="margin: 0px!important;">
+        <thead>
+          <tr>
+            <th  class="text-center"> PR NO.</th>
+            <th  class="text-center">STATUS</th>
+            <th  class="text-center">COMMENT</th>
+            <th  class="text-center">LAST UPDATED</th>
+        </tr>
+        
+          
+        </thead>
+        <tbody>
+
+        {% for p in tracker %}
+            <tr>
+                <td class="text-center"> {{ p.pr_id }}</td>
+                <td class="text-center">
+                  {% if p.status %}
+                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.status }}</span>
+                  {% else %}
+                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                  {% endif %}
+              </td>
+              <td class="text-center">
+                {% if p.comment %}
+                    {{ p.comment }}
+                {% else %}
+                    No comment yet
+                {% endif %}
+                
+              </td>
+              
+            
+                <td class="text-center"> {{ p.submission_date }}</td>
+                
+            </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+{% endblock %}
