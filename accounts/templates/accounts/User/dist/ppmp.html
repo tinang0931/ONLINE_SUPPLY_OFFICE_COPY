@@ -49,7 +49,7 @@
         overflow: hidden;
         cursor: pointer;
         border: none;
-        margin-left: -107%;
+        margin-left: -109%;
         margin-top: 15%;
         padding: 10px 20px;
         font-size: 16px;
@@ -60,7 +60,7 @@
 
    
     .catalogue {
-        background: #1c96c5;
+        background: #033768;
         padding: 5px 15px;
         color: white;
         text-decoration: none;
@@ -85,17 +85,7 @@
     }
 
 
-    .bck {
-        position: fixed;
-        bottom: 50px;
-        left: 0;
-        background-color: #your-color; 
-        border-radius: 10px;
-        padding: 10px;
-        z-index: 1;
-        display: inline-block;
-        margin-left: 10px;
-    }
+    
     
     .bck a {
         display: flex;
@@ -130,6 +120,9 @@
     .bck:hover::before {
         opacity: 1;
     }
+    .table-responsive {
+    margin-top: -1vh; /* Adjust the margin-top value as needed to move the table upward */
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -139,7 +132,7 @@
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
     <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"> CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
     </div>
     <div class="bck">
         <a href="{% url 'myppmp' %}">
@@ -148,30 +141,27 @@
     </div>
    
 
-    <div class="bck">
-        <a href="{% url 'myppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}">
-        </a>
-    </div>
+   
 
-    <div class="row">
-        <div class="col-md-4 ml-auto text-right">
-            <h5> TOTAL ESTIMATED BUDGET : 1,000,000 </h5>
-        </div>
-    
-        <div class="col-md-1 ml-auto text-left">
-            <h5 style="font-size: 18px;"> TOTAL : 100,000 </h5>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;"> View Catalogue </a>
             </button>
+            
         </div>
     </div>
 
+    
+    <div class="row">
+        <div class="text-left">
+            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
+        <div class="text-center" style="margin-top: -9vh;">
+            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
+            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+        </div>
+    
 
 
     <div class="table-responsive">
@@ -230,20 +220,20 @@
                             </td>
 
 
-                            <td><input type="number" name="estimate_budget"></td>
+                            <td><input type="number" name="estimate_budget" ></td>
 
-                            <td><input type="number"  style="width: 38px;" name="jan"></td>
-                            <td><input type="number" style="width: 38px;" name="feb"></td>
-                            <td><input type="number" style="width: 38px;" name="mar"></td>
-                            <td><input type="number" style="width: 38px;" name="apr"></td>
-                            <td><input type="number" style="width: 38px;" name="may"></td>
-                            <td><input type="number" style="width: 38px;" name="jun"></td>
-                            <td><input type="number" style="width: 38px;" name="jul"></td>
-                            <td><input type="number" style="width: 38px;" name="aug"></td>
-                            <td><input type="number" style="width: 38px;" name="sep"></td>
-                            <td><input type="number" style="width: 38px;" name="oct"></td>
-                            <td><input type="number" style="width: 38px;" name="nov"></td>
-                            <td><input type="number" style="width: 38px;" name="dec"></td>
+                            <td><input type="number"  style="width: 38px;" name="jan" required></td>
+                            <td><input type="number" style="width: 38px;" name="feb" required></td>
+                            <td><input type="number" style="width: 38px;" name="mar" required></td>
+                            <td><input type="number" style="width: 38px;" name="apr" required></td>
+                            <td><input type="number" style="width: 38px;" name="may" required></td>
+                            <td><input type="number" style="width: 38px;" name="jun"  required></td>
+                            <td><input type="number" style="width: 38px;" name="jul" required></td>
+                            <td><input type="number" style="width: 38px;" name="aug" required></td>
+                            <td><input type="number" style="width: 38px;" name="sep" required></td>
+                            <td><input type="number" style="width: 38px;" name="oct" required></td>
+                            <td><input type="number" style="width: 38px;" name="nov" required></td>
+                            <td><input type="number" style="width: 38px;" name="dec" required></td>
 
                             <td>
                                 <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
@@ -346,6 +336,12 @@
                 <i class="fas fa-plus-circle"></i>
             </button>
             
+
+            <div class="d-flex justify-content-end">
+                <button type="button" class="add-btn btn-sm mt-2 mb-2 bg-none border-0" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
+                    <i class="fas fa-plus-circle fa-lg text-primary" style="font-size: 20px;"></i>
+                </button>
+            </div>
     </div>
 </div>
 
@@ -442,6 +438,47 @@
             updateEstimateBudgetForRow(row);
         });
     });
+
+    function updateTotalForAllItems() {
+    var totalValue = 0;
+
+    $('tr.item-row').each(function() {
+        var row = $(this);
+        var unitPrice = parseFloat(row.find('[name="price"]').val());
+        var rowTotalValue = 0;
+
+        row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
+            var monthValue = parseFloat($(this).val()) || 0;
+            rowTotalValue += monthValue;
+        });
+
+        var rowTotal = rowTotalValue * unitPrice;
+        totalValue += rowTotal;
+    });
+
+    var allocatedBudget = 20000; // Set your allocated budget here
+
+    if (totalValue >= allocatedBudget) {
+        alert('Budget limit reached! Further input is disabled.');
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', true);
+    } else {
+
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"], [name="price"]').prop('disabled', false);
+    }
+
+    $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
+}
+
+$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    updateTotalForAllItems();
+});
+
+$('[name="price"]').on('input', function() {
+    updateTotalForAllItems();
+});
+
+updateTotalForAllItems();
 
 
 </script>
