@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/userlanding.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://fonts.google.com/icons"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>USER Landing Page</title>
+</head>
+
+<body>
+    <main class="flex-wrap">
+        <!-- <div id="page-content-wrapper"> -->
+          <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+            <div class="row w-100 m-auto">
+              <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+              </div>
+              <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                  <h1 class="head">Supply Office Request Monitoring System</h1>
+                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+              </div>
+              <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+              
+              </div>
+            </div>
+          </nav>
+        </div>
+        <h1 class="welcome">Welcome! You are signed in as a Regular User.</h1>
+
+        <div class="d-flex" id="wrapper">
+            <div class="box-container">
+                <a href="{% url 'myppmp' %}" class="box ppmp">
+                    <i class="bi bi-file-earmark-medical"></i>
+                    <span id="myPpmp" class="hidden-name">PPMP</span>
+                </a>
+                <a href="{% url 'purchase' %}" class="box pr">
+                    <i class="bi bi-bag-check"></i> 
+                    <span id="purchaseRequest" class="hidden-name">PURCHASE REQUEST</span>
+                </a>
+                <a href="{% url 'tracker' %}" class="box tracker">
+                    <i class="bi bi-geo-alt"></i> 
+                    <span id="ppmpTracker" class="hidden-name">PPMP TRACKER</span>
+                </a>
+                <a href="{% url 'tracker' %}" class="box tracker">
+                    <i class="bi bi-geo-alt"></i> 
+                    <span id="requestTracker" class="hidden-name">PR TRACKER</span>
+                </a>
+                <a href="{% url 'history' %}" class="box history">
+                    <i class="bi bi-clock-history"></i> 
+                    <span id="history" class="hidden-name">HISTORY</span>
+                </a>
+                <a href="{% url 'about' %}" class="box about">
+                    <i class="bi bi-info-circle"></i> 
+                    <span id="about" class="hidden-name">ABOUT</span>
+                </a>
+                <br>
+                <br>
+                <br>
+                <br>
+                <a href="{% url 'logout_user' %}" class="box logout">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span id="logout" class="hidden-name">LOG OUT</span>
+                </a>
+            </div>
+            
+        </div>
+    

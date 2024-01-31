@@ -1,0 +1,93 @@
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
+
+{% load static %}
+
+{% block bohome %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  .status {
+    width: 30%;
+    text-align: center;
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    background-color: #b5e550; /* Adjust this to your desired background color */
+    color: white; /* Adjust this to your desired text color */
+  }
+
+  .no-comment {
+    background-color: lightgray; /* Adjust this to your desired background color */
+    color: black; /* Adjust this to your desired text color */
+  }
+
+  .table th {
+    background-color: rgba(10, 99, 158, 0.637); 
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+</style>
+<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4"> PPMP REQUESTS FOR APPROVAL</h1>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests for Approval</th>
+        <th class="status">Status</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Comment</th> 
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkout in checkouts %}
+        <tr>
+          <td class="text-center">
+            {{ checkout.submission_date }}
+          </td>
+          <td>
+            <a href="{% url 'buppmpform'  %}">
+              <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new ppmp request on {{ checkout.submission_date }}
+            </a>
+          </td>
+          
+          <td class="badge {% if checkout.is_seen %}bg-success{% elif checkout.is_approve %}bg-success{% elif checkout.is_disapprove %}no-comment{% else %}bg-info{% endif %}" style="margin-top: 5px; margin-left: 5px; color: white">
+            {% if checkout.is_seen %}
+              {% if checkout.is_approve %}
+                Approved
+              {% else %}
+                Declined
+              {% endif %}
+            {% else %}
+              Waiting for Approval
+            {% endif %}
+          </td>
+          <td>
+            {{ checkout.status_update_date|default:"Not available" }}
+          </td>
+          <td>
+            {% if checkout.pr_id == preqform_bo.pr_id %}
+              {{ checkout.comment|default:"No comment" }}
+            {% else %}
+              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
+              No relevant comment available
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+
+{% endblock %}
