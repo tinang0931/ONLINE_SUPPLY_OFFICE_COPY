@@ -38,7 +38,8 @@
           </nav>
       </div>
   </main>
-  <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+  <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System <button id="toggleSidebarBtn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+  </h1>
   <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
@@ -74,72 +75,63 @@
             </div>
           </div>
         </div>
-        <style>
-          #sidebar-wrapper .list-group-item.logout-link {
+<style>
+  body {
+    
+    transition: margin-left 0.2s ease-in-out;
+    position: relative;
+}
+#sidebar-wrapper .list-group-item.logout-link {
             position: absolute;
-            top: 60vh;
+            top: 77vh;
+            width: 230px;
         }
-          .d-flex {
-            height: 90vh;
+.d-flex {
+            height: 85vh;
             margin-bottom: 1;
 }
-          #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+#sidebar {
+    transition: width 0.2s ease-in-out, padding 0.2s ease-in-out 0s !important;
     overflow: hidden;
-    width: 60px;
+    width: 55px;
 }
 
 #sidebar.show-names {
     width: 300px;
-    padding: 0 30px;
+    padding: 0 6px;
+    margin-left: -4.5px;
 }
 
 .hidden-name {
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 }
 
 #sidebar.show-names .hidden-name {
     opacity: 1;
+  
 }
-
-.list-group-item-action {
-    transition: background-color 0.5s ease-in-out, border-radius 0.5s ease-in-out, color 0.5s ease-in-out;
-}
-
 .list-group-item-action:hover {
     background-color: #093a68 !important;
     border-radius: 5px !important;
     color: #f2f2f2 !important;
 }
-
-
 #sidebar:hover {
     width: 300px;
     padding: 0 6px;
+    margin-left: -4.5px;
 }
 
 .logout-link {
-    margin-bottom: 1%;
-    margin-left: -10px;
-    width: 242px;
+    margin-bottom: 10%;
+    margin-left: -2px;
+    width: 230px;
 }
-.about-link {
-  margin-left: -10px;
-  width: 242px;
-
-}
-.resolution-link {
-  margin-left: -10px;
-  width: 242px;
-}
-.purchase-requests-link {
-  margin-left: -10px;
-  width: 242px;
-}
+.about-link 
+.resolution-link 
 .home-link {
   margin-left: -10px;
-  width: 242px;
+  width: 245px;
 }
 
 .d-flex.flex-wrap.align-content-between.h-100 {
@@ -172,8 +164,9 @@
   display:none;
 }
 .list-group-item i {
-    transform: scale(1.4);
+    transform: scale(1.2);
     display: inline-block;
+    margin-left:-10px;
 }
 
 .profile-container {
@@ -210,20 +203,55 @@
     visibility: visible;
 }
 
+#toggleSidebarBtn {
+  position: fixed;
+  left: -5px; 
+  top: -15%; 
+  z-index: 1001; 
+  background-color: transparent; 
+  border: none;
+  padding: 10px; 
+  cursor: pointer;
+  color: #000; 
+}
+#toggleSidebarBtn i {
+  font-size: 24px; 
+}
+
 
         </style>
-        
         <script>
+          let isSidebarOpen = false; // Variable to track sidebar state
+      
+          function toggleSidebar() {
+              const sidebar = document.getElementById('sidebar');
+      
+              if (isSidebarOpen) {
+                  sidebar.classList.remove('show-names');
+              } else {
+                  sidebar.classList.add('show-names');
+              }
+      
+              isSidebarOpen = !isSidebarOpen; // Toggle the sidebar state
+          }
+      
           function showNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.add('show-names');
+              if (!isSidebarOpen) {
+                  const sidebar = document.getElementById('sidebar');
+                  sidebar.classList.add('show-names');
+                  isSidebarOpen = false; // Set sidebar state to open
+              }
           }
-        
+      
           function hideNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('show-names');
+              if (isSidebarOpen) {
+                  const sidebar = document.getElementById('sidebar');
+                  sidebar.classList.remove('show-names');
+                  isSidebarOpen = false; // Set sidebar state to closed
+              }
           }
-        </script>
+      </script>
+      
         
         {% block cdabout %}
         {% endblock %}

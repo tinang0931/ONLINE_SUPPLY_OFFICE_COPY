@@ -37,7 +37,8 @@
           </div>
         </nav>
       </div>
-      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System <button id="toggleSidebarBtn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+      </h1>
       <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
@@ -72,158 +73,187 @@
         </div>
  
         <style>
-          body{
+          body {
+            
+            transition: margin-left 0.2s ease-in-out;
+            position: relative;
             overflow:hidden;
-          }
-          html{
+        }
+         html{
             overflow:hidden;
-          }
-          .d-flex {
-            height: 85vh;
-            margin-bottom: 1;
-          }
+        }
+        #sidebar-wrapper .list-group-item.logout-link {
+                    position: absolute;
+                    top: 77vh;
+                }
+        .d-flex {
+                    height: 85vh;
+                    margin-bottom: 1;
+        }
         #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 50px;
-}
-
-#sidebar.show-names {
-    width: 300px;
-    padding: 0 20px;
-}
-
-.hidden-name {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-#sidebar.show-names .hidden-name {
-    opacity: 1;
-}
-
-.list-group-item-action {
-  transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
-}
-
-.list-group-item-action:hover {
-  background-color: #254b6e !important;
-  border-radius: 5px !important;
-  color: #f2f2f2 !important;
-  transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
-}
-
-
-
-#sidebar:hover {
-    width: 300px;
-    padding: 0 6px;
-}
-
-.logout-link {
-    margin-top: 195px;
-    margin-left: -10px;
-    width:242px;
-}
-.home-link {
-  margin-left: -10px;
-  width:242px;
-}
-.history-link {
-  margin-left: -10px;
-  width:242px;
-}
-.about-link {
-  margin-left: -10px;
-  width:242px;
-}
-
-.d-flex.flex-wrap.align-content-between.h-100 {
-    background-color: #f2f2f2;
-}
-
-.list-group-item-action:not(:hover) span {
-    color: black !important;
-}
-
-.ctu_logo {
-    position: relative;
-    top: 3px;
-    z-index: 1;
-}
-
-.pro {
-    position: relative;
-    height: 45px;
-    width: 45px;
-    margin-left: 45%;
-    transition: height 0.3s ease, width 0.3s ease;
-    cursor: pointer;
-    border-radius: 50px;
-    border: 2px solid #000;
-    margin-top: 450px;
-    display: none;
-}
-
-.list-group-item i {
-    transform: scale(1.4);
-    display: inline-block;
-}
-
-.profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    margin: 0;
-}
-
-.account_type {
-    position: relative;
-    left: 30px; /* Adjust the desired horizontal position */
-    font-size: 20px;
-    margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
-    margin-top: 450px;
-    display: none;
-}
-
-
-.sidebar:hover .account_type,
-.pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
-    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
-}
-
-
-.sidebar:hover .account_type {
-    opacity: 1; /* Show the element when the sidebar is hovered */
-    visibility: visible; /* Show the element when the sidebar is hovered */
-}
-body {
-  overflow: hidden;
-  }
-
-  html {
-   overflow: hidden;
-    }
-
-        </style>
+            transition: width 0.2s ease-in-out, padding 0.2s ease-in-out 0s !important;
+            overflow: hidden;
+            width: 55px;
+        }
         
-        <script>
-          function showNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.add('show-names');
-          }
+        #sidebar.show-names {
+            width: 300px;
+            padding: 0 6px;
+            margin-left: -4.5px;
+        }
         
-          function hideNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('show-names');
-          }
-        </script>
+        .hidden-name {
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        
+        #sidebar.show-names .hidden-name {
+            opacity: 1;
+        }
+        
+        
+        
+        .list-group-item-action:hover {
+            background-color: #093a68 !important;
+            border-radius: 5px !important;
+            color: #f2f2f2 !important;
+        }
+        
+        
+        #sidebar:hover {
+            width: 300px;
+            padding: 0 6px;
+            margin-left: -4.5px;
+        }
+        
+        .logout-link {
+            margin-bottom: 9%;
+            margin-left: -2px;
+            width: 230px;
+        }
+        .about-link 
+        .home-link {
+          margin-left: -10px;
+          width: 245px;
+        }
+        
+        .d-flex.flex-wrap.align-content-between.h-100 {
+          background-color: #f2f2f2;
+          overflow: hidden;
+        }
+        
+        .list-group-item-action:not(:hover) span {
+            color: black !important;
+        }
+        
+        .ctu_logo {
+            position: relative;
+            top: 3px;
+            z-index: 1;
+        }
+        
+        .pro {
+          position: relative;
+          top: 359px;
+          z-index: 1;
+          height: 45px;
+          width: 45px;
+          margin-left: 6%;
+          transition: height 0.3s ease, width 0.3s ease;
+          cursor: pointer;
+          border-radius: 50px;
+          border: 2px solid #000;
+          margin-top: 20px;
+          display:none;
+        }
+        .list-group-item i {
+            transform: scale(1.2);
+            display: inline-block;
+            margin-left:-10px;
+        }
+        
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            margin: 0;
+            margin-left: 0px;
+            display: none;
+        }
+        
+        .account_type {
+            position: relative;
+            top: 200px;
+            left: 30px;
+            font-size: 20px;
+            margin: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .sidebar:hover .account_type,
+        .pro:hover + .account_type {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar:hover .account_type {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        #toggleSidebarBtn {
+          position: fixed;
+          left: -5px; 
+          top: -15%; 
+          z-index: 1001; 
+          background-color: transparent; 
+          border: none;
+          padding: 10px; 
+          cursor: pointer;
+          color: #000; 
+        }
+        #toggleSidebarBtn i {
+          font-size: 24px; 
+        }
+        
+        
+                </style>
+                <script>
+                  let isSidebarOpen = false; // Variable to track sidebar state
+              
+                  function toggleSidebar() {
+                      const sidebar = document.getElementById('sidebar');
+              
+                      if (isSidebarOpen) {
+                          sidebar.classList.remove('show-names');
+                      } else {
+                          sidebar.classList.add('show-names');
+                      }
+              
+                      isSidebarOpen = !isSidebarOpen; // Toggle the sidebar state
+                  }
+              
+                  function showNames() {
+                      if (!isSidebarOpen) {
+                          const sidebar = document.getElementById('sidebar');
+                          sidebar.classList.add('show-names');
+                          isSidebarOpen = false; // Set sidebar state to open
+                      }
+                  }
+              
+                  function hideNames() {
+                      if (isSidebarOpen) {
+                          const sidebar = document.getElementById('sidebar');
+                          sidebar.classList.remove('show-names');
+                          isSidebarOpen = false; // Set sidebar state to closed
+                      }
+                  }
+              </script>
         
         {% block boabout %}
         {% endblock %}

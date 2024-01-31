@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
                         <div class="profile-container">
-                            <a href="{% url 'prof' %}">
+                            {% comment %} <a href="{% url 'prof' %}"> {% endcomment %}
                                 <img class="profile_img" id="profile-pic"
                                     src="{% static 'images/profile_default_image.png' %}" alt="">
 
@@ -66,7 +66,8 @@
                     </div>
             </nav>
         </div>
-        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System <button id="toggleSidebarBtn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+        </h1>
         <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
 
 
@@ -77,159 +78,187 @@
                         <div class="list-group w-100">
                             <br><br>
 
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'myppmp'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 myppmp-link" href="{% url 'myppmp'%}">
                                 <i class="bi bi-file-earmark-post"></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 purchase-link" href="{% url 'purchase'%}">
                                 <i class="bi bi-bag-check"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 tracker-link" href="{% url 'tracker'%}">
                                 <i class="bi bi-geo-alt"></i> <span id="requestTracker"
                                     class="hidden-name">Request Tracker</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 history-link" href="{% url 'history'%}">
                                 <i class="bi bi-clock-history"></i> <span id="history" class="hidden-name">History</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'about'%}">
                                 <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                             </a>
-                            <a class="list-group-item list-group-item-action p-3 border-0 logout-link"
-                                href="{% url 'logout_user'%}">
+                            <a class="list-group-item list-group-item-action p-3 border-0 logout-link"href="{% url 'logout_user'%}">
                                 <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
                             </a>
                         </div>
-                        <div class="profile-container">
+                        {% comment %} <div class="profile-container"> 
                             <a href="{% url 'prof' %}">
                                 <img class="pro" id="profile-pic" src="{% static 'images/propayl.png' %}"
                                     alt="Profile Picture"></a>
                             <p1 class="account_type">User</p1>
-                        </div>
+                        </div>{% endcomment %}
                     </div>
                 </div>
             </div>
 
 
             <style>
-                
-                .d-flex {
-                    height: 100vh;
-                    margin-bottom: 0;
-        }
-                #sidebar {
-                    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-                    overflow: hidden;
-                    width: 50px;
+                body {
+    
+                    transition: margin-left 0.2s ease-in-out;
+                    position: relative;
                 }
-
+                #sidebar-wrapper .list-group-item.logout-link {
+                            position: absolute;
+                            top: 75vh;
+                            width:236px;
+                        }
+                .d-flex {
+                            height: 85vh;
+                            margin-bottom: 1;
+                }
+                #sidebar {
+                    transition: width 0.2s ease-in-out, padding 0.2s ease-in-out 0s !important;
+                    overflow: hidden;
+                    width: 55px;
+                }
+                
                 #sidebar.show-names {
                     width: 300px;
-                    padding: 0 20px;
+                    padding: 0 6px;
+                    margin-left:-5px;
                 }
-
+                
                 .hidden-name {
                     opacity: 0;
-                    transition: opacity 0.5s ease-in-out;
+                    transition: opacity 0.2s ease-in-out;
                 }
-
+                
                 #sidebar.show-names .hidden-name {
                     opacity: 1;
                 }
-
-                .list-group-item-action {
-                    transition: background-color 0.5s ease-in-out, border-radius 0.5s ease-in-out, color 0.5s ease-in-out !important;
-                }
-
+                
+                
+                
                 .list-group-item-action:hover {
-                    background-color: #001524 !important;
+                    background-color: #093a68 !important;
                     border-radius: 5px !important;
                     color: #f2f2f2 !important;
+                    margin-left:4.5px;
                 }
-
+                
+                
                 #sidebar:hover {
                     width: 300px;
-                    padding: 0 10px;
+                    padding: 0 6px;
                 }
-
+                
                 .logout-link {
-                    margin-top: -80px !important;
-                    width:242px;
+                    margin-bottom: 10%;
+                    margin-left: -2px;
+                    width: 234px;
                 }
-
+                .about-link 
+                .pruchase-link 
+                .history-link
+                .myppmp-link
+                .tracker-link {
+                  margin-left: -10px;
+                  width: 245px;
+                }
+                
                 .d-flex.flex-wrap.align-content-between.h-100 {
-                    background-color: #f2f2f2;
+                  background-color: #f2f2f2;
+                  overflow: hidden;
                 }
-
+                
                 .list-group-item-action:not(:hover) span {
                     color: black !important;
                 }
-
+                
                 .ctu_logo {
                     position: relative;
                     top: 3px;
                     z-index: 1;
                 }
-
+                
                 .pro {
-                    position: relative;
-                    top: 380px;
-                    z-index: 1;
-                    height: 45px;
-                    width: 45px;
-                    margin-left: 45%;
-                    transition: height 0.3s ease, width 0.3s ease;
-                    cursor: pointer;
-                    border-radius: 50px;
-                    border: 2px solid #000;
-                    display: none;
+                  position: relative;
+                  top: 359px;
+                  z-index: 1;
+                  height: 45px;
+                  width: 45px;
+                  margin-left: 6%;
+                  transition: height 0.3s ease, width 0.3s ease;
+                  cursor: pointer;
+                  border-radius: 50px;
+                  border: 2px solid #000;
+                  margin-top: 20px;
+                  display:none;
                 }
-
                 .list-group-item i {
-                    transform: scale(1.4);
+                    transform: scale(1.2);
                     display: inline-block;
+                    margin-left:1px;
                 }
-
+                
                 .profile-container {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     width: 90%;
                     margin: 0;
+                    margin-left: 0px;
+                    display: none;
                 }
-
+                
                 .account_type {
                     position: relative;
-                    top: 380px;
-                    /* Adjust the desired vertical position */
+                    top: 200px;
                     left: 30px;
-                    /* Adjust the desired horizontal position */
                     font-size: 20px;
                     margin: 0;
                     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                     opacity: 0;
-                    /* Set the initial opacity to hide the element */
                     visibility: hidden;
-                    /* Set the initial visibility to hidden */
                     transition: opacity 0.3s ease, visibility 0.3s ease;
-                    /* Add a transition effect */
-                    display: none
+                    margin-top: 20px;
                 }
-
+                
                 .sidebar:hover .account_type,
-                .pro:hover+.account_type {
+                .pro:hover + .account_type {
                     opacity: 1;
-                    /* Show the element when the sidebar or .pro is hovered */
                     visibility: visible;
-                    /* Show the element when the sidebar or .pro is hovered */
                 }
-
-
+                
                 .sidebar:hover .account_type {
                     opacity: 1;
-                    /* Show the element when the sidebar is hovered */
                     visibility: visible;
-                    /* Show the element when the sidebar is hovered */
                 }
-            </style>
+                
+                #toggleSidebarBtn {
+                  position: fixed;
+                  left: 1px; 
+                  top: 1%; 
+                  z-index: 1001; 
+                  background-color: transparent; 
+                  border: none;
+                  padding: 10px; 
+                  cursor: pointer;
+                  color: #000; 
+                }
+                #toggleSidebarBtn i {
+                  font-size: 24px; 
+                }
+                
+                </style>
 
             <script>
                 const savedImageUrl = localStorage.getItem('profileImage');
@@ -240,14 +269,34 @@
             </script>
 
             <script>
-                function showNames() {
+                let isSidebarOpen = false; // Variable to track sidebar state
+            
+                function toggleSidebar() {
                     const sidebar = document.getElementById('sidebar');
-                    sidebar.classList.add('show-names');
+            
+                    if (isSidebarOpen) {
+                        sidebar.classList.remove('show-names');
+                    } else {
+                        sidebar.classList.add('show-names');
+                    }
+            
+                    isSidebarOpen = !isSidebarOpen; // Toggle the sidebar state
                 }
-
+            
+                function showNames() {
+                    if (!isSidebarOpen) {
+                        const sidebar = document.getElementById('sidebar');
+                        sidebar.classList.add('show-names');
+                        isSidebarOpen = false; // Set sidebar state to open
+                    }
+                }
+            
                 function hideNames() {
-                    const sidebar = document.getElementById('sidebar');
-                    sidebar.classList.remove('show-names');
+                    if (isSidebarOpen) {
+                        const sidebar = document.getElementById('sidebar');
+                        sidebar.classList.remove('show-names');
+                        isSidebarOpen = false; // Set sidebar state to closed
+                    }
                 }
             </script>
             {% block notification %}
