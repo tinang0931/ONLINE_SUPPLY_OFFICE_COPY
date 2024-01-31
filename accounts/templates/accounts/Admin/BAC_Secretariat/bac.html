@@ -46,7 +46,10 @@
               <div class="list-group w-100">
                 <br><br>
                 <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bac_home'%}">
-                  <i class="bi bi-house"></i> <span id="purchaseRequest" class="hidden-name">Home</span>
+                  <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest" class="hidden-name">PPMP</span>
+                </a>
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bac_request'%}">
+                  <i class="bi bi-bag"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
                 </a>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 dashboard-link" href="{% url 'bac_dashboard'%}">
@@ -171,13 +174,13 @@
 
 .account_type {
     position: relative;
-    left: 30px; /* Adjust the desired horizontal position */
+    left: 30px; 
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
     margin-top: 450px;
     display: none;
 }
@@ -185,14 +188,14 @@
 
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
-    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
 
 
 .sidebar:hover .account_type {
-    opacity: 1; /* Show the element when the sidebar is hovered */
-    visibility: visible; /* Show the element when the sidebar is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
 body {
   overflow: hidden;
@@ -231,6 +234,9 @@ body {
         {% endblock %}
 
         {% block bac_dashboard %}
+        {% endblock %}
+
+        {% block bac_request %}
         {% endblock %}
 
     </main>

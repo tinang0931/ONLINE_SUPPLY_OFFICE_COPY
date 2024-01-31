@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from . import views 
 from .views import *
 from .views import checkout_items_view
+from .views import budget_landing
 
 urlpatterns = [ 
    path('',views.landing, name='landing'),
@@ -12,6 +13,7 @@ urlpatterns = [
    path('main/',views.main, name='main'),
    path('bac/', views.bac, name='bac'),
    path('baclanding/', views.baclanding, name='baclanding'),
+   path('userlanding/', views.userlanding, name='userlanding'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -73,6 +75,8 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
+   path('budget-landing/', budget_landing, name='budget-landing'),
    path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
    path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
+   path('bac_request/', views.bac_request, name='bac_request'),
 ]
