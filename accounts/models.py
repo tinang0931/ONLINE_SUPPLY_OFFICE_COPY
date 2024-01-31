@@ -10,9 +10,9 @@ from bson import ObjectId
 
 
 
+
 class User(AbstractUser):
     CTU_ID_LENGTH = 10
-    
     username = models.CharField(max_length=12, unique=True, primary_key=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
@@ -20,7 +20,7 @@ class User(AbstractUser):
     contact2 = models.PositiveIntegerField()
 
     USER_TYPES = [
-        ('admin', 'Admin'),
+
         ('regular', 'Regular User'),
         ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
@@ -35,6 +35,12 @@ class User(AbstractUser):
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
 
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
+    @property
+    def get_user_type_display(self):
+        return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
+
     def save(self, *args, **kwargs):
        
         self.is_admin = self.user_type == 'admin'
@@ -44,7 +50,6 @@ class User(AbstractUser):
         self.is_bac = self.user_type == 'bac'
 
         super().save(*args, **kwargs)
-
     def __str__(self):
         return self.username
 
@@ -107,18 +112,6 @@ class PPMP(models.Model):
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-class Checkout(models.Model):
-
-    pr_id = models.CharField(max_length=50, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    submission_date = models.DateField(default=timezone.now)
-    bo_status = models.CharField(max_length=20, default="Pending")
-    bo_comment = models.TextField(blank=True, null=True) 
-    cd_status = models.CharField(max_length=20, default="Pending")
-    cd_comment = models.TextField(blank=True, null=True)
-    last_updated = models.DateTimeField(auto_now_add=True)
-    purpose = models.CharField(max_length=255)
-
 
 class PR_Items(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
@@ -128,8 +121,6 @@ class PR_Items(models.Model):
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     submission_date = models.DateField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    quantity = models.IntegerField()
-    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE)
  
 
 class FileMetadata(models.Model):
@@ -151,6 +142,8 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    status = models.CharField(max_length=20, default="Pending")
+    comment = models.TextField(blank=True, null=True)
 
     def generate_pr_id(self):
         pr_id = str(uuid.uuid4().int)[:8]
@@ -160,6 +153,16 @@ class Pr_identifier(models.Model):
 
 
 
+class Checkout(models.Model):
+
+    pr_id = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    submission_date = models.DateField(default=timezone.now)
+    bo_status = models.CharField(max_length=20, default="Pending")
+    bo_comment = models.TextField(blank=True, null=True) 
+    cd_status = models.CharField(max_length=20, default="Pending")
+    cd_comment = models.TextField(blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=True)
 
 
 
@@ -171,19 +174,12 @@ class Pr_identifier(models.Model):
     def __str__(self):
         return str(self.pr_id)
 
-    
-
-    
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
-    quantity = models.IntegerField(default=0)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    submission_date = models.DateField(auto_now_add=True)
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     jan = models.IntegerField(default=0)
     feb = models.IntegerField(default=0)
     mar = models.IntegerField(default=0)
@@ -197,19 +193,10 @@ class CheckoutItems(models.Model):
     nov = models.IntegerField(default=0)
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    attached_file = models.FileField(upload_to='checkout_items_files/', null=True, blank=True)
-    def __str__(self):
-        return f"{self.pk} - {self.attached_file.name if self.attached_file else 'No file'}"
-    
-    @property
-    def combined_id(self):
-        random_number = str(random.randint(10000000, 99999999)) 
-        return f"{str(self.id)}{random_number}"
 
 
-    def __str__(self):
-        return str(self.pr_id)
 
+   
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
@@ -244,65 +231,4 @@ class History(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
-    
-class appr_ppmp(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
-    date_requested = models.DateField(auto_now_add=True)
-    item = models.CharField(max_length=255, blank=True, null=True)
-    item_brand_description = models.CharField(max_length=255, blank=True, null=True)
-    unit = models.CharField(max_length=50, blank=True, null=True)
-    unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    submission_date = models.DateField(auto_now_add=True)
-    jan = models.IntegerField(default=0)
-    feb = models.IntegerField(default=0)
-    mar = models.IntegerField(default=0)
-    apr = models.IntegerField(default=0)
-    may = models.IntegerField(default=0)
-    jun = models.IntegerField(default=0)
-    jul = models.IntegerField(default=0)
-    aug = models.IntegerField(default=0)
-    sep = models.IntegerField(default=0)
-    oct = models.IntegerField(default=0)
-    nov = models.IntegerField(default=0)
-    dec = models.IntegerField(default=0)
-    estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-
-    
-
-class PurchaseRequestForm(models.Model):
-     user = models.ForeignKey(User, on_delete=models.CASCADE)
-     item_name = models.CharField(max_length=100)
-     description = models.TextField()
-     quantity = models.IntegerField()
-     is_submitted = models.BooleanField(default=False)
-     approved = models.BooleanField(default=False)
-     disapproved = models.BooleanField(default=False)
-def __str__(self):
-         return self.item_name
-
-
-class PurchaseRequest(models.Model):
-    request_id = models.BigAutoField(primary_key=True)
-    submission_date = models.DateField()
-    item = models.CharField(max_length=100)
-    quantity = models.IntegerField()
-    def calculate_total_cost(self):
-        return self.quantity * self.unit_cost  
-    total_cost = property(calculate_total_cost)
-
-
-
-class PurchaseRequest(models.Model):
-    item_name = models.CharField(max_length=255)
-    item_brand = models.CharField(max_length=255)
-    unit = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    file = models.FileField(upload_to='uploads/', blank=True, null=True)
-
-
-class Document(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-    document = models.FileField(upload_to='documents/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
     
