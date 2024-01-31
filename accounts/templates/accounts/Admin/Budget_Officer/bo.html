@@ -50,14 +50,15 @@
                   <i class="bi bi-file-earmark-post"></i> <span id="about" class="hidden-name">PPMP</span>
                 </a>
 
-                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
-                  <i class="bi bi-bag-check"></i></i> <span id="about" class="hidden-name">Purchase Request</span>
-                </a>
                
+                <a class="list-group-item list-group-item-action p-3 border-0 purchase-requests-link" href="{% url 'buppmp'%}">
+                  <i class='bx bx-shopping-bag' ></i> <span id="requests" class="hidden-name">PPMP Request</span>
+                </a>
+
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
                   <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
-                
+
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
                 </a>
@@ -229,6 +230,10 @@ body {
         {% endblock %}
 
         {% block bohistory %}
+        {% endblock %}
+        
+        
+        {% block buppmp %}
         {% endblock %}
 
 
