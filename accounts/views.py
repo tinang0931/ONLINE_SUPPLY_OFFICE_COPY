@@ -57,6 +57,8 @@ def bac(request):
 def baclanding(request):
     return render(request, 'accounts/User/baclanding.html')
 
+
+@regular_user_required
 def userlanding(request):
     return render(request, 'accounts/User/userlanding.html')
 
@@ -121,8 +123,6 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
-
-
 
 
 def login(request):
@@ -1179,6 +1179,7 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
+@regular_user_required
 def purchasetracker(request):
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
@@ -1188,5 +1189,3 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
-
-
