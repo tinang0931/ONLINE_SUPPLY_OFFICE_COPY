@@ -45,6 +45,7 @@ urlpatterns = [
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cd/',views.cd, name='cd'),
+   path('cdlanding/',views.cdlanding, name='cdlanding'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdppmp/',views.cdppmp, name='cdppmp'),
