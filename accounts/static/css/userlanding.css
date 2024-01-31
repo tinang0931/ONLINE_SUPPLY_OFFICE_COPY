@@ -18,7 +18,6 @@
     padding: 10px;
     background:
         linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
-        /* url("/static/images/CTU-Logo.jpg"); */
         background-size: cover;
         background-attachment: fixed;
         position: fixed;
@@ -27,16 +26,13 @@
         right: 0;
         bottom: 0;
         z-index: -1;
-  }
+    }
 
-  .flex-wrap{
-    height: 105%;
-    width: 100%;
-    margin: 0;
-  }
-
-
-   
+    .flex-wrap{
+        height: 105%;
+        width: 100%;
+        margin: 0;
+    }
 
     .p1 {
         color: white;
@@ -45,14 +41,12 @@
         text-align: center;
     }
   
-  
     .head {
         color: white;
         font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
         font-size: 48px;
         margin-top: 5%;
     } 
-  
   
     .ctu_logo {
         position: absolute;
@@ -62,9 +56,7 @@
         z-index: 100;
     }
   
-  
     .welcome{
-       
         background-color: #f59a23e7!important;
         color: #003566;
         text-align: center !important;
@@ -95,63 +87,78 @@
     }
     
     .box {     
-    width: 400px;
-    height: 65px;
-    background-color: #f0f0f0;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    border: 2px solid #ffffff;
-    border-radius: 10px;
-    color: #ffffff;
-    background-color: transparent;
-    transition: box-shadow 0.3s ease-in-out;
-    text-decoration: none;
-}
+        width: 400px;
+        height: 65px;
+        background-color: #00356663;
+        margin: -50px auto 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Roboto';
+        font-size: 20px;
+        font-weight: 600;
+        border: 1px solid #ffffff;
+        border-radius: 10px;
+        color: #ffffff;
+        transition: background-color 0.8s ease;
+        overflow: hidden;
+        text-decoration: none;
+    }       
+
+    .box:hover {
+        background-color: #6585a2;
+        color: #003566;
+        text-decoration: none;
+        border: 2px solid #003566;
+        box-shadow: 0 4px 8px #f59a2373;    
+    }
 
     .box i {
-        position: fixed;
+        position: absolute;
         left: 46%;
         font-size: 22px;
+        transform: translateY(0);
         font-weight: 800;
         padding: 0.5%;
         margin: 10px 0;
         font-weight: bolder;
         color: #ffffff;
+        background-color: #e1942c;
         border: 1px solid #ffff;
         border-radius: 50%;
         text-decoration: none;
     }
-
-    .box:hover i{
-        text-decoration: none;
-    }
-   
-
-    .box:hover {
-        background-color: #ffffff; 
-        color: #003566; 
-        box-shadow: 0 4px 8px #f59a2373; 
-        text-decoration: none;
-    }
-
-
-    .box a{
-        text-decoration: none;
-    }
-
-
-    .box a:hover {
+    
+    .box:hover i {
+        border-color: #003566;
+        color: #003566;
         text-decoration: none;
     }
     
-    .ppmp, .pr, .catalogue, .tracker, .history, .about, .logout{
+    .box a {
+        text-decoration: none;
+        color: inherit;
+        padding: 5px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .box a:hover {
+        text-decoration: none;
+        color: #003566;
+    }  
+
+    .box span {
+        text-decoration: none;
+    }
+
+    .logout{
+        font-weight: 700px;
         border: 1px solid #ffffff;
         border-radius: 10px;
         color: #ffffff;
-        background-color: #00427eb0;
+        background-color: #003566;
         margin: 10px 0;
     }

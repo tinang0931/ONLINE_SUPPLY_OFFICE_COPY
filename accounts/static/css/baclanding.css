@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow: hidden;
+    z-index: -1;
 }
 
 @media (min-width: 800px) {
@@ -37,11 +38,10 @@ body {
   
     .ctu_logo {
         position: absolute;
-        left: 0; 
-        top: 13px; 
         width: 45%;
+        left: 0;
         margin-top: 5%;
-        z-index: 2;
+        z-index: 1;
     }
   
     .welcome{
@@ -76,8 +76,8 @@ body {
     .box {
         width: 20%;
         height: 8%;
-        background-color: #003566;
-        margin: -100px auto 120px;
+        background-color: #00356663;
+        margin: -110px auto 130px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -94,7 +94,7 @@ body {
     }
     
     .box:hover {
-        background-color: white;
+        background-color: #6585a2;
         color: #003566;
         text-decoration: none;
         border: 2px solid #003566;
@@ -103,15 +103,15 @@ body {
     
     .box i {
         position: absolute;
-        left: 20px;
+        left: 15px; 
         top: 50%;
         transform: translateY(-50%);
-        font-size: 26px;
-        border: 1px solid #003566;
-        border-radius: 50%;
+        font-weight: bolder;
+        font-size: 24px; 
         border: 1px solid white;
-        background-color: transparent;
-        padding: 5px;
+        border-radius: 50%;
+        background-color: #e1942c;
+        padding: 2.5%;
         text-decoration: none;
     }
     
@@ -134,4 +134,13 @@ body {
     .box a:hover {
         text-decoration: none;
         color: #003566;
-    }    
+    }
+    
+    .logout{
+        font-weight: 700px;
+        border: 1px solid #ffffff;
+        border-radius: 10px;
+        color: #ffffff;
+        background-color: #003566;
+        margin: 10px 0;
+    }
