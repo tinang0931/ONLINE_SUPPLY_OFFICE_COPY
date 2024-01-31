@@ -144,7 +144,7 @@ def login(request):
             elif user.user_type == 'budget':
                 return redirect('bohome')
             elif user.user_type == 'bac':
-                return redirect('bac_home')
+                return redirect('bac_dashboard')
             else:
                 
                 return redirect('login') 
@@ -282,7 +282,51 @@ def bac_about(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
 
 
-@bac_required
+
+def cdpurchase_approval(request, pr_id):
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+        comment_content = request.POST.get('comment_content')
+
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        
+
+        checkout = Pr_identifier.objects.get(pr_id=pr_id)
+
+        PR.objects.filter(pr_identifier=checkout).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+       
+            
+        )
+
+
+        Pr_identifier.objects.filter(pr_id=pr_id).update(
+            status=new_status,
+            comment=comment_content
+        )
+
+        return redirect('cdpurchase')
+
+    elif request.method == 'GET':
+        checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
+        checkout_items = PR.objects.filter(pr_identifier=checkouts)
+        context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+            'status': checkouts.status
+     }
+
+   
+
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 def bac_home(request):
     
   
@@ -294,19 +338,40 @@ def bac_home(request):
         
     }
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
-@bac_required
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchaseapproval.html', context)
+
+def bac_home(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+
 def preqform(request, pr_id):
- 
-    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
-    context = {
-        'pr_identifier': pr_identifier,
-        'user': request.user,
-    }
 
-    return render(request, 'accounts/Admin/BAC_Secretariat/preqform.html', context)
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+        comment = request.POST.get('comment_content')
 
-@bac_required
+        Pr_identifier.objects.filter(pr_id=pr_id).update(
+            status=new_status,
+            comment=comment
+            
+        )
+        return redirect('bac_home')
+    
+    elif request.method == 'GET':
+        pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+        pr_items = PR.objects.filter(pr_identifier=pr_identifier)
+
+        context = {
+            'pr_identifier': pr_identifier,
+            'pr_items': pr_items,
+            'user_first_name': request.user.first_name,
+            'user_last_name': request.user.last_name,
+            'user': request.user,
+        }
+
+    return render(request, 'accounts/Admin/Budget_Officer/borequest.html', context)
+
+
+
 @authenticated_user
 def np(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/np.html')
@@ -365,10 +430,8 @@ def bo(request):
 @authenticated_user
 def boabout(request):
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
-@budget_required
-@authenticated_user
-def borequest(request):
-    return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
+
+
 
 @budget_required
 @authenticated_user
@@ -388,7 +451,29 @@ def cdabout(request):
 @cd_required
 @authenticated_user
 def cdppmp(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html')
+    checkouts = Checkout.objects.select_related('user').all()
+  
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'submission_date': checkout.submission_date,
+            'user': checkout.user,
+            'pr_id': checkout.pr_id,
+            'last_updated': checkout.last_updated,
+            'cd_status': checkout.cd_status,  
+            'cd_comment': checkout.cd_comment,
+            'bo_status': checkout.bo_status,
+            'bo_comment': checkout.bo_comment
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user      
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', context)
 
 @cd_required
 @authenticated_user
@@ -460,20 +545,6 @@ def register_user(request):
         return redirect('user')
     
    
-def update_user(request, username):
-    user = get_object_or_404(User, username=username)
-
-    if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'User updated successfully'})  # Return a success message
-        else:
-            return JsonResponse({'error': form.errors}, status=400)  # Return form errors if not valid
-    else:
-        form = UserForm(instance=user) 
-        return render(request, 'edit_user.html', {'form': form, 'user': user})
-
 
    
 def delete_user(request, username):
@@ -501,6 +572,7 @@ def addItem(request):
   
         )
         return redirect('ppmp')
+    
     return render(request, 'accounts/User/ppmp.html')
 
 
@@ -528,13 +600,23 @@ def catalogue (request):
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-    return render(request, 'accounts/User/request.html', {'grouped_data': grouped_data})
+    return render(request, 'accounts/User/catalogue.html', {'grouped_data': grouped_data})
 
 
 @regular_user_required
-def myppmp (request):
-    items = CheckoutItems.objects.all()
-    return render(request, 'accounts/User/myppmp.html', {'items': items})
+def myppmp(request):
+    
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
+
+    # Filter CheckoutItems based on approved checkouts
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+    context = {
+        'approved_items': approved_items,
+    }
+
+    return render(request, 'accounts/User/myppmp.html', context)
+
 
 
 @regular_user_required
@@ -590,6 +672,10 @@ def ppmp(request):
 
         new_checkout.pr_id = pr_id
         new_checkout.save()
+
+        # delete the items from the Item
+        Item.objects.filter(user=request.user).delete()
+
         return redirect('tracker')
     elif request.method == 'GET':
     
@@ -610,6 +696,7 @@ def purchase(request):
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
         purpose = request.POST.get('purpose')
+        total = request.POST.get('total_cost')
 
         pr_id = generate_auto_pr_id()
         user = request.user
@@ -630,10 +717,11 @@ def purchase(request):
                 item_brand_description=item_brands[i],
                 unit=units[i],
                 unit_cost=prices[i],
-                purpose=purpose
+                purpose=purpose,
+                total_cost=total
             )
 
-        return redirect('purchase')
+        return redirect('purchasetracker')
     elif request.method == 'GET':
        
         items = PR_Items.objects.all()
@@ -663,13 +751,15 @@ def approved_ppmp(request):
 
         return redirect('approved_ppmp')
     elif request.method == 'GET':
-        checkout = Checkout.objects.get()
-        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+        try:
+            checkout = Checkout.objects.get()
+            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+        except Checkout.DoesNotExist:
+            checkout_items = []
+
         context = {
             'checkout_items': checkout_items,
-            'checkout': checkout,
         }
-    
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
 @authenticated_user
@@ -829,7 +919,6 @@ def delete_category(request, Category):
 def bohome(request):
     checkouts = Checkout.objects.select_related('user').all()
   
-
     checkout_data = []
 
     for checkout in checkouts:
@@ -843,14 +932,83 @@ def bohome(request):
         }
         checkout_data.append(checkout_dict)
 
-        context = {
-            'checkouts': checkout_data,
+    context = {
+        'checkouts': checkout_data,
+    }
+
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
+
+    
+
+def preqform_bo(request, pr_id):
+
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+        print(new_status)
+        comment_content = request.POST.get('comment_content')
+        print(comment_content)
+
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        estimate = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
+
+        checkout = Checkout.objects.get(pr_id=pr_id)
+
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+            estimate_budget=estimate,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,
+            nov=nov,
+            dec=dec,
             
-        }
+        )
+        Checkout.objects.filter(pr_id=pr_id).update(
+            bo_status=new_status,
+            bo_comment=comment_content
+        )
 
-        return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
+        return redirect('bohome')
 
-def bo_approve(request, pr_id):
+    elif request.method == 'GET':
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkouts': checkouts,
+            'checkout_items': checkout_items,
+            'pr_id': pr_id,
+     }
+
+    return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+
+        
+
+def cdppmp_approval(request, pr_id):
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
@@ -898,11 +1056,11 @@ def bo_approve(request, pr_id):
 
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
-            bo_status=new_status,
-            bo_comment=comment_content
+            cd_status=new_status,
+            cd_comment=comment_content
         )
 
-        return redirect('bohome')
+        return redirect('cdppmp')
 
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
@@ -910,13 +1068,15 @@ def bo_approve(request, pr_id):
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
+            'user': request.user,
             'pr_id': pr_id,
      }
 
-    return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
 @cd_required
 def cdpurchase(request):
-    checkouts = Checkout.objects.select_related('user').all()
+
+    checkouts = Pr_identifier.objects.select_related('user').all()
   
 
     checkout_data = []
@@ -926,11 +1086,9 @@ def cdpurchase(request):
             'submission_date': checkout.submission_date,
             'user': checkout.user,
             'pr_id': checkout.pr_id,
-            'last_updated': checkout.last_updated,
-            'cd_status': checkout.cd_status,  
-            'cd_comment': checkout.cd_comment,
-            'bo_status': checkout.bo_status,
-            'bo_comment': checkout.bo_comment
+            'status': checkout.status,
+            
+           
         }
         checkout_data.append(checkout_dict)
 
@@ -938,7 +1096,9 @@ def cdpurchase(request):
         'checkouts': checkout_data,
         'user': request.user      
     }
-    
+
+   
+
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
 def preqform_cd(request, pr_id):
@@ -1017,3 +1177,16 @@ def checkout_items_view(request):
     checkout_items = CheckoutItems.objects.all()
     context = {'checkout_items': checkout_items}
     return render(request, 'attachment/checkout_items.html', context)
+
+
+def purchasetracker(request):
+    tracker = Pr_identifier.objects.select_related('user').all()
+    context = {
+        'tracker': tracker
+
+    }
+
+
+    return render(request, 'accounts/User/purchasetracker.html', context)
+
+
