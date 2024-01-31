@@ -52,7 +52,7 @@
    
     .custom-dropdown .btn {
         position: fixed;
-        top: 31vh;
+        top: 24.7vh;
         right: 2vh;
         z-index: 1000;
         background-color: #1c96c5;
@@ -72,7 +72,26 @@
     .custom-dropdown .btn:hover {
         background-color: #1c96c5;
     }
+    
 
+.ppmp button:hover {
+    background-color: #1c96c5;
+    color: #fff;
+}
+.pr {
+    margin-left: 20px !important; /* Adjust the value as needed */
+}
+
+body{
+    overflow:hidden;
+    } 
+html{
+    overflow:hidden;
+} 
+.d-flex {
+    height: 85vh;
+    margin-bottom: 1;
+}
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -169,7 +188,7 @@
                 <tbody>
                     {% for p in approved_items %}
 
-                  
+                
                         <tr class="item-row" id="{{ p.id }}">
 
                     <td>
@@ -205,6 +224,14 @@
 
 
 
+                        </tr>
+            
+                    {% endfor %}
+
+                </tbody>
+            </table>
+    
+    </div>
                     <td>
                         <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
@@ -212,12 +239,12 @@
                     </td>
 
                 </tr>
-                {% endfor %}
+
         </tbody>
     </table>
 </div>
 </div>
-       
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

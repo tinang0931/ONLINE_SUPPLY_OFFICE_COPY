@@ -142,7 +142,7 @@ def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
-          
+        
         user = authenticate(request, username=username, password=pass1)
         if user is not None and user.is_active:
             auth_login(request, user)
@@ -336,14 +336,14 @@ def cdpurchase_approval(request, pr_id):
             'user': request.user,
             'pr_id': pr_id,
             'status': checkouts.status
-     }
+    }
 
-   
+
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 def bac_home(request):
     
-  
+
     checkouts = Pr_identifier.objects.select_related('user').all()
 
     context = {
@@ -1171,17 +1171,22 @@ def preqform_cd(request, pr_id):
         return redirect('cdpurchase')
 
     elif request.method == 'GET':
-            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-            context = {
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkouts': checkouts,
+            'checkout_items': checkout_items,
+            'pr_id': pr_id,
+    }
+    checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+    context = {
                 'checkouts': checkout,
                 'checkout_items': checkout_items,
                 'pr_id': pr_id,
             }
-            
-            print("pr_id:", pr_id)
-
-
-            return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+    
+    print("pr_id:", pr_id)
+    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_item(request, id):

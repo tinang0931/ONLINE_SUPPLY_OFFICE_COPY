@@ -42,7 +42,7 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-       
+    
         self.is_admin = self.user_type == 'admin'
         self.is_regular = self.user_type == 'regular'
         self.is_cd = self.user_type == 'cd'
@@ -196,7 +196,7 @@ class CheckoutItems(models.Model):
 
 
 
-   
+
 
 class CSV(models.Model):
     id = models.AutoField(primary_key=True)
