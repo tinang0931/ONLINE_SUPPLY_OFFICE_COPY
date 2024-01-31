@@ -369,7 +369,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   content-visibility: auto;
   height: 50px;
 }
-/static/images/left-arrow-square.png.png
+static/images/left-arrow-square.png.png
 
 .arrow_img {
   height: 30px;
@@ -3366,4 +3366,34 @@ button {
 
 .fab.fa-youtube:hover {
   color:  #FF0000;
+}
+
+.alert-container {
+  margin-top: 20px;
+}
+
+
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  font-weight: 700;
+  top: 50%;
+  left: 40%;
+  font-size: large;
+}
+
+
+.alert {
+  padding: 10px;
+  border: 1px solid #d9534f;
+  border-radius: 4px;
+  color: #a94442;
+  background-color: #f2dede;
+  list-style-type: none;
+}
+
+.alert li {
+  margin-bottom: 5px;
 }
