@@ -458,18 +458,17 @@
     }
 
     $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
-}
+    }
 
-$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
+    $('[name="price"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
     updateTotalForAllItems();
-});
-
-$('[name="price"]').on('input', function() {
-    updateTotalForAllItems();
-});
-
-updateTotalForAllItems();
-
 
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
