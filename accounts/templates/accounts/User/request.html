@@ -129,7 +129,7 @@
 
                     {% for p in items %}
 
-                    <form action="{% url 'catalogue' %}" method="post">
+                    <form id="catalogueForm" action="{% url 'catalogue' %}" method="post">
                         {% csrf_token %}
                         <tr class="item-row" id="{{ p.id }}">
                             <td>{{ p.Item_name }}
@@ -141,20 +141,53 @@
                             <td>{{ p.Unit }}
                                 <input type="hidden" name="unit" value="{{ p.Unit }}">
                             </td>
-                            
                             <td>{{ p.Price }}
                                 <input type="hidden" name="price" value="{{ p.Price }}">
                             </td>
                             <td>
-                                {% if item_submitted %}
-                            {% else %}
-                            <button type="submit"> ➕
-                            </button>
-                            {% endif %}
+                                <button class="submitButton">➕ </button>
+                               
                             </td>
-
                         </tr>
                     </form>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Function to change button appearance to green checkmark and submit the form
+                            function toggleButtonAndSubmitForm(button) {
+                                button.innerHTML = "✓"; // Change button content to checkmark
+                                button.style.backgroundColor = "green"; // Change button background color
+                    
+                                // Delay disabling the button for a short duration (e.g., 500 milliseconds)
+                                setTimeout(function() {
+                                    button.disabled = true; // Disable the button after a delay
+                                    saveButtonStatus(button); // Save button status to local storage
+                                }, 500);
+                            }
+                    
+                            // Function to save button status to local storage
+                            function saveButtonStatus(button) {
+                                var buttonId = button.id; // Get button ID
+                                var formName = button.getAttribute("data-form"); // Get form name from data attribute
+                                localStorage.setItem(buttonId, 'submitted'); // Save button status
+                                console.log("Form submitted: " + formName); // Log the form name
+                            }
+                    
+                            // Get all submit buttons and attach event listeners
+                            var submitButtons = document.querySelectorAll(".submitButton");
+                            submitButtons.forEach(function(button) {
+                                button.addEventListener("click", function(event) {
+                                    toggleButtonAndSubmitForm(button); // Change button appearance
+                                });
+                            });
+                        });
+                    </script>
+                    
+                    
+                    
+                    
+                    
+                    
+                   
                     {% endfor %}
                     {%endfor%}
                 </tbody>
@@ -165,40 +198,6 @@
         </div>
 
 
-
-                    <div class="form-group">
-                        <label for="Item">Item</label>
-                        <input type="text" class="form-control" id="Item" name="item" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Item_Brand_Description">Item Brand/Description</label>
-                        <input type="text" class="form-control" id="Item_Brand_Description"
-                            name="item_Brand_Description" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Unit">Unit</label>
-                        <input type="text" class="form-control" id="Unit" name="unit" required>
-                    </div>
-
-                          <div class="form-group"> 
-                              <label for="Unit">Unit Cost</label>
-                              <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                          </div>
-                          
-                          <div class="form-group">
-                              <label for="Quantity">Quantity</label>
-                              <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                          </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
     <style>
        button {

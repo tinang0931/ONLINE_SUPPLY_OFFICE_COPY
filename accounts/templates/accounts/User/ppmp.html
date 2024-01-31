@@ -153,7 +153,46 @@
             <img src="{% static 'images/previous_189252.png' %}">
         </a>
     </div>
+    <div class="row">
+        <div class="col-md-4 ml-auto text-right">
+            <select id="selectYear">
+                <option value="select year">Select Year</option>
+                <option value="2031">2020</option>
+                <option value="2031">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2024">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2031</option>
+                <option value="2031">2032</option>
+                <option value="2031">2033</option>
+                <option value="2031">2034</option>
+                <option value="2031">2035</option>
+                <option value="2031">2036</option>
+                <option value="2031">2037</option>
+                <option value="2031">2038</option>
+                <!-- Add more years as needed -->
+            </select>
+        </div>
+    </div>
+    
 
+    <div class="row">
+        <div class="col-md-4 ml-auto text-right">
+            <h5> TOTAL ALLOCATED BUDGET : 1,000,000 </h5>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4 ml-auto text-right">
+              <label for="estimate_budget"> TOTAL AMOUNT :</label>
+              <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+            </div>
+          </div>
 
     <div class="row">
         <div class="col-md-1 mb-0">
@@ -163,17 +202,6 @@
         </div>
     </div>
 
-    
-    <div class="row">
-        <div class="text-left">
-            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        </div>
-        <div class="text-center">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-        </div>
-    </div>
-    
 
 
     <div class="table-responsive">
@@ -352,7 +380,6 @@
     </div>
 </div>
 
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
@@ -464,7 +491,7 @@
         totalValue += rowTotal;
     });
 
-    var allocatedBudget = 20000; // Set your allocated budget here
+    var allocatedBudget = 1000000; // Set your allocated budget here
 
     if (totalValue >= allocatedBudget) {
         alert('Budget limit reached! Further input is disabled.');
@@ -489,7 +516,11 @@ $('[name="price"]').on('input', function() {
 updateTotalForAllItems();
 
 
+
+
 </script>
+
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
