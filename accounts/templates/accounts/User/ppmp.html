@@ -124,7 +124,38 @@
         opacity: 1;
     }
     .table-responsive {
-    margin-top: -1vh; /* Adjust the margin-top value as needed to move the table upward */
+    margin-top: -4vh; 
+    }
+
+    .custom-dropdown .btn::after{
+        display:none;
+    }
+   
+    .custom-dropdown .btn {
+        position: fixed;
+        top: 3vh;
+        right: 3vh;
+        z-index: 1000;
+        background-color: #1c96c5;
+        color: whitesmoke;
+        border: none;
+        transition: all 0.5s ease;
+        padding: 5px 10px;
+        padding-right: 30px;
+        width: 120px;
+        margin-top: 25vh;
+    }
+
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #1c96c5;
+        color: whitesmoke;
+    }
+    .custom-dropdown .btn:hover {
+        background-color: #1c96c5;
+    }
+    h5 {
+    margin-top: -20px; /* Adjust the negative margin to move it upward */
 }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
