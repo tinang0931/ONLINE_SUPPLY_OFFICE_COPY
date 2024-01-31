@@ -7,10 +7,13 @@
         "boabout",
         "bohistory",
         "bohome",
+        "bolanding",
         "borequest",
         "cdabout",
+        "cdlanding",
         "cdppmp",
         "cdpurchase",
+        "cdpurchaseapproval",
         "cdresolution",
         "febs",
         "jans",
@@ -23,7 +26,9 @@
         "ppmp",
         "preqform",
         "purchaseorder",
+        "purchasetracker",
         "pymongo",
-        "uidb"
+        "uidb",
+        "userlanding"
     ]
 }

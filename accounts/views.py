@@ -10,8 +10,6 @@ from typing import ItemsView
 import logging
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
-
-from accounts.forms import UserForm
 from .models import *
 import csv
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -338,14 +336,14 @@ def cdpurchase_approval(request, pr_id):
             'user': request.user,
             'pr_id': pr_id,
             'status': checkouts.status
-     }
+    }
 
-   
+
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 def bac_home(request):
     
-  
+
     checkouts = Pr_identifier.objects.select_related('user').all()
 
     context = {
@@ -1180,17 +1178,15 @@ def preqform_cd(request, pr_id):
             'checkout_items': checkout_items,
             'pr_id': pr_id,
     }
-            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-            context = {
+    checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+    context = {
                 'checkouts': checkout,
                 'checkout_items': checkout_items,
                 'pr_id': pr_id,
             }
-            
-            print("pr_id:", pr_id)
-
-
-            return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+    
+    print("pr_id:", pr_id)
+    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_item(request, id):
