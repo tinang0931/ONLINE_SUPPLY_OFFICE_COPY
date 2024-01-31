@@ -76,6 +76,45 @@
         max-height:400px;  
     }
   }
+
+  .table-responsive {
+    margin-top: -6vh; 
+    }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+    }
+    
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    .bck:hover::before {
+        opacity: 1;
+    }
+    
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -86,9 +125,13 @@
     <div class="container">
         <h1 style="margin-left: 45%;"> CATALOGUE</h1>
     </div>
+    <div class="bck">
+        <a href="{% url 'ppmp' %}">
+            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+        </a>
+    </div>
 
     <div class="row">
-      
             <div class="search" style="position: relative; text-align: right;">
                 <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
                 <!-- <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
@@ -96,15 +139,7 @@
             
         </div>
 
-        
-
-        <div class="bckbtn">
-            <a href="{% url 'ppmp' %}">
-                <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
-            </a>
-        </div>
-        <div>
-</div>
+        <div class="table-responsive">
             <table class="table table-bordered custom-table">
                 <thead>
                     <tr>

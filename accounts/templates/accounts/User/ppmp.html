@@ -117,8 +117,9 @@
     .bck:hover::before {
         opacity: 1;
     }
+    
     .table-responsive {
-    margin-top: -3vh; /* Adjust the margin-top value as needed to move the table upward */
+    margin-top: -6vh; 
     }
 
     .custom-dropdown .btn::after{
@@ -157,7 +158,7 @@
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
     <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
     <div class="bck">
         <a href="{% url 'myppmp' %}">
@@ -192,13 +193,15 @@
     </div>
    
     <div class="row">
-        <div class="text-left">
+        <div class=" col-md-6 text-left">
             <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        <div class="text-center" style="margin-top: -9vh;">
+        </div>
+        <div class="col-md-6 text-center" style="margin-top: -5vh;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
-    
+    </div>
+
     <div class="table-responsive">
 
         <form action="{% url 'ppmp' %}" method="post">
