@@ -61,6 +61,11 @@ def bac_request(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html')
 
 
+@regular_user_required
+def userlanding(request):
+    return render(request, 'accounts/User/userlanding.html')
+
+
 def landing(request):
     return render(request, 'accounts/User/landing.html')
 
@@ -123,8 +128,6 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-
-
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -139,7 +142,7 @@ def login(request):
             if user.user_type == 'admin':
                 return redirect('admin_home')  
             elif user.user_type == 'regular':
-                return redirect('myppmp')
+                return redirect('userlanding')
             elif user.user_type == 'cd':
                 return redirect('cdpurchase')
             elif user.user_type == 'budget':
@@ -681,7 +684,9 @@ def ppmp(request):
     
         items = Item.objects.all()
     
-    return render(request, 'accounts/User/ppmp.html', {'items': items})
+        return render(request, 'accounts/User/ppmp.html', {'items': items})
+
+
 
 
 
@@ -1176,6 +1181,7 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
+@regular_user_required
 def purchasetracker(request):
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
@@ -1185,5 +1191,3 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
-
-
