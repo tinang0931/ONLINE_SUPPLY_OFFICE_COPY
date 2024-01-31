@@ -71,6 +71,8 @@
     }
 </style>
 
+
+
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -105,12 +107,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% if checkout_items %}
                     {% for p in checkout_items %}
-                    <form action="{% url 'approved_ppmp'  %}" method="post" class="item-form">
+                    <form action="{% url 'approved_ppmp' %}" method="post" class="item-form">
                         {% csrf_token %}
                         <tr class="item-row" id="row{{ p.id }}">
                             <td>{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
-                            <td>{{ p.item_brand_description }}<input type="hidden" name="item_brand" value="{{ p.item_brand_description }}"></td>
+                            <td>{{ p.item_brand_description }}<input type="hidden" name="item_brand"
+                                    value="{{ p.item_brand_description }}"></td>
                             <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
                             <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>
                             <td>
@@ -119,123 +123,128 @@
                         </tr>
                     </form>
                     {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">No Approved PPMP yet.</td>
+                    </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
-        
-        
-    <style>
-        button {
-            padding: 5px 10px;
-            /* Adjusted padding */
-            border: unset;
-            border-radius: 15px;
-            color: #212121;
-            z-index: 1;
-            background: #e8e8e8;
-            position: relative;
-            font-weight: 1000;
-            font-size: 14px;
-            /* Adjusted font size */
-            -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-            box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-            transition: all 250ms;
-            overflow: hidden;
-        }
-
-        button::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0;
-            border-radius: 15px;
-            background-color: #1c96c5;
-            z-index: -1;
-            -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-            box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-            transition: all 250ms;
-        }
-
-        button:hover {
-            color: #e8e8e8;
-            /* Change color to white when hovered */
-        }
-
-        button:hover::before {
-            width: 100%;
-        }
-    </style>
 
 
+        <style>
+            button {
+                padding: 5px 10px;
+                /* Adjusted padding */
+                border: unset;
+                border-radius: 15px;
+                color: #212121;
+                z-index: 1;
+                background: #e8e8e8;
+                position: relative;
+                font-weight: 1000;
+                font-size: 14px;
+                /* Adjusted font size */
+                -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+                box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+                transition: all 250ms;
+                overflow: hidden;
+            }
+
+            button::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0;
+                border-radius: 15px;
+                background-color: #1c96c5;
+                z-index: -1;
+                -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+                box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+                transition: all 250ms;
+            }
+
+            button:hover {
+                color: #e8e8e8;
+                /* Change color to white when hovered */
+            }
+
+            button:hover::before {
+                width: 100%;
+            }
+        </style>
 
 
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-
-            function updateEstimateBudgetForRow(row) {
-
-                var unitPrice = parseFloat(row.find('[name="price"]').val());
 
 
-                var totalValue = 0;
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                function updateEstimateBudgetForRow(row) {
+
+                    var unitPrice = parseFloat(row.find('[name="price"]').val());
 
 
-                row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
-                    var monthValue = parseFloat($(this).val()) || 0;
-                    totalValue += monthValue;
+                    var totalValue = 0;
+
+
+                    row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+                        var monthValue = parseFloat($(this).val()) || 0;
+                        totalValue += monthValue;
+                    });
+
+
+                    var estimateBudget = totalValue * unitPrice;
+
+
+                    row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
+                }
+
+
+                $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
+
+                    var row = $(this).closest('tr.item-row');
+                    updateEstimateBudgetForRow(row);
                 });
 
 
-                var estimateBudget = totalValue * unitPrice;
+                $('[name="price"]').on('input', function () {
 
-
-                row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
-            }
-
-
-            $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
-                var row = $(this).closest('tr.item-row');
-                updateEstimateBudgetForRow(row);
+                    var row = $(this).closest('tr.item-row');
+                    updateEstimateBudgetForRow(row);
+                });
             });
 
 
-            $('[name="price"]').on('input', function () {
-
-                var row = $(this).closest('tr.item-row');
-                updateEstimateBudgetForRow(row);
-            });
-        });
-
-
-        function scrollToCategory() {
-            var selectedCategory = document.getElementById('dropdownMenuSelect').value;
-            var table = document.getElementById(selectedCategory);
-            if (table) {
-                table.scrollIntoView({ behavior: 'smooth' });
+            function scrollToCategory() {
+                var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+                var table = document.getElementById(selectedCategory);
+                if (table) {
+                    table.scrollIntoView({ behavior: 'smooth' });
+                }
             }
-        }
-    </script>
+        </script>
 
-    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                <div class="modal-body">
+                    <div class="modal-body">
 
                         {% csrf_token %}
                         <div class="form-group">
@@ -268,165 +277,165 @@
                             <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
 
                         </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
+        <script>
 
-        function highlightInput(input) {
-            input.select();
-        }
-
-
-        function filterTable() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search_bar_request");
-            filter = input.value.toUpperCase();
-            table = document.querySelector(".table-striped");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
+            function highlightInput(input) {
+                input.select();
             }
-        }
 
 
+            function filterTable() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("search_bar_request");
+                filter = input.value.toUpperCase();
+                table = document.querySelector(".table-striped");
+                tr = table.getElementsByTagName("tr");
 
-
-        $(document).ready(function () {
-            // Add click event to checkboxes
-            $('.row-checkbox').on('click', function () {
-                // Find the closest tr and toggle the 'selected' class
-                $(this).closest('tr').toggleClass('selected');
-            });
-        });
-
-        const categoryFilter = document.getElementById('category_filter');
-        const productTables = document.querySelectorAll('.table table');
-
-        categoryFilter.addEventListener('change', (event) => {
-            const selectedCategory = event.target.value;
-            const filteredProducts = {};
-
-            if (selectedCategory !== 'all') {
-                for (const productTable of productTables) {
-                    const categoryName = productTable.querySelector('h3').textContent;
-                    if (categoryName === selectedCategory) {
-                        const products = productTable.querySelectorAll('tbody tr');
-                        for (const product of products) {
-                            const itemName = product.querySelector('td:nth-child(2)').textContent;
-                            const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                            const unit = product.querySelector('td:nth-child(4)').textContent;
-                            const price = product.querySelector('td:nth-child(5)').textContent;
-
-                            if (!filteredProducts[categoryName]) {
-                                filteredProducts[categoryName] = [];
-                            }
-
-                            filteredProducts[categoryName].push({
-                                itemName,
-                                itemDescription,
-                                unit,
-                                price
-                            });
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
                         }
                     }
                 }
             }
 
-            // Update the displayed items based on the filtered products
-            updateProductTables(filteredProducts);
-        });
 
 
-        function updateProductTables(filteredProducts) {
-            for (const productTable of productTables) {
-                productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
 
-                const categoryName = productTable.querySelector('h3').textContent;
-                const products = filteredProducts[categoryName] || [];
+            $(document).ready(function () {
+                // Add click event to checkboxes
+                $('.row-checkbox').on('click', function () {
+                    // Find the closest tr and toggle the 'selected' class
+                    $(this).closest('tr').toggleClass('selected');
+                });
+            });
 
-                for (const product of products) {
-                    const row = document.createElement('tr');
+            const categoryFilter = document.getElementById('category_filter');
+            const productTables = document.querySelectorAll('.table table');
 
-                    const itemNameCell = document.createElement('td');
-                    itemNameCell.textContent = product.itemName;
-                    row.appendChild(itemNameCell);
+            categoryFilter.addEventListener('change', (event) => {
+                const selectedCategory = event.target.value;
+                const filteredProducts = {};
 
-                    const itemDescriptionCell = document.createElement('td');
-                    itemDescriptionCell.textContent = product.itemDescription;
-                    row.appendChild(itemDescriptionCell);
+                if (selectedCategory !== 'all') {
+                    for (const productTable of productTables) {
+                        const categoryName = productTable.querySelector('h3').textContent;
+                        if (categoryName === selectedCategory) {
+                            const products = productTable.querySelectorAll('tbody tr');
+                            for (const product of products) {
+                                const itemName = product.querySelector('td:nth-child(2)').textContent;
+                                const itemDescription = product.querySelector('td:nth-child(3)').textContent;
+                                const unit = product.querySelector('td:nth-child(4)').textContent;
+                                const price = product.querySelector('td:nth-child(5)').textContent;
 
-                    const unitCell = document.createElement('td');
-                    unitCell.textContent = product.unit;
-                    row.appendChild(unitCell);
+                                if (!filteredProducts[categoryName]) {
+                                    filteredProducts[categoryName] = [];
+                                }
 
-                    const priceCell = document.createElement('td');
-                    priceCell.textContent = product.price;
-                    row.appendChild(priceCell);
-
-                    productTable.querySelector('tbody').appendChild(row);
+                                filteredProducts[categoryName].push({
+                                    itemName,
+                                    itemDescription,
+                                    unit,
+                                    price
+                                });
+                            }
+                        }
+                    }
                 }
-            }
-        }
+
+                // Update the displayed items based on the filtered products
+                updateProductTables(filteredProducts);
+            });
 
 
-        // Call a server-side function to handle the import
+            function updateProductTables(filteredProducts) {
+                for (const productTable of productTables) {
+                    productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
 
-        // Function to get CSRF token from cookies
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
+                    const categoryName = productTable.querySelector('h3').textContent;
+                    const products = filteredProducts[categoryName] || [];
+
+                    for (const product of products) {
+                        const row = document.createElement('tr');
+
+                        const itemNameCell = document.createElement('td');
+                        itemNameCell.textContent = product.itemName;
+                        row.appendChild(itemNameCell);
+
+                        const itemDescriptionCell = document.createElement('td');
+                        itemDescriptionCell.textContent = product.itemDescription;
+                        row.appendChild(itemDescriptionCell);
+
+                        const unitCell = document.createElement('td');
+                        unitCell.textContent = product.unit;
+                        row.appendChild(unitCell);
+
+                        const priceCell = document.createElement('td');
+                        priceCell.textContent = product.price;
+                        row.appendChild(priceCell);
+
+                        productTable.querySelector('tbody').appendChild(row);
                     }
                 }
             }
-        }
-
-        function filterTable() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search_bar_request");
-            filter = input.value.toUpperCase();
-            table = document.querySelector(".table-striped");
-            tr = table.getElementsByTagName("tr");
 
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
+            // Call a server-side function to handle the import
+
+            // Function to get CSRF token from cookies
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
                     }
                 }
             }
-        }
+
+            function filterTable() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("search_bar_request");
+                filter = input.value.toUpperCase();
+                table = document.querySelector(".table-striped");
+                tr = table.getElementsByTagName("tr");
 
 
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+
+
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
 
 
-    {% endblock %}
+        {% endblock %}

@@ -156,26 +156,17 @@ cursor: pointer;
       </td> 
 
       <td>
-        <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
+        <a href="{% url 'cdpurchase_approval' pr_id=checkout.pr_id %}">
           <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
         </a>
       </td>
 
   
-  
       <td class="text-center">
-        {% if checkout.bo_status %}
-            <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
-                <i class="fas fa-check-circle" style="background-color: transparent;"></i>
-            </span>
-        {% elif checkout.new_status %}
-            <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
-                <i class="fas fa-check-circle" style="background-color: transparent;"></i>
-            </span>
-        {% else %}
-            <span class="badge" style="color: red; padding: 8px 12px; font-size: 16px;">
-                <i class="fas fa-clock" style="background-color: transparent;"></i>
-            </span>
+        {% if checkout.status %}
+            
+        <span class="fas fa-circle text-danger">  {{ checkout.status }}</span>
+
         {% endif %}
     </td>
     

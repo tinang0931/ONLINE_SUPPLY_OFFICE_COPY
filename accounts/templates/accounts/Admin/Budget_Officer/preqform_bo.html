@@ -199,6 +199,10 @@
 
     <div class="table-responsive">
 
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post"  id="form_id">
+
+            {% csrf_token %}
+
 
         <table class="table table-bordered" style="margin-top: 1px;">
                 <thead>
@@ -230,6 +234,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     {% for p in checkout_items %}
                        
                         <tr class="item-row" id="{{ p.id }}">
@@ -305,7 +310,7 @@
             <footer class="footer">
                 <div class="icons-container">
                     <div class="input-box">
-                        <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
+                        <input placeholder="Type your comment" name="comment_content" id="comment_input" >
                     </div>
                     <input id="new_status_id" type="hidden" name="new_status">
                     <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
@@ -319,6 +324,22 @@
                     </a>
                 </div>
             </footer>
+</form>
+            
+
+            <script>
+                function btn_click(approve) {
+                    // Get the hidden input element by its ID
+                    var newStatusInput = document.getElementById('new_status_id');
+            
+                    // Set the value based on the 'approve' parameter
+                    newStatusInput.value = approve ? 'approved' : 'declined';
+            
+                    // Submit the form programmatically
+                    var form = document.getElementById('form_id');
+                    form.submit();
+                }
+            </script>
 
 
        
