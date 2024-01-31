@@ -56,7 +56,6 @@ textarea.form-control {
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -168,18 +167,7 @@ textarea.form-control {
           });
       });
 
-        $(document).ready(function () {
-          function calculateTotal() {
-            var totalAmount = 0;
-            $(".item_total_cost").each(function () {
-              var itemCost = parseFloat($(this).text());
-              totalAmount += itemCost;
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
 
-          calculateTotal();
-        });
       </script>
 
       <footer class="fixed-bottom p-2"
@@ -195,7 +183,7 @@ textarea.form-control {
             </div>
             <div class="col-md-4">
               <div class="text-right" style="color:#FFFFFF">
-                <span>Total Amount: ₱<span id="total_amount">0.00</span></span>
+                <span >Total Amount: ₱<span id="total_amount">0.00</span></span>
               </div>
             </div>
             <div class="col-md-4">

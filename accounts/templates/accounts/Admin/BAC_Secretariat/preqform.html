@@ -389,7 +389,7 @@ position: relative;
                 <div class="justify-content">
                     <div class="col-md-12">
                         <div class="mx-auto">
-                            <form action="" method="post">
+                            <form action="{% url 'preqform' pr_identifier.pr_id %}" method="post" id="form_id">
                                 {% csrf_token %}
                                 <table class="table-bordered table-fixed" style="width: 115%" position="center">
                                     <tr>
@@ -504,7 +504,7 @@ position: relative;
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
