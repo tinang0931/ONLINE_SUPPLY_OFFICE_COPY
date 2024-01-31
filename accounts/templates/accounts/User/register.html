@@ -38,7 +38,7 @@
             background: rgba(255, 255, 255, 0.486);
             border-radius: 3px;
             box-shadow: 0 0 3px black;
-            width: 102%;
+            width: 40vh;
         }
 
         input[type="number"]::-webkit-inner-spin-button,
@@ -50,13 +50,8 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
-    .container {
-        width: 900px;
-        
-            
-            
-    } 
-    .input-box label {
+    
+     .input-box label {
         display: flex;
         align-items: center; 
         margin-bottom: 10px; 
@@ -71,7 +66,35 @@
     .register-details .details {
         font-size: 20px; 
     }
+    .input-box1 {
+        display: flex;
+        flex-wrap: wrap;
+    }
     
+    .input-box1 label {
+        margin-right: 20px;
+    }
+    
+    .input-box1 .checkbox-label {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .input-box1 .checkbox-box {
+        margin-left: 5px;
+    }
+    .btn {
+        background-color: #f38c06;
+        color: black;
+    }
+    .btn:hover {
+        background-color: #033768;
+        color: white; 
+    }
+    .checkbox-label.selected {
+        color: #033768;
+    }
     </style>
 </head>
 
@@ -86,9 +109,7 @@
             {% endfor %}
     
             {% endif %} -->
-            <div class="icon-container">
-                <img class="login_icon" src="{% static 'images/register.png' %}" alt="" style="display: block; margin: 0 auto;">
-            </div>
+        
 
         <div class="title">Register</div>
         <form action="{% url 'register' %}" method="post">
@@ -168,30 +189,29 @@
                     <div class="register-details">
     <span class="details">Type of user</span>
 
-    <div class="input-box">
-
-        <label class="checkbox-label" for="bacCheckbox">
-            <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
+    <div class="input-box1">
+        <label class="checkbox-label" for="adminRadio">
+            <input type="radio" name="user_type" id="adminRadio" value="admin">
             <div class="checkbox-box">Admin</div>
         </label>
-
-        <label class="checkbox-label" for="bacCheckbox">
-            <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
+    
+        <label class="checkbox-label" for="bacRadio">
+            <input type="radio" name="user_type" id="bacRadio" value="bac">
             <div class="checkbox-box">BAC Secretariat</div>
         </label>
-
-        <label class="checkbox-label" for="regularCheckbox">
-            <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
+    
+        <label class="checkbox-label" for="cdRadio">
+            <input type="radio" name="user_type" id="cdRadio" value="cd">
             <div class="checkbox-box">Campus Director</div>
         </label>
-
-        <label class="checkbox-label" for="regularCheckbox">
-            <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
+    
+        <label class="checkbox-label" for="budgetRadio">
+            <input type="radio" name="user_type" id="budgetRadio" value="budget">
             <div class="checkbox-box">Budget Officer</div>
         </label>
-
-        <label class="checkbox-label" for="regularCheckbox">
-            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
+    
+        <label class="checkbox-label" for="regularRadio">
+            <input type="radio" name="user_type" id="regularRadio" value="regular">
             <div class="checkbox-box">Regular User</div>
         </label>
     </div>
@@ -200,10 +220,31 @@
                     <p>Already have an Account? <a href="{% url 'login' %}">Login</a></p>
                 </div>
                 
-                <button type="submit" class="btn"> Register </button>
+                <button type="submit" class="btn"> Sign Up </button>
         </form>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get all radio buttons
+            var radioButtons = document.querySelectorAll("input[type='radio'][name='user_type']");
     
+            // Attach click event listeners to each radio button
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener("click", function () {
+                    // Remove 'selected' class from all labels
+                    document.querySelectorAll(".checkbox-label").forEach(function (label) {
+                        label.classList.remove("selected");
+                    });
+    
+                    // Add 'selected' class to the clicked label
+                    var label = document.querySelector("label[for='" + this.id + "']");
+                    if (label) {
+                        label.classList.add("selected");
+                    }
+                });
+            });
+        });
+    </script>
 
     
 </body>
