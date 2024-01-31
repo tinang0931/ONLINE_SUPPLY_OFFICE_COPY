@@ -57,6 +57,9 @@ def bac(request):
 def baclanding(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
 
+def bac_request(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html')
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -142,7 +145,7 @@ def login(request):
             elif user.user_type == 'budget':
                 return redirect('bohome')
             elif user.user_type == 'bac':
-                return redirect('bac_dashboard')
+                return redirect('baclanding')
             else:
                 
                 return redirect('login') 

@@ -75,4 +75,5 @@ urlpatterns = [
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
    path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
    path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
+   path('bac_request/', views.bac_request, name='bac_request'),
 ]
