@@ -59,7 +59,13 @@ def baclanding(request):
 
 
 def bac_request(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html')
+
+    tracker = Pr_identifier.objects.select_related('user').all()
+    context = {
+        'tracker': tracker
+
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
 @cd_required
@@ -239,14 +245,7 @@ def registration(request):
 def regular_user_only_view(request):
     return render(request, 'accounts/User/request.html')
 
-@regular_user_required
-@authenticated_user
-def history(request):
-    user = request.user
-    checkouts = Checkout.objects.filter(user=user)
 
-    
-    return render(request, 'accounts/User/history.html', {'checkouts': checkouts})
 
 @regular_user_required
 @authenticated_user
@@ -339,21 +338,38 @@ def cdpurchase_approval(request, pr_id):
    
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
+
+
 def bac_home(request):
-    
+
+    checkouts = Checkout.objects.select_related('user').all()
   
-    checkouts = Pr_identifier.objects.select_related('user').all()
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'submission_date': checkout.submission_date,
+            'user': checkout.user,
+            'pr_id': checkout.pr_id,
+            'last_updated': checkout.last_updated,
+            'cd_status': checkout.cd_status,  
+            'cd_comment': checkout.cd_comment,
+            'bo_status': checkout.bo_status,
+            'bo_comment': checkout.bo_comment
+            
+        }
+        checkout_data.append(checkout_dict)
 
     context = {
-        'checkouts': checkouts,
-        'user': request.user,
+        'checkouts': checkout_data,
+        'user': request.user
+        
         
     }
 
-    return render(request, 'accounts/Admin/Campus_Director/cdpurchaseapproval.html', context)
 
-def bac_home(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html')
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
 
 def preqform(request, pr_id):
 
@@ -620,7 +636,7 @@ def myppmp(request):
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
 
-    # Filter CheckoutItems based on approved checkouts
+   
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
 
     context = {
