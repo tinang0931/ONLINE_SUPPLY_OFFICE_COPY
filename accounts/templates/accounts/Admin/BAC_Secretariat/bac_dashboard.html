@@ -199,7 +199,7 @@ padding: 6px 12px;
 <body> 
   
   <div class="container-fluid">
-    <h1 class="pr text-center pt-4">Available Items</h1>
+    <h1 class="pr text-center pt-4"><strong>CATALOGUE</strong></h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <label for="file" class="hidden-label" >Choose CSV file:</label>

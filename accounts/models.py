@@ -193,6 +193,7 @@ class CheckoutItems(models.Model):
     nov = models.IntegerField(default=0)
     dec = models.IntegerField(default=0)
     estimate_budget = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    
 
 
 
