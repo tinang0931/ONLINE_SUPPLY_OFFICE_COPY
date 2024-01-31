@@ -108,7 +108,6 @@
     border-radius: 10px;
     color: #ffffff;
     background-color: transparent;
-    box-shadow: 0 4px 8px #f59a2373; 
     transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -132,6 +131,8 @@
 .box:hover {
     background-color: #ffffff; 
     color: #003566; 
+    box-shadow: 0 4px 8px #f59a2373; 
+
 }
 
 
