@@ -89,55 +89,67 @@
     .box {     
         width: 400px;
         height: 65px;
-        background-color: #f0f0f0;
-        margin: 10px 0;
+        background-color: #00356663;
+        margin: -50px auto 70px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto';
         font-size: 20px;
-        border: 2px solid #ffffff;
+        font-weight: 600;
+        border: 1px solid #ffffff;
         border-radius: 10px;
         color: #ffffff;
-        background-color: transparent;
-        transition: box-shadow 0.3s ease-in-out;
+        transition: background-color 0.8s ease;
+        overflow: hidden;
         text-decoration: none;
     }       
-    
+
+    .box:hover {
+        background-color: white;
+        color: #003566;
+        text-decoration: none;
+        border: 2px solid #003566;
+        box-shadow: 0 4px 8px #f59a2373;    
+    }
+
     .box i {
         position: absolute;
         left: 46%;
         font-size: 22px;
+        transform: translateY(0);
         font-weight: 800;
         padding: 0.5%;
         margin: 10px 0;
         font-weight: bolder;
         color: #ffffff;
+        background-color: #e1942c;
         border: 1px solid #ffff;
         border-radius: 50%;
         text-decoration: none;
     }
     
-    .box:hover i{
-        text-decoration: none;
-    }
-    
-    .box:hover {
-        background-color: #ffffff; 
-        color: #003566; 
-        box-shadow: 0 4px 8px #f59a2373; 
-        text-decoration: none;
-    }
-    
-    .box:hover span {
+    .box:hover i {
+        border-color: black;
+        color: black;
         text-decoration: none;
     }
     
     .box a {
         text-decoration: none;
+        color: inherit;
+        padding: 5px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .box a:hover {
         text-decoration: none;
+        color: #003566;
+    }  
+
+    .box span {
+        text-decoration: none;
     }
-    

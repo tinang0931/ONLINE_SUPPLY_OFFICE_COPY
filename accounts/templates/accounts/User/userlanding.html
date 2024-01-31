@@ -42,52 +42,39 @@
 
         <div class="d-flex" id="wrapper">
             <div class="box-container">
-                <a  href="{% url 'myppmp'%}"> 
-                    <div class="box ppmp">
-                        <i class="bi bi-file-earmark-medical"></i>
-                       <span id="myPpmp" class="hidden-name">PPMP</span>  
-                    </div>
+                <a href="{% url 'myppmp' %}" class="box ppmp">
+                    <i class="bi bi-file-earmark-medical"></i>
+                    <span id="myPpmp" class="hidden-name">PPMP</span>
                 </a>
-                <a href="{% url 'purchase'%}">
-                    <div class="box pr">
-                        <i class="bi bi-bag-check"></i> <span id="purchaseRequest" class="hidden-name">PURCHASE REQUEST</span>
-                    </div>
+                <a href="{% url 'purchase' %}" class="box pr">
+                    <i class="bi bi-bag-check"></i> 
+                    <span id="purchaseRequest" class="hidden-name">PURCHASE REQUEST</span>
                 </a>
-                <a href="{% url 'tracker'%}">
-                    <div class="box tracker">
-                        <i class="bi bi-geo-alt"></i> 
-                        <span id="ppmpTracker" class="hidden-name">PPMP TRACKER</span>
-                    </div>
+                <a href="{% url 'tracker' %}" class="box tracker">
+                    <i class="bi bi-geo-alt"></i> 
+                    <span id="ppmpTracker" class="hidden-name">PPMP TRACKER</span>
                 </a>
-                <a href="{% url 'tracker'%}">
-                    <div class="box tracker">
-                   
-                        <i class="bi bi-geo-alt"></i> 
-                        <span id="requestTracker" class="hidden-name">PR TRACKER</span>
-                    </div>
+                <a href="{% url 'tracker' %}" class="box tracker">
+                    <i class="bi bi-geo-alt"></i> 
+                    <span id="requestTracker" class="hidden-name">PR TRACKER</span>
                 </a>
-                <a href="{% url 'history'%}">
-                    <div class="box history">
-                        <i class="bi bi-clock-history"></i> 
-                        <span id="history" class="hidden-name">HISTORY</span>
-                        
-                    </div>
+                <a href="{% url 'history' %}" class="box history">
+                    <i class="bi bi-clock-history"></i> 
+                    <span id="history" class="hidden-name">HISTORY</span>
                 </a>
-                <a href="{% url 'about'%}">
-                    <div class="box about">
-                        <i class="bi bi-info-circle"></i> 
-                        <span id="about" class="hidden-name">ABOUT</span>
-                    </div>
+                <a href="{% url 'about' %}" class="box about">
+                    <i class="bi bi-info-circle"></i> 
+                    <span id="about" class="hidden-name">ABOUT</span>
                 </a>
                 <br>
                 <br>
                 <br>
-                <a href="{% url 'logout_user'%}">
-                    <div class="box logout">
-                        <i class="bi bi-box-arrow-left"></i>
-                        <span id="logout" class="hidden-name">LOG OUT</span>
-                    </div>
+                <br>
+                <a href="{% url 'logout_user' %}" class="box logout">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span id="logout" class="hidden-name">LOG OUT</span>
                 </a>
             </div>
+            
         </div>
     
