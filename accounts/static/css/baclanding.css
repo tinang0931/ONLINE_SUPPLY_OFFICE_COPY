@@ -16,6 +16,7 @@ body {
       width: 100%;
     }
 }
+
     .bg-light {
         background: linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0.151) 170.25%) !important;
     }   
@@ -65,34 +66,35 @@ body {
     .box-container {
         display: flex;
         justify-content: center;
-        align-items: center; 
-        height: 100vh; 
-        flex-direction: column; 
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
     }
     
     .box {
         width: 20%;
-        height: 7%;
-        background-color: #003566; 
-        margin: -100px auto 120px;
+        height: 8%;
+        background-color: #003566;
+        margin: -80px auto 120px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        font-family: 'Roboto'; 
+        font-family: 'Roboto';
         font-size: 20px;
-        border: 2px solid #003566;
+        border: 2px solid white;
         border-radius: 10px;
-        color: white; 
+        color: white;
         position: relative;
-        transition: background-color 0.5s ease; 
+        transition: background-color 0.5s ease;
         overflow: hidden;
         text-decoration: none;
     }
     
     .box:hover {
-        background-color: white; 
-        color: #003566; 
+        background-color: white;
+        color: #003566;
         text-decoration: none;
+        border: 2px solid #003566;
     }
     
     .box i {
@@ -106,21 +108,26 @@ body {
         border: 1px solid white;
         background-color: transparent;
         padding: 5px;
+        text-decoration: none;
     }
     
     .box:hover i {
-        border-color: #003566; 
-        color: #003566; 
-        text-decoration: none;   
-     }
+        border-color: #003566;
+        color: #003566;
+        text-decoration: none;
+    }
     
     .box a {
         text-decoration: none;
         color: inherit;
-        padding: 5px 0; 
+        padding: 5px 0;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     
+    .box a:hover {
+        text-decoration: none;
+        color: #003566;
+    }    
