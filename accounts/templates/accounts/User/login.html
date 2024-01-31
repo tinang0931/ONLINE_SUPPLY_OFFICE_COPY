@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,8 +19,6 @@
     <title>Login Page</title>
 </head>
 
-
-
 <body>
     <div class="title">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
     
@@ -27,13 +26,13 @@
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
             
-            <!-- {% if messages %}
+            {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-danger" role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
-            {% endif %} -->
+            {% endif %}
 
             <h1>Sign In</h1>
 

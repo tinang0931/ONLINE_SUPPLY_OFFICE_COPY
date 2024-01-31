@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$0$us08g%r@266))x3tyr5_hg0c1&k6u9ak#2zaj=(!!i-d^r+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.28.52.133','172.28.20.119', '127.0.0.1']
+ALLOWED_HOSTS = ['172.28.52.134','172.28.20.119', '127.0.0.1']
 
 # Application definition
 
@@ -144,6 +144,9 @@ static_dir = os.path.join(BASE_DIR, "static")
 # Check if the directory exists, and create it if not
 if not os.path.exists(static_dir):
     os.makedirs(static_dir)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type

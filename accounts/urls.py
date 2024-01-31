@@ -5,12 +5,15 @@ from django.conf.urls.static import static
 from . import views 
 from .views import *
 from .views import checkout_items_view
+from .views import budget_landing
 
 urlpatterns = [ 
    path('',views.landing, name='landing'),
    path('purchaseorder/',views.purchaseorder, name='purchaseorder'),
    path('main/',views.main, name='main'),
    path('bac/', views.bac, name='bac'),
+   path('baclanding/', views.baclanding, name='baclanding'),
+   path('userlanding/', views.userlanding, name='userlanding'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
@@ -23,7 +26,7 @@ urlpatterns = [
    path('tracker/',views.tracker, name='tracker'),
    path('about/',views.about, name='about'),
    path('bac_prof/',views.bac_prof, name='bac_prof'),
-    path('bac_profile/',views.bac_profile, name='bac_profile'),
+   path('bac_profile/',views.bac_profile, name='bac_profile'),
    path('profile/',views.profile, name='profile'),
    path('bac_about/',views.bac_about, name='bac_about'),
    path('bac_home/',views.bac_home, name='bac_home'),
@@ -42,6 +45,7 @@ urlpatterns = [
    path('boabout/',views.boabout, name='boabout'),
    path('bohistory/',views.bohistory, name='bohistory'),
    path('cd/',views.cd, name='cd'),
+   path('cdlanding/',views.cdlanding, name='cdlanding'),
    path('cdabout/',views.cdabout, name='cdabout'),
    path('cdpurchase/',views.cdpurchase, name='cdpurchase'),
    path('cdppmp/',views.cdppmp, name='cdppmp'),
@@ -58,14 +62,13 @@ urlpatterns = [
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
-   path('update_user/<str:username>/', views.update_user, name='update_user'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bohome/',views.bohome, name='bohome'),
    path('boabout/',views.boabout, name='boabout'),
-   path('borequest/',views.borequest, name='borequest'),
    path('bohistory/',views.bohistory, name='bohistory'),
-   path('bac_home/<int:pr_id>/', views.bac_home, name='bac_home'),
-   path('bo_approve/<str:pr_id>/', views.bo_approve, name='bo_approve'),
+   path('cdpurchase_approval/<str:pr_id>/', views.cdpurchase_approval, name='cdpurchase_approval'),
+   path('bac_home/',views.bac_home, name='bac_home'),
+   path('cdppmp_approval/<str:pr_id>/', views.cdppmp_approval, name='cdppmp_approval'),
    path('delete/<int:id>/', views.delete, name='delete'),
    path('update/<int:id>/', views.update, name='update'),
    path('ppmp/',views.ppmp, name='ppmp'),
@@ -73,5 +76,8 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-   
+   path('budget-landing/', budget_landing, name='budget-landing'),
+   path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
+   path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
+   path('bac_request/', views.bac_request, name='bac_request'),
 ]

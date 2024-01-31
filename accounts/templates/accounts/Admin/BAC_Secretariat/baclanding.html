@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/baclanding.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://fonts.google.com/icons"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>BAC Landing Page</title>
+</head>
+
+<body>
+    <main class="flex-shrink">
+        <div id="page-content-wrapper">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="row w-100 m-auto">
+              <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+              </div>
+              <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                  <h1 class="head">Supply Office Request Monitoring System</h1>
+                  <h1 class="p1">Cebu Technological University - Argao Campus</h1>
+              </div>
+              <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+              
+              </div>
+            </div>
+          </nav>
+        </div>
+        <h1 class="welcome">Welcome! You are signed in as a BAC Secretariat.</h1>
+        <div class="box-container">
+            <div class="box ppmp"> 
+                <a href="{% url 'bac_home' %}"> 
+                    <i class="bi bi-file-earmark-medical"></i> PPMP
+                </a> 
+            </div>
+            <div class="box pr"> 
+                <a href="{% url 'bac_request' %}"> 
+                    <i class="bi bi-bag"></i> PR
+                </a> 
+            </div>
+            <div class="box catalogue">
+                <a href="{% url 'bac_dashboard' %}"> 
+                    <i class="bi bi-book-half"></i> CATALOGUE
+                </a> 
+            </div>
+            <div class="box about"> 
+                <a href="{% url 'bac_about' %}"> 
+                    <i class="bi bi-info-circle"></i> ABOUT
+                </a> 
+            </div>
+                <br>
+            <div class="box logout"> 
+                <a href="{% url 'logout_user'%}"> 
+                    <i class="bi bi-box-arrow-left"></i> LOG OUT
+                </a> 
+            </div>
+        </div>
+        
+        
+</body>
+
+</html>

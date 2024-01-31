@@ -30,7 +30,7 @@
                 <h1 class="p1">Cebu Technological University - Argao Campus</h1>
             </div>
             <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-             
+            
                 <a href="{% url 'profile' %}">
                   <img class="profile_img" src="{% static 'images/profile_default_image.png' %}" alt="">
                 </a>
@@ -76,6 +76,14 @@
             margin: 0;
             overflow: hidden; 
         }
+        #wrapper {
+          display: flex;
+      }
+      #page-content-wrapper {
+        flex-grow: 1;
+        overflow: hidden;
+        transition: margin-left 0.5s ease;
+    }
         .container-fluid {
             height: 100%;
             overflow-y: auto;
@@ -86,14 +94,16 @@
             margin-bottom: 1;
           }
           #sidebar {
-            transition: width 0.5s ease-in-out;
+            transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
             overflow: hidden;
-            width: 50px; /* Set your desired initial width */
-          }
+            width: 50px;
+        }
         
-          #sidebar.show-names {
-            width: 300px; /* Set your desired expanded width */
-          }
+        #sidebar.show-names {
+          width: 300px;
+          padding: 0 20px;
+      }
+      
         
           .hidden-name {
             opacity: 0;
@@ -111,15 +121,14 @@
         </style>
         
         <script>
-          function showNames() {
+          function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.add('show-names');
-          }
+            sidebar.classList.toggle('show-names');
+            
+            const pageContentWrapper = document.getElementById('page-content-wrapper');
+            pageContentWrapper.classList.toggle('show-names');
+        }
         
-          function hideNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('show-names');
-          }
         </script>
         
         {% block bac_about %}

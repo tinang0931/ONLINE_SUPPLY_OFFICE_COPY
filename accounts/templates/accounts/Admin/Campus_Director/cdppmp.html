@@ -25,7 +25,7 @@
 
   .form-control {
     display: block;
-    width: 18%;
+    width: 18;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -116,7 +116,8 @@
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4">PPMP REQUESTS</h1>
+  <h1 class="pr-heading text-center pt-4"> <strong>PPMP REQUESTS FOR APPROVAL</strong> </h1>
+
   
   <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
     <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 101%; color: #05708BD2;"></i>
@@ -182,7 +183,7 @@
             {{ checkout.submission_date }}
           </td>
           <td>
-            <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}">
+            <a href="{% url 'cdppmp_approval' pr_id=checkout.pr_id %}">
               <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a ppmp request for approval on {{ checkout.submission_date }}
             </a>
           </td>

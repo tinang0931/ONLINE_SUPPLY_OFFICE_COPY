@@ -5,6 +5,8 @@
 {% block bohome %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+
+
 <style>
   .status {
     width: 30%;
@@ -17,23 +19,25 @@
   }
 
   .bg-success {
-    background-color: #b5e550; /* Adjust this to your desired background color */
-    color: white; /* Adjust this to your desired text color */
+    background-color: #b5e550;
+    color: white;
   }
 
   .no-comment {
-    background-color: lightgray; /* Adjust this to your desired background color */
-    color: black; /* Adjust this to your desired text color */
+    background-color: lightgray;
+    color: black;
+
   }
 
   .table th {
-    background-color: #254b6e; 
+    background-color: #254b6e;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
   }
+
   .form-control {
     width: 18%;
     padding: .375rem .75rem;
@@ -44,39 +48,42 @@
     border-radius: 20px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1300px;
-    border: 2px solid #05708BD2; /* Set border color */
+    border: 2px solid #05708BD2;
   }
 
   .form-control:focus {
-    border-color: #87CEEB; /* Light blue color code */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Optional: Add a subtle box-shadow */
-}
+    border-color: #87CEEB;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
 
   .form-control::selection {
     background-color: #05708BD2;
-    color: #fff; /* Set text color in the selection */
+    color: #fff;
   }
 
   .search-form {
     justify-content: flex-end;
   }
+
   .pr-heading {
     position: sticky;
     top: 0;
-    background-color: #ffffff; /* You can adjust the background color as needed */
-    z-index: 1000; /* Adjust the z-index to make sure it's above other elements on the page */
-    padding: 10px; /* Adjust the padding as needed */
+    background-color: #ffffff;
+    z-index: 1000;
+    padding: 10px;
   }
-  
 </style>
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4">PPMP REQUESTS FOR APPROVAL</h1>
+  <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS FOR APPROVAL</strong></h1>
 
-  
+
   <div class="search" style="position: relative; text-align: right;">
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
-</div>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
+      oninput="filterTable()"
+      style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+    <i class="fas fa-search"
+      style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
+  </div>
 
 
   <table class="table table-bordered">
@@ -86,72 +93,75 @@
         <th class="text-center">Requests for Approval</th>
         <th class="text-center">PR ID</th>
         <th class="status">Status</th>
-        <th class="text-center">Comment</th> 
+        <th class="text-center">Comment</th>
       </tr>
     </thead>
     <tbody>
+      {% if checkouts %}
       {% for checkout in checkouts %}
       <tr>
         <td class="text-center">
           {{ checkout.submission_date }}
         </td>
         <td>
-          <a href="{% url 'bo_approve' pr_id=checkout.pr_id %}">
-            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase request on {{ checkout.submission_date }}
+          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
+            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+            request on {{ checkout.submission_date }}
           </a>
         </td>
 
         <td class="text-center">
           {{ checkout.pr_id }}
         </td>
-    
+
         <td class="text-center">
           {% if checkout.bo_status %}
-              <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
-                  <i class="fas fa-check-circle" style="background-color: transparent;"></i>
-              </span>
-          {% elif checkout.new_status %}
-              <span class="badge" style="color: green; padding: 8px 12px; font-size: 16px;">
-                  <i class="fas fa-check-circle" style="background-color: transparent;"></i>
-              </span>
-          {% else %}
-              <span class="badge" style="color: red; padding: 8px 12px; font-size: 16px;">
-                  <i class="fas fa-clock" style="background-color: transparent;"></i>
-              </span>
+              
+          <span class="fas fa-circle text-danger">  {{ checkout.bo_status }}</span>
+
           {% endif %}
       </td>
-      
+
         <td class="text-center">
           {% if checkout.bo_comment %}
-            {{ checkout.bo_comment }}
+          {{ checkout.bo_comment }}
+
+          {% else %}
+          <span >No Comment</span>
           {% endif %}
         </td>
         <script>
           function filterTable() {
-              // Get input value
-              var searchText = $('#search_bar_request').val().toLowerCase();
-      
-              // Iterate through table rows
-              $('.table tbody tr').each(function () {
-                  var rowText = $(this).text().toLowerCase();
-      
-                  // Check if the row contains the search text
-                  if (rowText.indexOf(searchText) === -1) {
-                      // Hide the row if it doesn't match the search text
-                      $(this).hide();
-                  } else {
-                      // Show the row if it matches the search text
-                      $(this).show();
-                  }
-              });
+            // Get input value
+            var searchText = $('#search_bar_request').val().toLowerCase();
+
+            // Iterate through table rows
+            $('.table tbody tr').each(function () {
+              var rowText = $(this).text().toLowerCase();
+
+              // Check if the row contains the search text
+              if (rowText.indexOf(searchText) === -1) {
+                // Hide the row if it doesn't match the search text
+                $(this).hide();
+              } else {
+                // Show the row if it matches the search text
+                $(this).show();
+              }
+            });
           }
-      </script>
+        </script>
       </tr>
-    {% endfor %}
-    
-  </tbody>
-  
-  
+      {% endfor %}
+
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center"><strong>No PPMP Request Yet.</strong></td>
+      </tr>
+      {% endif %}
+
+    </tbody>
+
+
   </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

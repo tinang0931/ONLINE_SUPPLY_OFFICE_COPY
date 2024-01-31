@@ -1,5 +1,7 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
+{% extends }
+
 
 {% load static %}
 
@@ -76,6 +78,45 @@
         max-height:400px;  
     }
   }
+
+  .table-responsive {
+    margin-top: -6vh; 
+    }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+    }
+    
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    .bck:hover::before {
+        opacity: 1;
+    }
+    
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -86,26 +127,22 @@
     <div class="container">
         <h1 style="margin-left: 45%;"> CATALOGUE</h1>
     </div>
+    <div class="bck">
+        <a href="{% url 'ppmp' %}">
+            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+        </a>
+    </div>
 
     <div class="row">
-      
             <div class="search" style="position: relative; text-align: right;">
                 <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-                <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
+                <!-- <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
             </div>
             
         </div>
 
-        
-
-        <div class="bckbtn">
-            <a href="{% url 'ppmp' %}">
-                <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
-            </a>
-        </div>
-        <div>
-</div>
-            <table class="table table-bordered custom-table" style="border: 2px solid #ccc; ">
+        <div class="table-responsive">
+            <table class="table table-bordered custom-table">
                 <thead>
                     <tr>
                     <tr>
@@ -113,7 +150,7 @@
                         <th > Brand / Description</th>
                         <th >Unit</th>
                         
-                       
+                    
                         <th >Unit Price</th>
                         <th > Select </th>
                     </tr>
@@ -121,43 +158,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tbody>
-                    {% for category, items in grouped_data.items %}
-                    <tr class="category-row">
-                        <th colspan="20">{{ category }}</th>
-                    </tr>
 
-                    {% for p in items %}
-
-                    <form action="{% url 'catalogue' %}" method="post">
-                        {% csrf_token %}
-                        <tr class="item-row" id="{{ p.id }}">
-                            <td>{{ p.Item_name }}
-                                <input type="hidden" name="item" value="{{ p.Item_name }}">
-                            </td>
-                            <td>{{ p.Item_Brand }}
-                                <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
-                            </td>
-                            <td>{{ p.Unit }}
-                                <input type="hidden" name="unit" value="{{ p.Unit }}">
-                            </td>
-                            
-                            <td>{{ p.Price }}
-                                <input type="hidden" name="price" value="{{ p.Price }}">
-                            </td>
-                            <td>
-                                {% if item_submitted %}
-                            {% else %}
-                            <button type="submit"> ➕
-                            </button>
-                            {% endif %}
-                            </td>
-
+                    
+                        {% for category, items in grouped_data.items %}
+                        <tr class="category-row">
+                            <th colspan="20">{{ category }}</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                    {%endfor%}
-                </tbody>
+                    
+                        {% for p in items %}
+                    
+                        <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
+                            {% csrf_token %}
+                            <tr class="item-row" id="{{ p.id }}">
+                                <td>{{ p.Item_name }}
+                                    <input type="hidden" name="item" value="{{ p.Item_name }}">
+                                </td>
+                                <td>{{ p.Item_Brand }}
+                                    <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
+                                </td>
+                                <td>{{ p.Unit }}
+                                    <input type="hidden" name="unit" value="{{ p.Unit }}">
+                                </td>
+                    
+                                <td>{{ p.Price }}
+                                    <input type="hidden" name="price" value="{{ p.Price }}">
+                                </td>
+                                <td>
+                                    {% if item_submitted %}
+                                    {% else %}
+                                    <button type="submit" onclick="hideRow('{{ p.id }}')"> ➕ </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
             </table>
 
 
@@ -261,71 +297,7 @@ button:hover::before {
                 table.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    </script>
 
-    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-
-                        {% csrf_token %}
-
-                        <div class="form-group">
-                            <label for="Item">Item</label>
-                            <input type="text" class="form-control" id="Item" name="item" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Item_Brand_Description">Item Brand/Description</label>
-                            <input type="text" class="form-control" id="Item_Brand_Description"
-                                name="item_Brand_Description" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Unit">Unit</label>
-                            <input type="text" class="form-control" id="Unit" name="unit" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Unit">Unit Cost</label>
-                            <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Quantity">Quantity</label>
-                            <input type="text" class="form-control" id="Quantity" name="quantity" required>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
 
         function highlightInput(input) {
             input.select();
