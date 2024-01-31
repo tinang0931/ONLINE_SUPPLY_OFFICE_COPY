@@ -182,16 +182,15 @@ cursor: pointer;
     </div>
 
     
-    <div class="row">
-        <div class="col-md-6 text-left">
-            <h5><strong>TOTAL ALLOCATED BUDGET: 1,000,000</strong></h5>
-        </div>
-        <div class="col-md-6 text-center">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT:</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-        </div>
+  <div class="row justify-content-center mb-3 mt-3">
+    <div class="col-md-6 text-left">
+        <h5><strong>TOTAL ALLOCATED BUDGET: 1,000,000</strong></h5>
     </div>
-
+    <div class="col-md-6 text-center">
+        <label for="estimate_budget"><strong>TOTAL AMOUNT:</strong></label>
+        <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+    </div>
+</div>
     <div class="table-responsive">
 
         <form action="{% url 'ppmp' %}" method="post">

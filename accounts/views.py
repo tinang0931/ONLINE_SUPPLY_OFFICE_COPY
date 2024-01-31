@@ -61,6 +61,8 @@ def baclanding(request):
 def landing(request):
     return render(request, 'accounts/User/landing.html')
 
+def budget_landing(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
 
 User = get_user_model()
 @unauthenticated_user

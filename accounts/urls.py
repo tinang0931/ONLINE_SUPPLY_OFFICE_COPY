@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from . import views 
 from .views import *
 from .views import checkout_items_view
+from .views import budget_landing
 
 urlpatterns = [ 
    path('',views.landing, name='landing'),
@@ -74,4 +75,5 @@ urlpatterns = [
    path('purchase/', views.purchase, name='purchase'),
    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
+   path('budget-landing/', budget_landing, name='budget-landing'),
 ]
