@@ -641,6 +641,7 @@ def ppmp(request):
         novs = request.POST.getlist('nov')
         decs = request.POST.getlist('dec')
         prices = request.POST.getlist('price')
+        
 
         
 
@@ -911,6 +912,7 @@ def update(request, id):
 def delete_category(request, Category):
     items_to_delete = CSV.objects.filter(Category=Category)
     items_to_delete.delete()
+    return redirect('bac_dashboard')
 
 
 @budget_required
@@ -1085,6 +1087,7 @@ def cdpurchase(request):
             'user': checkout.user,
             'pr_id': checkout.pr_id,
             'status': checkout.status,
+            
             
            
         }
