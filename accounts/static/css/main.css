@@ -132,9 +132,8 @@ p{
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  height: 100px;
+  height: 130px;
 }
-
 
 .container-fluid col-2 {
 padding: 0px !important;
@@ -339,7 +338,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   .ctu_logo {
     position: absolute;
     left: 26px; 
-    top: 1px; 
+    top: -9px; 
     width: 100px;
     height: 100px;
     margin: 0 3px;
@@ -367,7 +366,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   justify-content: space-around;
   visibility: visible;
   content-visibility: auto;
-  height: 50px;
 }
 
 .arrow_img {
