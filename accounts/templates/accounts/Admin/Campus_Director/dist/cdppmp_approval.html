@@ -234,7 +234,6 @@
                     <th>Nov</th>
                     <th>Dec</th>
                 </tr>
-
                 </tr>
             </thead>
             <tbody>
@@ -258,8 +257,6 @@
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-
-
 
                     <td>{{ p.estimate_budget }}</td>
                     <td>{{ p.jan }}</td>
@@ -308,9 +305,10 @@
         <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
         <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
 
-        <a href="#" title="Download" class="icon-link">
-            <i class="fas fa-download"></i>
+        <a href="#" title="Download" class="icon-link" id="downloadLink">
+            <i class="fas fa-download"></i> Download
         </a>
+
         <a href="javascript:window.print()" title="Print" class="icon-link">
             <i class="fas fa-print"></i>
         </a>
@@ -331,8 +329,35 @@
         form.submit();
     }
 </script>
+<script>
+    // Get the download link element
+    var downloadLink = document.getElementById('downloadLink');
 
+    // Add a click event listener to the download link
+    downloadLink.addEventListener('click', function() {
+        // Create a Blob with the content you want to download
+        var blob = new Blob(['Your file content here'], { type: 'text/plain' });
 
+        // Create a temporary link element
+        var tempLink = document.createElement('a');
+        tempLink.href = URL.createObjectURL(blob);
+
+        // Set the filename for the download
+        tempLink.download = 'your_file_name.txt';
+
+        // Append the link to the document
+        document.body.appendChild(tempLink);
+
+        // Trigger a click on the link to start the download
+        tempLink.click();
+
+        // Remove the temporary link element from the document
+        document.body.removeChild(tempLink);
+
+        // Redirect to another HTML page after the download
+        window.location.href = 'preqform_cd.html';
+    });
+</script>
 {% endblock %}
 
 
