@@ -138,27 +138,31 @@ th {
     border-radius: 10px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
-
-    .btn-primary {
-    color: #fff;
-    border-radius: 5px;
-    background-color: #007bff;
-    border-color: #007bff;
-    }
-
-.btn-success {
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-    border-radius: 5px;
-}
-
 .sticky-container {
   position: fixed;
   top: 20;
   width: 100%;
   background-color: #f1f1f1;
   padding: 20px;
+}
+
+.btn-primary {
+  color: #fff;
+  border-radius: 5px;
+  background-color: #007bff;
+  border-color: #007bff;
+  position: relative;
+  top: -120px; 
+  left:10px;
+  width: 40px;
+
+}
+
+  .btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    border-radius: 5px;
 }
 
 .table-container {
@@ -169,7 +173,7 @@ th {
 
 .hidden-label {
   display: none;
- padding: 6px 12px;
+padding: 6px 12px;
 }
   </style>
   
@@ -178,7 +182,7 @@ th {
 <body> 
   
   <div class="container-fluid">
-    <h1 class="pr text-center pt-4">Available Items</h1>
+    <h1 class="pr text-center pt-4"><strong>CATALOGUE</strong></h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <label for="file" class="hidden-label" >Choose CSV file:</label>
@@ -329,7 +333,7 @@ th {
               var category = confirmationMessage.match(/'([^']+)'/)[1];
               
       
-             window.location.href = "/delete_category/"+category;
+            window.location.href = "/delete_category/"+category;
           }
   
           function cancelDelete() {
@@ -421,14 +425,15 @@ th {
             <td>
               <button type="submit" class="save-btn btn-success">Save</button>
             </td>
+            <td>
           </form>
         </tr>
-
       </tbody>
     </table>
     <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
     {% endfor %}
+    
 
   </div>
 

@@ -369,7 +369,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   content-visibility: auto;
   height: 50px;
 }
-static/images/left-arrow-square.png.png
 
 .arrow_img {
   height: 30px;
@@ -398,6 +397,7 @@ static/images/left-arrow-square.png.png
   position: fixed;
   z-index: 2;
 }
+
 .form-group{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
