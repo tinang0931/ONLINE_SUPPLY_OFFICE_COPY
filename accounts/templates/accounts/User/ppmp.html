@@ -4,10 +4,152 @@
 
 {% block ppmp %}
 
+<style>
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin: 20px 0;
+      }
+      .container-fluid {
+        margin-bottom: 0;
+    }
+    .ctu_logo {
+        margin-top: -13%;
+    }
+
+    .table-bordered th {
+        background-color: #1c96c5;
+        color: #fff;
+      }
+      .table-bordered th,
+      .table-bordered td {
+          color: #000; 
+    
+      }
+      .table-container {
+        margin-top: 20vh; 
+    }
+    .item-actions {
+        display: none;
+    }
+
+    tr:hover .item-actions {
+        display: flex;
+    }
+
+    .btn {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1vh;
+        background: #144472;
+        font-family: "Montserrat", sans-serif;
+        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        cursor: pointer;
+        border: none;
+        margin-left: -107%;
+        margin-top: 15%;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    .btn.btn-success {
+    transition: transform 0.3s ease; /* Add a 0.3s transition with ease timing function */
+}
+
+.btn.btn-success:hover {
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.btn.btn-success:active {
+    transform: translate(0em, 0.14em);
+}
+
+
+   
+    .catalogue {
+    background: #1c96c5;
+    padding: 5px 15px;
+    color: white;
+    text-decoration: none;
+    margin-left: 0;
+    border: none;
+    border-radius: 5px;
+    margin-top: -5%;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.catalogue:hover {
+    background: #144472;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.catalogue:active {
+    transform: translate(0em, 0.17em);
+}
+
+
+    .bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
+    
+    .table-responsive {
+    margin-top: -4vh; 
+    }
+
+    .custom-dropdown .btn::after {
+    display: none;
+}
+
+.custom-dropdown .btn {
+    position: fixed;
+    top: 3vh;
+    right: 3vh;
+    z-index: 1000;
+    background-color: #1c96c5;
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    padding: 5px 10px;
+    padding-right: 30px;
+    width: 120px;
+    margin-top: 22vh;
+}
+
+.custom-dropdown .btn:hover {
+    background-color: #1c96c5;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+
+.dropdown-menu .dropdown-item:hover {
+        background-color: #1c96c5;
+        color: whitesmoke;
+    }
+    .custom-dropdown .btn:hover {
+        background-color: #1c96c5;
+    }
+    h5 {
+    margin-top: -20px; /* Adjust the negative margin to move it upward */
+}
+</style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/ppmp.css' %}">
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
 
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
@@ -20,14 +162,6 @@
         </a>
     </div>
    
-
-    <div class="bck">
-        <a href="{% url 'myppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}">
-        </a>
-    </div>
-
-
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
@@ -120,7 +254,7 @@
                             </td>
 
 
-                            <td><input type="number" name="estimate_budget"></td>
+                            <td><input type="number" name="estimate_budget" ></td>
 
                             <td><input type="number"  style="width: 38px;" name="jan" required></td>
                             <td><input type="number" style="width: 38px;" name="feb" required></td>
