@@ -71,6 +71,10 @@ def cdlanding(request):
 def userlanding(request):
     return render(request, 'accounts/User/userlanding.html')
 
+@regular_user_required
+def ppmp101(request):
+    return render(request, 'accounts/User/ppmp101.html')
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
