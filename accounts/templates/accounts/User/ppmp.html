@@ -54,101 +54,97 @@
         padding: 10px 20px;
         font-size: 16px;
     }
-    .submt {
-        float: inline-end;
-    }
+    .btn.btn-success {
+    transition: transform 0.3s ease; /* Add a 0.3s transition with ease timing function */
+}
+
+.btn.btn-success:hover {
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.btn.btn-success:active {
+    transform: translate(0em, 0.14em);
+}
+
 
    
     .catalogue {
-        background: #1c96c5;
-        padding: 5px 15px;
-        color: white;
-        text-decoration: none;
-        margin-left: 0;
-        border: none;
-        border-radius: 5px;
-        margin-top: -5%;
-    }
+    background: #1c96c5;
+    padding: 5px 15px;
+    color: white;
+    text-decoration: none;
+    margin-left: 0;
+    border: none;
+    border-radius: 5px;
+    margin-top: -5%;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
 
-    .custom:hover,
-    .catalogue:hover,
-    .submt:hover {
-        transition: all ease .5s;
-        background: #144472;
-    }
+.catalogue:hover {
+    background: #144472;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
 
+.catalogue:active {
+    transform: translate(0em, 0.17em);
+}
 
-    .custom:active,
-    .catalogue:active,
-    .submt:active {
-        transform: translate(0em, 0.14em);
-    }
 
     .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: all 0.3s ease-in-out;
-    }
-    
-    .bck:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-    }
-    
-    .bck::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -5px;
-        left: 0;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-    
-    .bck:hover::before {
-        opacity: 1;
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
     
     .table-responsive {
-    margin-top: -6vh; 
+    margin-top: -4vh; 
     }
 
-    .custom-dropdown .btn::after{
-        display:none;
-    }
-   
-    .custom-dropdown .btn {
-        position: fixed;
-        top: 3vh;
-        right: 3vh;
-        z-index: 1000;
-        background-color: #1c96c5;
-        color: whitesmoke;
-        border: none;
-        transition: all 0.5s ease;
-        padding: 5px 10px;
-        padding-right: 30px;
-        width: 120px;
-    }
+    .custom-dropdown .btn::after {
+    display: none;
+}
+
+.custom-dropdown .btn {
+    position: fixed;
+    top: 3vh;
+    right: 3vh;
+    z-index: 1000;
+    background-color: #1c96c5;
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    padding: 5px 10px;
+    padding-right: 30px;
+    width: 120px;
+    margin-top: 22vh;
+}
+
+.custom-dropdown .btn:hover {
+    background-color: #1c96c5;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
 
 
-    .dropdown-menu .dropdown-item:hover {
+.dropdown-menu .dropdown-item:hover {
         background-color: #1c96c5;
         color: whitesmoke;
     }
     .custom-dropdown .btn:hover {
         background-color: #1c96c5;
     }
-
+    h5 {
+    margin-top: -20px; /* Adjust the negative margin to move it upward */
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -162,7 +158,7 @@
     </div>
     <div class="bck">
         <a href="{% url 'myppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+            <img src="{% static 'images/bck.png' %}" alt="Previous">
         </a>
     </div>
    

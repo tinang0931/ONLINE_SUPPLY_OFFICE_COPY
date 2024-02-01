@@ -8,7 +8,6 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-
   .status {
     width: 30%;
     text-align: center;
@@ -26,7 +25,7 @@
 
   .form-control {
     display: block;
-    width: 18%;
+    width: 14%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -40,9 +39,10 @@
     border: var(--bs-border-width) solid #343a40;
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1300px;
+    margin-left: 1400px;
   }
-  
+
+
   .btn-outline-success {
     color: #ffffff;
     background-color: #2d83da;
@@ -73,10 +73,12 @@
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"><strong>PURCHASE REQUESTS</strong></h1>
-  <div class="search" style="position: relative; float: right; margin-right: 190px; margin-top: 1%;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 108%; color: #05708BD2;"></i>
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
-</div>
+  <div class="search" style="position: relative; float: right; margin-left:; margin-left: 1%;">
+    <i class="fas fa-search"
+      style="position: absolute; top: 40%; transform: translateY(-50%); right: 0%; color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request"
+      oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
+  </div>
 
   <table class="table table-bordered">
     <thead>
@@ -87,7 +89,23 @@
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
-        </th> 
+        </th>
+
+        <th class="text-center" onclick="sortTable(0)" style="width: 10%;">
+          User ID
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
+
+        <th class="text-center" onclick="sortTable(0)" style="width: 10%;">
+          Username
+          <span class="sort-arrow">
+            <span class="sort-arrow-up"></span>
+            <span class="sort-arrow-down"></span>
+          </span>
+        </th>
         <th class="text-center" onclick="sortTable(1)" style="width: 10%;">
           PR ID
           <span class="sort-arrow">
@@ -95,36 +113,18 @@
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
-          Requests
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
-        <th class="text-center" onclick="sortTable(3)" style="width: 10%;">
-          Purpose
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
+
+  
         <th class="status" onclick="sortTable(4)" style="width: 10%;">
-          Status
+          Campus Director Status
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
           </span>
         </th>
-        <th class="text-center" onclick="sortTable(5)" style="width: 10%;">
-          Date
-          <span class="sort-arrow">
-            <span class="sort-arrow-up"></span>
-            <span class="sort-arrow-down"></span>
-          </span>
-        </th>
+
         <th class="text-center" onclick="sortTable(6)" style="width: 10%;">
-          Attachments
+          View Attachments
           <span class="sort-arrow">
             <span class="sort-arrow-up"></span>
             <span class="sort-arrow-down"></span>
@@ -134,32 +134,39 @@
     </thead>
 
     <tbody>
-      {% for checkout in checkouts %}
-        <tr>
-            <td class="text-center">{{ checkout.submission_date }}
+      {% if tracker %}
+      {% for checkout in tracker %}
 
-            </td>
-            <td>{{ checkout.pr_id }}</td>
-            <td>
-              <a href="{% url 'preqform' pr_id=checkout.pr_id %}">
-                  <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
-                  request on {{ checkout.submission_date }}
-                </a>
-            </td>
+      <tr>
+        <td style="text-align: center;">{{checkout.submission_date}}</td>
 
-            {% for pr in checkout.pr_set.all %}
-            <td>{{ pr.purpose }}</td>
-            {% endfor %}
+        <td style="text-align: center;">{{checkout.user_id}}</td>
 
-            <td>
-              {{ checkout.status_update_date|default:"Pending" }}
-            </td>
-        </tr>
+        <td style="text-align: center;">{{checkout.user.first_name}} {{checkout.user.last_name}}</td>
+
+        <td style="text-align: center;">{{checkout.pr_id}}</td>
+
+       
+
+        <td class="text-center">
+          {% if checkout.status %}
+              
+          <span class="fas fa-circle text-success">  {{ checkout.status }}</span>
+
+          {% endif %}
+      </td>
+
+        <td>
+          <a href="{{checkout.attachment.url}}"></a>
+        </td>
+
+      </tr>
+
       {% endfor %}
 
-      {% if checkouts|length == 0 %}
+      {% else %}
       <tr>
-        <td colspan="3">
+        <td colspan="7">
           <span>NO PURCHASE REQUESTS YET</span>
         </td>
       </tr>
