@@ -123,7 +123,7 @@ p{
 
 
 .navbar {
-  position: relative;
+  position: absolute;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -132,7 +132,7 @@ p{
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  height: 100px;
+  height: 15vh;
 }
 
 
@@ -141,15 +141,16 @@ padding: 0px !important;
 }
 
 
-.ctu_logo{
-  padding: 6px;
+/* .ctu_logo{
   position: absolute;
   left: 26px; 
   top: 2px; 
   width: 100px;
   height: 100px;
   margin:  3px; 
-  }
+
+
+  } */
   .user {
     font-size: 20px;
     padding: 10px;
@@ -338,11 +339,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
   .ctu_logo {
     position: absolute;
-    left: 26px; 
-    top: 13px; 
-    width: 80px;
-    height: 77px;
-    margin: 0 3px;
+    width:40%;
+    z-index: 100;
+    margin: 0%;
   }
   
 
@@ -353,12 +352,13 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 .welcome{
-  background-color: #6C757D!important;
-  color: white;
+  background-color: #f59a23!important;
+  color:  #003566;
   text-align: center !important;
-  margin: 0%;
+  margin:0%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: larger;
+  font-weight: 600;
   height: 40px;
   display: flex;
   align-content: center;
@@ -366,8 +366,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   flex-direction: column;
   justify-content: space-around;
   visibility: visible;
-  content-visibility: auto;
-  height: 50px;
 }
 
 .arrow_img {

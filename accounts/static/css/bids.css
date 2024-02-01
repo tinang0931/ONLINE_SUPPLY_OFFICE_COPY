@@ -1,0 +1,249 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+header {
+    background-color: #007acc; 
+    color: white;
+    padding: 10px;
+}
+
+.ctu_logo {
+    width: 190px;
+    height: auto;
+    margin-right: 20px;
+    float: left;
+    margin-top: 30px;
+}
+
+.asean_logo{
+    width: 167px;
+    height: auto;
+    margin-right: 20px;
+    margin-top: 55px;
+    float: left;
+}
+
+.container {
+    max-width: 800px; 
+    padding: 20px;
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 auto; 
+}
+
+h {
+    font-size: 25px; 
+    text-align: center; 
+}
+
+p {
+    font-size: 25px; 
+    text-align: center;
+}
+
+a {
+    color: #007acc; 
+    text-decoration: underline; 
+}
+
+a:hover {
+    text-decoration: none; 
+}
+
+.iso_logo {
+    float: right;
+    width: 167px;
+    height: auto;
+    margin-top: 50px;
+}
+
+.stars_logo {
+    float: right;
+    width: 167px;
+    height: auto;
+    margin-top: 145px;
+}
+
+.br {
+    margin-bottom: 20px;
+}
+
+.content p{
+    text-align: left;
+    margin-right: 800px;
+}
+
+.name p {
+    font-size: 25px;
+    display: grid;
+    margin: 0;
+    padding: 5px;
+}
+
+.committee-member {
+    border-radius: 5px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+    align-self: flex-start;
+}
+
+.committee {
+    display: inline;
+    align-self: flex-end;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+}
+
+ ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+}
+
+li {
+    margin: 5px 0; 
+}
+
+li:before {
+    content: "\00a0"; 
+}
+
+ul[contenteditable="true"]:focus {
+    outline: none; 
+}
+
+.icons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px; 
+    margin-right: 50px;
+}
+
+.icon-link {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    font-family: Arial, sans-serif; 
+}
+
+.icon-link i {
+    margin-right: 5px;
+}
+
+@media print {
+    .icons-container {
+        display: none;
+    }
+}
+
+.comment-box {
+width: calc(60% - 40px);
+margin-top: 20px;
+margin-left: 50px;
+margin-right: 50px;
+position: relative;
+}
+
+.comment-box textarea {
+width: 100%;
+height: 50px;
+margin-top: 10px;
+padding: 10px;
+box-sizing: border-box;
+border: 1px solid #ddd;
+border-radius: 5px;
+}
+
+.send-icon {
+position: absolute;
+top: 20px;
+right: 10px;
+width: 30px;
+height: 30px;
+background-color: #4CAF50;
+color: white;
+text-align: center;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.send-icon i {
+line-height: 30px;
+}
+
+.send-icon {
+    position: fixed;
+    top: 90.5%;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.footer {
+background-color: rgba(1, 33, 67, 0.9);
+text-align: center;
+width: 100%;
+height: auto;
+bottom: 0;
+-webkit-user-modify: read-only;
+position: fixed;
+z-index: 2;
+}
+
+.button-container{
+    margin-right: 5px;
+    float:right;
+}
+
+.send-button{
+    position: sticky;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    width: 59px;
+    height: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icons-container{
+    display: flex;
+}
+.input-box{
+    width: 60%;
+    margin-top: 25px;
+    margin-left: 5px;
+}
+
+.input-box input{
+    width: 166%;
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.97);
+    border-radius: 5px;
+}

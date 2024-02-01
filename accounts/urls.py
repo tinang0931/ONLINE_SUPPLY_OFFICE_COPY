@@ -14,6 +14,7 @@ urlpatterns = [
    path('bac/', views.bac, name='bac'),
    path('baclanding/', views.baclanding, name='baclanding'),
    path('userlanding/', views.userlanding, name='userlanding'),
+   path('ppmp101/', views.ppmp101, name='ppmp101'),
    path('login/',views.login, name='login'),
    path('item/<int:pk>/list/', views.item_list, name='item_list'),
    path('register/',views.register, name='register'),
