@@ -57,7 +57,7 @@ def bac(request):
 def baclanding(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
 
-
+@bac_required
 def bac_request(request):
 
     tracker = Pr_identifier.objects.select_related('user').all()
