@@ -1,0 +1,41 @@
+{% extends "accounts/User/main.html" %}
+
+
+{% load static %}
+
+{% block myppmp %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/ppmp101.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<div class="container-fluid main-content">
+
+    <div class="container">
+        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+    </div>
+
+    <div class="d-flex" id="wrapper">
+        <div class="box-container">
+           
+            <div class="box ppmp">
+                <span>2024 PPMP</span>
+            </div>
+            <div class="box ppmp">
+                <span>2023 PPMP</span>
+            </div>
+            <div class="box ppmp">
+                <span>2022 PPMP</span>
+            </div>
+            <div class="box1 create">
+                <span>Create PPMP</span>
+            </div>
+
+        </div>
+                
+    </div>
+
+</div>
+       
+
+{% endblock %}
