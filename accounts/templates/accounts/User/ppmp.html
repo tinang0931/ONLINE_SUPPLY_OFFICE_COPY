@@ -9,8 +9,8 @@
         color: #333;
         font-size: 24px;
         margin: 20px 0;
-    }
-    .container-fluid {
+      }
+      .container-fluid {
         margin-bottom: 0;
     }
     .ctu_logo {
@@ -20,13 +20,13 @@
     .table-bordered th {
         background-color: #1c96c5;
         color: #fff;
-    }
-    .table-bordered th,
-    .table-bordered td {
-        color: #000; 
+      }
+      .table-bordered th,
+      .table-bordered td {
+          color: #000; 
     
-    }
-    .table-container {
+      }
+      .table-container {
         margin-top: 20vh; 
     }
     .item-actions {
@@ -54,148 +54,145 @@
         padding: 10px 20px;
         font-size: 16px;
     }
-    .submt {
-        float: inline-end;
-    }
+    .btn.btn-success {
+    transition: transform 0.3s ease; /* Add a 0.3s transition with ease timing function */
+}
+
+.btn.btn-success:hover {
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.btn.btn-success:active {
+    transform: translate(0em, 0.14em);
+}
 
 
+   
     .catalogue {
-        background: #1c96c5;
-        padding: 5px 15px;
-        color: white;
-        text-decoration: none;
-        margin-left: 0;
-        border: none;
-        border-radius: 5px;
-        margin-top: 15%;
-    }
-    .search{
-        
-    }
-    
+    background: #1c96c5;
+    padding: 5px 15px;
+    color: white;
+    text-decoration: none;
+    margin-left: 0;
+    border: none;
+    border-radius: 5px;
+    margin-top: -5%;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
 
-    .custom:hover,
-    .catalogue:hover,
-    .submt:hover {
-        transition: all ease .5s;
-        background: #144472;
-    }
+.catalogue:hover {
+    background: #144472;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
 
-    .custom:active,
-    .catalogue:active,
-    .submt:active {
-        transform: translate(0em, 0.14em);
-    }
+.catalogue:active {
+    transform: translate(0em, 0.17em);
+}
 
 
-    
-    
     .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
     
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: all 0.3s ease-in-out;
-    }
-    
-    .bck:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-    }
-    
-    .bck::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -5px;
-        left: 0;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-    
-    .bck:hover::before {
-        opacity: 1;
-    }
     .table-responsive {
     margin-top: -4vh; 
     }
 
-    .custom-dropdown .btn::after{
-        display:none;
-    }
-   
-    .custom-dropdown .btn {
-        position: fixed;
-        top: 3vh;
-        right: 3vh;
-        z-index: 1000;
-        background-color: #1c96c5;
-        color: whitesmoke;
-        border: none;
-        transition: all 0.5s ease;
-        padding: 5px 10px;
-        padding-right: 30px;
-        width: 120px;
-        margin-top: 25vh;
-    }
+    ..custom-dropdown .btn::after {
+    display: none;
+}
 
+.custom-dropdown .btn {
+    position: fixed;
+    top: 3vh;
+    right: 3vh;
+    z-index: 1000;
+    background-color: #1c96c5;
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    padding: 5px 10px;
+    padding-right: 30px;
+    width: 120px;
+    margin-top: 22vh;
+}
 
-    .dropdown-menu .dropdown-item:hover {
-        background-color: #1c96c5;
-        color: whitesmoke;
-    }
-    .custom-dropdown .btn:hover {
-        background-color: #1c96c5;
-    }
+.custom-dropdown .btn:hover {
+    background-color: #1c96c5;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #1c96c5;
+    color: whitesmoke;
+}
     h5 {
     margin-top: -20px; /* Adjust the negative margin to move it upward */
 }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
     <div class="container">
-        <h1 class="pr text-center pt-4">CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
     <div class="bck">
         <a href="{% url 'myppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+            <img src="{% static 'images/bck.png' %}" alt="Previous">
         </a>
     </div>
-
-
-
-
-
+   
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;"> View Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
         </div>
     </div>
 
-    
+    <div class="custom-dropdown mx-auto">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Select Year
+        </button>
+        <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
+            <a class="dropdown-item" href="#" data-year="2022">2022</a>
+            <a class="dropdown-item" href="#" data-year="2023">2023</a>
+            <a class="dropdown-item" href="#" data-year="2024">2024</a>
+            <a class="dropdown-item" href="#" data-year="2025">2025</a>
+            <a class="dropdown-item" href="#" data-year="2026">2026</a>
+            <a class="dropdown-item" href="#" data-year="2027">2027</a>
+            <a class="dropdown-item" href="#" data-year="2028">2028</a>
+            <a class="dropdown-item" href="#" data-year="2029">2029</a>
+            <a class="dropdown-item" href="#" data-year="2030">2030</a>
+        </div>
+    </div>
+   
     <div class="row">
-        <div class="text-left">
+        <div class=" col-md-6 text-left">
             <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        <div class="text-center" style="margin-top: -5vh;">
+        </div>
+        <div class="col-md-6 text-center" style="margin-top: -5vh;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
-    
-
+    </div>
 
     <div class="table-responsive">
 
@@ -255,18 +252,18 @@
 
                             <td><input type="number" name="estimate_budget" ></td>
 
-                            <td><input type="number"  style="width: 38px;" name="jan" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="feb" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="mar" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="apr" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="may" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="jun"  value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="jul" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="aug" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="sep" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="oct" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="nov" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="dec" value="0"></td>
+                            <td><input type="number"  style="width: 38px;" name="jan" required></td>
+                            <td><input type="number" style="width: 38px;" name="feb" required></td>
+                            <td><input type="number" style="width: 38px;" name="mar" required></td>
+                            <td><input type="number" style="width: 38px;" name="apr" required></td>
+                            <td><input type="number" style="width: 38px;" name="may" required></td>
+                            <td><input type="number" style="width: 38px;" name="jun"  required></td>
+                            <td><input type="number" style="width: 38px;" name="jul" required></td>
+                            <td><input type="number" style="width: 38px;" name="aug" required></td>
+                            <td><input type="number" style="width: 38px;" name="sep" required></td>
+                            <td><input type="number" style="width: 38px;" name="oct" required></td>
+                            <td><input type="number" style="width: 38px;" name="nov" required></td>
+                            <td><input type="number" style="width: 38px;" name="dec" required></td>
 
                             <td>
                                 <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
@@ -325,15 +322,15 @@
                 <tr id="new-item-row-{{ category }}" style="display: none;">
 
                     <form method="post" action="{% url 'user_add_new_item' %}">
-                    {% csrf_token %}
-                    
-                    <td>
+                      {% csrf_token %}
+                      
+                      <td>
                         <input type="text" name="new_item_name" placeholder="New Item Name" required>
-                    </td>
-                    <td>
+                      </td>
+                      <td>
                         <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
-                    </td>
-                    <td>
+                      </td>
+                      <td>
                         <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
                       </td>
                       <td>
@@ -357,7 +354,7 @@
                       <td>
                         <button type="submit" class="save-btn btn-success" style="background: none; border: none;" title="Save" onclick="saveFunction()">
                             <i class="fas fa-save" style="color: #28a745;"></i>
-                        </button>z
+                        </button>
                       </td>
                     </form>
                   </tr>
@@ -380,7 +377,7 @@
     function toggleNewItemRow(category) {
         var newRow = document.getElementById('new-item-row-' + category);
         newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
-    }
+      }
 
     function editItem(itemId) {
         // Assuming each row has a unique identifier, you can use it to target specific elements
@@ -414,7 +411,7 @@
             editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
             saveButton.style.display = 'none';
             cancelButton.style.display = 'none';
-            editInputs.forEach(function (input) {                                                                
+            editInputs.forEach(function (input) {
                 input.style.display = 'none';
             });
             editableSpans.forEach(function (span) {
@@ -496,20 +493,50 @@
     }
 
     $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
-}
+    }
 
-$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
+    $('[name="price"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
     updateTotalForAllItems();
-});
-
-$('[name="price"]').on('input', function() {
-    updateTotalForAllItems();
-});
-
-updateTotalForAllItems();
-
-
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-item').on('click', function (e) {
+            e.stopPropagation();
+            var selectedYear = $(this).text();
+            updateButtonStyle(selectedYear);
+            hideDropdown();
+    });
+
+
+    document.getElementById('yearDropdown').addEventListener('click', function() {
+        this.style.backgroundColor = '#1c96c5';
+    });
+
+
+    function updateButtonStyle(selectedYear) {
+            $('.dropdown-item').removeClass('selected');
+            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
+           
+        }
+
+
+    function hideDropdown() {
+        $('.custom-dropdown').removeClass('show');
+        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+    }
+});
+</script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

@@ -46,51 +46,45 @@
         height: 85vh;
         margin-bottom: 1;
     }
-    .custom-dropdown .btn::after{
-        display:none;
-    }
-   
-    .custom-dropdown .btn {
-        position: fixed;
-        top: 24.7vh;
-        right: 2vh;
-        z-index: 1000;
-        background-color: #1c96c5;
-        color: whitesmoke;
-        border: none;
-        transition: all 0.5s ease;
-        padding: 5px 10px;
-        padding-right: 30px;
-        width: 120px;
-    }
+    .custom-dropdown .btn::after {
+    display: none;
+}
 
-
-    .dropdown-menu .dropdown-item:hover {
-        background-color: #1c96c5;
-        color: whitesmoke;
-    }
-    .custom-dropdown .btn:hover {
-        background-color: #1c96c5;
-    }
-    
-
-.ppmp button:hover {
+.custom-dropdown .btn {
+    position: fixed;
+    top: 3vh;
+    right: 3vh;
+    z-index: 1000;
     background-color: #1c96c5;
-    color: #fff;
-}
-.pr {
-    margin-left: 20px !important; /* Adjust the value as needed */
+    color: whitesmoke;
+    border: none;
+    transition: all 0.5s ease;
+    padding: 5px 10px;
+    padding-right: 30px;
+    width: 120px;
+    margin-top: 22vh;
 }
 
-body{
-    overflow:hidden;
-    } 
-html{
-    overflow:hidden;
-} 
-.d-flex {
-    height: 85vh;
-    margin-bottom: 1;
+.custom-dropdown .btn:hover {
+    background-color: #1c96c5;
+    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #1c96c5;
+    color: whitesmoke;
+}
+
+    #textContainer {
+    transition: transform 0.3s ease; /* Add a 0.3s transition with ease timing function */
+}
+
+#textContainer:hover {
+    transform: scale(1.1); /* Scale the container to 1.1 times its original size on hover */
+}
+
+#textContainer:active {
+    transform: translate(0em, 0.14em);
 }
 
 </style>
@@ -102,10 +96,10 @@ html{
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
+        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
         <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="margin-top: -20px; background-color: #1c96c5;">
+                    aria-haspopup="true" aria-expanded="false">
                 Select Year
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
@@ -139,7 +133,7 @@ html{
 
     <div class="row">
         <div class="col-md-1 mb-0">
-            <div id="textContainer" style="width: 98px; height: 33px; margin-top: 13px; margin-bottom: 10px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+            <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                 <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
             </div>
         </div>        
@@ -188,7 +182,7 @@ html{
                 <tbody>
                     {% for p in approved_items %}
 
-                
+                  
                         <tr class="item-row" id="{{ p.id }}">
 
                     <td>
@@ -224,14 +218,6 @@ html{
 
 
 
-                        </tr>
-            
-                    {% endfor %}
-
-                </tbody>
-            </table>
-    
-    </div>
                     <td>
                         <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
@@ -239,12 +225,12 @@ html{
                     </td>
 
                 </tr>
-
+                {% endfor %}
         </tbody>
     </table>
 </div>
 </div>
-
+       
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
