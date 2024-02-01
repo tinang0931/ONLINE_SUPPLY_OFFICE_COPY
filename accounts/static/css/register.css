@@ -37,7 +37,7 @@ body{
 }
 
 .container {
-    max-width: 90vh; /* Adjust the max-width to make it smaller */
+    max-width: 90vh; 
     width: 100%;
     background: rgba(255, 255, 255, 0.938);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
@@ -87,19 +87,16 @@ body{
     width: 102%;
 }
 
-
 form .user-details .input-box{
     margin-bottom: 15px;
     width: calc(100% / 2 - 20px);
 }
-
 
 .user-details .input-box .details{
     display: block;
     font-weight: 500;
     margin-bottom: 5px;
 }
-
 
 .user-details .input-box input{
     background: rgba(255, 255, 255, 0.486);
@@ -180,9 +177,6 @@ input[type="number"] {
 
 .container {
     width: 900px;
-
-
-
 }
 
 .input-box label {
@@ -192,15 +186,12 @@ input[type="number"] {
 
 .input-box input[type="radio"] {
     display: none;
-    /* Hide the actual radio buttons */
 }
 
 .input-box .radio-box {
     display: inline-block;
     width: 7vh;
-    /* Set the desired width */
     height: 3vh;
-    /* Set the desired height */
     border: 1px solid #ccc;
     padding: 5px;
     cursor: pointer;
