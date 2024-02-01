@@ -84,38 +84,20 @@
     }
 
     .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: all 0.3s ease-in-out;
-    }
-    
-    .bck:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-    }
-    
-    .bck::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -5px;
-        left: 0;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-    
-    .bck:hover::before {
-        opacity: 1;
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
     
 </style>
 
@@ -129,7 +111,7 @@
     </div>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
+            <img src="{% static 'images/bck.png' %}" alt="Previous">
         </a>
     </div>
 
@@ -242,10 +224,6 @@ button:hover::before {
   width: 100%;
 }
     </style>
-
-
-
-
 
 
 
