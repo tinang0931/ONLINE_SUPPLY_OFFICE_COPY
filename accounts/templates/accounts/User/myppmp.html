@@ -55,11 +55,8 @@
     <div class="row">
 
         <div class="col-md-1 mb-0">
-            <div class="dropdown">
-                <span class="dots" style="color: #1c96c5; cursor: pointer;" onclick="toggleText()">&#8226;&#8226;&#8226;</span>
-                <div id="textContainer" style="display: none; width: 98px; text-align: center; background-color: #f08f12; border-radius: 4px;">
-                    <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
-                </div>
+            <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
             </div>
         </div>
         
@@ -72,8 +69,6 @@
         
 
     <div class="table-responsive">
-
-
         <table class="table table-bordered" style="margin-top: 1px;">
                 <thead>
                     <tr>
@@ -148,15 +143,21 @@
                                     oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
 
-                        </tr>
-               
-                    {% endfor %}
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
 
-                </tbody>
-            </table>
-      
-    </div>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
 </div>
+</div>
+       
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
