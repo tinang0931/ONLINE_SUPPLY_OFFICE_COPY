@@ -1,0 +1,138 @@
+body{
+    overflow:hidden;
+  }
+  html{
+    overflow:hidden;
+  }
+  .d-flex {
+    height: 85vh;
+    margin-bottom: 1;
+  }
+#sidebar {
+transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+overflow: hidden;
+width: 50px;
+}
+
+#sidebar.show-names {
+width: 300px;
+padding: 0 20px;
+}
+
+.hidden-name {
+opacity: 0;
+transition: opacity 0.5s ease-in-out;
+}
+
+#sidebar.show-names .hidden-name {
+opacity: 1;
+}
+
+.list-group-item-action {
+transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
+}
+
+.list-group-item-action:hover {
+background-color: #254b6e !important;
+border-radius: 5px !important;
+color: #f2f2f2 !important;
+transition: background-color 0.5s ease-in-out 0s, border-radius 0.5s ease-in-out 0s, color 0.5s ease-in-out 0s !important;
+}
+
+
+
+#sidebar:hover {
+width: 300px;
+padding: 0 6px;
+}
+
+.logout-link {
+margin-top: 195px;
+margin-left: -10px;
+width:242px;
+}
+.home-link {
+margin-left: -10px;
+width:242px;
+}
+.history-link {
+margin-left: -10px;
+width:242px;
+}
+.about-link {
+margin-left: -10px;
+width:242px;
+}
+
+.d-flex.flex-wrap.align-content-between.h-100 {
+background-color: #f2f2f2;
+}
+
+.list-group-item-action:not(:hover) span {
+color: black !important;
+}
+
+.ctu_logo {
+position: relative;
+top: 3px;
+z-index: 1;
+}
+
+.pro {
+position: relative;
+height: 45px;
+width: 45px;
+margin-left: 45%;
+transition: height 0.3s ease, width 0.3s ease;
+cursor: pointer;
+border-radius: 50px;
+border: 2px solid #000;
+margin-top: 450px;
+display: none;
+}
+
+.list-group-item i {
+transform: scale(1.4);
+display: inline-block;
+}
+
+.profile-container {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 90%;
+margin: 0;
+}
+
+.account_type {
+position: relative;
+left: 30px; /* Adjust the desired horizontal position */
+font-size: 20px;
+margin: 0;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+opacity: 0; /* Set the initial opacity to hide the element */
+visibility: hidden; /* Set the initial visibility to hidden */
+transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+margin-top: 450px;
+display: none;
+}
+
+
+.sidebar:hover .account_type,
+.pro:hover + .account_type {
+opacity: 1; /* Show the element when the sidebar or .pro is hovered */
+visibility: visible; /* Show the element when the sidebar or .pro is hovered */
+}
+
+
+.sidebar:hover .account_type {
+opacity: 1; /* Show the element when the sidebar is hovered */
+visibility: visible; /* Show the element when the sidebar is hovered */
+}
+body {
+overflow: hidden;
+}
+
+html {
+overflow: hidden;
+}

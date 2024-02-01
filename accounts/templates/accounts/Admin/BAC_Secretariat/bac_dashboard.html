@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block bac_dashboard %}
+<link rel="stylesheet" href="{% static 'css/bac_dashboard.css' %}">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,193 +14,12 @@
 
   <title>Dynamic Display</title>
 
-  <style>
-    .body {
-      margin: 0;
-      padding: 0;
-    }
-
-    .content {
-      padding: 16px;
-    }
-    .container-fluid {
-      width: 100%;
-    } 
-
-    .container {
-      text-align: center;
-      width: 12000px;
-    }
-    .category-table {
-      margin: 20;
-    }
-    .category-table th,
-    .category-table td {
-      text-align: center;
-    }
-    input,
-    select {
-      margin-bottom: 10px;
-    }
-
-    table {
-      width: 100%;
-      margin: 35px 0 20px 0;
-    }
-    th,
-td {
-  border: 1px solid #ddd;
-  padding: 15px;
-  text-align: center; /* Align content in the center */
-}
-
-th {
-  background-color: #f2f2f2;
-}
-    .update-btn,
-    .delete-btn {
-      cursor: pointer;
-      color: blue;
-    }
-
-    .h4 {
-      text-align: left;
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown-arrow {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-    }
-
-    .container {
-      border: 1px solid #ddd;
-      padding: 10px;
-      width: 200px;
-      cursor: pointer;
-    }
-
-    .option:hover {
-      background-color: #e0e0e0;
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    #custom-category {
-      border: none;
-      text-align: center;
-      width: 70%;
-      border-bottom: 1px solid #000;
-      background-color: transparent;
-      outline: none;
-    }
-
-    .confirmation-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-  .confirmation-box {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-  }
-
-    .form-control {
-    display: block;
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 10px;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
-.sticky-container {
-  position: fixed;
-  top: 20;
-  width: 100%;
-  background-color: #f1f1f1;
-  padding: 20px;
-}
-
-.btn-primary {
-  color: #fff;
-  border-radius: 5px;
-  background-color: #007bff;
-  border-color: #007bff;
-  position: relative;
-  top: -120px; 
-  left:10px;
-  width: 40px;
-
-}
-
-  .btn-success {
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-    border-radius: 5px;
-}
-
-.table-container {
-  max-height: 700px;
-  overflow-y: auto;
-  margin-bottom: 20px; 
-}
-
-.hidden-label {
-  display: none;
-padding: 6px 12px;
-}
-
-
-.add-btn:hover {
-    background-color: #4574a0;
-}
-
-.add-btn:hover {
-    background-color: #4574a0;
-}
-
-/* Add this to your existing CSS */
-
-
-.add-btn:hover {
-  background-color: #0056b3; /* Darker color on hover */
-}
-
-  </style>
-  
 </head>
 
 <body> 
   
   <div class="container-fluid">
-    <h1 class="pr text-center pt-4"><strong>CATALOGUE</strong></h1>
+    <h1 class="pr text-center pt-4">Available Items</h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <label for="file" class="hidden-label" >Choose CSV file:</label>
@@ -350,7 +170,7 @@ padding: 6px 12px;
               var category = confirmationMessage.match(/'([^']+)'/)[1];
               
       
-            window.location.href = "/delete_category/"+category;
+             window.location.href = "/delete_category/"+category;
           }
   
           function cancelDelete() {
@@ -397,6 +217,7 @@ padding: 6px 12px;
                 <i class="fas fa-edit text-primary"></i></a>
 
 
+                <form action="{% url 'update_item' item.id %}" method="post">
 
                   {% csrf_token %}
                   <input id="form_item_{{ item.id }}" type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
@@ -441,15 +262,14 @@ padding: 6px 12px;
             <td>
               <button type="submit" class="save-btn btn-success">Save</button>
             </td>
-            <td>
           </form>
         </tr>
+
       </tbody>
     </table>
 
     <button class="add-btn btn-primary float-right mt-2 mb-4" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
     {% endfor %}
-    
 
   </div>
 
