@@ -84,18 +84,6 @@
         transform: translate(0em, 0.14em);
     }
 
-
-    .bck {
-        position: fixed;
-        bottom: 50px;
-        left: 0;
-        border-radius: 10px;
-        padding: 10px;
-        z-index: 1;
-        display: inline-block;
-        margin-left: 10px;
-    }
-    
     .bck a {
         display: flex;
         align-items: center;
@@ -172,22 +160,6 @@
     <div class="container">
         <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
-
-    
-<div class="select">
-    <select class="form-select" id="month" name="month" style="width: 150px; float: right;">
-        <option value="">Select Year</option>
-        <option value="01">2023</option>
-        <option value="02">2024</option>
-        <option value="03">2025</option>
-        <option value="04">2026</option>
-        <option value="05">2027</option>
-        <option value="06">2028</option>
-        <option value="07">2029</option>
-        <option value="08">2030</option>
-    </select>
-</div>
-    
     <div class="bck">
         <a href="{% url 'myppmp' %}">
             <img src="{% static 'images/previous_189252.png' %}" alt="Previous">
@@ -517,7 +489,7 @@
         totalValue += rowTotal;
     });
 
-    var allocatedBudget = 20000; // Set your allocated budget here
+    var allocatedBudget = 1000000; // Set your allocated budget here
 
     if (totalValue >= allocatedBudget) {
         alert('Budget limit reached! Further input is disabled.');
