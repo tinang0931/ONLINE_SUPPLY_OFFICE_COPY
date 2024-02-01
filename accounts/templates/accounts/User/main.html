@@ -32,7 +32,6 @@
                     </div>
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
                         <h1 class="head">CTU-AC Supply Office Request Monitoring System</h1>
-                        <!-- <h1 class="p1">Cebu Technological University - Argao Campus</h1> -->
                     </div>
                     <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
                         <div class="profile-container">
@@ -70,7 +69,6 @@
         <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
 
 
-            <!-- Sidebar -->
             <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
                 <div class="d-flex flex-wrap align-content-between h-100">
                     <div class="bg-#6C757D w-100" id="sidebar-wrapper">
@@ -93,9 +91,7 @@
                                     class="hidden-name">Purchase Tracker</span>
                             </a>
 
-                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'history'%}">
-                                <i class="bi bi-clock-history"></i> <span id="history" class="hidden-name">History</span>
-                            </a>
+                           
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
                                 <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                             </a>
@@ -108,7 +104,6 @@
                             <a href="{% url 'prof' %}">
                                 <img class="pro" id="profile-pic" src="{% static 'images/propayl.png' %}"
                                     alt="Profile Picture"></a>
-                            <p1 class="account_type">User</p1>
                         </div>
                     </div>
                 </div>
