@@ -1,6 +1,7 @@
 {% extends "accounts/User/main.html" %}
 
 {% block tracker %}
+
 <style>
   .custom-f {
     display: flex;
@@ -34,7 +35,7 @@
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
-    <h1 class="pr text-center pt-4">REQUEST STATUS</h1>
+    <h1 class="pr text-center pt-4"><strong>PPMP REQUEST STATUS</strong></h1>
   </div>
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
@@ -44,7 +45,7 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead class="text-center">
           <tr>
-            <th rowspan="2" class="text-center">PPMP REQUEST NO.</th>
+            <th rowspan="2" class="text-center">PR REQUEST NO.</th>
             <th colspan="2" class="text-center">STATUS</th>
             <th colspan="2" class="text-center">COMMENT</th>
             <th rowspan="2" class="text-center">LAST UPDATED</th>
@@ -63,19 +64,20 @@
           {% for p in checkouts %}
           <tr>
               <td>{{ p.pr_id }}</td>
-              <td class="text-center">
+                <td class="text-center">
                   {% if p.bo_status %}
-                      <i class="fas fa-check-circle text-success" style="font-size: 16px;"></i>
-                  {% else %}
-                      <i class="fas fa-hourglass-half text-warning" style="font-size: 16px;"></i>
+                      
+                  <span class="fas fa-circle text-danger">  {{ p.bo_status }}</span>
+        
                   {% endif %}
               </td>
+              
               <td class="text-center">
-                  {% if p.cd_status %}
-                      <i class="fas fa-check-circle text-success" style="font-size: 16px;"></i>
-                  {% else %}
-                      <i class="fas fa-hourglass-half text-warning" style="font-size: 16px;"></i>
-                  {% endif %}
+                {% if p.cd_status %}
+                      
+                <span class="fas fa-circle text-danger">  {{ p.cd_status }}</span>
+      
+                {% endif %}
               </td>
               <td class="text-center">{{ p.bo_comment }}</td>
               <td class="text-center">{{ p.cd_comment }}</td>
