@@ -3,73 +3,70 @@
 
 {% load static %}
 
-
 {% block myppmp %}
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/myppmp.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-<div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid main-content">
 
     <div class="container">
-        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
         <div class="custom-dropdown mx-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false">
                 Select Year
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
-                <a class="dropdown-item" href="#">2022</a>
-                <a class="dropdown-item" href="#">2023</a>
-                <a class="dropdown-item" href="#">2024</a>
-                <a class="dropdown-item" href="#">2025</a>
-                <a class="dropdown-item" href="#">2026</a>
-                <a class="dropdown-item" href="#">2027</a>
-                <a class="dropdown-item" href="#">2028</a>
-                <a class="dropdown-item" href="#">2029</a>
-                <a class="dropdown-item" href="#">2030</a>
+                <a class="dropdown-item" href="#" data-year="2022">2022</a>
+                <a class="dropdown-item" href="#" data-year="2023">2023</a>
+                <a class="dropdown-item" href="#" data-year="2024">2024</a>
+                <a class="dropdown-item" href="#" data-year="2025">2025</a>
+                <a class="dropdown-item" href="#" data-year="2026">2026</a>
+                <a class="dropdown-item" href="#" data-year="2027">2027</a>
+                <a class="dropdown-item" href="#" data-year="2028">2028</a>
+                <a class="dropdown-item" href="#" data-year="2029">2029</a>
+                <a class="dropdown-item" href="#" data-year="2030">2030</a>
             </div>
-            
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.dropdown-item').on('click', function (e) {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 var selectedYear = $(this).text();
                 $('.btn#yearDropdown').text(selectedYear);
             });
         });
 
-        document.getElementById('yearDropdown').addEventListener('click', function() {
-            this.style.backgroundColor = '#144472';
-        }); 
+        document.getElementById('yearDropdown').addEventListener('click', function () {
+            this.style.backgroundColor = ' #f59a23e7';
+        });
     </script>
-    
-    
 
-    <div class="row">
-
-        <div class="col-md-1 mb-0">
-            <div id="textContainer" style="width: 98px; height: 33px; margin-top: -13px; text-align: center; background-color: #1c96c5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none; white-space: nowrap;">Create PPMP</a>
+    <div class="rowppmp">
+            <div id="textContainer">
+                <a href="{% url 'ppmp' %}">Create
+                    PPMP</a>
             </div>
         </div>
-        
+
+
         <script>
             function toggleText() {
                 var textContainer = document.getElementById("textContainer");
                 textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
             }
         </script>
-        
 
-    <div class="table-responsive">
-        <table class="table table-bordered" style="margin-top: 1px;">
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                     <tr>
@@ -79,7 +76,7 @@
                         <th rowspan='2'>Estimated Budget</th>
                         <th colspan="12">Monthly Quantity Requirement</th>
                         <th rowspan='2'>Unit Price</th>
-                        
+
                     </tr>
                     <tr>
                         <th>Jan</th>
@@ -99,50 +96,52 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in items %}
-
-                  
-                        <tr class="item-row" id="{{ p.id }}">
-
-                            <td>
-                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
-                                    oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
-                                    style="display: none">
-                            </td>
-                            <td>
-                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>{{ p.estimate_budget }}</td>
-                            <td>{{ p.jan }}</td>
-                            <td>{{ p.feb }}</td>
-                            <td>{{ p.mar }}</td>
-                            <td>{{ p.apr }}</td>
-                            <td>{{ p.may }}</td>
-                            <td>{{ p.jun }}</td>
-                            <td>{{ p.jul }}</td>
-                            <td>{{ p.aug }}</td>
-                            <td>{{ p.sep }}</td>
-                            <td>{{ p.oct }}</td>
-                            <td>{{ p.nov }}</td>
-                            <td>{{ p.dec }}</td>
+                    {% for p in approved_items %}
 
 
-                           
+                    <tr class="item-row" id="{{ p.id }}">
 
-                            <td>
-                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
+                        <td>
+                            <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                            <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                                oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+                        <td>
+                            <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                            <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                                value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                                class="edit-input" style="display: none">
+                        </td>
+                        <td>
+                            <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                            <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                                oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+                        <td>{{ p.estimate_budget }}</td>
+                        <td>{{ p.jan }}</td>
+                        <td>{{ p.feb }}</td>
+                        <td>{{ p.mar }}</td>
+                        <td>{{ p.apr }}</td>
+                        <td>{{ p.may }}</td>
+                        <td>{{ p.jun }}</td>
+                        <td>{{ p.jul }}</td>
+                        <td>{{ p.aug }}</td>
+                        <td>{{ p.sep }}</td>
+                        <td>{{ p.oct }}</td>
+                        <td>{{ p.nov }}</td>
+                        <td>{{ p.dec }}</td>
 
+
+
+
+                        </tr>
+            
+                    {% endfor %}
+
+                </tbody>
+            </table>
+    
+    </div>
                     <td>
                         <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
@@ -150,12 +149,12 @@
                     </td>
 
                 </tr>
-                {% endfor %}
+
         </tbody>
     </table>
 </div>
 </div>
-       
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -167,56 +166,94 @@
 
 
 
-    $(document).ready(function () {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-        function updateEstimateBudgetForRow(row) {
-
-            var unitPrice = parseFloat(row.find('[name="price"]').val());
-
-
-            var totalValue = 0;
+    <script>
 
 
-            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
-                var monthValue = parseFloat($(this).val()) || 0;
-                totalValue += monthValue;
+
+        $(document).ready(function () {
+
+            function updateEstimateBudgetForRow(row) {
+
+                var unitPrice = parseFloat(row.find('[name="price"]').val());
+
+
+                var totalValue = 0;
+
+
+                row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+                    var monthValue = parseFloat($(this).val()) || 0;
+                    totalValue += monthValue;
+                });
+
+
+                var estimateBudget = totalValue * unitPrice;
+
+
+                row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
+            }
+
+
+            $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
+
+                var row = $(this).closest('tr.item-row');
+                updateEstimateBudgetForRow(row);
             });
 
 
-            var estimateBudget = totalValue * unitPrice;
+            $('[name="price"]').on('input', function () {
+
+                var row = $(this).closest('tr.item-row');
+                updateEstimateBudgetForRow(row);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function (e) {
+                e.stopPropagation();
+                var selectedYear = $(this).text();
+                updateButtonStyle(selectedYear);
+                hideDropdown();
+            });
 
 
-            row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
+            document.getElementById('yearDropdown').addEventListener('click', function () {
+                this.style.backgroundColor = ' #f59a23e7';
+            });
+
+
+            function updateButtonStyle(selectedYear) {
+                $('.dropdown-item').removeClass('selected');
+                $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+                $('.btn#yearDropdown').text(selectedYear).css('background-color', ' #f59a23e7');
+
+            }
+
+
+            function hideDropdown() {
+                $('.custom-dropdown').removeClass('show');
+                $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+                $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function toggleText() {
+            var textContainer = document.getElementById("textContainer");
+            textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
         }
+    </script>
 
-
-        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-
-
-        $('[name="price"]').on('input', function () {
-
-            var row = $(this).closest('tr.item-row');
-            updateEstimateBudgetForRow(row);
-        });
-    });
-
-
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script>
-    function toggleText() {
-        var textContainer = document.getElementById("textContainer");
-        textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
-    }
-</script>
-
-{% endblock %}
+    {% endblock %}
