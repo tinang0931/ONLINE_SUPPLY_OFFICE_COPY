@@ -84,7 +84,7 @@
   }
 </style>
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS FOR APPROVAL</strong></h1>
+  <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS </strong></h1>
 
 
   <div class="search" style="position: relative; text-align: right;">
@@ -101,7 +101,7 @@
       <tr>
         <th class="text-center">Date Requested</th>
         <th class="text-center">Requests for Approval</th>
-        <th class="text-center">PR ID</th>
+        <th class="text-center">PPMP ID</th>
         <th class="status">Status</th>
         <th class="text-center">Comment</th>
       </tr>
@@ -114,14 +114,16 @@
           {{ checkout.submission_date }}
         </td>
         <td>
-          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}">
-            <strong>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</strong> submitted a new purchase
+          
+            {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase
             request on {{ checkout.submission_date }}
-          </a>
+          
         </td>
 
         <td class="text-center">
-          {{ checkout.pr_id }}
+          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}"><strong>{{ checkout.pr_id }}</strong></a>
+          
+       
         </td>
 
         <td class="text-center">

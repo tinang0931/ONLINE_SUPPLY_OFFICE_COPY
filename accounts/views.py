@@ -970,7 +970,7 @@ def bohome(request):
 
     return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
 
-    
+
 
 def preqform_bo(request, pr_id):
 
@@ -1026,7 +1026,7 @@ def preqform_bo(request, pr_id):
         )
 
         return redirect('bohome')
-
+       
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
@@ -1034,9 +1034,8 @@ def preqform_bo(request, pr_id):
             'checkouts': checkouts,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-     }
-
-    return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+        }
+        return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
 
         
 
