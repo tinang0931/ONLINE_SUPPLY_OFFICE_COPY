@@ -343,9 +343,8 @@ def cdpurchase_approval(request, pr_id):
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 
-
+@bac_required
 def bac_home(request):
-
     checkouts = Checkout.objects.select_related('user').all()
   
 
