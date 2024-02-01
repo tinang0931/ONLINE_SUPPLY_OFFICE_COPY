@@ -329,35 +329,8 @@
         form.submit();
     }
 </script>
-<script>
-    // Get the download link element
-    var downloadLink = document.getElementById('downloadLink');
 
-    // Add a click event listener to the download link
-    downloadLink.addEventListener('click', function() {
-        // Create a Blob with the content you want to download
-        var blob = new Blob(['Your file content here'], { type: 'text/plain' });
 
-        // Create a temporary link element
-        var tempLink = document.createElement('a');
-        tempLink.href = URL.createObjectURL(blob);
-
-        // Set the filename for the download
-        tempLink.download = 'your_file_name.txt';
-
-        // Append the link to the document
-        document.body.appendChild(tempLink);
-
-        // Trigger a click on the link to start the download
-        tempLink.click();
-
-        // Remove the temporary link element from the document
-        document.body.removeChild(tempLink);
-
-        // Redirect to another HTML page after the download
-        window.location.href = 'preqform_cd.html';
-    });
-</script>
 {% endblock %}
 
 

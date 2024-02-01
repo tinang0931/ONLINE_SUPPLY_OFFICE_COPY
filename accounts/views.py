@@ -1238,7 +1238,7 @@ def purchasetracker(request):
     }
 
 
-    return render(request, 'accounts/User/purchasetracker.html', context)|
+    return render(request, 'accounts/User/purchasetracker.html', context)
 
 
 def cdppmp_approval(request, downloadLink):
