@@ -1,0 +1,45 @@
+.table-responsive th {
+    background-color: #1c96c5;
+  }
+  .view_more {
+    background: #1c96c5;
+    padding: 5px 15px;
+    color: white;
+    text-decoration: none;
+    margin-right: 0;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1%;
+   }
+  
+  
+  .input-group {
+    width: 300px; /* Adjust the width as needed */
+    margin-right: auto; /* Move to the left */
+  }
+  
+  .form-control {
+    border-radius: 5px;
+  }
+  
+  .btn-outline-secondary {
+    border-radius: 5px;
+  }
+  
+  .input-group:hover {
+    border-color: #144472;
+  }
+  
+  .input-group:hover .btn-outline-secondary:hover {
+    background-color: #144472;
+    color: #fff; /* Text color on hover */
+    border-color: #144472;
+  }
+  
+  #search_bar_request:hover {
+    border-color: #144472;
+  }
+  
+  .container-fluid {
+    position: relative; /* Make the container a reference for absolute positioning */
+  }
