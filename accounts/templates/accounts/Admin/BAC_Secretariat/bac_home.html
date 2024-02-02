@@ -26,18 +26,19 @@
 
   .form-control {
     display: block;
-    width: 13.4%;
+    width: 13.10%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: var(--bs-body-color);
     appearance: none;
-    background-color: rgb(13 110 253 / 8%);
-    background-clip: padding-box;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
+    background-color: transparent; 
+    box-shadow: none; 
   }
+
   
   .btn-outline-success {
     color: #ffffff;
@@ -68,8 +69,8 @@
 </style>
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr text-center pt-4"><strong>PPMP of the Users</strong></h1>
-  <div class="search" style="position: relative; float: right; margin-left:; margin-left: 1%;">
+  <h1 class="pr text-center pt-4"><strong>PPMP OF THE USERS</strong></h1>
+  <div class="search" style="position: relative; float: right; margin-left: 1%;">
     <i class="fas fa-search"
       style="position: absolute; top: 40%; transform: translateY(-50%); right: 1%; color: #05708BD2;"></i>
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request"
@@ -157,6 +158,14 @@
               
         <span class="fas fa-circle text-success">  {{ checkout.cd_status }}</span>
 
+            {% comment %} {% for pr in checkout.pr_set.all %} {% endcomment %}
+            <td>{{ pr.purpose }}</td>
+
+            <td>
+              {{ checkout.status_update_date|default:"Pending" }}
+            </td>
+        </tr>
+      {% comment %} {% endfor %} {% endcomment %}
         {% endif %}
       </td>
         <td >{{ checkout.bo_comment }}</td>
