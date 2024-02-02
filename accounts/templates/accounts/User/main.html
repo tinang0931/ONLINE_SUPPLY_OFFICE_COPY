@@ -33,7 +33,7 @@
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
                         <h1 class="head">CTU-AC Supply Office Request Monitoring System</h1>
                     </div>
-                    <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+                    <!-- <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
                         <div class="profile-container">
                             <a href="{% url 'prof' %}">
                                 <img class="profile_img" id="profile-pic"
@@ -41,8 +41,8 @@
 
 
                                 <!-- <h1 class="user">Username</h1> -->
-                                <script>
-                                    // Function to shorten the full name and update the display
+                                <!-- <script> -->
+                                    <!-- // Function to shorten the full name and update the display
                                     function shortenAndDisplay(fullName, maxLength) {
                                         var shortenedName = fullName.length > maxLength ?
                                             fullName.substring(0, maxLength - 3) + '...' :
@@ -62,7 +62,7 @@
 
 
                         </div>
-                    </div>
+                    </div> --> 
             </nav>
         </div>
         <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
@@ -76,7 +76,7 @@
                             <br><br>
 
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'myppmp'%}">
-                                <i class="bi bi-file-earmark-post"></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
+                                <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
                             </a>
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase'%}">
                                 <i class="bi bi-bag-check"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
@@ -91,10 +91,10 @@
                                     class="hidden-name">Purchase Tracker</span>
                             </a>
 
-                           
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
                                 <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                             </a>
+                            
                             <a class="list-group-item list-group-item-action p-3 border-0 logout-link"
                                 href="{% url 'logout_user'%}">
                                 <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>

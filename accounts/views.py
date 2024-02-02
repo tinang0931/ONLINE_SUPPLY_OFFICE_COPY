@@ -57,7 +57,7 @@ def bac(request):
 def baclanding(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
 
-
+@bac_required
 def bac_request(request):
 
     tracker = Pr_identifier.objects.select_related('user').all()
@@ -76,6 +76,10 @@ def cdlanding(request):
 @regular_user_required
 def userlanding(request):
     return render(request, 'accounts/User/userlanding.html')
+
+@regular_user_required
+def ppmp101(request):
+    return render(request, 'accounts/User/ppmp101.html')
 
 
 def landing(request):
@@ -339,9 +343,8 @@ def cdpurchase_approval(request, pr_id):
 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 
-
+@bac_required
 def bac_home(request):
-
     checkouts = Checkout.objects.select_related('user').all()
   
 
