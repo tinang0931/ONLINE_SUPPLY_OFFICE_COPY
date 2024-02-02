@@ -17,12 +17,17 @@
   .category-table {
     margin: 20;
   }
-  .table-container {
-    max-height: 400px; /* I-modify kining kantidad base sa imong gikinahanglan */
-    max-width: 800px; /* I-modify kining kantidad base sa imong gikinahanglan */
-    overflow-y: auto;
-    overflow-x: auto; /* Ihatag ang horizontal scrolling kun kinahanglanon */
-    margin: 0 auto; /* I-align ang container sa tunga sa page */
+  .category-table {
+    width: 100%; /* Pagpalambo sa lapad sa table */
+    margin: 0 auto; /* Pagsulod sa center sa table */
+    /* Ang ubang estilo sama sa pag-ubos sa border, padding, ug uban pa mahimo sab mapalihok dinhi */
+}
+
+.category-table th,
+.category-table td {
+    /* Estilo alang sa mga header ug cell sa table */
+    padding: 8px; /* Palihok o pag-usab sa padding */
+    /* Ang ubang estilo sama sa text-align, border, ug uban pa mahimo sab mapalihok dinhi */
 }
 
   .category-table th,
