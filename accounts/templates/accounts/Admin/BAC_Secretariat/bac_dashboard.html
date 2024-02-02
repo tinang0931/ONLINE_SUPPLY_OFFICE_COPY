@@ -140,8 +140,7 @@
     {% for category, items in grouped_data.items %}
 
     <table class="category-table" id="table-{{ category }}" style="margin-bottom: 120px; ">
-        <tr>
-          <th colspan="6" class="text-center" style="width: 100%; text-align:center">
+          <th colspan="6" class="text-center" style="width: 50%; text-align:center">
             {{ category }}
             <a href="#" onclick="confirmDeleteCategory('{{ category }}')">
                 <i class="fas fa-trash-alt text-danger"></i>
@@ -269,7 +268,6 @@
     </table>
     <button style="color: #fff; border-radius: 5px; background-color: #007bff; border-color: #007bff; position: relative; top: -120px;" class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
-    <button class="add-btn btn-primary float-right mt-2 mb-4" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
     {% endfor %}
 
   </div> 
