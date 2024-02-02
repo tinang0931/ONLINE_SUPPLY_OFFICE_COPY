@@ -17,6 +17,14 @@
   .category-table {
     margin: 20;
   }
+  .table-container {
+    max-height: 400px; /* I-modify kining kantidad base sa imong gikinahanglan */
+    max-width: 800px; /* I-modify kining kantidad base sa imong gikinahanglan */
+    overflow-y: auto;
+    overflow-x: auto; /* Ihatag ang horizontal scrolling kun kinahanglanon */
+    margin: 0 auto; /* I-align ang container sa tunga sa page */
+}
+
   .category-table th,
   .category-table td {
     text-align: center;
