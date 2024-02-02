@@ -206,6 +206,7 @@
             <table class="table table-bordered text-center mt-4">
                 <thead>
                     <tr>
+                        <th rowspan='2' class="text-center"></th>
                         <th rowspan='2' class="text-center">Item Name</th>
                         <th rowspan='2' class="text-center">Brand / Description</th>
                         <th rowspan='2' class="text-center">Unit</th>
@@ -235,6 +236,7 @@
 
                     
                         <tr class="item-row" id="{{ p.id }}">
+                            <td class="text-center">{{ forloop.counter }}</td>
 
                             <td>
                                 <span class="editable" data-field="Item_name">{{ p.item }}</span>
@@ -327,6 +329,7 @@
 
                     <form method="post" action="{% url 'user_add_new_item' %}">
                       {% csrf_token %}
+                      <td class="text-center"></td>
                       
                       <td>
                         <input type="text" name="new_item_name" placeholder="New Item Name" required>
