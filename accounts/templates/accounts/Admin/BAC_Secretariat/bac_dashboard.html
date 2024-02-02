@@ -37,7 +37,7 @@
       </div>
     
       <div id="options" class="d-none position-absolute z-1 bg-white "
-        style="user-select: none; width: 100%; max-height: 200px; overflow-y: auto; text-align: center; ">
+        style="user-select: none; width: 100%; max-height: 30px; overflow-y: auto; text-align: center; ">
         <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
         {% for category, items in grouped_data.items %}
         <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
@@ -170,7 +170,7 @@
               var category = confirmationMessage.match(/'([^']+)'/)[1];
               
       
-             window.location.href = "/delete_category/"+category;
+            window.location.href = "/delete_category/"+category;
           }
   
           function cancelDelete() {
@@ -267,11 +267,11 @@
 
       </tbody>
     </table>
-    <button class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
+    <button style="color: #fff; border-radius: 5px; background-color: #007bff; border-color: #007bff; position: relative; top: -120px;" class="add-btn btn-primary float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">+</button>
 
     {% endfor %}
 
-  </div>
+  </div> 
 
 <script>
 
