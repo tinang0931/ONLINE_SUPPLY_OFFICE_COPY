@@ -90,7 +90,7 @@
         width: 400px;
         height: 65px;
         background-color: #00356663;
-        margin: -50px auto 70px;
+        margin: -50px auto 85px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -106,7 +106,7 @@
     }       
 
     .box:hover {
-        background-color: #6585a2;
+        background-color: #88a8c7;
         color: #003566;
         text-decoration: none;
         border: 2px solid #003566;
@@ -123,13 +123,14 @@
         margin: 10px 0;
         font-weight: bolder;
         color: #ffffff;
-        background-color: #e1942c;
+        background-color: #e0922b;
         border: 1px solid #ffff;
         border-radius: 50%;
         text-decoration: none;
     }
     
     .box:hover i {
+        background-color: #ebb875;
         border-color: #003566;
         color: #003566;
         text-decoration: none;
