@@ -305,9 +305,10 @@
         <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
         <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
 
-        <a href="#" title="Download" class="icon-link" id="downloadLink">
+        
+        {% comment %} <a href="#" title="Download" class="icon-link" id="downloadLink">
             <i class="fas fa-download"></i> Download
-        </a>
+        </a> {% endcomment %}
 
         <a href="javascript:window.print()" title="Print" class="icon-link">
             <i class="fas fa-print"></i>
@@ -329,6 +330,20 @@
         form.submit();
     }
 </script>
+{% comment %} 
+<script>
+    document.getElementById('downloadLink').addEventListerner('click', functions() {
+    
+        var pdfFilePath =  'path/to/preqform_cd.html';
+        window.location.href = preqform_cd.html; 
+    });
+{% comment %} 
+    functions btn_click(approve) {
+
+    }
+ {% endcomment %}
+
+</script> {% endcomment %}
 
 
 {% endblock %}
