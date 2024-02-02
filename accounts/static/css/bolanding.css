@@ -95,7 +95,7 @@ width: 100%;
   width: 499px;
   height: 80px;
   background-color: #00356663;
-  margin: 50px auto 40px;
+  margin: 70px auto 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,6 +140,8 @@ width: 100%;
 }
 
 .logout{
+  width: 20vw;
+  height: 70px;
   font-weight: 700px;
   border: none;
   border-radius: 10px;
