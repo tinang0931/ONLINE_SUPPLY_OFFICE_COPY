@@ -217,7 +217,7 @@
                 <i class="fas fa-edit text-primary"></i></a>
 
 
-                {% comment %} <form action="{% url 'update_item' item.id %}" method="post"> {% endcomment %}
+      
 
                   {% csrf_token %}
                   <input id="form_item_{{ item.id }}" type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
