@@ -654,9 +654,14 @@ def myppmp(request):
 def ppmp(request):
     
     if request.method == 'POST':
+
+        year = request.POST.get('selectedYear')
+        
         new_checkout = Checkout.objects.create(
             user=request.user,
+            year=year,
         )
+        
         items = request.POST.getlist('item')
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
