@@ -30,6 +30,14 @@
             </div>
         </div>
     </div>
+    <script>
+    $(document).ready(function () {
+        $('.dropdown-item').on('click', function () {
+            var selectedYear = $(this).data('year');
+            $('#yearDropdown').text(selectedYear);
+        });
+    });
+</script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
