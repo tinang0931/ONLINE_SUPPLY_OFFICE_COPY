@@ -156,8 +156,8 @@ body {
     outline: none;
     border-radius: 20px;
     border-bottom: 2px solid; 
-    font-size: 85%;
-    padding: 1vw;
+    font-size: 95%;
+    padding: 10px;
     box-shadow: 0 0 3px;
     transition: all 0.5s ease;
     border-color: transparent; 

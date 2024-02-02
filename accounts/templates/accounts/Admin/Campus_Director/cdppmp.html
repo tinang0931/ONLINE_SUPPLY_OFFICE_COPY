@@ -25,22 +25,19 @@
 
   .form-control {
     display: block;
-    width: 18;
+    width: 13.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: var(--bs-body-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
-    background-clip: padding-box;
-    border-radius: 20px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1300px;
-    background-color: transparent; /* Remove background color */
-    box-shadow: none; /* Remove box shadow */
+    margin-left: 1400.15px;
+    background-color: transparent; 
+    box-shadow: none; 
   }
+
 
   .search-form {
     justify-content: flex-end;
@@ -103,7 +100,7 @@
     top: 0;
     z-index: 2;
   }
-   body{
+  body{
     overflow:hidden;
   }
   html{
@@ -119,9 +116,9 @@
   <h1 class="pr-heading text-center pt-4"> <strong>PPMP REQUESTS </strong> </h1>
 
   
-  <div class="search" style="position: relative; float: right; margin-right: 70px; margin-top: 1%;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 101%; color: #05708BD2;"></i>
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search Username or Date" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #05708BD2;">
+  <div class="search" style="position: relative; text-align: right;">
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
 
   <div class="table-container">
@@ -177,7 +174,7 @@
       </th>
       <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
         
-       Campus Director Comments
+      Campus Director Comments
         <span class="sort-arrow">
           <span class="sort-arrow-up"></span>
           <span class="sort-arrow-down"></span>
@@ -194,12 +191,11 @@
           </td>
           <td>
             
-             {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a ppmp request for approval on {{ checkout.submission_date }}
+            {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a ppmp request for approval on {{ checkout.submission_date }}
             
           </td>
 
           <td class="text-center">
-            <a href="{% url 'cdppmp_approval' pr_id=checkout.pr_id %}">
               <strong>{{ checkout.pr_id }}</strong>
             </a>
           </td>
