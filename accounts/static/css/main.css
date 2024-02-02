@@ -358,6 +358,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin: 0%;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: larger;
+  font-weight: bold;
   height: 40px;
   display: flex;
   align-content: center;
