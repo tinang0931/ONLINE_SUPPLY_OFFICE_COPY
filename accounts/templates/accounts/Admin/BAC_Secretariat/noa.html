@@ -25,13 +25,13 @@ body {
         display: none;
     }
 }
-  
+
     header {
             background-color: #007acc;
             color: white;
             padding: 10px;
         }
-       
+    
 
 
     h4 {
@@ -241,13 +241,13 @@ body, h3, p, h, div {
                                     <div class="icons-container">
                                         <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
                                             <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
-                                           </a>
-                                           <a href="#" title="Select" class="icon-link">
+                                        </a>
+                                        <a href="#" title="Select" class="icon-link">
                                             <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
-                                           </a>
-                                           <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                                               <option value="a4">A4</option>
-                                               <option value="legal">Legal</option>
+                                        </a>
+                                        <select id="paperSize" onchange="changePaperSize()" style="display: none;">
+                                            <option value="a4">A4</option>
+                                            <option value="legal">Legal</option>
                                             </div>
                                         </div>
                                         </a>
@@ -393,7 +393,7 @@ body, h3, p, h, div {
             <h contenteditable="true">JOHN JOHN</h>
         </div>
     <div>&nbsp</div>
-       <h contenteditable="true">Campus Director/Head Procuring Entity</h>
+        <h contenteditable="true">Campus Director/Head Procuring Entity</h>
     </div>
 
 
@@ -425,5 +425,5 @@ body, h3, p, h, div {
 <div class="page-break"></div>
 </div>
 </body>
-        
- {% endblock %}
+
+{% endblock %}

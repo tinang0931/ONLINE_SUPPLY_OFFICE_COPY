@@ -9,9 +9,9 @@
 {% block request %}
 
 <style>
- 
 
-   
+
+
     .table-bordered  {
         height:100%;
     }
@@ -25,61 +25,60 @@
     .welcome {
         margin-left: 10%;
     }
-   .bckbtn {
+.bckbtn {
         position: fixed;
         bottom: 50px; /* Adjust the top position as needed */
         left: 20px; /* Adjust the left position as needed */
         z-index: 1000; /* Ensure it stays on top of other elements */
     }
 .bckbtn a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+display: flex;
+align-items: center;
+text-decoration: none;
 }
 
 .bckbtn img {
-  width: 30px;  /* Adjust the width of the image as needed */
-  height: 30px; /* Adjust the height of the image as needed */
-  transition: all 0.3s ease-in-out;
+width: 30px;  /* Adjust the width of the image as needed */
+height: 30px; /* Adjust the height of the image as needed */
+transition: all 0.3s ease-in-out;
 }
 
 .bckbtn:hover img {
-  transform: translateX(-5px);
-  filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
+transform: translateX(-5px);
+filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
 }
 
 .bckbtn::before {
-  content: "";
-  position: absolute;
-  top: -5px; /* Adjust the position higher or lower based on your preference */
-  right: 0;
-  bottom: -5px; /* Adjust the bottom position as needed */
-  left: 0;
-  
-  border-radius: 20px;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    top: -5px; /* Adjust the position higher or lower based on your preference */
+    bottom: -5px; /* Adjust the bottom position as needed */
+    left: 0;
+    
+    border-radius: 20px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .bckbtn:hover::before {
-  opacity: 1;
-  
+opacity: 1;
+
 }
 .table-bordered {
     max-height: 700px;
     overflow-y: auto;
     margin-bottom: 20px; 
-  }
-  
-  
-  @media only screen and (max-width: 768px) {
+} 
+
+
+    @media only screen and (max-width: 768px) {
     .table-bordered {
         max-height:400px;  
     }
-  }
+}
 
-  .table-responsive {
+.table-responsive {
     margin-top: -6vh; 
     }
 
@@ -136,7 +135,7 @@
     <div class="row">
             <div class="search" style="position: relative; text-align: right;">
                 <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-                <!-- <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
+                <!-- <i class="fas fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
             </div>
             
         </div>
@@ -203,35 +202,35 @@
 
     </div>
     <style>
-       button {
+        button {
   padding: 5px 10px; /* Adjusted padding */
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e8e8e8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 14px; /* Adjusted font size */
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
+border: unset;
+border-radius: 15px;
+color: #212121;
+z-index: 1;
+background: #e8e8e8;
+position: relative;
+font-weight: 1000;
+ font-size: 14px; /* Adjusted font size */
+-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+transition: all 250ms;
+overflow: hidden;
 }
 
 button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #1c96c5;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 0;
+border-radius: 15px;
+background-color: #1c96c5;
+z-index: -1;
+-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+transition: all 250ms;
 }
 
 button:hover {
@@ -239,7 +238,7 @@ button:hover {
 }
 
 button:hover::before {
-  width: 100%;
+width: 100%;
 }
     </style>
 
