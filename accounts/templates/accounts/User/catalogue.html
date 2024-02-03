@@ -201,7 +201,7 @@
                     // Function to change button appearance to green checkmark and submit the form
                     function toggleButtonAndSubmitForm(button) {
                         button.innerHTML = "✓"; // Change button content to checkmark
-                        button.style.backgroundColor = "green"; // Change button background color
+                        button.style.backgroundColor = "#04AA6D"; // Change button background color
             
                         // Delay disabling the button for a short duration (e.g., 500 milliseconds)
                         setTimeout(function() {
@@ -219,7 +219,7 @@
                     }
             
                     // Get all submit buttons and attach event listeners
-                    var submitButtons = document.querySelectorAll(".submitButton"); 
+                    var submitButtons = document.querySelectorAll(".submitButton");
                     submitButtons.forEach(function(button) {
                         button.addEventListener("click", function(event) {
                             toggleButtonAndSubmitForm(button); // Change button appearance
@@ -227,7 +227,6 @@
                     });
                 });
             </script>
-
 
 
         </div>
