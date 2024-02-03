@@ -79,7 +79,27 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-    return render(request, 'accounts/User/ppmp101.html')
+
+    checkouts = Checkout.objects.select_related('user').all()
+  
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            
+            'user': checkout.user,
+            'year': checkout.year,
+            
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user      
+    }
+
+    return render(request, 'accounts/User/ppmp101.html', context)
 
 
 def landing(request):
