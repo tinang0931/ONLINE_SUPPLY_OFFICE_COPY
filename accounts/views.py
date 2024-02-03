@@ -79,7 +79,27 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-    return render(request, 'accounts/User/ppmp101.html')
+
+    checkouts = Checkout.objects.select_related('user').all()
+  
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            
+            'user': checkout.user,
+            'year': checkout.year,
+            
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user      
+    }
+
+    return render(request, 'accounts/User/ppmp101.html', context)
 
 
 def landing(request):
@@ -661,9 +681,14 @@ def myppmp(request):
 def ppmp(request):
     
     if request.method == 'POST':
+
+        year = request.POST.get('selectedYear')
+        
         new_checkout = Checkout.objects.create(
             user=request.user,
+            year=year,
         )
+        
         items = request.POST.getlist('item')
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
