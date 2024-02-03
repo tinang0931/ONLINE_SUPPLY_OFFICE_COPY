@@ -5,7 +5,6 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-
 body {
     display: flex;
     justify-content: center;
@@ -35,7 +34,6 @@ body {
     transform-origin: left top;
 }
 
-
 .wrapper {
     width: 25%;
     max-width: 30%;
@@ -55,43 +53,35 @@ body {
     transition: scrollbar-color 0.5s ease;
 }
 
-
 .wrapper {
     overflow-y: hidden; 
 }
 
-
 .wrapper:hover {
     overflow-y: auto; 
 }
-
 
 .wrapper::-webkit-scrollbar {
     width: 5px;
     transition: width 0.5s;
 }
 
-
 .wrapper::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 5px;
 }
 
-
 .wrapper.scrolled {
     scrollbar-color: #888 rgba(255, 255, 255, 0.815);
 }
-
 
 .wrapper:hover::-webkit-scrollbar {
     width: 2px;
 }
 
-
 .wrapper:hover .scrolled {
     scrollbar-color: #888 rgba(255, 255, 255, 0.815);
 }
-
 
 @media screen and (max-width: 30%) {
     .wrapper {
@@ -100,12 +90,10 @@ body {
         padding: 10px;
     }
 
-
     .wrapper h1 {
         font-size: 1.5em;
         margin-bottom: 1vw;
     }
-
 
     .input-box input {
         height: 3vw;
@@ -113,24 +101,20 @@ body {
         padding: 0.5vw;
     }
 
-
     .wrapper .btn {
         height: 2.5vw;
         font-size: 1.2vw;
         margin-top: 1vw;
     }
 
-
     .register-link {
         margin-top: 1vw;
     }
-
 
     .register-link p a {
         font-size: 1.2vw;
     }
 }
-
 
 .wrapper h1 {
     color: #003566;
@@ -141,12 +125,10 @@ body {
     font-weight: 600;
 }
 
-
 .wrapper .input-box {
     width: 100%;
     margin: 1vw 0;
 }
-
 
 .input-box input {
     font-family: 'Poppins', sans-serif;
@@ -156,11 +138,12 @@ body {
     outline: none;
     border-radius: 20px;
     border-bottom: 2px solid; 
-    font-size: 85%;
-    padding: 1vw;
-    box-shadow: 0 0 3px;
+    font-size: 95%;
+    padding: 20px;
+    box-shadow: 0 1px 3px;
     transition: all 0.5s ease;
     border-color: transparent; 
+    font-weight: normal; 
 }
 
 .input-box input:hover {
@@ -169,24 +152,22 @@ body {
 
 .input-box input:focus,
 .input-box input:valid {
-    border-color: #003566; 
+    color: #003566;
+    border-color: #003566;
+    font-weight: bold;
 }
-
-
 
 .forgot a {
     font-size: .8vw;
     font-weight: 500;
-    margin-left: 2vw;
+    margin-left: .2vw;
     color: black;
     text-decoration: none;
 }
 
-
 .forgot a:hover {
     text-decoration: underline;
 }
-
 
 .wrapper .btn {
     width: 100%;
@@ -204,23 +185,20 @@ body {
     outline: none;
     margin-top: 1.5em;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .wrapper .btn:hover {
     background: linear-gradient(45deg, #ffbc67, #f38c06);
     transform: translateY(-2px);
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2);
 }
-
-
 
 .register-link {
     font-size: .8vw;
     text-align: center;
     margin-top: 1vw;
 }
-
 
 .register-link p a {
     font-size: .8vw;
@@ -229,9 +207,7 @@ body {
     text-decoration: none;
 }
 
-
 .register-link p a:hover {
     text-decoration: underline;
     color: #007bff;
 }
-

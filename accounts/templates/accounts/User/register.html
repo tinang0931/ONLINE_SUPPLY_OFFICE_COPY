@@ -29,6 +29,10 @@
 
 
     <style>
+        p {
+            margin-top: 70px;
+            margin-bottom: 1rem;
+        }
         .form-check-label {
         font-family: 'Poppins', sans-serif;
         }
@@ -37,11 +41,10 @@
             font-family: 'Poppins', sans-serif;
             border: none; 
             background: rgba(255, 255, 255, 0.486);
-            border-radius: 3px;
+            border-radius: 20px; 
             box-shadow: 0 0 3px black;
             width: 40vh;
         }
-
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             font-family: 'Poppins', sans-serif;
@@ -99,6 +102,7 @@
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
         width: 20%;
+        margin-top: 0px; 
         background: linear-gradient(45deg, #f38c06, #ffbc67);
         color: #003566;
         border: none;
@@ -107,15 +111,14 @@
         outline: none;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-
     }
-
+    
     .btn:hover {
         font-family: 'Poppins', sans-serif;
         background: linear-gradient(45deg, #ffbc67, #f38c06);
         transform: translateY(-2px);
         box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-        }
+    }
 
     .checkbox-label.selected {
         font-family: 'Poppins', sans-serif;
@@ -130,13 +133,13 @@
     <div class="upper">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
 
     <div class="container" style="margin-top: 150px;">
-        <!-- {% if messages %}
+        {% if messages %}
     
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
     
-            {% endif %} -->
+            {% endif %}
         
 
         <div class="title">Register</div>
@@ -146,7 +149,7 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
+                    <input type="number" name="username" placeholder="CTU ID" required oninput="maxLengthCheck(this, 11)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
@@ -157,33 +160,22 @@
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="email" name="email" placeholder="Email:" required>
+                    <input type="email" name="email" placeholder="Email" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="text" name="fname" placeholder="First Name:" required>
+                    <input type="text" name="fname" placeholder="First Name" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="text" name="lname" placeholder="Last Name:" required>
+                    <input type="text" name="lname" placeholder="Last Name" required>
                 </div>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="contact1" placeholder="Contact No. 1:" required oninput="maxLengthCheck(this, 12)">
-                </div>
-                <script>
-                    function maxLengthCheck(object, maxLength) {
-                        if (object.value.length > maxLength)
-                        object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                <div class="input-box">
-                    <span class="details"></span>
-                    <input type="number" name="contact2" placeholder="Contact 2:" required oninput="maxLengthCheck(this, 12)">
+                    <input type="number" name="contact1" placeholder="Contact No. 1" required oninput="maxLengthCheck(this, 12)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
@@ -194,7 +186,18 @@
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="password" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
+                    <input type="number" name="contact2" placeholder="Contact No. 2" required oninput="maxLengthCheck(this, 12)">
+                </div>
+                <script>
+                    function maxLengthCheck(object, maxLength) {
+                        if (object.value.length > maxLength)
+                        object.value = object.value.slice(0, maxLength);
+                        }
+                    </script>
+
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" name="pass1" placeholder="Password" required oninput="maxLengthCheck(this, 15)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
