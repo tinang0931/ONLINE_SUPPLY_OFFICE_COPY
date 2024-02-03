@@ -1,5 +1,7 @@
 {% extends "accounts/User/main.html" %}
 
+{% load static %}
+
 {% block tracker %}
 
 <style>
@@ -31,6 +33,23 @@
   .table-bordered th {
     background-color: #1c96c5;
   }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -40,6 +59,11 @@
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
   </div>
+      <div class="bck">
+        <a href="{% url 'userlanding' %}">
+          <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+        </a>
+      </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
       <table class="table table-bordered" style="margin: 0px!important;">
