@@ -200,7 +200,7 @@
 
 
 
-
+    
     <div class="table-responsive">
 
         <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
@@ -277,6 +277,7 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
+
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -304,10 +305,14 @@
         <input id="new_status_id" type="hidden" name="new_status">
         <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
         <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-     
-  <a href="{% url path/to/preqform_cd.html %}" title="Download" class="icon-link" id="downloadLink">
-            <i class="fas fa-download"></i> Download
-        </a>  
+
+        {% comment %} <a href="#" title="Download" class="icon-link">
+            <i class="fas fa-download"></i> 
+        </a> {% endcomment %}
+
+        <a href={% url 'preqform_cd' %} title="Download" class="icon-link" onclick="redirectToPage(pr_id=pr_id)">
+            <i class="fas fa-download"></i> 
+        </a>
 
         <a href="javascript:window.print()" title="Print" class="icon-link">
             <i class="fas fa-print"></i>
@@ -317,8 +322,7 @@
 </form>
 
 
-
-{% comment %} <script>
+<script>
     function btn_click(approve) {
         // Get the hidden input element by its ID
         var newStatusInput = document.getElementById('new_status_id');
@@ -332,53 +336,16 @@
     }
 </script>
 
-<script>
-    <script>
-        document.getElementById('downloadLink').addEventListener('click', function() {
-            var pdfFilePath = 'path/to/preqform_cd.html';
-            window.location.href = pdfFilePath;
-        });
-    
-        function btn_click(approve) {
-            // Your btn_click function logic here
-        }
-    </script>
-    
-</script> {% endcomment %}
+
 
 
 
 <script>
-
-    function btn_click(approve) {
-        var newStatusInput = document.getElementById('new_status_id');
-        newStatusInput.value = approve ? 'approved' : 'declined';
-        var form = document.getElementById('form_id');
-        form.submit();
+    function redirectToPage(pr_id) {
+        // Use JavaScript to redirect to another page
+        window.location.href = `{% url 'preqform_cd' pr_id=pr_id %}`;
     }
-
-    document.getElementById('downloadLink').addEventListener('click', function() {
-        // Create a Blob containing the HTML content
-        var htmlContent = document.documentElement.outerHTML;
-        var blob = new Blob([htmlContent], { type: 'text/html' });
-
-        // Create a temporary URL for the Blob
-        var url = URL.createObjectURL(blob);
-
-        // Create a link element and trigger the download
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'your_file_name.html';  // Set the desired file name
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        // Revoke the URL to free up resources
-        URL.revokeObjectURL(cdpurchase_approval.html);
-    });
-
 </script>
 
+
 {% endblock %}
-
-

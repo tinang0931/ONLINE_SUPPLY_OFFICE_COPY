@@ -1242,8 +1242,3 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
-
-
-def cdppmp_approval(request, downloadLink):
-    # Your view logic goes here
-    return render(request, 'your_app_name/preqform_cd.html', {'downloadLink': downloadLink})

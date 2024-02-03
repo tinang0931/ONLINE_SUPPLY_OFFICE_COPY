@@ -559,6 +559,8 @@
                             document.forms[0].submit();  // Assuming the form is the first form on the page
                         }
  </script>
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 <script>
     let selectedPaperSize = 'a4';
@@ -591,21 +593,22 @@
             element.style.pageBreakBefore = 'auto';
         });
     }
-    html2pdf().set({ 
-  pagebreak: { mode: 'avoid-all', before: '#page2el' }
+      html2pdf().set({ 
+        pagebreak: { mode: 'avoid-all', before: '#page2el' }
 });
 
-// Enable all 'modes', with no explicit elements.
-html2pdf().set({
-  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        // Enable all 'modes', with no explicit elements.
+        html2pdf().set({
+           pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
 });
 
-// No modes, only explicit elements.
-html2pdf().set({
-  pagebreak: { before: '.beforeClass', after: ['#after1', '#after2'], avoid: 'img' }
+    // No modes, only explicit elements.
+    html2pdf().set({
+        pagebreak: { before: '.beforeClass', after: ['#after1', '#after2'], avoid: 'img' }
 });
 
 </script>
+
 <script>
     function toggleSelect() {           
         var selectElement = document.getElementById("paperSize");
