@@ -90,6 +90,7 @@ def ppmp101(request):
             
             'user': checkout.user,
             'year': checkout.year,
+            'pr_id': checkout.pr_id
             
         }
         checkout_data.append(checkout_dict)
@@ -100,6 +101,21 @@ def ppmp101(request):
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
+
+def ppmpform(request, year):
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
+    
+    # If you want to get all checkout items associated with approved checkouts
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+    context = {
+        'approved_items': approved_items,
+        'year': year,
+    }
+
+    return render(request, 'accounts/User/myppmp.html', context)
+
+
 
 
 def landing(request):
