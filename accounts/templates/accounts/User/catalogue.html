@@ -167,7 +167,7 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button class="submitButton">➕ </button>
+                                    <button type="submit" onclick="hideRow('{{ p.id }}')"> ➕ </button>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -177,38 +177,6 @@ opacity: 1;
                     </tbody>
             </table>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    
-                    // Function to change button appearance to green checkmark and submit the form
-                    function toggleButtonAndSubmitForm(button) {
-                        button.innerHTML = "✓"; // Change button content to checkmark
-                        button.style.backgroundColor = "#04AA6D"; // Change button background color
-            
-                        // Delay disabling the button for a short duration (e.g., 500 milliseconds)
-                        setTimeout(function() {
-                            button.disabled = true; // Disable the button after a delay
-                            saveButtonStatus(button); // Save button status to local storage
-                        }, 500);
-                    }
-            
-                    // Function to save button status to local storage
-                    function saveButtonStatus(button) {
-                        var buttonId = button.id; // Get button ID
-                        var formName = button.getAttribute("data-form"); // Get form name from data attribute
-                        localStorage.setItem(buttonId, 'submitted'); // Save button status
-                        console.log("Form submitted: " + formName); // Log the form name
-                    }
-            
-                    // Get all submit buttons and attach event listeners
-                    var submitButtons = document.querySelectorAll(".submitButton");
-                    submitButtons.forEach(function(button) {
-                        button.addEventListener("click", function(event) {
-                            toggleButtonAndSubmitForm(button); // Change button appearance
-                        });
-                    });
-                });
-            </script>
 
 
         </div>

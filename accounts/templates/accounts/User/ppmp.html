@@ -161,36 +161,29 @@
             <img src="{% static 'images/bck.png' %}" alt="Previous">
         </a>
     </div>
-   
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
                 <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
             </button>
         </div>
-    </div>
-
-    <form action="{% url 'ppmp' %}" method="post">
-        {% csrf_token %}
-
-    <div class="custom-dropdown mx-auto">
-        <select id="yearDropdown">
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-          </select>
-
-          <input type="hidden" id="selectedYear" name="selectedYear">
-          
-          <script>
-            document.getElementById("yearDropdown").addEventListener("change", function() {
-              document.getElementById("selectedYear").value = this.value;
-            });
-          </script>
-    
+        <div class="col-md-3 mb-0">
+            <form action="{% url 'ppmp' %}" method="post">
+                {% csrf_token %}
+                <div class="custom-dropdown mx-auto">
+                    <select id="yearDropdown" style="padding: 5px 15px;; font-size: 16px; border-radius: 5px; margin-top: -5%;
+                    transition: transform 0.3s ease-in-out; background: #1c96c5; color: #fff; margin-left: 0; border: none; ">
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                    </select>
+                    <input type="hidden" id="selectedYear" name="selectedYear">
+                </div>
+            </form>
+        </div>
     </div>
    
     <div class="row">
