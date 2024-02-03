@@ -18,17 +18,13 @@
     <div class="d-flex" id="wrapper">
         <div class="box-container">
            
+            {% for checkout in checkouts %}
             <div class="box ppmp">
-                <span>2024 PPMP</span>
+                <span> {{checkout.year}} PPMP</span>
             </div>
-            <div class="box ppmp">
-                <span>2023 PPMP</span>
-            </div>
-            <div class="box ppmp">
-                <span>2022 PPMP</span>
-            </div>
+            {% endfor %}
             <div class="box1 create">
-                <span>Create PPMP</span>
+                <a href="{% url 'ppmp' %}">Create PPMP</a>
             </div>
 
         </div>
