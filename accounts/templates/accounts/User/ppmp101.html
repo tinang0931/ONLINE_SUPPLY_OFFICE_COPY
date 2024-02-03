@@ -8,11 +8,35 @@
 <link rel="stylesheet" href="{% static 'css/ppmp101.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<style>
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+        
+</style>
 
 <div class="container-fluid main-content">
 
     <div class="container">
         <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+    </div>
+
+    <div class="bck">
+        <a href="{% url 'userlanding' %}">
+            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+        </a>
     </div>
 
     <div class="d-flex" id="wrapper">
