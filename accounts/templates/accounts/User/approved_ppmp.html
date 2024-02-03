@@ -70,6 +70,16 @@
     .table-responsive {
     margin-top: -6vh; 
     }
+
+.bckbtn img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bckbtn:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
 </style>
 
 
@@ -82,7 +92,7 @@
     <div class="container">
         <h1 style="margin-left: 45%;"> <strong>APPROVED PPMP</strong> </h1>
     </div>
-    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/previous_189252.png' %}"></a>
+    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/arrow-left.png' %}"></a>
     </div>
     <div class="row">
         <div class="col-md-4">

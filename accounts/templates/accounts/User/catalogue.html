@@ -189,7 +189,7 @@ opacity: 1;
     
         // Function to initialize selected items from localStorage
         function initializeSelectedItems() {
-            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];   
             for (var i = 0; i < storedItems.length; i++) {
                 var itemName = storedItems[i];
                 var button = document.getElementById(itemName);
