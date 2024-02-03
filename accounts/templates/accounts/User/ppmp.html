@@ -107,43 +107,28 @@
 }
     
     .table-responsive {
-    margin-top: -4vh; 
+    margin-top: -6vh; 
     }
 
-    .custom-dropdown .btn::after {
-    display: none;
+.custom-dropdown{
+    position: relative;
+    display: inline-block;
 }
 
-.custom-dropdown .btn {
-    position: fixed;
-    top: 3vh;
-    right: 3vh;
-    z-index: 1000;
-    background-color: #1c96c5;
-    color: whitesmoke;
-    border: none;
-    transition: all 0.5s ease;
-    padding: 5px 10px;
-    padding-right: 30px;
-    width: 120px;
-    margin-top: 22vh;
+#yearDropdown{
+    padding: 5px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+
 }
-
-.custom-dropdown .btn:hover {
-    background-color: #1c96c5;
-    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
-}
-
-
-.dropdown-menu .dropdown-item:hover {
-        background-color: #1c96c5;
-        color: whitesmoke;
-    }
-    .custom-dropdown .btn:hover {
-        background-color: #1c96c5;
-    }
-    h5 {
-    margin-top: -20px; /* Adjust the negative margin to move it upward */
+.custom-dropdown::after {
+  position: relative;
+  top: 40%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
