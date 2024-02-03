@@ -658,10 +658,11 @@ def catalogue (request):
             item=item_name,
             item_brand_description=item_brand,
             unit=unit,
-            unit_cost=price
+            unit_cost=price,
         )
-
+        
         return redirect('catalogue')
+
 
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
