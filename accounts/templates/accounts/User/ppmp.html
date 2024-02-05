@@ -181,8 +181,14 @@
                         <option value="2027">2027</option>
                     </select>
                     <input type="hidden" id="selectedYear" name="selectedYear">
+
+                    <script>
+                        document.getElementById("yearDropdown").addEventListener("change", function() {
+                          document.getElementById("selectedYear").value = this.value;
+                        });
+                      </script>
                 </div>
-            </form>
+            
         </div>
     </div>
    
@@ -370,12 +376,10 @@
                 <i class="fas fa-plus-circle"></i>
             </button>
             
-
-            <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
-                <i class="fas fa-plus-circle"></i>
-            </button>
+        </div>
             
     </div>
+    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
