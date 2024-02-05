@@ -8,67 +8,36 @@
 <link rel="stylesheet" href="{% static 'css/myppmp.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<style>
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+</style>
 
 <div class="container-fluid main-content">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
-        <div class="custom-dropdown mx-auto">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Select Year
-            </button>
-            <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
-                <a class="dropdown-item" href="#" data-year="2022">2022</a>
-                <a class="dropdown-item" href="#" data-year="2023">2023</a>
-                <a class="dropdown-item" href="#" data-year="2024">2024</a>
-                <a class="dropdown-item" href="#" data-year="2025">2025</a>
-                <a class="dropdown-item" href="#" data-year="2026">2026</a>
-                <a class="dropdown-item" href="#" data-year="2027">2027</a>
-                <a class="dropdown-item" href="#" data-year="2028">2028</a>
-                <a class="dropdown-item" href="#" data-year="2029">2029</a>
-                <a class="dropdown-item" href="#" data-year="2030">2030</a>
-            </div>
-        </div>
+        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
+        
     </div>
-    <script>
-    $(document).ready(function () {
-        $('.dropdown-item').on('click', function () {mp
-            var selectedYear = $(this).data('year');
-            $('#yearDropdown').text(selectedYear);
-        });
-    });
-</script>
+    <div class="bck">
+        <a href="{% url 'ppmp101' %}">
+            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+        </a>
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-item').on('click', function (e) {
-                e.stopPropagation();
-                var selectedYear = $(this).text();
-                $('.btn#yearDropdown').text(selectedYear);
-            });
-        });
-
-        document.getElementById('yearDropdown').addEventListener('click', function () {
-            this.style.backgroundColor = ' #f59a23e7';
-        });
-    </script>
-
-    <div class="rowppmp">
-            <div id="textContainer">
-                <a href="{% url 'ppmp' %}">Create
-                    PPMP</a>
-            </div>
-        </div>
-
-
-        <script>
-            function toggleText() {
-                var textContainer = document.getElementById("textContainer");
-                textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
-            }
-        </script>
 
 
         <div class="table-responsive">
@@ -137,6 +106,8 @@
                         <td>{{ p.oct }}</td>
                         <td>{{ p.nov }}</td>
                         <td>{{ p.dec }}</td>
+
+                        <td>{{ p.unit_cost }}</td>
 
 
 

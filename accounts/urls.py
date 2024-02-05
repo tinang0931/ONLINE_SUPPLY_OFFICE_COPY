@@ -85,4 +85,6 @@ urlpatterns = [
    path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
    path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
    path('bac_request/', views.bac_request, name='bac_request'),
+   path('ppmpform/<int:year>/', views.ppmpform, name='ppmpform'),
+
 ]
