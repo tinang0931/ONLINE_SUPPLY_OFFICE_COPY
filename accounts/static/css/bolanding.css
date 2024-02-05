@@ -31,124 +31,159 @@
     margin: 0;
 }
 
-
-   
-
-    .p1 {
-        color: white;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-size: 25px;
-        text-align: center;
-    }
-  
-  
-    .head {
-        color: white;
-        font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-        font-size: 48px;
-        margin-top: 5%;
-    } 
-  
-  
-    .ctu_logo {
-        position: absolute;
-        width: 45%;
-        left: 0;
-        margin-top: 5%;
-        z-index: 100;
-    }
-    .navbar {
-      margin-bottom: 0; 
-  }
-  
-    .welcome {
-      background-color: #f59a23e7!important;
-      color: #003566;
-      text-align: center !important;
-      margin: 0%;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      font-size: 24px;
-      font-weight: 600;
-      height: 70px;
-      display: flex;
-      align-content: center;
-      flex-wrap: wrap;
-      flex-direction: column;
-      justify-content: space-around;
-      visibility: visible;
-      content-visibility: auto;
-      height: 50px;
-      margin-left: 5%;
-      width: 100%;
-  }
-
-  .box-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    flex-direction: column;
-    margin-left: auto; 
-    margin-right: auto;
-    margin-top: 5%;
+.p1 {
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 25px;
+  text-align: center;
 }
-    
-    .box {     
-      width: 499px;
-      height: 80px;
-      background-color: #00356663;
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Roboto', sans-serif;
-      font-size: 20px;
-      border: 2px solid #ffffff;
-      border-radius: 10px;
-      color: #ffffff;
-      background-color: transparent;
-  }
 
-.box i {
-    margin-right: 5px;
-    position: absolute;
-    left: 38%;
-    font-size: 24px;
-    border-radius: 50%;
-    border: 2px solid white;
-    background-color: #e3952d; 
-    padding: 0.5%;
-    margin: 10px 0;
-   
+  
+.head {
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  font-size: 48px;
+  margin-top: 5%;
+} 
+
+
+.ctu_logo {
+  position: absolute;
+  width: 45%;
+  left: 0;
+  margin-top: 5%;
+  z-index: 100;
+}
+
+.navbar {
+margin-bottom: 0; 
+}
+
+.welcome {
+background-color: #f59a23e7!important;
+color: #003566;
+text-align: center !important;
+margin: 0%;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: 24px;
+font-weight: 600;
+height: 70px;
+display: flex;
+align-content: center;
+flex-wrap: wrap;
+flex-direction: column;
+justify-content: space-around;
+visibility: visible;
+content-visibility: auto;
+height: 50px;
+margin-left: 5%;
+width: 100%;
+}
+
+.box-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: 5%;
+}
+  
+.box {     
+  width: 499px;
+  height: 80px;
+  background-color: #00356663;
+  margin: 70px auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 600;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #00356663;
+  transition: background-color 0.8s ease;
+  overflow: hidden;
+  text-decoration: none;
 }
 
 .box:hover {
-  background-color: #6585a2; 
+  background-color: #88a8c7;
   color: #003566;
-  text-decoration: none; 
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 4px 8px #f59a2373;    
+}
+
+.box i {
+  margin-right: 5px;
+  position: absolute;
+  left: 38%;
+  font-size: 24px;
+  font-weight: bolder;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-color: #e0922b; 
+  padding: 0.5%;
+  margin: 10px 0;
+}
+
+.box:hover i {
+  background-color: #ebb875;
+  border-color: #003566;
+  color: #003566;
+  text-decoration: none;
+}
+
+.logout{
+  width: 20vw;
+  height: 70px;
+  font-weight: 700px;
+  border: none;
+  border-radius: 10px;
+  color: #003566;
+  background: linear-gradient(45deg, #f38c06, #ffbc67);
+  margin: 10px 0;
+  box-shadow: 0 4px 8px #f59a2373;      
+  border-radius: 50px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 1.5em;
+  transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.logout:hover{
+  background: linear-gradient(45deg, #ffbc67, #f38c06);
+  transform: translateY(-2px);
+  box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
 
-    
-    .ppmp,.about,.history,.purchase request{
-        font-weight: 700px;
-        border: 1px solid #ffffff;
-        border-radius: 10px;
-        color: #ffffff;
-        background-color: #00356663;
-        margin: 10px 0;
-    }
+.logout i {
+  margin-right: 5px;
+  position: absolute;
+  left: 38%;
+  font-size: 24px;
+  font-weight: bolder;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-color: red; 
+  padding: 0.5%;
+  margin: 10px 0;
+}
 
+.logout:hover i {
+  background-color: rgb(224, 54, 54);
+  border-color: #003566;
+  color: #003566;
+  text-decoration: none;
+}
 
-    .logout{
-        font-weight: 700px;
-        border: 1px solid #ffffff;
-        border-radius: 10px;
-        color: #ffffff;
-        background-color: #003566;
-        margin: 10px 0;
-
-    }
-    .container-fluid {
-      padding: 0;
-  }
+.container-fluid {
+padding: 0;
+}
