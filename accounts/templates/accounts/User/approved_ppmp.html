@@ -53,13 +53,10 @@
         content: "";
         position: absolute;
         top: -5px;
-        /* Adjust the position higher or lower based on your preference */
         right: 0;
-        bottom: -5px;
-        /* Adjust the bottom position as needed */
+        bottom: -8px;
         left: 0;
         background-color: #6a89a5;
-        /* Set the background color */
         border-radius: 20px;
         opacity: 0;
         z-index: -1;
@@ -69,6 +66,20 @@
     .bckbtn:hover::before {
         opacity: 1;
     }
+
+    .table-responsive {
+    margin-top: -6vh; 
+    }
+
+.bckbtn img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bckbtn:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
 </style>
 
 
@@ -81,7 +92,8 @@
     <div class="container">
         <h1 style="margin-left: 45%;"> <strong>APPROVED PPMP</strong> </h1>
     </div>
-
+    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/arrow-left.png' %}"></a>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <div class="search">
@@ -89,12 +101,7 @@
                     oninput="filterTable()">
             </div>
         </div>
-
-
-
-        <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/previous_189252.png' %}"></a>
-        </div>
-
+        <div class="table-responsive">
         <div>
             <table class="table table-bordered">
                 <thead>
