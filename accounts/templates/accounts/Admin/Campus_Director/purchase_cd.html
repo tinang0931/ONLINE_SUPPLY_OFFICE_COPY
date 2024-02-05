@@ -389,7 +389,7 @@ position: relative;
                 <div class="justify-content">
                     <div class="col-md-12">
                         <div class="mx-auto">
-                            <form action="{% url 'preqform' pr_identifier.pr_id %}" method="post" id="form_id">
+                            <form action="" method="post">
                                 {% csrf_token %}
                                 <table class="table-bordered table-fixed" style="width: 115%" position="center">
                                     <tr>
@@ -504,11 +504,10 @@ position: relative;
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-<div class="html2pdf__page-break"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 <script>
@@ -591,7 +590,6 @@ position: relative;
             const options = {
                 filename: 'purchase_request.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                margin: 2,
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
                 pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 

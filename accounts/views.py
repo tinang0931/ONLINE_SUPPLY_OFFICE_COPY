@@ -548,6 +548,13 @@ def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
 
 
+@cd_required
+@authenticated_user
+def purchase_cd(request):
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html')
+
+
+
 @authenticated_user
 def resolution(request):
     return render(request, 'accounts/Admin/Campus_Director/resolution.html')
@@ -944,6 +951,8 @@ def delete(request, id):
     return redirect('ppmp')
 
 
+
+
 def update_item(request, id):
     if request.method == 'POST':
         CSV.objects.get(id=id)
@@ -1249,6 +1258,7 @@ def preqform_cd(request, pr_id):
     print("pr_id:", pr_id)
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
+
 @authenticated_user              
 def delete_item(request, id):
     item = Item.objects.get(id = id)
@@ -1271,3 +1281,8 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
+
+
+def purchase_cd(request, pr_id):
+    # your view logic here...
+  return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})

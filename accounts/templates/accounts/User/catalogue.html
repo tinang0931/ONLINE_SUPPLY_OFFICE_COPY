@@ -167,7 +167,7 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button type="submit" onclick="hideRow('{{ p.id }}')"> ➕ </button>
+                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')"> ➕ </button>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -183,6 +183,56 @@ opacity: 1;
 
 
     </div>
+
+    <script>
+        var selectedItems = [];
+    
+        // Function to initialize selected items from localStorage
+        function initializeSelectedItems() {
+            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];   
+            for (var i = 0; i < storedItems.length; i++) {
+                var itemName = storedItems[i];
+                var button = document.getElementById(itemName);
+                if (button) {
+                    button.textContent = "✔";
+                    selectedItems.push(itemName);
+                }
+            }
+            displaySelectedItems();
+        }
+    
+        // Initialize selected items when the page loads
+        initializeSelectedItems();
+    
+        function toggleSelection(button, itemName, event) {
+            console.log(button);
+            event.preventDefault();
+            if (button.textContent.trim() === "➕") {
+                button.textContent = "✔";
+                selectedItems.push(itemName);
+            } else {
+                button.textContent = "➕";
+                var index = selectedItems.indexOf(itemName);
+                if (index !== -1) {
+                    selectedItems.splice(index, 1);
+                }
+            }
+
+            return false;
+    
+            // Display selected item names
+            displaySelectedItems();
+    
+            // Save selected items to localStorage
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        }
+    
+        function displaySelectedItems() {
+            var selectedItemsContainer = document.getElementById("selectedItemsContainer");
+            selectedItemsContainer.textContent = selectedItems.join(', ');
+        }
+    </script>
+    
     <style>
         button {
   padding: 5px 10px; /* Adjusted padding */
@@ -279,6 +329,70 @@ width: 100%;
             }
         }
 
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    {% comment %} <form action="{% url 'addItem' %}" method="post"> {% endcomment %}
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="Item">Item</label>
+                            <input type="text" class="form-control" id="Item" name="item" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Item_Brand_Description">Item Brand/Description</label>
+                            <input type="text" class="form-control" id="Item_Brand_Description"
+                                name="item_Brand_Description" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Unit">Unit</label>
+                            <input type="text" class="form-control" id="Unit" name="unit" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Unit">Unit Cost</label>
+                            <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Quantity">Quantity</label>
+                            <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
 
         function highlightInput(input) {
             input.select();

@@ -210,7 +210,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -230,4 +230,6 @@ class History(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
+    
+    
     
