@@ -175,6 +175,34 @@
         color: #ffa125e3;
         background-color: #000000e3;
     }
+
+    
+    .footer {
+        display: left;
+        justify-content: space-between;
+        align-items: center;  /* Vertically center the content */
+    }
+    
+    .icons-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the gap between buttons as needed */
+    }
+    
+    .slip-icon {
+        width: 50px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+        margin-right: 15px
+    }
+    
+    /* Additional styles for buttons if necessary */
+    .aprv, .disaprv {
+        /* Add styles as needed */
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -193,11 +221,6 @@
             <img src="{% static 'images/previous_189252.png' %}">
         </a>
     </div>
-
-
-
-
-
 
     <div class="table-responsive">
 
@@ -265,20 +288,19 @@
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
-        <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-        <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        
+        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
+            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
+        </a>
 
-        <a href="#" title="Download" class="icon-link">
-            <i class="fas fa-download"></i>
-        </a>
-        <a href="javascript:window.print()" title="Print" class="icon-link">
-            <i class="fas fa-print"></i>
-        </a>
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
     </div>
 </footer>
 
 </form>
-
 
 <script>
     function btn_click(approve) {

@@ -1267,3 +1267,8 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
+
+
+def purchase_cd(request, pr_id):
+    # your view logic here...
+  return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
