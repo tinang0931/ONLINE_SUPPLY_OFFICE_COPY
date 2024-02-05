@@ -23,6 +23,7 @@
     align-items: center;
     text-decoration: none;
     margin-bottom: 10px;
+    justify-content: flex-start;
 }
 
 .bck img {
@@ -164,7 +165,7 @@
   
     {% for category, items in grouped_data.items %}
 
-    <table class="category-table" id="table-{{ category }}" style="margin-bottom: 120px; ">
+    <table class="category-table" id="table-{{ category }}" style="margin-bottom: 20px; ">
         <tr>
           <th colspan="6" class="text-center" style="width: 100%; text-align:center">
             {{ category }}
