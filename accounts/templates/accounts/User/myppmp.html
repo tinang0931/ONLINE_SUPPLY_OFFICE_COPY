@@ -11,49 +11,50 @@
 
 <div class="container-fluid main-content">
 
-    <div class="container">
-        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
-        <div class="custom-dropdown mx-auto">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Select Year
-            </button>
-            <div class="dropdown-menu text-center" aria-labelledby="yearDropdown">
-                <a class="dropdown-item" href="#" data-year="2022">2022</a>
-                <a class="dropdown-item" href="#" data-year="2023">2023</a>
-                <a class="dropdown-item" href="#" data-year="2024">2024</a>
-                <a class="dropdown-item" href="#" data-year="2025">2025</a>
-                <a class="dropdown-item" href="#" data-year="2026">2026</a>
-                <a class="dropdown-item" href="#" data-year="2027">2027</a>
-                <a class="dropdown-item" href="#" data-year="2028">2028</a>
-                <a class="dropdown-item" href="#" data-year="2029">2029</a>
-                <a class="dropdown-item" href="#" data-year="2030">2030</a>
+    
+<div class="container">
+    <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
+    <div class="custom-dropdown mx-auto">
+        <div class="row">
+            <div class="col-md-4 ml-auto text-right">
+                <select id="selectYear">
+                    <option value="select year">Select Year</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <!-- Add more years as needed -->
+                </select>
             </div>
         </div>
     </div>
-    <script>
-    $(document).ready(function () {
-        $('.dropdown-item').on('click', function () {
-            var selectedYear = $(this).data('year');
-            $('#yearDropdown').text(selectedYear);
-        });
+</div>
+
+<script>
+    // Retrieve selected year from local storage and set it as the default selected option
+    var selectedYear = localStorage.getItem('selectedYear');
+    if (selectedYear) {
+        document.getElementById('selectYear').value = selectedYear;
+    }
+
+    document.getElementById('selectYear').addEventListener('change', function() {
+        var selectedYear = this.value;
+        console.log('Selected Year:', selectedYear);
+        // Store selected year in local storage
+        localStorage.setItem('selectedYear', selectedYear);
+        // You can perform any action here based on the selected year
+        // For example, you can send an AJAX request to fetch data related to the selected year
     });
 </script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-item').on('click', function (e) {
-                e.stopPropagation();
-                var selectedYear = $(this).text();
-                $('.btn#yearDropdown').text(selectedYear);
-            });
-        });
+           
 
-        document.getElementById('yearDropdown').addEventListener('click', function () {
-            this.style.backgroundColor = ' #f59a23e7';
-        });
-    </script>
 
     <div class="rowppmp">
             <div id="textContainer">
@@ -221,36 +222,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-item').on('click', function (e) {
-                e.stopPropagation();
-                var selectedYear = $(this).text();
-                updateButtonStyle(selectedYear);
-                hideDropdown();
-            });
-
-
-            document.getElementById('yearDropdown').addEventListener('click', function () {
-                this.style.backgroundColor = ' #f59a23e7';
-            });
-
-
-            function updateButtonStyle(selectedYear) {
-                $('.dropdown-item').removeClass('selected');
-                $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
-                $('.btn#yearDropdown').text(selectedYear).css('background-color', ' #f59a23e7');
-
-            }
-
-
-            function hideDropdown() {
-                $('.custom-dropdown').removeClass('show');
-                $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
-                $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
-            }
-        });
-    </script>
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
