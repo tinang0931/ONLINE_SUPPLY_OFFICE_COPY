@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    margin-bottom: 10px;
 }
 
 .bck img {
@@ -39,12 +40,14 @@
     <h1 class="pr text-center pt-4">Available Items</h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
+      <div class="container-fluid">
       <div class="bck">
         <div class="col-md-1 mb-0">
         <a href="{% url 'baclanding' %}">
             <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
         </a>
     </div>
+  </div>
       <label for="file" class="hidden-label" >Choose CSV file:</label>
       <input type="file" name="file" accept=".csv" required>    
       <br>
