@@ -167,7 +167,7 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button type="submit" onclick="hideRow('{{ p.id }}')"> ➕ </button>
+                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')"> ➕ </button>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -183,6 +183,56 @@ opacity: 1;
 
 
     </div>
+
+    <script>
+        var selectedItems = [];
+    
+        // Function to initialize selected items from localStorage
+        function initializeSelectedItems() {
+            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];   
+            for (var i = 0; i < storedItems.length; i++) {
+                var itemName = storedItems[i];
+                var button = document.getElementById(itemName);
+                if (button) {
+                    button.textContent = "✔";
+                    selectedItems.push(itemName);
+                }
+            }
+            displaySelectedItems();
+        }
+    
+        // Initialize selected items when the page loads
+        initializeSelectedItems();
+    
+        function toggleSelection(button, itemName, event) {
+            console.log(button);
+            event.preventDefault();
+            if (button.textContent.trim() === "➕") {
+                button.textContent = "✔";
+                selectedItems.push(itemName);
+            } else {
+                button.textContent = "➕";
+                var index = selectedItems.indexOf(itemName);
+                if (index !== -1) {
+                    selectedItems.splice(index, 1);
+                }
+            }
+
+            return false;
+    
+            // Display selected item names
+            displaySelectedItems();
+    
+            // Save selected items to localStorage
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        }
+    
+        function displaySelectedItems() {
+            var selectedItemsContainer = document.getElementById("selectedItemsContainer");
+            selectedItemsContainer.textContent = selectedItems.join(', ');
+        }
+    </script>
+    
     <style>
         button {
   padding: 5px 10px; /* Adjusted padding */
