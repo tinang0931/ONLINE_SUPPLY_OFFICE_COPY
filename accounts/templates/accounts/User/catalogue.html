@@ -9,9 +9,9 @@
 {% block request %}
 
 <style>
- 
 
-   
+
+
     .table-bordered  {
         height:100%;
     }
@@ -23,99 +23,80 @@
         margin-top: -13%;
     }
     .welcome {
-        margin-left: 10%;
+        margin-left: 0;
     }
-   .bckbtn {
+.bckbtn {
         position: fixed;
         bottom: 50px; /* Adjust the top position as needed */
         left: 20px; /* Adjust the left position as needed */
         z-index: 1000; /* Ensure it stays on top of other elements */
     }
 .bckbtn a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+display: flex;
+align-items: center;
+text-decoration: none;
 }
 
 .bckbtn img {
-  width: 30px;  /* Adjust the width of the image as needed */
-  height: 30px; /* Adjust the height of the image as needed */
-  transition: all 0.3s ease-in-out;
+width: 30px;  /* Adjust the width of the image as needed */
+height: 30px; /* Adjust the height of the image as needed */
+transition: all 0.3s ease-in-out;
 }
 
 .bckbtn:hover img {
-  transform: translateX(-5px);
-  filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
+transform: translateX(-5px);
+filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
 }
 
 .bckbtn::before {
-  content: "";
-  position: absolute;
-  top: -5px; /* Adjust the position higher or lower based on your preference */
-  right: 0;
-  bottom: -5px; /* Adjust the bottom position as needed */
-  left: 0;
-  
-  border-radius: 20px;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    top: -5px; /* Adjust the position higher or lower based on your preference */
+    bottom: -5px; /* Adjust the bottom position as needed */
+    left: 0;
+    
+    border-radius: 20px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .bckbtn:hover::before {
-  opacity: 1;
-  
+opacity: 1;
+
 }
 .table-bordered {
     max-height: 700px;
     overflow-y: auto;
     margin-bottom: 20px; 
-  }
-  
-  
-  @media only screen and (max-width: 768px) {
+} 
+
+
+    @media only screen and (max-width: 768px) {
     .table-bordered {
         max-height:400px;  
     }
-  }
+}
 
-  .table-responsive {
+.table-responsive {
     margin-top: -6vh; 
     }
 
     .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: all 0.3s ease-in-out;
-    }
-    
-    .bck:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-    }
-    
-    .bck::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -5px;
-        left: 0;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-    
-    .bck:hover::before {
-        opacity: 1;
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+}
+
+.bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+}
     
 </style>
 
@@ -129,14 +110,14 @@
     </div>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
-            <img src="{% static 'images/bck.png' %}" alt="Previous">   
+            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
         </a>
     </div>
 
     <div class="row">
             <div class="search" style="position: relative; text-align: right;">
                 <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-                <!-- <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
+                <!-- <i class="fas fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
             </div>
             
         </div>
@@ -209,25 +190,20 @@
                                 console.log("Form submitted: " + formName); // Log the form name
                             }
                     
-                            // Get all submit buttons and attach event listeners
-                            var submitButtons = document.querySelectorAll(".submitButton");
-                            submitButtons.forEach(function(button) {
-                                button.addEventListener("click", function(event) {
-                                    toggleButtonAndSubmitForm(button); // Change button appearance
-                                });
-                            });
-                        });
-                    </script>
-                    
-                    
-                    
-                    
-                    
-                    
-                   
-                    {% endfor %}
-                    {%endfor%}
-                </tbody>
+                                <td>{{ p.Price }}
+                                    <input type="hidden" name="price" value="{{ p.Price }}">
+                                </td>
+                                <td>
+                                    {% if item_submitted %}
+                                    {% else %}
+                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')"> ➕ </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
             </table>
 
 
@@ -236,36 +212,86 @@
 
 
     </div>
+
+    <script>
+        var selectedItems = [];
+    
+        // Function to initialize selected items from localStorage
+        function initializeSelectedItems() {
+            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];   
+            for (var i = 0; i < storedItems.length; i++) {
+                var itemName = storedItems[i];
+                var button = document.getElementById(itemName);
+                if (button) {
+                    button.textContent = "✔";
+                    selectedItems.push(itemName);
+                }
+            }
+            displaySelectedItems();
+        }
+    
+        // Initialize selected items when the page loads
+        initializeSelectedItems();
+    
+        function toggleSelection(button, itemName, event) {
+            console.log(button);
+            event.preventDefault();
+            if (button.textContent.trim() === "➕") {
+                button.textContent = "✔";
+                selectedItems.push(itemName);
+            } else {
+                button.textContent = "➕";
+                var index = selectedItems.indexOf(itemName);
+                if (index !== -1) {
+                    selectedItems.splice(index, 1);
+                }
+            }
+
+            return false;
+    
+            // Display selected item names
+            displaySelectedItems();
+    
+            // Save selected items to localStorage
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        }
+    
+        function displaySelectedItems() {
+            var selectedItemsContainer = document.getElementById("selectedItemsContainer");
+            selectedItemsContainer.textContent = selectedItems.join(', ');
+        }
+    </script>
+    
     <style>
-       button {
+        button {
   padding: 5px 10px; /* Adjusted padding */
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e8e8e8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 14px; /* Adjusted font size */
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
+border: unset;
+border-radius: 15px;
+color: #212121;
+z-index: 1;
+background: #e8e8e8;
+position: relative;
+font-weight: 1000;
+ font-size: 14px; /* Adjusted font size */
+-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+transition: all 250ms;
+overflow: hidden;
 }
 
 button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #1c96c5;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 0;
+border-radius: 15px;
+background-color: #1c96c5;
+z-index: -1;
+-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+transition: all 250ms;
 }
 
 button:hover {
@@ -273,7 +299,7 @@ button:hover {
 }
 
 button:hover::before {
-  width: 100%;
+width: 100%;
 }
     </style>
 
@@ -332,6 +358,70 @@ button:hover::before {
             }
         }
 
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    {% comment %} <form action="{% url 'addItem' %}" method="post"> {% endcomment %}
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="Item">Item</label>
+                            <input type="text" class="form-control" id="Item" name="item" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Item_Brand_Description">Item Brand/Description</label>
+                            <input type="text" class="form-control" id="Item_Brand_Description"
+                                name="item_Brand_Description" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Unit">Unit</label>
+                            <input type="text" class="form-control" id="Unit" name="unit" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Unit">Unit Cost</label>
+                            <input type="text" class="form-control" id="Unit_Cost" name="unit_Cost" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Quantity">Quantity</label>
+                            <input type="text" class="form-control" id="Quantity" name="quantity" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" value="submit" class="btn btn-primary">Add to Cart</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
 
         function highlightInput(input) {
             input.select();

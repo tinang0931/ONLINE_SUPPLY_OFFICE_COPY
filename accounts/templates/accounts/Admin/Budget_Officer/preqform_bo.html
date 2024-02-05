@@ -100,7 +100,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 39px;
-            margin-left: -80px;
+            margin-left: -750px;
         }
 
         .send-icon i {
@@ -172,10 +172,46 @@
             background-color: #000000e3;
         }
 
-       
 
+    .landscape-table th {
+        background-color: #f2f2f2;
+    }
 
+    .center-heading {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 20px;
+        line-height: 1.5; /* Adjust the line-height for vertical centering */
+    }
 
+    .signatures {
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .signatures p {
+        margin: 20px; /* Remove default margin for the paragraphs */
+    }
+
+    .total-budget-container {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    .total-budget-text {
+        text-align: left;
+    }
+
+    @media (max-width: 768px) {
+        /* Your responsive styles for smaller screens */
+    }
+
+    .footer-image {
+        display: block;
+        margin: auto;
+        width: 115%; /* Set the width you desire */
+    }
+    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -296,15 +332,11 @@
                             
 
                         </tr>
-
                         {% endfor %}
-                   
                 </tbody>
-
             </table>
         </div>
     </div>
-
             <footer class="footer">
                 <div class="icons-container">
                     <div class="input-box">
@@ -340,8 +372,6 @@
             </script>
 
 
-       
-
-
+    
 
 {% endblock %}

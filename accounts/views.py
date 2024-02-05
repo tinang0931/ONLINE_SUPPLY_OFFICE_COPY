@@ -78,7 +78,43 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-    return render(request, 'accounts/User/ppmp101.html')
+
+    checkouts = Checkout.objects.select_related('user').all()
+  
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            
+            'user': checkout.user,
+            'year': checkout.year,
+            'pr_id': checkout.pr_id
+            
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user      
+    }
+
+    return render(request, 'accounts/User/ppmp101.html', context)
+
+def ppmpform(request, year):
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
+    
+    # If you want to get all checkout items associated with approved checkouts
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+    context = {
+        'approved_items': approved_items,
+        'year': year,
+    }
+
+    return render(request, 'accounts/User/myppmp.html', context)
+
+
 
 
 def landing(request):
@@ -511,6 +547,13 @@ def cdresolution(request):
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
 
 
+@cd_required
+@authenticated_user
+def purchase_cd(request):
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html')
+
+
+
 @authenticated_user
 def resolution(request):
     return render(request, 'accounts/Admin/Campus_Director/resolution.html')
@@ -621,10 +664,11 @@ def catalogue (request):
             item=item_name,
             item_brand_description=item_brand,
             unit=unit,
-            unit_cost=price
+            unit_cost=price,
         )
-
+        
         return redirect('catalogue')
+
 
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
@@ -653,9 +697,14 @@ def myppmp(request):
 def ppmp(request):
     
     if request.method == 'POST':
+
+        year = request.POST.get('selectedYear')
+        
         new_checkout = Checkout.objects.create(
             user=request.user,
+            year=year,
         )
+        
         items = request.POST.getlist('item')
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
@@ -899,6 +948,8 @@ def delete(request, id):
     item = Item.objects.get(id=id)
     item.delete()
     return redirect('ppmp')
+
+
 
 
 def update_item(request, id):
@@ -1206,6 +1257,7 @@ def preqform_cd(request, pr_id):
     print("pr_id:", pr_id)
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
+
 @authenticated_user              
 def delete_item(request, id):
     item = Item.objects.get(id = id)
@@ -1228,3 +1280,8 @@ def purchasetracker(request):
 
 
     return render(request, 'accounts/User/purchasetracker.html', context)
+
+
+def purchase_cd(request, pr_id):
+    # your view logic here...
+  return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})

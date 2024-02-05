@@ -177,6 +177,35 @@
         color: #ffa125e3;
         background-color: #000000e3;
     }
+
+
+    .footer {
+        display: left;
+        justify-content: space-between;
+        align-items: center;  /* Vertically center the content */
+    }
+    
+    .icons-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the gap between buttons as needed */
+    }
+    
+    .slip-icon {
+        width: 50px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+        margin-right: 15px
+    }
+    
+    /* Additional styles for buttons if necessary */
+    .aprv, .disaprv {
+        /* Add styles as needed */
+    }
+    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -186,19 +215,9 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4 "> <strong>PURCHASE REQUEST FOR APPROVAL</strong> </h1>
+        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
 
     </div>
-
-    <div class="bck">
-        <a href="{% url 'cdppmp' %}">
-            <img src="{% static 'images/previous_189252.png' %}">
-        </a>
-    </div>
-
-
-
-
 
 
     <div class="table-responsive">
@@ -206,7 +225,6 @@
         <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
 
             {% csrf_token %}
-
 
         <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
@@ -234,7 +252,6 @@
                     <th>Nov</th>
                     <th>Dec</th>
                 </tr>
-
                 </tr>
             </thead>
             <tbody>
@@ -259,8 +276,6 @@
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-
-
                     <td>{{ p.estimate_budget }}</td>
                     <td>{{ p.jan }}</td>
                     <td>{{ p.feb }}</td>
@@ -280,6 +295,7 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
+
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -293,34 +309,27 @@
                     <input type="hidden" name="oct" value="{{ p.oct }}">
                     <input type="hidden" name="nov" value="{{ p.nov }}">
                     <input type="hidden" name="dec" value="{{ p.dec }}">
-
-
-
                 </tr>
-
                 {% endfor %}
-
             </tbody>
-
         </table>
     </div>
 </div>
-
 <footer class="footer">
     <div class="icons-container">
         <div class="input-box">
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
-        <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-        <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        
+        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
+            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
+        </a>
 
-        <a href="#" title="Download" class="icon-link">
-            <i class="fas fa-download"></i>
-        </a>
-        <a href="javascript:window.print()" title="Print" class="icon-link">
-            <i class="fas fa-print"></i>
-        </a>
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
     </div>
 </footer>
 
@@ -343,5 +352,20 @@
 
 
 
+
+<script>
+    // Check if the element has the class 'redirect-link' before applying onclick
+    document.addEventListener('DOMContentLoaded', function () {
+        var downloadLink = document.querySelector('.icon-link.redirect-link');
+
+        if (downloadLink) {
+            downloadLink.onclick = function () {
+                // Replace 'your_redirect_url_name' with the actual URL name
+                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
+                return false; // Prevent the default link behavior
+            };
+        }
+    });
+</script>
 
 {% endblock %}

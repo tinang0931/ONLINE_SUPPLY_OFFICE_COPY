@@ -8,68 +8,36 @@
 <link rel="stylesheet" href="{% static 'css/myppmp.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<style>
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+</style>
 
 <div class="container-fluid main-content">
 
-    
-<div class="container">
-    <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
-    <div class="custom-dropdown mx-auto">
-        <div class="row">
-            <div class="col-md-4 ml-auto text-right">
-                <select id="selectYear">
-                    <option value="select year">Select Year</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                    <option value="2031">2031</option>
-                    <!-- Add more years as needed -->
-                </select>
-            </div>
-        </div>
+    <div class="container">
+        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
+        
     </div>
-</div>
+    <div class="bck">
+        <a href="{% url 'ppmp101' %}">
+            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+        </a>
+    </div>
 
-<script>
-    // Retrieve selected year from local storage and set it as the default selected option
-    var selectedYear = localStorage.getItem('selectedYear');
-    if (selectedYear) {
-        document.getElementById('selectYear').value = selectedYear;
-    }
-
-    document.getElementById('selectYear').addEventListener('change', function() {
-        var selectedYear = this.value;
-        console.log('Selected Year:', selectedYear);
-        // Store selected year in local storage
-        localStorage.setItem('selectedYear', selectedYear);
-        // You can perform any action here based on the selected year
-        // For example, you can send an AJAX request to fetch data related to the selected year
-    });
-</script>
-
-           
-
-
-    <div class="rowppmp">
-            <div id="textContainer">
-                <a href="{% url 'ppmp' %}">Create
-                    PPMP</a>
-            </div>
-        </div>
-
-
-        <script>
-            function toggleText() {
-                var textContainer = document.getElementById("textContainer");
-                textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
-            }
-        </script>
 
 
         <div class="table-responsive">
@@ -85,7 +53,6 @@
                         <th rowspan='2'>Estimated Budget</th>
                         <th colspan="12">Monthly Quantity Requirement</th>
                         <th rowspan='2'>Unit Price</th>
-
                     </tr>
                     <tr>
                         <th>Jan</th>
@@ -140,6 +107,8 @@
                         <td>{{ p.nov }}</td>
                         <td>{{ p.dec }}</td>
 
+                        <td>{{ p.unit_cost }}</td>
+
 
 
 
@@ -172,17 +141,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <script>
-
-
 
         $(document).ready(function () {
 

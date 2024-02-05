@@ -2,44 +2,42 @@
 <!DOCTYPE html>
 <html lang="en">  
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Budget Officer</title>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requester</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  
   </head>
-
+  
   <body>
     <main class="flex-shrink">
-      <div id="page-content-wrapper ">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="row w-100 m-auto">
-            <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-              <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-            </div>
-            <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                <h1 class="head">Supply Office Request Monitoring System</h1>
-                <h1 class="p1">Cebu Technological University - Argao Campus</h1>
-            </div>
-            <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-          
-            </div>
-          </div>
-        </nav>
-      </div>
-      <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
-      <div class="d-flex" id="wrapper">
-        <!-- Sidebar-->
+        <div id="page-content-wrapper ">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="row w-100 m-auto">
+                    <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                        <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+                    </div>
+                    <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                        <h1 class="head">CTU-AC Supply Office Request Monitoring System</h1>
+                    </div>
+                    
+            </nav>
+        </div>
+        <h1 class="welcome">Welcome to Cebu Technological University - Argao Campus Online Supply System </h1>
+        <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
+  
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
           <div class="d-flex flex-wrap align-content-between h-100">
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
@@ -49,8 +47,6 @@
                 <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
                   <i class="bi bi-file-earmark-medical"></i> <span id="about" class="hidden-name">PPMP</span>
                 </a>
-
-              
 
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
                   <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
@@ -70,6 +66,7 @@
         </div>
  
         <style>
+          
           body{
             overflow:hidden;
           }

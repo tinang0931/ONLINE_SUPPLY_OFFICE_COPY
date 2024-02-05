@@ -154,25 +154,23 @@ class Pr_identifier(models.Model):
 
 
 class Checkout(models.Model):
-
+    year = models.IntegerField(primary_key=True)
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
     bo_status = models.CharField(max_length=20, default="Pending")
-    bo_comment = models.TextField(blank=True, null=True) 
+    bo_comment = models.TextField(blank=True, null=True)
     cd_status = models.CharField(max_length=20, default="Pending")
     cd_comment = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now_add=True)
 
-
-
     @property
     def combined_id(self):
-        random_number = str(random.randint(10000000, 99999999)) 
+        random_number = str(random.randint(10000000, 99999999))
         return f"{str(self.pr_id)}{random_number}"
 
     def __str__(self):
-        return str(self.pr_id)
+        return f"{self.year} - {self.pr_id}"
 
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
@@ -212,7 +210,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 class VerificationCode(models.Model):
     email = models.EmailField()
@@ -232,4 +230,6 @@ class History(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
+    
+    
     
