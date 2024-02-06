@@ -135,7 +135,6 @@ class PR(models.Model):
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    purpose = models.TextField(blank=True, null=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     pr_identifier = models.ForeignKey('Pr_identifier', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -143,6 +142,7 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    purpose = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20, default="Pending")
     comment = models.TextField(blank=True, null=True)
 
