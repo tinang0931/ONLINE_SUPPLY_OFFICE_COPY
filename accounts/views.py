@@ -950,7 +950,10 @@ def delete(request, id):
     item.delete()
     return redirect('ppmp')
 
-
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('purchase')
 
 
 def update_item(request, id):
@@ -1286,3 +1289,8 @@ def purchasetracker(request):
 def purchase_cd(request, pr_id):
     # your view logic here...
   return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
+
+
+def boppmp(request, pr_id):
+    return render(request, 'accounts/Admin/Budget_Officer/boppmp.html',{'pr_id': pr_id})
+    # Your view logic here

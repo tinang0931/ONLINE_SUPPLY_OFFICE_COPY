@@ -83,8 +83,13 @@ urlpatterns = [
    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
    path('budget-landing/', budget_landing, name='budget-landing'),
    path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
-   path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
+   # path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
    path('bac_request/', views.bac_request, name='bac_request'),
    path('ppmpform/<int:year>/', views.ppmpform, name='ppmpform'),
+   path('boppmp/', views.boppmp, name='boppmp'),
+   path('boppmp/<int:pr_id>/', views.boppmp, name='boppmp'),
+   path('preqform_bo/<int:pr_id>/', views.preqform_bo, name='preqform_bo'),
+
+
 
 ]
