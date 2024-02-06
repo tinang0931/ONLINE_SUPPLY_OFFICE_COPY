@@ -69,15 +69,15 @@
 
    
     .catalogue {
-    background: #1c96c5;
-    padding: 9px 15px;
-    color: white;
-    text-decoration: none;
-    margin-left: 0;
-    border: none;
-    border-radius: 5px;
-    margin-top: -5%;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    background: #fff;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 10px;
+    width: 150%;
 }
 
 .catalogue:hover {
@@ -125,13 +125,42 @@
 }
 .custom-dropdown::after {
   position: relative;
-  top: 40%;
-  right: 10px;
+  top: 100%;
+  right: 20px;
   transform: translateY(-50%);
   pointer-events: none;
 }
 
+strong {
+    height: 55px; /* Taas ng 30 pixels */
+    line-height: 40px; /* Pagitan ng linya na 30 pixels, ito ang magbibigay ng vertikal na pag-adjust */
+}
 
+.budget-container input[type="text"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    margin-right: 20px;
+    height: 40px; /* Adjust the height as needed */
+}
+
+.budget-container {
+    margin-left: 300px;
+    padding-right: 100px;
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+}
+
+.budget-container strong {
+    font-weight: bold;
+}
+
+.budget-container input[type="text"] {
+    padding: 5px;
+    border-radius: 10px;
+    border: 5px solid #ccc;
+    margin-right: 20px;
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -151,15 +180,15 @@
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue </a>
             </button>
         </div>
         <div class="col-md-3 mb-0">
-            <form action="{% url 'ppmp' %}" method="post">
+            <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
                 <div class="custom-dropdown mx-auto">
                     <select id="yearDropdown" style="padding: 9.5px 15px;; font-size: 16px; border-radius: 5px; margin-top: -5%;
-                    transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; margin-left: 0; border: none; ">
+                    transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; margin-left: 50px; border: none; ">
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -178,33 +207,16 @@
             
         </div>
     </div>
-    
-    <script>
-        // Retrieve selected year from local storage and set it as the default selected option
-        var selectedYear = localStorage.getItem('selectedYear');
-        if (selectedYear) {
-            document.getElementById('selectYear').value = selectedYear;
-        }
-    
-        document.getElementById('selectYear').addEventListener('change', function() {
-            var selectedYear = this.value;
-            console.log('Selected Year:', selectedYear);
-            // Store selected year in local storage
-            localStorage.setItem('selectedYear', selectedYear);
-            // You can perform any action here based on the selected year
-            // For example, you can send an AJAX request to fetch data related to the selected year
-        });
-    </script>
-    
    
     <div class="row">
-        <div class=" col-md-6 text-left">
-            <h5><strong>TOTAL ALLOCATED BUDGET:</strong>
-                <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)"  >
-                <button onclick="displayBudget()" style="background: #1c96c5;">save</button>
-
-            </h5>
-        </div>
+        <div class="row">
+            <div class=" col-md-6 text-left">
+                  
+                <h5 class="budget-container">
+                    <strong>TOTAL ALLOCATED BUDGET:</strong>
+                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
+                </h5>
+            </div>
       
         <script>
             function isNumberKey(evt) {
@@ -235,11 +247,9 @@
                 }
             };
         </script>
-
-
         <div class="col-md-6 text-center" style="margin-top: -5vh;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly >
+            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
     </div>
 
@@ -356,7 +366,7 @@
                                         <i class="fas fa-trash text-danger"></i>
                                     </a>
                                     {% endif %}
-                                    
+
                                 </div>
                             </td>
 
@@ -364,7 +374,7 @@
                         </tr>
                     {% endfor %}
 
-                    <button type="submit" class="btn btn-success btn-sm m-2 float-right">
+                    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px;">
                         <i class="fas fa-check-circle"></i> Submit
                     </button>
                 </form>
@@ -520,13 +530,11 @@
     function updateTotalForAllItems() {
     var totalValue = 0;
 
-    // Iterate over each item row
     $('tr.item-row').each(function() {
         var row = $(this);
         var unitPrice = parseFloat(row.find('[name="price"]').val());
         var rowTotalValue = 0;
 
-        // Iterate over months in the current row
         row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function() {
             var monthValue = parseFloat($(this).val()) || 0;
             rowTotalValue += monthValue;
@@ -548,48 +556,39 @@
     }
 
     $('#estimate_budget').val(totalValue.toFixed(2)); // Update the estimate_budget input field
-}
+    }
 
-$('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+    $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
+    $('[name="price"]').on('input', function() {
+        updateTotalForAllItems();
+    });
+
     updateTotalForAllItems();
-});
-
-$('[name="price"]').on('input', function() {
-    updateTotalForAllItems();
-});
-
-// Initial calculation when the page loads
-updateTotalForAllItems();
-
-
 </script>
 
 <script>
     $(document).ready(function () {
-        // Retrieve and set selected year from local storage on page load
-        var storedYear = localStorage.getItem('selectedYear');
-        if (storedYear) {
-            updateButtonStyle(storedYear);
-        }
-
         $('.dropdown-item').on('click', function (e) {
             e.stopPropagation();
             var selectedYear = $(this).text();
             updateButtonStyle(selectedYear);
             hideDropdown();
+    });
 
-            // Save selected year to local storage
-            localStorage.setItem('selectedYear', selectedYear);
-        });
 
-        document.getElementById('yearDropdown').addEventListener('click', function() {
-            this.style.backgroundColor = '#1c96c5';
-        });
+    document.getElementById('yearDropdown').addEventListener('click', function() {
+        this.style.backgroundColor = '#1c96c5';
+    });
 
-        function updateButtonStyle(selectedYear) {
+
+    function updateButtonStyle(selectedYear) {
             $('.dropdown-item').removeClass('selected');
             $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
             $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
+           
         }
 
 
@@ -601,6 +600,18 @@ updateTotalForAllItems();
 });
 </script>
 
+<script>
+    // Function to handle form submission
+    function submitForm() {
+        // Perform any validation or additional logic here if needed
+
+        // Submit the form
+        document.getElementById('ppmpForm').submit();
+    }
+
+    // Attach the submitForm function to the click event of the button
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+</script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
