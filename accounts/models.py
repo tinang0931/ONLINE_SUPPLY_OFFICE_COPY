@@ -114,6 +114,7 @@ class PPMP(models.Model):
 
 
 class PR_Items(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)

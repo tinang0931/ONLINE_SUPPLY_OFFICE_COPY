@@ -821,13 +821,23 @@ def approved_ppmp(request):
         return redirect('approved_ppmp')
     elif request.method == 'GET':
         try:
-            checkout = Checkout.objects.get()
-            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+            # Get the latest approved checkout based on submission date
+            latest_checkout = Checkout.objects.filter(bo_status='approved', cd_status='approved').order_by('-year').first()
+
+            if latest_checkout:
+                checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+                latest_year = latest_checkout.year
+            else:
+                checkout_items = []
+                latest_year = None
+
         except Checkout.DoesNotExist:
             checkout_items = []
+            latest_year = None
 
         context = {
             'checkout_items': checkout_items,
+            'latest_year': latest_year,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
