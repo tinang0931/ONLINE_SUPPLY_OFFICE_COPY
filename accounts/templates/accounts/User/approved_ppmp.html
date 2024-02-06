@@ -127,7 +127,9 @@
                             <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
                             <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>
                             <td>
-                                <button type="submit">➕</button>
+                                <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
+                                    <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                </button> 
                             </td>
                         </tr>
                     </form>
