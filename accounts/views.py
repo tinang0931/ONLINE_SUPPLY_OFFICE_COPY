@@ -60,11 +60,12 @@ def baclanding(request):
 @bac_required
 def bac_request(request):
 
-    tracker = Pr_identifier.objects.select_related('user').all()
+    tracker = Pr_identifier.objects.select_related('user', ).all()
+
     context = {
         'tracker': tracker
-
     }
+ 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
@@ -752,9 +753,6 @@ def ppmp(request):
 
 
 
-
-
-
 from django.core.files.base import ContentFile
 @regular_user_required
 def purchase(request):
@@ -764,18 +762,17 @@ def purchase(request):
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
-        purpose = request.POST.get('purpose')
         total = request.POST.get('total_cost')
 
         pr_id = generate_auto_pr_id()
+        purpose = request.POST.get('purpose')
         user = request.user
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id)
+        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose)
 
         for i in range(len(items)):
             uploaded_file = files[i]
             metadata = FileMetadata.objects.create(filename=uploaded_file.name)
             
-            # Save the file content to the FileField using save()
             metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
 
             PR.objects.create(
@@ -786,7 +783,6 @@ def purchase(request):
                 item_brand_description=item_brands[i],
                 unit=units[i],
                 unit_cost=prices[i],
-                purpose=purpose,
                 total_cost=total
             )
 
@@ -1289,4 +1285,4 @@ def purchase_cd(request, pr_id):
 
 def boppmp(request, pr_id):
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html',{'pr_id': pr_id})
-    # Your view logic here
+  
