@@ -60,9 +60,7 @@ def baclanding(request):
 @bac_required
 def bac_request(request):
 
-    tracker = Pr_identifier.objects.select_related('user').all()
-
-    
+    tracker = Pr_identifier.objects.select_related('user', ).all()
 
     context = {
         'tracker': tracker
@@ -755,9 +753,6 @@ def ppmp(request):
 
 
 
-
-
-
 from django.core.files.base import ContentFile
 @regular_user_required
 def purchase(request):
@@ -778,7 +773,6 @@ def purchase(request):
             uploaded_file = files[i]
             metadata = FileMetadata.objects.create(filename=uploaded_file.name)
             
-            # Save the file content to the FileField using save()
             metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
 
             PR.objects.create(
@@ -1291,4 +1285,4 @@ def purchase_cd(request, pr_id):
 
 def boppmp(request, pr_id):
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html',{'pr_id': pr_id})
-    # Your view logic here
+  
