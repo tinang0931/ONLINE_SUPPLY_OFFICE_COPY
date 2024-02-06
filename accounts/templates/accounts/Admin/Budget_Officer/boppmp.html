@@ -232,6 +232,24 @@
     .aprv, .disaprv {
         /* Add styles as needed */
     }
+
+  .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -245,11 +263,15 @@
         
     </div>
 
-    <div class="bck">
-        <a href="{% url 'bohome' %}">
-            <img src="{% static 'images/previous_189252.png' %}">
-        </a>
-    </div>
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
 
     <div class="table-responsive">
         <form action="{% if pr_id %}{% url 'boppmp' pr_id=pr_id %}{% endif %}" method="post" id="form_id">
