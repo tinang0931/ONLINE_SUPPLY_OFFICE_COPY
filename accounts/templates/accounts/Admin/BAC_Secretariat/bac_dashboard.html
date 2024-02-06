@@ -59,7 +59,7 @@
 
     <div class="dropdown" style="width: 45%; border: 2px;">
       <div>
-        <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; margin-left: 20px; border-radius: 5px; margin:1px; width: 810px; transition: background-color 0.3s;">ALL CATEGORIES</div>
+        <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; margin-left: 20px; border-radius: 5px; margin:1px; width: 100%; max-width: 1140px; transition: background-color 0.3s;">ALL CATEGORIES</div>
       </div>
     
       <div id="options" class="d-none position-absolute z-1 bg-white "
@@ -157,6 +157,7 @@
           var newRow = document.getElementById('new-item-row-' + category);
           newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
         }
+        
       </script>
     </div>
     
