@@ -1,3 +1,4 @@
+
 {% load static %}
 
 {% block preqform %}
@@ -149,23 +150,6 @@
             justify-content: space-evenly;
         }
 
-
-        .icons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-right: 50px;
-        }
-
-        .icon-link {
-            margin-left: 20px;
-            margin-top: 16px;
-            text-decoration: none;
-            color: white;
-            /* Adjust the color as needed */
-        }
-
-
         .heading-container {
             text-align: center;
             font-size: 10;
@@ -195,62 +179,6 @@
             margin-left: -16%;
 
 
-        }
-
-
-        .icon-link {
-            margin-left: 20px;
-            text-decoration: none;
-            color: white;
-            /* Adjust the color as needed */
-        }
-
-
-        .input-box {
-            width: auto;
-            margin-top: 1px;
-            margin-left: 16px;
-            margin-right: 20px;
-        }
-
-        .input-box input {
-            width: 150%;
-            height: 40px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .send-icon {
-            position: fixed;
-            top: 90%;
-            left: 65%;
-            width: 30px;
-            height: 30px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 39px;
-            margin-left: -80px;
-        }
-
-        .send-icon i {
-            line-height: 30px;
-        }
-
-        .footer {
-            background-color: rgba(10, 99, 158, 0.637);
-            text-align: center;
-            width: 30%;
-            height: auto;
-            bottom: 0;
-            -webkit-user-modify: read-only;
-            position: fixed;
-            z-index: 2;
-            left: 0%;
         }
 
         .p {
@@ -369,7 +297,23 @@
     @media (max-width: 768px) {
         /* Your responsive styles for smaller screens */
     }
-    
+
+    .icon-link,
+    .icon {
+        width: 30px; /* Adjust the width of the icons as needed */
+        height: 30px; /* Adjust the height of the icons as needed */
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; /* Adjust the margin-top value to move the icons up */
+    }
+
+    .icons-container {
+        display: flex;
+        justify-content: flex-start; /* Align icons to the left */
+        align-items: center;
+        margin-top: -40px; /* Move icons up */
+    }
 
 
 </style>
@@ -414,7 +358,6 @@
     </tr>
 </thead>
 <tbody>
-    <!-- Your table body content goes here -->
 </tbody>
                             {% for p in checkout_items %}
                             <tr class="item-row" id="{{ p.id }}">
@@ -509,110 +452,95 @@
                     <br>
                     <br>
                 </div>                
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
+                <span id="totalBudget"> </span>
             </div>
         </div>
         <br>
+        <div class="page-break">  
+        </div>
+            <div id="footer-content">
                 <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                    </form> <!-- Close the form tag here -->
-                    <div class="page-break">  
-                    <footer class="footer">
-                        <div class="icons-container">
-                            <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                <img class="icon" src="{% static 'svg/download.svg' %}" alt="Select" onclick="downloadPDF()">
-                               </a>
-                               <a href="#" title="Select" class="icon-link">
-                                <img class="icon" src="{% static 'svg/select_icon.svg' %}" alt="Select" onclick="toggleSelect()">
-                               </a>
-                               <select id="paperSize" onchange="changePaperSize()" style="display: none;">
-                                   <option value="a4">A4</option>
-                                   <option value="legal">Legal</option>
-
-                            {% comment %} <form id='form_status' method="post" action="{% url 'approve_checkout' %}"> {% endcomment %}
-
-                                {% csrf_token %}
-                            <script>
-                                function btn_click(status) {
-                                    document.getElementById('new_status_id').value = status
-                                    form = document.getElementById('form_status')
-                                    form.submit()
-                                }
-                            </script>
-                            <div class="input-box">
-                                <input placeholder="Type your comment" name="comment_content">
-                            </div>
-                            <div class="send-icon">
-                                <button type="submit"><i class="fas fa-paper-plane"
-                                        style="margin-top: 3px;"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </footer>
+                <br>
+                <br>
+                <div class="icons-container">
+                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                        <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
+                    </a>
+                
+                    <a href="#" title="Select" class="icon-link">
+                        <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
+                    </a>
+                    <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
+                        <option value="a4">A4</option>
+                        <option value="legal">Legal</option>
+                    </select>
+                </div>
+            </div>                  
+                  {% csrf_token %}
                 <script>
-                        function setAction(action) {
-                            document.getElementById('action').value = action;
-                            document.forms[0].submit();  // Assuming the form is the first form on the page
-                        }
- </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-<script>
-    let selectedPaperSize = 'a4';
-
-    function changePaperSize() {
-        selectedPaperSize = document.getElementById('paperSize').value;
-    }
-    function downloadPDF() {
-        const body = document.getElementById('purchaseRequestTable');
-        const elementsWithPageBreak = body.querySelectorAll('.page-break');
-
-        elementsWithPageBreak.forEach((element) => {
-            element.style.pageBreakBefore = 'always';
-        });
-        const footer = document.querySelector('.footer');
-        footer.style.display = 'none';
-
-        const options = {
-            filename: 'PPMP.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-        };
-
-        html2pdf(body, options);
-
-        // Reset page breaks after generating PDF
-        elementsWithPageBreak.forEach((element) => {
-            element.style.pageBreakBefore = 'auto';
-        });
-    }
-      html2pdf().set({ 
-        pagebreak: { mode: 'avoid-all', before: '#page2el' }
-});
-
-        // Enable all 'modes', with no explicit elements.
-        html2pdf().set({
-           pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-});
-
-    // No modes, only explicit elements.
-    html2pdf().set({
-        pagebreak: { before: '.beforeClass', after: ['#after1', '#after2'], avoid: 'img' }
-});
-
-</script>
-<script>
-    function toggleSelect() {           
-        var selectElement = document.getElementById("paperSize");
-        selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
-    }
-</script>
+                    function btn_click(status) {
+                        document.getElementById('new_status_id').value = status
+                        form = document.getElementById('form_status')
+                        form.submit()
+                    }
+                </script>
 
                     </div>
-                </div>
+                </form>
             </div>
+        </footer>
+    <script>
+            function setAction(action) {
+                document.getElementById('action').value = action;
+                document.forms[0].submit();  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+<!-- Ang imong custom JavaScript code -->
+<script>
+let selectedPaperSize = 'a4';
+
+function changePaperSize() {
+selectedPaperSize = document.getElementById('paperSize').value;
+}
+
+function downloadPDF() {
+    const body = document.getElementById('purchaseRequestTable');
+    const elementsWithPageBreak = body.querySelectorAll('.page-break');
+
+    elementsWithPageBreak.forEach((element) => {
+        element.style.pageBreakBefore = 'always';
+    });
+
+    const footer = document.getElementById('footer-content');
+    footer.style.display = 'none';
+
+    const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
+    iconsContainer.style.display = 'block'; // Ensure icons container is visible
+
+    const options = {
+        filename: 'PPMP.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+        pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+    };
+
+    html2pdf(body, options);
+
+    // Reset page breaks after generating PDF
+    elementsWithPageBreak.forEach((element) => {
+        element.style.pageBreakBefore = 'auto';
+    });
+    footer.style.display = 'block'; // Display the footer again after PDF generation
+    iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
+}
+</script>
+
         </div>
-    </body>
+    </div>
+</div>
+</div>
+</body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+
 {% endblock %}
