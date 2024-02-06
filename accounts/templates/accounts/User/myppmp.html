@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
-
     #viewCommentsBtn {
         border: 1px solid black;
         background-color: white;
@@ -27,84 +26,88 @@
         align-items: center;
         text-decoration: none;
     }
-    
+
     .bck img {
         width: 30px;
         height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+        transition: transform 0.3s ease-in-out;
+        /* Apply transition to the transform property */
     }
 
-    body{
-        margin-top:20px;
-        background-color:#e9ebee;
+    .bck:hover img {
+        transform: scale(1.2);
+        /* Scale the image to 1.2 times its original size on hover */
     }
-    
+
+    body {
+        margin-top: 20px;
+        background-color: #e9ebee;
+    }
+
     .be-comment-block {
         margin-bottom: 50px !important;
         border: 1px solid #edeff2;
         border-radius: 2px;
         padding: 50px 70px;
-        border:1px solid #ffffff;
+        border: 1px solid #ffffff;
     }
-    
+
     .comments-title {
         font-size: 16px;
         color: #262626;
         margin-bottom: 15px;
         font-family: 'Conv_helveticaneuecyr-bold';
     }
-    
+
     .be-img-comment {
         width: 60px;
         height: 60px;
         float: left;
         margin-bottom: 15px;
     }
-    
+
     .be-ava-comment {
-        width: 60px;
-        height: 60px;
+        margin-top: 45px;
+        margin-left: 20px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
     }
-    
+
     .be-comment-content {
         margin-left: 80px;
     }
-    
+
     .be-comment-content span {
         display: inline-block;
         width: 49%;
         margin-bottom: 15px;
     }
-    
+
     .be-comment-name {
         font-size: 13px;
         font-family: 'Conv_helveticaneuecyr-bold';
     }
-    
+
     .be-comment-content a {
         color: #383b43;
     }
-    
+
     .be-comment-content span {
         display: inline-block;
         width: 49%;
         margin-bottom: 15px;
     }
-    
+
     .be-comment-time {
         text-align: right;
     }
-    
+
     .be-comment-time {
         font-size: 11px;
         color: #b4b7c1;
     }
-    
+
     .be-comment-text {
         font-size: 13px;
         line-height: 18px;
@@ -114,22 +117,26 @@
         border: 1px solid #edeff2;
         padding: 15px 20px 20px 20px;
     }
+
     .btn-primary {
         margin-left: 0%;
         color: #fff;
         background-color: #1c96c5;
         border-color: #1c96c5;
     }
-    
 
-    
+    .custom-card-width {
+        max-width: 500px;
+        
+        float: left;
+    }
 </style>
 
 <div class="container-fluid main-content">
 
     <div class="container">
         <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
-        
+
     </div>
     <div class="bck">
         <a href="{% url 'ppmp101' %}">
@@ -139,194 +146,233 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    
-        <div class="table-responsive">
+
+    <div class="table-responsive">
 
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                    <tr>
-                        <th rowspan='2'>Item Name</th>
-                        <th rowspan='2'> Brand / Description</th>
-                        <th rowspan='2'>Unit</th>
-                        <th rowspan='2'>Estimated Budget</th>
-                        <th colspan="12">Monthly Quantity Requirement</th>
-                        <th rowspan='2'>Unit Price</th>
-                    </tr>
-                    <tr>
-                        <th>Jan</th>
-                        <th>Feb</th>
-                        <th>Mar</th>
-                        <th>April</th>
-                        <th>May</th>
-                        <th>June</th>
-                        <th>July</th>
-                        <th>Aug</th>
-                        <th>Sept</th>
-                        <th>Oct</th>
-                        <th>Nov</th>
-                        <th>Dec</th>
-                    </tr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                <tr>
+                    <th rowspan='2'>Item Name</th>
+                    <th rowspan='2'> Brand / Description</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>Aug</th>
+                    <th>Sept</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for p in approved_items %}
-
-
-                    <tr class="item-row" id="{{ p.id }}">
-
-                        <td>
-                            <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                            <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
-                        <td>
-                            <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                            <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                                value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
-                                class="edit-input" style="display: none">
-                        </td>
-                        <td>
-                            <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                            <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                        </td>
-                        <td>{{ p.estimate_budget }}</td>
-                        <td>{{ p.jan }}</td>
-                        <td>{{ p.feb }}</td>
-                        <td>{{ p.mar }}</td>
-                        <td>{{ p.apr }}</td>
-                        <td>{{ p.may }}</td>
-                        <td>{{ p.jun }}</td>
-                        <td>{{ p.jul }}</td>
-                        <td>{{ p.aug }}</td>
-                        <td>{{ p.sep }}</td>
-                        <td>{{ p.oct }}</td>
-                        <td>{{ p.nov }}</td>
-                        <td>{{ p.dec }}</td>
-
-                        <td>{{ p.unit_cost }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in approved_items %}
 
 
+                <tr class="item-row" id="{{ p.id }}">
 
-
-                        </tr>
-            
-                    {% endfor %}
-
-                </tbody>
-            </table>
-    
-    </div>
                     <td>
-                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
+                    <td>
+                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                            class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>{{ p.estimate_budget }}</td>
+                    <td>{{ p.jan }}</td>
+                    <td>{{ p.feb }}</td>
+                    <td>{{ p.mar }}</td>
+                    <td>{{ p.apr }}</td>
+                    <td>{{ p.may }}</td>
+                    <td>{{ p.jun }}</td>
+                    <td>{{ p.jul }}</td>
+                    <td>{{ p.aug }}</td>
+                    <td>{{ p.sep }}</td>
+                    <td>{{ p.oct }}</td>
+                    <td>{{ p.nov }}</td>
+                    <td>{{ p.dec }}</td>
+
+                    <td>{{ p.unit_cost }}</td>
+
+
+
 
                 </tr>
 
-        </tbody>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+    <td>
+        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+    </td>
+
+    </tr>
+
+    </tbody>
     </table>
 
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-primary mb-3 ml-0" id="viewCommentsBtn">View Comments</button>
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-primary mb-3 ml-0" id="viewCommentsBtn" onclick="toggleComments()">View
+                Comments</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card custom-card-width" id="commentsContainer" style="display: none;">
+                <div class="card-body">
+                    <div class="be-comment">
+                        <div class="be-img-comment">
+                            <a href="blog-detail-2.html">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""
+                                    class="be-ava-comment">
+                            </a>
+                        </div>
+                        <div class="be-comment-content">
+                            <span class="be-comment-name">
+                                <a href="blog-detail-2.html">Budget Officer</a>
+                            </span>
+                            <span class="be-comment-time">
+                                <i class="fa fa-clock-o"></i>
+                                May 27, 2015 at 3:14am
+                            </span>
+                            <p class="be-comment-text">
+                                {% if bo_comment %}
+                                    {{ bo_comment }}
+                                {% else %}
+                                    No comment
+                                {% endif %}
+                            </p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="be-comment">
+                        <div class="be-img-comment">
+                            <a href="blog-detail-2.html">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""
+                                    class="be-ava-comment">
+                            </a>
+                        </div>
+                        <div class="be-comment-content">
+                            <span class="be-comment-name">
+                                <a href="blog-detail-2.html">Campus Director</a>
+                            </span>
+                            <span class="be-comment-time">
+                                <i class="fa fa-clock-o"></i>
+                                May 27, 2015 at 3:14am
+                            </span>
+                            <p class="be-comment-text">
+                                {% if cd_comment %}
+                                    {{ cd_comment }}
+                                {% else %}
+                                    No comment
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="be-comment">
+                        <div class="be-img-comment">
+                            <a href="blog-detail-2.html">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""
+                                    class="be-ava-comment">
+                            </a>
+                        </div>
+                        <div class="be-comment-content">
+                            <span class="be-comment-name">
+                                <a href="blog-detail-2.html">BAC Secretariat</a>
+                            </span>
+                            <span class="be-comment-time">
+                                <i class="fa fa-clock-o"></i>
+                                May 27, 2015 at 3:14am
+                            </span>
+                            <p class="be-comment-text">
+                                {% if bac_comment %}
+                                    {{ bac_comment }}
+                                {% else %}
+                                    No comment
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div id="commentsBlock" style="display: none;">
-	<div class="be-comment">
-		<div class="be-img-comment">	
-			<a href="blog-detail-2.html">
-				<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
-			</a>
-		</div>
-		<div class="be-comment-content">
-			
-				<span class="be-comment-name">
-					<a href="blog-detail-2.html">Budget Officer</a>
-					</span>
-				<span class="be-comment-time">
-					<i class="fa fa-clock-o"></i>
-					May 27, 2015 at 3:14am
-				</span>
-
-			<p class="be-comment-text">
-				{{ bo_comment }}
-			</p>
-		</div>
-	</div>
-	<div class="be-comment">
-		<div class="be-img-comment">	
-			<a href="blog-detail-2.html">
-				<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
-			</a>
-		</div>
-		<div class="be-comment-content">
-			<span class="be-comment-name">
-				<a href="blog-detail-2.html">Campus Director</a>
-			</span>
-			<span class="be-comment-time">
-				<i class="fa fa-clock-o"></i>
-				May 27, 2015 at 3:14am
-			</span>
-			<p class="be-comment-text">
-				{{ cd_comment }}
-			</p>
-		</div>
-	</div>
-    <div class="be-comment">
-		<div class="be-img-comment">	
-			<a href="blog-detail-2.html">
-				<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
-			</a>
-		</div>
-		<div class="be-comment-content">
-			<span class="be-comment-name">
-				<a href="blog-detail-2.html">BAC Secretariat</a>
-			</span>
-			<span class="be-comment-time">
-				<i class="fa fa-clock-o"></i>
-				May 27, 2015 at 3:14am
-			</span>
-			<p class="be-comment-text">
-				Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
-			</p>
-		</div>
-	</div>
+    </div>
 </div>
 
 
-<script>
-    var commentsBlock = document.getElementById('commentsBlock');
-    var viewCommentsBtn = document.getElementById('viewCommentsBtn');
+            <script>
+                function toggleComments() {
+                    var commentsContainer = document.getElementById('commentsContainer');
 
-    viewCommentsBtn.addEventListener('click', function () {
-        // Toggle the visibility of comments block
-        if (commentsBlock.style.display === 'none' || commentsBlock.style.display === '') {
-            commentsBlock.style.display = 'block';
-        } else {
-            commentsBlock.style.display = 'none';
-        }
-    });
-</script>
-	
-</div>
-</div>
+                    // Toggle the visibility of the comments container
+                    if (commentsContainer.style.display === 'none' || commentsContainer.style.display === '') {
+                        commentsContainer.style.display = 'block';
+                    } else {
+                        commentsContainer.style.display = 'none';
+                    }
+                }
+            </script>
 
 
 
+            <script>
+                var commentsBlock = document.getElementById('commentsBlock');
+                var viewCommentsBtn = document.getElementById('viewCommentsBtn');
+
+                viewCommentsBtn.addEventListener('click', function () {
+                    // Toggle the visibility of comments block
+                    if (commentsBlock.style.display === 'none' || commentsBlock.style.display === '') {
+                        commentsBlock.style.display = 'block';
+                    } else {
+                        commentsBlock.style.display = 'none';
+                    }
+                });
+            </script>
+
+        </div>
+    </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
 
         $(document).ready(function () {
 
