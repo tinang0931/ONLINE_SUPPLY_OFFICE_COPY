@@ -167,7 +167,9 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')"> ➕ </button>
+                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
+                                        <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                    </button>                                    
                                     {% endif %}
                                 </td>
                             </tr>
