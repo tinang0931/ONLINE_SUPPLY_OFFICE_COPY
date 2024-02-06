@@ -153,7 +153,7 @@
             </button>
         </div>
         <div class="col-md-3 mb-0">
-            <form action="{% url 'ppmp' %}" method="post">
+            <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
                 <div class="custom-dropdown mx-auto">
                     <select id="yearDropdown" style="padding: 9.5px 15px;; font-size: 16px; border-radius: 5px; margin-top: -5%;
@@ -300,7 +300,7 @@
                                         <i class="fas fa-trash text-danger"></i>
                                     </a>
                                     {% endif %}
-                                    
+
                                 </div>
                             </td>
 
@@ -308,7 +308,7 @@
                         </tr>
                     {% endfor %}
 
-                    <button type="submit" class="btn btn-success btn-sm m-2 float-right">
+                    <button type="button" id="submitBtn" class="btn btn-success btn-sm m-2 float-right">
                         <i class="fas fa-check-circle"></i> Submit
                     </button>
                 </form>
@@ -532,6 +532,19 @@
         $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
     }
 });
+</script>
+
+<script>
+    // Function to handle form submission
+    function submitForm() {
+        // Perform any validation or additional logic here if needed
+
+        // Submit the form
+        document.getElementById('ppmpForm').submit();
+    }
+
+    // Attach the submitForm function to the click event of the button
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

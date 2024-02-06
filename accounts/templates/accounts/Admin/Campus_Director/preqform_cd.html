@@ -371,7 +371,6 @@
     }
     
 
-    
 
 </style>
 
@@ -467,10 +466,10 @@
         </div>          
         <div class="content-below-table">
             <div class="total-budget-container">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
+            <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
                 <span id="totalBudget" class="total-budget-value">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+                     Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
                     <br>
                     <br>
                     <br>
@@ -489,7 +488,7 @@
             <br>
             <br>
             <div>
-                <strong><u>GLICERIO A. BAGUIA</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong><u>GLICERIO A. BAGUIA</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong><u>MARY ANN P. GONZAGA. C.P.A.</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong><u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
                 <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
@@ -532,10 +531,6 @@
                             {% comment %} <form id='form_status' method="post" action="{% url 'approve_checkout' %}"> {% endcomment %}
 
                                 {% csrf_token %}
-                                <input id="new_status_id" type="hidden" name="new_status">
-                                <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-                                <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-                            </form>
                             <script>
                                 function btn_click(status) {
                                     document.getElementById('new_status_id').value = status
@@ -559,8 +554,6 @@
                             document.forms[0].submit();  // Assuming the form is the first form on the page
                         }
  </script>
-
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 <script>
     let selectedPaperSize = 'a4';
@@ -608,13 +601,13 @@
 });
 
 </script>
-
 <script>
     function toggleSelect() {           
         var selectElement = document.getElementById("paperSize");
         selectElement.style.display = (selectElement.style.display === "none") ? "inline-block" : "none";
     }
 </script>
+
                     </div>
                 </div>
             </div>
@@ -623,5 +616,3 @@
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 {% endblock %}
-
-
