@@ -79,38 +79,36 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-
-    checkouts = Checkout.objects.select_related('user').all()
-  
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved')
 
     checkout_data = []
 
     for checkout in checkouts:
         checkout_dict = {
-            
-            'user': checkout.user,
             'year': checkout.year,
-            'pr_id': checkout.pr_id
-            
+            'pr_id': checkout.pr_id,
+            'user': checkout.user,
+            'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user      
+        'user': request.user,
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year):
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
-    
-    # If you want to get all checkout items associated with approved checkouts
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
 
     context = {
         'approved_items': approved_items,
         'year': year,
+        'bo_comment': approved_checkouts.first().bo_comment,
+        'cd_comment': approved_checkouts.first().cd_comment, 
+        
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
@@ -678,19 +676,7 @@ def catalogue (request):
     return render(request, 'accounts/User/catalogue.html', {'grouped_data': grouped_data})
 
 
-@regular_user_required
-def myppmp(request):
-    
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
 
-   
-    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-
-    context = {
-        'approved_items': approved_items,
-    }
-
-    return render(request, 'accounts/User/myppmp.html', context)
 
 
 
