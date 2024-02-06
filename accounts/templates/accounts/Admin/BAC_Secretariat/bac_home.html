@@ -118,7 +118,7 @@
       {% for checkout in checkouts %}
       <tr>
         <td style="text-align: center;">{{ checkout.user }}</td>
-        <td style="text-align: center;">{{ checkout.pr_id }}</td>
+        <td style="text-align: center;"> <a href="{% url 'bac_ppmp' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a> </td>
         <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
         <td style="text-align: center;">{{ checkout.submission_date }}</td>
         <td class="text-center">

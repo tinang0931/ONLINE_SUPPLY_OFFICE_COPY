@@ -109,16 +109,20 @@
               <span class="fas fa-circle text-danger"> Pending</span>
           {% endif %}
       </td>
-      
-    
-    
+
       <td class="text-center">
+
         {% if checkout.cd_status %}
             <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
         {% else %}
             <span class="fas fa-circle text-danger"> Pending</span>
         {% endif %}
+        
     </td>
+      
+    
+    
+   
 
     <td style="cursor: pointer;" onclick="toggleComments(this)">
       <div class="commentsBlock">

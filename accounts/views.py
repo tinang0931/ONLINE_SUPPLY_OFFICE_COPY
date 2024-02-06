@@ -68,6 +68,18 @@ def bac_request(request):
  
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
+def bac_purchaserequest(request, pr_id):
+    checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    checkout_items = PR.objects.filter(pr_identifier=checkouts)
+    context = {
+            
+            'checkout_items': checkout_items,
+            
+            'pr_id': pr_id,
+        
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
+
 
 @cd_required
 def cdlanding(request):
@@ -367,11 +379,11 @@ def cdpurchase_approval(request, pr_id):
         checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
         checkout_items = PR.objects.filter(pr_identifier=checkouts)
         context = {
-            'checkout': checkouts,
+            
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'status': checkouts.status
+        
     }
 
 
@@ -408,6 +420,19 @@ def bac_home(request):
 
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+
+def bac_ppmp(request, pr_id):
+    checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+    checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+    context = {
+            
+            'checkout_items': checkout_items,
+            
+            'pr_id': pr_id,
+        
+    }
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
 def preqform(request, pr_id):
 
@@ -549,8 +574,8 @@ def cdresolution(request):
 
 @cd_required
 @authenticated_user
-def purchase_cd(request):
-    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html')
+def purchase_cd(request, pr_id):
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
 
 
 
@@ -1010,6 +1035,8 @@ def bohome(request):
             'last_updated': checkout.last_updated,
             'bo_status': checkout.bo_status,  
             'bo_comment': checkout.bo_comment,
+            'cd_status': checkout.cd_status,
+            'cd_comment': checkout.cd_comment
         }
         checkout_data.append(checkout_dict)
 
@@ -1167,6 +1194,7 @@ def cdpurchase(request):
             'user': checkout.user,
             'pr_id': checkout.pr_id,
             'status': checkout.status,
+            'comment': checkout.comment
             
             
            
@@ -1174,7 +1202,7 @@ def cdpurchase(request):
         checkout_data.append(checkout_dict)
 
     context = {
-        'checkouts': checkout_data,
+        'checkout_data': checkout_data,
         'user': request.user      
     }
 
@@ -1243,14 +1271,7 @@ def preqform_cd(request, pr_id):
             'checkout_items': checkout_items,
             'pr_id': pr_id,
     }
-    checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-    context = {
-                'checkouts': checkout,
-                'checkout_items': checkout_items,
-                'pr_id': pr_id,
-            }
-    
-    print("pr_id:", pr_id)
+   
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 
@@ -1284,5 +1305,70 @@ def purchase_cd(request, pr_id):
 
 
 def boppmp(request, pr_id):
-    return render(request, 'accounts/Admin/Budget_Officer/boppmp.html',{'pr_id': pr_id})
+
+    if request.method == 'POST':
+        new_status = request.POST.get('new_status')
+        comment_content = request.POST.get('comment_content')
+
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        estimate = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
+
+        checkout = Checkout.objects.get(pr_id=pr_id)
+
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+            estimate_budget=estimate,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,   
+            nov=nov,
+            dec=dec,
+            
+        )
+
+        # Update Checkout model
+        Checkout.objects.filter(pr_id=pr_id).update(
+            bo_status=new_status,
+            bo_comment=comment_content
+        )
+
+        return redirect('bohome')
+
+    elif request.method == 'GET':
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+     }
+
+
+    return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
   
