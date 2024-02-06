@@ -9,6 +9,19 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
+
+    #viewCommentsBtn {
+        border: 1px solid black;
+        background-color: white;
+        color: black;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    #viewCommentsBtn:hover {
+        background-color: #1c96c5;
+        color: white;
+    }
+
     .bck a {
         display: flex;
         align-items: center;
@@ -24,6 +37,92 @@
     .bck:hover img {
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
+
+    body{
+        margin-top:20px;
+        background-color:#e9ebee;
+    }
+    
+    .be-comment-block {
+        margin-bottom: 50px !important;
+        border: 1px solid #edeff2;
+        border-radius: 2px;
+        padding: 50px 70px;
+        border:1px solid #ffffff;
+    }
+    
+    .comments-title {
+        font-size: 16px;
+        color: #262626;
+        margin-bottom: 15px;
+        font-family: 'Conv_helveticaneuecyr-bold';
+    }
+    
+    .be-img-comment {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-bottom: 15px;
+    }
+    
+    .be-ava-comment {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+    
+    .be-comment-content {
+        margin-left: 80px;
+    }
+    
+    .be-comment-content span {
+        display: inline-block;
+        width: 49%;
+        margin-bottom: 15px;
+    }
+    
+    .be-comment-name {
+        font-size: 13px;
+        font-family: 'Conv_helveticaneuecyr-bold';
+    }
+    
+    .be-comment-content a {
+        color: #383b43;
+    }
+    
+    .be-comment-content span {
+        display: inline-block;
+        width: 49%;
+        margin-bottom: 15px;
+    }
+    
+    .be-comment-time {
+        text-align: right;
+    }
+    
+    .be-comment-time {
+        font-size: 11px;
+        color: #b4b7c1;
+    }
+    
+    .be-comment-text {
+        font-size: 13px;
+        line-height: 18px;
+        color: #7a8192;
+        display: block;
+        background: #f6f6f7;
+        border: 1px solid #edeff2;
+        padding: 15px 20px 20px 20px;
+    }
+    .btn-primary {
+        margin-left: 0%;
+        color: #fff;
+        background-color: #1c96c5;
+        border-color: #1c96c5;
+    }
+    
+
+    
 </style>
 
 <div class="container-fluid main-content">
@@ -38,8 +137,9 @@
         </a>
     </div>
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-
+    
         <div class="table-responsive">
 
 
@@ -130,8 +230,94 @@
 
         </tbody>
     </table>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-primary mb-3 ml-0" id="viewCommentsBtn">View Comments</button>
+            </div>
+        </div>
+
+        <div id="commentsBlock" style="display: none;">
+	<div class="be-comment">
+		<div class="be-img-comment">	
+			<a href="blog-detail-2.html">
+				<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+			</a>
+		</div>
+		<div class="be-comment-content">
+			
+				<span class="be-comment-name">
+					<a href="blog-detail-2.html">Budget Officer</a>
+					</span>
+				<span class="be-comment-time">
+					<i class="fa fa-clock-o"></i>
+					May 27, 2015 at 3:14am
+				</span>
+
+			<p class="be-comment-text">
+				{{ bo_comment }}
+			</p>
+		</div>
+	</div>
+	<div class="be-comment">
+		<div class="be-img-comment">	
+			<a href="blog-detail-2.html">
+				<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
+			</a>
+		</div>
+		<div class="be-comment-content">
+			<span class="be-comment-name">
+				<a href="blog-detail-2.html">Campus Director</a>
+			</span>
+			<span class="be-comment-time">
+				<i class="fa fa-clock-o"></i>
+				May 27, 2015 at 3:14am
+			</span>
+			<p class="be-comment-text">
+				{{ cd_comment }}
+			</p>
+		</div>
+	</div>
+    <div class="be-comment">
+		<div class="be-img-comment">	
+			<a href="blog-detail-2.html">
+				<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
+			</a>
+		</div>
+		<div class="be-comment-content">
+			<span class="be-comment-name">
+				<a href="blog-detail-2.html">BAC Secretariat</a>
+			</span>
+			<span class="be-comment-time">
+				<i class="fa fa-clock-o"></i>
+				May 27, 2015 at 3:14am
+			</span>
+			<p class="be-comment-text">
+				Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
+			</p>
+		</div>
+	</div>
+</div>
+
+
+<script>
+    var commentsBlock = document.getElementById('commentsBlock');
+    var viewCommentsBtn = document.getElementById('viewCommentsBtn');
+
+    viewCommentsBtn.addEventListener('click', function () {
+        // Toggle the visibility of comments block
+        if (commentsBlock.style.display === 'none' || commentsBlock.style.display === '') {
+            commentsBlock.style.display = 'block';
+        } else {
+            commentsBlock.style.display = 'none';
+        }
+    });
+</script>
+	
 </div>
 </div>
+
+
 
 
 

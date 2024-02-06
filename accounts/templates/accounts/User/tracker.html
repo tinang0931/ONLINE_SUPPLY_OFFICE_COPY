@@ -46,50 +46,110 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  
-  /* Modal content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+   .custom-f{
+    margin-top: 20px;
+   }
+  .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
+    body{
+      margin-top:20px;
+      background-color:#e9ebee;
   }
   
-  /* Close button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  .be-comment-block {
+      margin-bottom: 50px !important;
+      border: 1px solid #edeff2;
+      border-radius: 2px;
+      padding: 50px 70px;
+      border:1px solid #ffffff;
   }
   
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  .comments-title {
+      font-size: 16px;
+      color: #262626;
+      margin-bottom: 15px;
+      font-family: 'Conv_helveticaneuecyr-bold';
   }
   
-  /* Form styles */
-  #replyInput {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
+  .be-img-comment {
+      width: 60px;
+      height: 60px;
+      float: left;
+      margin-bottom: 15px;
   }
   
-  #replyForm button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+  .be-ava-comment {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
   }
   
-  #replyForm button:hover {
-    background-color: #45a049;
+  .be-comment-content {
+      margin-left: 80px;
   }
   
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-name {
+      font-size: 13px;
+      font-family: 'Conv_helveticaneuecyr-bold';
+  }
+  
+  .be-comment-content a {
+      color: #383b43;
+  }
+  
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-time {
+      text-align: right;
+  }
+  
+  .be-comment-time {
+      font-size: 11px;
+      color: #b4b7c1;
+  }
+  
+  .be-comment-text {
+      width: 30%;
+      font-size: 13px;
+      line-height: 18px;
+      color: #7a8192;
+      display: block;
+      background: #f6f6f7;
+      border: 1px solid #edeff2;
+      padding: 15px 20px 20px 20px;
+  }
+  .btn-primary {
+      margin-left: 0%;
+      color: #fff;
+      background-color: #1c96c5;
+      border-color: #1c96c5;
+  }
+  
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -109,18 +169,13 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
-            <th rowspan="2" class="text-center">PR REQUEST NO.</th>
-            <th colspan="2" class="text-center">STATUS</th>
-            <th colspan="2" class="text-center">COMMENT</th>
-            <th rowspan="2" class="text-center">LAST UPDATED</th>
+            <th  class="text-center">PR REQUEST NO.</th>
+            <th  class="text-center">BUDGET OFFICER STATUS</th>
+            <th class="text-center">CAMPUS DIRECTOR STATUS</th>
+            <th  class="text-center">COMMENT</th>
+            <th class="text-center">LAST UPDATED</th>
         </tr>
-        <tr>
-            <th class="text-center">BUDGET OFFICER</th>
-            <th class="text-center">CAMPUS DIRECTOR</th>
-            <th class="text-center">    CHATS   </th>
-             <th class="text-center">    CHATS   </th>
-            
-        </tr>
+       
         
           
         </thead>
@@ -129,25 +184,61 @@
           {% for p in checkouts %}
           <tr>
               <td>{{ p.pr_id }}</td>
-                <td class="text-center">
-                  {% if p.bo_status %}
-                      
-                  <span class="fas fa-circle text-success">  {{ p.bo_status }}</span>
-                  
-        
-                  {% endif %}
-              </td>
+              
+                  <td class="text-center">
+                    {% if p.bo_status %}
+                        <span class="fas fa-circle text-success"> {{ p.bo_status }}</span>
+                    {% else %}
+                        <span class="fas fa-circle text-danger"> Pending</span>
+                    {% endif %}
+                </td>
+                
+              
               
               <td class="text-center">
-                {% if p.cd_status %}
-                      
+                {% if p.cd_status %}                  
                 <span class="fas fa-circle text-success">  {{ p.cd_status }}</span>
-      
                 {% endif %}
               </td>
-              <td class="text-center" onclick="handleCommentClick('{{ p.bo_comment }}', '{{ p.cd_comment }}', 'cd')">{{ p.bo_comment }}</td>
 
-             
+              <td style="cursor: pointer;" onclick="toggleComments(this)">
+                <div class="commentsBlock">
+                    <p>
+                        {% if p.bo_comment %}
+                            <strong>Budget Officer :</strong>  {{ p.bo_comment }}
+                        {% else %}
+                            <strong>Budget Officer :</strong> No comment
+                        {% endif %}
+                    </p>
+                    <p class="campusDirectorComment" style="display: none;">
+                        {% if p.cd_comment %}
+                            <strong>Campus Director:</strong> {{ p.cd_comment }}
+                        {% else %}
+                            <strong>Campus Director:</strong> No comment
+                        {% endif %}
+                    </p>
+                </div>
+            
+                <script>
+                    function toggleComments(element) {
+                        var commentsBlock = element.querySelector('.commentsBlock');
+                        var campusDirectorComment = element.querySelector('.campusDirectorComment');
+            
+                        // Toggle the visibility of the second <p> element
+                        if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+                            campusDirectorComment.style.display = 'block';
+                        } else {
+                            campusDirectorComment.style.display = 'none';
+                        }
+                    }
+                </script>
+            </td>
+            
+            
+            
+            
+            
+              
               <td>{{ p.last_updated }}</td>
           </tr>
       {% endfor %}

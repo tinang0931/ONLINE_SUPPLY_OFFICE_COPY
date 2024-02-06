@@ -78,38 +78,36 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-
-    checkouts = Checkout.objects.select_related('user').all()
-  
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved')
 
     checkout_data = []
 
     for checkout in checkouts:
         checkout_dict = {
-            
-            'user': checkout.user,
             'year': checkout.year,
-            'pr_id': checkout.pr_id
-            
+            'pr_id': checkout.pr_id,
+            'user': checkout.user,
+            'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user      
+        'user': request.user,
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year):
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
-    
-    # If you want to get all checkout items associated with approved checkouts
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
 
     context = {
         'approved_items': approved_items,
         'year': year,
+        'bo_comment': approved_checkouts.first().bo_comment,
+        'cd_comment': approved_checkouts.first().cd_comment, 
+        
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
@@ -677,19 +675,7 @@ def catalogue (request):
     return render(request, 'accounts/User/catalogue.html', {'grouped_data': grouped_data})
 
 
-@regular_user_required
-def myppmp(request):
-    
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
 
-   
-    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-
-    context = {
-        'approved_items': approved_items,
-    }
-
-    return render(request, 'accounts/User/myppmp.html', context)
 
 
 
@@ -834,13 +820,23 @@ def approved_ppmp(request):
         return redirect('approved_ppmp')
     elif request.method == 'GET':
         try:
-            checkout = Checkout.objects.get()
-            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+            # Get the latest approved checkout based on submission date
+            latest_checkout = Checkout.objects.filter(bo_status='approved', cd_status='approved').order_by('-year').first()
+
+            if latest_checkout:
+                checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+                latest_year = latest_checkout.year
+            else:
+                checkout_items = []
+                latest_year = None
+
         except Checkout.DoesNotExist:
             checkout_items = []
+            latest_year = None
 
         context = {
             'checkout_items': checkout_items,
+            'latest_year': latest_year,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
@@ -949,7 +945,10 @@ def delete(request, id):
     item.delete()
     return redirect('ppmp')
 
-
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    item.delete()
+    return redirect('purchase')
 
 
 def update_item(request, id):
@@ -1285,3 +1284,8 @@ def purchasetracker(request):
 def purchase_cd(request, pr_id):
     # your view logic here...
   return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
+
+
+def boppmp(request, pr_id):
+    return render(request, 'accounts/Admin/Budget_Officer/boppmp.html',{'pr_id': pr_id})
+    # Your view logic here
