@@ -61,13 +61,13 @@
       <div class="col-md-4 offset-md-4 ml-8">
     <div class="dropdown" style="width: 90%; border: 2px;" >
     <div style="display: flex; align-items: center; justify-content: center;">
-        <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; border-radius: 5px; margin:1px; width: 50%; transition: background-color 0.3s;">ALL CATEGORIES</div>
+        <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; border-radius: 5px; margin:1px; width: 100%; max-height: 307px; transition: background-color 0.3s;">ALL CATEGORIES</div>
       </div>
     </div>
   
     
       <div id="options" class="d-none position-absolute z-1 bg-white "
-        style="user-select: none; width: 100%; max-height: 30px; overflow-y: auto; text-align: center; ">
+        style="user-select: none; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); ">
         <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
         {% for category, items in grouped_data.items %}
         <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
