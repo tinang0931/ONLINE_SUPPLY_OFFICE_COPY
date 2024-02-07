@@ -1,27 +1,27 @@
-{% extends "accounts/Admin/Budget_Officer/nav_bo.html" %}
-
+{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+ 
 {% load static %}
-
-
-{% block boppmp %}
-
-
+ 
+ 
+{% block cdppmp_approval %}
+ 
+ 
 <style>
     .table-bordered th {
         background-color: #1c96c5;
     }
-
+ 
     .bck img {
         width: 30px;
         height: 30px;
         transition: all 0.3s ease-in-out;
     }
-
+ 
     .bck:hover img {
         transform: translateX(-5px);
         filter: brightness(1.2);
     }
-
+ 
     .bck::before {
         content: "";
         position: absolute;
@@ -34,26 +34,26 @@
         z-index: -1;
         transition: opacity 0.3s ease-in-out;
     }
-
+ 
     .bck:hover::before {
         opacity: 1;
     }
-
-
+ 
+ 
     .table-and-comment {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
-
+ 
+ 
     .icons-container {
         display: flex;
         justify-content: center;
         margin-top: 20px;
         margin-right: 50px;
     }
-
+ 
     .icon-link {
         margin-left: 20px;
         margin-top: 16px;
@@ -61,26 +61,26 @@
         color: white;
         /* Adjust the color as needed */
     }
-
-
-
-
+ 
+ 
+ 
+ 
     .icon-link {
         margin-left: 20px;
         text-decoration: none;
         color: white;
         /* Adjust the color as needed */
     }
-
-
+ 
+ 
     .input-box {
         width: 30%;
-
+ 
         margin-top: 1px;
         margin-left: 16px;
         margin-right: 20px;
     }
-
+ 
     .input-box input {
         width: 100%;
         height: 40px;
@@ -89,7 +89,7 @@
         border: none;
         border-radius: 5px;
     }
-
+ 
     .send-icon {
         position: fixed;
         top: 90%;
@@ -104,11 +104,11 @@
         margin-top: 39px;
         margin-left: -80px;
     }
-
+ 
     .send-icon i {
         line-height: 30px;
     }
-
+ 
     .footer {
         background-color: rgba(10, 99, 158, 0.637);
         text-align: center;
@@ -120,42 +120,42 @@
         z-index: 2;
         position: fixed;
     }
-
+ 
     .p {
         size: 12px;
     }
-
-
-
-
+ 
+ 
+ 
+ 
     .subpage {
         padding: 1cm;
         border: 5px red solid;
         height: 256mm;
         outline: 2cm #FFEAEA solid;
     }
-
+ 
     @page {
         size: A4;
         margin: 0;
     }
-
-
+ 
+ 
     @media print {
         .footer {
             display: none;
         }
-
+ 
         .input-box,
         .icons-container {
             display: none;
         }
     }
-
+ 
     .container {
         text-align: center;
     }
-
+ 
     .aprv,
     .disaprv {
         font-size: 15px;
@@ -170,60 +170,93 @@
         border: 1px solid rgba(9, 87, 139, 0.616);
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
-
-
+ 
+ 
     .aprv:hover,
     .disaprv:hover {
         color: #ffa125e3;
         background-color: #000000e3;
     }
-
-
+ 
+ 
     .footer {
         display: left;
         justify-content: space-between;
         align-items: center;  /* Vertically center the content */
     }
-    
+   
     .icons-container {
         display: flex;
         align-items: center;
     }
-    
+   
     .button-container {
         display: flex;
         gap: 10px; /* Adjust the gap between buttons as needed */
     }
-    
+   
     .slip-icon {
         width: 50px; /* Adjust the width as needed */
         height: auto; /* Maintain the aspect ratio */
         margin-right: 15px
     }
+   
+    /* Additional styles for buttons if necessary */
+    .aprv, .disaprv {
+        /* Add styles as needed */
+    }
+ 
+    .pr {
+        text-align: center; /* Align text to center */
+        margin: auto; /* Set margin to auto */
+        max-width: 80%; /* Optionally limit the maximum width */
+    }
+   
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
     
-
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
     
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
+ 
+ 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
-
+ 
     <div class="container">
         <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
-
+ 
     </div>
-
-
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
+ 
     <div class="table-responsive">
-
-        <form action="{% url 'boppmp' pr_id=pr_id %}" method="post" id ="form_id">
-
+ 
+        <form action="{% url 'boppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+ 
             {% csrf_token %}
-
-
+ 
+ 
         <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
                 <tr>
@@ -234,7 +267,7 @@
                     <th rowspan='2'>Estimated Budget</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
                     <th rowspan='2'>Unit Price</th>
-
+ 
                 </tr>
                 <tr>
                     <th>Jan</th>
@@ -254,9 +287,9 @@
             </thead>
             <tbody>
                 {% for p in checkout_items %}
-
+ 
                 <tr class="item-row" id="{{ p.id }}">
-
+ 
                     <td>
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
@@ -273,7 +306,7 @@
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-
+ 
                     <td>{{ p.estimate_budget }}</td>
                     <td>{{ p.jan }}</td>
                     <td>{{ p.feb }}</td>
@@ -292,8 +325,7 @@
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-
-
+ 
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -319,37 +351,47 @@
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
-        
-        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
+       
+        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
-
+ 
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
             <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
         </div>
     </div>
+   
 </footer>
-
-</form>
-
-
+ 
 <script>
     function btn_click(approve) {
         // Get the hidden input element by its ID
         var newStatusInput = document.getElementById('new_status_id');
-
+ 
         // Set the value based on the 'approve' parameter
         newStatusInput.value = approve ? 'approved' : 'declined';
-
+ 
         // Submit the form programmatically
         var form = document.getElementById('form_id');
         form.submit();
     }
 </script>
-
-
-
-
-
+ 
+ 
+<script>
+    // Check if the element has the class 'redirect-link' before applying onclick
+    document.addEventListener('DOMContentLoaded', function () {
+        var downloadLink = document.querySelector('.icon-link.redirect-link');
+ 
+        if (downloadLink) {
+            downloadLink.onclick = function () {
+                // Replace 'your_redirect_url_name' with the actual URL name
+                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
+                return false; // Prevent the default link behavior
+            };
+        }
+    });
+</script>
+ 
 {% endblock %}
