@@ -1,9 +1,9 @@
-{% extends "accounts/Admin/Budget_Officer/nav_bo.html" %}
+{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
 
 {% load static %}
 
 
-{% block boppmp %}
+{% block cdppmp_approval %}
 
 
 <style>
@@ -201,7 +201,10 @@
         margin-right: 15px
     }
     
-
+    /* Additional styles for buttons if necessary */
+    .aprv, .disaprv {
+        /* Add styles as needed */
+    }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -351,5 +354,19 @@
 
 
 
+<script>
+    // Check if the element has the class 'redirect-link' before applying onclick
+    document.addEventListener('DOMContentLoaded', function () {
+        var downloadLink = document.querySelector('.icon-link.redirect-link');
+
+        if (downloadLink) {
+            downloadLink.onclick = function () {
+                // Replace 'your_redirect_url_name' with the actual URL name
+                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
+                return false; // Prevent the default link behavior
+            };
+        }
+    });
+</script>
 
 {% endblock %}
