@@ -65,7 +65,7 @@ urlpatterns = [
    path('upload_file/',views.upload_file, name='upload_file'),
    path('handle_uploaded_file/',views.handle_uploaded_file, name='handle_uploaded_file'),
    path('delete_item/<int:id>/', delete_item, name='delete_item'),
-    path('delete_item/<int:id>/', delete_item, name='delete_item'),
+   path('delete_item/<int:id>/', delete_item, name='delete_item'),
    path('delete_category/<str:Category>/', delete_category, name='delete_category'),
    path('delete_user/<str:username>/', views.delete_user, name='delete_user'),
    path('bohome/',views.bohome, name='bohome'),
@@ -84,8 +84,7 @@ urlpatterns = [
    path('purchasetracker/', views.purchasetracker, name='purchasetracker'),
    path('bac_request/', views.bac_request, name='bac_request'),
    path('ppmpform/<int:year>/', views.ppmpform, name='ppmpform'),
-   path('boppmp/<int:pr_id>/', views.preqform_bo, name='preqform_bo'),
-   path('boppmp/<int:pr_id>/', views.boppmp, name='boppmp'),
-   path('bohome/<int:pr_id>/', views.boppmp, name='bohome'), 
+   path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
+   path('boppmp_approval/<str:pr_id>/', views.boppmp_approval, name='boppmp_approval'),
 
-]
+]  
