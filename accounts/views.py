@@ -675,7 +675,7 @@ def addItem(request):
 
 @regular_user_required
 def catalogue (request):
-    grouped_data = {}  # Define grouped_data outside of if conditions
+    grouped_data = {}  
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
         item_brand = request.POST.get(f'item_brand')
@@ -690,6 +690,7 @@ def catalogue (request):
             unit=unit,
             unit_cost=price,
         )
+        
         
         return redirect('catalogue')
 
@@ -1376,3 +1377,6 @@ def boppmp(request, pr_id):
 
 def boppmp(request, pr_id):
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', {'pr_id': pr_id})
+
+def boppmp_approval(request, pr_id):
+    return render(request, 'accounts/Admin/Budget_Officer/boppmp_approval.html', {'pr_id': pr_id})  

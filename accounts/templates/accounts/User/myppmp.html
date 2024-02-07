@@ -180,8 +180,6 @@
             </thead>
             <tbody>
                 {% for p in approved_items %}
-
-
                 <tr class="item-row" id="{{ p.id }}">
 
                     <td>
@@ -216,9 +214,6 @@
 
                     <td>{{ p.unit_cost }}</td>
 
-
-
-
                 </tr>
 
                 {% endfor %}
@@ -232,9 +227,7 @@
         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
     </td>
-
     </tr>
-
     </tbody>
     </table>
 
@@ -272,7 +265,6 @@
                                 {% endif %}
                             </p>
                         </div>
-                        
                     </div>
 
                     <div class="be-comment">
@@ -329,9 +321,7 @@
         </div>
     </div>
 </div>
-
-
-            <script>
+        <script>
                 function toggleComments() {
                     var commentsContainer = document.getElementById('commentsContainer');
 

@@ -205,6 +205,12 @@
     .aprv, .disaprv {
         /* Add styles as needed */
     }
+
+    .pr {
+        text-align: center; /* Align text to center */
+        margin: auto; /* Set margin to auto */
+        max-width: 80%; /* Optionally limit the maximum width */
+    }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -296,7 +302,6 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -335,8 +340,6 @@
     
 </footer>
 
-</form>
-
 
 <script>
     function btn_click(approve) {
@@ -351,8 +354,6 @@
         form.submit();
     }
 </script>
-
-
 
 
 <script>
@@ -371,3 +372,4 @@
 </script>
 
 {% endblock %}
+

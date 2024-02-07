@@ -82,7 +82,6 @@
             {% if checkout.pr_id == preqform_bo.pr_id %}
               {{ checkout.comment|default:"No comment" }}
             {% else %}
-              <!-- Display a different message or leave empty if the comment is not from preqform_bo -->
               No relevant comment available
             {% endif %}
           </td>

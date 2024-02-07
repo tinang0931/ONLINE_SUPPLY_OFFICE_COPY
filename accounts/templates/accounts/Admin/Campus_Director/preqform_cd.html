@@ -476,64 +476,57 @@
                     </select>
                 </div>
             </div>                  
-                  {% csrf_token %}
-                <script>
-                    function btn_click(status) {
-                        document.getElementById('new_status_id').value = status
-                        form = document.getElementById('form_status')
-                        form.submit()
-                    }
-                </script>
+    </div>
 
-                    </div>
-                </form>
-            </div>
-        </footer>
-    <script>
-            function setAction(action) {
-                document.getElementById('action').value = action;
-                document.forms[0].submit();  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-<!-- Ang imong custom JavaScript code -->
+
 <script>
-let selectedPaperSize = 'a4';
+    let selectedPaperSize = 'a4';
 
-function changePaperSize() {
-selectedPaperSize = document.getElementById('paperSize').value;
-}
+    function changePaperSize() {
+        selectedPaperSize = document.getElementById('paperSize').value;
+    }
 
-function downloadPDF() {
-    const body = document.getElementById('purchaseRequestTable');
-    const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    function toggleSelect() {
+        const select = document.getElementById('paperSize');
+        select.style.display = select.style.display === 'none' ? 'block' : 'none';
 
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'always';
-    });
+    }
 
-    const footer = document.getElementById('footer-content');
-    footer.style.display = 'none';
+    function downloadPDF() {
+        const body = document.getElementById('purchaseRequestTable');
+        const elementsWithPageBreak = body.querySelectorAll('.page-break');
 
-    const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
-    iconsContainer.style.display = 'block'; // Ensure icons container is visible
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'always';
+        });
 
-    const options = {
-        filename: 'PPMP.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-        pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-    };
+        const footer = document.getElementById('footer-content');
+        footer.style.display = 'none';
 
-    html2pdf(body, options);
+        const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
+        iconsContainer.style.display = 'block'; // Ensure icons container is visible
 
-    // Reset page breaks after generating PDF
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'auto';
-    });
-    footer.style.display = 'block'; // Display the footer again after PDF generation
-    iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
-}
+        const options = {
+            filename: 'PPMP.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+        };
+
+        html2pdf().from(body).set(options).save();
+
+        // Reset page breaks after generating PDF
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'auto';
+        });
+        footer.style.display = 'block'; // Display the footer again after PDF generation
+        iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
+    }
 </script>
+
 
         </div>
     </div>
