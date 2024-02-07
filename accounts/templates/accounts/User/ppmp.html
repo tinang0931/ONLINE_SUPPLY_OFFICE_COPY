@@ -69,7 +69,8 @@
 
 .catalogue {
     position: fixed;
-    top: 35vh;
+    top: 37vh;
+    z-index: 999;
     left: 10;
     background: #fff;
     color: black;
@@ -125,24 +126,19 @@
 }
 .custom-dropdown::after {
   position: relative;
-  top: 10%;
+  top: 5vh;
   right: 20px;
   transform: translateY(-50%);
   pointer-events: none;
 }
 
 strong {
-    height: 30px;
-    line-height: 46px;
+    height: 60px;
+    line-height: 5vh;
+    margin-left: 5vh;
+    
 }
 
-.budget-container input[type="text"] {
-    padding: 10px;
-    border-radius: 10px;
-    border: 3px solid #ccc;
-    margin-right: 50px;
-    height: 40px;
-}
 
 .budget-container {
     margin-left: 300px;
@@ -156,10 +152,11 @@ strong {
 }
 
 .budget-container input[type="text"] {
-    padding: 5px;
-    border-radius: 10px;
-    border: 5px solid #ccc;
-    margin-right: 20px;
+    padding: 1px;
+    
+    position: absolute;
+    top: 1vh;
+    margin-left: 25vh;
 }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -188,7 +185,7 @@ strong {
         <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="  position: absolute; top: 21px;">
+                <div style="  position: absolute; top: 40px; z-index: 999;">
                     <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 5px; 
                                         transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
                                         margin-left: 45px; border: none;">
@@ -215,10 +212,10 @@ strong {
         <div class="row">
             <div class=" col-md-6 text-left">
                   
-                <h5 class="budget-container">
+                <div class="budget-container">
                     <strong>TOTAL ALLOCATED BUDGET:</strong>
                     <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
-                </h5>
+                </div>
             </div>
       
         <script>
@@ -250,7 +247,7 @@ strong {
                 }
             };
         </script>
-        <div class="col-md-6 text-center" style="margin-top: -5vh;">
+        <div class="col-md-6 text-center" style="position: absolute; margin-top: -2vh; margin-left: 50vh; ">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
@@ -377,7 +374,7 @@ strong {
                         </tr>
                     {% endfor %}
 
-                    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px;">
+                    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: px; width: 120px;">
                         <i class="fas fa-check-circle"></i> Submit
                     </button>
                 </form>
