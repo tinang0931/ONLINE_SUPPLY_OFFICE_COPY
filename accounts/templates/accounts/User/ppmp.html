@@ -50,7 +50,7 @@
         cursor: pointer;
         border: none;
         margin-left: -107%;
-        margin-top: 15%;
+        margin-top: 20%;
         padding: 10px 20px;
         font-size: 16px;
     }
@@ -70,17 +70,17 @@
 .catalogue {
     position: fixed;
     top: 35vh;
-    left: 10;
+    left: 10px; /* Added 'px' unit */
     background: #fff;
     color: black;
     border: 1px solid black;
     padding: 10px 20px;
     border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, transform 0.3s; /* Added transform */
     width: 10%;
-    color: inherit;
     text-decoration: none;
 }
+
 .catalogue:hover {
     background: #1c96c5;
     transform: scale(1.1);
@@ -88,6 +88,12 @@
 
 .catalogue:active {
     transform: translate(0em, 0.17em);
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .bck a {
@@ -137,7 +143,7 @@ strong {
 }
 
 .budget-container input[type="text"] {
-    padding: 10px;
+    padding: 30px;
     border-radius: 10px;
     border: 3px solid #ccc;
     margin-right: 50px;
@@ -189,7 +195,7 @@ strong {
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
                 <div style="  position: absolute; top: 21px;">
-                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 5px; 
+                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 12px; 
                                         transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
                                         margin-left: 45px; border: none;">
                         <option value="2022">2022</option>
@@ -250,7 +256,7 @@ strong {
                 }
             };
         </script>
-        <div class="col-md-6 text-center" style="margin-top: -5vh;">
+        <div class="col-md-6 text-center" style="position: absolute; top: 35vh; margin-left: 60vh">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>

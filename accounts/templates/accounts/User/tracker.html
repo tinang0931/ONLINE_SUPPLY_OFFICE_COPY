@@ -246,41 +246,7 @@
           </tr>
       {% endfor %}
 
-        </tbody>
-      </table>
-      <div id="commentModal" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-          <h2>Comment</h2>
-          <p id="commentContent"></p>
-          <form id="replyForm">
-            <textarea id="replyInput" placeholder="Enter your reply"></textarea>
-            <button type="submit">Submit Reply</button>
-          </form>
-        </div>
-      </div>
-      <script>
-        function handleCommentClick(comment) {
-          // Set the comment content in the modal
-          document.getElementById("commentContent").textContent = comment;
-          // Show the modal
-          document.getElementById("commentModal").style.display = "block";
-        }
-      
-        function closeModal() {
-          // Close the modal
-          document.getElementById("commentModal").style.display = "none";
-        }
-      
-        // Handle form submission (you can adjust this as needed)
-        document.getElementById("replyForm").addEventListener("submit", function(event) {
-          event.preventDefault(); // Prevent form submission
-          var reply = document.getElementById("replyInput").value;
-          // Handle the reply submission (e.g., send it to a server, update UI, etc.)
-          alert("Submitted reply: " + reply);
-          closeModal(); // Close the modal after submission
-        });
-      </script>
+       
       
     </div>
   </div>
