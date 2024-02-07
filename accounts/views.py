@@ -39,7 +39,6 @@ from .models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
-import pandas as pd
 from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import CheckoutItems
