@@ -95,10 +95,10 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="text-center" >Date Requested</th>
         <th class="text-center" >User ID</th>
-        <th class="text-center" >Username</th>
         <th class="text-center" >PR ID</th>
+        <th class="text-center" >Username</th>
+        <th class="text-center" >Date Requested</th>
         <th class="text-center">Purpose</th>
         <th class="text-center">Campus Director Status</th>
         <th class="text-center">View Attachments</th>
@@ -110,13 +110,15 @@
       {% for checkout in tracker %}
 
       <tr>
-        <td style="text-align: center;">{{checkout.submission_date}}</td>
 
         <td style="text-align: center;">{{checkout.user_id}}</td>
 
+        <td style="text-align: center;"> <a href="{% url 'bac_purchaserequest' pr_id=checkout.pr_id %}"> <strong>{{checkout.pr_id}}</strong></a> </td>
+
         <td style="text-align: center;">{{checkout.user.first_name}} {{checkout.user.last_name}}</td>
 
-        <td style="text-align: center;">{{checkout.pr_id}}</td>
+        <td style="text-align: center;">{{checkout.submission_date}}</td>
+
 
         <td style="text-align: center;">  {{checkout.purpose}}</td>
 

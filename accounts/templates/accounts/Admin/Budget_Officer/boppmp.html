@@ -454,6 +454,114 @@
                 </div>                
                 <span id="totalBudget"> </span>
             </div>
+<div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <form action="{% url 'boppmp' pr_id=pr_id %}" method="post" id ="form_id">
+
+            {% csrf_token %}
+
+
+        <table class="table table-bordered" style="margin-top: 1px;">
+            <thead>
+                <tr>
+                <tr>
+                    <th rowspan='2'>Item Name</th>
+                    <th rowspan='2'> Brand / Description</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>Aug</th>
+                    <th>Sept</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in checkout_items %}
+
+                <tr class="item-row" id="{{ p.id }}">
+
+                    <td>
+                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                            class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+
+                    <td>{{ p.estimate_budget }}</td>
+                    <td>{{ p.jan }}</td>
+                    <td>{{ p.feb }}</td>
+                    <td>{{ p.mar }}</td>
+                    <td>{{ p.apr }}</td>
+                    <td>{{ p.may }}</td>
+                    <td>{{ p.jun }}</td>
+                    <td>{{ p.jul }}</td>
+                    <td>{{ p.aug }}</td>
+                    <td>{{ p.sep }}</td>
+                    <td>{{ p.oct }}</td>
+                    <td>{{ p.nov }}</td>
+                    <td>{{ p.dec }}</td>
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+
+
+                    <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
+                    <input type="hidden" name="jan" value="{{ p.jan }}">
+                    <input type="hidden" name="feb" value="{{ p.feb }}">
+                    <input type="hidden" name="mar" value="{{ p.mar }}">
+                    <input type="hidden" name="apr" value="{{ p.apr }}">
+                    <input type="hidden" name="may" value="{{ p.may }}">
+                    <input type="hidden" name="jun" value="{{ p.jun }}">
+                    <input type="hidden" name="jul" value="{{ p.jul }}">
+                    <input type="hidden" name="aug" value="{{ p.aug }}">
+                    <input type="hidden" name="sep" value="{{ p.sep }}">
+                    <input type="hidden" name="oct" value="{{ p.oct }}">
+                    <input type="hidden" name="nov" value="{{ p.nov }}">
+                    <input type="hidden" name="dec" value="{{ p.dec }}">
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer class="footer">
+    <div class="icons-container">
+        <div class="input-box">
+            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <br>
         <div class="page-break">  

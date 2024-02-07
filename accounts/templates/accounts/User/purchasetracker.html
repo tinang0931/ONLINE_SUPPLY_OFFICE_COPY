@@ -1,5 +1,7 @@
 {% extends "accounts/User/main.html" %}
 
+{% load static %}
+
 {% block purchasetracker %}
 <style>
   .custom-f {
@@ -62,7 +64,11 @@
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
   </div>
-
+  <div class="bck">
+    <a href="{% url 'userlanding' %}">
+      <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+    </a>
+  </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
       <table class="table table-bordered" style="margin: 0px!important;">
@@ -77,15 +83,15 @@
           
         </thead>
         <tbody>
-
+        {% if tracker %}
         {% for p in tracker %}
             <tr>
                 <td class="text-center"> {{ p.pr_id }}</td>
                 <td class="text-center">
                   {% if p.status %}
-                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.status }}</span>
+                      <span class="fas fa-circle text-success"> {{ p.status }}</span>
                   {% else %}
-                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                      <span class="fas fa-circle text-danger"> Pending</span>
                   {% endif %}
               </td>
               <td class="text-center">
@@ -102,6 +108,13 @@
                 
             </tr>
         {% endfor %}
+        {% else %}
+
+        <tr>
+          <td colspan="4" class="text-center"><strong>No Purchase Request</strong></td>
+        </tr>
+
+        {% endif %}
 
         </tbody>
       </table>
