@@ -1,9 +1,9 @@
-{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 {% load static %}
 
 
-{% block cdppmp_approval %}
+{% block bac_purchaserequest %}
 
 
 <style>
@@ -59,7 +59,6 @@
         margin-top: 16px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
 
 
@@ -69,7 +68,6 @@
         margin-left: 20px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
 
 
@@ -178,7 +176,7 @@
         background-color: #000000e3;
     }
 
-
+    
     .footer {
         display: left;
         justify-content: space-between;
@@ -201,24 +199,8 @@
         margin-right: 15px
     }
     
-
-    
-    .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
+    /* Additional styles for buttons if necessary */
+ 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -227,24 +209,20 @@
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-    <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+        <h1 style="text-align: center; margin-top: 15px"> <strong>PURCHASE REQUEST ITEMS
+        </strong> </h1>
+
+   
+
+    <div class="bck">
+        <a href="{% url 'bac_request' %}">
+            <img src="{% static 'images/previous_189252.png' %}">
+        </a>
     </div>
 
-    <div class="row">
-        <div class="col-md-1 mb-0">
-          <div class="bck">
-            <a href="{% url 'cdppmp' %}">
-              <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
-            </a>
-          </div>
-        </div>
-      </div>
     <div class="table-responsive">
 
-        <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
-
-            {% csrf_token %}
+       
 
 
         <table class="table table-bordered" style="margin-top: 1px;">
@@ -254,26 +232,11 @@
                     <th rowspan='2'>Item Name</th>
                     <th rowspan='2'> Brand / Description</th>
                     <th rowspan='2'>Unit</th>
-                    <th rowspan='2'>Estimated Budget</th>
-                    <th colspan="12">Monthly Quantity Requirement</th>
                     <th rowspan='2'>Unit Price</th>
 
                 </tr>
-                <tr>
-                    <th>Jan</th>
-                    <th>Feb</th>
-                    <th>Mar</th>
-                    <th>April</th>
-                    <th>May</th>
-                    <th>June</th>
-                    <th>July</th>
-                    <th>Aug</th>
-                    <th>Sept</th>
-                    <th>Oct</th>
-                    <th>Nov</th>
-                    <th>Dec</th>
-                </tr>
-                </tr>
+                
+
             </thead>
             <tbody>
                 {% for p in checkout_items %}
@@ -291,89 +254,30 @@
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
+
                     <td>
                         <span class="editable" data-field="Unit">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-                    <td>{{ p.estimate_budget }}</td>
-                    <td>{{ p.jan }}</td>
-                    <td>{{ p.feb }}</td>
-                    <td>{{ p.mar }}</td>
-                    <td>{{ p.apr }}</td>
-                    <td>{{ p.may }}</td>
-                    <td>{{ p.jun }}</td>
-                    <td>{{ p.jul }}</td>
-                    <td>{{ p.aug }}</td>
-                    <td>{{ p.sep }}</td>
-                    <td>{{ p.oct }}</td>
-                    <td>{{ p.nov }}</td>
-                    <td>{{ p.dec }}</td>
                     <td>
-                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                        <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
                     </td>
 
+                    
 
-                    <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
-                    <input type="hidden" name="jan" value="{{ p.jan }}">
-                    <input type="hidden" name="feb" value="{{ p.feb }}">
-                    <input type="hidden" name="mar" value="{{ p.mar }}">
-                    <input type="hidden" name="apr" value="{{ p.apr }}">
-                    <input type="hidden" name="may" value="{{ p.may }}">
-                    <input type="hidden" name="jun" value="{{ p.jun }}">
-                    <input type="hidden" name="jul" value="{{ p.jul }}">
-                    <input type="hidden" name="aug" value="{{ p.aug }}">
-                    <input type="hidden" name="sep" value="{{ p.sep }}">
-                    <input type="hidden" name="oct" value="{{ p.oct }}">
-                    <input type="hidden" name="nov" value="{{ p.nov }}">
-                    <input type="hidden" name="dec" value="{{ p.dec }}">
+
+
                 </tr>
+
                 {% endfor %}
+
             </tbody>
+
         </table>
     </div>
 </div>
-<footer class="footer">
-    <div class="icons-container">
-        <div class="input-box">
-            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
-        </div>
-        <input id="new_status_id" type="hidden" name="new_status">
-        
-        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
-            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
-        </a>
-
-        <div class="button-container">
-            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-        </div>
-    </div>
-</footer>
-
-</form>
-
-
-<script>
-    function btn_click(approve) {
-        // Get the hidden input element by its ID
-        var newStatusInput = document.getElementById('new_status_id');
-
-        // Set the value based on the 'approve' parameter
-        newStatusInput.value = approve ? 'approved' : 'declined';
-
-        // Submit the form programmatically
-        var form = document.getElementById('form_id');
-        form.submit();
-    }
-</script>
-
-
-
-
 
 
 {% endblock %}

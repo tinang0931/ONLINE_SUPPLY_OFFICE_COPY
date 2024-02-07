@@ -200,9 +200,7 @@
     }
     
     /* Additional styles for buttons if necessary */
-    .aprv, .disaprv {
-        /* Add styles as needed */
-    }
+ 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -258,6 +256,7 @@
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
+
                     <td>
                         <span class="editable" data-field="Unit">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
@@ -266,9 +265,9 @@
 
                     <td>
                         <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
-                        <input id="unit_price_{{ p.id }}" name="unit_price" type="text" value="{{ p.unit_price }}"
-                            oninput="change_val('unit_price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
+
+                    
 
 
 
@@ -289,7 +288,7 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
 

@@ -143,7 +143,7 @@ class Pr_identifier(models.Model):
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=20, default="Pending")
+    status = models.CharField(max_length=20)
     comment = models.TextField(blank=True, null=True)
 
     def generate_pr_id(self):
