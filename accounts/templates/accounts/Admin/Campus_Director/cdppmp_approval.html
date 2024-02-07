@@ -206,6 +206,22 @@
         /* Add styles as needed */
     }
     
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -215,11 +231,18 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
-
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
 
-
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'cdppmp' %}">
+              <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
     <div class="table-responsive">
 
         <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
