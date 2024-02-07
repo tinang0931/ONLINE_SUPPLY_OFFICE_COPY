@@ -447,6 +447,7 @@ position: relative;
                                 <br>
                                 <br>
                                 <div class="icons-container">
+                                    <footer>
                                     <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
                                         <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
                                     </a>
@@ -454,6 +455,7 @@ position: relative;
                                     <a href="#" title="Select" class="icon-link">
                                         <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
                                     </a>
+                                </footer>
                                     <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
                                         <option value="a4">A4</option>
                                         <option value="legal">Legal</option>

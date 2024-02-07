@@ -315,7 +315,47 @@
         margin-top: -40px; /* Move icons up */
     }
 
+    .icon-link,
+    .icon {
+        width: 30px; /* Adjust the width of the icons as needed */
+        height: 30px; /* Adjust the height of the icons as needed */
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; /* Adjust the margin-top value to move the icons up */
+    }
 
+    .icons-container {
+        display: flex;
+        justify-content: flex-start; /* Align icons to the left */
+        align-items: center;
+        margin-top: -10px; /* Move icons up */
+        margin-left: 85vh;
+    }
+
+    footer {
+        background-color: rgba(10, 99, 158, 0.637);
+        text-align: center;
+            width: 100%;
+            height: 10vh;
+            position: absolute;
+            bottom: 0vh;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+            left: 0px;
+    }
+
+    #footer-content {
+        text-align: center; /* Center-align the content */
+        padding: 50px; /* Add padding around the content */
+    }
+    
+    .header-image {
+        max-width: 100%; /* Ensure the image doesn't exceed its container */
+        height: auto; /* Maintain the aspect ratio of the image */
+        margin-bottom: 50px; /* Add margin below the image */
+    }
 </style>
 
        
@@ -463,6 +503,7 @@
                 <br>
                 <br>
                 <div class="icons-container">
+                    <footer>
                     <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
                         <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
                     </a>
@@ -470,6 +511,7 @@
                     <a href="#" title="Select" class="icon-link">
                         <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
                     </a>
+                </footer>
                     <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
                         <option value="a4">A4</option>
                         <option value="legal">Legal</option>
