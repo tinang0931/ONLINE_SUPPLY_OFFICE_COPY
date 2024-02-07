@@ -1,9 +1,9 @@
-{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 {% load static %}
 
 
-{% block cdpurchase_approval %}
+{% block bac_purchaserequest %}
 
 
 <style>
@@ -200,9 +200,7 @@
     }
     
     /* Additional styles for buttons if necessary */
-    .aprv, .disaprv {
-        /* Add styles as needed */
-    }
+ 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -211,22 +209,20 @@
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-    <div class="container">
-        <h1 class="pr text-center pt-6 "> <strong>PURCHASE REQUEST FOR APPROVAL</strong> </h1>
+        <h1 style="text-align: center; margin-top: 15px"> <strong>PURCHASE REQUEST ITEMS
+        </strong> </h1>
 
-    </div>
+   
 
     <div class="bck">
-        <a href="{% url 'cdpurchase' %}">
+        <a href="{% url 'bac_request' %}">
             <img src="{% static 'images/previous_189252.png' %}">
         </a>
     </div>
 
     <div class="table-responsive">
 
-        <form action="{% url 'cdpurchase_approval' pr_id=pr_id %}" method="post" id ="form_id">
-
-            {% csrf_token %}
+       
 
 
         <table class="table table-bordered" style="margin-top: 1px;">
@@ -258,6 +254,7 @@
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
+
                     <td>
                         <span class="editable" data-field="Unit">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
@@ -266,9 +263,9 @@
 
                     <td>
                         <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
-                        <input id="unit_price_{{ p.id }}" name="unit_price" type="text" value="{{ p.unit_price }}"
-                            oninput="change_val('unit_price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
+
+                    
 
 
 
@@ -281,42 +278,6 @@
         </table>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="icons-container">
-        <div class="input-box">
-            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
-        </div>
-        <input id="new_status_id" type="hidden" name="new_status">
-        
-        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
-            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
-        </a>
-
-        <div class="button-container">
-            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
-            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
-        </div>
-    </div>
-</footer>
-
-</form>
-
-<script>
-    function btn_click(approve) {
-        // Get the hidden input element by its ID
-        var newStatusInput = document.getElementById('new_status_id');
-
-        // Set the value based on the 'approve' parameter
-        newStatusInput.value = approve ? 'approved' : 'declined';
-
-        // Submit the form programmatically
-        var form = document.getElementById('form_id');
-        form.submit();
-    }
-</script>
-
-
 
 
 {% endblock %}

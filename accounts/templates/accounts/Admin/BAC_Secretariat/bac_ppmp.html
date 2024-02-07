@@ -1,9 +1,10 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
 {% load static %}
 
-{% block myppmp %}
+{% block bac_ppmp %}
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/myppmp.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -139,7 +140,7 @@
 
     </div>
     <div class="bck">
-        <a href="{% url 'ppmp101' %}">
+        <a href="{% url 'bac_home' %}">
             <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
         </a>
     </div>
@@ -179,7 +180,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for p in approved_items %}
+                {% for p in checkout_items %}
 
 
                 <tr class="item-row" id="{{ p.id }}">
@@ -238,127 +239,9 @@
     </tbody>
     </table>
 
-    <div class="row">
-        <div class="col-md-6">
-            <button class="btn btn-primary mb-3 ml-0" id="viewCommentsBtn" onclick="toggleComments()">View
-                Comments</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card custom-card-width" id="commentsContainer" style="display: none;">
-                <div class="card-body">
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""
-                                    class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-                            <span class="be-comment-name">
-                                <a href="blog-detail-2.html">Budget Officer</a>
-                            </span>
-                            <span class="be-comment-time">
-                                <i class="fa fa-clock-o"></i>
-                                May 27, 2015 at 3:14am
-                            </span>
-                            <p class="be-comment-text">
-                                {% if bo_comment %}
-                                    {{ bo_comment }}
-                                {% else %}
-                                    No comment
-                                {% endif %}
-                            </p>
-                        </div>
-                        
-                    </div>
-
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""
-                                    class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-                            <span class="be-comment-name">
-                                <a href="blog-detail-2.html">Campus Director</a>
-                            </span>
-                            <span class="be-comment-time">
-                                <i class="fa fa-clock-o"></i>
-                                May 27, 2015 at 3:14am
-                            </span>
-                            <p class="be-comment-text">
-                                {% if cd_comment %}
-                                    {{ cd_comment }}
-                                {% else %}
-                                    No comment
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="be-comment">
-                        <div class="be-img-comment">
-                            <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""
-                                    class="be-ava-comment">
-                            </a>
-                        </div>
-                        <div class="be-comment-content">
-                            <span class="be-comment-name">
-                                <a href="blog-detail-2.html">BAC Secretariat</a>
-                            </span>
-                            <span class="be-comment-time">
-                                <i class="fa fa-clock-o"></i>
-                                May 27, 2015 at 3:14am
-                            </span>
-                            <p class="be-comment-text">
-                                {% if bac_comment %}
-                                    {{ bac_comment }}
-                                {% else %}
-                                    No comment
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    
 
 
-            <script>
-                function toggleComments() {
-                    var commentsContainer = document.getElementById('commentsContainer');
-
-                    // Toggle the visibility of the comments container
-                    if (commentsContainer.style.display === 'none' || commentsContainer.style.display === '') {
-                        commentsContainer.style.display = 'block';
-                    } else {
-                        commentsContainer.style.display = 'none';
-                    }
-                }
-            </script>
-
-
-
-            <script>
-                var commentsBlock = document.getElementById('commentsBlock');
-                var viewCommentsBtn = document.getElementById('viewCommentsBtn');
-
-                viewCommentsBtn.addEventListener('click', function () {
-                    // Toggle the visibility of comments block
-                    if (commentsBlock.style.display === 'none' || commentsBlock.style.display === '') {
-                        commentsBlock.style.display = 'block';
-                    } else {
-                        commentsBlock.style.display = 'none';
-                    }
-                });
-            </script>
 
         </div>
     </div>
@@ -412,7 +295,36 @@
         });
     </script>
 
-    
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function (e) {
+                e.stopPropagation();
+                var selectedYear = $(this).text();
+                updateButtonStyle(selectedYear);
+                hideDropdown();
+            });
+
+
+            document.getElementById('yearDropdown').addEventListener('click', function () {
+                this.style.backgroundColor = ' #f59a23e7';
+            });
+
+
+            function updateButtonStyle(selectedYear) {
+                $('.dropdown-item').removeClass('selected');
+                $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
+                $('.btn#yearDropdown').text(selectedYear).css('background-color', ' #f59a23e7');
+
+            }
+
+
+            function hideDropdown() {
+                $('.custom-dropdown').removeClass('show');
+                $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
+                $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
+            }
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

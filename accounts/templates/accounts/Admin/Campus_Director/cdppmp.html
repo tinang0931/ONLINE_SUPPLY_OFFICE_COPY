@@ -7,10 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-  .status {
-    width: 30%;
-    text-align: center;
-  }
+
 
   .table a {
     text-decoration: none;
@@ -38,58 +35,8 @@
     box-shadow: none; 
   }
 
-
   .search-form {
     justify-content: flex-end;
-  }
-
-  .table-container {
-    width: 100%;
-    overflow-x: hidden;
-  }
-
-  .table {
-    width: 100%;
-    margin: auto;
-    table-layout: fixed;
-    position: relative;
-  }
-
-  .table th,
-  .table td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .table th:nth-child(1),
-  .table td:nth-child(1) {
-    width: 15%;
-  }
-
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    width: 10%;
-  }
-
-  .table th:nth-child(3),
-  .table td:nth-child(3) {
-    width: 30%;
-  }
-
-  .table th:nth-child(4),
-  .table td:nth-child(4) {
-    width: 25%;
-  }
-
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    width: 15%;
-  }
-
-  .table th:nth-child(6),
-  .table td:nth-child(6) {
-    width: 40%;
   }
 
   .table th {
@@ -100,20 +47,28 @@
     top: 0;
     z-index: 2;
   }
-  body{
-    overflow:hidden;
-  }
-  html{
-    overflow:hidden;
-  }
-  footer{
-    height:30%;
-  }
-  
+
+  .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"> <strong>PPMP REQUESTS </strong> </h1>
+  <h1 class="pr-heading text-center pt-4" style="margin-left: 10px;"  > <strong>PPMP REQUESTS </strong> </h1>
 
   
   <div class="search" style="position: relative; text-align: right;">
@@ -121,65 +76,46 @@
     <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
 
+<div class="row">
+  <div class="col-md-1 mb-0">
+    <div class="bck">
+      <a href="{% url 'cdlanding' %}">
+        <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+      </a>
+    </div>
+  </div>
+</div>
+
   <div class="table-container">
     <table class="table table-bordered">
 <thead>
     <tr>
-      <th class="text-center" onclick="sortTable(0)" style="width: 15%;">
+      <th class="text-center">
         Date Requested
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
       </th>
       
-      <th class="text-center" onclick="sortTable(2)" style="width: 30%;">
+      <th class="text-center" >
         Requests
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
       </th>
 
-      <th class="text-center" onclick="sortTable(2)" style="width: 10%;">
+      <th class="text-center">
         PPMP ID
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
       </th>
 
 
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="text-center">
         Budget Officer Status
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
       </th>
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
-        Budget Officer Comment
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
-      </th>
+     
       
-      <th class="status" onclick="sortTable(4)" style="width: 15%;">
+      <th class="text-center">
         Campus Director Status
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
       </th>
-      <th class="text-center" onclick="sortTable(5)" style="width: 25%;">
-        
-      Campus Director Comments
-        <span class="sort-arrow">
-          <span class="sort-arrow-up"></span>
-          <span class="sort-arrow-down"></span>
-        </span>
+
+      <th class="text-center">
+        Comments
       </th>
+  
 
     </tr>
   </thead>
@@ -201,42 +137,57 @@
             </a>
         </td>
 
-          <td class="text-center">
-            <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;" >
-                {{ checkout.bo_status }}
-            </span>
-        </td>
-          <td class="text-center">
-            {% if checkout.bo_comment %}
-              {{ checkout.bo_comment }}
-            {% else %}
-              No comments
-            {% endif %}
-          </td>
-          <td class="text-center">
-            {% if checkout.cd_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.cd_status }}
-                </span>
-            {% elif checkout.new_status %}
-                <span class="badge" style="background-color: green; color: white; padding: 8px 12px; font-size: 16px;">
-                    {{ checkout.new_status }}
-                </span>
-            {% else %}
-                <span class="badge" style="background-color: red; color: white; padding: 8px 12px; font-size: 16px;">
-                    Pending
-                </span>
-            {% endif %}
-        </td>
+        <td class="text-center">
+          {% if checkout.bo_status %}
+              <span class="fas fa-circle text-success"> {{ checkout.bo_status }}</span>
+          {% else %}
+              <span class="fas fa-circle text-danger"> Pending</span>
+          {% endif %}
+      </td>
+      
+    
+    
+      <td class="text-center">
+        {% if checkout.cd_status %}
+            <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
+        {% else %}
+            <span class="fas fa-circle text-danger"> Pending</span>
+        {% endif %}
+    </td>
         
         
-          <td class="text-center">
-            {% if checkout.cd_comment %}
-              {{ checkout.cd_comment }}
-            {% else %}
-              No comments
-            {% endif %}
-          </td>
+        <td style="cursor: pointer;" onclick="toggleComments(this)">
+          <div class="commentsBlock">
+              <p>
+                  {% if checkout.bo_comment %}
+                      <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
+                  {% else %}
+                      <strong>Budget Officer :</strong> No comment
+                  {% endif %}
+              </p>
+              <p class="campusDirectorComment" style="display: none;">
+                  {% if checkout.cd_comment %}
+                      <strong>Campus Director:</strong> {{ checkout.cd_comment }}
+                  {% else %}
+                      <strong>Campus Director:</strong> No comment
+                  {% endif %}
+              </p>
+          </div>
+      
+          <script>
+              function toggleComments(element) {
+                  var commentsBlock = element.querySelector('.commentsBlock');
+                  var campusDirectorComment = element.querySelector('.campusDirectorComment');
+      
+                  // Toggle the visibility of the second <p> element
+                  if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+                      campusDirectorComment.style.display = 'block';
+                  } else {
+                      campusDirectorComment.style.display = 'none';
+                  }
+              }
+          </script>
+      </td>
         </tr>
       {% endfor %}
     </tbody>

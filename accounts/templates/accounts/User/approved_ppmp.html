@@ -80,6 +80,8 @@
 .bckbtn:hover img {
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
+
+
 </style>
 
 
@@ -90,7 +92,7 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 45%;"> <strong>APPROVED PPMP</strong> </h1>
+        <h1 style="margin-left: 35%;"> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
     <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/arrow-left.png' %}"></a>
     </div>
@@ -125,7 +127,9 @@
                             <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
                             <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>
                             <td>
-                                <button type="submit">➕</button>
+                                <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
+                                    <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                </button> 
                             </td>
                         </tr>
                     </form>

@@ -114,6 +114,7 @@ class PPMP(models.Model):
 
 
 class PR_Items(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
@@ -134,7 +135,6 @@ class PR(models.Model):
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    purpose = models.TextField(blank=True, null=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     pr_identifier = models.ForeignKey('Pr_identifier', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -142,7 +142,8 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
-    status = models.CharField(max_length=20, default="Pending")
+    purpose = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=20)
     comment = models.TextField(blank=True, null=True)
 
     def generate_pr_id(self):
@@ -158,9 +159,9 @@ class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(default=timezone.now)
-    bo_status = models.CharField(max_length=20, default="Pending")
+    bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
-    cd_status = models.CharField(max_length=20, default="Pending")
+    cd_status = models.CharField(max_length=20)
     cd_comment = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now_add=True)
 

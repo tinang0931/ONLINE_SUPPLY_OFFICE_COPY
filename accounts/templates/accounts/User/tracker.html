@@ -34,8 +34,17 @@
     background-color: #1c96c5;
   }
 
-  .bck{
-    margin-bottom: 20px;
+  /* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
    .custom-f{
     margin-top: 20px;
@@ -56,6 +65,91 @@
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
 
+    body{
+      margin-top:20px;
+      background-color:#e9ebee;
+  }
+  
+  .be-comment-block {
+      margin-bottom: 50px !important;
+      border: 1px solid #edeff2;
+      border-radius: 2px;
+      padding: 50px 70px;
+      border:1px solid #ffffff;
+  }
+  
+  .comments-title {
+      font-size: 16px;
+      color: #262626;
+      margin-bottom: 15px;
+      font-family: 'Conv_helveticaneuecyr-bold';
+  }
+  
+  .be-img-comment {
+      width: 60px;
+      height: 60px;
+      float: left;
+      margin-bottom: 15px;
+  }
+  
+  .be-ava-comment {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+  }
+  
+  .be-comment-content {
+      margin-left: 80px;
+  }
+  
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-name {
+      font-size: 13px;
+      font-family: 'Conv_helveticaneuecyr-bold';
+  }
+  
+  .be-comment-content a {
+      color: #383b43;
+  }
+  
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-time {
+      text-align: right;
+  }
+  
+  .be-comment-time {
+      font-size: 11px;
+      color: #b4b7c1;
+  }
+  
+  .be-comment-text {
+      width: 30%;
+      font-size: 13px;
+      line-height: 18px;
+      color: #7a8192;
+      display: block;
+      background: #f6f6f7;
+      border: 1px solid #edeff2;
+      padding: 15px 20px 20px 20px;
+  }
+  .btn-primary {
+      margin-left: 0%;
+      color: #fff;
+      background-color: #1c96c5;
+      border-color: #1c96c5;
+  }
+  
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -75,17 +169,13 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
-            <th rowspan="2" class="text-center">PR REQUEST NO.</th>
-            <th colspan="2" class="text-center">STATUS</th>
-            <th colspan="2" class="text-center">COMMENT</th>
-            <th rowspan="2" class="text-center">LAST UPDATED</th>
+            <th  class="text-center">PPMP NO.</th>
+            <th  class="text-center">BUDGET OFFICER STATUS</th>
+            <th class="text-center">CAMPUS DIRECTOR STATUS</th>
+            <th  class="text-center">COMMENT</th>
+            <th class="text-center">LAST UPDATED</th>
         </tr>
-        <tr>
-            <th class="text-center">BUDGET OFFICER</th>
-            <th class="text-center">CAMPUS DIRECTOR</th>
-            <th class="text-center">BUDGET OFFICER</th>
-            <th class="text-center">CAMPUS DIRECTOR</th>
-        </tr>
+       
         
           
         </thead>
@@ -94,30 +184,103 @@
           {% for p in checkouts %}
           <tr>
               <td>{{ p.pr_id }}</td>
+              
+                  <td class="text-center">
+                    {% if p.bo_status %}
+                        <span class="fas fa-circle text-success" style="color: green;"> {{ p.bo_status }}</span>
+                    {% else %}
+                        <span class="fas fa-circle text-danger"> Pending</span>
+                    {% endif %}
+                </td>
+                
+              
+              
                 <td class="text-center">
-                  {% if p.bo_status %}
-                      
-                  <span class="fas fa-circle text-success">  {{ p.bo_status }}</span>
-                  
-        
+                  {% if p.cd_status %}
+                      <span class="fas fa-circle text-success"> {{ p.cd_status }}</span>
+                  {% else %}
+                      <span class="fas fa-circle text-danger"> Pending</span>
                   {% endif %}
               </td>
               
-              <td class="text-center">
-                {% if p.cd_status %}
-                      
-                <span class="fas fa-circle text-success">  {{ p.cd_status }}</span>
-      
-                {% endif %}
-              </td>
-              <td class="text-center">{{ p.bo_comment }}</td>
-              <td class="text-center">{{ p.cd_comment }}</td>
+
+              <td style="cursor: pointer;" onclick="toggleComments(this)">
+                <div class="commentsBlock">
+                    <p>
+                        {% if p.bo_comment %}
+                            <strong>Budget Officer :</strong>  {{ p.bo_comment }}
+                        {% else %}
+                            <strong>Budget Officer :</strong> No comment
+                        {% endif %}
+                    </p>
+                    <p class="campusDirectorComment" style="display: none;">
+                        {% if p.cd_comment %}
+                            <strong>Campus Director:</strong> {{ p.cd_comment }}
+                        {% else %}
+                            <strong>Campus Director:</strong> No comment
+                        {% endif %}
+                    </p>
+                </div>
+            
+                <script>
+                    function toggleComments(element) {
+                        var commentsBlock = element.querySelector('.commentsBlock');
+                        var campusDirectorComment = element.querySelector('.campusDirectorComment');
+            
+                        // Toggle the visibility of the second <p> element
+                        if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+                            campusDirectorComment.style.display = 'block';
+                        } else {
+                            campusDirectorComment.style.display = 'none';
+                        }
+                    }
+                </script>
+            </td>
+            
+            
+            
+            
+            
+              
               <td>{{ p.last_updated }}</td>
           </tr>
       {% endfor %}
 
         </tbody>
       </table>
+      <div id="commentModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <h2>Comment</h2>
+          <p id="commentContent"></p>
+          <form id="replyForm">
+            <textarea id="replyInput" placeholder="Enter your reply"></textarea>
+            <button type="submit">Submit Reply</button>
+          </form>
+        </div>
+      </div>
+      <script>
+        function handleCommentClick(comment) {
+          // Set the comment content in the modal
+          document.getElementById("commentContent").textContent = comment;
+          // Show the modal
+          document.getElementById("commentModal").style.display = "block";
+        }
+      
+        function closeModal() {
+          // Close the modal
+          document.getElementById("commentModal").style.display = "none";
+        }
+      
+        // Handle form submission (you can adjust this as needed)
+        document.getElementById("replyForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent form submission
+          var reply = document.getElementById("replyInput").value;
+          // Handle the reply submission (e.g., send it to a server, update UI, etc.)
+          alert("Submitted reply: " + reply);
+          closeModal(); // Close the modal after submission
+        });
+      </script>
       
     </div>
   </div>

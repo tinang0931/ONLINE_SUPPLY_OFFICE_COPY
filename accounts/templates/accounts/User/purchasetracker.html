@@ -1,5 +1,7 @@
 {% extends "accounts/User/main.html" %}
 
+{% load static %}
+
 {% block purchasetracker %}
 <style>
   .custom-f {
@@ -30,6 +32,29 @@
   .table-bordered th {
     background-color: #1c96c5;
   }
+
+  .bck{
+    margin-bottom: 20px;
+  }
+   .custom-f{
+    margin-top: 20px;
+   }
+  .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -38,6 +63,11 @@
   </div>
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
+  </div>
+  <div class="bck">
+    <a href="{% url 'userlanding' %}">
+      <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+    </a>
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
@@ -53,15 +83,15 @@
           
         </thead>
         <tbody>
-
+        {% if tracker %}
         {% for p in tracker %}
             <tr>
                 <td class="text-center"> {{ p.pr_id }}</td>
                 <td class="text-center">
                   {% if p.status %}
-                      <span class="badge badge-success" style="font-size: 16px; padding: 8px 12px;">{{ p.status }}</span>
+                      <span class="fas fa-circle text-success"> {{ p.status }}</span>
                   {% else %}
-                      <span class="badge badge-danger" style="font-size: 16px; padding: 8px 12px;">Pending</span>
+                      <span class="fas fa-circle text-danger"> Pending</span>
                   {% endif %}
               </td>
               <td class="text-center">
@@ -78,6 +108,13 @@
                 
             </tr>
         {% endfor %}
+        {% else %}
+
+        <tr>
+          <td colspan="4" class="text-center"><strong>No Purchase Request</strong></td>
+        </tr>
+
+        {% endif %}
 
         </tbody>
       </table>

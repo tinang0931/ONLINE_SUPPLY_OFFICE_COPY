@@ -139,27 +139,56 @@ opacity: 1;
                     </tr>
                 </thead>
                 <tbody>
+                <tbody>
+                    {% for category, items in grouped_data.items %}
+                    <tr class="category-row">
+                        <th colspan="20">{{ category }}</th>
+                    </tr>
 
-                    
-                        {% for category, items in grouped_data.items %}
-                        <tr class="category-row">
-                            <th colspan="20">{{ category }}</th>
+                    {% for p in items %}
+
+                    <form id="catalogueForm" action="{% url 'catalogue' %}" method="post">
+                        {% csrf_token %}
+                        <tr class="item-row" id="{{ p.id }}">
+                            <td>{{ p.Item_name }}
+                                <input type="hidden" name="item" value="{{ p.Item_name }}">
+                            </td>
+                            <td>{{ p.Item_Brand }}
+                                <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
+                            </td>
+                            <td>{{ p.Unit }}
+                                <input type="hidden" name="unit" value="{{ p.Unit }}">
+                            </td>
+                            <td>{{ p.Price }}
+                                <input type="hidden" name="price" value="{{ p.Price }}">
+                            </td>
+                            <td>
+                                <button class="submitButton">➕ </button>
+                               
+                            </td>
                         </tr>
+                    </form>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Function to change button appearance to green checkmark and submit the form
+                            function toggleButtonAndSubmitForm(button) {
+                                button.innerHTML = "✓"; // Change button content to checkmark
+                                button.style.backgroundColor = "green"; // Change button background color
                     
-                        {% for p in items %}
+                                // Delay disabling the button for a short duration (e.g., 500 milliseconds)
+                                setTimeout(function() {
+                                    button.disabled = true; // Disable the button after a delay
+                                    saveButtonStatus(button); // Save button status to local storage
+                                }, 500);
+                            }
                     
-                        <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
-                            {% csrf_token %}
-                            <tr class="item-row" id="{{ p.id }}">
-                                <td>{{ p.Item_name }}
-                                    <input type="hidden" name="item" value="{{ p.Item_name }}">
-                                </td>
-                                <td>{{ p.Item_Brand }}
-                                    <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
-                                </td>
-                                <td>{{ p.Unit }}
-                                    <input type="hidden" name="unit" value="{{ p.Unit }}">
-                                </td>
+                            // Function to save button status to local storage
+                            function saveButtonStatus(button) {
+                                var buttonId = button.id; // Get button ID
+                                var formName = button.getAttribute("data-form"); // Get form name from data attribute
+                                localStorage.setItem(buttonId, 'submitted'); // Save button status
+                                console.log("Form submitted: " + formName); // Log the form name
+                            }
                     
                                 <td>{{ p.Price }}
                                     <input type="hidden" name="price" value="{{ p.Price }}">
@@ -167,7 +196,9 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')"> ➕ </button>
+                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
+                                        <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                    </button>                         
                                     {% endif %}
                                 </td>
                             </tr>
