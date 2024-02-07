@@ -67,29 +67,21 @@
 }
 
 
-.catalogue {
-    position: fixed;
-    top: 35vh;
-    left: 10;
-    background: #fff;
-    color: black;
+a.custom-button {
     border: 1px solid black;
+    background-color: white;
+    color: black;
     padding: 10px 20px;
-    border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
-    width: 10%;
-    color: inherit;
+    border-radius: 5px;
     text-decoration: none;
-}
-.catalogue:hover {
-    background: #1c96c5;
-    transform: scale(1.1);
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.catalogue:active {
-    transform: translate(0em, 0.17em);
+a.custom-button:hover {
+    background-color: #3498db;
+    color: white;
 }
-
 .bck a {
     display: flex;
     align-items: center;
@@ -178,20 +170,16 @@ strong {
         </a>
     </div>
     <div class="row">
-        <div class="col-md-1 mb-0">
-            <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue </a>
-            </button>
+        <div class="col-md-8 mb-2">
+            <a href="{% url 'catalogue' %}" class="custom-button">Catalogue</a>
         </div>
-
-        
-        <div class="col-md-3 mb-0">
+        <div class="col-md-4 mb-2">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="  position: absolute; top: 21px;">
+                <div style="position: relative;">
                     <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 5px; 
                                         transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
-                                        margin-left: 45px; border: none;">
+                                        border: none;">
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -200,18 +188,18 @@ strong {
                         <option value="2027">2027</option>
                     </select>
                     <input type="hidden" id="selectedYear" name="selectedYear">
-
                     <script>
                         document.getElementById("yearDropdown").addEventListener("change", function() {
-                          document.getElementById("selectedYear").value = this.value;
+                            document.getElementById("selectedYear").value = this.value;
                         });
-                      </script>
+                    </script>
                 </div>
-            
+            </form>
         </div>
     </div>
-   
-    <div class="row">
+    
+    
+    
         <div class="row">
             <div class=" col-md-6 text-left">
                   
