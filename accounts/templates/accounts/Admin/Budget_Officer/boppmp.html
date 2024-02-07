@@ -1,4 +1,5 @@
-
+{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+ 
 {% load static %}
 
 {% block preqform %}
@@ -255,292 +256,388 @@
         white-space: nowrap;
         height: 800px; /* Adjust the height as needed */
     }
-
-    .landscape-table th,
-    .landscape-table td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-        white-space: nowrap;
-        vertical-align: top;
+ 
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
     }
-
-    .landscape-table th {
-        background-color: #f2f2f2;
+ 
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
     }
-
-    .center-heading {
-        text-align: center;
-        margin-top: 15px;
-        font-size: 20px;
-        line-height: 1.5; /* Adjust the line-height for vertical centering */
+ 
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
     }
-
-    .signatures {
-        text-align: left;
-        margin-top: 10px;
+ 
+    .bck:hover::before {
+        opacity: 1;
     }
-
-    .signatures p {
-        margin: 20px; /* Remove default margin for the paragraphs */
+ 
+ 
+    .table-and-comment {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
     }
-
-    .total-budget-container {
-        text-align: left;
-        margin-top: 20px;
-    }
-
-    .total-budget-text {
-        text-align: left;
-    }
-
-    @media (max-width: 768px) {
-        /* Your responsive styles for smaller screens */
-    }
-
-    .icon-link,
-    .icon {
-        width: 30px; /* Adjust the width of the icons as needed */
-        height: 30px; /* Adjust the height of the icons as needed */
-        display: inline-block;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px; /* Adjust the margin-top value to move the icons up */
-    }
-
+ 
+ 
     .icons-container {
         display: flex;
-        justify-content: flex-start; /* Align icons to the left */
-        align-items: center;
-        margin-top: -40px; /* Move icons up */
+        justify-content: center;
+        margin-top: 20px;
+        margin-right: 50px;
     }
-
-
+ 
+    .icon-link {
+        margin-left: 20px;
+        margin-top: 16px;
+        text-decoration: none;
+        color: white;
+        /* Adjust the color as needed */
+    }
+ 
+ 
+ 
+ 
+    .icon-link {
+        margin-left: 20px;
+        text-decoration: none;
+        color: white;
+        /* Adjust the color as needed */
+    }
+ 
+ 
+    .input-box {
+        width: 30%;
+ 
+        margin-top: 1px;
+        margin-left: 16px;
+        margin-right: 20px;
+    }
+ 
+    .input-box input {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+    }
+ 
+    .send-icon {
+        position: fixed;
+        top: 90%;
+        left: 65%;
+        width: 30px;
+        height: 30px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 39px;
+        margin-left: -80px;
+    }
+ 
+    .send-icon i {
+        line-height: 30px;
+    }
+ 
+    .footer {
+        background-color: rgba(10, 99, 158, 0.637);
+        text-align: center;
+        width: 100%;
+        height: 100px;
+        bottom: 0;
+        -webkit-user-modify: read-only;
+        position: fixed;
+        z-index: 2;
+        position: fixed;
+    }
+ 
+    .p {
+        size: 12px;
+    }
+ 
+ 
+ 
+ 
+    .subpage {
+        padding: 1cm;
+        border: 5px red solid;
+        height: 256mm;
+        outline: 2cm #FFEAEA solid;
+    }
+ 
+    @page {
+        size: A4;
+        margin: 0;
+    }
+ 
+ 
+    @media print {
+        .footer {
+            display: none;
+        }
+ 
+        .input-box,
+        .icons-container {
+            display: none;
+        }
+    }
+ 
+    .container {
+        text-align: center;
+    }
+ 
+    .aprv,
+    .disaprv {
+        font-size: 15px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 11px;
+        color: #ffa125e3;
+        background-color: rgba(9, 87, 139, 0.616);
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(9, 87, 139, 0.616);
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
+ 
+ 
+    .aprv:hover,
+    .disaprv:hover {
+        color: #ffa125e3;
+        background-color: #000000e3;
+    }
+ 
+ 
+    .footer {
+        display: left;
+        justify-content: space-between;
+        align-items: center;  /* Vertically center the content */
+    }
+   
+    .icons-container {
+        display: flex;
+        align-items: center;
+    }
+   
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the gap between buttons as needed */
+    }
+   
+    .slip-icon {
+        width: 50px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+        margin-right: 15px
+    }
+   
+    /* Additional styles for buttons if necessary */
+    .aprv, .disaprv {
+        /* Add styles as needed */
+    }
+ 
+    .pr {
+        text-align: center; /* Align text to center */
+        margin: auto; /* Set margin to auto */
+        max-width: 80%; /* Optionally limit the maximum width */
+    }
+   
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
 </style>
-
-       
-    </style>
-<body>
-    <div class="container page-break">
-        <div id="purchaseRequestTable" class="container-fluid">
-            <div class="container" style="border: b;">
-                <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
-                <h1 class="center-heading"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
-                <div class="container" style="text-align: left; display: inline-block; margin-left: -200px; margin-top: 20px; ">
-                    <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
-                    <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
-                    <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                    <thead>
-    <tr>
-        <th rowspan="2" style="background-color:  #fff942f0; color: black; text-align: center;">Item Name</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Brand / Description</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Estimated Budget</th>
-        <th colspan="12" style="background-color:  #FFFA42; color: black; text-align: center;">Monthly Quantity Requirement</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit Price</th>
-    </tr>
-    <tr>
-        <th style="background-color: #FFFA42; color: black;">Jan</th>
-        <th style="background-color: #FFFA42; color: black;">Feb</th>
-        <th style="background-color: #FFFA42; color: black;">Mar</th>
-        <th style="background-color: #FFFA42; color: black;">April</th>
-        <th style="background-color: #FFFA42; color: black;">May</th>
-        <th style="background-color: #FFFA42; color: black;">June</th>
-        <th style="background-color: #FFFA42; color: black;">July</th>
-        <th style="background-color: #FFFA42; color: black;">Aug</th>
-        <th style="background-color: #FFFA42; color: black;">Sept</th>
-        <th style="background-color: #FFFA42; color: black;">Oct</th>
-        <th style="background-color: #FFFA42; color: black;">Nov</th>
-        <th style="background-color: #FFFA42; color: black;">Dec</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-                            {% for p in checkout_items %}
-                            <tr class="item-row" id="{{ p.id }}">
-                                <td>
-                                    <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                    <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                        oninput="change_val('item_{{ p.id }}')" class="edit-input"
-                                        style="display: none">
-                                </td>
-                                <td>
-                                    <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                    <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                                        value="{{ p.item_brand_description }}"
-                                        oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
-                                        style="display: none">
-                                </td>
-                                <td>
-                                    <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                    <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                        oninput="change_val('unit_{{ p.id }}')" class="edit-input"
-                                        style="display: none">
-                                </td>
-
-                                <td>{{ p.estimate_budget }}</td>
-                                <td>{{ p.jan }}</td>
-                                <td>{{ p.feb }}</td>
-                                <td>{{ p.mar }}</td>
-                                <td>{{ p.apr }}</td>                                                                                    
-                                <td>{{ p.may }}</td>
-                                <td>{{ p.jun }}</td>
-                                <td>{{ p.jul }}</td>
-                                <td>{{ p.aug }}</td>
-                                <td>{{ p.sep }}</td>
-                                <td>{{ p.oct }}</td>
-                                <td>{{ p.nov }}</td>
-                                <td>{{ p.dec }}</td>
-                                <td>
-                                    <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                                    <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                        oninput="change_val('price_{{ p.id }}')" class="edit-input"
-                                        style="display: none">
-                                    </td>
-                                  </tr>
-                            {% endfor %}
-                        </form>
-                    </tbody>
-                </table>
-            </div>
-        </div>          
-        <div class="content-below-table">
-            <div class="total-budget-container">
-            <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
-                <span id="totalBudget" class="total-budget-value">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
-                     Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
-                    <br>
-                    <br>
-                    <br>
-                </span>
-            </div>
-            <div>
-                <div style="text-align: center; margin-right: 140px;">
-                    <strong>Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              
-                        <strong>Certified Fund Available:</strong>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved:</strong>
-                    </div>          
-            </div>
-            <br>
-            <br>
-            <br>
-            <div>
-                <strong><u>GLICERIO A. BAGUIA</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <strong><u>MARY ANN P. GONZAGA. C.P.A.</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <strong><u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-            </div>          
-            <div>
-                <strong>End-User &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Accountant 1  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
-                <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div>
-                <div style="text-align: left;">
-                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
-                    <br>
-                    <br>
-                    <br>
-                </div>                
-                <span id="totalBudget"> </span>
-            </div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ 
+ 
+<div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
+ 
+    <div class="container">
+        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+ 
+    </div>
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            </a>
+          </div>
         </div>
-        <br>
-        <div class="page-break">  
-        </div>
-            <div id="footer-content">
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                <br>
-                <br>
-                <div class="icons-container">
-                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                        <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
-                    </a>
-                
-                    <a href="#" title="Select" class="icon-link">
-                        <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
-                    </a>
-                    <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
-                        <option value="a4">A4</option>
-                        <option value="legal">Legal</option>
-                    </select>
-                </div>
-            </div>                  
-                  {% csrf_token %}
-                <script>
-                    function btn_click(status) {
-                        document.getElementById('new_status_id').value = status
-                        form = document.getElementById('form_status')
-                        form.submit()
-                    }
-                </script>
-
-                    </div>
-                </form>
-            </div>
-        </footer>
-    <script>
-            function setAction(action) {
-                document.getElementById('action').value = action;
-                document.forms[0].submit();  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-<!-- Ang imong custom JavaScript code -->
-<script>
-let selectedPaperSize = 'a4';
-
-function changePaperSize() {
-selectedPaperSize = document.getElementById('paperSize').value;
-}
-
-function downloadPDF() {
-    const body = document.getElementById('purchaseRequestTable');
-    const elementsWithPageBreak = body.querySelectorAll('.page-break');
-
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'always';
-    });
-
-    const footer = document.getElementById('footer-content');
-    footer.style.display = 'none';
-
-    const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
-    iconsContainer.style.display = 'block'; // Ensure icons container is visible
-
-    const options = {
-        filename: 'PPMP.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-        pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-    };
-
-    html2pdf(body, options);
-
-    // Reset page breaks after generating PDF
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'auto';
-    });
-    footer.style.display = 'block'; // Display the footer again after PDF generation
-    iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
-}
-</script>
-
-        </div>
+      </div>
+ 
+    <div class="table-responsive">
+ 
+        <form action="{% url 'boppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+ 
+            {% csrf_token %}
+ 
+ 
+        <table class="table table-bordered" style="margin-top: 1px;">
+            <thead>
+                <tr>
+                <tr>
+                    <th rowspan='2'>Item Name</th>
+                    <th rowspan='2'> Brand / Description</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+ 
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>Aug</th>
+                    <th>Sept</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in checkout_items %}
+ 
+                <tr class="item-row" id="{{ p.id }}">
+ 
+                    <td>
+                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                            class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+ 
+                    <td>{{ p.estimate_budget }}</td>
+                    <td>{{ p.jan }}</td>
+                    <td>{{ p.feb }}</td>
+                    <td>{{ p.mar }}</td>
+                    <td>{{ p.apr }}</td>
+                    <td>{{ p.may }}</td>
+                    <td>{{ p.jun }}</td>
+                    <td>{{ p.jul }}</td>
+                    <td>{{ p.aug }}</td>
+                    <td>{{ p.sep }}</td>
+                    <td>{{ p.oct }}</td>
+                    <td>{{ p.nov }}</td>
+                    <td>{{ p.dec }}</td>
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+ 
+                    <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
+                    <input type="hidden" name="jan" value="{{ p.jan }}">
+                    <input type="hidden" name="feb" value="{{ p.feb }}">
+                    <input type="hidden" name="mar" value="{{ p.mar }}">
+                    <input type="hidden" name="apr" value="{{ p.apr }}">
+                    <input type="hidden" name="may" value="{{ p.may }}">
+                    <input type="hidden" name="jun" value="{{ p.jun }}">
+                    <input type="hidden" name="jul" value="{{ p.jul }}">
+                    <input type="hidden" name="aug" value="{{ p.aug }}">
+                    <input type="hidden" name="sep" value="{{ p.sep }}">
+                    <input type="hidden" name="oct" value="{{ p.oct }}">
+                    <input type="hidden" name="nov" value="{{ p.nov }}">
+                    <input type="hidden" name="dec" value="{{ p.dec }}">
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-</div>
-</body>
-</html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-
+<footer class="footer">
+    <div class="icons-container">
+        <div class="input-box">
+            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
+        </div>
+        <input id="new_status_id" type="hidden" name="new_status">
+       
+        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link">
+            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
+        </a>
+ 
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
+    </div>
+   
+</footer>
+ 
+<script>
+    function btn_click(approve) {
+        // Get the hidden input element by its ID
+        var newStatusInput = document.getElementById('new_status_id');
+ 
+        // Set the value based on the 'approve' parameter
+        newStatusInput.value = approve ? 'approved' : 'declined';
+ 
+        // Submit the form programmatically
+        var form = document.getElementById('form_id');
+        form.submit();
+    }
+</script>
+ 
+ 
+<script>
+    // Check if the element has the class 'redirect-link' before applying onclick
+    document.addEventListener('DOMContentLoaded', function () {
+        var downloadLink = document.querySelector('.icon-link.redirect-link');
+ 
+        if (downloadLink) {
+            downloadLink.onclick = function () {
+                // Replace 'your_redirect_url_name' with the actual URL name
+                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
+                return false; // Prevent the default link behavior
+            };
+        }
+    });
+</script>
+ 
 {% endblock %}
