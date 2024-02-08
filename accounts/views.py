@@ -962,14 +962,14 @@ def delete_item(request, id):
     return redirect('bac_dashboard')
 
 def delete(request, id):
-    item = Item.objects.get(id=id)
-    item.delete()
-    return redirect('ppmp')
+     item = Item.objects.get(id=id)
+     item.delete()
+     return redirect('ppmp')
 
-def delete(request, id):
-    item = Item.objects.get(id=id)
-    item.delete()
-    return redirect('purchase')
+# def delete(request, id):
+#     item = Item.objects.get(id=id)
+#     item.delete()
+#     return redirect('purchase')
 
 
 def update_item(request, id):
