@@ -1380,3 +1380,4 @@ def boppmp(request, pr_id):
 
 def boppmp_approval(request, pr_id):
     return render(request, 'accounts/Admin/Budget_Officer/boppmp_approval.html', {'pr_id': pr_id})  
+

@@ -187,9 +187,9 @@
         }
 
         .container {
-            width: 90%;
+            width: 85%;
             max-width: 950px;
-            padding: 8px;
+            padding: 0px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -475,17 +475,19 @@
                     <br>
                     <br>
                     <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center;">
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block;">
+                    </div>
                 </div>                
                 <span id="totalBudget"> </span>
             </div>
         </div>
         <br>
-        <div class="page-break">  
         </div>
             <div id="footer-content">
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                <br>
-                <br>
               <footer>
                     <div class="icons-container">
                         <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
@@ -502,6 +504,7 @@
                     </div>
             </div>                  
     </div>
+    <div class="page-break">  
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>

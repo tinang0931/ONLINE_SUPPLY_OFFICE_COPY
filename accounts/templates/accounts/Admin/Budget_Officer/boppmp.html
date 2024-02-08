@@ -187,9 +187,9 @@
         }
 
         .container {
-            width: 90%;
+            width:95%;
             max-width: 950px;
-            padding: 8px;
+            padding: 0px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -318,7 +318,7 @@
     }
 
     footer {
-        background-color: rgba(10, 99, 158, 0.637);
+        background-color: rgba(1, 33, 67, 0.9);
         text-align: center;
             width: 100%;
             height: 10vh;
@@ -475,21 +475,23 @@
                     <br>
                     <br>
                     <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center;">
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block;">
+                    </div>
                 </div>                
                 <span id="totalBudget"> </span>
             </div>
         </div>
         <br>
-        <div class="page-break">  
         </div>
             <div id="footer-content">
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                <br>
-                <br>
               <footer>
                     <div class="icons-container">
                         <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                            <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
+                            <img class="icon" src="{% static 'images/download-pdf.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px; margin-right: 50px;">
                         </a>
                         <a href="#" title="Select" class="icon-link">
                             <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20px; margin-left: 50px;">
@@ -502,6 +504,7 @@
                     </div>
             </div>                  
     </div>
+    <div class="page-break">  
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
@@ -522,17 +525,14 @@
     function downloadPDF() {
         const body = document.getElementById('purchaseRequestTable');
         const elementsWithPageBreak = body.querySelectorAll('.page-break');
-
+    
         elementsWithPageBreak.forEach((element) => {
             element.style.pageBreakBefore = 'always';
         });
-
-        const footer = document.getElementById('footer-content');
-        footer.style.display = 'none';
-
-        const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
-        iconsContainer.style.display = 'block'; // Ensure icons container is visible
-
+    
+        const footer = document.querySelector('footer');
+        footer.style.display = 'none'; // Hide the footer
+    
         const options = {
             filename: 'PPMP.pdf',
             image: { type: 'jpeg', quality: 0.98 },
@@ -540,16 +540,16 @@
             jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
             pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
         };
-
+    
         html2pdf().from(body).set(options).save();
-
+    
         // Reset page breaks after generating PDF
         elementsWithPageBreak.forEach((element) => {
             element.style.pageBreakBefore = 'auto';
         });
         footer.style.display = 'block'; // Display the footer again after PDF generation
-        iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
     }
+    
 </script>
 
 
