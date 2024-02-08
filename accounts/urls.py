@@ -87,5 +87,6 @@ urlpatterns = [
    path('ppmpform/<int:year>/', views.ppmpform, name='ppmpform'),
    path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
    path('boppmp_approval/<str:pr_id>/', views.boppmp_approval, name='boppmp_approval'),
+   path('boppmp/', views.boppmp, name='boppmp'),
 
 ]  
