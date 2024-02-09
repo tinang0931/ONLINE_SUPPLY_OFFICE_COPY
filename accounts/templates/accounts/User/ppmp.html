@@ -55,7 +55,7 @@
         font-size: 16px;
     }
     .btn.btn-success {
-    transition: transform 0.3s ease; /* Add a 0.3s transition with ease timing function */
+    transition: transform 0.3s ease; 
 }
 
 .btn.btn-success:hover {
@@ -67,28 +67,29 @@
 }
 
 
-   
-    .catalogue {
-    background: #1c96c5;
-    padding: 9px 15px;
-    color: white;
+.catalogue {
+    position: fixed;
+    top: 39vh;
+    z-index: 999;
+    left: 10;
+    background: #fff;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 10%;
+    color: inherit;
     text-decoration: none;
-    margin-left: 0;
-    border: none;
-    border-radius: 5px;
-    margin-top: -5%;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
 }
-
 .catalogue:hover {
-    background: #144472;
-    transform: scale(1.1); /* Scale the button to 1.1 times its original size on hover */
+    background: #1c96c5;
+    transform: scale(1.1);
 }
 
 .catalogue:active {
     transform: translate(0em, 0.17em);
 }
-
 
 .bck a {
     display: flex;
@@ -97,17 +98,17 @@
 }
 
 .bck img {
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .bck:hover img {
-    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    transform: scale(1.2); 
 }
     
     .table-responsive {
-    margin-top: -6vh; 
+    margin-top: -2vh; 
     }
 
 .custom-dropdown{
@@ -125,10 +126,37 @@
 }
 .custom-dropdown::after {
   position: relative;
-  top: 40%;
-  right: 10px;
+  top: 5vh;
+  right: 20px;
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+strong {
+    height: 60px;
+    line-height: 5vh;
+    margin-left: 5vh;
+    
+}
+
+
+.budget-container {
+    margin-left: 300px;
+    padding-right: 100px;
+    display: flex;
+    align-items: flex-start; 
+}
+
+.budget-container strong {
+    font-weight: bold;
+}
+
+.budget-container input[type="text"] {
+    padding: 1px;
+    z-index: 999;
+    position: absolute;
+    top: 1vh;
+    margin-left: 25vh;
 }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -137,19 +165,19 @@
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 
 
-<div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 20px;">
+<div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 50px;">
     <div class="container">
         <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
     <div class="bck">
         <a href="{% url 'ppmp101' %}">
-            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: white; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue </a>
             </button>
         </div>
 
@@ -157,9 +185,10 @@
         <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div class="custom-dropdown mx-auto">
-                    <select id="yearDropdown" style="padding: 9.5px 15px;; font-size: 16px; border-radius: 5px; margin-top: -5%;
-                    transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; margin-left: 0; border: none; ">
+                <div style="  position: absolute; top: 40px; z-index: 999;">
+                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 8px; 
+                                        transition: transform 0.s ease-in-out; background: #1c96c5; color: white; 
+                                        margin-left: 40px; border: none; width: 75%; position: sticky;">
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -175,15 +204,51 @@
                         });
                       </script>
                 </div>
-            
+           
         </div>
     </div>
    
     <div class="row">
-        <div class=" col-md-6 text-left">
-            <h5><strong> TOTAL ALLOCATED BUDGET : 1,000,000 </strong></h5>
-        </div>
-        <div class="col-md-6 text-center" style="margin-top: -5vh;">
+        <div class="row">
+            <div class=" col-md-6 text-left">
+                  
+                <div class="budget-container">
+                    <strong>TOTAL ALLOCATED BUDGET:</strong>
+                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
+                </div>
+            </div>
+    
+      
+        <script>
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode === 13) { // Check if Enter key is pressed
+                    displayBudget();
+                    return false; // Prevent form submission
+                }
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+        
+            function displayBudget() {
+                var inputElement = document.getElementById("budgetInput");
+                var currentValue = inputElement.value;
+                console.log("Entered budget:", currentValue); // You can modify this to display the value wherever you need
+                localStorage.setItem("allocatedBudget", currentValue); // Store in local storage
+                return false; // Prevent form submission
+            }
+        
+            // Retrieve budget value from local storage on page load (optional)
+            window.onload = function() {
+                var storedValue = localStorage.getItem("allocatedBudget");
+                if (storedValue) {
+                    document.getElementById("budgetInput").value = storedValue;
+                }
+            };
+        </script>
+        <div class="col-md-6 text-center" style="position: absolute; margin-top: -2vh; margin-left: 50vh; ">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
@@ -310,9 +375,7 @@
                         </tr>
                     {% endfor %}
 
-                    <button type="button" id="submitBtn" class="btn btn-success btn-sm m-2 float-right">
-                        <i class="fas fa-check-circle"></i> Submit
-                    </button>
+                    
                 </form>
 
                 <tr id="new-item-row-{{ category }}" style="display: none;">
@@ -364,12 +427,18 @@
             </button>
             
         </div>
-            
-    </div>
+      </div>
+
+    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff;height: 50px; width: 120px;">
+        <i class="fas fa-check-circle"></i> Submit
+    </button>
+    
+
     </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 <script>
 

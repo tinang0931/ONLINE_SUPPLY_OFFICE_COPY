@@ -16,8 +16,8 @@
     }
 
     .bck img {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         transition: transform 0.3s ease-in-out;
         /* Apply transition to the transform property */
     }
@@ -26,6 +26,23 @@
         transform: scale(1.2);
         /* Scale the image to 1.2 times its original size on hover */
     }
+    @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Apply the animation to the box */
+        .box1.create {
+            animation: pulse 1s ease infinite;
+        }
+
 </style>
 
 <div class="container-fluid main-content">
@@ -36,9 +53,9 @@
 
     <div class="bck">
         <a href="{% url 'userlanding' %}">
-            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
-    </div>
+      </div>
 
     <div class="d-flex" id="wrapper">
         <div class="box-container">
@@ -54,7 +71,7 @@
 
 
             <div class="box1 create">
-                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;">Create PPMP</a>
+                <a href="{% url 'ppmp' %}" style="color: BLACK; text-decoration: none;">Create PPMP</a>
             </div>
 
         </div>

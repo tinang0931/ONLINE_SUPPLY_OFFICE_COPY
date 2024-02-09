@@ -34,8 +34,17 @@
     background-color: #1c96c5;
   }
 
-  .bck{
-    margin-bottom: 20px;
+  /* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
    .custom-f{
     margin-top: 20px;
@@ -140,6 +149,23 @@
       border-color: #1c96c5;
   }
   
+  .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
+    }
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+
 
 </style>
 
@@ -152,7 +178,7 @@
   </div>
       <div class="bck">
         <a href="{% url 'userlanding' %}">
-          <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
       </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
@@ -178,7 +204,7 @@
               
                   <td class="text-center">
                     {% if p.bo_status %}
-                        <span class="fas fa-circle text-success"> {{ p.bo_status }}</span>
+                        <span class="fas fa-circle text-success" style="color: green;"> {{ p.bo_status }}</span>
                     {% else %}
                         <span class="fas fa-circle text-danger"> Pending</span>
                     {% endif %}
@@ -237,8 +263,7 @@
           </tr>
       {% endfor %}
 
-        </tbody>
-      </table>
+       
       
     </div>
   </div>
