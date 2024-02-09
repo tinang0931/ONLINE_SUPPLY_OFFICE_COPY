@@ -77,9 +77,28 @@ def cdlanding(request):
 def userlanding(request):
     return render(request, 'accounts/User/userlanding.html')
 
+
 @regular_user_required
 def ppmp101(request):
-    return render(request, 'accounts/User/ppmp101.html')
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved')
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'year': checkout.year,
+            'pr_id': checkout.pr_id,
+            'user': checkout.user,
+            'submission_date': checkout.submission_date,
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user,
+    }
+
+    return render(request, 'accounts/User/ppmp101.html', context)
 
 
 def landing(request):
