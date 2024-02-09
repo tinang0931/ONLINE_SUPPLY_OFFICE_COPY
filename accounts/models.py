@@ -141,6 +141,7 @@ class PR(models.Model):
 class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20)
@@ -158,12 +159,12 @@ class Checkout(models.Model):
     year = models.IntegerField(primary_key=True)
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    submission_date = models.DateField(default=timezone.now)
+    submission_date = models.DateField(auto_now_add=True)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
     cd_status = models.CharField(max_length=20)
     cd_comment = models.TextField(blank=True, null=True)
-    last_updated = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     @property
     def combined_id(self):

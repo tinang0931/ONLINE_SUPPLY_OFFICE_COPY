@@ -779,12 +779,12 @@ def purchase(request):
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
-        purpose = request.POST.get('purpose')
         total = request.POST.get('total_cost')
 
         pr_id = generate_auto_pr_id()
         user = request.user
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id)
+        purpose = request.POST.get('purpose')
+        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose,)
 
         for i in range(len(items)):
             uploaded_file = files[i]
@@ -801,9 +801,11 @@ def purchase(request):
                 item_brand_description=item_brands[i],
                 unit=units[i],
                 unit_cost=prices[i],
-                purpose=purpose,
                 total_cost=total
             )
+            
+
+            PR_Items.objects.all().delete()
 
         return redirect('purchasetracker')
     elif request.method == 'GET':
@@ -1171,6 +1173,7 @@ def cdpurchase(request):
             'user': checkout.user,
             'pr_id': checkout.pr_id,
             'status': checkout.status,
+            'comment' : checkout.comment,
             
             
            
@@ -1283,7 +1286,7 @@ def purchasetracker(request):
 
 def purchase_cd(request, pr_id):
     # your view logic here...
-  return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
 
 def boppmp(request, pr_id):
 

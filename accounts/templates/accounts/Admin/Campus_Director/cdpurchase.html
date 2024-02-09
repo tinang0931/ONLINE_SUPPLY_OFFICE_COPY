@@ -9,11 +9,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-  .status {
-    width: 30%;
-    text-align: center;
-  }
 
+ 
+    
+    .table-responsive {
+    margin-top: -2vh; 
+    }
   .table a {
     text-decoration: none;
     color: black;
@@ -135,7 +136,7 @@
 </style>
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS FOR APPROVAL</strong> </h1>
+  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS </strong> </h1>
 
   
   <div class="search" style="position: relative; text-align: right;">
@@ -147,9 +148,9 @@
   <div class="col-md-1 mb-0">
     <div class="bck">
       <a href="{% url 'cdlanding' %}">
-        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
       </a>
-    </div>
+  </div>
   </div>
 </div>
 
@@ -159,14 +160,14 @@
     <tr>
       <th class="text-center">Date Requested</th>
       <th class="text-center">PR ID</th>
-      <th class="text-center">Requests for Approval</th>
+      <th class="text-center">Purchase Requests </th>
       <th class="status">Status</th>
       <th class="text-center">Comment</th> 
     </tr>
   </thead>
 
   <tbody>
-    {% for checkout in checkout_data %}
+    {% for checkout in checkouts %}
     <tr>
       <td class="text-center">
         {{ checkout.submission_date }}

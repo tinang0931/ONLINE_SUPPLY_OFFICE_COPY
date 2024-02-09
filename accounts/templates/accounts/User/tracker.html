@@ -186,6 +186,7 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
+            <th  class="text-center"> DATE REQUESTED </th>
             <th  class="text-center">PPMP NO.</th>
             <th  class="text-center">BUDGET OFFICER STATUS</th>
             <th class="text-center">CAMPUS DIRECTOR STATUS</th>
@@ -200,7 +201,8 @@
 
           {% for p in checkouts %}
           <tr>
-              <td>{{ p.pr_id }}</td>
+            <td class="text-center">{{ p.submission_date }}</td>
+              <td class="text-center">{{ p.pr_id }}</td>
               
                   <td class="text-center">
                     {% if p.bo_status %}
@@ -259,7 +261,7 @@
             
             
               
-              <td>{{ p.last_updated }}</td>
+              <td style="text-align: center">{{ p.last_updated }}</td>
           </tr>
       {% endfor %}
 
