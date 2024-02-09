@@ -232,7 +232,7 @@
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">
-            <a href="{% url 'cdppmp' %}">
+            <a href="{% url 'bohome' %}">
               <img src="{% static 'images/back-button.gif' %}" alt="Previous">
             </a>
           </div>
@@ -240,7 +240,7 @@
       </div>
     <div class="table-responsive">
 
-        <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id ="form_id">
 
             {% csrf_token %}
 
@@ -341,7 +341,7 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
 
