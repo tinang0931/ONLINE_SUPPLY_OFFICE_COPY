@@ -100,6 +100,20 @@ def ppmp101(request):
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
+def ppmpform(request, year):
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+    context = {
+        'approved_items': approved_items,
+        'year': year,
+        'bo_comment': approved_checkouts.first().bo_comment,
+        'cd_comment': approved_checkouts.first().cd_comment, 
+        
+    }
+
+    return render(request, 'accounts/User/myppmp.html', context)
+
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
