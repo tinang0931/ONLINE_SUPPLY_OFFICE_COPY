@@ -187,10 +187,10 @@ strong {
         <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="  position: absolute; top: 55px; z-index: 999;">
-                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 5px; 
-                                        transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
-                                        margin-left: 45px; border: none;">
+                <div style="  position: absolute; top: 40px; z-index: 999;">
+                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 8px; 
+                                        transition: transform 0.s ease-in-out; background: #1c96c5; color: white; 
+                                        margin-left: 40px; border: none; width: 75%; position: sticky;">
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -219,6 +219,7 @@ strong {
                     <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
                 </div>
             </div>
+    
       
         <script>
             function isNumberKey(evt) {
@@ -430,14 +431,16 @@ strong {
         </div>
       </div>
 
-      <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px;">
+    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff;height: 50px; width: 120px;">
         <i class="fas fa-check-circle"></i> Submit
     </button>
+    
 
     </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 <script>
 
