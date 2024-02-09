@@ -26,6 +26,23 @@
         transform: scale(1.2);
         /* Scale the image to 1.2 times its original size on hover */
     }
+    @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Apply the animation to the box */
+        .box1.create {
+            animation: pulse 1s ease infinite;
+        }
+
 </style>
 
 <div class="container-fluid main-content">
@@ -45,7 +62,7 @@
 
             {% for checkout in checkouts|dictsortreversed:"year" %}
             <div class="box ppmp">
-                <a href="{% url 'ppmpform' year=checkout.year %}" style="color: white; text-decoration: none;">
+                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none;">
                     <span>{{ checkout.year }} PPMP</span>
                 </a>
             </div>
@@ -54,7 +71,7 @@
 
 
             <div class="box1 create">
-                <a href="{% url 'ppmp' %}" style="color: white; text-decoration: none;">Create PPMP</a>
+                <a href="{% url 'ppmp' %}" style="color: BLACK; text-decoration: none;">Create PPMP</a>
             </div>
 
         </div>

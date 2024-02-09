@@ -120,33 +120,38 @@
         <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
         <td style="text-align: center;">{{ checkout.submission_date }}</td>
         <td class="text-center">
-          {% if checkout.bo_status %}
-
+          {% if checkout.bo_status == 'approved' %}
           <span class="fas fa-circle text-success"> {{ checkout.bo_status }}</span>
-
+          {% elif checkout.bo_status == 'declined' %}
+          <span class="fas fa-circle text-warning"> {{ checkout.bo_status }}</span>
+          {% else %}
+          <span class="fas fa-circle text-danger"> Pending</span>
           {% endif %}
+
         </td>
 
         <td class="text-center">
-          {% if checkout.cd_status %}
-
+          {% if checkout.cd_status == 'approved' %}
           <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
-
+          {% elif checkout.cd_status == 'declined' %}
+          <span class="fas fa-circle text-warning"> {{ checkout.cd_status }}</span>
+          {% else %}
+          <span class="fas fa-circle text-danger"> Pending</span>
           {% endif %}
-      </td>
 
+        </td>
       <td style="cursor: pointer;" onclick="toggleComments(this)">
         <div class="commentsBlock">
             <p>
-                {% if p.bo_comment %}
-                    <strong>Budget Officer :</strong>  {{ p.bo_comment }}
+                {% if checkout.bo_comment %}
+                    <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
                 {% else %}
                     <strong>Budget Officer :</strong> No comment
                 {% endif %}
             </p>
             <p class="campusDirectorComment" style="display: none;">
-                {% if p.cd_comment %}
-                    <strong>Campus Director:</strong> {{ p.cd_comment }}
+                {% if checkout.cd_comment %}
+                    <strong>Campus Director:</strong> {{ checkout.cd_comment }}
                 {% else %}
                     <strong>Campus Director:</strong> No comment
                 {% endif %}
