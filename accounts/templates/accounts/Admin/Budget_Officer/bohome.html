@@ -8,10 +8,7 @@
  
  
 <style>
-  .status {
-    width: 30%;
-    text-align: center;
-  }
+
  
   .table a {
     text-decoration: none;
@@ -92,7 +89,8 @@
         <th class="text-center">Date Requested</th>
         <th class="text-center">Requests for Approval</th>
         <th class="text-center">PPMP ID</th>
-        <th class="status">Status</th>
+        <th class="text-center">Budget Officer Status</th>
+        <th class="text-center">Caampus Director Status</th>
         <th class="text-center">Comment</th>
       </tr>
     </thead>
@@ -118,19 +116,52 @@
  
         <td class="text-center">
           {% if checkout.bo_status %}
-             
-          <span class="fas fa-circle text-danger">  {{ checkout.bo_status }}</span>
- 
+              <span class="fas fa-circle text-success"> {{ checkout.bo_status }}</span>
+          {% else %}
+              <span class="fas fa-circle text-danger"> Pending</span>
           {% endif %}
       </td>
+
+      <td class="text-center">
+        {% if checkout.cd_status %}
+            <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
+        {% else %}
+            <span class="fas fa-circle text-danger"> Pending</span>
+        {% endif %}
+    </td>
  
-        <td class="text-center">
-          {% if checkout.bo_comment %}
-          {{ checkout.bo_comment }}
- 
-          {% else %}
-          <span >No Comment</span>
-          {% endif %}
+    <td style="cursor: pointer;" onclick="toggleComments(this)">
+      <div class="commentsBlock">
+          <p>
+              {% if checkout.bo_comment %}
+                  <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
+              {% else %}
+                  <strong>Budget Officer :</strong> No comment
+              {% endif %}
+          </p>
+          <p class="campusDirectorComment" style="display: none;">
+              {% if checkout.cd_comment %}
+                  <strong>Campus Director:</strong> {{ checkout.cd_comment }}
+              {% else %}
+                  <strong>Campus Director:</strong> No comment
+              {% endif %}
+          </p>
+      </div>
+  
+      <script>
+          function toggleComments(element) {
+              var commentsBlock = element.querySelector('.commentsBlock');
+              var campusDirectorComment = element.querySelector('.campusDirectorComment');
+  
+              // Toggle the visibility of the second <p> element
+              if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+                  campusDirectorComment.style.display = 'block';
+              } else {
+                  campusDirectorComment.style.display = 'none';
+              }
+          }
+      </script>
+  </td>
         </td>
         <script>
           function filterTable() {
