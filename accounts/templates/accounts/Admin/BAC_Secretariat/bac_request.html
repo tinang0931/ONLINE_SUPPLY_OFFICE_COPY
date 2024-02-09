@@ -125,12 +125,15 @@
        
 
         <td class="text-center">
-          {% if checkout.status %}
-              
-          <span class="fas fa-circle text-success">  {{ checkout.status }}</span>
-
+          {% if checkout.status == 'approved' %}
+          <span class="fas fa-circle text-success"> {{ checkout.status }}</span>
+          {% elif checkout.status == 'declined' %}
+          <span class="fas fa-circle text-warning"> {{ checkout.status }}</span>
+          {% else %}
+          <span class="fas fa-circle text-danger"> Pending</span>
           {% endif %}
-      </td>
+
+        </td>
 
         <td>
          
