@@ -967,10 +967,10 @@ def delete(request, id):
     item.delete()
     return redirect('ppmp')
 
-def delete(request, id):
-    item = Item.objects.get(id=id)
-    item.delete()
-    return redirect('purchase')
+# def delete(request, id):
+#     item = Item.objects.get(id=id)
+#     item.delete()
+#     return redirect('purchase')
 
 
 def update_item(request, id):
