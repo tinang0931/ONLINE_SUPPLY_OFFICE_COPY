@@ -80,7 +80,8 @@ def userlanding(request):
 
 @regular_user_required
 def ppmp101(request):
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved')
+  
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
 
     checkout_data = []
 
@@ -100,16 +101,21 @@ def ppmp101(request):
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
-def ppmpform(request, year):
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', year=year)
+def ppmpform(request, year, pr_id):
+    print("Current User:", request.user)
+    
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
+    print("Approved Checkouts:", approved_checkouts)
+
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+    print("Approved Items:", approved_items)
 
     context = {
         'approved_items': approved_items,
         'year': year,
+        'pr_id': pr_id,
         'bo_comment': approved_checkouts.first().bo_comment,
         'cd_comment': approved_checkouts.first().cd_comment, 
-        
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
@@ -287,7 +293,7 @@ def regular_user_only_view(request):
 @regular_user_required
 @authenticated_user
 def tracker(request):
-    checkouts = Checkout.objects.select_related('user').all()
+    checkouts = Checkout.objects.filter(user=request.user)
   
 
     checkout_data = []
@@ -407,6 +413,21 @@ def bac_home(request):
 
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+
+def bac_purchaserequest(request, pr_id):
+    checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    checkout_items = PR.objects.filter(pr_identifier=checkouts)
+    context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+            'status': checkouts.status
+    }
+        
+    
+
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
 def bac_ppmp(request, pr_id):
     checkouts = get_object_or_404(Checkout, pr_id=pr_id)
@@ -838,13 +859,23 @@ def approved_ppmp(request):
         return redirect('approved_ppmp')
     elif request.method == 'GET':
         try:
-            checkout = Checkout.objects.get()
-            checkout_items = CheckoutItems.objects.filter(checkout=checkout)
+            # Get the latest approved checkout based on submission date
+            latest_checkout = Checkout.objects.filter(bo_status='approved', cd_status='approved').order_by('-year').first()
+
+            if latest_checkout:
+                checkout_items = CheckoutItems.objects.filter(checkout=latest_checkout)
+                latest_year = latest_checkout.year
+            else:
+                checkout_items = []
+                latest_year = None
+
         except Checkout.DoesNotExist:
             checkout_items = []
+            latest_year = None
 
         context = {
             'checkout_items': checkout_items,
+            'latest_year': latest_year,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
@@ -1016,6 +1047,8 @@ def bohome(request):
             'last_updated': checkout.last_updated,
             'bo_status': checkout.bo_status,  
             'bo_comment': checkout.bo_comment,
+            'cd_status': checkout.cd_status,  
+            'cd_comment': checkout.cd_comment,
         }
         checkout_data.append(checkout_dict)
 
@@ -1274,7 +1307,7 @@ def checkout_items_view(request):
 
 @regular_user_required
 def purchasetracker(request):
-    tracker = Pr_identifier.objects.select_related('user').all()
+    tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
         'tracker': tracker
 

@@ -62,7 +62,7 @@
 
             {% for checkout in checkouts|dictsortreversed:"year" %}
             <div class="box ppmp">
-                <a href="{% url 'ppmpform' year=checkout.year %}" style="color: white; text-decoration: none;">
+                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none;">
                     <span>{{ checkout.year }} PPMP</span>
                 </a>
             </div>

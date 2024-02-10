@@ -93,14 +93,13 @@
             <TD class="text-center">{{ p.submission_date }}</TD>
             <td class="text-center"> {{ p.pr_id }}</td>
             <td class="text-center">
-              {% if data.status == 'approved' %}
-              <span class="fas fa-circle text-success"> {{ data.status }}</span>
-              {% elif data.status == 'declined' %}
-              <span class="fas fa-circle text-warning"> {{ data.status }}</span>
+              {% if p.status == 'approved' %}
+              <span class="fas fa-circle text-success"> {{ p.status }}</span>
+              {% elif p.status == 'declined' %}
+              <span class="fas fa-circle text-warning"> {{ p.status }}</span>
               {% else %}
               <span class="fas fa-circle text-danger"> Pending</span>
               {% endif %}
-
 
             </td>
             <td class="text-center">

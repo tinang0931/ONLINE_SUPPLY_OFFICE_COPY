@@ -156,7 +156,7 @@ class Pr_identifier(models.Model):
 
 
 class Checkout(models.Model):
-    year = models.IntegerField(primary_key=True)
+    year = models.IntegerField()
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
@@ -173,6 +173,9 @@ class Checkout(models.Model):
 
     def __str__(self):
         return f"{self.year} - {self.pr_id}"
+    
+    class Meta:
+        unique_together = ('year', 'user')
 
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
