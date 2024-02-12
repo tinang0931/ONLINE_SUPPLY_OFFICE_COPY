@@ -1,21 +1,21 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
-
+ 
 {% extends }
-
-
+ 
+ 
 {% load static %}
-
-
+ 
+ 
 {% block request %}
-
+ 
 <style>
-
-
-
+ 
+ 
+ 
     .table-bordered  {
         height:100%;
     }
-
+ 
     .table-bordered th {
         background-color: #1c96c5;
     }
@@ -36,92 +36,142 @@ display: flex;
 align-items: center;
 text-decoration: none;
 }
-
+ 
 .bckbtn img {
 width: 30px;  /* Adjust the width of the image as needed */
 height: 30px; /* Adjust the height of the image as needed */
 transition: all 0.3s ease-in-out;
 }
-
+ 
 .bckbtn:hover img {
 transform: translateX(-5px);
 filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
 }
-
+ 
 .bckbtn::before {
     content: "";
     position: absolute;
     top: -5px; /* Adjust the position higher or lower based on your preference */
     bottom: -5px; /* Adjust the bottom position as needed */
     left: 0;
-    
+   
     border-radius: 20px;
     opacity: 0;
     z-index: -1;
     transition: opacity 0.3s ease-in-out;
 }
-
+ 
 .bckbtn:hover::before {
 opacity: 1;
-
+ 
 }
 .table-bordered {
     max-height: 700px;
     overflow-y: auto;
-    margin-bottom: 20px; 
-} 
-
-
+    margin-bottom: 20px;
+}
+ 
+ 
     @media only screen and (max-width: 768px) {
     .table-bordered {
         max-height:400px;  
     }
 }
-
+ 
 .table-responsive {
-    margin-top: -6vh; 
+    margin-top: -6vh;
     }
-
+ 
     .bck a {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
-
+ 
 .bck img {
     width: 50px;
     height: 50px;
     transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
 }
-
+ 
 .bck:hover img {
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
-    
-</style>
+   
+.home a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 
+
+}
+ 
+.home img {
+    margin-bottom: 8px;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+   
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2);
+}
+</style>
+ 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+ 
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
-
+ 
     <div class="container">
         <h1 style="margin-left: 45%;"> <strong> CATALOGUE </strong></h1>
     </div>
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="Home">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
-
+ 
     <div class="row">
             <div class="search" style="position: relative; text-align: right;">
                 <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
                 <!-- <i class="fas fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
             </div>
-            
+           
         </div>
-
+ 
         <div class="table-responsive">
             <table class="table table-bordered custom-table">
                 <thead>
@@ -130,24 +180,24 @@ opacity: 1;
                         <th >Item Name</th>
                         <th > Brand / Description</th>
                         <th >Unit</th>
-                        
-                    
+                       
+                   
                         <th >Unit Price</th>
                         <th > Select </th>
                     </tr>
-                    
+                   
                     </tr>
                 </thead>
                 <tbody>
-
-                    
+ 
+                   
                         {% for category, items in grouped_data.items %}
                         <tr class="category-row">
                             <th colspan="20">{{ category }}</th>
                         </tr>
-                    
+                   
                         {% for p in items %}
-                    
+                   
                         <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
                             {% csrf_token %}
                             <tr class="item-row" id="{{ p.item_id }}">
@@ -168,7 +218,7 @@ opacity: 1;
                                     {% else %}
                                     <button type="submit" onclick="submitFormAndHideRow(this, '{{ p.item_id }}')" class="custom-button">
                                         <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
-                                    </button>
+                                    </button>                        
                                     {% endif %}
                                 </td>
                             </tr>
@@ -180,12 +230,12 @@ opacity: 1;
                         {% endfor %}
                     </tbody>
             </table>
-
-
-
+ 
+ 
+ 
         </div>
-
-
+ 
+ 
     </div>
 
     
@@ -206,7 +256,7 @@ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
 transition: all 250ms;
 overflow: hidden;
 }
-
+ 
 button::before {
 content: "";
 position: absolute;
@@ -221,63 +271,63 @@ z-index: -1;
 box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
 transition: all 250ms;
 }
-
+ 
 button:hover {
   color: #e8e8e8; /* Change color to white when hovered */
 }
-
+ 
 button:hover::before {
 width: 100%;
 }
     </style>
-
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+ 
     <script>
         $(document).ready(function () {
-
+ 
             function updateEstimateBudgetForRow(row) {
-
+ 
                 var unitPrice = parseFloat(row.find('[name="price"]').val());
-
-
+ 
+ 
                 var totalValue = 0;
-
-
+ 
+ 
                 row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
                     var monthValue = parseFloat($(this).val()) || 0;
                     totalValue += monthValue;
                 });
-
-
+ 
+ 
                 var estimateBudget = totalValue * unitPrice;
-
-
+ 
+ 
                 row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
             }
-
-
+ 
+ 
             $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
+ 
                 var row = $(this).closest('tr.item-row');
                 updateEstimateBudgetForRow(row);
             });
-
-
+ 
+ 
             $('[name="price"]').on('input', function () {
-
+ 
                 var row = $(this).closest('tr.item-row');
                 updateEstimateBudgetForRow(row);
             });
         });
-
-
+ 
+ 
         function scrollToCategory() {
             var selectedCategory = document.getElementById('dropdownMenuSelect').value;
             var table = document.getElementById(selectedCategory);
@@ -292,15 +342,15 @@ width: 100%;
         function highlightInput(input) {
             input.select();
         }
-
-
+ 
+ 
         function filterTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("search_bar_request");
             filter = input.value.toUpperCase();
             table = document.querySelector(".table-striped");
             tr = table.getElementsByTagName("tr");
-
+ 
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
@@ -313,10 +363,10 @@ width: 100%;
                 }
             }
         }
-
-
-
-
+ 
+ 
+ 
+ 
         $(document).ready(function () {
             // Add click event to checkboxes
             $('.row-checkbox').on('click', function () {
@@ -324,14 +374,14 @@ width: 100%;
                 $(this).closest('tr').toggleClass('selected');
             });
         });
-
+ 
         const categoryFilter = document.getElementById('category_filter');
         const productTables = document.querySelectorAll('.table table');
-
+ 
         categoryFilter.addEventListener('change', (event) => {
             const selectedCategory = event.target.value;
             const filteredProducts = {};
-
+ 
             if (selectedCategory !== 'all') {
                 for (const productTable of productTables) {
                     const categoryName = productTable.querySelector('h3').textContent;
@@ -342,11 +392,11 @@ width: 100%;
                             const itemDescription = product.querySelector('td:nth-child(3)').textContent;
                             const unit = product.querySelector('td:nth-child(4)').textContent;
                             const price = product.querySelector('td:nth-child(5)').textContent;
-
+ 
                             if (!filteredProducts[categoryName]) {
                                 filteredProducts[categoryName] = [];
                             }
-
+ 
                             filteredProducts[categoryName].push({
                                 itemName,
                                 itemDescription,
@@ -357,46 +407,46 @@ width: 100%;
                     }
                 }
             }
-
+ 
             // Update the displayed items based on the filtered products
             updateProductTables(filteredProducts);
         });
-
-
+ 
+ 
         function updateProductTables(filteredProducts) {
             for (const productTable of productTables) {
                 productTable.querySelector('tbody').innerHTML = ''; // Clear existing items
-
+ 
                 const categoryName = productTable.querySelector('h3').textContent;
                 const products = filteredProducts[categoryName] || [];
-
+ 
                 for (const product of products) {
                     const row = document.createElement('tr');
-
+ 
                     const itemNameCell = document.createElement('td');
                     itemNameCell.textContent = product.itemName;
                     row.appendChild(itemNameCell);
-
+ 
                     const itemDescriptionCell = document.createElement('td');
                     itemDescriptionCell.textContent = product.itemDescription;
                     row.appendChild(itemDescriptionCell);
-
+ 
                     const unitCell = document.createElement('td');
                     unitCell.textContent = product.unit;
                     row.appendChild(unitCell);
-
+ 
                     const priceCell = document.createElement('td');
                     priceCell.textContent = product.price;
                     row.appendChild(priceCell);
-
+ 
                     productTable.querySelector('tbody').appendChild(row);
                 }
             }
         }
-
-
+ 
+ 
         // Call a server-side function to handle the import
-
+ 
         // Function to get CSRF token from cookies
         function getCookie(name) {
             var cookieValue = null;
@@ -410,16 +460,16 @@ width: 100%;
                     }
                 }
             }
-        } 
-
+        }
+ 
         function filterTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("search_bar_request");
             filter = input.value.toUpperCase();
             table = document.querySelector(".table-striped");
             tr = table.getElementsByTagName("tr");
-
-
+ 
+ 
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
@@ -432,14 +482,14 @@ width: 100%;
                 }
             }
         }
-
-
+ 
+ 
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
     {% endblock %}

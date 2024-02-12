@@ -60,27 +60,30 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Checkout',
             fields=[
-                ('year', models.IntegerField(primary_key=True, serialize=False)),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('year', models.IntegerField()),
                 ('pr_id', models.CharField(max_length=50, unique=True)),
-                ('submission_date', models.DateField(default=django.utils.timezone.now)),
+                ('submission_date', models.DateField(auto_now_add=True)),
                 ('bo_status', models.CharField(max_length=20)),
                 ('bo_comment', models.TextField(blank=True, null=True)),
                 ('cd_status', models.CharField(max_length=20)),
                 ('cd_comment', models.TextField(blank=True, null=True)),
-                ('last_updated', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now=True)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'unique_together': {('year', 'user')},
+            },
         ),
         migrations.CreateModel(
             name='CSV',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('Category', models.CharField(max_length=255)),
                 ('Item_name', models.CharField(max_length=255)),
                 ('Item_Brand', models.CharField(max_length=255)),
                 ('Unit', models.CharField(max_length=50)),
                 ('Price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('item_id', models.CharField(max_length=50, unique=True)),
             ],
         ),
         migrations.CreateModel(
@@ -119,6 +122,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('submission_date', models.DateField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now=True)),
                 ('pr_id', models.CharField(blank=True, max_length=8, null=True, unique=True)),
                 ('purpose', models.TextField(blank=True, null=True)),
                 ('status', models.CharField(max_length=20)),

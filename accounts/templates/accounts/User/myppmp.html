@@ -26,18 +26,22 @@
         align-items: center;
         text-decoration: none;
     }
-
+    
     .bck img {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         transition: transform 0.3s ease-in-out;
-        /* Apply transition to the transform property */
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
-
+    
     .bck:hover img {
-        transform: scale(1.2);
-        /* Scale the image to 1.2 times its original size on hover */
+        transform: scale(1.2); 
     }
+        
+        .table-responsive {
+        margin-top: -2vh; 
+        }
 
     body {
         margin-top: 20px;
@@ -126,9 +130,9 @@
     }
 
     .custom-card-width {
-        max-width: 500px;
+        max-width: 90%;
         
-        float: left;
+        
     }
 </style>
 
@@ -140,7 +144,7 @@
     </div>
     <div class="bck">
         <a href="{% url 'ppmp101' %}">
-            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
 
@@ -180,8 +184,6 @@
             </thead>
             <tbody>
                 {% for p in approved_items %}
-
-
                 <tr class="item-row" id="{{ p.id }}">
 
                     <td>
@@ -216,9 +218,6 @@
 
                     <td>{{ p.unit_cost }}</td>
 
-
-
-
                 </tr>
 
                 {% endfor %}
@@ -232,9 +231,7 @@
         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
     </td>
-
     </tr>
-
     </tbody>
     </table>
 
@@ -272,7 +269,6 @@
                                 {% endif %}
                             </p>
                         </div>
-                        
                     </div>
 
                     <div class="be-comment">
@@ -329,9 +325,7 @@
         </div>
     </div>
 </div>
-
-
-            <script>
+        <script>
                 function toggleComments() {
                     var commentsContainer = document.getElementById('commentsContainer');
 
