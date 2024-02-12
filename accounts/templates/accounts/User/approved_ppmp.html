@@ -81,6 +81,38 @@
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
 
+.home a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+}
+ 
+.home img {
+    margin-bottom: 8px;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+}
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2); 
+}
+
 
 </style>
 
@@ -94,6 +126,21 @@
     <div class="container">
         <h1 style="margin-left: 35%;"> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home-button.png' %}" alt="Home">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/back-button.gif' %}"></a>
     </div>
     <div class="row">

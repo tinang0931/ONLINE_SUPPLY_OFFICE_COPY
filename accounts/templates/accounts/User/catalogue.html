@@ -27,9 +27,9 @@
     }
 .bckbtn {
         position: fixed;
-        bottom: 50px; /* Adjust the top position as needed */
-        left: 20px; /* Adjust the left position as needed */
-        z-index: 1000; /* Ensure it stays on top of other elements */
+        bottom: 50px; 
+        left: 20px; 
+        z-index: 1000; 
     }
 .bckbtn a {
 display: flex;
@@ -38,21 +38,21 @@ text-decoration: none;
 }
  
 .bckbtn img {
-width: 30px;  /* Adjust the width of the image as needed */
-height: 30px; /* Adjust the height of the image as needed */
+width: 30px; 
+height: 30px; 
 transition: all 0.3s ease-in-out;
 }
  
 .bckbtn:hover img {
 transform: translateX(-5px);
-filter: brightness(1.2); /* Adjust the brightness for a highlight effect */
+filter: brightness(1.2);
 }
  
 .bckbtn::before {
     content: "";
     position: absolute;
-    top: -5px; /* Adjust the position higher or lower based on your preference */
-    bottom: -5px; /* Adjust the bottom position as needed */
+    top: -5px; 
+    bottom: -5px; 
     left: 0;
    
     border-radius: 20px;
@@ -70,7 +70,6 @@ opacity: 1;
     overflow-y: auto;
     margin-bottom: 20px;
 }
- 
  
     @media only screen and (max-width: 768px) {
     .table-bordered {
@@ -91,29 +90,45 @@ opacity: 1;
 .bck img {
     width: 50px;
     height: 50px;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    transition: transform 0.3s ease-in-out; 
 }
  
 .bck:hover img {
-    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    transform: scale(1.2); 
 }
 
 .home a {
     display: flex;
     align-items: center;
     text-decoration: none;
+
 }
  
 .home img {
+    margin-bottom: 8px;
     width: 40px;
     height: 40px;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+}
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
  
 .home:hover img {
-    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    animation-play-state: paused;
+    transform: scale(1.2); 
 }
-   
+
 </style>
  
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -126,10 +141,20 @@ opacity: 1;
     </div>
 
     <div class="home">
-        <a href="{% url 'userlanding' %}">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
             <img src="{% static 'images/home-button.png' %}" alt="Home">
         </a>
     </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
 
     <div class="bck">
         <a href="{% url 'ppmp' %}">
@@ -176,20 +201,24 @@ opacity: 1;
                         <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
                             {% csrf_token %}
                             <tr class="item-row" id="{{ p.id }}">
-                                <td>{{ p.Item_name }}
+                                <td style="text-align: left;">
+                                    {{ p.Item_name }}
                                     <input type="hidden" name="item" value="{{ p.Item_name }}">
                                 </td>
-                                <td>{{ p.Item_Brand }}
+                                <td style="text-align: left;">
+                                    {{ p.Item_Brand }}
                                     <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
                                 </td>
-                                <td>{{ p.Unit }}
+                                <td style="text-align: left;">
+                                    {{ p.Unit }}
                                     <input type="hidden" name="unit" value="{{ p.Unit }}">
                                 </td>
                     
-                                <td>{{ p.Price }}
+                                <td style="text-align: left;">
+                                    {{ p.Price }}
                                     <input type="hidden" name="price" value="{{ p.Price }}">
                                 </td>
-                                <td>
+                                <td style="text-align: left;">
                                     {% if item_submitted %}
                                     {% else %}
                                     <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
