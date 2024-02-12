@@ -131,6 +131,33 @@
         
         float: left;
     }
+    .baclanding img {
+        margin-bottom: 8px;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+        
+        margin-left: .5vh;
+    }
+    
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .baclanding:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2);
+    }
 </style>
 
 <div class="container-fluid main-content">
@@ -139,6 +166,21 @@
         <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
 
     </div>
+    <div class="baclanding">
+        <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="baclanding">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="bck">
         <a href="{% url 'bac_home' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
