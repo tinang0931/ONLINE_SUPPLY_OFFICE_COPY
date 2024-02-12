@@ -176,13 +176,14 @@ strong {
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
+    
     <div class="row">
         <div class="col-md-1 mb-0">
             <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue </a>
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; ">Catalogue </a>
             </button>
         </div>
-
+ 
         
         <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
