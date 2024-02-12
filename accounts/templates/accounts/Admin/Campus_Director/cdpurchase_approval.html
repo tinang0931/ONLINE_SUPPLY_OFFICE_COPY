@@ -198,8 +198,46 @@
         height: auto; /* Maintain the aspect ratio */
         margin-right: 15px
     }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
     
-    /* Additional styles for buttons if necessary */
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); 
+    }
+    
+  
+        .status-circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    
+        .text-green {
+            color: green;
+        }
+    
+        .text-orange {
+            color: orange;
+        }
+    
+        .text-red {
+            color: red;
+        }
+
  
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -214,9 +252,9 @@
 
     </div>
 
-    <div class="bck">
-        <a href="{% url 'cdpurchase' %}">
-            <img src="{% static 'images/previous_189252.png' %}">
+   <div class="bck">
+        <a href="{% url 'ppmp101' %}">
+            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
 
@@ -303,13 +341,13 @@
 
 <script>
     function btn_click(approve) {
-        // Get the hidden input element by its ID
+      
         var newStatusInput = document.getElementById('new_status_id');
 
-        // Set the value based on the 'approve' parameter
+       
         newStatusInput.value = approve ? 'approved' : 'declined';
 
-        // Submit the form programmatically
+   
         var form = document.getElementById('form_id');
         form.submit();
     }

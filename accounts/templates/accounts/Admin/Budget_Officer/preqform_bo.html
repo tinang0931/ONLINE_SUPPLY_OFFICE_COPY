@@ -110,7 +110,7 @@
     }
 
     .footer {
-        background-color: rgba(10, 99, 158, 0.637);
+        background-color: rgba(1, 33, 67, 0.9);
         text-align: center;
         width: 100%;
         height: 100px;
@@ -200,12 +200,23 @@
         height: auto; /* Maintain the aspect ratio */
         margin-right: 15px
     }
-    
-    /* Additional styles for buttons if necessary */
-    .aprv, .disaprv {
-        /* Add styles as needed */
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 18px;
     }
     
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -215,14 +226,21 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
-
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
 
-
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
     <div class="table-responsive">
 
-        <form action="{% url 'boppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id ="form_id">
 
             {% csrf_token %}
 
@@ -323,7 +341,7 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link">
+        <a href="{}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
 
@@ -332,7 +350,6 @@
             <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
         </div>
     </div>
-    
 </footer>
 
 </form>
@@ -354,20 +371,5 @@
 
 
 
-
-<script>
-    // Check if the element has the class 'redirect-link' before applying onclick
-    document.addEventListener('DOMContentLoaded', function () {
-        var downloadLink = document.querySelector('.icon-link.redirect-link');
-
-        if (downloadLink) {
-            downloadLink.onclick = function () {
-                // Replace 'your_redirect_url_name' with the actual URL name
-                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
-                return false; // Prevent the default link behavior
-            };
-        }
-    });
-</script>
 
 {% endblock %}
