@@ -955,7 +955,6 @@ def handle_uploaded_file(file):
             Price=row[4]
         )
 
-
 def delete_item(request, id):
     item = CSV.objects.get(id=id)
     item.delete()

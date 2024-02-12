@@ -300,12 +300,12 @@ strong {
                         <tr class="item-row" id="{{ p.id }}">
                             <td class="text-center">{{ forloop.counter }}</td>
 
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_name">{{ p.item }}</span>
                                 <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                                     oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
                                 <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
                                     oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
