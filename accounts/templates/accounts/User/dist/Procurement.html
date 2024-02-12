@@ -1,0 +1,203 @@
+{% extends "accounts/User/main.html" %}
+
+{% load static %}
+
+{% block Procurement %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #1c96c5;
+        }
+
+        td {
+            background-color: #f2e6f0; 
+        }
+
+        .category-header {
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        .category-row {
+            margin-bottom: 5px;
+        }
+
+        .item-row {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .container-fluid {
+            height: 74vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            position: right;
+        }
+
+    
+        tbody input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+    
+        tbody input[name="unit_price"] {
+            border: none;
+            outline: none;
+            pointer-events: none;
+            background-color: transparent;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="subheader">
+            <div class="container">
+                <div class="header">
+                    <h1 class="title">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
+                    <div class="search">
+                        <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
+                    </div>
+                    <div class="add-item-button">
+                        <button class="btn btn-success" onclick="addItem()">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan='2'>Item & Specifications</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th rowspan='2'>Mode of Procurement</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>Aug</th>
+                    <th>Sept</th>   
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, items in grouped_data.items %}
+                    <tr class="category-row">
+                        <th colspan="17">{{ category }}</th>
+                    </tr>
+                    {% for p in items %}
+                        <tr class="item-row" data-category="{{ category }}">
+                            <td><input type="checkbox">{{ p.item }}</td>
+                            <td>{{ p.unit }}</td>
+                            <td class="estimated-budget" data-total="0"></td>
+                            <td contenteditable="true"> <!-- Add mode of procurement input here --></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td><input type="text" name="unit_price" class="unit-price-input" value="400" readonly></td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function filterTable() {
+            const search_bar_request = document.getElementById("search_bar_request").value.toLowerCase();
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            for (const row of tableRows) {
+                row.style.display = "none";
+            }
+
+            for (const row of tableRows) {
+                const tableData = row.querySelectorAll("td");
+                const search_value = search_bar_request;
+                let isFound = false;
+
+                for (const cell of tableData) {
+                    const cellValue = cell.textContent.toLowerCase();
+
+                    if (cellValue.includes(search_value)) {
+                        isFound = true;
+                        break;
+                    }
+                }
+
+                if (isFound) {
+                    row.style.display = "";
+                }
+            }
+        }
+
+        $(document).on('input', 'tbody td[contenteditable="true"]', function () {
+            const unitPriceInput = this.closest('tr').querySelector('input[name="unit_price"]');
+            updateEstimatedBudget(this, unitPriceInput);
+        });
+
+        function updateEstimatedBudget(editedCell, unitPriceInput) {
+            const row = editedCell.parentElement;
+            const quantityCells = row.querySelectorAll('td[contenteditable="true"]');
+            const estimatedBudgetCell = row.querySelector('.estimated-budget');
+
+            let totalQuantity = 0;
+
+            quantityCells.forEach(function (cell) {
+                totalQuantity += parseFloat(cell.textContent) || 0;
+            });
+
+            const unitPrice = parseFloat(unitPriceInput.value) || 0;
+            unitPriceInput.value = unitPrice.toFixed(2);
+
+            const estimatedBudget = unitPrice * totalQuantity;
+            estimatedBudgetCell.textContent = estimatedBudget.toFixed(2);
+        }
+    </script>
+{% endblock %}
+

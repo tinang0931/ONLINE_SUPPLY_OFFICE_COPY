@@ -341,9 +341,10 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{}" class="icon-link">
+        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
+
 
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
@@ -353,7 +354,6 @@
 </footer>
 
 </form>
-
 
 <script>
     function btn_click(approve) {
