@@ -203,12 +203,29 @@ class CheckoutItems(models.Model):
 
 
 class CSV(models.Model):
-    id = models.AutoField(primary_key=True)
     Category = models.CharField(max_length=255)
     Item_name = models.CharField(max_length=255)
     Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+    item_id = models.CharField(max_length=50, unique=True)
+
+    def generate_item_id(self):
+        
+        category_short = self.Category[:3].upper()
+        item_name_short = self.Item_name[:3].upper()
+        unique_id = str(uuid.uuid4().hex)[:6].upper() 
+
+        
+        self.item_id = f"{category_short}-{item_name_short}-{unique_id}"
+
+    def save(self, *args, **kwargs):
+       
+        if not self.item_id:
+            self.generate_item_id()
+        super().save(*args, **kwargs)
+
+ 
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
