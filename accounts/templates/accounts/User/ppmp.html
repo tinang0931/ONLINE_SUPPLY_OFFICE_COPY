@@ -104,6 +104,10 @@
     width: 50px;
     height: 50px;
     transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: 5vh;
+    z-index: 999;
+    
 }
 
 .bck:hover img {
@@ -111,7 +115,7 @@
 }
     
     .table-responsive {
-    margin-top: -2vh; 
+    margin-top: -8vh; 
     }
 
 .custom-dropdown{
@@ -162,6 +166,42 @@ strong {
     top: 1vh;
     margin-left: 25vh;
 }
+.home a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+
+}
+ 
+.home img {
+    margin-bottom: 8px;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+    position: relative;
+    top: 4vh;
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2);
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -173,6 +213,21 @@ strong {
     <div class="container">
         <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="Home">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="bck">
         <a href="{% url 'ppmp101' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
@@ -189,7 +244,7 @@ strong {
         <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="  position: absolute; top: 40px; z-index: 999;">
+                <div style="  position: relative; top: 79px; z-index: 999;">
                     <select id="yearDropdown" style="padding: 8px 10px; font-size: 16px; border-radius: 5px; 
                                         transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
                                         margin-left: 45px; border: none;">
@@ -258,7 +313,7 @@ strong {
     </div>
 
     <div class="button-container" style="float: left;">
-        <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px;">
+        <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -8vh;">
             <i class="fas fa-check-circle"></i> Submit
         </button>
     </div>

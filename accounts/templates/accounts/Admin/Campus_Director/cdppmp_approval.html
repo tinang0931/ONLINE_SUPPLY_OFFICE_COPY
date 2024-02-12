@@ -217,6 +217,41 @@
     .bck:hover img {
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
+    .cdlanding a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    
+    
+    }
+     
+    .cdlanding img {
+        margin-bottom: 8px;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+      
+        margin-left: .5vh;
+    }
+    
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .cdlanding:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2);
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -228,7 +263,21 @@
     <div class="container">
         <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
-
+    <div class="cdlanding">
+        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('cdlandingImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">

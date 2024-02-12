@@ -80,7 +80,7 @@ urlpatterns = [
     path('bac_request/', views.bac_request, name='bac_request'),
     path('boppmp/', views.boppmp, name='boppmp'),
     path('bac_ppmp/<str:pr_id>/',views.bac_ppmp, name='bac_ppmp'),
- 
+    
     path('ppmpform/<int:year>/<str:pr_id>/', ppmpform, name='ppmpform'),
 
     path('purchase_cd/<str:pr_id>/', views.purchase_cd, name='purchase_cd'),

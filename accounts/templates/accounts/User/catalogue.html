@@ -98,6 +98,41 @@ opacity: 1;
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
    
+.home a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+
+}
+ 
+.home img {
+    margin-bottom: 8px;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+   
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2);
+}
 </style>
  
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -108,6 +143,21 @@ opacity: 1;
     <div class="container">
         <h1 style="margin-left: 45%;"> <strong> CATALOGUE </strong></h1>
     </div>
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="Home">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
