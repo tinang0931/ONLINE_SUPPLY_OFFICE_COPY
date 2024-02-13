@@ -79,12 +79,8 @@ urlpatterns = [
     path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
     path('bac_request/', views.bac_request, name='bac_request'),
     path('bac_ppmp/<str:pr_id>/',views.bac_ppmp, name='bac_ppmp'),
-    path('boppmp/<str:pr_id>/',views.boppmp, name='boppmp'),
     path('ppmpform/<int:year>/<str:pr_id>/', ppmpform, name='ppmpform'),
-    path('purchase_cd/<str:pr_id>/', views.purchase_cd, name='purchase_cd'),
     path('bac_purchaserequest/<str:pr_id>/', views.bac_purchaserequest, name='bac_purchaserequest'),
-     
 
-    
 
 ]
