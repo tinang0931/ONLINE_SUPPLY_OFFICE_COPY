@@ -973,7 +973,6 @@ def handle_uploaded_file(file):
             Price=row[4]
         )
 
-
 def delete_item(request, id):
     item = CSV.objects.get(id=id)
     item.delete()
@@ -1317,9 +1316,6 @@ def purchasetracker(request):
     return render(request, 'accounts/User/purchasetracker.html', context)
 
 
-def purchase_cd(request, pr_id):
-    # your view logic here...
-    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', {'pr_id': pr_id})
 
 def boppmp(request, pr_id):
 

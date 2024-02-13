@@ -200,30 +200,32 @@ opacity: 1;
                    
                         <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
                             {% csrf_token %}
-                            <tr class="item-row" id="{{ p.id }}">
-                                <td>{{ p.Item_name }}
+                            <tr class="item-row" id="{{ p.item_id }}">
+                                <td class="text-left">{{ p.Item_name }}
                                     <input type="hidden" name="item" value="{{ p.Item_name }}">
                                 </td>
-                                <td>{{ p.Item_Brand }}
+                                <td class="text-left">{{ p.Item_Brand }}
                                     <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
                                 </td>
                                 <td>{{ p.Unit }}
                                     <input type="hidden" name="unit" value="{{ p.Unit }}">
                                 </td>
-                    
                                 <td>{{ p.Price }}
                                     <input type="hidden" name="price" value="{{ p.Price }}">
                                 </td>
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
-                                    <button type="submit" onclick="toggleSelection(this, '{{ p.Item_name }}')" class="custom-button">
+                                    <button type="submit" onclick="submitFormAndHideRow(this, '{{ p.item_id }}')" class="custom-button">
                                         <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
                                     </button>                        
                                     {% endif %}
                                 </td>
                             </tr>
                         </form>
+                        
+                       
+                        
                         {% endfor %}
                         {% endfor %}
                     </tbody>
@@ -235,56 +237,9 @@ opacity: 1;
  
  
     </div>
- 
-    <script>
-        var selectedItems = [];
-   
-        // Function to initialize selected items from localStorage
-        function initializeSelectedItems() {
-            var storedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];  
-            for (var i = 0; i < storedItems.length; i++) {
-                var itemName = storedItems[i];
-                var button = document.getElementById(itemName);
-                if (button) {
-                    button.textContent = "✔";
-                    selectedItems.push(itemName);
-                }
-            }
-            displaySelectedItems();
-        }
-   
-        // Initialize selected items when the page loads
-        initializeSelectedItems();
-   
-        function toggleSelection(button, itemName, event) {
-            console.log(button);
-            event.preventDefault();
-            if (button.textContent.trim() === "➕") {
-                button.textContent = "✔";
-                selectedItems.push(itemName);
-            } else {
-                button.textContent = "➕";
-                var index = selectedItems.indexOf(itemName);
-                if (index !== -1) {
-                    selectedItems.splice(index, 1);
-                }
-            }
- 
-            return false;
-   
-            // Display selected item names
-            displaySelectedItems();
-   
-            // Save selected items to localStorage
-            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-        }
-   
-        function displaySelectedItems() {
-            var selectedItemsContainer = document.getElementById("selectedItemsContainer");
-            selectedItemsContainer.textContent = selectedItems.join(', ');
-        }
-    </script>
-   
+
+    
+    
     <style>
         button {
   padding: 5px 10px; /* Adjusted padding */

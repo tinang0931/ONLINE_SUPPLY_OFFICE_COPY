@@ -1,5 +1,6 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
+
 {% load static %}
 
 {% block ppmp %}
@@ -87,8 +88,10 @@
 
 .catalogue:hover {
     background: #1c96c5;
+    color: white;
     transform: scale(1.1);
 }
+
 
 .catalogue:active {
     transform: translate(0em, 0.17em);
@@ -118,27 +121,26 @@
     margin-top: -8vh; 
     }
 
-.custom-dropdown{
-    position: relative;
-    display: inline-block;
-}
+
 
 #yearDropdown{
-    padding: 20px 30px;
+    padding: 10px 30px;
     font-size: 14px;
-    border: 1px solid #ccc;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
 
 }
 
-.custom-dropdown::after {
-  position: relative;
-  top: 5vh;
-  right: 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
+#yearDropdown option {
+    height: 40px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
 }
+
+
 
 strong {
     height: 60px;
@@ -245,9 +247,7 @@ strong {
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
                 <div style="  position: relative; top: 79px; z-index: 999;">
-                    <select id="yearDropdown" style="padding: 8px 10px; font-size: 16px; border-radius: 5px; 
-                                        transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
-                                        margin-left: 45px; border: none;">
+                    <select id="yearDropdown" >
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -275,7 +275,6 @@ strong {
                     <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
                 </div>
             </div>
-    
       
         <script>
             function isNumberKey(evt) {
@@ -357,12 +356,12 @@ strong {
                         <tr class="item-row" id="{{ p.id }}">
                             <td class="text-center">{{ forloop.counter }}</td>
 
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_name">{{ p.item }}</span>
                                 <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                                     oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
                                 <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
                                     oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
@@ -495,7 +494,6 @@ strong {
 
     </form>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
@@ -633,36 +631,6 @@ strong {
     updateTotalForAllItems();
 </script>
 
-<script>
-    $(document).ready(function () {
-        $('.dropdown-item').on('click', function (e) {
-            e.stopPropagation();
-            var selectedYear = $(this).text();
-            updateButtonStyle(selectedYear);
-            hideDropdown();
-    });
-
-
-    document.getElementById('yearDropdown').addEventListener('click', function() {
-        this.style.backgroundColor = '#1c96c5';
-    });
-
-
-    function updateButtonStyle(selectedYear) {
-            $('.dropdown-item').removeClass('selected');
-            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
-            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
-           
-        }
-
-
-    function hideDropdown() {
-        $('.custom-dropdown').removeClass('show'); 
-        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
-        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
-    }
-});
-</script>
 
 <script>
     // Function to handle form submission
