@@ -199,7 +199,7 @@
         margin-right: 15px
     }
 
-    .bck a {
+    .bck a  {
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -209,8 +209,10 @@
         width: 50px;
         height: 50px;
         transition: transform 0.3s ease-in-out;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        position: relative;
+      
+      
+        
     }
     
     .bck:hover img {
@@ -237,6 +239,82 @@
             color: red;
         }
 
+        .home {
+            position: fixed;
+            top: 20vh;
+        }
+         
+        .home img {
+            margin-bottom: ;
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease-in-out;
+            animation: beat 2s infinite;
+            position: relative;
+            margin-left: .5vh;
+        }
+        
+        
+        @keyframes beat{
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.2);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+         
+        .home:hover img {
+            animation-play-state: paused;
+            transform: scale(1.2); 
+        }
+    
+
+   .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: -50vh%; /* Adjust this value as needed */
+        transform: translateY(-50%);
+    
+    }
+
+    .table-responsive {
+        margin-top: 35px; /* Adjust the value as needed to move the table down */
+    }
+
+
+    
+    .get {
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
+        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+    }
+    
+    .get:hover {
+        background: #13AA52; /* Change background color on hover */
+        outline: 1px solid transparent; /* Optional: remove outline on hover */
+    }
+    
+    .get:focus, .get:active {
+        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
+    }
+     
  
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -246,9 +324,14 @@
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-    <div class="container">
-        <h1 class="pr text-center pt-6 "> <strong>PURCHASE REQUEST FOR APPROVAL</strong> </h1>
-
+    <h1 class="pr text-center pt-6" style="text-align: center; margin-top: 3vh;">
+        <strong>PURCHASE REQUEST FOR APPROVAL</strong>
+    </h1>
+    
+    <div class="home">
+        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+        </a>
     </div>
 
    <div class="bck">
@@ -257,6 +340,12 @@
         </a>
     </div>
 
+    <div class="left-button-container">
+        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
+        </a>
+    </div>
+    
     <div class="table-responsive">
 
         <form action="{% url 'cdpurchase_approval' pr_id=pr_id %}" method="post" id ="form_id">
@@ -304,10 +393,6 @@
 
                     <td>{{p.quantity}}</td>
 
-                    
-
-
-
                 </tr>
 
                 {% endfor %}
@@ -322,11 +407,6 @@
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
-
-        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
-            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
-        </a>
-        
 
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
