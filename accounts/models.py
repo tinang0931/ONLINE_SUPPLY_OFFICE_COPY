@@ -161,6 +161,7 @@ class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
+    bac_status = models.CharField(max_length=20)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
     cd_status = models.CharField(max_length=20)

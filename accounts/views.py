@@ -102,21 +102,24 @@ def ppmp101(request):
     return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year, pr_id):
-    print("Current User:", request.user)
+   
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
-    print("Approved Checkouts:", approved_checkouts)
+   
 
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-    print("Approved Items:", approved_items)
+ 
 
     context = {
         'approved_items': approved_items,
         'year': year,
         'pr_id': pr_id,
+        'bac_status': approved_checkouts.first().bac_status,
+        
         'bo_comment': approved_checkouts.first().bo_comment,
         'cd_comment': approved_checkouts.first().cd_comment, 
     }
+   
 
     return render(request, 'accounts/User/myppmp.html', context)
 
@@ -444,16 +447,70 @@ def bac_purchaserequest(request, pr_id):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
 def bac_ppmp(request, pr_id):
-    checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-    checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
-    context = {
-            
-            'checkout_items': checkout_items,
-            
-            'pr_id': pr_id,
-        
-    }
 
+    if request.method == 'POST':
+        
+        comment_content = request.POST.get('comment_content')
+
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        estimate = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
+
+        checkout = Checkout.objects.get(pr_id=pr_id)
+
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+            estimate_budget=estimate,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,   
+            nov=nov,
+            dec=dec,
+            
+        )
+
+        # Update Checkout model
+        Checkout.objects.filter(pr_id=pr_id).update(
+            
+            bac_status=comment_content
+        )
+
+        return redirect('bac_home')
+
+    elif request.method == 'GET':
+
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
 def preqform(request, pr_id):
