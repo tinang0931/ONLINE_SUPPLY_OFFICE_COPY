@@ -253,7 +253,7 @@
     </div>
 
    <div class="bck">
-        <a href="{% url 'ppmp101' %}">
+        <a href="{% url 'cdpurchase' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
@@ -273,6 +273,7 @@
                     <th rowspan='2'> Brand / Description</th>
                     <th rowspan='2'>Unit</th>
                     <th rowspan='2'>Unit Price</th>
+                    <th rowspan='2'>Quantity </th>
 
                 </tr>
                 
@@ -283,12 +284,12 @@
 
                 <tr class="item-row" id="{{ p.id }}">
 
-                    <td>
+                    <td class="text-left">
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                             oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-                    <td>
+                    <td class="text-left">
                         <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
                         <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
@@ -304,6 +305,8 @@
                     <td>
                         <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
                     </td>
+
+                    <td>{{p.quantity}}</td>
 
                     
 
@@ -326,7 +329,7 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link">
+        <a href="" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
 

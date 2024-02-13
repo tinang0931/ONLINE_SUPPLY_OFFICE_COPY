@@ -131,6 +131,7 @@ textarea.form-control {
           <th>Brand / Description</th>
           <th>Unit</th>
           <th>Unit Price</th>
+          <th>Quantity</th>
           <th>Attachment</th>
         </tr>
       </thead>
@@ -138,14 +139,19 @@ textarea.form-control {
 
         {% for item in items %}
         <tr>
-          <td>{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
+          <td class="text-left">{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
               id="item_{{ item.id }}"></td>
-          <td>{{ item.item_brand_description }} <input type="text" name="item_brands[]"
+          <td class="text-left">{{ item.item_brand_description }} <input type="text" name="item_brands[]"
               value="{{ item.item_brand_description }}" style="display:none;" id="item_brand_{{ item.id }}"></td>
           <td>{{ item.unit }} <input type="text" name="units[]" value="{{ item.unit }}" style="display:none;"
               id="unit_{{ item.id }}"></td>
           <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
               id="unit_cost_{{ item.id }}"></td>
+              <td style="text-align: center;">
+                <input type="number" value="0" name="quantity[]" style="width: 40px;">
+            </td>
+            
+            
           <td>
             <div class="file-attachment">
               <label for="fileInput{{ item.id }}" style="cursor: pointer;">
@@ -157,31 +163,63 @@ textarea.form-control {
         </tr>
         {% endfor %}
       </tbody>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Attach change event to the unit cost input elements
-    document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
-      unitCostInput.addEventListener('change', function () {
-        calculateTotal();
-      });
-    });
 
-    // Calculate total on page load
-    calculateTotal();
-
-    function calculateTotal() {
-      var totalAmount = 0;
-      $('input[name="prices[]"]').each(function () {
-        var itemCost = parseFloat($(this).val());
-        if (!isNaN(itemCost)) {
-          totalAmount += itemCost;
+      <script>
+        function validateForm() {
+            var fileInputs = document.querySelectorAll('input[type="file"]');
+            var filesSelected = false;
+    
+            if (fileInputs.length > 0) {
+                fileInputs.forEach(function (fileInput) {
+                    if (fileInput.files.length > 0) {
+                        filesSelected = true;
+                    }
+                });
+            }
+    
+            if (!filesSelected) {
+                var confirmSubmit = confirm("No attachments selected. Are you sure you want to submit the form without attachments?");
+                return confirmSubmit; // Allow or prevent form submission based on user confirmation
+            }
+    
+            // You can add more validation checks here if needed
+    
+            return true; // Allow form submission with attachments
         }
-      });
-      $("#total_amount").text(totalAmount.toFixed(2));
-    }
-  });
-</script>
-
+    </script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Attach change event to the unit cost input elements
+          document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
+            unitCostInput.addEventListener('change', function () {
+              calculateTotal();
+            });
+          });
+      
+          // Attach change event to the quantity input elements
+          document.querySelectorAll('input[name="quantity[]"]').forEach(function (quantityInput) {
+            quantityInput.addEventListener('input', function () {
+              calculateTotal();
+            });
+          });
+      
+          // Calculate total on page load
+          calculateTotal();
+      
+          function calculateTotal() {
+            var totalAmount = 0;
+            $('input[name="prices[]"]').each(function (index) {
+              var itemCost = parseFloat($(this).val());
+              var quantity = parseInt($('input[name="quantity[]"]').eq(index).val()) || 0;
+              if (!isNaN(itemCost)) {
+                totalAmount += itemCost * quantity;
+              }
+            });
+            $("#total_amount").text(totalAmount.toFixed(2));
+          }
+        });
+      </script>
+      
 
       <script>
         document.addEventListener('DOMContentLoaded', function () {

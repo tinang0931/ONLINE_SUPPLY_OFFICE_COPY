@@ -800,6 +800,7 @@ def purchase(request):
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
+        quantity = request.POST.getlist('quantity[]')
         total = request.POST.get('total_cost')
 
         pr_id = generate_auto_pr_id()
@@ -808,27 +809,29 @@ def purchase(request):
         pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose,)
 
         for i in range(len(items)):
-            uploaded_file = files[i]
-            metadata = FileMetadata.objects.create(filename=uploaded_file.name)
-            
+            uploaded_file = files[i] if i < len(files) else None  # Check if files list has an item at index i
+            metadata = FileMetadata.objects.create(filename=uploaded_file.name if uploaded_file else '')
+
             # Save the file content to the FileField using save()
-            metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+            if uploaded_file:
+                metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
 
             PR.objects.create(
                 metadata=metadata,
-                file=metadata.file,
+                file=metadata.file if uploaded_file else None,  # Set to None if no file is attached
                 pr_identifier=pr_identifier,
                 item=items[i],
                 item_brand_description=item_brands[i],
                 unit=units[i],
                 unit_cost=prices[i],
+                quantity=quantity[i],
                 total_cost=total
             )
-            
 
             PR_Items.objects.all().delete()
 
-        return redirect('purchasetracker')
+            return redirect('purchasetracker')
+
     elif request.method == 'GET':
        
         items = PR_Items.objects.all()

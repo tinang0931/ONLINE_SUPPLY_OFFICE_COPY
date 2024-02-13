@@ -189,14 +189,14 @@
   
       <td class="text-center">
         {% if checkout.status == 'approved' %}
-        <span class="fas fa-circle text-success"> {{ checkout.status }}</span>
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
         {% elif checkout.status == 'declined' %}
-        <span class="fas fa-circle text-warning"> {{ checkout.status }}</span>
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
         {% else %}
-        <span class="fas fa-circle text-danger"> Pending</span>
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
-
-      </td>
+    </td>
+    
     
     <td class="text-center">
       {% if checkout.comment %}
