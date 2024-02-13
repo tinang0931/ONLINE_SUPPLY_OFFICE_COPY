@@ -226,11 +226,11 @@
         {% for item in items %}
         <tr id="{{ item.id }}">
           <td class="text-center">{{ forloop.counter }}</td>
-          <td>
+          <td class="text-left">
             <span class="editable" data-field="Item_name">{{ item.Item_name }}</span>
             <input id="item_{{ item.id }}" type="text" value="{{ item.Item_name }}" oninput="change_val('item_{{ item.id }}')" class="edit-input" style="display: none">
           </td>
-          <td>
+          <td class="text-left">
             <span class="editable" data-field="Item_Brand">{{ item.Item_Brand }}</span>
             <input id="item_brand_{{ item.id }}" type="text" value="{{ item.Item_Brand }}" oninput="change_val('item_brand_{{ item.id }}')" class="edit-input" style="display: none">
           </td>
