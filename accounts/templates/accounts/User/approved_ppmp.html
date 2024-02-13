@@ -162,8 +162,8 @@
                     <form action="{% url 'approved_ppmp' %}" method="post" class="item-form">
                         {% csrf_token %}
                         <tr class="item-row" id="row{{ p.id }}">
-                            <td>{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
-                            <td>{{ p.item_brand_description }}<input type="hidden" name="item_brand"
+                            <td class="text-left">{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
+                            <td class="text-left">{{ p.item_brand_description }}<input type="hidden" name="item_brand"
                                     value="{{ p.item_brand_description }}"></td>
                             <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
                             <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>

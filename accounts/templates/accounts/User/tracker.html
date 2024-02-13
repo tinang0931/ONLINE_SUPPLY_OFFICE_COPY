@@ -206,27 +206,28 @@
               
               <td class="text-center">
                 {% if p.bo_status == 'approved' %}
-                <span class="fas fa-circle text-success"> {{ p.bo_status }}</span>
+                    <span class="badge badge-success text-uppercase" style="font-size: 18px;">{{ p.bo_status }}</span>
                 {% elif p.bo_status == 'declined' %}
-                <span class="fas fa-circle text-warning"> {{ p.bo_status }}</span>
+                    <span class="badge badge-warning text-uppercase" style="font-size: 18px;">{{ p.bo_status }}</span>
                 {% else %}
-                <span class="fas fa-circle text-danger"> Pending</span>
+                    <span class="badge badge-danger text-uppercase" style="font-size: 18px;">Pending</span>
                 {% endif %}
-  
-              </td>
+            </td>
+            
+            
                 
               
               
-              <td class="text-center">
-                {% if p.cd_status == 'approved' %}
-                <span class="fas fa-circle text-success"> {{ p.cd_status }}</span>
-                {% elif p.cd_status == 'declined' %}
-                <span class="fas fa-circle text-warning"> {{ p.cd_status }}</span>
-                {% else %}
-                <span class="fas fa-circle text-danger"> Pending</span>
-                {% endif %}
-  
-              </td>
+            <td class="text-center">
+              {% if p.cd_status == 'approved' %}
+                  <span class="badge badge-success text-uppercase" style="font-size: 18px;">{{ p.cd_status }}</span>
+              {% elif p.cd_status == 'declined' %}
+                  <span class="badge badge-warning text-uppercase" style="font-size: 18px;">{{ p.cd_status }}</span>
+              {% else %}
+                  <span class="badge badge-danger text-uppercase" style="font-size: 18px;">Pending</span>
+              {% endif %}
+          </td>
+            
               
 
               <td style="cursor: pointer;" onclick="toggleComments(this)">
