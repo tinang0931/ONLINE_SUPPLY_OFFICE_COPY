@@ -252,7 +252,7 @@
     </div>
 
    <div class="bck">
-        <a href="{% url 'ppmp101' %}">
+        <a href="{% url 'cdpurchase' %}">
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
@@ -315,10 +315,11 @@
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
-        
+
         <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
             <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
         </a>
+        
 
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>

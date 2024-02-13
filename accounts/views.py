@@ -383,6 +383,14 @@ def cdpurchase_approval(request, pr_id):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
 
 
+def purchase_cd(request, pr_id):
+    checkout_items = PR.objects.filter(pr_identifier__pr_id=pr_id)
+    context = {
+        'checkout_items': checkout_items,
+        'pr_id': pr_id,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', context)
+
 @bac_required
 def bac_home(request):
     checkouts = Checkout.objects.select_related('user').all()
