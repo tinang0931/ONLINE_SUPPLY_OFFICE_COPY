@@ -39,10 +39,51 @@
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
 
+
+/* Style for the container */
+.file-upload-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Style for the custom button */
+.file-upload-button {
+  color: #ffffff; /* Text color */
+  background-color: #007bff; /* Background color */
+  padding: 10px 20px; /* Padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  margin-top: 10px;
+}
+
+/* Style for the hidden file input */
+.hidden-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+/* Optional: Style for the Upload button */
+.btn-success {
+  color: #ffffff; /* Text color */
+  background-color: #28a745; /* Green background color */
+  border-color: #28a745; /* Green border color */
+  padding: 10px 20px; /* Padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  margin-top: -5vh;
+}
+
 </style>
 
   <div class="container-fluid">
-    <h1 class="pr text-center pt-4" style="margin-left: -34px;"><strong>AVAILABLE ITEMS</strong></h1>
+    <h1 class="pr text-center pt-4" style="margin-left: -34px; margin-top: 20px;"><strong>AVAILABLE ITEMS</strong></h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="bck">
@@ -51,12 +92,13 @@
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
-      <label for="file" class="hidden-label" >Choose CSV file:</label>
-      <input type="file" name="file" accept=".csv" required>    
-      <br>
-      <button class="btn btn-success" type="submit" style=" margin-left: 2px;">
-        <i class="fas fa-file-upload"></i> Upload
-      </button>
+    <div class="file-upload-container">
+      <label for="file" class="file-upload-button">Choose CSV file</label>
+      <input type="file" name="file" id="file" class="hidden-input" accept=".csv" required>
+    </div>
+    <button class="btn btn-success" type="submit" style="margin-left: 2px;">
+      <i class="fas fa-file-upload"></i> Upload
+    </button>
     </form>
     <br>
 
@@ -64,14 +106,14 @@
      <div class="row">
       <div class="col-md-4 offset-md-4 ml-8">
     <div class="dropdown" style="width: 90%; border: 2px;" >
-    <div style="display: flex; align-items: center; justify-content: center;">
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: -0vh;">
         <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')" onmouseout="restoreBackgroundColor()" onclick="showOptions()" style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; border-radius: 5px; margin:1px; width: 100%; max-height: 307px; transition: background-color 0.3s;">ALL CATEGORIES</div>
       </div>
     </div>
   
     
-      <div id="options" class="d-none position-absolute z-1 bg-white "
-        style="user-select: none; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); ">
+      <div id="options" class="d-none position-absolute z-1 bg-white"
+        style="user-select: none; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822) margin-top:-100px;">
         <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
         {% for category, items in grouped_data.items %}
         <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
@@ -267,6 +309,8 @@
       
                 </form>
               
+              
+
               {% if item.id %}
               <a href="{% url 'delete_item' item.id %}" class="delete-icon"><i class="fas fa-trash-alt text-danger"></i></a>
               {% endif %}
