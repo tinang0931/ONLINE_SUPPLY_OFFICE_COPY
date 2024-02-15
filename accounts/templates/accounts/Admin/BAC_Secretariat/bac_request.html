@@ -23,7 +23,7 @@
 
   .form-control {
     display: block;
-    width: 13.10%;
+    width: 13.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -31,10 +31,12 @@
     color: var(--bs-body-color);
     appearance: none;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-left: 1408px;
+    margin-left: 1400.15px;
     background-color: transparent; 
     box-shadow: none; 
+    margin-top: -5vh;
   }
+
 
 
   .btn-outline-success {
@@ -64,22 +66,27 @@
     z-index: 2;
   }
 
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -10vh;
+  
     
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
+}
+
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
+
 
 </style>
 
@@ -89,8 +96,6 @@
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
       oninput="filterTable()"
       style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search"
-      style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
   </div>
 
   <div class="bck">
@@ -98,7 +103,7 @@
         <img src="{% static 'images/back-button.gif' %}" alt="Previous">
     </a>
 </div>
-  <table class="table table-bordered">
+  <table class="table table-bordered" style="margin-top: -5vh">
     <thead>
       <tr>
         <th class="text-center" >User ID</th>

@@ -218,7 +218,6 @@ def login(request):
     return render(request, 'accounts/User/login.html') 
 
 
-
 def get_random_string(length, allowed_chars='0123456789'):
     return ''.join(random.choice(allowed_chars) for _ in range(length))
 
