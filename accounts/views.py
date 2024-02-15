@@ -44,10 +44,22 @@ from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import CheckoutItems
 
+from django.shortcuts import render
+from .config import SITE_TITLE, CAMPUS_NAME
+
+
+
 
 
 def main(request):
-    return render(request, 'accounts/User/main.html')
+    context = {
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    print(CAMPUS_NAME)
+    print(SITE_TITLE)
+    return render(request, 'accounts/User/main.html', context)
+
 
 
 def bac(request):
@@ -97,6 +109,8 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
@@ -277,7 +291,12 @@ def logout_user(request):
 
 @authenticated_user
 def about(request):
-    return render(request, 'accounts/User/about.html')
+    context = {
+    'SITE_TITLE': SITE_TITLE,
+    'CAMPUS_NAME': CAMPUS_NAME,
+    }
+
+    return render(request, 'accounts/User/about.html', context)
 
 @regular_user_required
 @authenticated_user
@@ -314,7 +333,9 @@ def tracker(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user
+        'user': request.user,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
         
         
     }
@@ -676,8 +697,8 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-  
         )
+
         return redirect('ppmp')
     
     return render(request, 'accounts/User/ppmp.html')
@@ -728,7 +749,6 @@ def myppmp(request):
 
 @regular_user_required
 def ppmp(request):
-    
     if request.method == 'POST':
 
         year = request.POST.get('selectedYear')
@@ -802,6 +822,10 @@ def ppmp(request):
 from django.core.files.base import ContentFile
 @regular_user_required
 def purchase(request):
+    context = {
+                'SITE_TITLE': SITE_TITLE,
+                'CAMPUS_NAME': CAMPUS_NAME,
+                }
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
         items = request.POST.getlist('items[]')
@@ -835,7 +859,7 @@ def purchase(request):
                 quantity=quantity[i],
                 total_cost=total
             )
-
+            
             PR_Items.objects.all().delete()
 
             return redirect('purchasetracker')
@@ -843,7 +867,8 @@ def purchase(request):
     elif request.method == 'GET':
        
         items = PR_Items.objects.all()
-        return render(request, 'accounts/User/purchase.html', {'items': items})
+        context['items'] = items  # Add 'items' to the context dictionary
+        return render(request, 'accounts/User/purchase.html', context)
 
 from bson import ObjectId
 
@@ -1319,8 +1344,9 @@ def checkout_items_view(request):
 def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
-        'tracker': tracker
-
+        'tracker': tracker,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
 
