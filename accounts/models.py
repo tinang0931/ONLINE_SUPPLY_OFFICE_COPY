@@ -135,12 +135,14 @@ class PR(models.Model):
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    quantity = models.IntegerField()
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     pr_identifier = models.ForeignKey('Pr_identifier', on_delete=models.CASCADE, null=True, blank=True)
 
 class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20)
@@ -155,15 +157,15 @@ class Pr_identifier(models.Model):
 
 
 class Checkout(models.Model):
-    year = models.IntegerField(primary_key=True)
+    year = models.IntegerField()
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    submission_date = models.DateField(default=timezone.now)
+    submission_date = models.DateField(auto_now_add=True)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
     cd_status = models.CharField(max_length=20)
     cd_comment = models.TextField(blank=True, null=True)
-    last_updated = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     @property
     def combined_id(self):
@@ -172,6 +174,9 @@ class Checkout(models.Model):
 
     def __str__(self):
         return f"{self.year} - {self.pr_id}"
+    
+    class Meta:
+        unique_together = ('year', 'user')
 
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
@@ -199,12 +204,29 @@ class CheckoutItems(models.Model):
 
 
 class CSV(models.Model):
-    id = models.AutoField(primary_key=True)
     Category = models.CharField(max_length=255)
     Item_name = models.CharField(max_length=255)
     Item_Brand = models.CharField(max_length=255)
     Unit = models.CharField(max_length=50)
     Price = models.DecimalField(max_digits=10, decimal_places=2)
+    item_id = models.CharField(max_length=50, unique=True)
+
+    def generate_item_id(self):
+        
+        category_short = self.Category[:3].upper()
+        item_name_short = self.Item_name[:3].upper()
+        unique_id = str(uuid.uuid4().hex)[:6].upper() 
+
+        
+        self.item_id = f"{category_short}-{item_name_short}-{unique_id}"
+
+    def save(self, *args, **kwargs):
+       
+        if not self.item_id:
+            self.generate_item_id()
+        super().save(*args, **kwargs)
+
+ 
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)

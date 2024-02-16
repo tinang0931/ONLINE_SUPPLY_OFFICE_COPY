@@ -12,6 +12,7 @@
   .table a {
     text-decoration: none;
     color: black;
+    margin-top : 5vh
   }
 
   .no-comment {
@@ -33,6 +34,7 @@
     margin-left: 1400.15px;
     background-color: transparent; 
     box-shadow: none; 
+    margin-top: 5vh;
   }
 
   .search-form {
@@ -48,21 +50,28 @@
     z-index: 2;
   }
 
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -15vh;
+  
     
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
+}
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
     
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    .table-container {
+    margin-top: -5vh; 
     }
 
 </style>
@@ -73,14 +82,13 @@
   
   <div class="search" style="position: relative; text-align: right;">
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
 
 <div class="row">
   <div class="col-md-1 mb-0">
     <div class="bck">
       <a href="{% url 'cdlanding' %}">
-        <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
       </a>
     </div>
   </div>
@@ -138,22 +146,27 @@
         </td>
 
         <td class="text-center">
-          {% if checkout.bo_status %}
-              <span class="fas fa-circle text-success"> {{ checkout.bo_status }}</span>
+          {% if checkout.bo_status == 'approved' %}
+              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+          {% elif checkout.bo_status == 'declined' %}
+              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
           {% else %}
-              <span class="fas fa-circle text-danger"> Pending</span>
+              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
           {% endif %}
       </td>
       
     
     
       <td class="text-center">
-        {% if checkout.cd_status %}
-            <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
+        {% if checkout.cd_status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+        {% elif checkout.cd_status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
         {% else %}
-            <span class="fas fa-circle text-danger"> Pending</span>
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
     </td>
+    
         
         
         <td style="cursor: pointer;" onclick="toggleComments(this)">

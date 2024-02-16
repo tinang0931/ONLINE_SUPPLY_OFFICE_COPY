@@ -58,7 +58,10 @@ textarea.form-control {
 
   .col-md-4 .text-right button.btn.btn-primary {
     border-radius: 8%;
-    
+    background-color: #28a745;
+    border-color: #007bff;
+    height: 50px; 
+    width: 120px;
   }
 
   .bck a {
@@ -68,8 +71,8 @@ textarea.form-control {
     }
     
     .bck img {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
     }
     
@@ -78,8 +81,10 @@ textarea.form-control {
     }
     footer {
     position: absolute;
+    margin-left: -3vh;
     bottom: 0;
-    width: 94%;
+    width: 50vh;
+    height: 17vh;
     background-color: rgba(1, 33, 67, 0.9);
     color: #ffffff;
     padding: 10px 0;
@@ -98,15 +103,14 @@ textarea.form-control {
   <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
     <h1 class="pr text-center pt-4"><strong>CREATE PURCHASE REQUEST</strong></h1>
 
-    <div class="row">
+    
+    <div class="bck">
       <div class="col-md-1 mb-0">
-        <div class="bck">
-          <a href="{% url 'userlanding' %}">
-            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
-          </a>
-        </div>
-      </div>
+      <a href="{% url 'userlanding' %}">
+        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+      </a>
     </div>
+  </div>
     <div class="row mt-3">
       <div class="col-md-1 mb-0">
         <div class="pp_mp">
@@ -127,6 +131,7 @@ textarea.form-control {
           <th>Brand / Description</th>
           <th>Unit</th>
           <th>Unit Price</th>
+          <th>Quantity</th>
           <th>Attachment</th>
         </tr>
       </thead>
@@ -134,14 +139,19 @@ textarea.form-control {
 
         {% for item in items %}
         <tr>
-          <td>{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
+          <td class="text-left">{{ item.item }} <input type="text" name="items[]" value="{{ item.item }}" style="display:none;"
               id="item_{{ item.id }}"></td>
-          <td>{{ item.item_brand_description }} <input type="text" name="item_brands[]"
+          <td class="text-left">{{ item.item_brand_description }} <input type="text" name="item_brands[]"
               value="{{ item.item_brand_description }}" style="display:none;" id="item_brand_{{ item.id }}"></td>
           <td>{{ item.unit }} <input type="text" name="units[]" value="{{ item.unit }}" style="display:none;"
               id="unit_{{ item.id }}"></td>
           <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
               id="unit_cost_{{ item.id }}"></td>
+              <td style="text-align: center;">
+                <input type="number" value="0" name="quantity[]" style="width: 40px;">
+            </td>
+            
+            
           <td>
             <div class="file-attachment">
               <label for="fileInput{{ item.id }}" style="cursor: pointer;">
@@ -154,32 +164,62 @@ textarea.form-control {
         {% endfor %}
       </tbody>
 
-<!-- Add this script at the end of your HTML body -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Attach change event to the unit cost input elements
-    document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
-      unitCostInput.addEventListener('change', function () {
-        calculateTotal();
-      });
-    });
-
-    // Calculate total on page load
-    calculateTotal();
-
-    function calculateTotal() {
-      var totalAmount = 0;
-      $('input[name="prices[]"]').each(function () {
-        var itemCost = parseFloat($(this).val());
-        if (!isNaN(itemCost)) {
-          totalAmount += itemCost;
+      <script>
+        function validateForm() {
+            var fileInputs = document.querySelectorAll('input[type="file"]');
+            var filesSelected = false;
+    
+            if (fileInputs.length > 0) {
+                fileInputs.forEach(function (fileInput) {
+                    if (fileInput.files.length > 0) {
+                        filesSelected = true;
+                    }
+                });
+            }
+    
+            if (!filesSelected) {
+                var confirmSubmit = confirm("No attachments selected. Are you sure you want to submit the form without attachments?");
+                return confirmSubmit; // Allow or prevent form submission based on user confirmation
+            }
+    
+            // You can add more validation checks here if needed
+    
+            return true; // Allow form submission with attachments
         }
-      });
-      $("#total_amount").text(totalAmount.toFixed(2));
-    }
-  });
-</script>
-
+    </script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Attach change event to the unit cost input elements
+          document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
+            unitCostInput.addEventListener('change', function () {
+              calculateTotal();
+            });
+          });
+      
+          // Attach change event to the quantity input elements
+          document.querySelectorAll('input[name="quantity[]"]').forEach(function (quantityInput) {
+            quantityInput.addEventListener('input', function () {
+              calculateTotal();
+            });
+          });
+      
+          // Calculate total on page load
+          calculateTotal();
+      
+          function calculateTotal() {
+            var totalAmount = 0;
+            $('input[name="prices[]"]').each(function (index) {
+              var itemCost = parseFloat($(this).val());
+              var quantity = parseInt($('input[name="quantity[]"]').eq(index).val()) || 0;
+              if (!isNaN(itemCost)) {
+                totalAmount += itemCost * quantity;
+              }
+            });
+            $("#total_amount").text(totalAmount.toFixed(2));
+          }
+        });
+      </script>
+      
 
       <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -225,7 +265,7 @@ textarea.form-control {
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-right">
+                <div class="text-right" >
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>

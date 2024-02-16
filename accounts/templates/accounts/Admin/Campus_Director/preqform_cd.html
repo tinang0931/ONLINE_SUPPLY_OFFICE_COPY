@@ -142,6 +142,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+           
         }
 
         .table-and-comment {
@@ -173,7 +174,7 @@
 
 
         .table-container {
-            margin-top: 20px;
+            margin-top: 10px;
             /* Adjust the margin-top as needed */
             width: 80%;
             margin-left: -16%;
@@ -186,9 +187,9 @@
         }
 
         .container {
-            width: 90%;
+            width: 85%;
             max-width: 950px;
-            padding: 8px;
+            padding: 0px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -312,10 +313,36 @@
         display: flex;
         justify-content: flex-start; /* Align icons to the left */
         align-items: center;
-        margin-top: -40px; /* Move icons up */
+        margin-top: -10px; /* Move icons up */
+        margin-left: 85vh;
+    }
+
+    footer {
+        background-color: rgba(1, 33, 67, 0.9);
+        text-align: center;
+            width: 100%;
+            height: 10vh;
+            position: absolute;
+            bottom: 0vh;
+            -webkit-user-modify: read-only;
+            position: fixed;
+            z-index: 2;
+            left: 0px;
+    }
+
+    #footer-content {
+        text-align: center; /* Center-align the content */
+        padding: 50px; /* Add padding around the content */
+    }
+    
+    .header-image {
+        max-width: 100%; /* Ensure the image doesn't exceed its container */
+        height: auto; /* Maintain the aspect ratio of the image */
+        margin-bottom: 20vh; /* Add margin below the image */
     }
 
 
+    
 </style>
 
        
@@ -431,9 +458,9 @@
             <br>
             <br>
             <div>
-                <strong><u>GLICERIO A. BAGUIA</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong><b><u>{{user.first_name}} {{user.last_name}}</b></u></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong><u>MARY ANN P. GONZAGA. C.P.A.</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <strong><u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
                 <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
             </div>          
             <div>
@@ -451,89 +478,83 @@
                     <br>
                     <br>
                     <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center;">
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block;">
+                    </div>
                 </div>                
                 <span id="totalBudget"> </span>
             </div>
         </div>
         <br>
-        <div class="page-break">  
         </div>
             <div id="footer-content">
-                <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
-                <br>
-                <br>
-                <div class="icons-container">
-                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                        <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
-                    </a>
-                
-                    <a href="#" title="Select" class="icon-link">
-                        <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
-                    </a>
-                    <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
-                        <option value="a4">A4</option>
-                        <option value="legal">Legal</option>
-                    </select>
-                </div>
-            </div>                  
-                  {% csrf_token %}
-                <script>
-                    function btn_click(status) {
-                        document.getElementById('new_status_id').value = status
-                        form = document.getElementById('form_status')
-                        form.submit()
-                    }
-                </script>
-
+              <footer>
+                    <div class="icons-container">
+                        <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                            <img class="icon" src="{% static 'images/download-pdf.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px; margin-right: 50px;">
+                        </a>
+                        <a href="#" title="Select" class="icon-link">
+                            <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20px; margin-left: 50px;">
+                        </a>
+                            <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
+                                <option value="a4">A4</option>
+                                <option value="legal">Legal</option>
+                            </select>
+                        </select>
                     </div>
-                </form>
-            </div>
-        </footer>
-    <script>
-            function setAction(action) {
-                document.getElementById('action').value = action;
-                document.forms[0].submit();  
+            </div>                  
+    </div>
+    <div class="page-break">  
+</footer>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-<!-- Ang imong custom JavaScript code -->
+
 <script>
-let selectedPaperSize = 'a4';
+    let selectedPaperSize = 'a4';
 
-function changePaperSize() {
-selectedPaperSize = document.getElementById('paperSize').value;
-}
+    function changePaperSize() {
+        selectedPaperSize = document.getElementById('paperSize').value;
+    }
 
-function downloadPDF() {
-    const body = document.getElementById('purchaseRequestTable');
-    const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    function toggleSelect() {
+        const select = document.getElementById('paperSize');
+        select.style.display = select.style.display === 'none' ? 'block' : 'none';
 
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'always';
-    });
+    }
 
-    const footer = document.getElementById('footer-content');
-    footer.style.display = 'none';
-
-    const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
-    iconsContainer.style.display = 'block'; // Ensure icons container is visible
-
-    const options = {
-        filename: 'PPMP.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-        pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-    };
-
-    html2pdf(body, options);
-
-    // Reset page breaks after generating PDF
-    elementsWithPageBreak.forEach((element) => {
-        element.style.pageBreakBefore = 'auto';
-    });
-    footer.style.display = 'block'; // Display the footer again after PDF generation
-    iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
-}
+    function downloadPDF() {
+        const body = document.getElementById('purchaseRequestTable');
+        const elementsWithPageBreak = body.querySelectorAll('.page-break');
+    
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'always';
+        });
+    
+        const footer = document.querySelector('footer');
+        footer.style.display = 'none'; // Hide the footer
+    
+        const options = {
+            filename: 'PPMP.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+        };
+    
+        html2pdf().from(body).set(options).save();
+    
+        // Reset page breaks after generating PDF
+        elementsWithPageBreak.forEach((element) => {
+            element.style.pageBreakBefore = 'auto';
+        });
+        footer.style.display = 'block'; // Display the footer again after PDF generation
+    }
+    
 </script>
+
 
         </div>
     </div>

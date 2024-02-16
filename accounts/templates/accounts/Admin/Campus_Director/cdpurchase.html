@@ -9,11 +9,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-  .status {
-    width: 30%;
-    text-align: center;
-  }
 
+ 
+    
+    .table-responsive {
+    margin-top: -2vh; 
+    }
   .table a {
     text-decoration: none;
     color: black;
@@ -37,6 +38,7 @@
     margin-left: 1400.15px;
     background-color: transparent; 
     box-shadow: none; 
+    margin-top: 5vh;
   }
 
   .search-form {
@@ -115,41 +117,47 @@
     cursor: help;
   }
   
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -15vh;
+  
     
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
+}
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
     
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    .table-container {
+    margin-top: -5vh; 
     }
 
 </style>
 
-<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS FOR APPROVAL</strong> </h1>
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden; margin-top ">
+  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS </strong> </h1>
 
   
   <div class="search" style="position: relative; text-align: right;">
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
 
 <div class="row">
   <div class="col-md-1 mb-0">
     <div class="bck">
       <a href="{% url 'cdlanding' %}">
-        <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
       </a>
-    </div>
+  </div>
   </div>
 </div>
 
@@ -159,14 +167,14 @@
     <tr>
       <th class="text-center">Date Requested</th>
       <th class="text-center">PR ID</th>
-      <th class="text-center">Requests for Approval</th>
+      <th class="text-center">Purchase Requests </th>
       <th class="status">Status</th>
       <th class="text-center">Comment</th> 
     </tr>
   </thead>
 
   <tbody>
-    {% for checkout in checkout_data %}
+    {% for checkout in checkouts %}
     <tr>
       <td class="text-center">
         {{ checkout.submission_date }}
@@ -187,12 +195,15 @@
 
   
       <td class="text-center">
-        {% if checkout.status %}
-            <span class="fas fa-circle text-success"> {{ checkout.status }}</span>
+        {% if checkout.status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+        {% elif checkout.status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
         {% else %}
-            <span class="fas fa-circle text-danger"> Pending</span>
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
     </td>
+    
     
     <td class="text-center">
       {% if checkout.comment %}

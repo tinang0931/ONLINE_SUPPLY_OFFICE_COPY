@@ -33,28 +33,31 @@
     background-color: #1c96c5;
   }
 
-  .bck{
+  .bck {
     margin-bottom: 20px;
   }
-   .custom-f{
-    margin-top: 20px;
-   }
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
 
+  .custom-f {
+    margin-top: 20px;
+  }
+
+  .bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    /* Apply transition to the transform property */
+  }
+
+  .bck:hover img {
+    transform: scale(1.2);
+    /* Scale the image to 1.2 times its original size on hover */
+  }
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
@@ -66,7 +69,7 @@
   </div>
   <div class="bck">
     <a href="{% url 'userlanding' %}">
-      <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+      <img src="{% static 'images/back-button.gif' %}" alt="Previous">
     </a>
   </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
@@ -74,51 +77,55 @@
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
-            <th  class="text-center"> PR NO.</th>
-            <th  class="text-center">STATUS</th>
-            <th  class="text-center">COMMENT</th>
-            <th  class="text-center">LAST UPDATED</th>
-        </tr>
-        
-          
+            <th class="text-center">DATE REQUESTED</th>
+            <th class="text-center"> PR NO.</th>
+            <th class="text-center">STATUS</th>
+            <th class="text-center">COMMENT</th>
+            <th class="text-center">LAST UPDATED</th>
+          </tr>
+
+
         </thead>
         <tbody>
-        {% if tracker %}
-        {% for p in tracker %}
-            <tr>
-                <td class="text-center"> {{ p.pr_id }}</td>
-                <td class="text-center">
-                  {% if p.status %}
-                      <span class="fas fa-circle text-success"> {{ p.status }}</span>
-                  {% else %}
-                      <span class="fas fa-circle text-danger"> Pending</span>
-                  {% endif %}
-              </td>
-              <td class="text-center">
-                {% if p.comment %}
-                    {{ p.comment }}
-                {% else %}
-                    No comment yet
-                {% endif %}
-                
-              </td>
-              
-            
-                <td class="text-center"> {{ p.submission_date }}</td>
-                
-            </tr>
-        {% endfor %}
-        {% else %}
+          {% if tracker %}
+          {% for p in tracker %}
+          <tr>
+            <TD class="text-center">{{ p.submission_date }}</TD>
+            <td class="text-center"> {{ p.pr_id }}</td>
+            <td class="text-center">
+              {% if p.status == 'approved' %}
+                  <span class="badge badge-success text-uppercase" style="font-size: 18px;">{{ p.status }}</span>
+              {% elif p.status == 'declined' %}
+                  <span class="badge badge-warning text-uppercase" style="font-size: 18px;">{{ p.status }}</span>
+              {% else %}
+                  <span class="badge badge-danger text-uppercase" style="font-size: 18px;">Pending</span>
+              {% endif %}
+          </td>
+            <td class="text-center">
+              {% if p.comment %}
+              {{ p.comment }}
+              {% else %}
+              No comment yet
+              {% endif %}
 
-        <tr>
-          <td colspan="4" class="text-center"><strong>No Purchase Request</strong></td>
-        </tr>
+            </td>
 
-        {% endif %}
+
+            <td class="text-center"> {{ p.last_updated }}</td>
+
+          </tr>
+          {% endfor %}
+          {% else %}
+
+          <tr>
+            <td colspan="4" class="text-center"><strong>No Purchase Request</strong></td>
+          </tr>
+
+          {% endif %}
 
         </tbody>
       </table>
-      
+
     </div>
   </div>
 </div>

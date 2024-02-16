@@ -1,5 +1,6 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
+
 {% load static %}
 
 {% block ppmp %}
@@ -53,6 +54,7 @@
         margin-top: 15%;
         padding: 10px 20px;
         font-size: 16px;
+        float: right;
     }
     .btn.btn-success {
     transition: transform 0.3s ease; 
@@ -66,32 +68,49 @@
     transform: translate(0em, 0.14em);
 }
 
+    
 
-a.custom-button {
-    border: 1px solid black;
-    background-color: white;
+.catalogue {
+    position: relative; /* Change from fixed to relative */
+    left: 10px; /* You may adjust this value too */
+    z-index: 999;
+    background: #fff;
     color: black;
+    border: 1px solid black;
     padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
+    border-radius: 20px;
     transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
 }
 
-a.custom-button:hover {
-    background-color: #3498db;
+.catalogue:hover {
+    background: #1c96c5;
     color: white;
+    transform: scale(1.1);
 }
-.bck a {
+
+
+.catalogue:active {
+    transform: translate(0em, 0.17em);
+}
+
+.bck a  {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
 
 .bck img {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
+    margin-top: 8px;
     transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -2vh;
+  
+    
 }
 
 .bck:hover img {
@@ -99,45 +118,40 @@ a.custom-button:hover {
 }
     
     .table-responsive {
-    margin-top: -6vh; 
+    margin-top: -18vh; 
     }
 
-.custom-dropdown{
-    position: relative;
-    display: inline-block;
-}
+
 
 #yearDropdown{
-    padding: 5px 15px;
+    padding: 10px 30px;
     font-size: 14px;
-    border: 1px solid #ccc;
+    margin-left: 30px;
+    border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
 
+
 }
-.custom-dropdown::after {
-  position: relative;
-  top: 10%;
-  right: 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
+
+#yearDropdown option {
+    height: 40px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
 }
+
+
 
 strong {
-    height: 30px;
-    line-height: 46px;
+    height: 60px;
+    line-height: 5vh;
+    margin-left: 5vh;
+    
 }
 
-.budget-container input[type="text"] {
-    padding: 10px;
-    border-radius: 10px;
-    border: 3px solid #ccc;
-    margin-right: 50px;
-    height: 40px;
-}
 
 .budget-container {
-    margin-left: 300px;
+    margin-left: 500px;
     padding-right: 100px;
     display: flex;
     align-items: flex-start; 
@@ -148,11 +162,54 @@ strong {
 }
 
 .budget-container input[type="text"] {
-    padding: 5px;
-    border-radius: 10px;
-    border: 5px solid #ccc;
-    margin-right: 20px;
+    padding: 1px;
+    z-index: 999;
+    position: absolute;
+    top: -7.5vh;
+    margin-left: 30vh;
 }
+
+.budget-container strong {
+    font-weight: bold;
+    position: relative;
+    top: -8.5vh; /* Adjust this value as needed to move it to the desired position */
+}
+
+
+.home {
+    position: fixed;
+    top: 20vh;
+}
+ 
+.home img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+    position: relative;
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2); 
+}
+
+
+
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
@@ -164,22 +221,40 @@ strong {
     <div class="container">
         <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
     </div>
-    <div class="bck">
-        <a href="{% url 'ppmp101' %}">
-            <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="Home">
         </a>
     </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
+    <div class="bck">
+        <a href="{% url 'ppmp101' %}">
+            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+        </a>
+    </div>
+    
     <div class="row">
-        <div class="col-md-8 mb-2">
-            <a href="{% url 'catalogue' %}" class="custom-button">Catalogue</a>
+        <div class="col-md-1 mb-0">
+            <button class="catalogue">
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; ">Catalogue </a>
+            </button>
         </div>
-        <div class="col-md-4 mb-2">
+ 
+        
+        <div class="col-md-3 mb-0">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="position: relative;">
-                    <select id="yearDropdown" style="padding: 9.5px 4px; font-size: 16px; border-radius: 5px; 
-                                        transition: transform 0.s ease-in-out; background: #1c96c5; color: #fff; 
-                                        border: none;">
+                <div style="  position: relative;  z-index: 999;">
+                    <select id="yearDropdown" >
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -188,25 +263,24 @@ strong {
                         <option value="2027">2027</option>
                     </select>
                     <input type="hidden" id="selectedYear" name="selectedYear">
+
                     <script>
                         document.getElementById("yearDropdown").addEventListener("change", function() {
-                            document.getElementById("selectedYear").value = this.value;
+                          document.getElementById("selectedYear").value = this.value;
                         });
-                    </script>
+                      </script>
                 </div>
-            </form>
         </div>
     </div>
-    
-    
-    
+   
+    <div class="row">
         <div class="row">
             <div class=" col-md-6 text-left">
                   
-                <h5 class="budget-container">
-                    <strong>TOTAL ALLOCATED BUDGET:</strong>
+                <div class="budget-container">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>TOTAL ALLOCATED BUDGET:</strong>
                     <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
-                </h5>
+                </div>
             </div>
       
         <script>
@@ -238,16 +312,20 @@ strong {
                 }
             };
         </script>
-        <div class="col-md-6 text-center" style="margin-top: -5vh;">
+        <div class="total" style="position: relative; margin-top: -25vh; margin-left: 120vh; ">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
     </div>
 
+    <div class="button-container" style="float: left;">
+        <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -150px;">
+            <i class="fas fa-check-circle"></i> Submit
+        </button>
+    </div>
+    
     <div class="table-responsive">
 
-        
-    
             <table class="table table-bordered text-center mt-4">
                 <thead>
                     <tr>
@@ -283,18 +361,18 @@ strong {
                         <tr class="item-row" id="{{ p.id }}">
                             <td class="text-center">{{ forloop.counter }}</td>
 
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_name">{{ p.item }}</span>
                                 <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                                     oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
                                 <input id="item_brand_{{ p.id }}" name="item_brand" type="text" value="{{ p.item_brand_description }}"
                                     oninput="change_val('item_brand_{{ p.id }}')" class="edit-input"
                                     style="display: none">
                             </td>
-                            <td>
+                            <td class="text-left">
                                 <span class="editable" data-field="Unit">{{ p.unit }}</span>
                                 <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                                     oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
@@ -365,9 +443,7 @@ strong {
                         </tr>
                     {% endfor %}
 
-                    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px;">
-                        <i class="fas fa-check-circle"></i> Submit
-                    </button>
+                    
                 </form>
 
                 <tr id="new-item-row-{{ category }}" style="display: none;">
@@ -419,12 +495,12 @@ strong {
             </button>
             
         </div>
-            
-    </div>
+      </div>
+
     </form>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 <script>
 
@@ -560,36 +636,6 @@ strong {
     updateTotalForAllItems();
 </script>
 
-<script>
-    $(document).ready(function () {
-        $('.dropdown-item').on('click', function (e) {
-            e.stopPropagation();
-            var selectedYear = $(this).text();
-            updateButtonStyle(selectedYear);
-            hideDropdown();
-    });
-
-
-    document.getElementById('yearDropdown').addEventListener('click', function() {
-        this.style.backgroundColor = '#1c96c5';
-    });
-
-
-    function updateButtonStyle(selectedYear) {
-            $('.dropdown-item').removeClass('selected');
-            $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
-            $('.btn#yearDropdown').text(selectedYear).css('background-color', '#1c96c5');
-           
-        }
-
-
-    function hideDropdown() {
-        $('.custom-dropdown').removeClass('show'); 
-        $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
-        $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
-    }
-});
-</script>
 
 <script>
     // Function to handle form submission

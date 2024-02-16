@@ -8,6 +8,10 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
+  table a {
+    text-decoration: none;
+    color: #000;
+  }
   
   .bg-success {
     background-color: #9ee800;
@@ -16,7 +20,7 @@
 
   .form-control {
     display: block;
-    width: 13.10%;
+    width: 13.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -25,10 +29,10 @@
     appearance: none;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
-    background-color: transparent;
-    box-shadow: none;
+    background-color: transparent; 
+    box-shadow: none; 
+    margin-top: -5vh;
   }
-
 
   .btn-outline-success {
     color: #ffffff;
@@ -57,24 +61,29 @@
     z-index: 2;
   }
 
-  .bck a {
+  .bck a  {
     display: flex;
     align-items: center;
     text-decoration: none;
-    margin-bottom: 18px;
-  }
+}
 
-  .bck img {
-    width: 30px;
-    height: 30px;
+.bck img {
+    width: 50px;
+    height: 50px;
     transition: transform 0.3s ease-in-out;
-    /* Apply transition to the transform property */
-  }
+    position: relative;
+    top: -10vh;
+  
+    
+}
 
-  .bck:hover img {
-    transform: scale(1.2);
-    /* Scale the image to 1.2 times its original size on hover */
-  }
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
+
+
+
 </style>
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
@@ -83,15 +92,13 @@
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
       oninput="filterTable()"
       style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search"
-      style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
   </div>
   <div class="bck">
     <a href="{% url 'baclanding' %}">
-      <img src="{% static 'images/arrow-left.png' %}" alt="Previous">
+      <img src="{% static 'images/back-button.gif' %}" alt="Previous">
     </a>
   </div>
-  <table class="table table-bordered">
+  <table class="table table-bordered" style="margin-top: -5vh">
     <thead>
       <tr>
         <th class="text-center" rowspan="2">User ID</th>
@@ -109,8 +116,6 @@
       </tr>
 
 
-
-
     </thead>
 
     <tbody>
@@ -122,39 +127,42 @@
         <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
         <td style="text-align: center;">{{ checkout.submission_date }}</td>
         <td class="text-center">
-          {% if checkout.bo_status %}
-
-          <span class="fas fa-circle text-success"> {{ checkout.bo_status }}</span>
-
+          {% if checkout.bo_status == 'approved' %}
+              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+          {% elif checkout.bo_status == 'declined' %}
+              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+          {% else %}
+              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
           {% endif %}
-        </td>
-
-        <td class="text-center">
-          {% if checkout.cd_status %}
-
-          <span class="fas fa-circle text-success"> {{ checkout.cd_status }}</span>
-
-          {% endif %}
-
       </td>
+      
+      <td class="text-center">
+        {% if checkout.cd_status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+        {% elif checkout.cd_status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+        {% else %}
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+        {% endif %}
+    </td>
+    
       <td style="cursor: pointer;" onclick="toggleComments(this)">
         <div class="commentsBlock">
             <p>
-                {% if p.bo_comment %}
-                    <strong>Budget Officer :</strong>  {{ p.bo_comment }}
+                {% if checkout.bo_comment %}
+                    <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
                 {% else %}
                     <strong>Budget Officer :</strong> No comment
                 {% endif %}
             </p>
             <p class="campusDirectorComment" style="display: none;">
-                {% if p.cd_comment %}
-                    <strong>Campus Director:</strong> {{ p.cd_comment }}
+                {% if checkout.cd_comment %}
+                    <strong>Campus Director:</strong> {{ checkout.cd_comment }}
                 {% else %}
                     <strong>Campus Director:</strong> No comment
                 {% endif %}
             </p>
         </div>
-    
         <script>
             function toggleComments(element) {
                 var commentsBlock = element.querySelector('.commentsBlock');
@@ -169,13 +177,11 @@
             }
         </script>
     </td>
-    
       </tr>
       {% endfor %}
 
 
       {% else %}
-
 
       <tr>
         <td colspan="8">
@@ -229,3 +235,5 @@
     }
   </script>
   {% endblock %}
+
+

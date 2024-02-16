@@ -72,8 +72,8 @@
     }
 
 .bckbtn img {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
 }
 
@@ -81,6 +81,38 @@
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
 
+.home {
+    position: fixed;
+    top: 20vh;
+}
+ 
+.home img {
+    margin-bottom: ;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+    animation: beat 2s infinite;
+    position: relative;
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2); 
+}
 
 </style>
 
@@ -92,9 +124,24 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 35%;"> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
+        <h1 style="margin-left: 35%; "> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
-    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/arrow-left.png' %}"></a>
+    <div class="home">
+        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="Home">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('homeImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
+    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/back-button.gif' %}"></a>
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -121,8 +168,8 @@
                     <form action="{% url 'approved_ppmp' %}" method="post" class="item-form">
                         {% csrf_token %}
                         <tr class="item-row" id="row{{ p.id }}">
-                            <td>{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
-                            <td>{{ p.item_brand_description }}<input type="hidden" name="item_brand"
+                            <td class="text-left">{{ p.item }}<input type="hidden" name="item" value="{{ p.item }}"></td>
+                            <td class="text-left">{{ p.item_brand_description }}<input type="hidden" name="item_brand"
                                     value="{{ p.item_brand_description }}"></td>
                             <td>{{ p.unit }}<input type="hidden" name="unit" value="{{ p.unit }}"></td>
                             <td>{{ p.unit_cost }}<input type="hidden" name="unit_cost" value="{{ p.unit_cost }}"></td>

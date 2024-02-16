@@ -110,7 +110,7 @@
     }
 
     .footer {
-        background-color: rgba(10, 99, 158, 0.637);
+        background-color: rgba(1, 33, 67, 0.9);
         text-align: center;
         width: 100%;
         height: 100px;
@@ -200,11 +200,90 @@
         height: auto; /* Maintain the aspect ratio */
         margin-right: 15px
     }
-    
-    /* Additional styles for buttons if necessary */
-    .aprv, .disaprv {
-        /* Add styles as needed */
+
+    .bck a  {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
     }
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -4.5vh;
+      
+        
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+    .home {
+        position: fixed;
+        top: 20vh;
+    }
+     
+    .home img {
+        margin-bottom: ;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+        position: relative;
+        margin-left: .5vh;
+    }
+    
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2); 
+    }
+
+    .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: 300px; /* Adjust this value as needed */
+        transform: translateY(-50%);
+    }
+
+    .get {
+     
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        
+    }
+    
+    .get:hover {
+        background: #ffa125e3; /* Change background color on hover */
+        outline: 0px; /* Optional: remove outline on hover */
+    }
+    
+   
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -215,14 +294,42 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4 "> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
-
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
 
+    <div class="left-button-container">
+        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link"> 
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
+        </a>
+    </div>
 
+    <div class="home">
+        <a href="{% url 'budget-landing' %}" onclick="toggleAnimation()">
+            <img src="{% static 'images/home.png' %}" alt="budget-landing">
+        </a>
+    </div>
+    <script>
+    function toggleAnimation() {
+        var img = document.getElementById('budget-landingImg');
+        if (img.style.animationPlayState === 'paused') {
+            img.style.animationPlayState = 'running'; // Resume animation
+        } else {
+            img.style.animationPlayState = 'paused'; // Pause animation
+        }
+    }
+    </script>
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
     <div class="table-responsive">
 
-        <form action="{% url 'boppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id ="form_id">
 
             {% csrf_token %}
 
@@ -296,7 +403,6 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -323,20 +429,16 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
-        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link">
-            <img class="slip-icon" src="{% static 'images/slip.png' %}" alt="">
-        </a>
+  
 
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
             <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
         </div>
     </div>
-    
 </footer>
 
 </form>
-
 
 <script>
     function btn_click(approve) {
@@ -354,20 +456,5 @@
 
 
 
-
-<script>
-    // Check if the element has the class 'redirect-link' before applying onclick
-    document.addEventListener('DOMContentLoaded', function () {
-        var downloadLink = document.querySelector('.icon-link.redirect-link');
-
-        if (downloadLink) {
-            downloadLink.onclick = function () {
-                // Replace 'your_redirect_url_name' with the actual URL name
-                window.location.href = '{% url 'preqform_cd' %}?pr_id=' + pr_id;
-                return false; // Prevent the default link behavior
-            };
-        }
-    });
-</script>
 
 {% endblock %}
