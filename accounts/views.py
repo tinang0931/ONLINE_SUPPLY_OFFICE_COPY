@@ -41,10 +41,22 @@ from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import *
 
+from django.shortcuts import render
+from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
+from .config import HEADING_TEXT, SUBHEADING_TEXT
+
+
 
 
 def main(request):
-    return render(request, 'accounts/User/main.html')
+    context = {
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    print(CAMPUS_NAME)
+    print(SITE_TITLE)
+    return render(request, 'accounts/User/main.html', context)
+
 
 
 def bac(request):
@@ -52,27 +64,43 @@ def bac(request):
 
 @bac_required
 def baclanding(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+    context ={
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT,
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html', context)
 
 @bac_required
 def bac_request(request):
 
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
-        'tracker': tracker
-
+        'tracker': tracker,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+  
     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
 @cd_required
 def cdlanding(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
+    context ={
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
 @regular_user_required
 def userlanding(request):
-    return render(request, 'accounts/User/userlanding.html')
+    context = {
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT,
+    }
+    print(HEADING_TEXT)
+    print(SUBHEADING_TEXT)
+    return render(request, 'accounts/User/userlanding.html', context)
 
 
 @regular_user_required
@@ -94,6 +122,8 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
@@ -112,7 +142,9 @@ def ppmpform(request, year, pr_id):
         'year': year,
         'pr_id': pr_id,
         'bo_comment': approved_checkouts.first().bo_comment,
-        'cd_comment': approved_checkouts.first().cd_comment, 
+        'cd_comment': approved_checkouts.first().cd_comment,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
@@ -124,7 +156,11 @@ def landing(request):
 
 @budget_required
 def budget_landing(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
+    context = {
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT,
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html', context)
 
 User = get_user_model()
 @unauthenticated_user
@@ -279,7 +315,12 @@ def logout_user(request):
 
 @authenticated_user
 def about(request):
-    return render(request, 'accounts/User/about.html')
+    context = {
+    'SITE_TITLE': SITE_TITLE,
+    'CAMPUS_NAME': CAMPUS_NAME,
+    }
+
+    return render(request, 'accounts/User/about.html', context)
 
 @regular_user_required
 @authenticated_user
@@ -316,7 +357,9 @@ def tracker(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user
+        'user': request.user,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
         
         
     }
@@ -335,7 +378,11 @@ def profile(request):
 
 @bac_required
 def bac_about(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html')
+    context = {
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html', context)
 
 
 
@@ -377,7 +424,9 @@ def cdpurchase_approval(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'status': checkouts.status
+            'status': checkouts.status,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
     }
 
 
@@ -416,11 +465,10 @@ def bac_home(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user
-        
-        
+        'user': request.user,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
-
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
 
@@ -428,11 +476,13 @@ def bac_purchaserequest(request, pr_id):
     checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
     checkout_items = PR.objects.filter(pr_identifier=checkouts)
     context = {
-            'checkout': checkouts,
-            'checkout_items': checkout_items,
-            'user': request.user,
-            'pr_id': pr_id,
-            'status': checkouts.status
+        'checkout': checkouts,
+        'checkout_items': checkout_items,
+        'user': request.user,
+        'pr_id': pr_id,
+        'status': checkouts.status,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
         
     
@@ -445,8 +495,9 @@ def bac_ppmp(request, pr_id):
     context = {
             
             'checkout_items': checkout_items,
-            
             'pr_id': pr_id,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
         
     }
 
@@ -538,7 +589,11 @@ def bo(request):
 @budget_required
 @authenticated_user
 def boabout(request):
-    return render(request, 'accounts/Admin/Budget_Officer/boabout.html')
+    context = {
+    'SITE_TITLE': SITE_TITLE,
+    'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/boabout.html', context)
 
 
 
@@ -555,7 +610,11 @@ def cd(request):
 @cd_required
 @authenticated_user
 def cdabout(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdabout.html')
+    context = {
+    'SITE_TITLE': SITE_TITLE,
+    'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdabout.html', context)
 
 @cd_required
 @authenticated_user
@@ -580,14 +639,20 @@ def cdppmp(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user      
+        'user': request.user,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,   
     }
     return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', context)
 
 @cd_required
 @authenticated_user
 def cdresolution(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdresolution.html')
+    context ={
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdresolution.html', context)
 
 
 @authenticated_user
@@ -678,8 +743,8 @@ def addItem(request):
             item_brand_description=item_brand_description,
             unit=unit,
             unit_cost=unit_cost,
-  
         )
+
         return redirect('ppmp')
     
     return render(request, 'accounts/User/ppmp.html')
@@ -709,7 +774,13 @@ def catalogue (request):
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-    return render(request, 'accounts/User/catalogue.html', {'grouped_data': grouped_data})
+
+    context = {
+        'grouped_data' : grouped_data,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
+    }
+    return render(request, 'accounts/User/catalogue.html', context)
 
 
 @regular_user_required
@@ -730,7 +801,10 @@ def myppmp(request):
 
 @regular_user_required
 def ppmp(request):
-    
+    context = {
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
+    }
     if request.method == 'POST':
 
         year = request.POST.get('selectedYear')
@@ -795,8 +869,8 @@ def ppmp(request):
     elif request.method == 'GET':
     
         items = Item.objects.all()
-    
-        return render(request, 'accounts/User/ppmp.html', {'items': items})
+        context['items'] = items
+        return render(request, 'accounts/User/ppmp.html', context)
 
 
 
@@ -804,6 +878,10 @@ def ppmp(request):
 from django.core.files.base import ContentFile
 @regular_user_required
 def purchase(request):
+    context = {
+                'SITE_TITLE': SITE_TITLE,
+                'CAMPUS_NAME': CAMPUS_NAME,
+                }
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
         items = request.POST.getlist('items[]')
@@ -837,7 +915,7 @@ def purchase(request):
                 quantity=quantity[i],
                 total_cost=total
             )
-
+            
             PR_Items.objects.all().delete()
 
             return redirect('purchasetracker')
@@ -845,7 +923,8 @@ def purchase(request):
     elif request.method == 'GET':
        
         items = PR_Items.objects.all()
-        return render(request, 'accounts/User/purchase.html', {'items': items})
+        context['items'] = items  # Add 'items' to the context dictionary
+        return render(request, 'accounts/User/purchase.html', context)
 
 from bson import ObjectId
 
@@ -889,6 +968,8 @@ def approved_ppmp(request):
         context = {
             'checkout_items': checkout_items,
             'latest_year': latest_year,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
 
@@ -953,15 +1034,21 @@ def bac_dashboard(request):
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
+
+        context = {
+            'grouped_data': grouped_data,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
+        }
         
-        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', {'grouped_data': grouped_data})
+        return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', context)
 
     elif request.method == 'POST':
         new_category = request.POST.get('custom-category', '').strip()
         if new_category:
             CSV.objects.create(Category=new_category)
-            return redirect('bac_dashboard')
-        
+
+        return redirect('bac_dashboard')
 
 
 def upload_file(request):
@@ -1066,6 +1153,8 @@ def bohome(request):
 
     context = {
         'checkouts': checkout_data,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME':CAMPUS_NAME,
     }
 
     return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
@@ -1134,6 +1223,8 @@ def preqform_bo(request, pr_id):
             'checkouts': checkouts,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
         }
         return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
 
@@ -1201,6 +1292,8 @@ def cdppmp_approval(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
+            'SITE_TITLE':SITE_TITLE,
+            'CAMPUS_NAME':CAMPUS_NAME,
      }
 
     return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
@@ -1227,7 +1320,9 @@ def cdpurchase(request):
 
     context = {
         'checkouts': checkout_data,
-        'user': request.user      
+        'user': request.user,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,     
     }
 
    
@@ -1321,8 +1416,9 @@ def checkout_items_view(request):
 def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
-        'tracker': tracker
-
+        'tracker': tracker,
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
 
