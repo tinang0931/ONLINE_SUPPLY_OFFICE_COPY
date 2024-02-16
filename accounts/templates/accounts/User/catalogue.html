@@ -93,7 +93,7 @@ opacity: 1;
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
+        top: -8.5vh;
       
         
     }
@@ -104,7 +104,7 @@ opacity: 1;
    
 .home {
     position: relative;
-    top: -5vh;
+    top: -10vh;
 }
  
 .home img {
@@ -143,7 +143,7 @@ opacity: 1;
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
  
     <div class="container">
-        <h1 style="margin-left: 45%;"> <strong> CATALOGUE </strong></h1>
+        <h1 style="margin-left: 45%; margin-top: 5vh"> <strong> CATALOGUE </strong></h1>
     </div>
     <div class="home">
         <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
@@ -167,8 +167,8 @@ opacity: 1;
     </div>
  
     <div class="row">
-            <div class="search" style="position: relative; text-align: right;">
-                <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+            <div class="search" style="position: relative; text-align: right; margin-top : -7.5vh">
+                <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; margin-top: -4vh">
                 <!-- <i class="fas fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i> -->
             </div>
            
@@ -226,8 +226,7 @@ opacity: 1;
                             </tr>
                         </form>
                         
-                       
-                        
+ 
                         {% endfor %}
                         {% endfor %}
                     </tbody>

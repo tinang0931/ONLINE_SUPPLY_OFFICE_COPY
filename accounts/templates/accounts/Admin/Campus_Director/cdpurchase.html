@@ -38,6 +38,7 @@
     margin-left: 1400.15px;
     background-color: transparent; 
     box-shadow: none; 
+    margin-top: 5vh;
   }
 
   .search-form {
@@ -116,32 +117,38 @@
     cursor: help;
   }
   
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -15vh;
+  
     
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
+}
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
     
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    .table-container {
+    margin-top: -5vh; 
     }
 
 </style>
 
-<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden; margin-top ">
   <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS </strong> </h1>
 
   
   <div class="search" style="position: relative; text-align: right;">
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search" style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
 
 <div class="row">
