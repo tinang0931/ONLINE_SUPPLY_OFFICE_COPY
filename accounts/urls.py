@@ -17,6 +17,7 @@ urlpatterns = [
     path('item/<int:pk>/list/', views.item_list, name='item_list'),
     path('register/', views.register, name='register'),
     path('register_user/', views.register_user, name='register_user'),
+    path('requests/', views.requests, name='requests'),
     path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
     path('logout_user/', views.logout_user, name='logout_user'),
     path('catalogue/', views.catalogue, name='catalogue'),

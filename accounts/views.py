@@ -46,6 +46,155 @@ from .models import *
 def main(request):
     return render(request, 'accounts/User/main.html')
 
+User = get_user_model()
+@unauthenticated_user
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/User/register.html')
+        
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/User/register.html')
+
+        user = User.objects.create_user(
+        username=username, 
+        email=email, 
+        password=password1, 
+        contact1=contact1,
+        first_name=first_name,
+        last_name=last_name, 
+        is_active=False)
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        messages.success(request, "Waiting for Admin's Approval")
+        return redirect('login')
+    return render(request, 'accounts/User/register.html')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        pass1 = request.POST.get('pass1')
+        
+        user = authenticate(request, username=username, password=pass1)
+        if user is not None and user.is_active:
+            auth_login(request, user)
+            
+            if user.user_type == 'admin':
+                return redirect('user')  
+            elif user.user_type == 'regular':
+                return redirect('userlanding')
+            elif user.user_type == 'cd':
+                return redirect('cdlanding')
+            elif user.user_type == 'budget':
+                return redirect('budget-landing')
+            elif user.user_type == 'bac':
+                return redirect('baclanding')
+            else:
+                
+                return redirect('login') 
+        else:
+            messages.error(request, "Invalid login credentials. Please try again.")
+    
+    return render(request, 'accounts/User/login.html') 
+
+
+def get_random_string(length, allowed_chars='0123456789'):
+    return ''.join(random.choice(allowed_chars) for _ in range(length))
+
+
+def handle_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        verification_code = get_random_string(4, '0123456789')
+        cache_key = f'verification_code_{email}'
+        cache.set(cache_key, verification_code, 600) 
+        subject = 'Password Reset Verification Code'
+        message = f'Your verification code is: {verification_code}'
+        from_email = 'rlphtzn@gmail.com'
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list)
+        return redirect('verify_code')  
+    return render(request, 'accounts/User/forgot.html')
+
+
+def verify_code(request):
+    if request.method == 'POST':
+        code1 = request.POST.get('code1')
+        code2 = request.POST.get('code2')
+        code3 = request.POST.get('code3')
+        code4 = request.POST.get('code4')
+        verification_code = f"{code1}{code2}{code3}{code4}"
+        user_email = request.POST.get('email')
+        if is_valid_code(verification_code, user_email):
+            return redirect('reset_password')  
+    return render(request, 'accounts/User/verify.html')  
+
+
+def is_valid_code(verification_code, user_email):
+    cache_key = f'verification_code_{user_email}'
+    stored_code = cache.get(cache_key)
+    if stored_code and verification_code == stored_code:
+        return True
+    return False
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')  
+        user = request.user  
+        user.set_password(new_password)
+        user.save()
+        update_session_auth_hash(request, user)
+        messages.success(request, 'Password updated successfully.')
+        return redirect('login') 
+    return render(request, 'accounts/User/reset.html') 
+
+
+@authenticated_user
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You are now logged out.")
+    return redirect('login')
+
+
 
 def bac(request):
     return render(request, 'accounts/User/bac.html')
@@ -129,153 +278,6 @@ def landing(request):
 def budget_landing(request):
     return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
 
-User = get_user_model()
-@unauthenticated_user
-def register(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        first_name = request.POST['fname']
-        last_name = request.POST['lname']
-        email = request.POST['email']
-        contact1 = request.POST['contact1']
-        password1 = request.POST['pass1']
-        password2 = request.POST['pass2']
-        user_type = request.POST['user_type']
-
-        if password1 != password2:
-            messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/User/register.html')
-        
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
-            messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/User/register.html')
-
-        user = User.objects.create_user(username=username, 
-        email=email, 
-        password=password1, 
-        contact1=contact1,   
-        user_type=user_type, is_active=False)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-
-        current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
-        message = render_to_string('accounts/User/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-        messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
-        return redirect('login')
-    return render(request, 'accounts/User/register.html')
-
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
-
-
-def login(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        pass1 = request.POST.get('pass1')
-        
-        user = authenticate(request, username=username, password=pass1)
-        if user is not None and user.is_active:
-            auth_login(request, user)
-            
-            if user.user_type == 'admin':
-                return redirect('admin_home')  
-            elif user.user_type == 'regular':
-                return redirect('userlanding')
-            elif user.user_type == 'cd':
-                return redirect('cdlanding')
-            elif user.user_type == 'budget':
-                return redirect('budget-landing')
-            elif user.user_type == 'bac':
-                return redirect('baclanding')
-            else:
-                
-                return redirect('login') 
-        else:
-            messages.error(request, "Invalid login credentials. Please try again.")
-    
-    return render(request, 'accounts/User/login.html') 
-
-
-def get_random_string(length, allowed_chars='0123456789'):
-    return ''.join(random.choice(allowed_chars) for _ in range(length))
-
-
-def handle_reset_request(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        verification_code = get_random_string(4, '0123456789')
-        cache_key = f'verification_code_{email}'
-        cache.set(cache_key, verification_code, 600) 
-        subject = 'Password Reset Verification Code'
-        message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'
-        recipient_list = [email]
-        send_mail(subject, message, from_email, recipient_list)
-        return redirect('verify_code')  
-    return render(request, 'accounts/User/forgot.html')
-
-
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-        verification_code = f"{code1}{code2}{code3}{code4}"
-        user_email = request.POST.get('email')
-        if is_valid_code(verification_code, user_email):
-            return redirect('reset_password')  
-    return render(request, 'accounts/User/verify.html')  
-
-
-def is_valid_code(verification_code, user_email):
-    cache_key = f'verification_code_{user_email}'
-    stored_code = cache.get(cache_key)
-    if stored_code and verification_code == stored_code:
-        return True
-    return False
-
-
-def reset_password(request):
-    if request.method == 'POST':
-        new_password = request.POST.get('new_password')  
-        user = request.user  
-        user.set_password(new_password)
-        user.save()
-        update_session_auth_hash(request, user)
-        messages.success(request, 'Password updated successfully.')
-        return redirect('login') 
-    return render(request, 'accounts/User/reset.html') 
-
-
-@authenticated_user
-def logout_user(request):
-    logout(request)
-    messages.success(request, "You are now logged out.")
-    return redirect('login')
 
 
 @authenticated_user
@@ -681,7 +683,6 @@ def register_user(request):
         last_name = request.POST['lname']
         email = request.POST['email']
         contact1 = request.POST['contact1']
-        contact2 = request.POST['contact2']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
@@ -693,7 +694,7 @@ def register_user(request):
             messages.error(request, "Username or email is already in use.")
             
 
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1,   user_type=user_type, is_active=False)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
@@ -711,9 +712,28 @@ def register_user(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
-        messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
-        return redirect('user')
+        messages.success(request, "Waiting for Admin's Approval")
+        return redirect('login')
+    return render(request, 'accounts/Admin/System_Admin/user.html')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
     
+def requests(request):
+    return render(request, 'accounts/Admin/System_Admin/requests.html')
+
+  
    
 
    

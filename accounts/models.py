@@ -12,15 +12,13 @@ from bson import ObjectId
 
 
 class User(AbstractUser):
-    CTU_ID_LENGTH = 10
     username = models.CharField(max_length=12, unique=True, primary_key=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
-    contact2 = models.PositiveIntegerField()
 
     USER_TYPES = [
-
+        ('admin', 'Admin'),
         ('regular', 'Regular User'),
         ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
@@ -35,7 +33,7 @@ class User(AbstractUser):
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
 
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
 
     @property
     def get_user_type_display(self):

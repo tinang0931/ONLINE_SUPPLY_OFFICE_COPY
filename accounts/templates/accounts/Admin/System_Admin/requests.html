@@ -3,7 +3,7 @@
 
 {% load static %}
 
-{% block user %}
+{% block requests %}
 
 
 <style>
@@ -102,16 +102,14 @@
 <div class="container-fluid" style="height: 68vh;">
     <div class="container">
         <i class="fas fa-user-friends two-user-icon"></i> 
-        <h1 class="user">USERS</h1>
+        <h1 class="user"><strong>REQUEST USER'S ROLE</strong></h1>
     </div>
     <div class="search">
         <i class="fas fa-search" style="position: absolute; top: 40%; transform: translateY(-50%); left: 85%; color: #05708BD2;"></i>
     <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request" oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
     </div>
     
-    <button class="adduser" onclick="openModal()" style="background-color: #28a745; color: white; font-size: 16px; margin-left: 2px;">
-        <span class="bi bi-person-plus"></span> Add User
-      </button>
+
       
 
 
@@ -213,116 +211,9 @@
                     </table>
                 </div>
 
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                      <span class="close" onclick="closeModal()">&times;</span>
-
-                        <h5 class="modal-title" >Add User</h5>
-
-                        <form action="{% url 'register_user' %}" method="post">
-                            {% csrf_token %}
-                        
-                                    <div class="user-details">
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="number" name="username" placeholder="CTU ID:" required oninput="maxLengthCheck(this, 11)">
-                                        </div>
-                                        <script>
-                                            function maxLengthCheck(object, maxLength) {
-                                                if (object.value.length > maxLength)
-                                                object.value = object.value.slice(0, maxLength);
-                                                }
-                                            </script>
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="email" name="email" placeholder="Email:" required>
-                                        </div>
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="text" name="fname" placeholder="First Name:" required>
-                                        </div>
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="text" name="lname" placeholder="Last Name:" required>
-                                        </div>
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="number" name="contact1" placeholder="Contact No. 1:" required oninput="maxLengthCheck(this, 12)">
-                                        </div>
-                                        <script>
-                                            function maxLengthCheck(object, maxLength) {
-                                                if (object.value.length > maxLength)
-                                                object.value = object.value.slice(0, maxLength);
-                                                }
-                                            </script>
+                
                     
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="password" name="pass1" placeholder="Password:" required oninput="maxLengthCheck(this, 15)">
-                                        </div>
-                                        <script>
-                                            function maxLengthCheck(object, maxLength) {
-                                                if (object.value.length > maxLength)
-                                                object.value = object.value.slice(0, maxLength);
-                                                }
-                                            </script>
-                        
-                                        <div class="input-box">
-                                            <span class="details"></span>
-                                            <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
-                                        </div>
-                                        <script>
-                                            function maxLengthCheck(object, maxLength) {
-                                                if (object.value.length > maxLength)
-                                                object.value = object.value.slice(0, maxLength);
-                                                }
-                                            </script>
-                        
-                                            <div class="register-details">
-                                    <span class="details">Type of user</span>
-                                
-                                    <div class="input-box">
-                                
-                                        <label class="checkbox-label" for="bacCheckbox">
-                                            <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
-                                            <div class="checkbox-box">Admin</div>
-                                        </label>
-                                
-                                        <label class="checkbox-label" for="bacCheckbox">
-                                            <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
-                                            <div class="checkbox-box">BAC Secretariat</div>
-                                        </label>
-                                
-                                        <label class="checkbox-label" for="regularCheckbox">
-                                            <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
-                                            <div class="checkbox-box">Campus Director</div>
-                                        </label>
-                                
-                                        <label class="checkbox-label" for="regularCheckbox">
-                                            <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
-                                            <div class="checkbox-box">Budget Officer</div>
-                                        </label>
-                                
-                                        <label class="checkbox-label" for="regularCheckbox">
-                                            <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
-                                            <div class="checkbox-box">Regular User</div>
-                                        </label>
-
-                                
-                        </div>
-                    
-            
-            
-                        <div class="modal-footer ">
-                        <button type="submit" value ="submit" class="btn btn-primary" >Register</button>
-
-                    </form>  
-  
+           
 
     
 
@@ -535,6 +426,5 @@
  -->
 
 
-{% endblock %}
-{% block admin_home %}
+
 {% endblock %}
