@@ -728,7 +728,13 @@ def catalogue (request):
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
-    return render(request, 'accounts/User/catalogue.html', {'grouped_data': grouped_data})
+
+    context = {
+        'grouped_data' : grouped_data,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
+    }
+    return render(request, 'accounts/User/catalogue.html', context)
 
 
 @regular_user_required
@@ -749,6 +755,10 @@ def myppmp(request):
 
 @regular_user_required
 def ppmp(request):
+    context = {
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
+    }
     if request.method == 'POST':
 
         year = request.POST.get('selectedYear')
@@ -813,8 +823,8 @@ def ppmp(request):
     elif request.method == 'GET':
     
         items = Item.objects.all()
-    
-        return render(request, 'accounts/User/ppmp.html', {'items': items})
+        context['items'] = items
+        return render(request, 'accounts/User/ppmp.html', context)
 
 
 

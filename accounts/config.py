@@ -1,3 +1,3 @@
-CAMPUS_NAME = "ginatilan "
-SITE_TITLE = " secrert Supply Office Request Monitoring System"
+CAMPUS_NAME = "Argao "
+SITE_TITLE = " CTU-AC Supply Office Request Monitoring System"
 
