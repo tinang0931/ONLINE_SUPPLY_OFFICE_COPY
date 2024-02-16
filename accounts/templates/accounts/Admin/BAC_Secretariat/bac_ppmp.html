@@ -22,23 +22,6 @@
         color: white;
     }
 
-    .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        /* Apply transition to the transform property */
-    }
-
-    .bck:hover img {
-        transform: scale(1.2);
-        /* Scale the image to 1.2 times its original size on hover */
-    }
 
     body {
         margin-top: 20px;
@@ -131,13 +114,37 @@
         
         float: left;
     }
-    .baclanding img {
-        margin-bottom: 8px;
+    .bck a  {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -1vh;
+      
+        
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+    .home {
+        position: fixed;
+        top: 20vh;
+    }
+     
+    .home img {
+        margin-bottom: ;
         width: 40px;
         height: 40px;
         transition: transform 0.3s ease-in-out;
         animation: beat 2s infinite;
-        
+        position: relative;
         margin-left: .5vh;
     }
     
@@ -154,9 +161,9 @@
         }
     }
      
-    .baclanding:hover img {
+    .home:hover img {
         animation-play-state: paused;
-        transform: scale(1.2);
+        transform: scale(1.2); 
     }
 </style>
 
@@ -166,7 +173,7 @@
         <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
 
     </div>
-    <div class="baclanding">
+    <div class="home">
         <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
             <img src="{% static 'images/home.png' %}" alt="baclanding">
         </a>
