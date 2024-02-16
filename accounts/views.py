@@ -34,15 +34,12 @@ from django.utils.crypto import get_random_string
 from .models import VerificationCode
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Item
-from .models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt 
 import random
-
 from itertools import groupby
 from django.core.files.base import ContentFile
-from .models import CheckoutItems
+from .models import *
 
 
 
@@ -102,13 +99,13 @@ def ppmp101(request):
     return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year, pr_id):
-   
+ 
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
-   
+
 
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
- 
+
 
     context = {
         'approved_items': approved_items,
@@ -153,7 +150,13 @@ def register(request):
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = User.objects.create_user(username=username, 
+        email=email, 
+        password=password1, 
+        contact1=contact1, 
+        contact2=contact2,  
+        user_type=user_type, 
+        is_active=False)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
