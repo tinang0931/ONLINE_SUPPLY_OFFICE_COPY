@@ -80,13 +80,19 @@
 .bckbtn:hover img {
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
 }
+
+.home {
+    position: fixed;
+    top: 20vh;
+}
+ 
 .home img {
-    margin-bottom: 8px;
+    margin-bottom: ;
     width: 40px;
     height: 40px;
     transition: transform 0.3s ease-in-out;
     animation: beat 2s infinite;
-   
+    position: relative;
     margin-left: .5vh;
 }
 
@@ -105,7 +111,7 @@
  
 .home:hover img {
     animation-play-state: paused;
-    transform: scale(1.2);
+    transform: scale(1.2); 
 }
 
 </style>
@@ -118,7 +124,7 @@
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 35%;"> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
+        <h1 style="margin-left: 35%; "> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
     <div class="home">
         <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
