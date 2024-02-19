@@ -1,4 +1,4 @@
-
+{% comment %} 
 {% load static %}
 
 {% block preqform %}
@@ -376,7 +376,6 @@
         }
         
      
-        
         .bck a  {
             display: flex;
             align-items: center;
@@ -387,9 +386,10 @@
             width: 50px;
             height: 50px;
             transition: transform 0.3s ease-in-out;
-            position: relative;
-            top: -16vh;
+            position: fixed;
+            top: 8vh;
             margin-left: -60.5vh;
+            
           
             
         }
@@ -438,19 +438,15 @@
             transform: translateY(-50%);
         }
         
-      
+    .table-responsive {
+        margin-top: 2vh;
+    }  
+        
     </style>
 <body>
     <div class="container page-break">
         <div id="purchaseRequestTable" class="container-fluid">
             <div class="container" style="border: b;">
-                <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 85%; margin-left: 5px">
-                <h1 class="center-heading" style="font-size: 1em;"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
-                <div class="container" style="text-align: left; display: inline-block; margin-left: -160px; margin-top: 20px; font-size: 0.8em; ">
-                    <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
-                    <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
-                    <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
-                </div>
                 <div class="home">
                     <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
                         <img src="{% static 'images/home.png' %}" alt="cdlanding">
@@ -473,6 +469,14 @@
                           <img src="{% static 'images/back-button.gif' %}" alt="Previous">
                         </a>
                       </div>
+                    </div>
+                    <img class="center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 85%; margin-left: 5px; margin-top: -3vh;">
+                <h1 class="center-heading" style="font-size: 1em; margin-top: 0.5vh"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
+                <div class="container" style="text-align: left; display: inline-block; margin-left: -40vh; margin-top: 20px; font-size: 0.8em; ">
+                    <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
+                    <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
+                    <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
+                </div>
                 <div class="table-responsive" style= "font-size= 0.8em">
                     <table class="table table-bordered">
                     <thead>
@@ -501,6 +505,7 @@
 </thead>
 <tbody>
 </tbody>
+
                             {% for p in checkout_items %}
                             <tr class="item-row" id="{{ p.id }}">
                                 <td>
@@ -550,7 +555,7 @@
             </div>
         </div>          
         <div class="content-below-table">
-            <div class="total-budget-container" style="margin-left: 35px">
+            <div class="total-budget-container" style="margin-left: -7vh">
             <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
                 <span id="totalBudget" class="total-budget-value">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
@@ -559,24 +564,29 @@
                 </span>
             </div>
             <div>
-                <div style="text-align: center; margin-right: 120px;">
-                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              
+                <div style="display: flex; justify-content: center; margin-left: -15vh">
+                    <div>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                    </div>
+                    <div style="margin-left: 5vh;">
                         <strong>Certified Fund Available:</strong>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved:</strong>
-                    </div>          
+                    </div>
+                    <div style="margin-left: 5vh;">
+                        <strong>Approved:</strong>
+                    </div>
+                </div>
             </div>
             <br>
             <br>
-            <br>
             <div>
+                <div style="margin-left: -15vh;">
                 <strong><b><u>{{user.first_name}} {{user.last_name}}</b></u></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong><u>MARY ANN P. GONZAGA. C.P.A.</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
                 <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
             </div>          
             <div>
+                <div style="margin-left: -2vh;">
                 <strong>End-User &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Accountant 1  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
@@ -585,12 +595,12 @@
             <br>
             <br>
             <div>
-                <div style="text-align: left; ">
+                <div style="text-align: left; margin-left:  -10vh ">
                     <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
                     <br>
                     <br>
                     <br>
-                    <div style="text-align: center;">
+                    <div style="text-align: left; margin-left: 9vh ">
                         <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block; width: 600px;">
                     </div>
                 </div>                
@@ -600,22 +610,24 @@
         <br>
         </div>
         <div id="footer-content">
-            <div class="icons-container" style="position: relative; margin-top: -100vh; margin-left: 1300px;">
-                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()" style="position: absolute; top: -5vh;">
-                    <button type="button" onclick="btn_click(true)" class="get"><b>DOWNLOAD</b></button>
-                </a>
-                <a href="#" title="Select" class="icon-link" style="margin-left: 5px;" onclick="toggleSelect()">
-                    <button type="button" onclick="btn_click(true)" class="select"><b>SELECT</b></button>
-                </a>
-                <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 6px; margin-top: -5vh">
-                    <option value="a4">A4</option>
-                    <option value="legal">Legal</option>
-                </select>
-            </div>
-        </div>                 
-    </div>
-    <div class="page-break">  
-
+            <footer>
+                  <div class="icons-container">
+                      <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                        <button type="button" class="get">Download</button>
+                      </a>
+                      <a href="#" title="Select" class="icon-link">
+                        <button type="button" class="get toggle-select">Select</button>
+                      </a>
+                          <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
+                              <option value="a4">A4</option>
+                              <option value="legal">Legal</option>
+                          </select>
+                      </select>
+                     </div>
+                </div>                  
+             </div>
+  <div class="page-break">  
+</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 
 <script>
@@ -669,4 +681,4 @@
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 
-{% endblock %}
+{% endblock %} {% endcomment %}
