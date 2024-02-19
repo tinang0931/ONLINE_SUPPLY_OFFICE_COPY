@@ -164,6 +164,12 @@
         <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
 
+            {% for message in messages %}
+            <div class="alert alert-danger " style="text-align: center;" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+
             <div class="user-details">
                 <div class="input-box">
                     <span class="details"></span>

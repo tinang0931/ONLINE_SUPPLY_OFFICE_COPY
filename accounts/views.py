@@ -63,7 +63,7 @@ def register(request):
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
         
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
@@ -689,9 +689,11 @@ def register_user(request):
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
 
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
             
 
         user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1,   user_type=user_type, is_active=False)
@@ -712,8 +714,7 @@ def register_user(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
-        messages.success(request, "Waiting for Admin's Approval")
-        return redirect('login')
+        return redirect('user')
     return render(request, 'accounts/Admin/System_Admin/user.html')
 
 def activate(request, uidb64, token):
