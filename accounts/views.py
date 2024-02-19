@@ -171,7 +171,6 @@ def register(request):
         last_name = request.POST['lname']
         email = request.POST['email']
         contact1 = request.POST['contact1']
-        contact2 = request.POST['contact2']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
@@ -186,8 +185,7 @@ def register(request):
         user = User.objects.create_user(username=username, 
         email=email, 
         password=password1, 
-        contact1=contact1, 
-        contact2=contact2,  
+        contact1=contact1,   
         user_type=user_type, 
         is_active=False)
         user.first_name = first_name
@@ -685,7 +683,6 @@ def register_user(request):
         last_name = request.POST['lname']
         email = request.POST['email']
         contact1 = request.POST['contact1']
-        contact2 = request.POST['contact2']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
         user_type = request.POST['user_type']
@@ -697,7 +694,7 @@ def register_user(request):
             messages.error(request, "Username or email is already in use.")
             
 
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, contact2=contact2,  user_type=user_type, is_active=False)
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
