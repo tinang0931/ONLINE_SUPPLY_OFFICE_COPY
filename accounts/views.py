@@ -173,7 +173,7 @@ def register(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
-        user_type = request.POST['user_type']
+
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -185,8 +185,7 @@ def register(request):
         user = User.objects.create_user(username=username, 
         email=email, 
         password=password1, 
-        contact1=contact1,   
-        user_type=user_type, 
+        contact1=contact1,    
         is_active=False)
         user.first_name = first_name
         user.last_name = last_name
