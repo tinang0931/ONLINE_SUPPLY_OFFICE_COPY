@@ -28,7 +28,7 @@
     
       }
       .table-container {
-        margin-top: 20vh; 
+        margin-top: 30vh; 
     }
     .item-actions {
         display: none;
@@ -166,7 +166,7 @@ strong {
     z-index: 999;
     position: absolute;
     top: -7.5vh;
-    margin-left: 30vh;
+    margin-left: 25vh;
 }
 
 .budget-container strong {
@@ -207,8 +207,109 @@ strong {
     animation-play-state: paused;
     transform: scale(1.2); 
 }
+/* Tooltip container */
+.catalogue-popup {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white; /* Set text color to white */
+    padding: 20px; /* Increased padding */
+    border-radius: 5px;
+    top: calc(-60vh); /* Position 60% of the viewport height above the button */
+    left: 50%;
+    transform: translateX(10%);
+    z-index: 9999;
+    display: none; /* Initially hidden */
+    font-size: 16px; /* Increased font size */
+    width: 200px; /* Set a specific width */
+}
 
+/* Arrow pointing to the button */
+.catalogue-popup::after {
+    content: "";
+    position: absolute;
+    bottom: -45%;
+    left: -1%;
+    border-width: 15px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+    transform: translateX(10%);
+}
+.budget-container {
+    position: relative;
+}
 
+#budgetInput {
+    width: 200px;
+}
+.popup {
+    position: absolute;
+    top: 31vh; /* Adjusted the vertical position */
+    left: calc(50% - 150px); /* Adjusted the horizontal position */
+    width: 200px; /* Doubled the width */
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ccc;
+    padding: 15px;
+    display: none;
+    color: white; /* Text color set to white */
+}
+/* Creating the arrow */
+.popup::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; /* Adjust arrow's position */
+    left: calc(50% - 10px); /* Adjust arrow's horizontal position */
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+#tutorialPopup {
+    position: fixed;
+    display: none;
+    width: 400px; /* Adjust the width as needed */
+    top: 26vh; /* Adjust the top position */
+    left: 15%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+#tutorialPopup .popuptext {
+    visibility: hidden;
+    font-size: 14px;
+}
+
+.button-container {
+    position: relative;
+}
+
+.popup-box {
+    position: absolute;
+    top: -23vh;
+    left: 95%;
+    transform: translateX(-50%);
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 9999;
+    color: white; /* Text color set to white */
+}
+
+.popup-box::after {
+    content: "";
+    position: absolute;
+    bottom: -20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
 
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -241,29 +342,94 @@ strong {
             <img src="{% static 'images/back-button.gif' %}" alt="Previous">
         </a>
     </div>
-    
     <div class="row">
         <div class="col-md-1 mb-0">
-            <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; ">Catalogue </a>
+            <button class="catalogue" id="catalogueButton">
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue</a>
             </button>
         </div>
- 
+    
+    
+    <!-- Popup message -->
+    <div class="catalogue-popup" id="popupMessage">
+        naa dere ang items day para maka hibaw ka 
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var popup = document.getElementById("popupMessage");
+            var button = document.getElementById("catalogueButton");
+    
+            // Check if the popup has been displayed in this session
+            var popupDisplayed = sessionStorage.getItem("popupDisplayed");
+    
+            if (!popupDisplayed && popup && button) {
+                // Position the popup above the button
+                popup.style.top = (button.offsetTop - popup.offsetHeight - -250) + "px";
+                popup.style.left = (button.offsetLeft + (button.offsetWidth / 2)) + "px";
+    
+                // Show the popup for 7 seconds
+                setTimeout(function() {
+                    popup.style.display = "block";
+    
+                    // Hide the popup after 3 seconds
+                    setTimeout(function() {
+                        popup.style.display = "none";
+    
+                        // Set flag in sessionStorage indicating that the popup has been displayed in this session
+                        sessionStorage.setItem("popupDisplayed", "true");
+                    }, 3000); // Adjusted to 3 seconds
+                }, 7000); // Adjusted to 7 seconds
+            }
+        });
+    </script>
+    
+    
         
-        <div class="col-md-3 mb-0">
-            <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
-                {% csrf_token %}
-                <div style="  position: relative;  z-index: 999;">
-                    <select id="yearDropdown" >
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                    </select>
-                    <input type="hidden" id="selectedYear" name="selectedYear">
-
+    <div class="col-md-3 mb-0">
+        <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
+            {% csrf_token %}
+            <div style="position: relative; z-index: 999;">
+                <select id="yearDropdown">
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                </select>
+                <input type="hidden" id="selectedYear" name="selectedYear">
+               
+                <div id="tutorialPopup" class="popup">
+                    <span class="popuptext" id="myPopup">year anniversary unta ninyo kay wala mn yaw rah butange  </span>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Check if the popup has been displayed in this session
+                        var popupDisplayed = sessionStorage.getItem("popupDisplayed");
+                
+                        if (!popupDisplayed) {
+                            setTimeout(function() {
+                                var popup = document.getElementById("tutorialPopup");
+                                var popupText = document.getElementById("myPopup");
+                                popup.style.display = "block";
+                                popupText.style.visibility = "visible";
+                
+                                setTimeout(function() {
+                                    popup.style.display = "none";
+                                    // Set flag in sessionStorage indicating that the popup has been displayed in this session
+                                    sessionStorage.setItem("popupDisplayed", "true");
+                                }, 3000); // Adjusted to 3 seconds
+                            }, 4000); // Adjusted to 4 seconds
+                        }
+                
+                        document.getElementById("yearDropdown").addEventListener("change", function() {
+                            document.getElementById("selectedYear").value = this.value;
+                        });
+                    });
+                </script>
+                
+                
                     <script>
                         document.getElementById("yearDropdown").addEventListener("change", function() {
                           document.getElementById("selectedYear").value = this.value;
@@ -278,10 +444,47 @@ strong {
             <div class=" col-md-6 text-left">
                   
                 <div class="budget-container">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>TOTAL ALLOCATED BUDGET:</strong>
-                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)">
+                    <strong>TOTAL ALLOCATED BUDGET:</strong>
+                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount">
+                   </div>
                 </div>
-            </div>
+                <div class="popup" id="popup">
+                    please lang pag input dere .
+                </div>
+            
+           
+           
+                <script>
+                    // Function to show the popup
+                    function showPopup() {
+                        var popup = document.getElementById('popup');
+                        popup.style.display = 'block';
+                        // Hide the popup after 2 seconds
+                        setTimeout(function() {
+                            popup.style.display = 'none';
+                            // Set flag in sessionStorage indicating that the popup has been displayed
+                            sessionStorage.setItem('popupDisplayed', 'true');
+                        }, 3000);
+                    }
+                
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Check if the popup has been displayed in this session
+                        var popupDisplayed = sessionStorage.getItem('popupDisplayed');
+                        
+                        if (!popupDisplayed) {
+                            // Show the popup after 5 seconds when the page loads
+                            setTimeout(showPopup, 5000); // Adjusted to 5 seconds
+                        }
+                
+                        // Hide the popup when budgetInput loses focus
+                        document.getElementById('budgetInput').addEventListener('blur', function() {
+                            var popup = document.getElementById('popup');
+                            popup.style.display = 'none';
+                        });
+                    });
+                </script>
+                
+                
       
         <script>
             function isNumberKey(evt) {
@@ -309,6 +512,7 @@ strong {
                 var storedValue = localStorage.getItem("allocatedBudget");
                 if (storedValue) {
                     document.getElementById("budgetInput").value = storedValue;
+                    
                 }
             };
         </script>
@@ -318,13 +522,19 @@ strong {
         </div>
     </div>
 
-    <div class="button-container" style="float: left;">
-        <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -150px;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
-    </div>
     
-    <div class="table-responsive">
+    <div class="button-container" style="float: left;">
+    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -150px;">
+        <i class="fas fa-check-circle"></i> Submit
+    </button>
+    <div class="popup-box" id="popupBox">
+        hmmmm pa owaw2 pa mo submit
+    </div>
+
+
+
+    
+    <div class="table-responsive" style="position: fixed; top: 60vh;">
 
             <table class="table table-bordered text-center mt-4">
                 <thead>
@@ -490,6 +700,14 @@ strong {
 
                 </tbody>
             </table>
+           
+            <div id="tutorialPopup" class="tutorial-popup">
+                <h2>Welcome to the Tutorial!</h2>
+                <p>This is a tutorial popup. It will automatically appear for 1 second and then disappear after 3 seconds.</p>
+                <p>Please input here</p> <!-- Bagong text na idinagdag -->
+            </div>
+            
+            
             <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
                 <i class="fas fa-plus-circle"></i>
             </button>
@@ -635,7 +853,44 @@ strong {
 
     updateTotalForAllItems();
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const popupBox = document.getElementById("popupBox");
+        const submitBtn = document.getElementById("submitBtn");
 
+        // Function to prevent clicks on popup box from affecting the button
+        popupBox.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+
+        // Check local storage for a flag indicating if the popup has been shown before
+        const popupShown = localStorage.getItem("popupShown");
+
+        // Show the popup box only if it hasn't been shown before
+        if (!popupShown) {
+            setTimeout(function() {
+                popupBox.style.display = "block";
+                setTimeout(function() {
+                    popupBox.style.display = "none";
+                    // Set a flag in local storage indicating the popup has been shown
+                    localStorage.setItem("popupShown", true);
+                }, 3000);
+            }, 10000);
+        }
+
+        // Button click event listener
+        submitBtn.addEventListener("click", function() {
+            // Add your button click functionality here
+            console.log("Button clicked!");
+        });
+
+        // Event listener for when the user logs in
+        window.addEventListener("login", function() {
+            // Remove the flag from local storage when the user logs in
+            localStorage.removeItem("popupShown");
+        });
+    });
+</script>
 
 <script>
     // Function to handle form submission
