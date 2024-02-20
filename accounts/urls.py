@@ -1,12 +1,16 @@
 from django.urls import path
 from django.contrib import admin
-from django.conf import settings
+from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from . import views
 from .views import *
 
 urlpatterns = [
     path('', views.landing, name='landing'),
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name='accounts/User/reset_password.html'), name='reset_password'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='accounts/User/reset_password_sent.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='accounts/User/reset.html'), name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='accounts/User/reset_password_complete.html'), name='password_reset_complete'),
     path('purchaseorder/', views.purchaseorder, name='purchaseorder'),
     path('main/', views.main, name='main'),
     path('bac/', views.bac, name='bac'),
@@ -21,8 +25,6 @@ urlpatterns = [
     path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
     path('logout_user/', views.logout_user, name='logout_user'),
     path('catalogue/', views.catalogue, name='catalogue'),
-    path('reset-password/', views.handle_reset_request, name='handle_reset_request'),
-    path('verify-code/', views.verify_code, name='verify_code'),
     path('tracker/', views.tracker, name='tracker'),
     path('about/', views.about, name='about'),
     path('bac_prof/', views.bac_prof, name='bac_prof'),

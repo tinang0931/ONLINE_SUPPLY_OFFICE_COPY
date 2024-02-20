@@ -40,6 +40,15 @@ import random
 from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import *
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 from django.shortcuts import render
 from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
@@ -183,6 +192,8 @@ def register(request):
             return render(request, 'accounts/User/register.html')
 
         user = User.objects.create_user(
+        first_name=first_name,
+        last_name=last_name,
         username=username, 
         email=email, 
         password=password1, 
@@ -249,56 +260,6 @@ def login(request):
     return render(request, 'accounts/User/login.html') 
 
 
-def get_random_string(length, allowed_chars='0123456789'):
-    return ''.join(random.choice(allowed_chars) for _ in range(length))
-
-
-def handle_reset_request(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        verification_code = get_random_string(4, '0123456789')
-        cache_key = f'verification_code_{email}'
-        cache.set(cache_key, verification_code, 600) 
-        subject = 'Password Reset Verification Code'
-        message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'
-        recipient_list = [email]
-        send_mail(subject, message, from_email, recipient_list)
-        return redirect('verify_code')  
-    return render(request, 'accounts/User/forgot.html')
-
-
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-        verification_code = f"{code1}{code2}{code3}{code4}"
-        user_email = request.POST.get('email')
-        if is_valid_code(verification_code, user_email):
-            return redirect('reset_password')  
-    return render(request, 'accounts/User/verify.html')  
-
-
-def is_valid_code(verification_code, user_email):
-    cache_key = f'verification_code_{user_email}'
-    stored_code = cache.get(cache_key)
-    if stored_code and verification_code == stored_code:
-        return True
-    return False
-
-
-def reset_password(request):
-    if request.method == 'POST':
-        new_password = request.POST.get('new_password')  
-        user = request.user  
-        user.set_password(new_password)
-        user.save()
-        update_session_auth_hash(request, user)
-        messages.success(request, 'Password updated successfully.')
-        return redirect('login') 
-    return render(request, 'accounts/User/reset.html') 
 
 
 @authenticated_user

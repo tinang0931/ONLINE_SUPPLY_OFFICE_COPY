@@ -16,6 +16,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
+    email = models.EmailField(unique=True)
 
     USER_TYPES = [
         ('admin', 'Admin'),
