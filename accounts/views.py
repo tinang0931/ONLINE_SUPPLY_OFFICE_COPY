@@ -173,7 +173,6 @@ def register(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
-        
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -187,9 +186,7 @@ def register(request):
         username=username, 
         email=email, 
         password=password1, 
-        contact1=contact1,
-        first_name=first_name,
-        last_name=last_name,  
+        contact1=contact1,    
         is_active=False)
 
         current_site = get_current_site(request)
