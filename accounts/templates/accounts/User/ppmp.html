@@ -310,6 +310,28 @@ strong {
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
 }
+ /* Style for the popup */
+.popupt {
+    position: absolute;
+    right: 101vh; /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ccc;
+    padding: 10px;
+    
+    display: none;
+    color: white;
+    bottom: 120px; /* Adjust as needed */
+}
+.popupt::after {
+    content: "";
+    position: absolute;
+    bottom: -20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
 
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -352,7 +374,7 @@ strong {
     
     <!-- Popup message -->
     <div class="catalogue-popup" id="popupMessage">
-        naa dere ang items day para maka hibaw ka 
+        click here to select items
     </div>
     
     <script>
@@ -401,7 +423,7 @@ strong {
                 <input type="hidden" id="selectedYear" name="selectedYear">
                
                 <div id="tutorialPopup" class="popup">
-                    <span class="popuptext" id="myPopup">year anniversary unta ninyo kay wala mn yaw rah butange  </span>
+                    <span class="popuptext" id="myPopup">select year </span>
                 </div>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
@@ -449,7 +471,7 @@ strong {
                    </div>
                 </div>
                 <div class="popup" id="popup">
-                    please lang pag input dere .
+                    input your total allocated budget
                 </div>
             
            
@@ -528,14 +550,50 @@ strong {
         <i class="fas fa-check-circle"></i> Submit
     </button>
     <div class="popup-box" id="popupBox">
-        hmmmm pa owaw2 pa mo submit
+         click here to submit 
     </div>
 
 
-
+   
+   
     
     <div class="table-responsive" style="position: fixed; top: 60vh;">
-
+        <div id="popupt" class="popupt">
+            <p>Fill up this field.</p>
+            <div class="arrow"></div>
+        </div>
+    
+        <script>
+            // Display popup for 9 seconds, then hide it after 3 seconds
+            function displayPopupt() {
+                var popupt = document.getElementById("popupt");
+                var reloadCount = localStorage.getItem("reloadCount") || 0;
+        
+                // Check if it's the second reload and not logged in
+                if (reloadCount % 1 === 1 && localStorage.getItem("loggedIn") !== "true") {
+                    popupt.style.display = "block";
+                    setTimeout(function () {
+                        popupt.style.display = "none";
+                    }, 9000);
+                }
+            }
+        
+            // Check localStorage for reload count
+            var reloadCount = localStorage.getItem("reloadCount") || 0;
+        
+            // Increment reload count on page load
+            localStorage.setItem("reloadCount", ++reloadCount);
+        
+            // Function to set login status
+            function setLoggedIn() {
+                localStorage.setItem("loggedIn", "true");
+            }
+        
+            // Automatically display popup on page load
+            window.onload = displayPopupt;
+        </script>
+        
+        
             <table class="table table-bordered text-center mt-4">
                 <thead>
                     <tr>
@@ -610,7 +668,7 @@ strong {
                                     oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                             </td>
 
-
+                           
 
                             <td>
                                 <div class="item-actions" style="text-align: center; gap: 20px">
@@ -696,16 +754,12 @@ strong {
                       </td>
                     </form>
                   </tr>
-
-
-                </tbody>
+                 
+                
             </table>
            
-            <div id="tutorialPopup" class="tutorial-popup">
-                <h2>Welcome to the Tutorial!</h2>
-                <p>This is a tutorial popup. It will automatically appear for 1 second and then disappear after 3 seconds.</p>
-                <p>Please input here</p> <!-- Bagong text na idinagdag -->
-            </div>
+          
+          
             
             
             <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
