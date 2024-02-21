@@ -28,6 +28,9 @@
         transform: scale(1.2);
        
     }
+    .box1 {
+    margin-right: -30%; /* Move 30% to the left */
+}
 
     .box1 {
         transition: transform 0.3s ease-in-out; /* Adding smooth transition */
@@ -36,6 +39,7 @@
     .box1:hover {
         transform: scale(1.1); /* Zoom in by 10% on hover */
     }
+
    
 </style>
 
@@ -52,7 +56,7 @@
       </div>
 
     <div class="d-flex" id="wrapper">
-        <div class="box-container">
+        <div class="box-container" style="margin-left: 70vh;">
 
             <div class="box1 create">
                 <a href="{% url 'ppmp' %}" style="color: BLACK; text-decoration: none;">Create PPMP</a>
