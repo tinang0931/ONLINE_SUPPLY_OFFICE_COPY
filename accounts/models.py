@@ -12,15 +12,14 @@ from bson import ObjectId
 
 
 class User(AbstractUser):
-    CTU_ID_LENGTH = 10
     username = models.CharField(max_length=12, unique=True, primary_key=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
-    contact2 = models.PositiveIntegerField()
+    email = models.EmailField(unique=True)
 
     USER_TYPES = [
-
+        ('admin', 'Admin'),
         ('regular', 'Regular User'),
         ('cd', 'Campus Director'),
         ('budget', 'Budget Officer'),
@@ -35,7 +34,7 @@ class User(AbstractUser):
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
 
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+
 
     @property
     def get_user_type_display(self):
@@ -161,6 +160,7 @@ class Checkout(models.Model):
     pr_id = models.CharField(max_length=50, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
+    bac_status = models.CharField(max_length=20)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
     cd_status = models.CharField(max_length=20)
