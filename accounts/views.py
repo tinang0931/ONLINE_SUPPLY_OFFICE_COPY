@@ -40,6 +40,15 @@ import random
 from itertools import groupby
 from django.core.files.base import ContentFile
 from .models import *
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 from django.shortcuts import render
 from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
@@ -174,22 +183,22 @@ def register(request):
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
 
-
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
-        user = User.objects.create_user(username=username, 
+        user = User.objects.create_user(
+        first_name=first_name,
+        last_name=last_name,
+        username=username, 
         email=email, 
         password=password1, 
         contact1=contact1,    
         is_active=False)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
 
         current_site = get_current_site(request)
         mail_subject = 'Activation link has been sent to your email id'
@@ -204,7 +213,7 @@ def register(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
-        messages.success(request, "Your account has been successfully created. Check your email for activation instructions.")
+        messages.success(request, "Waiting for Admin's Approval")
         return redirect('login')
     return render(request, 'accounts/User/register.html')
 
@@ -233,7 +242,7 @@ def login(request):
             auth_login(request, user)
             
             if user.user_type == 'admin':
-                return redirect('admin_home')  
+                return redirect('user')  
             elif user.user_type == 'regular':
                 return redirect('userlanding')
             elif user.user_type == 'cd':
@@ -251,56 +260,6 @@ def login(request):
     return render(request, 'accounts/User/login.html') 
 
 
-def get_random_string(length, allowed_chars='0123456789'):
-    return ''.join(random.choice(allowed_chars) for _ in range(length))
-
-
-def handle_reset_request(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        verification_code = get_random_string(4, '0123456789')
-        cache_key = f'verification_code_{email}'
-        cache.set(cache_key, verification_code, 600) 
-        subject = 'Password Reset Verification Code'
-        message = f'Your verification code is: {verification_code}'
-        from_email = 'rlphtzn@gmail.com'
-        recipient_list = [email]
-        send_mail(subject, message, from_email, recipient_list)
-        return redirect('verify_code')  
-    return render(request, 'accounts/User/forgot.html')
-
-
-def verify_code(request):
-    if request.method == 'POST':
-        code1 = request.POST.get('code1')
-        code2 = request.POST.get('code2')
-        code3 = request.POST.get('code3')
-        code4 = request.POST.get('code4')
-        verification_code = f"{code1}{code2}{code3}{code4}"
-        user_email = request.POST.get('email')
-        if is_valid_code(verification_code, user_email):
-            return redirect('reset_password')  
-    return render(request, 'accounts/User/verify.html')  
-
-
-def is_valid_code(verification_code, user_email):
-    cache_key = f'verification_code_{user_email}'
-    stored_code = cache.get(cache_key)
-    if stored_code and verification_code == stored_code:
-        return True
-    return False
-
-
-def reset_password(request):
-    if request.method == 'POST':
-        new_password = request.POST.get('new_password')  
-        user = request.user  
-        user.set_password(new_password)
-        user.save()
-        update_session_auth_hash(request, user)
-        messages.success(request, 'Password updated successfully.')
-        return redirect('login') 
-    return render(request, 'accounts/User/reset.html') 
 
 
 @authenticated_user
@@ -308,6 +267,91 @@ def logout_user(request):
     logout(request)
     messages.success(request, "You are now logged out.")
     return redirect('login')
+
+
+
+def bac(request):
+    return render(request, 'accounts/User/bac.html')
+
+@bac_required
+def baclanding(request):
+    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
+@bac_required
+def bac_request(request):
+
+    tracker = Pr_identifier.objects.select_related('user').all()
+    context = {
+        'tracker': tracker
+
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
+
+
+@cd_required
+def cdlanding(request):
+    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
+
+
+@regular_user_required
+def userlanding(request):
+    return render(request, 'accounts/User/userlanding.html')
+
+
+@regular_user_required
+def ppmp101(request):
+  
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'year': checkout.year,
+            'pr_id': checkout.pr_id,
+            'user': checkout.user,
+            'submission_date': checkout.submission_date,
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user,
+    }
+
+    return render(request, 'accounts/User/ppmp101.html', context)
+
+def ppmpform(request, year, pr_id):
+ 
+    
+    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
+
+
+    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
+
+
+    context = {
+        'approved_items': approved_items,
+        'year': year,
+        'pr_id': pr_id,
+        'bac_status': approved_checkouts.first().bac_status,
+        
+        'bo_comment': approved_checkouts.first().bo_comment,
+        'cd_comment': approved_checkouts.first().cd_comment, 
+    }
+   
+
+    return render(request, 'accounts/User/myppmp.html', context)
+
+
+def landing(request):
+    return render(request, 'accounts/User/landing.html')
+
+
+@budget_required
+def budget_landing(request):
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
+
 
 
 @authenticated_user
@@ -432,11 +476,17 @@ def cdpurchase_approval(request, pr_id):
 
 
 def purchase_cd(request, pr_id):
+    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    
     checkout_items = PR.objects.filter(pr_identifier__pr_id=pr_id)
+    
     context = {
         'checkout_items': checkout_items,
         'pr_id': pr_id,
+        'purpose': pr_identifier.purpose,
+        
     }
+   
     return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', context)
 
 @bac_required
@@ -498,6 +548,69 @@ def bac_ppmp(request, pr_id):
         
     }
 
+    if request.method == 'POST':
+        
+        comment_content = request.POST.get('comment_content')
+
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        estimate = request.POST.get('estimate_budget')
+        jan = request.POST.get('jan')
+        feb = request.POST.get('feb')
+        mar = request.POST.get('mar')
+        apr = request.POST.get('apr')
+        may = request.POST.get('may')
+        jun = request.POST.get('jun')
+        jul = request.POST.get('jul')
+        aug = request.POST.get('aug')
+        sep = request.POST.get('sep')
+        oct = request.POST.get('oct')
+        nov = request.POST.get('nov')
+        dec = request.POST.get('dec')
+
+        checkout = Checkout.objects.get(pr_id=pr_id)
+
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+            estimate_budget=estimate,
+            jan=jan,
+            feb=feb,
+            mar=mar,
+            apr=apr,
+            may=may,
+            jun=jun,
+            jul=jul,
+            aug=aug,
+            sep=sep,
+            oct=oct,   
+            nov=nov,
+            dec=dec,
+            
+        )
+
+        # Update Checkout model
+        Checkout.objects.filter(pr_id=pr_id).update(
+            
+            bac_status=comment_content
+        )
+
+        return redirect('bac_home')
+
+    elif request.method == 'GET':
+
+        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
+        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
 def preqform(request, pr_id):
@@ -688,9 +801,11 @@ def register_user(request):
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
 
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
             
 
         user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
@@ -711,9 +826,27 @@ def register_user(request):
             mail_subject, message, to=[to_email]
         )
         email.send()
-        messages.success(request, "The account has been successfully created. Check the email for activation instructions.")
         return redirect('user')
+    return render(request, 'accounts/Admin/System_Admin/user.html')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
     
+def requests(request):
+    return render(request, 'accounts/Admin/System_Admin/requests.html')
+
+  
    
 
    
@@ -884,8 +1017,9 @@ def purchase(request):
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
+        print(prices)
         quantity = request.POST.getlist('quantity[]')
-        total = request.POST.get('total_cost')
+        total = request.POST.get('total_amount')
 
         pr_id = generate_auto_pr_id()
         user = request.user
@@ -893,16 +1027,15 @@ def purchase(request):
         pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose,)
 
         for i in range(len(items)):
-            uploaded_file = files[i] if i < len(files) else None  # Check if files list has an item at index i
+            uploaded_file = files[i] if i < len(files) else None  
             metadata = FileMetadata.objects.create(filename=uploaded_file.name if uploaded_file else '')
 
-            # Save the file content to the FileField using save()
             if uploaded_file:
                 metadata.file.save(uploaded_file.name, ContentFile(uploaded_file.read()))
 
             PR.objects.create(
                 metadata=metadata,
-                file=metadata.file if uploaded_file else None,  # Set to None if no file is attached
+                file=metadata.file if uploaded_file else None, 
                 pr_identifier=pr_identifier,
                 item=items[i],
                 item_brand_description=item_brands[i],

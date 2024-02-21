@@ -10,7 +10,8 @@
     <script src="https://fonts.google.com/icons"></script>
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
+    <link rel="stylesheet"
+        href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -20,7 +21,7 @@
     <script>
         function maxLengthCheck(object, maxLength) {
             if (object.value.length > maxLength)
-            object.value = object.value.slice(0, maxLength);
+                object.value = object.value.slice(0, maxLength);
         }
     </script>
 
@@ -33,18 +34,20 @@
             margin-top: 0px;
             margin-bottom: 1rem;
         }
+
         .form-check-label {
-        font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .form-control {
             font-family: 'Poppins', sans-serif;
-            border: none; 
+            border: none;
             background: rgba(255, 255, 255, 0.486);
-            border-radius: 20px; 
+            border-radius: 20px;
             box-shadow: 0 0 3px black;
             width: 40vh;
         }
+
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             font-family: 'Poppins', sans-serif;
@@ -55,91 +58,91 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
-    
-     .input-box label {
-        font-family: 'Poppins', sans-serif;
-        display: flex;
-        align-items: center; 
-        margin-bottom: 10px; 
-        width: 30px;
-    }
 
-    .input-box input[type="checkbox"] {
-        font-family: 'Poppins', sans-serif;
-        margin-right: 5px; 
-        width: 20px;
-        height: 20px; 
-    }
+        .input-box label {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 30px;
+        }
 
-    .register-details .details {
-        font-family: 'Poppins', sans-serif;
-        font-size: 20px; 
-    }
+        .input-box input[type="checkbox"] {
+            font-family: 'Poppins', sans-serif;
+            margin-right: 5px;
+            width: 20px;
+            height: 20px;
+        }
 
-    .input-box1 {
-        font-family: 'Poppins', sans-serif;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    
-    .input-box1 label {
-        font-family: 'Poppins', sans-serif;
-        margin-right: 20px
+        .register-details .details {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+        }
 
-    }
-    
-    .input-box1 .checkbox-label {
-        font-family: 'Poppins', sans-serif;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-    }
-    
-    .input-box1 .checkbox-box {
-        font-family: 'Poppins', sans-serif;
-        margin-left: 5px;
-    }
+        .input-box1 {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-    .btn {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 600;
-        width: 20%;
-        margin-top: 0px; 
-        background: linear-gradient(45deg, #f38c06, #ffbc67);
-        color: #003566;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        outline: none;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .btn:hover {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(45deg, #ffbc67, #f38c06);
-        transform: translateY(-2px);
-        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    }
+        .input-box1 label {
+            font-family: 'Poppins', sans-serif;
+            margin-right: 20px
+        }
 
-    .checkbox-label.selected {
-        font-family: 'Poppins', sans-serif;
-        color: #033768;
-        font-weight: 600;
-    }
-    
-.container form .user-details {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px 0 10px 0;
-    flex-direction: column;
-    align-items: center;
-}
-form .user-details .input-box {
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 15px;
-    width: calc(100% / 1.2 - 20px);
-}
+        .input-box1 .checkbox-label {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-box1 .checkbox-box {
+            font-family: 'Poppins', sans-serif;
+            margin-left: 5px;
+        }
+
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            width: 20%;
+            margin-top: 0px;
+            background: linear-gradient(45deg, #f38c06, #ffbc67);
+            color: #003566;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #ffbc67, #f38c06);
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkbox-label.selected {
+            font-family: 'Poppins', sans-serif;
+            color: #033768;
+            font-weight: 600;
+        }
+
+        .container form .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 10px 0 10px 0;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form .user-details .input-box {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+            width: calc(100% / 1.2 - 20px);
+        }
     </style>
 
 </head>
@@ -149,27 +152,36 @@ form .user-details .input-box {
 
     <div class="container" style="margin-top: 150px; max-width: 600px; height: 80%;">
         {% if messages %}
+
         {% for message in messages %}
         {{ message }}
         {% endfor %}
+
         {% endif %}
-        
+
 
         <div class="title">Register</div>
         <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
 
+            {% for message in messages %}
+            <div class="alert alert-danger " style="text-align: center;" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+
             <div class="user-details">
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="username" placeholder="CTU ID" required oninput="maxLengthCheck(this, 11)">
+                    <input type="number" name="username" placeholder="CTU ID" required
+                        oninput="maxLengthCheck(this, 11)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
                         if (object.value.length > maxLength)
-                        object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
+                            object.value = object.value.slice(0, maxLength);
+                    }
+                </script>
 
                 <div class="input-box">
                     <span class="details"></span>
@@ -188,71 +200,73 @@ form .user-details .input-box {
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="contact1" placeholder="Contact No." required oninput="maxLengthCheck(this, 12)">
+                    <input type="number" name="contact1" placeholder="Contact No." required
+                        oninput="maxLengthCheck(this, 12)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
                         if (object.value.length > maxLength)
-                        object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
+                            object.value = object.value.slice(0, maxLength);
+                    }
+                </script>
 
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="password" name="pass1" placeholder="Password" required oninput="maxLengthCheck(this, 15)">
+                    <input type="password" name="pass1" placeholder="Password" required
+                        oninput="maxLengthCheck(this, 15)">
                 </div>
                 <script>
                     function maxLengthCheck(object, maxLength) {
                         if (object.value.length > maxLength)
-                        object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
+                            object.value = object.value.slice(0, maxLength);
+                    }
+                </script>
 
-<div class="input-box">
-    <span class="details"></span>
-    <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
-</div>
-
-
-
-<script>
-    function maxLengthCheck(object, maxLength) {
-        if (object.value.length > maxLength)
-        object.value = object.value.slice(0, maxLength);
-        }
-    </script>
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" name="pass2" placeholder="Confirm Password:" required
+                        oninput="maxLengthCheck(this, 15)">
+                </div>
+                <script>
+                    function maxLengthCheck(object, maxLength) {
+                        if (object.value.length > maxLength)
+                            object.value = object.value.slice(0, maxLength);
+                    }
+                </script>
 
 
                 <div class="login-link">
                     <p>Already have an Account? <a href="{% url 'login' %}">Login</a></p>
                 </div>
-                
+
                 <button type="submit" class="btn"> Sign Up </button>
+
+            </div>
         </form>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get all radio buttons
-            var radioButtons = document.querySelectorAll("input[type='radio'][name='user_type']");
-    
-            // Attach click event listeners to each radio button        
-            radioButtons.forEach(function (radioButton) {
-                radioButton.addEventListener("click", function () {
-                    // Remove 'selected' class from all labels
-                    document.querySelectorAll(".checkbox-label").forEach(function (label) {
-                        label.classList.remove("selected");
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get all radio buttons
+                var radioButtons = document.querySelectorAll("input[type='radio'][name='user_type']");
+
+                // Attach click event listeners to each radio button        
+                radioButtons.forEach(function (radioButton) {
+                    radioButton.addEventListener("click", function () {
+                        // Remove 'selected' class from all labels
+                        document.querySelectorAll(".checkbox-label").forEach(function (label) {
+                            label.classList.remove("selected");
+                        });
+
+                        // Add 'selected' class to the clicked label
+                        var label = document.querySelector("label[for='" + this.id + "']");
+                        if (label) {
+                            label.classList.add("selected");
+                        }
                     });
-    
-                    // Add 'selected' class to the clicked label
-                    var label = document.querySelector("label[for='" + this.id + "']");
-                    if (label) {
-                        label.classList.add("selected");
-                    }
                 });
             });
-        });
-    </script>
+        </script>
 
-    
+
 </body>
+
 </html>
