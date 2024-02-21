@@ -1,4 +1,4 @@
-{% comment %} 
+
 {% load static %}
 
 {% block preqform %}
@@ -20,7 +20,31 @@
             padding: 10px;
         }
 
-       
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ctu_logo {
+            width: 120px;
+            height: 124px;
+            margin-left: -141px;
+        }
+
+        .asean_logo {
+            width: 117px;
+            height: 114px;
+            margin-right: -136px;
+        }
+
+
         h4 {
             font-size: 25px;
             text-align: center;
@@ -37,7 +61,17 @@
             text-decoration: underline;
         }
 
-      
+        a:hover {
+            text-decoration: none;
+        }
+
+        .management {
+            float: right;
+            width: 167px;
+            height: auto;
+            margin-right: 20px;
+        }
+
         .br {
             margin-bottom: 20px;
         }
@@ -111,6 +145,12 @@
            
         }
 
+        .table-and-comment {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
         .heading-container {
             text-align: center;
             font-size: 10;
@@ -147,8 +187,8 @@
         }
 
         .container {
-            width: 70%;
-            max-width: 800px;
+            width: 85%;
+            max-width: 950px;
             padding: 0px;
             text-align: center;
             display: flex;
@@ -158,6 +198,7 @@
             margin: 0 auto;
             margin-top: 10px;
             position: ceneter;
+
         }
 
 
@@ -300,212 +341,139 @@
         margin-bottom: 20vh; /* Add margin below the image */
     }
 
-
-    .get {
-        display: inline-block;
-        outline: 0;
-        cursor: pointer;
-        text-align: center;
-        border: 1px solid #babfc3;
-        padding: 11px 24px;
-        min-height: 44px;
-        min-width: 44px;
-        color: #202223;
-        background: #ffffff;
-        border-radius: 4px;
-        font-weight: 500;
-        font-size: 14px;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        transition: background 0.3s ease; /* Add transition for smoother hover effect */
-        margin-top: px;
+    .bck a  {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
     }
     
-    .get:hover {
-        background: #ffa125e3; /* Change background color on hover */
-        outline: 1px solid transparent; /* Optional: remove outline on hover */
-    }
-    
-    .get:focus, .get:active {
-       
-    }
-
-
-        .get, .select {
-            display: inline-block;
-            outline: 0;
-            cursor: pointer;
-            text-align: center;
-            border: 1px solid #babfc3;
-            padding: 11px 24px;
-            min-height: 44px;
-            min-width: 44px;
-            color: #202223;
-            background: #ffffff;
-            border-radius: 4px;
-            font-weight: 500;
-            font-size: 14px;
-            box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-            text-decoration: none !important; /* Remove underline when the button is focused or active */
-            transition: background 0.3s ease; /* Add transition for smoother hover effect */
-            margin-top: -5vh; /* Adjust the top margin as needed */
-        }
-    
-        .get:hover {
-            background: #ffa125e3; /* Change background color on hover */
-            outline: 1px solid transparent; /* Optional: remove outline on hover */
-            color: #ffffff; /* Change text color on hover */
-        }
-    
-        .select:hover {
-            background: #007acc; /* Change background color on hover */
-            outline: 1px solid transparent; /* Optional: remove outline on hover */
-            color: #ffffff; /* Change text color on hover */
-        }
-    
-        .get:focus, .get:active, .select:focus, .select:active {
-            text-decoration: none !important; /* Remove underline when the button is focused or active */
-        }
- 
-
-        #purchaseRequestTable {
-            /* Add your styles here to adjust the content */
-            /* For example: */
-            padding: 0.5px; /* Add padding around the content */
-            margin: 0 auto; /* Center the content horizontally */
-            max-width: 800px; /* Limit the maximum width of the content */
-        }
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 8vh;
+        margin-left: -60.5vh;
         
+      
+        
+    }
+    
+    .bck:hover img {
+        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+    }
+    
+    .home {
+        position: fixed;
+        top: 3vh;
+    }
      
-        .bck a  {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        
-        .bck img {
-            width: 50px;
-            height: 50px;
-            transition: transform 0.3s ease-in-out;
-            position: fixed;
-            top: 8vh;
-            margin-left: -60.5vh;
-            
-          
-            
-        }
-        
-        .bck:hover img {
-            transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-        }
-        
-        .home {
-            position: fixed;
-            top: 3vh;
-        }
-         
-        .home img {
-            margin-bottom: ;
-            width: 40px;
-            height: 40px;
-            transition: transform 0.3s ease-in-out;
-            animation: beat 2s infinite;
-            position: relative;
-            margin-left: -192vh;
-        }
-        
-        
-        @keyframes beat{
-            0%{
-                transform: scale(1);
-            }
-            50%{
-                transform: scale(1.2);
-            }
-            100%{
-                transform: scale(1);
-            }
-        }
-         
-        .home:hover img {
-            animation-play-state: paused;
-            transform: scale(1.2); 
-        }
+    .home img {
+        margin-bottom: ;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+        position: relative;
+        margin-left: -192vh;
+    }
     
-        .left-button-container {
-            position: absolute;
-            left: 184vh; /* Adjust this value as needed */
-            top: 300px; /* Adjust this value as needed */
-            transform: translateY(-50%);
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
         }
-        
-    .table-responsive {
-        margin-top: 2vh;
-    }  
-        
-    </style>
-<body>
-    <div class="container page-break">
-        <div id="purchaseRequestTable" class="container-fluid">
-            <div class="container" style="border: b;">
-                <div class="home">
-                    <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
-                        <img src="{% static 'images/home.png' %}" alt="cdlanding">
-                    </a>
-                </div>
-                <script>
-                function toggleAnimation() {
-                    var img = document.getElementById('cdlandingImg');
-                    if (img.style.animationPlayState === 'paused') {
-                        img.style.animationPlayState = 'running'; // Resume animation
-                    } else {
-                        img.style.animationPlayState = 'paused'; // Pause animation
-                    }
-                }
-                </script>
-                <div class="row">
-                    <div class="col-md-1 mb-0">
-                      <div class="bck">
-                        <a href="{% url 'cdppmp' %}">
-                          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
-                        </a>
-                      </div>
-                    </div>
-                    <img class="center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 85%; margin-left: 5px; margin-top: -3vh;">
-                <h1 class="center-heading" style="font-size: 1em; margin-top: 0.5vh"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
-                <div class="container" style="text-align: left; display: inline-block; margin-left: -40vh; margin-top: 20px; font-size: 0.8em; ">
-                    <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
-                    <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
-                    <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
-                </div>
-                <div class="table-responsive" style= "font-size= 0.8em">
-                    <table class="table table-bordered">
-                    <thead>
-    <tr>
-        <th rowspan="2" style="background-color:  #fff942f0; color: black; text-align: center;">Item Name</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Brand / Description</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Estimated Budget</th>
-        <th colspan="12" style="background-color:  #FFFA42; color: black; text-align: center;">Monthly Quantity Requirement</th>
-        <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit Price</th>
-    </tr>
-    <tr>
-        <th style="background-color: #FFFA42; color: black;">Jan</th>
-        <th style="background-color: #FFFA42; color: black;">Feb</th>
-        <th style="background-color: #FFFA42; color: black;">Mar</th>
-        <th style="background-color: #FFFA42; color: black;">April</th>
-        <th style="background-color: #FFFA42; color: black;">May</th>
-        <th style="background-color: #FFFA42; color: black;">June</th>
-        <th style="background-color: #FFFA42; color: black;">July</th>
-        <th style="background-color: #FFFA42; color: black;">Aug</th>
-        <th style="background-color: #FFFA42; color: black;">Sept</th>
-        <th style="background-color: #FFFA42; color: black;">Oct</th>
-        <th style="background-color: #FFFA42; color: black;">Nov</th>
-        <th style="background-color: #FFFA42; color: black;">Dec</th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2); 
+    }
 
+    .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: 300px; /* Adjust this value as needed */
+        transform: translateY(-50%);
+    }
+    
+.table-responsive {
+    margin-top: 2vh;
+}  
+
+
+  
+</style>
+
+       
+    </style>
+    <body>
+        <div class="container page-break">
+            <div id="purchaseRequestTable" class="container-fluid">
+                <div class="container" style="border: b;">
+                    <div class="home">
+                        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
+                            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+                        </a>
+                    </div>
+                    <script>
+                    function toggleAnimation() {
+                        var img = document.getElementById('cdlandingImg');
+                        if (img.style.animationPlayState === 'paused') {
+                            img.style.animationPlayState = 'running'; // Resume animation
+                        } else {
+                            img.style.animationPlayState = 'paused'; // Pause animation
+                        }
+                    }
+                    </script>
+                    <div class="row">
+                        <div class="col-md-1 mb-0">
+                          <div class="bck">
+                            <a href="{% url 'cdppmp' %}">
+                              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+                            </a>
+                          </div>
+                        </div>
+                        <img class="center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 85%; margin-left: 5px; margin-top: -3vh;">
+                    <h1 class="center-heading" style="font-size: 1em; margin-top: 0.5vh"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
+                    <div class="container" style="text-align: left; display: inline-block; margin-left: -40vh; margin-top: 20px; font-size: 0.8em; ">
+                        <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
+                        <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
+                        <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
+                    </div>
+                    <div class="table-responsive" style= "font-size= 0.8em">
+                        <table class="table table-bordered">
+                        <thead>
+        <tr>
+            <th rowspan="2" style="background-color:  #fff942f0; color: black; text-align: center;">Item Name</th>
+            <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Brand / Description</th>
+            <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit</th>
+            <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Estimated Budget</th>
+            <th colspan="12" style="background-color:  #FFFA42; color: black; text-align: center;">Monthly Quantity Requirement</th>
+            <th rowspan="2" style="background-color:  #FFFA42; color: black; text-align: center;">Unit Price</th>
+        </tr>
+        <tr>
+            <th style="background-color: #FFFA42; color: black;">Jan</th>
+            <th style="background-color: #FFFA42; color: black;">Feb</th>
+            <th style="background-color: #FFFA42; color: black;">Mar</th>
+            <th style="background-color: #FFFA42; color: black;">April</th>
+            <th style="background-color: #FFFA42; color: black;">May</th>
+            <th style="background-color: #FFFA42; color: black;">June</th>
+            <th style="background-color: #FFFA42; color: black;">July</th>
+            <th style="background-color: #FFFA42; color: black;">Aug</th>
+            <th style="background-color: #FFFA42; color: black;">Sept</th>
+            <th style="background-color: #FFFA42; color: black;">Oct</th>
+            <th style="background-color: #FFFA42; color: black;">Nov</th>
+            <th style="background-color: #FFFA42; color: black;">Dec</th>
+        </tr>
+    </thead>
+    <tbody>
                             {% for p in checkout_items %}
                             <tr class="item-row" id="{{ p.id }}">
                                 <td>
@@ -555,38 +523,35 @@
             </div>
         </div>          
         <div class="content-below-table">
-            <div class="total-budget-container" style="margin-left: -7vh">
+            <div class="total-budget-container">
             <strong><u class="total-budget-text">TOTAL BUDGET</u></strong>
                 <span id="totalBudget" class="total-budget-value">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>16,000</strong><br><br><br>
                      Note: Technical Specifications for each Item/Project being&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+                    <br>
+                    <br>
                     <br>
                 </span>
             </div>
             <div>
-                <div style="display: flex; justify-content: center; margin-left: -15vh">
-                    <div>
-                        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                    </div>
-                    <div style="margin-left: 5vh;">
+                <div style="text-align: center; margin-right: 140px;">
+                    <strong>Prepared and Submitted by:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              
                         <strong>Certified Fund Available:</strong>
-                    </div>
-                    <div style="margin-left: 5vh;">
-                        <strong>Approved:</strong>
-                    </div>
-                </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved:</strong>
+                    </div>          
             </div>
             <br>
             <br>
+            <br>
             <div>
-                <div style="margin-left: -15vh;">
                 <strong><b><u>{{user.first_name}} {{user.last_name}}</b></u></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong><u>MARY ANN P. GONZAGA. C.P.A.</u></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>JEAN F. PUERTO, Dev.Ed.D.,Ph.D.</u></strong>
                 <span id="totalBudget"> <!-- You can dynamically update this value with JavaScript --></span>
             </div>          
             <div>
-                <div style="margin-left: -2vh;">
                 <strong>End-User &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Accountant 1  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campus Director</strong>
@@ -594,14 +559,18 @@
             </div>
             <br>
             <br>
+            <br>
             <div>
-                <div style="text-align: left; margin-left:  -10vh ">
-                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
+                <div style="text-align: left;">
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;Date Prepared:</strong>
                     <br>
                     <br>
                     <br>
-                    <div style="text-align: left; margin-left: 9vh ">
-                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block; width: 600px;">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center;">
+                        <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image" style="display: inline-block;">
                     </div>
                 </div>                
                 <span id="totalBudget"> </span>
@@ -609,24 +578,23 @@
         </div>
         <br>
         </div>
-        <div id="footer-content">
-            <footer>
-                  <div class="icons-container">
-                      <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                        <button type="button" class="get">Download</button>
-                      </a>
-                      <a href="#" title="Select" class="icon-link">
-                        <button type="button" class="get toggle-select">Select</button>
-                      </a>
-                          <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
-                              <option value="a4">A4</option>
-                              <option value="legal">Legal</option>
-                          </select>
-                      </select>
-                     </div>
-                </div>                  
-             </div>
-  <div class="page-break">  
+            <div id="footer-content">
+              <footer>
+                    <div class="icons-container">
+                        <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
+                            <img class="icon" src="{% static 'images/download-pdf.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px; margin-right: 50px;">
+                        </a>
+                        <a href="#" title="Select" class="icon-link">
+                            <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20px; margin-left: 50px;">
+                        </a>
+                            <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
+                                <option value="a4">A4</option>
+                                <option value="legal">Legal</option>
+                        </select>
+                    </select>
+                </div>
+        </div>                  
+    </div>  
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 
@@ -673,6 +641,7 @@
     
 </script>
 
+
         </div>
     </div>
 </div>
@@ -681,4 +650,4 @@
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
 
-{% endblock %} {% endcomment %}
+{% endblock %}
