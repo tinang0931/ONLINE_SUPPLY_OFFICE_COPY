@@ -113,7 +113,7 @@
     </div>
 </div>
       <div id="options" class="d-none position-absolute z-1 bg-white"
-        style="user-select: none; margin-top: -1vh; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822)">
+        style="user-select: none; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); margin-top:-100px;">
         <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
         {% for category, items in grouped_data.items %}
         <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
@@ -294,9 +294,6 @@
             <div style="display: flex; justify-content: center; gap: 20px;">
               <a href="#" class="edit-icon" style="text-align: center;" onclick="editItem('{{ item.id }}')">
                 <i class="fas fa-edit text-primary"></i></a>
-
-
-      
 
                   {% csrf_token %}
                   <input id="form_item_{{ item.id }}" type="hidden" name="item_{{ item.id }}" value="{{ item.Item_name }}">
