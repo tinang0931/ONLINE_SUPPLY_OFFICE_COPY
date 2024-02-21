@@ -37,9 +37,9 @@
     margin-top: 5vh;
   }
 
-  .search-form {
+  /* .search-form {
     justify-content: flex-end;
-  }
+  } */
 
   .table th {
     background-color: rgba(5, 112, 139, 0.822);
@@ -61,7 +61,7 @@
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    top: -7vh;
+    top: 1vh;
   
     
 }
@@ -70,8 +70,8 @@
     transform: scale(1.2); 
 }
     
-    .table-container {
-    margin-top: -5vh; 
+    .table-responsive {
+    margin-top: 1vh; 
     }
 
 </style>
@@ -80,10 +80,11 @@
   <h1 class="pr-heading text-center pt-4" style="margin-left: 10px;"  > <strong>PPMP REQUESTS </strong> </h1>
 
   
-  <div class="search" style="position: relative; text-align: right;">
+  <div class="search" style="display: flex; text-align: right; position: fixed; top: 24%; left: 19%; z-index: 100;">
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; padding-left: 30px;">
-    <i class="fas fa-search" style="position: absolute; top: 65%; right: 30px; transform: translateY(-50%); color: #05708BD2;"></i>
+    <i class="fas fa-search" style="position: absolute; top: 64%; right: 30px; transform: translateY(-50%); color: #05708BD2;"></i>
 </div>
+
 
 <div class="row">
   <div class="col-md-1 mb-0">
@@ -95,7 +96,7 @@
   </div>
 </div>
 
-  <div class="table-container">
+<div class="table table-responsive"></div>
     <table class="table table-bordered">
 <thead>
     <tr>
