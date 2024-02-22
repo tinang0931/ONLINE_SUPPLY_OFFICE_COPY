@@ -11,8 +11,7 @@ body{
     align-items: center;
     padding: 10px;
     background:
-        linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%),
-        url("/static/images/CTU-Logo.jpg");
+        linear-gradient(128.43deg, rgba(0, 53, 102, 0.92) 43.98%, rgba(0, 53, 102, 0.899983) 49.22%, rgba(0, 53, 102, 0.867118) 54.74%, rgba(0, 53, 102, 0.845939) 57.59%, rgba(0, 53, 102, 0.7636) 63.96%, rgba(0, 53, 102, 0) 170.25%);
         background-size: cover;
         background-attachment: fixed;
         position: fixed;
@@ -39,7 +38,7 @@ body{
     font-family: 'Poppins', sans-serif;
     max-width: 700px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.938);
+    background: rgba(2255 255 255 / 62%);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     padding: 20px 30px;
     border-radius: 10px;

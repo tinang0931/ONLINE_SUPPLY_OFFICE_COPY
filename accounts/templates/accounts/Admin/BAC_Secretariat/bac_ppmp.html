@@ -5,115 +5,11 @@
 
 {% block bac_ppmp %}
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/myppmp.css' %}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <style>
-    #viewCommentsBtn {
-        border: 1px solid black;
-        background-color: white;
-        color: black;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    #viewCommentsBtn:hover {
+    .table-bordered th {
         background-color: #1c96c5;
-        color: white;
     }
 
-
-    body {
-        margin-top: 20px;
-        background-color: #e9ebee;
-    }
-
-    .be-comment-block {
-        margin-bottom: 50px !important;
-        border: 1px solid #edeff2;
-        border-radius: 2px;
-        padding: 50px 70px;
-        border: 1px solid #ffffff;
-    }
-
-    .comments-title {
-        font-size: 16px;
-        color: #262626;
-        margin-bottom: 15px;
-        font-family: 'Conv_helveticaneuecyr-bold';
-    }
-
-    .be-img-comment {
-        width: 60px;
-        height: 60px;
-        float: left;
-        margin-bottom: 15px;
-    }
-
-    .be-ava-comment {
-        margin-top: 45px;
-        margin-left: 20px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-    }
-
-    .be-comment-content {
-        margin-left: 80px;
-    }
-
-    .be-comment-content span {
-        display: inline-block;
-        width: 49%;
-        margin-bottom: 15px;
-    }
-
-    .be-comment-name {
-        font-size: 13px;
-        font-family: 'Conv_helveticaneuecyr-bold';
-    }
-
-    .be-comment-content a {
-        color: #383b43;
-    }
-
-    .be-comment-content span {
-        display: inline-block;
-        width: 49%;
-        margin-bottom: 15px;
-    }
-
-    .be-comment-time {
-        text-align: right;
-    }
-
-    .be-comment-time {
-        font-size: 11px;
-        color: #b4b7c1;
-    }
-
-    .be-comment-text {
-        font-size: 13px;
-        line-height: 18px;
-        color: #7a8192;
-        display: block;
-        background: #f6f6f7;
-        border: 1px solid #edeff2;
-        padding: 15px 20px 20px 20px;
-    }
-
-    .btn-primary {
-        margin-left: 0%;
-        color: #fff;
-        background-color: #1c96c5;
-        border-color: #1c96c5;
-    }
-
-    .custom-card-width {
-        max-width: 500px;
-        
-        float: left;
-    }
     .bck a  {
         display: flex;
         align-items: center;
@@ -125,17 +21,234 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -1vh;
+        top: -15vh;
       
         
     }
     
     .bck:hover img {
+        transform: scale(1.2); 
+    }
+        
+
+
+    .table-and-comment {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+
+    .icons-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-right: 50px;
+    }
+
+    .icon-link {
+        margin-left: 20px;
+        margin-top: 16px;
+        text-decoration: none;
+        color: white;
+        /* Adjust the color as needed */
+    }
+
+
+
+
+    .icon-link {
+        margin-left: 20px;
+        text-decoration: none;
+        color: white;
+        /* Adjust the color as needed */
+    }
+
+
+    .input-box {
+        width: 30%;
+
+        margin-top: 1px;
+        margin-left: 16px;
+        margin-right: 20px;
+    }
+
+    .input-box input {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .send-icon {
+        position: fixed;
+        top: 90%;
+        left: 65%;
+        width: 30px;
+        height: 30px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 39px;
+        margin-left: -80px;
+    }
+
+    .send-icon i {
+        line-height: 30px;
+    }
+
+    .footer {
+        background-color: rgba(1, 33, 67, 0.9);
+        text-align: center;
+        width: 100%;
+        height: 100px;
+        bottom: 0;
+        -webkit-user-modify: read-only;
+        position: fixed;
+        z-index: 2;
+        position: fixed;
+    }
+
+    .p {
+        size: 12px;
+    }
+
+
+
+
+    .subpage {
+        padding: 1cm;
+        border: 5px red solid;
+        height: 256mm;
+        outline: 2cm #FFEAEA solid;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+
+    @media print {
+        .footer {
+            display: none;
+        }
+
+        .input-box,
+        .icons-container {
+            display: none;
+        }
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .aprv,
+    .disaprv {
+        font-size: 15px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 11px;
+        color: #ffa125e3;
+        background-color: rgba(9, 87, 139, 0.616);
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(9, 87, 139, 0.616);
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
+
+
+    .aprv:hover,
+    .disaprv:hover {
+        color: #ffa125e3;
+        background-color: #000000e3;
+    }
+
+
+    .footer {
+        display: left;
+        justify-content: space-between;
+        align-items: center;  /* Vertically center the content */
+    }
+    
+    .icons-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the gap between buttons as needed */
+    }
+    
+    .slip-icon {
+        width: 50px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+        margin-right: 15px
+    }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 10px;
+    }
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        margin-top: 9vh;
+        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    }
+    
+    .bck:hover img {
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
+    .cdlanding a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    
+    
+    }
+     
+    .cdlanding img {
+        margin-bottom: 8px;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+      
+        margin-left: .5vh;
+    }
+    
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .cdlanding:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2); 
+    }
+
     .home {
         position: fixed;
-        top: 20vh;
+        top: 19vh;
     }
      
     .home img {
@@ -165,22 +278,30 @@
         animation-play-state: paused;
         transform: scale(1.2); 
     }
-</style>
 
-<div class="container-fluid main-content">
+    .center-text {
+        text-align: center;
+    }
+
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr text-center pt-4"><strong>PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP) {{ year }}</strong></h1>
-
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px; margin-top: -0.2vh"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
     <div class="home">
         <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="baclanding">
+            <img src="{% static 'images/home.png' %}" alt="cdlanding">
         </a>
     </div>
     <script>
     function toggleAnimation() {
-        var img = document.getElementById('homeImg');
+        var img = document.getElementById('cdlandingImg');
         if (img.style.animationPlayState === 'paused') {
             img.style.animationPlayState = 'running'; // Resume animation
         } else {
@@ -188,30 +309,32 @@
         }
     }
     </script>
-    <div class="bck">
-        <a href="{% url 'bac_home' %}">
-            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
-        </a>
-    </div>
+    <div class="row">
+        <div class="col-md-1 mb-3"> 
+            <div class="bck">
+                <a href="{% url 'bac_home' %}">
+                    <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+                </a>
+            </div>
+        </div>
+    </div>    
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="table-responsive" style="margin-top: -15vh;">
+        <form action="{% url 'bac_ppmp' pr_id=pr_id %}" method="post" id ="form_id">
+            {% csrf_token %}
 
 
-    <div class="table-responsive">
-
-
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
-                <tr>
-                <tr>
-                    <th rowspan='2'>Item Name</th>
-                    <th rowspan='2'> Brand / Description</th>
-                    <th rowspan='2'>Unit</th>
-                    <th rowspan='2'>Estimated Budget</th>
-                    <th colspan="12">Monthly Quantity Requirement</th>
-                    <th rowspan='2'>Unit Price</th>
-                </tr>
-                <tr>
+            <tr>
+            <th rowspan='2' class="center-text">Item Name</th>
+            <th rowspan='2' class="center-text">Brand / Description</th>
+            <th rowspan='2' class="center-text">Unit</th>
+            <th rowspan='2' class="center-text">Estimated Budget</th>
+            <th colspan="12" class="center-text">Monthly Quantity Requirement</th>
+            <th rowspan='2' class="center-text">Unit Price</th>
+
+        </tr>
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -224,16 +347,12 @@
                     <th>Oct</th>
                     <th>Nov</th>
                     <th>Dec</th>
-                </tr>
 
-                </tr>
             </thead>
             <tbody>
                 {% for p in checkout_items %}
 
-
                 <tr class="item-row" id="{{ p.id }}">
-
                     <td>
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
@@ -250,6 +369,7 @@
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
+
                     <td>{{ p.estimate_budget }}</td>
                     <td>{{ p.jan }}</td>
                     <td>{{ p.feb }}</td>
@@ -263,128 +383,44 @@
                     <td>{{ p.oct }}</td>
                     <td>{{ p.nov }}</td>
                     <td>{{ p.dec }}</td>
-
-                    <td>{{ p.unit_cost }}</td>
-
-
-
-
+                    <td>
+                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                    </td>
+                    <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
+                    <input type="hidden" name="jan" value="{{ p.jan }}">
+                    <input type="hidden" name="feb" value="{{ p.feb }}">
+                    <input type="hidden" name="mar" value="{{ p.mar }}">
+                    <input type="hidden" name="apr" value="{{ p.apr }}">
+                    <input type="hidden" name="may" value="{{ p.may }}">
+                    <input type="hidden" name="jun" value="{{ p.jun }}">
+                    <input type="hidden" name="jul" value="{{ p.jul }}">
+                    <input type="hidden" name="aug" value="{{ p.aug }}">
+                    <input type="hidden" name="sep" value="{{ p.sep }}">
+                    <input type="hidden" name="oct" value="{{ p.oct }}">
+                    <input type="hidden" name="nov" value="{{ p.nov }}">
+                    <input type="hidden" name="dec" value="{{ p.dec }}">
                 </tr>
-
                 {% endfor %}
-
             </tbody>
         </table>
-
     </div>
-    <td>
-        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-            oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-    </td>
+</div>
+<style>
 
-    </tr>
-
-    </tbody>
-    </table>
-
-    
-
-
-
+</style>
+<footer class="footer">
+    <div class="icons-container">
+        <div class="input-box">
+            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
+        <button type="submit"  style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px; position: relative;">
+            <i class="fas fa-check-circle"></i> Submit
+        </button>
+        <input id="new_status_id" type="hidden" name="new_status">
     </div>
-
-
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <script>
-
-        $(document).ready(function () {
-
-            function updateEstimateBudgetForRow(row) {
-
-                var unitPrice = parseFloat(row.find('[name="price"]').val());
-
-
-                var totalValue = 0;
-
-
-                row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
-                    var monthValue = parseFloat($(this).val()) || 0;
-                    totalValue += monthValue;
-                });
-
-
-                var estimateBudget = totalValue * unitPrice;
-
-
-                row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
-            }
-
-
-            $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
-
-                var row = $(this).closest('tr.item-row');
-                updateEstimateBudgetForRow(row);
-            });
-
-
-            $('[name="price"]').on('input', function () {
-
-                var row = $(this).closest('tr.item-row');
-                updateEstimateBudgetForRow(row);
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-item').on('click', function (e) {
-                e.stopPropagation();
-                var selectedYear = $(this).text();
-                updateButtonStyle(selectedYear);
-                hideDropdown();
-            });
-
-
-            document.getElementById('yearDropdown').addEventListener('click', function () {
-                this.style.backgroundColor = ' #f59a23e7';
-            });
-
-
-            function updateButtonStyle(selectedYear) {
-                $('.dropdown-item').removeClass('selected');
-                $('.dropdown-item[data-year="' + selectedYear + '"]').addClass('selected');
-                $('.btn#yearDropdown').text(selectedYear).css('background-color', ' #f59a23e7');
-
-            }
-
-
-            function hideDropdown() {
-                $('.custom-dropdown').removeClass('show');
-                $('.custom-dropdown').find('.dropdown-toggle').attr('aria-expanded', 'false');
-                $('.custom-dropdown').find('.dropdown-menu').removeClass('show');
-            }
-        });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <script>
-        function toggleText() {
-            var textContainer = document.getElementById("textContainer");
-            textContainer.style.display = (textContainer.style.display === "none" || textContainer.style.display === "") ? "block" : "none";
-        }
-    </script>
+</footer>
+</form>
 
     {% endblock %}

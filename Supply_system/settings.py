@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$0$us08g%r@266))x3tyr5_hg0c1&k6u9ak#2zaj=(!!i-d^r+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.28.52.134','172.28.20.119', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost','172.28.52.134','172.28.20.119', '127.0.0.1']
 
 # Application definition
 
@@ -155,15 +155,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # SMTP server for Gmail
+EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rlphtzn@gmail.com'  
 EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  
 AUTH_USER_MODEL = 'accounts.User'
-
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
-
 MEDIA_DIR = BASE_DIR / 'media'
-
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+BASE_URL = 'http://127.0.0.1:8000'
