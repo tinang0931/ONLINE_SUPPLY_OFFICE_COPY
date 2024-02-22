@@ -34,6 +34,7 @@ body{
     transform-origin: left top;
 }
 
+
 .container {
     font-family: 'Poppins', sans-serif;
     max-width: 700px;
@@ -48,7 +49,6 @@ body{
     height: 70%;
     
 }
-
 .container .title{
     font-family: 'Poppins', sans-serif;
     color: #003566;

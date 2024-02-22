@@ -103,7 +103,7 @@
     .btn {
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
-        width: 50%;
+        width: 40%;
         margin-top: 0px; 
         background: linear-gradient(45deg, #f38c06, #ffbc67);
         color: #003566;
@@ -113,7 +113,6 @@
         outline: none;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 12px 20px;
     }
     
     .btn:hover {
@@ -141,37 +140,18 @@ form .user-details .input-box {
     margin-bottom: 15px;
     width: calc(100% / 1.2 - 20px);
 }
-@media screen and (max-width: 30%) {
-    .container {
-        width: 80%;
-        max-width: 100%;
-        padding: 5px;
+.container {
+        margin-top: 150px;
+        max-width: 600px;
+        height: 80%;
+        border-radius: 15px;
+        border-style: solid;
+        border-width: 2px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+        padding: 20px; /* Added padding for better spacing */
     }
-
-    .container h1 {
-        font-size: 1.5em;
-        margin-bottom: 1vw;
-    }
-
-    .input-box input {
-        height: 3vw;
-        font-size: 1.2vw;
-        padding: 0.5vw;
-    }
-
-    .wrapper .btn {
-        height: 2.5vw;
-        font-size: 1.2vw;
-        margin-top: 1vw;
-    }
-
-    .register-link {
-        margin-top: 1vw;
-    }
-
-
-}
-
     </style>
 
 </head>
@@ -179,8 +159,7 @@ form .user-details .input-box {
 <body>
     <div class="upper">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
 
-    <div class="container" style="margin-top: 150px; max-width: 600px; height: 80%;border-radius: 15px; border-style: solid; border-width: 2px; overflow-y: auto; scrollbar-width: thin;
-    scrollbar-color: transparent transparent; ">
+    <div class="container">
         {% if messages %}
     
             {% for message in messages %}
@@ -192,7 +171,7 @@ form .user-details .input-box {
 
         <div class="title">Register</div>
         <form action="{% url 'register' %}" method="post">
-            {% csrf_token %}    
+            {% csrf_token %}
 
             <div class="user-details">
                 <div class="input-box">
@@ -246,7 +225,10 @@ form .user-details .input-box {
 <div class="input-box">
     <span class="details"></span>
     <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
-</div> 
+</div>
+
+
+
 <script>
     function maxLengthCheck(object, maxLength) {
         if (object.value.length > maxLength)
