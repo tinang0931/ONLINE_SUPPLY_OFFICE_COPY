@@ -98,6 +98,9 @@ def cdlanding(request):
         'HEADING_TEXT': HEADING_TEXT,
         'SUBHEADING_TEXT': SUBHEADING_TEXT,
     }
+    print(HEADING_TEXT)
+    print(SUBHEADING_TEXT)
+  
     return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
