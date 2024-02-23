@@ -247,8 +247,8 @@
             width: 40px;
             height: 40px;
             transition: transform 0.3s ease-in-out;
-            animation: beat 2s infinite;
-            margin-left: .5vh;
+            margin-left: 0.5vh;
+            margin-top: 4vh;
         }
         
         
@@ -325,14 +325,14 @@
     </h1>
     
     <div class="home">
-        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+        <a href="{% url 'cdlanding' %}">
+            <img src="{% static 'images/home2.png' %}" alt="cdlanding">
         </a>
     </div>
 
    <div class="bck">
         <a href="{% url 'cdpurchase' %}">
-            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            <img src="{% static 'images/back2.png' %}" alt="Previous">
         </a>
     </div>
 
