@@ -308,6 +308,8 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
@@ -529,7 +531,6 @@ def bac_ppmp(request, pr_id):
             'pr_id': pr_id,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
-        
     }
 
     if request.method == 'POST':
@@ -594,6 +595,8 @@ def bac_ppmp(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
      }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
