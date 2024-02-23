@@ -98,9 +98,6 @@ def cdlanding(request):
         'HEADING_TEXT': HEADING_TEXT,
         'SUBHEADING_TEXT': SUBHEADING_TEXT,
     }
-    print(HEADING_TEXT)
-    print(SUBHEADING_TEXT)
-  
     return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
@@ -276,9 +273,7 @@ def logout_user(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-@bac_required
-def baclanding(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
 
 @bac_required
 def bac_request(request):
@@ -291,14 +286,7 @@ def bac_request(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
-@cd_required
-def cdlanding(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
 
-
-@regular_user_required
-def userlanding(request):
-    return render(request, 'accounts/User/userlanding.html')
 
 
 @regular_user_required
@@ -349,13 +337,6 @@ def ppmpform(request, year, pr_id):
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
-
-
-@budget_required
-def budget_landing(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
-
-
 
 @authenticated_user
 def about(request):
