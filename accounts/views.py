@@ -178,7 +178,7 @@ def register(request):
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 

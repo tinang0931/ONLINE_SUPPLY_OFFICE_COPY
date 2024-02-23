@@ -55,6 +55,7 @@
         padding: 10px 20px;
         font-size: 16px;
         float: right;
+        
     }
     .btn.btn-success {
     transition: transform 0.3s ease; 
@@ -401,7 +402,7 @@ strong {
                         // Set flag in sessionStorage indicating that the popup has been displayed in this session
                         sessionStorage.setItem("popupDisplayed", "true");
                     }, 3000); // Adjusted to 3 seconds
-                }, 7000); // Adjusted to 7 seconds
+                }, 8000); // Adjusted to 7 seconds
             }
         });
     </script>
@@ -495,7 +496,7 @@ strong {
                         
                         if (!popupDisplayed) {
                             // Show the popup after 5 seconds when the page loads
-                            setTimeout(showPopup, 5000); // Adjusted to 5 seconds
+                            setTimeout(showPopup, 1000); // Adjusted to 5 seconds
                         }
                 
                         // Hide the popup when budgetInput loses focus
@@ -545,12 +546,12 @@ strong {
     </div>
 
     
-    <div class="button-container" style="float: left;">
-    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -150px;">
+    <div class="button-container" style="float: left; z-index: 999;">
+    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; top: -150px; z-index: 999;">
         <i class="fas fa-check-circle"></i> Submit
     </button>
     <div class="popup-box" id="popupBox">
-         click here to submit 
+         dont forget to submit 
     </div>
 
 
@@ -564,34 +565,42 @@ strong {
         </div>
     
         <script>
-            // Display popup for 9 seconds, then hide it after 3 seconds
             function displayPopupt() {
                 var popupt = document.getElementById("popupt");
-                var reloadCount = localStorage.getItem("reloadCount") || 0;
+                var popupDisplayed = localStorage.getItem("popupDisplayed");
         
-                // Check if it's the second reload and not logged in
-                if (reloadCount % 1 === 1 && localStorage.getItem("loggedIn") !== "true") {
+                if (!popupDisplayed) {
                     popupt.style.display = "block";
                     setTimeout(function () {
                         popupt.style.display = "none";
                     }, 9000);
+                    localStorage.setItem("popupDisplayed", "true");
                 }
             }
         
-            // Check localStorage for reload count
-            var reloadCount = localStorage.getItem("reloadCount") || 0;
-        
-            // Increment reload count on page load
-            localStorage.setItem("reloadCount", ++reloadCount);
-        
-            // Function to set login status
             function setLoggedIn() {
-                localStorage.setItem("loggedIn", "true");
+                // Here you can add logic to handle login status without using localStorage
             }
         
-            // Automatically display popup on page load
             window.onload = displayPopupt;
+        
+            // Add an event listener to the form submission
+            document.getElementById("myForm").addEventListener("submit", function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+                
+                // Here you can add your form submission logic
+                
+                // Call the function to set login status after successful form submission
+                setLoggedIn();
+                
+                // Display the popup
+                displayPopupt();
+            });
         </script>
+        
+        
+        
         
         
             <table class="table table-bordered text-center mt-4">
@@ -914,22 +923,25 @@ strong {
 
         // Function to prevent clicks on popup box from affecting the button
         popupBox.addEventListener("click", function(event) {
-            event.stopPropagation();
+            event.stopPropagation(); // Prevents clicks on the popup box from reaching underlying elements
         });
+
+        // Function to show the popup box and set flag in local storage
+        function showPopup() {
+            popupBox.style.display = "block"; // Display the popup box
+            setTimeout(function() {
+                popupBox.style.display = "none"; // Hide the popup box after 3 seconds
+                // Set a flag in local storage indicating the popup has been shown
+                localStorage.setItem("popupShown", true);
+            }, 3000);
+        }
 
         // Check local storage for a flag indicating if the popup has been shown before
         const popupShown = localStorage.getItem("popupShown");
 
         // Show the popup box only if it hasn't been shown before
         if (!popupShown) {
-            setTimeout(function() {
-                popupBox.style.display = "block";
-                setTimeout(function() {
-                    popupBox.style.display = "none";
-                    // Set a flag in local storage indicating the popup has been shown
-                    localStorage.setItem("popupShown", true);
-                }, 3000);
-            }, 10000);
+            setTimeout(showPopup, 10000); // Display the popup after 10 seconds
         }
 
         // Button click event listener

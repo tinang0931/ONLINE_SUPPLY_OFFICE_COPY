@@ -285,6 +285,26 @@
     
    
     
+.bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    margin-top: 8px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -2vh;
+  
+    
+}
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -296,7 +316,11 @@
     <div class="container">
         <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
-
+    <div class="bck">
+        <a href="{% url 'ppmp101' %}">
+            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+        </a>
+    </div>
     <div class="left-button-container">
         <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>

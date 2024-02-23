@@ -91,14 +91,15 @@
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS </strong></h1>
  
- 
-  <div class="search" style="position: relative; text-align: right;">
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
-      oninput="filterTable()"
-      style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search"
-      style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
-  </div>
+  <div class="search" style="position: relative; text-align: right; top: 9vh;">
+    <input class="form-control mb-3 pr-6 pl-6" type="text" id="search_bar_request" oninput="filterTable()" placeholder="Search" 
+    style="border: 2px solid #254b6e; border-radius: 15px; padding-right: 40px; padding-left: 30px; display: inline-block;">
+
+    <div style="position: absolute; top: 40%; transform: translateY(-50%); right: 10px;">
+        <i class="fas fa-search" style="color: #05708BD2;"></i>
+    </div>
+</div>
+
   <div class="bck">
     <a href="{% url 'budget-landing' %}">
         <img src="{% static 'images/back-button.gif' %}" alt="Previous">
@@ -113,7 +114,7 @@
         <th class="text-center">Requests for Approval</th>
         <th class="text-center">PPMP ID</th>
         <th class="text-center">Budget Officer Status</th>
-        <th class="text-center">Caampus Director Status</th>
+        <th class="text-center">Campus Director Status</th>
         <th class="text-center">Comment</th>
       </tr>
     </thead>

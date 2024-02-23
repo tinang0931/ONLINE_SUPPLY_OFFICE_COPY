@@ -257,35 +257,45 @@ opacity: 1;
                                         <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
                                     </button> 
                                     
+                                 
                                     <script>
-                                        <script>
-                                            function showPopup() {
-                                                // Check if the popup has already been displayed
-                                                if (!localStorage.getItem('popupDisplayed')) {
-                                                    document.getElementById("popup-container").style.display = "block";
+                                        function showPopup() {
+                                            // Check if the popup has already been displayed
+                                            var popupDisplayed = localStorage.getItem('popupDisplayed');
+                                    
+                                            if (!popupDisplayed) {
+                                                // Display the popup container
+                                                var popupContainer = document.getElementById("popup-container");
+                                                if (popupContainer) {
+                                                    popupContainer.style.display = "block";
+                                    
+                                                    // Hide the popup after 4 seconds
                                                     setTimeout(function() {
-                                                        document.getElementById("popup-container").style.display = "none";
+                                                        popupContainer.style.display = "none";
                                                         // Mark the popup as displayed in local storage
                                                         localStorage.setItem('popupDisplayed', true);
                                                     }, 4000); // 4 seconds
                                                 }
                                             }
-                                        
-                                            function hidePopup() {
-                                                document.getElementById("popup-container").style.display = "none";
+                                        }
+                                    
+                                        function hidePopup() {
+                                            var popupContainer = document.getElementById("popup-container");
+                                            if (popupContainer) {
+                                                popupContainer.style.display = "none";
                                             }
-                                        
-                                            function submitFormAndHideRow() {
-                                                // Add your form submission logic here
-                                                // This function will be called when the user submits the form from the popup
-                                            }
-                                        
-                                            window.onload = function() {
-                                                showPopup();
-                                            };
-                                        </script>
-                                        
-                                </script>
+                                        }
+                                    
+                                        function submitFormAndHideRow() {
+                                            // Add your form submission logic here
+                                            // This function will be called when the user submits the form from the popup
+                                        }
+                                    
+                                        window.onload = function() {
+                                            showPopup();
+                                        };
+                                    </script>
+                                    
                                     {% endif %}
                                 </td>
                             </tr>
