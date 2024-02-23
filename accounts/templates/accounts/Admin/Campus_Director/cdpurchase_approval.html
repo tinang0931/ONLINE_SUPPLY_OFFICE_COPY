@@ -210,9 +210,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-      
-      
-        
+        top: 1.5vh;
     }
     
     .bck:hover img {
@@ -245,7 +243,6 @@
         }
          
         .home img {
-            margin-bottom: ;
             width: 40px;
             height: 40px;
             transition: transform 0.3s ease-in-out;
@@ -272,17 +269,16 @@
             transform: scale(1.2); 
         }
     
-
-   .left-button-container {
-        position: absolute;
-        left: 184vh; /* Adjust this value as needed */
-        top: -50vh%; /* Adjust this value as needed */
-        transform: translateY(-50%);
-    
+        .left-button-container {
+            position: absolute;
+            left: 199.3vh; /* Adjust this value as needed */
+            top: 300px; /* Adjust this value as needed */
+            transform: translateY(-50%);
     }
 
+
     .table-responsive {
-        margin-top: 35px; /* Adjust the value as needed to move the table down */
+        margin-top: 3vh; /* Adjust the value as needed to move the table down */
     }
 
 
@@ -302,7 +298,7 @@
         font-weight: 500;
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
+        text-decoration: none;  /* Remove underline when the button is focused or active */
         transition: background 0.3s ease; /* Add transition for smoother hover effect */
     }
     
@@ -312,7 +308,7 @@
     }
     
     .get:focus, .get:active {
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
+        text-decoration: none;  /* Remove underline when the button is focused or active */
     }
      
  
@@ -341,7 +337,7 @@
     </div>
 
     <div class="left-button-container">
-        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>

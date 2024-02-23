@@ -15,6 +15,8 @@
         width: 30px;
         height: 30px;
         transition: all 0.3s ease-in-out;
+        position: relative;
+        top: -1.5vh;
     }
 
     .bck:hover img {
@@ -110,7 +112,7 @@
     }
 
     .footer {
-        background-color: rgba(1, 33, 67, 0.9);
+        background-color: rgba(10, 99, 158, 0.637);
         text-align: center;
         width: 100%;
         height: 100px;
@@ -212,9 +214,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
-      
-        
+        top: -5vh;
     }
     
     .bck:hover img {
@@ -254,15 +254,46 @@
     }
 
     .left-button-container {
-        position: absolute;
-        left: 184vh; /* Adjust this value as needed */
+        position: fixed;
+        left: 199.3vh; /* Adjust this value as needed */
         top: 300px; /* Adjust this value as needed */
         transform: translateY(-50%);
     }
     
   
      
- 
+    .get {
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        text-decoration: none;  /* Remove underline when the button is focused or active */
+        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+    }
+    
+    .get:hover {
+        background: #ffa125e3; /* Change background color on hover */
+        outline: 1px solid transparent; /* Optional: remove outline on hover */
+    }
+    
+    .get:focus, .get:active {
+        text-decoration: none;  /* Remove underline when the button is focused or active */
+    }
+    
+    .table-responsive{
+        margin-top: -1vh;
+    }
+    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
