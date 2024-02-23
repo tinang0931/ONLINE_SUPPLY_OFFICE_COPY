@@ -51,7 +51,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.shortcuts import render
-from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
+from .config import SITE_TITLE, CAMPUS_NAME
 from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
