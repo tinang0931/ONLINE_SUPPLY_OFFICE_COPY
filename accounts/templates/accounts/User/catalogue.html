@@ -146,23 +146,13 @@ opacity: 1;
         <h1 style="margin-left: 45%; margin-top: 5vh"> <strong> CATALOGUE </strong></h1>
     </div>
     <div class="home">
-        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="Home">
+        <a href="{% url 'userlanding' %}">
+            <img src="{% static 'images/home2.png' %}" alt="Home">
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('homeImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
     <div class="bck">
         <a href="{% url 'ppmp' %}">
-            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            <img src="{% static 'images/back2.png' %}" alt="Previous">
         </a>
     </div>
  
