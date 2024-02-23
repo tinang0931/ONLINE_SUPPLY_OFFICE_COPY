@@ -25,62 +25,29 @@
         justify-content: center;
     }
 
-    .bckbtn {
-        display: inline-block;
-        position: relative;
-    }
-
-    .bckbtn a {
+    .bck a  {
         display: flex;
         align-items: center;
         text-decoration: none;
     }
-
-    .bckbtn img {
-        width: 25px;
-        /* Adjust the width of the image as needed */
-        height: 25px;
-        /* Adjust the height of the image as needed */
-        transition: all 0.3s ease-in-out;
+    
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -15vh;
+      
+        
     }
-
-    .bckbtn:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-        /* Adjust the brightness for a highlight effect */
+    
+    .bck:hover img {
+        transform: scale(1.2); 
     }
-
-    .bckbtn::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -8px;
-        left: 0;
-        background-color: #6a89a5;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    .bckbtn:hover::before {
-        opacity: 1;
-    }
-
-    .table-responsive {
-    margin-top: -6vh; 
-    }
-
-.bckbtn img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-}
-
-.bckbtn:hover img {
-    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-}
+        
+        .table-responsive {
+        margin-top: -6vh; 
+        }
 
 .home {
     position: fixed;
@@ -88,7 +55,6 @@
 }
  
 .home img {
-   
     width: 40px;
     height: 40px;
     transition: transform 0.3s ease-in-out;
@@ -146,9 +112,12 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div class="search">
-                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request"
-                    oninput="filterTable()">
+            <div class="search" style="position: relative; text-align: right; margin-top: 2vh">
+                <span class="icon" style="position: absolute; right: -90px; top: 2vh; transform: translateY(-50%); width: 40px;">
+                    <i class="fas fa-search" style="font-size: 20px;"></i>
+                </span>
+                <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
             </div>
         </div>
         <div class="table-responsive">
@@ -349,30 +318,6 @@
                 input.select();
             }
 
- 
-            function filterTable() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("search_bar_request");
-                filter = input.value.toUpperCase();
-                table = document.querySelector(".table-striped");
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-
-
-
-
             $(document).ready(function () {
                 // Add click event to checkboxes
                 $('.row-checkbox').on('click', function () {
@@ -491,6 +436,27 @@
 
 
         </script>
+
+        <script>
+            function filterTable() {
+              // Get input value
+              var searchText = $('#search_bar_request').val().toLowerCase();
+          
+              // Iterate through table rows
+              $('.table tbody tr').each(function () {
+                var rowText = $(this).text().toLowerCase();
+          
+                // Check if the row contains the search text
+                if (rowText.indexOf(searchText) === -1) {
+                  // Hide the row if it doesn't match the search text
+                  $(this).hide();
+                } else {
+                  // Show the row if it matches the search text
+                  $(this).show();
+                }
+              });
+            }
+          </script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
