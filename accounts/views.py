@@ -51,7 +51,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.shortcuts import render
-from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
+from .config import SITE_TITLE, CAMPUS_NAME
 from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
@@ -273,9 +273,7 @@ def logout_user(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-@bac_required
-def baclanding(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
 
 @bac_required
 def bac_request(request):
@@ -288,14 +286,7 @@ def bac_request(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
-@cd_required
-def cdlanding(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
 
-
-@regular_user_required
-def userlanding(request):
-    return render(request, 'accounts/User/userlanding.html')
 
 
 @regular_user_required
@@ -346,13 +337,6 @@ def ppmpform(request, year, pr_id):
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
-
-
-@budget_required
-def budget_landing(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
-
-
 
 @authenticated_user
 def about(request):
