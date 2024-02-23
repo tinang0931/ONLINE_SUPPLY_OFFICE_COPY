@@ -1207,6 +1207,8 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+
+
 def delete(request, id):
      item = Item.objects.get(id=id)
      item.delete()
