@@ -308,6 +308,8 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
