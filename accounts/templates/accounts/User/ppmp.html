@@ -5,7 +5,11 @@
 
 {% block ppmp %}
 
+
 <style>
+    .head{
+        margin-left: -56%;
+    }
     h1 {
         color: #333;
         font-size: 24px;
@@ -39,7 +43,7 @@
     }
 
     .btn {
-        position: relative;
+       
         display: flex;
         justify-content: center;
         align-items: center;
@@ -55,6 +59,7 @@
         padding: 10px 20px;
         font-size: 16px;
         float: right;
+        
     }
     .btn.btn-success {
     transition: transform 0.3s ease; 
@@ -72,7 +77,8 @@
 
 .catalogue {
     position: relative; /* Change from fixed to relative */
-    left: 10px; /* You may adjust this value too */
+    top: 4vh;
+    left: 2px; /* You may adjust this value too */
     z-index: 999;
     background: #fff;
     color: black;
@@ -86,6 +92,7 @@
 }
 
 .catalogue:hover {
+    
     background: #1c96c5;
     color: white;
     transform: scale(1.1);
@@ -93,10 +100,11 @@
 
 
 .catalogue:active {
+ 
     transform: translate(0em, 0.17em);
 }
 
-.bck a  {
+.bck a {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -107,34 +115,35 @@
     height: 50px;
     margin-top: 8px;
     transition: transform 0.3s ease-in-out;
-    position: relative;
-    top: -2vh;
-  
-    
 }
 
 .bck:hover img {
     transform: scale(1.2); 
 }
+
     
     .table-responsive {
-    margin-top: -18vh; 
+        display: flex;
+    margin-top: -15vh;
+     
     }
 
 
 
 #yearDropdown{
+    position: fixed;
     padding: 10px 30px;
     font-size: 14px;
-    margin-left: 30px;
+    margin-left: -25px;
     border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
-
+    z-index: 999;
 
 }
 
 #yearDropdown option {
+    position: fixed;
     height: 40px;
     font-family: 'Arial', sans-serif;
     font-size: 14px;
@@ -142,43 +151,37 @@
 
 
 
-strong {
-    height: 60px;
-    line-height: 5vh;
-    margin-left: 5vh;
-    
-}
+.row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
+        .budget-container {
+            position: fixed;
+            display: flex;
+            align-items: center;
+            z-index: 999;
+        }
 
-.budget-container {
-    margin-left: 500px;
-    padding-right: 100px;
+        .budget-container strong {
+            position: fixed;
+            margin-left: -49vh;
+            margin-top: 5vh;
+            z-index: 999;
+        }
+
+        #budgetInput {
+            position: relative;
+            padding: 5px;
+            border: 2px solid black;
+            margin-left: 65vh;
+            top: -6vh;
+        }
+
+        .home {
     display: flex;
-    align-items: flex-start; 
-}
-
-.budget-container strong {
-    font-weight: bold;
-}
-
-.budget-container input[type="text"] {
-    padding: 1px;
-    z-index: 999;
-    position: absolute;
-    top: -7.5vh;
-    margin-left: 25vh;
-}
-
-.budget-container strong {
-    font-weight: bold;
-    position: relative;
-    top: -8.5vh; /* Adjust this value as needed to move it to the desired position */
-}
-
-
-.home {
-    position: fixed;
-    top: 20vh;
+    margin-top: -61px;
 }
  
 .home img {
@@ -186,23 +189,12 @@ strong {
     height: 40px;
     transition: transform 0.3s ease-in-out;
     animation: beat 2s infinite;
-    position: relative;
     margin-left: .5vh;
+    pointer-events: none; /* Ito ang bagong line */
 }
 
 
-@keyframes beat{
-    0%{
-        transform: scale(1);
-    }
-    50%{
-        transform: scale(1.2);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
- 
+
 .home:hover img {
     animation-play-state: paused;
     transform: scale(1.2); 
@@ -223,19 +215,11 @@ strong {
     width: 200px; /* Set a specific width */
 }
 
-/* Arrow pointing to the button */
-.catalogue-popup::after {
-    content: "";
-    position: absolute;
-    bottom: -45%;
-    left: -1%;
-    border-width: 15px;
-    border-style: solid;
-    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-    transform: translateX(10%);
-}
-.budget-container {
+.budget-container strong {
+    font-weight: bold;
+    font-size: 18px; /* Adjust the font size as needed */
     position: relative;
+    top: -8.5vh; /* Adjust this value as needed to move it to the desired position */
 }
 
 #budgetInput {
@@ -366,8 +350,8 @@ strong {
     </div>
     <div class="row">
         <div class="col-md-1 mb-0">
-            <button class="catalogue" id="catalogueButton">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none;">Catalogue</a>
+            <button class="catalogue">
+                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative; ">Catalogue </a>
             </button>
         </div>
     
@@ -408,50 +392,20 @@ strong {
     
     
         
-    <div class="col-md-3 mb-0">
-        <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
-            {% csrf_token %}
-            <div style="position: relative; z-index: 999;">
-                <select id="yearDropdown">
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                </select>
-                <input type="hidden" id="selectedYear" name="selectedYear">
-               
-                <div id="tutorialPopup" class="popup">
-                    <span class="popuptext" id="myPopup">select year </span>
-                </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        // Check if the popup has been displayed in this session
-                        var popupDisplayed = sessionStorage.getItem("popupDisplayed");
-                
-                        if (!popupDisplayed) {
-                            setTimeout(function() {
-                                var popup = document.getElementById("tutorialPopup");
-                                var popupText = document.getElementById("myPopup");
-                                popup.style.display = "block";
-                                popupText.style.visibility = "visible";
-                
-                                setTimeout(function() {
-                                    popup.style.display = "none";
-                                    // Set flag in sessionStorage indicating that the popup has been displayed in this session
-                                    sessionStorage.setItem("popupDisplayed", "true");
-                                }, 3000); // Adjusted to 3 seconds
-                            }, 4000); // Adjusted to 4 seconds
-                        }
-                
-                        document.getElementById("yearDropdown").addEventListener("change", function() {
-                            document.getElementById("selectedYear").value = this.value;
-                        });
-                    });
-                </script>
-                
-                
+        <div class="col-md-3 mb-0"style="position: fixed; margin-top: 4vh; margin-left: 23vh;z-index: 999; ">
+            <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
+                {% csrf_token %}
+                <div style="  position: relative;  z-index: 999;">
+                    <select id="yearDropdown" >
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                    </select>
+                    <input type="hidden" id="selectedYear" name="selectedYear">
+
                     <script>
                         document.getElementById("yearDropdown").addEventListener("change", function() {
                           document.getElementById("selectedYear").value = this.value;
@@ -466,9 +420,8 @@ strong {
             <div class=" col-md-6 text-left">
                   
                 <div class="budget-container">
-                    <strong>TOTAL ALLOCATED BUDGET:</strong>
-                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount">
-                   </div>
+                <input type="text" id="budgetInput" value="" placeholder="Enter budget amount" onkeypress="return isNumberKey(event)"><strong>TOTAL ALLOCATED BUDGET:
+                </strong>
                 </div>
                 <div class="popup" id="popup">
                     input your total allocated budget
@@ -538,20 +491,19 @@ strong {
                 }
             };
         </script>
-        <div class="total" style="position: relative; margin-top: -25vh; margin-left: 120vh; ">
+        <div class="total" style="position: relative; margin-top: -5vh; left: 60vw;">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
     </div>
-
-    
-    <div class="button-container" style="float: left;">
-    <button type="submit" class="btn btn-success btn-sm m-2 float-right" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 120px; position: relative; top: -150px;">
-        <i class="fas fa-check-circle"></i> Submit
-    </button>
-    <div class="popup-box" id="popupBox">
-         dont forget to submit 
+    <div class="button-container" style=" display: flex; justify-content: flex-end; margin-top: -7vh;">
+        <button type="submit" class="btn btn-success btn-sm m-2" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 130px;">
+            <i class="fas fa-check-circle"></i> Submit
+        </button>
     </div>
+    
+    
+    <div class="table-responsive">
 
 
    
