@@ -1530,7 +1530,7 @@ def preqform_cd(request, pr_id):
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
-def delete_item(request, id):
+def delete_items(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
