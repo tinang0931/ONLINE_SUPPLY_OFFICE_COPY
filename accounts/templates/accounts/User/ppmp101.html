@@ -54,13 +54,13 @@
     <div class="d-flex" id="wrapper">
         <div class="box-container">
 
-            <div class="box1 create">
+            <div class="box1 create" style="position: relative;">
                 <a href="{% url 'ppmp' %}" style="color: BLACK; text-decoration: none;">Create PPMP</a>
             </div>
 
             {% for checkout in checkouts|dictsortreversed:"year" %}
-            <div class="box ppmp">
-                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none;">
+            <div class="box ppmp" style="margin-left: -24vh; position: relative;">
+                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none; ">
                     <span>{{ checkout.year }} PPMP</span>
                 </a>
             </div>
