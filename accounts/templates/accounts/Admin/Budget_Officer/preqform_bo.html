@@ -226,10 +226,11 @@
     }
      
     .home img {
-        width: 40px;
-        height: 40px;
-        position: relative;
-        margin-left: .5vh;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: .5vh;
+    top: 4vh;
     }
     
     
@@ -279,9 +280,11 @@
         background: #ffa125e3; /* Change background color on hover */
         outline: 0px; /* Optional: remove outline on hover */
     }
-    
-   
-    
+
+    .table thead th[rowspan='2'] {
+    vertical-align: middle;
+    }
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
