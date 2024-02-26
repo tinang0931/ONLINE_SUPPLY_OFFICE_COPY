@@ -210,7 +210,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: 1.5vh;
+        top: 2.5vh;
     }
     
     .bck:hover img {
@@ -240,6 +240,7 @@
         .home {
             position: fixed;
             top: 20vh;
+
         }
          
         .home img {
@@ -247,7 +248,6 @@
             height: 40px;
             transition: transform 0.3s ease-in-out;
             animation: beat 2s infinite;
-            position: relative;
             margin-left: .5vh;
         }
         
@@ -269,19 +269,19 @@
             transform: scale(1.2); 
         }
     
-        .left-button-container {
-            position: absolute;
-            left: 199.3vh; /* Adjust this value as needed */
-            top: 300px; /* Adjust this value as needed */
-            transform: translateY(-50%);
-    }
-
+    
 
     .table-responsive {
         margin-top: 3vh; /* Adjust the value as needed to move the table down */
     }
 
 
+    .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: 300px; /* Adjust this value as needed */
+        transform: translateY(-50%);
+    }
     
     .get {
         display: inline-block;
@@ -337,7 +337,7 @@
     </div>
 
     <div class="left-button-container">
-        <a href="{% url 'purchase_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>

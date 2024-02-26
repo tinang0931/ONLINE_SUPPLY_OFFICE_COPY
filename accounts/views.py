@@ -51,7 +51,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.shortcuts import render
-from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
+from .config import SITE_TITLE, CAMPUS_NAME
 from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
@@ -273,9 +273,7 @@ def logout_user(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-@bac_required
-def baclanding(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
 
 @bac_required
 def bac_request(request):
@@ -288,14 +286,7 @@ def bac_request(request):
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
-@cd_required
-def cdlanding(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
 
-
-@regular_user_required
-def userlanding(request):
-    return render(request, 'accounts/User/userlanding.html')
 
 
 @regular_user_required
@@ -317,6 +308,8 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
     }
 
     return render(request, 'accounts/User/ppmp101.html', context)
@@ -346,13 +339,6 @@ def ppmpform(request, year, pr_id):
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
-
-
-@budget_required
-def budget_landing(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
-
-
 
 @authenticated_user
 def about(request):
@@ -545,7 +531,6 @@ def bac_ppmp(request, pr_id):
             'pr_id': pr_id,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
-        
     }
 
     if request.method == 'POST':
@@ -610,6 +595,8 @@ def bac_ppmp(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
      }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
@@ -1207,6 +1194,8 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+
+
 def delete(request, id):
      item = Item.objects.get(id=id)
      item.delete()
@@ -1530,7 +1519,7 @@ def preqform_cd(request, pr_id):
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
-def delete_item(request, id):
+def delete_items(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')

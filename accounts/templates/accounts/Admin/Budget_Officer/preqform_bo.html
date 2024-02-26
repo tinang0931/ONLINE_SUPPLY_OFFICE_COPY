@@ -228,8 +228,7 @@
     .home img {
         width: 40px;
         height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
+        top: 3vh;
         position: relative;
         margin-left: .5vh;
     }
@@ -327,7 +326,7 @@
 
     <div class="home">
         <a href="{% url 'budget-landing' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="budget-landing">
+            <img src="{% static 'images/home2.png' %}" alt="budget-landing">
         </a>
     </div>
     <script>
@@ -344,7 +343,7 @@
         <div class="col-md-1 mb-0">
           <div class="bck">
             <a href="{% url 'bohome' %}">
-              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+              <img src="{% static 'images/back2.png' %}" alt="Previous">
             </a>
           </div>
         </div>
