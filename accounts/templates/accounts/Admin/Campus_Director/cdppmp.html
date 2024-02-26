@@ -1,23 +1,18 @@
 {% extends "accounts/Admin/Campus_Director/cd.html" %}
-
-
 {% load static %}
 
 {% block cdppmp %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-
-
   .table a {
     text-decoration: none;
     color: black;
-    margin-top : 5vh
+    margin-top: 5vh;
   }
 
   .no-comment {
-    /* Your styles for a status with no comment */
-    background-color: lightgray; /* Adjust this to your desired background color */
+    background-color: lightgray;
     color: black;
   }
 
@@ -32,14 +27,14 @@
     appearance: none;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
-    background-color: transparent; 
-    box-shadow: none; 
+    background-color: transparent;
+    box-shadow: none;
     margin-top: 5vh;
   }
 
-  /* .search-form {
+  .search-form {
     justify-content: flex-end;
-  } */
+  }
 
   .table th {
     background-color: rgba(5, 112, 139, 0.822);
@@ -50,186 +45,148 @@
     z-index: 2;
   }
 
-  .bck a  {
+  .bck a {
     display: flex;
     align-items: center;
     text-decoration: none;
-}
+  }
 
-.bck img {
+  .bck img {
     width: 50px;
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    top: -15vh;
-  
-    
-}
+    top: -6.5vh;
+  }
 
-.bck:hover img {
-    transform: scale(1.2); 
-}
-    
-    .table-responsive {
-    margin-top: 1vh; 
-    }
+  .bck:hover img {
+    transform: scale(1.2);
+  }
 
+  .table-responsive {
+    margin-top: -6vh;
+  }
 </style>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4" style="margin-left: 10px;"  > <strong>PPMP REQUESTS </strong> </h1>
-  <div class="search" style="position: relative; text-align: right;">
-    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
-        <i class="fas fa-search" style="font-size: 20px;"></i>
-    </span>
-    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-</div>
+  <h1 class="pr-heading text-center pt-4" style="margin-left: 10px;"> <strong>PPMP REQUESTS </strong> </h1>
 
-<div class="row">
-  <div class="col-md-1 mb-0">
-    <div class="bck">
-      <a href="{% url 'cdlanding' %}">
-        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
-      </a>
+  <div class="search" style="position: relative; text-align: right;">
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; padding-left: 30px;">
+    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
+      <i class="fas fa-search" style="font-size: 20px;"></i>
+  </span>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1 mb-0">
+      <div class="bck">
+        <a href="{% url 'cdlanding' %}">
+          <img src="{% static 'images/back2.png' %}" alt="Previous">
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="table table-responsive" style="margin-top: -8vh;"></div>
+  <div class="table-responsive">
     <table class="table table-bordered">
-<thead>
-    <tr>
-      <th class="text-center">
-        Date Requested
-      </th>
-      
-      <th class="text-center" >
-        Requests
-      </th>
-
-      <th class="text-center">
-        PPMP ID
-      </th>
-
-
-      <th class="text-center">
-        Budget Officer Status
-      </th>
-     
-      
-      <th class="text-center">
-        Campus Director Status
-      </th>
-
-      <th class="text-center">
-        Comments
-      </th>
-  
-
-    </tr>
-  </thead>
-
-      {% for checkout in checkouts %}
+      <thead>
+        <tr>
+          <th class="text-center">Date Requested</th>
+          <th class="text-center">Requests</th>
+          <th class="text-center">PPMP ID</th>
+          <th class="text-center">Budget Officer Status</th>
+          <th class="text-center">Campus Director Status</th>
+          <th class="text-center">Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for checkout in checkouts %}
         <tr>
           <td class="text-center">
             {{ checkout.submission_date }}
           </td>
           <td>
-            
             {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a ppmp request for approval on {{ checkout.submission_date }}
-            
           </td>
-
           <td class="text-center">
             <a href="{% url 'cdppmp_approval' pr_id=checkout.pr_id %}">
-                <strong>{{ checkout.pr_id }}</strong>
+              <strong>{{ checkout.pr_id }}</strong>
             </a>
-        </td>
-
-        <td class="text-center">
-          {% if checkout.bo_status == 'approved' %}
-              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-          {% elif checkout.bo_status == 'declined' %}
-              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-          {% else %}
-              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-          {% endif %}
-      </td>
-      
-    
-    
-      <td class="text-center">
-        {% if checkout.cd_status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-        {% elif checkout.cd_status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-        {% else %}
+          </td>
+          <td class="text-center">
+            {% if checkout.bo_status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+            {% elif checkout.bo_status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+            {% else %}
             <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-        {% endif %}
-    </td>
-    
-        
-        
-        <td style="cursor: pointer;" onclick="toggleComments(this)">
-          <div class="commentsBlock">
+            {% endif %}
+          </td>
+          <td class="text-center">
+            {% if checkout.cd_status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+            {% elif checkout.cd_status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+            {% else %}
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+            {% endif %}
+          </td>
+          <td style="cursor: pointer;" onclick="toggleComments(this)">
+            <div class="commentsBlock">
               <p>
-                  {% if checkout.bo_comment %}
-                      <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
-                  {% else %}
-                      <strong>Budget Officer :</strong> No comment
-                  {% endif %}
+                {% if checkout.bo_comment %}
+                <strong>Budget Officer :</strong> {{ checkout.bo_comment }}
+                {% else %}
+                <strong>Budget Officer :</strong> No comment
+                {% endif %}
               </p>
               <p class="campusDirectorComment" style="display: none;">
-                  {% if checkout.cd_comment %}
-                      <strong>Campus Director:</strong> {{ checkout.cd_comment }}
-                  {% else %}
-                      <strong>Campus Director:</strong> No comment
-                  {% endif %}
+                {% if checkout.cd_comment %}
+                <strong>Campus Director:</strong> {{ checkout.cd_comment }}
+                {% else %}
+                <strong>Campus Director:</strong> No comment
+                {% endif %}
               </p>
-          </div>
-      
-          <script>
-              function toggleComments(element) {
-                  var commentsBlock = element.querySelector('.commentsBlock');
-                  var campusDirectorComment = element.querySelector('.campusDirectorComment');
-      
-                  // Toggle the visibility of the second <p> element
-                  if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
-                      campusDirectorComment.style.display = 'block';
-                  } else {
-                      campusDirectorComment.style.display = 'none';
-                  }
-              }
-          </script>
-      </td>
+            </div>
+          </td>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-  function filterTable() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search_bar_request");
-      filter = input.value.toUpperCase();
-      table = document.querySelector(".table");
-      tr = table.getElementsByTagName("tr");
+  function toggleComments(element) {
+    var commentsBlock = element.querySelector('.commentsBlock');
+    var campusDirectorComment = element.querySelector('.campusDirectorComment');
 
-      for (i = 1; i < tr.length; i++) { 
-          td = tr[i].getElementsByTagName("td")[1]; 
-          if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-              } else {
-                  tr[i].style.display = "none";
-              }
-          }
+    if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+      campusDirectorComment.style.display = 'block';
+    } else {
+      campusDirectorComment.style.display = 'none';
+    }
+  }
+
+  function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search_bar_request");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".table");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
       }
+    }
   }
 </script>
-
 {% endblock %}

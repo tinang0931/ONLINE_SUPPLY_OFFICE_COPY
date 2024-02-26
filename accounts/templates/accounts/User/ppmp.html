@@ -59,6 +59,7 @@
         padding: 10px 20px;
         font-size: 16px;
         float: right;
+        z-index: 999;
     }
     .btn.btn-success {
     transition: transform 0.3s ease; 
@@ -131,19 +132,28 @@
     position: fixed;
     padding: 10px 30px;
     font-size: 14px;
-    margin-left: 30px;
+    margin-left: px;
     border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
-     
+    -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        /* Add custom arrow */
+        background-image: url('your_custom_arrow_icon.png'); /* You can replace 'your_custom_arrow_icon.png' with your own arrow icon */
+        background-repeat: no-repeat;
+        background-position: right center;
+        padding-right: 30px; /* Adjust as needed */
+        justify-content: center;
 
 }
 
+
 #yearDropdown option {
     position: fixed;
-    height: 40px;
+    height: 50px;
     font-family: 'Arial', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 
@@ -162,7 +172,7 @@
 
         .budget-container strong {
             position: fixed;
-            margin-left: -40vh;
+            margin-left: -50vh;
             margin-top: 5vh;
         }
 
@@ -200,7 +210,11 @@
     position: relative;
     top: -8.5vh; /* Adjust this value as needed to move it to the desired position */
 }
-
+#homeImg {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
 
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -215,7 +229,7 @@
     </div>
     <div class="home">
         <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="Home">
+            <img src="{% static 'images/home2.png' %}" alt="Home">
         </a>
     </div>
     <script>
@@ -230,23 +244,24 @@
     </script>
     <div class="bck">
         <a href="{% url 'ppmp101' %}">
-            <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+            <img src="{% static 'images/back2.png' %}" alt="Previous">
         </a>
     </div>
     
     <div class="row">
         <div class="col-md-1 mb-0">
-            <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative;">Catalogue </a>
-            </button>
+            <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative; ">
+                <button class="catalogue">Catalogue</button>
+            </a>
         </div>
- 
+        
         
         <div class="col-md-3 mb-0"style="position: fixed; margin-top: 4vh; margin-left: 23vh; ">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="  position: relative;  z-index: 999;">
-                    <select id="yearDropdown" >
+                <div style="position: relative; z-index: 999;">
+                    <select id="yearDropdown" style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 15px;">
+                        <option selected>Select Year</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
@@ -255,13 +270,14 @@
                         <option value="2027">2027</option>
                     </select>
                     <input type="hidden" id="selectedYear" name="selectedYear">
-
                     <script>
                         document.getElementById("yearDropdown").addEventListener("change", function() {
-                          document.getElementById("selectedYear").value = this.value;
+                            document.getElementById("selectedYear").value = this.value;
                         });
-                      </script>
+                    </script>
                 </div>
+                
+                
         </div>
     </div>
    
@@ -304,16 +320,19 @@
                 }
             };
         </script>
-        <div class="total" style="position: relative; margin-top: -5vh; margin-left: 120vh; ">
+        <div class="total" style="position: relative; margin-top: -5vh; left: 120vh; ">
             <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
             <input type="number" name="estimate_budget" id="estimate_budget" readonly>
         </div>
     </div>
-    <div class="button-container" style="display: flex; justify-content: flex-end; margin-top: -7vh;">
-        <button type="submit" class="btn btn-success btn-sm m-2" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 130px;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
+    <div id="ppmpFormContainer" class="button-container" style="display: flex; justify-content: flex-end; margin-top: -7vh;">
+        <form id="ppmpForm" action="action.php" method="post">
+            <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2" style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 130px;">
+                <i class="fas fa-check-circle"></i> Submit
+            </button>
+        </form>
     </div>
+    
     
     
     <div class="table-responsive">
@@ -628,7 +647,6 @@
     updateTotalForAllItems();
 </script>
 
-
 <script>
     // Function to handle form submission
     function submitForm() {
@@ -638,9 +656,19 @@
         document.getElementById('ppmpForm').submit();
     }
 
-    // Attach the submitForm function to the click event of the button
-    document.getElementById('submitBtn').addEventListener('click', submitForm);
+    // Attach event listener to the container
+    document.getElementById('ppmpFormContainer').addEventListener('click', function(event) {
+        // Check if the click target is the container
+        if (event.target === this) {
+            // If yes, trigger the submit function
+            submitForm();
+        }
+    });
 </script>
+
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

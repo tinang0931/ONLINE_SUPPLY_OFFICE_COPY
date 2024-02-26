@@ -212,7 +212,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
+        top: -0.5vh;
       
         
     }
@@ -226,12 +226,11 @@
     }
      
     .home img {
-        width: 40px;
-        height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
-        position: relative;
-        margin-left: .5vh;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: .5vh;
+    top: 4vh;
     }
     
     
@@ -260,7 +259,7 @@
     }
 
     .get {
-     
+        margin-left: -5vh;
         outline: 0;
         cursor: pointer;
         text-align: center;
@@ -281,9 +280,11 @@
         background: #ffa125e3; /* Change background color on hover */
         outline: 0px; /* Optional: remove outline on hover */
     }
-    
-   
-    
+
+    .table thead th[rowspan='2'] {
+    vertical-align: middle;
+    }
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -295,7 +296,7 @@
     <div class="container">
         <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
-
+    
     <div class="left-button-container">
         <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
@@ -303,25 +304,16 @@
     </div>
 
     <div class="home">
-        <a href="{% url 'budget-landing' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="budget-landing">
+        <a href="{% url 'budget-landing' %}">
+            <img src="{% static 'images/home2.png' %}" alt="budget-landing">
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('budget-landingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
+    
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">
             <a href="{% url 'bohome' %}">
-              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+              <img src="{% static 'images/back2.png' %}" alt="Previous">
             </a>
           </div>
         </div>
@@ -367,23 +359,23 @@
                 <tr class="item-row" id="{{ p.id }}">
 
                     <td>
-                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <span class="editable" data-field="Item_name" style=" margin-left: -6.5vh;">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                             oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <span class="editable" data-field="Item_Brand" style=" margin-left: -5.5vh;">{{ p.item_brand_description }}</span>
                         <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <span class="editable" data-field="Unit"style=" margin-left: -3vh;">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-                    <td>{{ p.estimate_budget }}</td>
+                    <td >{{ p.estimate_budget }} </td>
                     <td>{{ p.jan }}</td>
                     <td>{{ p.feb }}</td>
                     <td>{{ p.mar }}</td>
