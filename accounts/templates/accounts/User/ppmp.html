@@ -250,11 +250,11 @@
     
     <div class="row">
         <div class="col-md-1 mb-0">
-            <button class="catalogue">
-                <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative;">Catalogue </a>
-            </button>
+            <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative; ">
+                <button class="catalogue">Catalogue</button>
+            </a>
         </div>
- 
+        
         
         <div class="col-md-3 mb-0"style="position: fixed; margin-top: 4vh; margin-left: 23vh; ">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
