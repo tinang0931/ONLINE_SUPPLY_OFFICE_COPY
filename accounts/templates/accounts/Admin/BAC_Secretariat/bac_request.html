@@ -77,7 +77,7 @@
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    top: -10vh;
+    top: -5.5vh;
   
     
 }
@@ -92,18 +92,18 @@
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"><strong>PURCHASE REQUESTS</strong></h1>
-  <div class="search" style="position: relative; text-align: right;">
-    <span class="icon" style="position: absolute; right: 10px; top: 1vh; transform: translateY(-50%); width: 40px;">
+  <div class="search" style="position: relative; text-align: right; top: 1vh;">
+    <span class="icon" style="position: absolute; right: 20px; top: 1vh; transform: translateY(-50%); width: 40px;">
         <i class="fas fa-search" style="font-size: 20px;"></i>
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 0px; display: inline-block;">
 </div>
 
 
   <div class="bck">
     <a href="{% url 'baclanding' %}">
-        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+        <img src="{% static 'images/back2.png' %}" alt="Previous">
     </a>
 </div>
   <table class="table table-bordered" style="margin-top: -5vh">
@@ -160,7 +160,7 @@
 
       {% else %}
       <tr>
-        <td colspan="7">
+        <td colspan="7" >
           <span>NO PURCHASE REQUESTS YET</span>
         </td>
       </tr>

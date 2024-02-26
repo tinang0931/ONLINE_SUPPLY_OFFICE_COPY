@@ -110,8 +110,6 @@ opacity: 1;
 .home img {
     width: 40px;
     height: 40px;
-    transition: transform 0.3s ease-in-out;
-    animation: beat 2s infinite;
     position: relative;
     margin-left: .5vh;
 }
@@ -122,6 +120,32 @@ opacity: 1;
     animation-play-state: paused;
     transform: scale(1.2); 
 }
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 15px;
+    background-color:rgba(0, 0, 0, 0.8);
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999; /* Ensure the box is above other elements */
+    color: white;
+}
+.popup-container::before {
+    content: '';
+    position: absolute;
+    bottom: -20px; /* Adjust arrow's position */
+    left: calc(60% - -55px); /* Adjust arrow's horizontal position */
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
+
 
 
 </style>
@@ -146,7 +170,7 @@ opacity: 1;
     </div>
  
     <div class="row">
-        <div class="search" style="position: relative; text-align: right; margin-top: -6vh">
+        <div class="search" style="position: relative; text-align: right; margin-top: -8vh">
             <span class="icon" style="position: absolute; right: -10vh; top: 2vh; transform: translateY(-50%); width: 40px; ">
                 <i class="fas fa-search" style="font-size: 20px;"></i>
             </span>
@@ -198,9 +222,55 @@ opacity: 1;
                                 <td>
                                     {% if item_submitted %}
                                     {% else %}
+                                    <div id="popup-container" class="popup-container">
+                                        
+                                        
+                                            <p>click here</p>
+                                            
+                                           
+                                        </div>
+                                 
+
+
                                     <button type="submit" onclick="submitFormAndHideRow(this, '{{ p.item_id }}')" class="custom-button">
                                         <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
-                                    </button>                        
+                                    </button> 
+                                    
+                                 
+                                    <script>
+                                        var popupDisplayed = false; // Variable to track popup display status
+                                    
+                                        function showPopup() {
+                                            if (!popupDisplayed) {
+                                                var popupContainer = document.getElementById("popup-container");
+                                                if (popupContainer) {
+                                                    popupContainer.style.display = "block";
+                                                    setTimeout(function() {
+                                                        popupContainer.style.display = "none";
+                                                        popupDisplayed = true; // Update variable to mark popup displayed
+                                                    }, 4000);
+                                                }
+                                            }
+                                        }
+                                    
+                                        function hidePopup() {
+                                            var popupContainer = document.getElementById("popup-container");
+                                            if (popupContainer) {
+                                                popupContainer.style.display = "none";
+                                            }
+                                        }
+                                    
+                                        function submitFormAndHideRow() {
+                                            // Add your form submission logic here
+                                            // This function will be called when the user submits the form from the popup
+                                        }
+                                    
+                                        window.onload = function() {
+                                            showPopup();
+                                        };
+                                    </script>
+                                    
+                                    
                                     {% endif %}
                                 </td>
                             </tr>
