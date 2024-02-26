@@ -247,17 +247,18 @@
     }
 
     .home {
-        position: fixed;
-        top: 19vh;
+       display: flex;
+       top: 20vh;
     }
      
     .home img {
         width: 40px;
         height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
+        
+      
         position: relative;
         margin-left: .5vh;
+        top: -5vh;
     }
     
     
@@ -281,7 +282,10 @@
     .center-text {
         text-align: center;
     }
-
+    
+    .table thead th[rowspan='2'] {
+        vertical-align: middle;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -295,7 +299,7 @@
     </div>
     <div class="home">
         <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+            <img src="{% static 'images/home2.png' %}" alt="cdlanding">
         </a>
     </div>
     <script>
@@ -312,7 +316,7 @@
         <div class="col-md-1 mb-3"> 
             <div class="bck">
                 <a href="{% url 'bac_home' %}">
-                    <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+                    <img src="{% static 'images/back2.png' %}" alt="Previous">
                 </a>
             </div>
         </div>
