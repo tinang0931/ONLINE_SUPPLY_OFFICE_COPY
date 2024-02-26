@@ -67,8 +67,8 @@ body {
 
     .box-container {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        margin-top: 10%;
+        margin-right: 15%;
         height: 100vh;
         flex-direction: column;
     }

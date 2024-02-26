@@ -944,6 +944,7 @@ def ppmp(request):
     
         items = Item.objects.all()
         context['items'] = items
+        
         return render(request, 'accounts/User/ppmp.html', context)
 
 
@@ -1241,9 +1242,9 @@ def preqform_bo(request, pr_id):
 
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
-        print(new_status)
+ 
         comment_content = request.POST.get('comment_content')
-        print(comment_content)
+
 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
