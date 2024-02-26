@@ -153,8 +153,6 @@ class Pr_identifier(models.Model):
         self.save()
     
 
-
-
 class Checkout(models.Model):
     year = models.IntegerField()
     pr_id = models.CharField(max_length=50, unique=True)

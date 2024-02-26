@@ -212,7 +212,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
+        top: -0.5vh;
       
         
     }
@@ -226,11 +226,11 @@
     }
      
     .home img {
-        width: 40px;
-        height: 40px;
-        top: 3vh;
-        position: relative;
-        margin-left: .5vh;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: .5vh;
+    top: 4vh;
     }
     
     
@@ -280,32 +280,11 @@
         background: #ffa125e3; /* Change background color on hover */
         outline: 0px; /* Optional: remove outline on hover */
     }
-    
-   
-    
-.bck a  {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
 
-.bck img {
-    width: 50px;
-    height: 50px;
-    margin-top: 8px;
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    top: -2vh;
-  
-    
-}
-
-.bck:hover img {
-    transform: scale(1.2); 
-}
-.table thead th[rowspan='2'] {
+    .table thead th[rowspan='2'] {
     vertical-align: middle;
-}
+    }
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -325,20 +304,11 @@
     </div>
 
     <div class="home">
-        <a href="{% url 'budget-landing' %}" onclick="toggleAnimation()">
+        <a href="{% url 'budget-landing' %}">
             <img src="{% static 'images/home2.png' %}" alt="budget-landing">
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('budget-landingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
+    
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">
