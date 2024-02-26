@@ -320,7 +320,7 @@
       </div>
     <div class="table-responsive">
 
-        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id ="form_id">
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" >
 
             {% csrf_token %}
 
@@ -353,8 +353,9 @@
                 </tr>
                 </tr>
             </thead>
+            {% for p in checkout_item%}
             <tbody>
-                {% for p in checkout_items %}
+               
 
                 <tr class="item-row" id="{{ p.id }}">
 
@@ -408,8 +409,9 @@
                     <input type="hidden" name="nov" value="{{ p.nov }}">
                     <input type="hidden" name="dec" value="{{ p.dec }}">
                 </tr>
-                {% endfor %}
+                
             </tbody>
+            {% endfor %}
         </table>
     </div>
 </div>
@@ -448,4 +450,4 @@
 
 
 
-{% endblock %}
+{% endblock %}{% url 'preqform_bo' pr_id=pr_id %}
