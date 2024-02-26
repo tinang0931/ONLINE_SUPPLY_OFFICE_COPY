@@ -331,6 +331,8 @@ def ppmpform(request, year, pr_id):
         
         'bo_comment': approved_checkouts.first().bo_comment,
         'cd_comment': approved_checkouts.first().cd_comment, 
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
    
 
@@ -909,6 +911,8 @@ def myppmp(request):
 
     context = {
         'approved_items': approved_items,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
