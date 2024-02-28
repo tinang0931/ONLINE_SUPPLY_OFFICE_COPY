@@ -101,7 +101,7 @@ def cdlanding(request):
     return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def userlanding(request):
     context = {
         'HEADING_TEXT': HEADING_TEXT,
@@ -112,7 +112,7 @@ def userlanding(request):
     return render(request, 'accounts/User/userlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def ppmp101(request):
   
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
@@ -163,6 +163,7 @@ def register(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
+        
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -222,10 +223,9 @@ def login(request):
         if user is not None and user.is_active:
             auth_login(request, user)
             
+            
             if user.user_type == 'admin':
-                return redirect('user')  
-            elif user.user_type == 'regular':
-                return redirect('userlanding')
+                return redirect('user') 
             elif user.user_type == 'cd':
                 return redirect('cdlanding')
             elif user.user_type == 'budget':
@@ -234,7 +234,7 @@ def login(request):
                 return redirect('baclanding')
             else:
                 
-                return redirect('login') 
+                return redirect('userlanding') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
@@ -304,18 +304,11 @@ def about(request):
 
     return render(request, 'accounts/User/about.html', context)
 
-@regular_user_required
-@authenticated_user
-def registration(request):
-    return render(request, 'accounts/User/registration.html')
-
-@regular_user_required
-def regular_user_only_view(request):
-    return render(request, 'accounts/User/request.html')
 
 
 
-@regular_user_required
+
+
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.filter(user=request.user)
@@ -348,13 +341,11 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
-@regular_user_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
-@regular_user_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -477,6 +468,7 @@ def bac_purchaserequest(request, pr_id):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
+@bac_required
 def bac_ppmp(request, pr_id):
     checkouts = get_object_or_404(Checkout, pr_id=pr_id)
     checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
@@ -797,7 +789,7 @@ def delete_user(request, username):
     user.delete()
     return redirect('user')
 
-
+@authenticated_user
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -821,7 +813,7 @@ def addItem(request):
     return render(request, 'accounts/User/ppmp.html')
 
 
-@regular_user_required
+@authenticated_user
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
     if request.method == 'POST':
@@ -854,7 +846,7 @@ def catalogue (request):
     return render(request, 'accounts/User/catalogue.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def myppmp(request):
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
@@ -872,7 +864,7 @@ def myppmp(request):
 
 
 
-@regular_user_required
+@authenticated_user
 def ppmp(request):
     context = {
         'SITE_TITLE' : SITE_TITLE,
@@ -951,7 +943,7 @@ def ppmp(request):
 
 
 from django.core.files.base import ContentFile
-@regular_user_required
+@authenticated_user
 def purchase(request):
     context = {
                 'SITE_TITLE': SITE_TITLE,
@@ -1008,6 +1000,8 @@ def generate_auto_pr_id():
     pr_id = str(ObjectId())
     return pr_id
 
+
+@authenticated_user
 def approved_ppmp(request):
     if request.method == 'POST':
         item = request.POST.get('item')
@@ -1054,7 +1048,7 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 
-@authenticated_user
+@bac_required
 def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
@@ -1490,7 +1484,7 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
