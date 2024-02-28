@@ -132,7 +132,7 @@
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    top: 4.5vh;
+    top: 4vh;
     z-index: 999;
   
     
@@ -157,12 +157,12 @@
       </div>
       </div>
     </div>
-    <div class="search" style="position: relative; text-align: right;">
+    <div class="search" style="position: relative; display: flex; text-align: right; justify-content: flex-end; ">
       <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
           <i class="fas fa-search" style="font-size: 20px;"></i>
       </span>
       <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-          style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+          style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 10px 40px 10px 20px; display: inline-block; outline: none;">
   </div>
   
 <div class="table-responsive" style="margin-top: -1vh;"></div>
