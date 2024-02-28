@@ -51,7 +51,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.shortcuts import render
-from .config import SITE_TITLE, CAMPUS_NAME, HEADING_TEXT, SUBHEADING_TEXT
+from .config import SITE_TITLE, CAMPUS_NAME
 from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
@@ -137,26 +137,7 @@ def ppmp101(request):
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
-def ppmpform(request, year, pr_id):
- 
-    
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
 
-
-    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-
-
-    context = {
-        'approved_items': approved_items,
-        'year': year,
-        'pr_id': pr_id,
-        'bo_comment': approved_checkouts.first().bo_comment,
-        'cd_comment': approved_checkouts.first().cd_comment,
-        'SITE_TITLE': SITE_TITLE,
-        'CAMPUS_NAME': CAMPUS_NAME,
-    }
-
-    return render(request, 'accounts/User/myppmp.html', context)
 
 
 def landing(request):
@@ -273,9 +254,7 @@ def logout_user(request):
 def bac(request):
     return render(request, 'accounts/User/bac.html')
 
-@bac_required
-def baclanding(request):
-    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html')
+
 
 @bac_required
 def bac_request(request):
@@ -287,39 +266,6 @@ def bac_request(request):
     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
-
-@cd_required
-def cdlanding(request):
-    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html')
-
-
-@regular_user_required
-def userlanding(request):
-    return render(request, 'accounts/User/userlanding.html')
-
-
-@regular_user_required
-def ppmp101(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-    }
-
-    return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year, pr_id):
  
@@ -338,6 +284,8 @@ def ppmpform(request, year, pr_id):
         
         'bo_comment': approved_checkouts.first().bo_comment,
         'cd_comment': approved_checkouts.first().cd_comment, 
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
    
 
@@ -346,13 +294,6 @@ def ppmpform(request, year, pr_id):
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
-
-
-@budget_required
-def budget_landing(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html')
-
-
 
 @authenticated_user
 def about(request):
@@ -545,7 +486,6 @@ def bac_ppmp(request, pr_id):
             'pr_id': pr_id,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
-        
     }
 
     if request.method == 'POST':
@@ -610,6 +550,8 @@ def bac_ppmp(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
+            'SITE_TITLE': SITE_TITLE,
+            'CAMPUS_NAME': CAMPUS_NAME,
      }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
 
@@ -922,6 +864,8 @@ def myppmp(request):
 
     context = {
         'approved_items': approved_items,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
 
     return render(request, 'accounts/User/myppmp.html', context)
@@ -944,6 +888,7 @@ def ppmp(request):
         )
         
         items = request.POST.getlist('item')
+        
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
         estimate_budgets = request.POST.getlist('estimate_budget')
@@ -999,6 +944,7 @@ def ppmp(request):
     
         items = Item.objects.all()
         context['items'] = items
+        
         return render(request, 'accounts/User/ppmp.html', context)
 
 
@@ -1207,6 +1153,8 @@ def delete_item(request, id):
     item.delete()
     return redirect('bac_dashboard')
 
+
+
 def delete(request, id):
      item = Item.objects.get(id=id)
      item.delete()
@@ -1294,9 +1242,9 @@ def preqform_bo(request, pr_id):
 
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
-        print(new_status)
+ 
         comment_content = request.POST.get('comment_content')
-        print(comment_content)
+
 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
@@ -1347,14 +1295,15 @@ def preqform_bo(request, pr_id):
        
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        checkout_item = CheckoutItems.objects.filter(checkout=checkouts)
         context = {
             'checkouts': checkouts,
-            'checkout_items': checkout_items,
+            'checkout_item': checkout_item,
             'pr_id': pr_id,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
         }
+        
         return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
 
         
@@ -1530,7 +1479,7 @@ def preqform_cd(request, pr_id):
     return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
-def delete_item(request, id):
+def delete_items(request, id):
     item = Item.objects.get(id = id)
     item.delete()
     return redirect ('requester')
@@ -1623,4 +1572,3 @@ def boppmp(request, pr_id):
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
   
-

@@ -123,6 +123,27 @@
             transform: translateY(-2px);
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
         }
+        .container {
+    font-family: 'Poppins', sans-serif;
+    max-width: 600px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.884);
+    box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
+    padding: 20px 30px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    top: 100px;
+    height: 75%;
+    margin-top: 110px;
+    padding: 1vw;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+        }
 
         .checkbox-label.selected {
             font-family: 'Poppins', sans-serif;
@@ -150,7 +171,7 @@
 <body>
     <div class="upper">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
 
-    <div class="container" style="margin-top: 150px; max-width: 600px; height: 80%;">
+    <div class="container">
         {% if messages %}
 
         {% for message in messages %}

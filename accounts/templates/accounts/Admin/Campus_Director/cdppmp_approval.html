@@ -212,13 +212,13 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
+        top: -0.5vh;
       
         
     }
     
     .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+        transform: scale(1.2); 
     }
     
     .home {
@@ -227,13 +227,12 @@
     }
      
     .home img {
-        margin-bottom: ;
         width: 40px;
         height: 40px;
         transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
         position: relative;
-        margin-left: .5vh;
+        margin-left: 0.5vh;
+        top: 4vh;
     }
     
     
@@ -250,7 +249,6 @@
     }
      
     .home:hover img {
-        animation-play-state: paused;
         transform: scale(1.2); 
     }
 
@@ -260,11 +258,9 @@
         top: 300px; /* Adjust this value as needed */
         transform: translateY(-50%);
     }
-    
-  
-     
+
     .get {
-        display: inline-block;
+     
         outline: 0;
         cursor: pointer;
         text-align: center;
@@ -278,19 +274,17 @@
         font-weight: 500;
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
-        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+        
     }
     
     .get:hover {
         background: #ffa125e3; /* Change background color on hover */
-        outline: 1px solid transparent; /* Optional: remove outline on hover */
+        outline: 0px; /* Optional: remove outline on hover */
     }
     
-    .get:focus, .get:active {
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
-    }
-    
+    .table thead th[rowspan='2'] {
+    vertical-align: middle;
+}
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -305,32 +299,21 @@
     </div>
 
     <div class="left-button-container">
-        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
-    
-    
+
     <div class="home">
-        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+        <a href="{% url 'cdlanding' %}">
+            <img src="{% static 'images/home2.png' %}" alt="budget-landing">
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('cdlandingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">
             <a href="{% url 'cdppmp' %}">
-              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+              <img src="{% static 'images/back2.png' %}" alt="Previous">
             </a>
           </div>
         </div>
@@ -411,7 +394,6 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -438,14 +420,16 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
+  
+
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
             <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
         </div>
     </div>
 </footer>
-</form>
 
+</form>
 
 <script>
     function btn_click(approve) {
@@ -460,6 +444,7 @@
         form.submit();
     }
 </script>
+
 
 
 
