@@ -191,32 +191,6 @@
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
 
-
-
-
-                            <input id="form_username_{{ user.id }}" type="hidden" name="username_{{ user.id }}"
-                                value="{{ user.username }}">
-                            <input id="form_first_name_{{ user.id }}" type="hidden" name="first_name_{{ user.id }}"
-                                value="{{ user.first_name }}">
-                            <input id="form_last_name_{{ user.id }}" type="hidden" name="last_name_{{ user.id }}"
-                                value="{{ user.last_name }}">
-                            <input id="form_email_{{ user.id }}" type="number" style="display: none;"
-                                name="email_{{ user.id }}" value="{{ user.email }}">
-                            <input id="form_contact1_{{ user.id }}" type="number" style="display: none;"
-                                name="contact1_{{ user.id }}" value="{{ user.contact1 }}">
-                            <input id="form_user_type_{{ user.id }}" type="hidden" name="user_type_{{ user.id }}"
-                                value="{{ user.user_type }}">
-
-                            <button type="submit" class="save-icon" style="display: none;"
-                                onclick="saveEdit('{{ user.id }}')" id="save_icon_{{ user.id }}"><i
-                                    class="fas fa-check text-success"></i></button>
-                            <button type="button" class="cancel-icon" style="display: none;"
-                                onclick="cancelEdit('{{ user.id }}')" id="cancel_icon_{{ user.id }}"><i
-                                    class="fas fa-times text-danger"></i></button>
-
-
-
-
                             {% if user.username %}
 
                             <a href="{% url 'delete_user' user.username %}" style="text-align: center;">
