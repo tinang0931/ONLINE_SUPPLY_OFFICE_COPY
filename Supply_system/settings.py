@@ -87,15 +87,10 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,  # Set to True if you want to enforce a schema, otherwise, set to False
         'NAME': 'inventory',
-	'CLIENT': {
-            'host': 'mongodb+srv://ctugacsupplyofficedevteam:przh0tkFb1oMtA04@ctug-supplyofficedevtea.rn0ftik.mongodb.net/',
-            'username': 'ctugacsupplyofficedevteam',
-            'password': 'przh0tkFb1oMtA04',
-            'authSource': 'admin',
-        }
-    }
+        'HOST': 'localhost',
+        'PORT': 27017,
+    },
 }
 
 # Password validation
