@@ -86,7 +86,7 @@
     .catalogue {
         position: relative;
         /* Change from fixed to relative */
-        top: 4vh;
+        top: 7vh;
         left: 2px;
         /* You may adjust this value too */
         z-index: 999;
@@ -139,37 +139,30 @@
 
 
     #yearDropdown {
-        position: fixed;
-        padding: 10px 30px;
-        font-size: 14px;
-        margin-left: px;
-        border: 1px solid black;
-        border-radius: 4px;
-        cursor: pointer;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        /* Add custom arrow */
-        background-image: url('your_custom_arrow_icon.png');
-        /* You can replace 'your_custom_arrow_icon.png' with your own arrow icon */
-        background-repeat: no-repeat;
-        background-position: right center;
-        padding-right: 30px;
-        /* Adjust as needed */
-        justify-content: center;
+    padding: 10px 2vw; /* Use vw (viewport width) for padding */
+    font-size: 1.6vw; /* Use vw for font size */
+    margin-left: -65vw; /* Use vw for margin */
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('your_custom_arrow_icon.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 2vw; /* Use vw for padding */
+    justify-content: center;
+    overflow-y: auto;
+    position: relative;
+    top: 3vh;
+}
 
-    }
-
-
-    #yearDropdown option {
-        position: fixed;
-        height: 50px;
-        font-family: 'Arial', sans-serif;
-        font-size: 16px;
-    }
-
-
-
+#yearDropdown option {
+    font-size: 16px;
+    padding: 1vw; /* Use vw for padding */
+    
+}
     .row {
         display: flex;
         justify-content: space-between;
@@ -177,23 +170,23 @@
     }
 
     .budget-container {
-        position: fixed;
+       
         display: flex;
         align-items: center;
     }
 
     .budget-container strong {
         position: fixed;
-        margin-left: -50vh;
-        margin-top: 5vh;
+        margin-left: -57vh;
+      
     }
 
     #budgetInput {
-        position: relative;
+       
         padding: 5px;
         border: 2px solid black;
         margin-left: 80vh;
-        top: -6vh;
+       
     }
 
     .home {
@@ -208,7 +201,6 @@
         animation: beat 2s infinite;
         margin-left: .5vh;
         pointer-events: none;
-        /* Ito ang bagong line */
     }
 
 
@@ -221,10 +213,10 @@
     .budget-container strong {
         font-weight: bold;
         font-size: 18px;
-        /* Adjust the font size as needed */
         position: relative;
-        top: -8.5vh;
-        /* Adjust this value as needed to move it to the desired position */
+        top: -0.5vh;
+        left: 13vh;
+
     }
 
     #homeImg {
@@ -232,6 +224,10 @@
         top: 0;
         left: 0;
     }
+    .ml-3, .mx-3 {
+    margin-left: 1rem !important;
+    margin-top: -37px;
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -271,13 +267,13 @@
             </a>
         </div>
 
-
-        <div class="col-md-3 mb-0" style="position: fixed; margin-top: 4vh; margin-left: 23vh; ">
+        
+        <div class="col-md-3 mb-0" style=" top: 38px;">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
                 <div style="position: relative; z-index: 999;">
                     <select id="yearDropdown"
-                        style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 15px;">
+                        style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 15px; ">
                         <option selected>Select Year</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -293,14 +289,14 @@
                         });
                     </script>
                 </div>
-
-
+                
+        
         </div>
     </div>
 
     <div class="row">
         <div class="row">
-            <div class=" col-md-6 text-left">
+            <div class=" col-md-5 text-left">
 
                 <div class="budget-container">
                     <input type="text" id="budgetInput" value="" placeholder="Enter budget amount"

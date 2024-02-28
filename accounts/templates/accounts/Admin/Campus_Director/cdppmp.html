@@ -18,18 +18,24 @@
 
   .form-control {
     display: block;
-    width: 13.5%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+    width: 13.4%;
     color: var(--bs-body-color);
     appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
-    background-color: transparent;
-    box-shadow: none;
-    margin-top: 5vh;
+  }
+
+
+  .form-control:focus {
+    border-color: #87CEEB; /* Light blue color code */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Optional: Add a subtle box-shadow */
+}
+
+  .form-control::selection {
+    background-color: #05708BD2;
+    color: #fff; /* Set text color in the selection */
   }
 
   .search-form {
@@ -71,13 +77,13 @@
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4" style="margin-left: 10px;"> <strong>PPMP REQUESTS </strong> </h1>
 
-  <div class="search" style="position: relative; text-align: right;">
-    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; padding-left: 30px;">
-    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
-      <i class="fas fa-search" style="font-size: 20px;"></i>
-  </span>
-  </div>
-
+  <div class="search" style="position: relative; display: flex; text-align: right; justify-content: flex-end; ">
+    <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
+        <i class="fas fa-search" style="font-size: 20px;"></i>
+    </span>
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+        style=" top: 6vh; border: 2px solid #254b6e; border-radius: 25px; padding-right: 10px 40px 10px 20px; display: inline-block; outline: none;">
+</div>
   <div class="row">
     <div class="col-md-1 mb-0">
       <div class="bck">
