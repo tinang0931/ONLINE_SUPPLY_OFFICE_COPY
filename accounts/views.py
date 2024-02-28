@@ -101,7 +101,7 @@ def cdlanding(request):
     return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def userlanding(request):
     context = {
         'HEADING_TEXT': HEADING_TEXT,
@@ -112,7 +112,7 @@ def userlanding(request):
     return render(request, 'accounts/User/userlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def ppmp101(request):
   
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
@@ -137,26 +137,7 @@ def ppmp101(request):
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
-def ppmpform(request, year, pr_id):
- 
-    
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
 
-
-    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-
-
-    context = {
-        'approved_items': approved_items,
-        'year': year,
-        'pr_id': pr_id,
-        'bo_comment': approved_checkouts.first().bo_comment,
-        'cd_comment': approved_checkouts.first().cd_comment,
-        'SITE_TITLE': SITE_TITLE,
-        'CAMPUS_NAME': CAMPUS_NAME,
-    }
-
-    return render(request, 'accounts/User/myppmp.html', context)
 
 
 def landing(request):
@@ -182,6 +163,7 @@ def register(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
+        
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -241,10 +223,9 @@ def login(request):
         if user is not None and user.is_active:
             auth_login(request, user)
             
+            
             if user.user_type == 'admin':
-                return redirect('user')  
-            elif user.user_type == 'regular':
-                return redirect('userlanding')
+                return redirect('user') 
             elif user.user_type == 'cd':
                 return redirect('cdlanding')
             elif user.user_type == 'budget':
@@ -253,7 +234,7 @@ def login(request):
                 return redirect('baclanding')
             else:
                 
-                return redirect('login') 
+                return redirect('userlanding') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
@@ -285,34 +266,6 @@ def bac_request(request):
     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
-
-
-
-
-@regular_user_required
-def ppmp101(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
-    }
-
-    return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year, pr_id):
  
@@ -351,18 +304,11 @@ def about(request):
 
     return render(request, 'accounts/User/about.html', context)
 
-@regular_user_required
-@authenticated_user
-def registration(request):
-    return render(request, 'accounts/User/registration.html')
-
-@regular_user_required
-def regular_user_only_view(request):
-    return render(request, 'accounts/User/request.html')
 
 
 
-@regular_user_required
+
+
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.filter(user=request.user)
@@ -395,13 +341,11 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
-@regular_user_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
-@regular_user_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
@@ -524,6 +468,7 @@ def bac_purchaserequest(request, pr_id):
 
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
+@bac_required
 def bac_ppmp(request, pr_id):
     checkouts = get_object_or_404(Checkout, pr_id=pr_id)
     checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
@@ -844,7 +789,7 @@ def delete_user(request, username):
     user.delete()
     return redirect('user')
 
-
+@authenticated_user
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -868,7 +813,7 @@ def addItem(request):
     return render(request, 'accounts/User/ppmp.html')
 
 
-@regular_user_required
+@authenticated_user
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
     if request.method == 'POST':
@@ -901,7 +846,7 @@ def catalogue (request):
     return render(request, 'accounts/User/catalogue.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def myppmp(request):
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
@@ -919,7 +864,7 @@ def myppmp(request):
 
 
 
-@regular_user_required
+@authenticated_user
 def ppmp(request):
     context = {
         'SITE_TITLE' : SITE_TITLE,
@@ -935,6 +880,7 @@ def ppmp(request):
         )
         
         items = request.POST.getlist('item')
+        
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
         estimate_budgets = request.POST.getlist('estimate_budget')
@@ -990,13 +936,14 @@ def ppmp(request):
     
         items = Item.objects.all()
         context['items'] = items
+        
         return render(request, 'accounts/User/ppmp.html', context)
 
 
 
 
 from django.core.files.base import ContentFile
-@regular_user_required
+@authenticated_user
 def purchase(request):
     context = {
                 'SITE_TITLE': SITE_TITLE,
@@ -1053,6 +1000,8 @@ def generate_auto_pr_id():
     pr_id = str(ObjectId())
     return pr_id
 
+
+@authenticated_user
 def approved_ppmp(request):
     if request.method == 'POST':
         item = request.POST.get('item')
@@ -1099,7 +1048,7 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 
-@authenticated_user
+@bac_required
 def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
@@ -1287,9 +1236,9 @@ def preqform_bo(request, pr_id):
 
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
-        print(new_status)
+ 
         comment_content = request.POST.get('comment_content')
-        print(comment_content)
+
 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
@@ -1340,14 +1289,15 @@ def preqform_bo(request, pr_id):
        
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        checkout_item = CheckoutItems.objects.filter(checkout=checkouts)
         context = {
             'checkouts': checkouts,
-            'checkout_items': checkout_items,
+            'checkout_item': checkout_item,
             'pr_id': pr_id,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
         }
+        
         return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
 
         
@@ -1534,7 +1484,7 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
