@@ -1571,4 +1571,3 @@ def boppmp(request, pr_id):
 
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
-  
