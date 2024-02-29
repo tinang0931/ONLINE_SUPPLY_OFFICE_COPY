@@ -322,9 +322,9 @@
           <input id="form_price_{{ item.id }}" type="number" style="display: none;" name="price_{{ item.id }}"
             value="{{ item.Price }}">
 
-          <button type="submit" class="save-icon" style="display: none;"><i
+          <button type="submit" class="save-icon" onclick="saveItem('{{ item.id }}')" style="display: none;"><i
               class="fas fa-check text-success"></i></button>
-          <button type="button" class="cancel-icon" style="display: none;"><i
+          <button type="button" class="cancel-icon" onclick="cancelEdit('{{ item.id }}')" style="display: none;"><i
               class="fas fa-times text-danger"></i></button>
 
           
@@ -439,8 +439,6 @@
       });
     }
     
-
-
   </script>
 
 
