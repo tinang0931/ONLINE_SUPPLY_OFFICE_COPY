@@ -255,18 +255,6 @@ def bac(request):
     return render(request, 'accounts/User/bac.html')
 
 
-
-@bac_required
-def bac_request(request):
-
-    tracker = Pr_identifier.objects.select_related('user').all()
-    context = {
-        'tracker': tracker
-
-    }
-    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
-
-
 def ppmpform(request, year, pr_id):
  
     
