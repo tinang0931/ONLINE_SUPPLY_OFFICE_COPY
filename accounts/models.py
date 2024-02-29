@@ -199,8 +199,6 @@ class CheckoutItems(models.Model):
 
 
 
-
-
 class CSV(models.Model):
     Category = models.CharField(max_length=255)
     Item_name = models.CharField(max_length=255)

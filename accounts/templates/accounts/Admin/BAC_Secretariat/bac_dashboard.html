@@ -96,6 +96,7 @@
       display: inline-block;
       width: 8%;
     }
+    
   </style>
 
   <div class="container-fluid">
@@ -327,9 +328,6 @@
               class="fas fa-times text-danger"></i></button>
 
           
-
-
-
           {% if item.id %}
           <a href="{% url 'delete_item' item.id %}" class="delete-icon"><i class="fas fa-trash-alt text-danger"></i></a>
           {% endif %}
