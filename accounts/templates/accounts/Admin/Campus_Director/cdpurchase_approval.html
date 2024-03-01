@@ -39,13 +39,11 @@
         opacity: 1;
     }
 
-
     .table-and-comment {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
 
     .icons-container {
         display: flex;
@@ -60,9 +58,6 @@
         text-decoration: none;
         color: white;
     }
-
-
-
 
     .icon-link {
         margin-left: 20px;
@@ -123,9 +118,6 @@
         size: 12px;
     }
 
-
-
-
     .subpage {
         padding: 1cm;
         border: 5px red solid;
@@ -140,14 +132,14 @@
 
 
     @media print {
-        .footer {
-            display: none;
-        }
+    .footer {
+         display: none;
+    }
 
-        .input-box,
-        .icons-container {
-            display: none;
-        }
+    .input-box,
+    .icons-container {
+        display: none;
+    }
     }
 
     .container {
@@ -180,7 +172,7 @@
     .footer {
         display: left;
         justify-content: space-between;
-        align-items: center;  /* Vertically center the content */
+        align-items: center;  
     }
     
     .icons-container {
@@ -190,12 +182,12 @@
     
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the gap between buttons as needed */
+        gap: 10px; 
     }
     
     .slip-icon {
-        width: 50px; /* Adjust the width as needed */
-        height: auto; /* Maintain the aspect ratio */
+        width: 50px; 
+        height: auto; 
         margin-right: 15px
     }
 
@@ -217,69 +209,65 @@
         transform: scale(1.2); 
     }
     
-        .status-circle {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+    .status-circle {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
     
-        .text-green {
-            color: green;
-        }
+    .text-green {
+        color: green;
+    }
     
-        .text-orange {
-            color: orange;
-        }
+    .text-orange {
+        color: orange;
+    }
     
-        .text-red {
-            color: red;
-        }
-
-        .home {
-            position: fixed;
-            top: 20vh;
-
-        }
-         
-        .home img {
-            width: 40px;
-            height: 40px;
-            transition: transform 0.3s ease-in-out;
-            margin-left: 0.5vh;
-            margin-top: 0vh;
-        }
-        
-        
-        @keyframes beat{
-            0%{
-                transform: scale(1);
-            }
-            50%{
-                transform: scale(1.2);
-            }
-            100%{
-                transform: scale(1);
-            }
-        }
-         
-        .home:hover img {
-            animation-play-state: paused;
-            transform: scale(1.2); 
-        }
-    
-    
-
-    .table-responsive {
-        margin-top: 3vh; /* Adjust the value as needed to move the table down */
+    .text-red {
+        color: red;
     }
 
+    .home {
+         position: fixed;
+        top: 20vh;
+    }
+         
+    .home img {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        margin-left: 0.5vh;
+        margin-top: 0vh;
+    }
+        
+        
+     @keyframes beat{
+    0%{
+       transform: scale(1);
+    }
+    50%{
+       transform: scale(1.2);
+    }
+    100%{
+       transform: scale(1);
+    }
+    }
+         
+    .home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2); 
+    }
+    
+    .table-responsive {
+        margin-top: 3vh; 
+    }
 
     .left-button-container {
         position: absolute;
-        left: 184vh; /* Adjust this value as needed */
-        top: 300px; /* Adjust this value as needed */
+        left: 184vh;
+        top: 300px; 
         transform: translateY(-50%);
     }
     
@@ -298,20 +286,19 @@
         font-weight: 500;
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        text-decoration: none;  /* Remove underline when the button is focused or active */
-        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+        text-decoration: none;  
+        transition: background 0.3s ease; 
     }
     
     .get:hover {
-        background:#ffa125e3; /* Change background color on hover */
-        outline: 1px solid transparent; /* Optional: remove outline on hover */
+        background:#ffa125e3; 
+        outline: 1px solid transparent; 
     }
     
     .get:focus, .get:active {
-        text-decoration: none;  /* Remove underline when the button is focused or active */
+        text-decoration: none;  
     }
      
- 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">

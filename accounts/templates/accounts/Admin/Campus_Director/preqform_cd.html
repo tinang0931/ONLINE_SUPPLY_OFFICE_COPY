@@ -13,242 +13,222 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-    <style> 
-        header {
-            background-color: #007acc;
-            color: white;
-            padding: 10px;
-        }
+<style> 
+    header {
+        background-color: #007acc;
+        color: white;
+        padding: 10px;
+    }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-        .ctu_logo {
-            width: 120px;
-            height: 124px;
-            margin-left: -141px;
-        }
+    .ctu_logo {
+        width: 120px;
+        height: 124px;
+        margin-left: -141px;
+    }
 
-        .asean_logo {
-            width: 117px;
-            height: 114px;
-            margin-right: -136px;
-        }
+    .asean_logo {
+        width: 117px;
+        height: 114px;
+        margin-right: -136px;
+    }
 
+    h4 {
+        font-size: 25px;
+        text-align: center;
+        margin-top: 10px;
+    }
 
-        h4 {
-            font-size: 25px;
-            text-align: center;
-            margin-top: 10px;
-        }
+    p {
+        font-size: 12px;
+        text-align: center;
+    }
 
-        p {
-            font-size: 12px;
-            text-align: center;
-        }
+    a {
+        color: #007acc;
+        text-decoration: underline;
+    }
 
-        a {
-            color: #007acc;
-            text-decoration: underline;
-        }
+    a:hover {
+        text-decoration: none;
+    }
 
-        a:hover {
-            text-decoration: none;
-        }
+    .management {
+        float: right;
+        width: 167px;
+        height: auto;
+        margin-right: 20px;
+    }
 
-        .management {
-            float: right;
-            width: 167px;
-            height: auto;
-            margin-right: 20px;
-        }
+    .br {
+         margin-bottom: 20px;
+    }
 
-        .br {
-            margin-bottom: 20px;
-        }
+    .content p {
+        text-align: left;
+        margin-right: 1000px;
+    }
 
-        .content p {
-            text-align: left;
-            margin-right: 1000px;
-        }
+    table {
+        font-weight: bold;
+        text-align: center;
+        position: center;
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
 
-        table {
-            font-weight: bold;
-            text-align: center;
-            position: center;
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            /* Ensure borders collapse into a single border */
-        }
+    th,
+    td {
+    border: 0.5px solid rgba(0, 0, 0, 0.5);
+    text-align: left;
+    font-size: 12px;
+    height: 50px;
+    padding: 6px;
+    }
 
-        th,
-        td {
-            border: 0.5px solid rgba(0, 0, 0, 0.5);
-            /* Set border color to black with reduced opacity */
-            text-align: left;
-            /* Center text within cells */
-            font-size: 12px;
-            /* Adjust the font size as needed */
-            height: 50px;
-            padding: 6px;
-            /* Adjust the padding for better visibility */
-        }
+    th {
+    background-color: #f2f2f2;     
+    }
 
-        th {
-            background-color: #f2f2f2;
-            /* Set a background color for header cells */
-        }
+    tr:hover {
+        background-color: #f5f5f5
+    }
 
-        /* Add a hover effect to highlight rows */
-        tr:hover {
-            background-color: #f5f5f5;
-            /* Adjust the background color as needed */
-        }
+    th:not(:last-child),
+    td:not(:last-child) {
+        border-right: 0px solid rgba(0, 0, 0, 0.5);
+    }
 
-        /* Add borders to the vertical sides of th and td, excluding the last cell in each row */
-        th:not(:last-child),
-        td:not(:last-child) {
-            border-right: 0px solid rgba(0, 0, 0, 0.5);
-            /* Set border color to black with reduced opacity */
-        }
+    table {
+        border: 3px solid #000000;    
+    }
 
-        /* Make the outer border thicker */
-        table {
-            border: 3px solid #000000;
-            /* Set the outer border color and thickness */
-        }
+    body,
+     h3,
+    p {
+        margin: 0;
+        padding: 0;
+    }
 
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center; 
+    }
 
+    .table-and-comment {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
 
-        body,
-        h3,
-        p {
-            margin: 0;
-            padding: 0;
-        }
+    .heading-container {
+        text-align: center;
+        font-size: 10;
+    }
 
-        .container-fluid {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-           
-        }
+    .heading-container h3 {
+        font-size: 1.5em;
+    }
 
-        .table-and-comment {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-        }
+    .heading-container h2 {
+        font-size: 2em;
+    }
 
-        .heading-container {
-            text-align: center;
-            font-size: 10;
-        }
+    .heading-container p {
+         font-size: 1em;
+    }
 
-        .heading-container h3 {
-            font-size: 1.5em;
-        }
-
-        .heading-container h2 {
-            font-size: 2em;
-        }
-
-        .heading-container p {
-            font-size: 1em;
-        }
-
-        .heading-container a {
-            font-size: 1em;
-        }
+    .heading-container a {
+        font-size: 1em;
+    }
 
 
-        .table-container {
-            margin-top: 10px;
-            /* Adjust the margin-top as needed */
-            width: 80%;
-            margin-left: -16%;
+    .table-container {
+        margin-top: 10px;
+        width: 80%;
+        margin-left: -16%;
+    }
+
+    .p {
+        size: 12px;
+    }
+
+    .container {
+        width: 85%;
+        max-width: 950px;
+        padding: 0px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        margin-top: 10px;
+        position: ceneter;
+
+    }
+
+    .subpage {
+        padding: 1cm;
+        border: 5px red solid;
+        height: 256mm;
+        outline: 2cm #FFEAEA solid;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
 
 
-        }
+    @media print {
+    .footer {
+        display: none;
+     }
 
-        .p {
-            size: 12px;
-        }
+    .input-box,
+    .icons-container {
+        display: none;
+       }
+    }
 
-        .container {
-            width: 85%;
-            max-width: 950px;
-            padding: 0px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            margin-top: 10px;
-            position: ceneter;
-
-        }
-
-
-        .subpage {
-            padding: 1cm;
-            border: 5px red solid;
-            height: 256mm;
-            outline: 2cm #FFEAEA solid;
-        }
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
+    .aprv,
+    .disaprv {
+        font-size: 15px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 11px;
+        color: #ffa125e3;
+        background-color: rgba(9, 87, 139, 0.616);
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(9, 87, 139, 0.616);
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
 
 
-        @media print {
-            .footer {
-                display: none;
-            }
+    .aprv:hover,
+    .disaprv:hover {
+        color: #ffa125e3;
+        background-color: #000000e3;
+    }
 
-            .input-box,
-            .icons-container {
-                display: none;
-            }
-        }
-
-        .aprv,
-        .disaprv {
-            font-size: 15px;
-            margin-right: 5px;
-            margin-left: 5px;
-            margin-top: 5px;
-            margin-bottom: 11px;
-            color: #ffa125e3;
-            background-color: rgba(9, 87, 139, 0.616);
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(9, 87, 139, 0.616);
-            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-        }
-
-
-        .aprv:hover,
-        .disaprv:hover {
-            color: #ffa125e3;
-            background-color: #000000e3;
-        }
-
-        .landscape-table {
+    .landscape-table {
         width: 100%;
         max-width: none;
         transform: rotate(-90deg);
@@ -340,9 +320,6 @@
         height: auto; /* Maintain the aspect ratio of the image */
         margin-bottom: 20vh; /* Add margin below the image */
     }
-
-
-    
 </style>
 
        

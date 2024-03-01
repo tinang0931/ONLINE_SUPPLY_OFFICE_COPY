@@ -72,19 +72,22 @@
             </div>
           </div>
         </div>
-        <style>
-          #sidebar-wrapper .list-group-item.logout-link {
-            position: absolute;
-            top: 75vh;
-        }
-          .d-flex {
-            height: 85vh;
-            margin-bottom: 1;
+
+<style>
+#sidebar-wrapper .list-group-item.logout-link {
+position: absolute;
+top: 75vh;
 }
-          #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 70px;
+
+ .d-flex {
+height: 85vh;
+margin-bottom: 1;
+}
+
+#sidebar {
+transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+overflow: hidden;
+width: 70px;
 }
 
 #sidebar.show-names {
@@ -207,9 +210,8 @@
     opacity: 1;
     visibility: visible;
 }
+</style>      
 
-
-        </style>      
         <script>
           function showNames() {
             const sidebar = document.getElementById('sidebar');
