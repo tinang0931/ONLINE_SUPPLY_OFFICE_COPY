@@ -212,7 +212,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -0.5vh;
+        top: -2.5vh;
       
         
     }
@@ -232,7 +232,7 @@
         transition: transform 0.3s ease-in-out;
         position: relative;
         margin-left: 0.5vh;
-        top: 4vh;
+        top: 0vh;
     }
     
     
@@ -284,6 +284,10 @@
     .table thead th[rowspan='2'] {
     vertical-align: middle;
 }
+
+   .table-responsive{
+    margin-top: -1vh;
+   }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -294,7 +298,7 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 629px; font-size: 3rem;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
 
     <div class="left-button-container">
@@ -305,7 +309,7 @@
 
     <div class="home">
         <a href="{% url 'cdlanding' %}">
-            <img src="{% static 'images/home2.png' %}" alt="budget-landing">
+            <img src="{% static 'svg/home5.svg' %}" alt="budget-landing">
         </a>
     </div>
     <div class="row">
