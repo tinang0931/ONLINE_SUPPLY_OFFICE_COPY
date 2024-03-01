@@ -197,7 +197,8 @@
             align-items: center;
             margin: 0 auto;
             margin-top: 10px;
-            position: ceneter;
+            position: center;
+         
 
         }
 
@@ -226,65 +227,27 @@
             }
         }
 
-     .print-btn {
-         
-         margin-top: 10px;
-         margin-right: 50px;
-         margin-bottom: 10px;
-         position: relative;
-         color: #000000e3;
-         background-color:rgba(9, 139, 29, 0.61);
-         padding: 10px 12px;
-         border-radius: 8px;
-         border: 1px solid rgba(9, 87, 139, 0.616);
-         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-         height: 40px;
-     }
+        .aprv,
+        .disaprv {
+            font-size: 15px;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-top: 5px;
+            margin-bottom: 11px;
+            color: #ffa125e3;
+            background-color: rgba(9, 87, 139, 0.616);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(9, 87, 139, 0.616);
+            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
 
-     
-     .print-btn:hover {
-         color: #ffa125e3;
-         background-color: #000000e3;
-     }
 
-     .download-btn {
-         margin-top: 10px;
-         margin-left: 85px;
-         margin-right: 10px;
-         margin-bottom: 10px;
-         color: #000000e3;
-         background-color: rgba(9, 139, 29, 0.616);
-         padding: 10px 12px;
-         border-radius: 8px;
-         border: 1px solid rgba(9, 87, 139, 0.616);
-         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-        
-     }
-
-     .download-btn:hover {
-         color: #ffa125e3;
-         background-color: #000000e3;
-     }
-
-     .select-btn{
-         margin-top: 10px;
-         margin-left: 200px;
-         margin-right: 10px;
-         margin-bottom: 10px;
-         padding: 10px;
-         color: #000000e3;
-         background-color: rgba(9, 139, 29, 0.61);
-         padding: 10px 12px;
-         border-radius: 8px;
-         border: 1px solid rgba(9, 87, 139, 0.616);
-         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    
-     }
-
-     .select-btn:hover {
-         color: #ffa125e3;
-         background-color: #000000e3;
-     }
+        .aprv:hover,
+        .disaprv:hover {
+            color: #ffa125e3;
+            background-color: #000000e3;
+        }
 
         .landscape-table {
         width: 100%;
@@ -379,16 +342,75 @@
         margin-bottom: 20vh; /* Add margin below the image */
     }
 
-
+.print-btn {
+         
+    margin-top: 10px;
+    margin-right: 10vh;
+    margin-bottom: 10px;
+    position: relative;
+    color: #000000e3;
+    background-color:rgba(9, 139, 29, 0.61);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     
-    </style>
+}
+
+
+.print-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
+
+.download-btn {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    color: #000000e3;
+    background-color: rgba(9, 139, 29, 0.616);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+   
+}
+
+.download-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
+
+.select-btn{
+    margin-top: 10px;
+    margin-left: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    color: #000000e3;
+    background-color: rgba(9, 139, 29, 0.61);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+}
+
+.select-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
+
+</style>
+
 <body>
-    <div class="container page-break">
+    <div class="container page-break" id="page1" style="height: -50px; overflow-y: auto; zoom: 80%;  ">
         <div id="purchaseRequestTable" class="container-fluid">
-            <div class="container" style="border: b; ">
-                <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" >
-                <h1 class="center-heading" ><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
-                <div class="container" style="text-align: left; display: inline-block; margin-left: -190px; margin-top: 20px; ">
+            <div class="container" style="border: b;">
+                <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 90%;">
+                <h1 class="center-heading"><b>PROJECT PROCUREMENT MANAGEMENT PLAN</b></h1>
+                <div class="container" style="text-align: left; display: inline-block; margin-left: -160px;  ">
                     <p>End-User / Unit: <strong><u><b>CTU-GINATILAN EXTENSION CAMPUS</b></strong></u></p>
                     <p>Charged to: <strong>(GAA, STF, IGP)</strong></p>
                     <p><strong><b>Projects, Programs, and Activities (PAPs)</b></strong></p>
@@ -525,30 +547,28 @@
         </div>
         <br>
         </div>
-            <div id="footer-content">
+            <div id="footer-content" class="footer-content" style="text-align: center; zoom: 120%;" >
               <footer>
-                <div class="icons-container">
-                    <a href="#" title="Print" class="icon-link" onclick="printPDF()" style="margin-left: -5vh;">
+                    <div class="icons-container">
+                        <a href="#" title="Print" class="icon-link" onclick="printPDF()">
                         <button type="button" onclick="printPDF()" class="print-btn">PRINT</button>
                     </a>
-                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                        <button type="button" onclick="btn_click(true)" class="download-btn">DOWNLOAD</button>
+                    <a href="#" title="Download" class="icon-link" onclick="downloadPDF()" >
+                        <button type="button" onclick="downloadPDF(true)" class="download-btn">DOWNLOAD</button>
                     </a>
                     <a href="#" title="Select" class="icon-link">
-                        <button type="button" onclick="btn_click(true)" class="select-btn">SELECT</button>
-                    </a>
-                    <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
-                        <option value="a4">A4</option>
-                        <option value="legal">Legal</option>
+                        <button type="button" onclick="toggleSelect(true)" class="select-btn">SELECT</button>
+                         
                     </select>
-                </div>
-                
+                        </select>
+                    </div>
             </div>                  
     </div>
     <div class="page-break">  
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+
 
 <script>
     function printPDF() {
@@ -571,6 +591,8 @@
         footer.style.display = 'block'; // Display the footer again after printing
     }
 </script>
+
+
 
 <script>
     let selectedPaperSize = 'a4';
@@ -601,10 +623,7 @@
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-            margin: { top: 30, right: 10, bottom: 10, left: 10 },
-            pagebreak: { mode: 'avoid', avoid: '.page-break' },
-            pagebreak: { mode: 'css', avoid: '.page-break' }
-        
+            pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
         };
     
         html2pdf().from(body).set(options).save();
