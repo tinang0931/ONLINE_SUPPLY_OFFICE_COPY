@@ -356,6 +356,7 @@ def cdpurchase_approval(request, pr_id):
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('price')
+       
         
 
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
