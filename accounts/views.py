@@ -356,12 +356,11 @@ def cdpurchase_approval(request, pr_id):
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('price')
-       
         
 
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
 
-        PR.objects.filter(pr_identifier=checkout).update(
+        PR.objects.filter(pr_identifier=checkout,).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
@@ -389,6 +388,7 @@ def cdpurchase_approval(request, pr_id):
             'status': checkouts.status,
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
+
     }
 
 
