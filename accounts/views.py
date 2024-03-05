@@ -347,36 +347,38 @@ def bac_about(request):
 
 
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Pr_identifier, PR
+
 def cdpurchase_approval(request, pr_id):
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
-
+ 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('price')
-        
 
+ 
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
-
+ 
         PR.objects.filter(pr_identifier=checkout).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
             unit_cost=price,
-       
-            
+
         )
-
-
+ 
+ 
         Pr_identifier.objects.filter(pr_id=pr_id).update(
             status=new_status,
             comment=comment_content
         )
-
+ 
         return redirect('cdpurchase')
-
+ 
     elif request.method == 'GET':
         checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
         checkout_items = PR.objects.filter(pr_identifier=checkouts)
@@ -389,10 +391,20 @@ def cdpurchase_approval(request, pr_id):
             'SITE_TITLE': SITE_TITLE,
             'CAMPUS_NAME': CAMPUS_NAME,
     }
-
-
-
+ 
+ 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
+ 
+ 
+def purchase_cd(request, pr_id):
+    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    checkout_items = PR.objects.filter(pr_identifier__pr_id=pr_id)
+    context = {
+        'checkout_items': checkout_items,
+        'pr_id': pr_id,
+        'purpose': pr_identifier.purpose,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', context)
 
 
 def purchase_cd(request, pr_id):
@@ -453,7 +465,6 @@ def bac_purchaserequest(request, pr_id):
     }
         
     
-
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
 @bac_required
@@ -934,16 +945,15 @@ from django.core.files.base import ContentFile
 @authenticated_user
 def purchase(request):
     context = {
-                'SITE_TITLE': SITE_TITLE,
-                'CAMPUS_NAME': CAMPUS_NAME,
-                }
+        'SITE_TITLE': SITE_TITLE,
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
         items = request.POST.getlist('items[]')
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
-        print(prices)
         quantity = request.POST.getlist('quantity[]')
         total = request.POST.get('total_amount')
 
@@ -971,15 +981,17 @@ def purchase(request):
                 total_cost=total
             )
             
+            # Remove the following line, it is not necessary
             PR_Items.objects.all().delete()
 
-            return redirect('purchasetracker')
+        # Move the redirect statement outside the loop
+        return redirect('purchasetracker')
 
     elif request.method == 'GET':
-       
         items = PR_Items.objects.all()
         context['items'] = items  # Add 'items' to the context dictionary
         return render(request, 'accounts/User/purchase.html', context)
+
 
 from bson import ObjectId
 
