@@ -129,10 +129,11 @@
         </div>
       </div>
     </div>
-    <div class="new-border-div" style="border: 1px solid #080808; margin-top: 10px;"></div>
+    <div class="new-border-div" style="border: 0.5px solid #080808; margin-top: 1vh;"></div>
+
     <div id="options" class="d-none position-absolute z-1 bg-white"
       style="user-select: none; width: 27.5%; max-height: 300px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); margin-left: 65vh; position: absolute; ">
-      <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
+      <div class="option" onclick="selectCategory('all')" >ALL CATEGORIES</div>
       {% for category, items in grouped_data.items %}
       <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
       {% endfor %}
@@ -274,7 +275,7 @@
   </script>
 
 
-  </tr>
+
   <tr>
     <th></th>
     <th class="text-center" style="width: 20%;">Item Name</th>
@@ -282,7 +283,7 @@
     <th class="text-center" style="width: 11%;">Unit</th>
     <th class="text-center" style="width: 11%;">Price</th>
     <th class="text-center">Action</th>
-  </tr>
+    </tr>
   </thead>
   <form>
     {% for item in items %}
