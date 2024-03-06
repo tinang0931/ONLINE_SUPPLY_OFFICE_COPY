@@ -365,8 +365,6 @@ def cdpurchase_approval(request, pr_id):
             item_brand_description=item_brand,
             unit=unit,
             unit_cost=price,
-       
-            
         )
 
 
