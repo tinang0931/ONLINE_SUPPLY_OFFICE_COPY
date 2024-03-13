@@ -214,16 +214,22 @@ table {
     line-height: 30px;
   }
 
-  .footer {
+  footer {
     background-color: rgba(1, 33, 67, 0.9);
     text-align: center;
-    width: 30%;
-    height: 10%;
-    bottom: 0;
-    -webkit-user-modify: read-only;
-    position: fixed;
-    z-index: 2;
-    position:fixed;
+        width: 100%;
+        height: 10vh;
+        position: absolute;
+        bottom: 0vh;
+        -webkit-user-modify: read-only;
+        position: fixed;
+        z-index: 2;
+        left: 0px;
+}
+
+#footer-content {
+    text-align: center; /* Center-align the content */
+    padding: 50px; /* Add padding around the content */
 }
 .p {
     size: 12px;
@@ -338,6 +344,66 @@ position: relative;
         display: none;
     }
 }
+
+.print-btn {
+         
+    margin-top: -10vh;
+    margin-right: 10vh;
+    margin-bottom: 10px;
+    position: relative;
+    color: #000000e3;
+    background-color:rgba(9, 139, 29, 0.61);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    
+}
+
+
+.print-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
+
+.download-btn {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    color: #000000e3;
+    background-color: rgba(9, 139, 29, 0.616);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+   
+}
+
+.download-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
+
+.select-btn{
+    margin-top: 10px;
+    margin-left: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    color: #000000e3;
+    background-color: rgba(9, 139, 29, 0.61);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(9, 87, 139, 0.616);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+}
+
+.select-btn:hover {
+    color: #ffa125e3;
+    background-color: #000000e3;
+}
 </style>
 </head>
 
@@ -345,8 +411,8 @@ position: relative;
 <div class="container page-break">
     <div id="selectedFundCluster"></div>
     <div id="purchaseRequestTable" class="container-fluid">
-        <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
-        <h1 style="margin-top: -15px; font-size: 25px;"><b>PURCHASE REQUEST</b></h1>
+        <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 75%;">
+        <h1 style="margin-top: -10px; font-size: 20px;"><b>PURCHASE REQUEST</b></h1>
         <div style="display: flex; justify-content: space-between; margin-left: -auto; margin-top: 3; margin-bottom: -4%;">
                 <h><b>Entity Name:</b></h> &nbsp &nbsp
                 <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
@@ -395,28 +461,27 @@ position: relative;
                                     <tr></tr>
                                     <tr></tr>
                                     {% for item in checkout_items %}
-                                    {% if forloop.counter <= 10 %} {# Display only the first 10 items per page #}
+                                    {% if forloop.counter <= 10 %} 
                                       <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td class="item_unit text-center">{{ item.unit }}</td>
                                         <td class="item_description text-center">{{ item.item }} - {{ item.item_brand_description }}</td>
                                         <td class="item_quantity text-center">{{ item.quantity }}</td>
                                         <td class="item_unit_cost text-center">{{ item.unit_cost }}</td>
-                                        <td class="item_total_cost text-center">{{item.total_cost }}</td>
+                                        <td class="item_total_cost text-center" id="itemTotalCost_{{ item.id }}">{{ item.total_cost }}</td>
                                             <input type="hidden" name="item_{{ item.id }}" value="{{ item.stock_or_property }}">
                                             <input type="hidden" name="unit_{{ item.id }}" value="{{ item.unit }}">
                                             <input type="hidden" name="description_{{ item.id }}" value="{{ item.item_description }}">
                                             <input type="hidden" name="quantity_{{ item.id }}" value="{{ item.quantity }}">
                                             <input type="hidden" name="cost_{{ item.id }}" value="{{ item.unit_cost }}">
-                                            <input type="hidden" name="total_{{ item.id }}" value="{{total_cost }}">
+                                            <input type="hidden" name="total_{{ item.id }}" value=" {{total_cost }}">
                                         </tr>
                                         {% endif %}
                                       {% endfor %}              
-                                    <!-- Move the TOTAL row below the Unit Cost -->
-                                    <tr>
+                                      <tr>
                                         <td colspan="4"></td>
                                         <td style="text-align: right;">TOTAL</td>
-                                        <td id="totalCostCell" style="text-align: center;" colspan="2">{{ total_cost }}</td>
+                                        <td id="totalCostCell" style="text-align: center;" colspan="2">0.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="7" style="text-align: left; vertical-align: top;">
@@ -438,80 +503,109 @@ position: relative;
                                 </table>
                             </div>
                         </div>
-                        <div class="page-break">  
                         </div>
                         <div id="footer-content">
                             <div class="footer-images">
                                 <img class="header-image" src="{% static 'images/CTU-DocFooter-1.png' %}" alt="Header Image">
                             </div>
-                            <div class="icons-container">
-                                <a href="#" title="Download" class="icon-link" onclick="downloadPDF()">
-                                    <img class="icon" src="{% static 'images/download.png' %}" alt="Download" style="width: 50px; height: 50px; margin-top: 20px;">
-                                </a>
-                                <a href="#" title="Select" class="icon-link">
-                                    <img class="icon" src="{% static 'images/select.png' %}" alt="Select" onclick="toggleSelect()" style="width: 50px; height: 50px; margin-top: 20pxpx; margin-left: 50px;">
-                                </a>
-                                <select id="paperSize" onchange="changePaperSize()" style="display: none; margin-left: 5px;">
-                                    <option value="a4">A4</option>
-                                    <option value="legal">Legal</option>
-                                </select>
-                            </div>
-                        </div>                       
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-
-                            <script>
-                                let selectedPaperSize = 'a4';
-                            
-                                function changePaperSize() {
-                                    selectedPaperSize = document.getElementById('paperSize').value;
-                                }
-                            
-                                function toggleSelect() {
-                                    const select = document.getElementById('paperSize');
-                                    select.style.display = select.style.display === 'none' ? 'block' : 'none';
-                            
-                                }
-                            
-                                function downloadPDF() {
-                                    const body = document.getElementById('purchaseRequestTable');
-                                    const elementsWithPageBreak = body.querySelectorAll('.page-break');
-                            
-                                    elementsWithPageBreak.forEach((element) => {
-                                        element.style.pageBreakBefore = 'always';
-                                    });
-                            
-                                    const footer = document.getElementById('footer-content');
-                                    footer.style.display = 'none';
-                            
-                                    const iconsContainer = document.querySelector('.icons-container'); // Select the icons container
-                                    iconsContainer.style.display = 'block'; // Ensure icons container is visible
-                            
-                                    const options = {
-                                        filename: 'PPMP.pdf',
-                                        image: { type: 'jpeg', quality: 0.98 },
-                                        html2canvas: { scale: 2 },
-                                        jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
-                                        pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
-                                    };
-                            
-                                    html2pdf().from(body).set(options).save();
-                            
-                                    // Reset page breaks after generating PDF
-                                    elementsWithPageBreak.forEach((element) => {
-                                        element.style.pageBreakBefore = 'auto';
-                                    });
-                                    footer.style.display = 'block'; // Display the footer again after PDF generation
-                                    iconsContainer.style.display = 'none'; // Hide icons container after generating PDF
-                                }
-                            </script>
-
-                        </div>
-                    </div>
-                </div>
+                        </div> 
+                        <div class="page-break">   
+                  <div id="footer-content" class="footer-content" style="position: relative ; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; height: 10%; width: 100%;" >
+                    <footer>
+                          <div class="icons-container">
+                              <a href="#" title="Print" class="icon-link" onclick="printPDF()" style="margin-top: -5vh; margin-left: 70vh; ">
+                              <button type="button" onclick="printPDF()" class="print-btn">PRINT</button>
+                          </a>
+                          <a href="#" title="Download" class="icon-link" onclick="downloadPDF()" style="margin-top: -10vh; margin-left: 10vh" >
+                              <button type="button" onclick="downloadPDF(true)" class="download-btn">DOWNLOAD</button>
+                          </a>
+                          <a href="#" title="Select" class="icon-link" style="margin-top: -10vh;">
+                              <button type="button" onclick="toggleSelect(true)" class="select-btn">SELECT</button>
+                          </select>
+                              <select id="paperSize" onchange="changePaperSize()" style="margin-left: 22vh">
+                                  <option value="a4">A4</option>
+                                  <option value="legal">Legal</option>
+                              </select>
+                          </a>
+                      </div>
+                  </div>                  
+                </div> 
+      </footer>
+      <script>
+        function printPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+        
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+        
+            const footer = document.querySelector('footer');
+            footer.style.display = 'none'; // Hide the footer
+        
+            window.print();
+        
+            // Reset page breaks after printing
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+            footer.style.display = 'block'; // Display the footer again after printing
+        }
+    </script>
+    
+    
+    
+    <script>
+        let selectedPaperSize = 'a4';
+    
+        function changePaperSize() {
+            selectedPaperSize = document.getElementById('paperSize').value;
+        }
+    
+        function toggleSelect() {
+            const select = document.getElementById('paperSize');
+            select.style.display = select.style.display === 'none' ? 'block' : 'none';
+    
+        }
+    
+        function downloadPDF() {
+            const body = document.getElementById('purchaseRequestTable');
+            const elementsWithPageBreak = body.querySelectorAll('.page-break');
+        
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'always';
+            });
+        
+            const footer = document.querySelector('footer');
+            footer.style.display = 'none'; // Hide the footer
+        
+            const options = {
+                filename: 'PPMP.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: selectedPaperSize, orientation: 'portrait' },
+                pagebreak: { mode: 'css', avoid: '.page-break' } // Avoid page break 
+            };
+        
+            html2pdf().from(body).set(options).save();
+        
+            // Reset page breaks after generating PDF
+            elementsWithPageBreak.forEach((element) => {
+                element.style.pageBreakBefore = 'auto';
+            });
+            footer.style.display = 'block'; // Display the footer again after PDF generation
+        }
+        
+    </script>
+    
+    
             </div>
-        </body>
+        </div>
+    </div>
+    </div>
+    </body>
     </html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
-
-    {% endblock %}
     
+    {% endblock %}
+      
