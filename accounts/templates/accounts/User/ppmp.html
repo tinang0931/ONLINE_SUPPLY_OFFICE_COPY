@@ -430,11 +430,8 @@
 
 
                         <td>
-                            <div class="item-actions" style="text-align: center; gap: 20px">
-                                <a href="#" class="edit-icon" style="text-align: center;"
-                                    onclick="editItem('{{ p.id }}')">
-                                    <i class="fas fa-pencil-alt text-primary"></i>
-                                </a>
+                            <div class="item-actions" style="margin-left: 17px;">
+                                
                                 
                                 {% if p.id%}
                                 <a href="{% url 'delete' p.id %}" class="delete-icon">
