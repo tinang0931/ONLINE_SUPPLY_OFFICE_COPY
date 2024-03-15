@@ -404,6 +404,25 @@ position: relative;
     color: #ffa125e3;
     background-color: #000000e3;
 }
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: 0.5vh;
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+}
+
 </style>
 </head>
 
@@ -411,8 +430,17 @@ position: relative;
 <div class="container page-break">
     <div id="selectedFundCluster"></div>
     <div id="purchaseRequestTable" class="container-fluid">
-        <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image" style="width: 75%;">
+        <img class=" center-image" src="{% static 'images/CTU-DocHeader-1.png' %}" alt="Header Image">
         <h1 style="margin-top: -10px; font-size: 20px;"><b>PURCHASE REQUEST</b></h1>
+        <div class="row">
+            <div class="col-md-1 mb-0">
+              <div class="bck">
+                <a href="{% url 'cdlanding' %}">
+                  <img src="{% static 'images/back2.png' %}" alt="Previous">
+                </a>
+              </div>
+            </div>
+          </div>
         <div style="display: flex; justify-content: space-between; margin-left: -auto; margin-top: 3; margin-bottom: -4%;">
                 <h><b>Entity Name:</b></h> &nbsp &nbsp
                 <h><b><u>CTU-ARGAO CAMPUS</b></u></h> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp 
@@ -553,8 +581,7 @@ position: relative;
         }
     </script>
     
-    
-    
+     
     <script>
         let selectedPaperSize = 'a4';
     
