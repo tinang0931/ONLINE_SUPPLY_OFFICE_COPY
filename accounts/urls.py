@@ -13,4 +13,10 @@ urlpatterns = [
     path('tracker', views.tracker, name='tracker'),
     path('purchasetracker', views.purchasetracker, name='purchasetracker'),
     path('about', views.about, name='about'),
+    path('ppmp', views.ppmp, name='ppmp'),
+    path('catalogue', views.catalogue, name='catalogue'),
+    path('user_add_new_item', views.user_add_new_item, name='user_add_new_item'),
+    path('approved_ppmp', views.approved_ppmp, name='approved_ppmp'),
+    
+    
 ]

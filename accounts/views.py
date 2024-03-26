@@ -57,3 +57,27 @@ def about(request):
         'SITE_TITLE': SITE_TITLE
     }
     return render(request, 'accounts/User/about.html', context)
+
+def ppmp(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/User/ppmp.html', context)
+
+def catalogue(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/User/catalogue.html', context )
+
+def user_add_new_item(request):
+    return render(request, 'accounts/User/ppmp.html')
+
+def approved_ppmp(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/User/approved_ppmp.html', context)
