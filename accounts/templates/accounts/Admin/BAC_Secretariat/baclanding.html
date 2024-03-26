@@ -1,8 +1,8 @@
 {% load static %}
-
+ 
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,10 +16,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+ 
     <title>BAC Landing Page</title>
 </head>
-
+ 
 <body>
     <main class="flex-shrink">
         <div id="page-content-wrapper">
@@ -33,48 +33,48 @@
                 <h1 class="p1">{{SUBHEADING_TEXT}}</h1>
               </div>
               <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
-              
+             
               </div>
             </div>
           </nav>
         </div>
         <h1 class="welcome">Welcome! You are signed in as a BAC Secretariat.</h1>
         <div class="box-container">
-            <div class="box ppmp"> 
-                <a href="{% url 'bac_home' %}"> 
+            <div class="box ppmp">
+                <a href="{% url 'bac_home' %}">
                     <i class="bi bi-file-earmark-medical"></i> PPMP
-                </a> 
+                </a>
             </div>
             <br>
-            <div class="box pr"> 
-                <a href="{% url 'bac_request' %}"> 
+            <div class="box pr">
+                <a href="{% url 'bac_request' %}">
                     <i class="bi bi-bag"></i> PR
-                </a> 
+                </a>
             </div>
             <br>
             <div class="box catalogue">
-                <a href="{% url 'bac_dashboard' %}"> 
+                <a href="{% url 'bac_dashboard' %}">
                     <i class="bi bi-book-half"></i> CATALOGUE
-                </a> 
+                </a>
             </div>
             <br>
-            <div class="box about"> 
-                <a href="{% url 'bac_about' %}"> 
+            <div class="box about">
+                <a href="{% url 'bac_about' %}">
                     <i class="bi bi-info-circle"></i> ABOUT
-                </a> 
+                </a>
             </div>
                 <br>
-
+ 
             <div class= "button-container">
-                <div class="box logout"> 
-                    <a href="{% url 'logout_user'%}"> 
+                <div class="box logout">
+                    <a href="{% url 'logout_user'%}">
                         LOG OUT
-                    </a> 
+                    </a>
                 </div>
             </div>
         </div>
-        
-        
+       
+       
 </body>
-
+ 
 </html>
