@@ -49,25 +49,10 @@
    .custom-f{
     margin-top: 20px;
    }
-  .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-top: 10px;
-    }
-    
-    .bck img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
+
 
     body{
-      margin-top:20px;
+      margin-top:0px;
       background-color:#e9ebee;
   }
   
@@ -151,21 +136,23 @@
   }
   
   .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 18px;
-    }
-    
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 18px;
+    pointer-events: none; /* I-disable ang interactions sa <a> tag */
+  }
+
+  .bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+    pointer-events: auto; /* Enable ang interactions sa <img> tag */
+  }
+
+  .bck:hover img {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+  }
 
 
 </style>
@@ -179,7 +166,7 @@
   </div>
       <div class="bck">
         <a href="{% url 'userlanding' %}">
-          <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+          <img src="{% static 'images/back2.png' %}" alt="Previous">
         </a>
       </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">

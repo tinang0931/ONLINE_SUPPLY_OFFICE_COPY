@@ -117,12 +117,13 @@
 }
  
 .logout-link {
-    margin-top: 306px;
+    margin-top: 297px;
     margin-left: -10px;
     width:242px;
 }
 .home-link {
   margin-left: -10px;
+  margin-left: 2px;
   width:242px;
 }
 .history-link {
@@ -131,6 +132,7 @@
 }
 .about-link {
   margin-left: -10px;
+  margin-left: 2px;
   width:242px;
 }
  
@@ -176,13 +178,13 @@
  
 .account_type {
     position: relative;
-    left: 30px; /* Adjust the desired horizontal position */
+    left: 30px; 
     font-size: 20px;
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0; /* Set the initial opacity to hide the element */
-    visibility: hidden; /* Set the initial visibility to hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Add a transition effect */
+    opacity: 0;
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
     margin-top: 450px;
     display: none;
 }
@@ -190,15 +192,16 @@
  
 .sidebar:hover .account_type,
 .pro:hover + .account_type {
-    opacity: 1; /* Show the element when the sidebar or .pro is hovered */
-    visibility: visible; /* Show the element when the sidebar or .pro is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
  
  
 .sidebar:hover .account_type {
-    opacity: 1; /* Show the element when the sidebar is hovered */
-    visibility: visible; /* Show the element when the sidebar is hovered */
+    opacity: 1; 
+    visibility: visible; 
 }
+
 body {
   overflow: hidden;
   }
@@ -207,19 +210,19 @@ body {
    overflow: hidden;
     }
  
-        </style>
+</style>
        
-        <script>
-          function showNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.add('show-names');
-          }
+<script>
+    function showNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.add('show-names');
+    }
        
-          function hideNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('show-names');
-          }
-        </script>
+    function hideNames() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('show-names');
+    }
+</script>
        
         {% block boabout %}
         {% endblock %}

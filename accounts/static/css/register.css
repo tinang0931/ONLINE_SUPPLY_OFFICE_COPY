@@ -33,20 +33,21 @@ body{
     transform-origin: left top;
 }
 
+
 .container {
     font-family: 'Poppins', sans-serif;
     max-width: 700px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.938);
+    background: rgba(2255 255 255 / 62%);
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.753);
     padding: 20px 30px;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    top: 160px;
+    top: 100px;
     height: 70%;
+    
 }
-
 .container .title{
     font-family: 'Poppins', sans-serif;
     color: #003566;
@@ -54,7 +55,7 @@ body{
     font-weight: 600;
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .container form .user-details{

@@ -79,33 +79,35 @@
 .bck img {
     width: 50px;
     height: 50px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease-in-out; 
-}
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -5vh;
+  }
  
 .bck:hover img {
     transform: scale(1.2); 
 }
+
+.table-responsive{
+  margin-top: -4vh;
+}
 </style>
-<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden; margin-top: 1px;">
   <h1 class="pr-heading text-center pt-4"><strong>PPMP REQUESTS </strong></h1>
  
  
   <div class="search" style="position: relative; text-align: right;">
-    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
-      oninput="filterTable()"
-      style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
-    <i class="fas fa-search"
-      style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"oninput="filterTable()"style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; padding-left: 1rem !important;">
+    <i class="fas fa-search"style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
   </div>
+  
   <div class="bck">
     <a href="{% url 'budget-landing' %}">
-        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+        <img src="{% static 'images/back2.png' %}" alt="Previous">
     </a>
 </div>
 
- 
+<div class="table-responsive"></div>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -113,7 +115,7 @@
         <th class="text-center">Requests for Approval</th>
         <th class="text-center">PPMP ID</th>
         <th class="text-center">Budget Officer Status</th>
-        <th class="text-center">Caampus Director Status</th>
+        <th class="text-center">Campus Director Status</th>
         <th class="text-center">Comment</th>
       </tr>
     </thead>

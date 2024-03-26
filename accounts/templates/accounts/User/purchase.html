@@ -65,8 +65,7 @@ textarea.form-control {
   }
 
   .bck a {
-        display: flex;
-        align-items: center;
+  
         text-decoration: none;
     }
     
@@ -107,16 +106,19 @@ textarea.form-control {
     <div class="bck">
       <div class="col-md-1 mb-0">
       <a href="{% url 'userlanding' %}">
-        <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+        <img src="{% static 'images/back2.png' %}" alt="Previous">
       </a>
     </div>
   </div>
     <div class="row mt-3">
       <div class="col-md-1 mb-0">
         <div class="pp_mp">
-          <button class="btn btn-primary">
-            <a href="{% url 'approved_ppmp'  %}" style="color: black; text-decoration: none;"> PPMP </a>
-          </button>
+          <a href="{% url 'approved_ppmp'  %}" style="text-decoration: none;">
+            <button class="btn btn-primary">
+              PPMP
+            </button>
+          </a>
+          
         </div>
       </div>
     </div>
@@ -147,9 +149,9 @@ textarea.form-control {
               id="unit_{{ item.id }}"></td>
           <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;"
               id="unit_cost_{{ item.id }}"></td>
-              <td style="text-align: center;">
+          <td style="text-align: center;">
                 <input type="number" value="0" name="quantity[]" style="width: 40px;">
-            </td>
+          </td>
             
             
           <td>
@@ -164,92 +166,7 @@ textarea.form-control {
         {% endfor %}
       </tbody>
 
-      <script>
-        function validateForm() {
-            var fileInputs = document.querySelectorAll('input[type="file"]');
-            var filesSelected = false;
-    
-            if (fileInputs.length > 0) {
-                fileInputs.forEach(function (fileInput) {
-                    if (fileInput.files.length > 0) {
-                        filesSelected = true;
-                    }
-                });
-            }
-    
-            if (!filesSelected) {
-                var confirmSubmit = confirm("No attachments selected. Are you sure you want to submit the form without attachments?");
-                return confirmSubmit; // Allow or prevent form submission based on user confirmation
-            }
-    
-            // You can add more validation checks here if needed
-    
-            return true; // Allow form submission with attachments
-        }
-    </script>
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          // Attach change event to the unit cost input elements
-          document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
-            unitCostInput.addEventListener('change', function () {
-              calculateTotal();
-            });
-          });
-      
-          // Attach change event to the quantity input elements
-          document.querySelectorAll('input[name="quantity[]"]').forEach(function (quantityInput) {
-            quantityInput.addEventListener('input', function () {
-              calculateTotal();
-            });
-          });
-      
-          // Calculate total on page load
-          calculateTotal();
-      
-          function calculateTotal() {
-            var totalAmount = 0;
-            $('input[name="prices[]"]').each(function (index) {
-              var itemCost = parseFloat($(this).val());
-              var quantity = parseInt($('input[name="quantity[]"]').eq(index).val()) || 0;
-              if (!isNaN(itemCost)) {
-                totalAmount += itemCost * quantity;
-              }
-            });
-            $("#total_amount").text(totalAmount.toFixed(2));
-          }
-        });
-      </script>
-      
 
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          // Attach click event to the icon, which will trigger the hidden file input
-          document.querySelectorAll('.file-attachment label').forEach(function (label) {
-              label.addEventListener('click', function (event) {
-                  event.preventDefault(); // Prevent default label behavior
-  
-                  var inputId = this.getAttribute('for');
-                  var fileInput = document.getElementById(inputId);
-  
-                  // Trigger a click on the file input only if it's not active
-                  if (!fileInput.value) {
-                      fileInput.click();
-                  }
-              });
-          });
-  
-          // Attach change event to the file input elements
-          document.querySelectorAll('.file-attachment input[type="file"]').forEach(function (fileInput) {
-              fileInput.addEventListener('change', function () {
-                  // Handle the file attachment here
-                  var fileName = this.files[0].name;
-                  console.log('Selected file:', fileName);
-              });
-          });
-      });
-
-
-      </script>
    <footer class="p-2" style="overflow-y: auto; overflow-x: hidden; background-color: rgba(1, 33, 67, 0.9); position: fixed; bottom: 0; width: 100%;">
     <div class="container">
         <div class="row align-items-center">
@@ -278,6 +195,93 @@ textarea.form-control {
 </div>
 </div>
 
+
+<script>
+  function validateForm() {
+      var fileInputs = document.querySelectorAll('input[type="file"]');
+      var filesSelected = false;
+
+      if (fileInputs.length > 0) {
+          fileInputs.forEach(function (fileInput) {
+              if (fileInput.files.length > 0) {
+                  filesSelected = true;
+              }
+          });
+      }
+
+      if (!filesSelected) {
+          var confirmSubmit = confirm("No attachments selected. Are you sure you want to submit the form without attachments?");
+          return confirmSubmit; // Allow or prevent form submission based on user confirmation
+      }
+
+      // You can add more validation checks here if needed
+
+      return true; // Allow form submission with attachments
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Attach change event to the unit cost input elements
+    document.querySelectorAll('input[name="prices[]"]').forEach(function (unitCostInput) {
+      unitCostInput.addEventListener('change', function () {
+        calculateTotal();
+      });
+    });
+
+    // Attach change event to the quantity input elements
+    document.querySelectorAll('input[name="quantity[]"]').forEach(function (quantityInput) {
+      quantityInput.addEventListener('input', function () {
+        calculateTotal();
+      });
+    });
+
+    // Calculate total on page load
+    calculateTotal();
+
+    function calculateTotal() {
+      var totalAmount = 0;
+      $('input[name="prices[]"]').each(function (index) {
+        var itemCost = parseFloat($(this).val());
+        var quantity = parseInt($('input[name="quantity[]"]').eq(index).val()) || 0;
+        if (!isNaN(itemCost)) {
+          totalAmount += itemCost * quantity;
+        }
+      });
+      $("#total_amount").text(totalAmount.toFixed(2));
+    }
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Attach click event to the icon, which will trigger the hidden file input
+    document.querySelectorAll('.file-attachment label').forEach(function (label) {
+        label.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default label behavior
+
+            var inputId = this.getAttribute('for');
+            var fileInput = document.getElementById(inputId);
+
+            // Trigger a click on the file input only if it's not active
+            if (!fileInput.value) {
+                fileInput.click();
+            }
+        });
+    });
+
+    // Attach change event to the file input elements
+    document.querySelectorAll('.file-attachment input[type="file"]').forEach(function (fileInput) {
+        fileInput.addEventListener('change', function () {
+            // Handle the file attachment here
+            var fileName = this.files[0].name;
+            console.log('Selected file:', fileName);
+        });
+    });
+});
+
+
+</script>
 
 
 

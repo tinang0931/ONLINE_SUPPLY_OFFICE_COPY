@@ -39,13 +39,11 @@
         opacity: 1;
     }
 
-
     .table-and-comment {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
 
     .icons-container {
         display: flex;
@@ -59,7 +57,6 @@
         margin-top: 16px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
 
 
@@ -69,9 +66,7 @@
         margin-left: 20px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
-
 
     .input-box {
         width: 30%;
@@ -83,7 +78,7 @@
 
     .input-box input {
         width: 100%;
-        height: 40px;
+        height: 50px;
         padding: 10px;
         box-sizing: border-box;
         border: none;
@@ -125,9 +120,6 @@
         size: 12px;
     }
 
-
-
-
     .subpage {
         padding: 1cm;
         border: 5px red solid;
@@ -140,16 +132,15 @@
         margin: 0;
     }
 
-
     @media print {
-        .footer {
-            display: none;
-        }
+    .footer {
+    display: none;
+    }
 
-        .input-box,
-        .icons-container {
-            display: none;
-        }
+    .input-box,
+    .icons-container {
+    display: none;
+    }
     }
 
     .container {
@@ -162,7 +153,7 @@
         margin-right: 5px;
         margin-left: 5px;
         margin-top: 5px;
-        margin-bottom: 11px;
+        margin-bottom: 7px;
         color: #ffa125e3;
         background-color: rgba(9, 87, 139, 0.616);
         padding: 10px 12px;
@@ -171,18 +162,16 @@
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
 
-
     .aprv:hover,
     .disaprv:hover {
         color: #ffa125e3;
         background-color: #000000e3;
     }
 
-
     .footer {
         display: left;
         justify-content: space-between;
-        align-items: center;  /* Vertically center the content */
+        align-items: center; 
     }
     
     .icons-container {
@@ -192,18 +181,17 @@
     
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the gap between buttons as needed */
+        gap: 10px;
     }
     
     .slip-icon {
-        width: 50px; /* Adjust the width as needed */
-        height: auto; /* Maintain the aspect ratio */
+        width: 50px; 
+        height: auto; 
         margin-right: 15px
     }
 
     .bck a  {
-        display: flex;
-        align-items: center;
+     
         text-decoration: none;
     }
     
@@ -212,13 +200,13 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.5vh;
+        top: -2.5vh;
       
         
     }
     
     .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+        transform: scale(1.2); 
     }
     
     .home {
@@ -227,15 +215,13 @@
     }
      
     .home img {
-        margin-bottom: ;
         width: 40px;
         height: 40px;
         transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
         position: relative;
-        margin-left: .5vh;
+        margin-left: 0.5vh;
+        top: 0vh;
     }
-    
     
     @keyframes beat{
         0%{
@@ -250,21 +236,17 @@
     }
      
     .home:hover img {
-        animation-play-state: paused;
         transform: scale(1.2); 
     }
 
     .left-button-container {
         position: absolute;
-        left: 184vh; /* Adjust this value as needed */
-        top: 300px; /* Adjust this value as needed */
+        left: 180vh;
+        top: 300px;
         transform: translateY(-50%);
     }
-    
-  
-     
+
     .get {
-        display: inline-block;
         outline: 0;
         cursor: pointer;
         text-align: center;
@@ -276,21 +258,20 @@
         background: #ffffff;
         border-radius: 4px;
         font-weight: 500;
-        font-size: 14px;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
-        transition: background 0.3s ease; /* Add transition for smoother hover effect */
     }
     
     .get:hover {
-        background: #ffa125e3; /* Change background color on hover */
-        outline: 1px solid transparent; /* Optional: remove outline on hover */
+        background: #ffa125e3; 
+        outline: 0px;
     }
     
-    .get:focus, .get:active {
-        text-decoration: none; ! important; /* Remove underline when the button is focused or active */
+    .table thead th[rowspan='2'] {
+        vertical-align: middle;
     }
-    
+
+   .table-responsive{
+        margin-top: -1vh;
+   }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -301,36 +282,25 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 629px; font-size: 3rem;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
 
     <div class="left-button-container">
-        <a href="{% url 'preqform_cd' pr_id=checkout.pr_id %}" class="icon-link">
+        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
-    
-    
+
     <div class="home">
-        <a href="{% url 'cdlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+        <a href="{% url 'cdlanding' %}">
+            <img src="{% static 'svg/home5.svg' %}" alt="budget-landing">
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('cdlandingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
     <div class="row">
         <div class="col-md-1 mb-0">
           <div class="bck">
             <a href="{% url 'cdppmp' %}">
-              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
+              <img src="{% static 'images/back2.png' %}" alt="Previous">
             </a>
           </div>
         </div>
@@ -352,9 +322,9 @@
                     <th rowspan='2'>Estimated Budget</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
                     <th rowspan='2'>Unit Price</th>
-
                 </tr>
                 <tr>
+
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -370,6 +340,7 @@
                 </tr>
                 </tr>
             </thead>
+            
             <tbody>
                 {% for p in checkout_items %}
 
@@ -411,7 +382,6 @@
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -438,14 +408,16 @@
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
+  
+
         <div class="button-container">
             <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
             <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
         </div>
     </div>
 </footer>
-</form>
 
+</form>
 
 <script>
     function btn_click(approve) {
@@ -460,6 +432,7 @@
         form.submit();
     }
 </script>
+
 
 
 

@@ -10,33 +10,26 @@
         background-color: #1c96c5;
     }
 
+    .bck a  {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
     .bck img {
-        width: 30px;
-        height: 30px;
-        transition: all 0.3s ease-in-out;
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -15vh;
+      
+        
     }
-
+    
     .bck:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
+        transform: scale(1.2); 
     }
-
-    .bck::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        right: 0;
-        bottom: -5px;
-        left: 0;
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    .bck:hover::before {
-        opacity: 1;
-    }
+        
 
 
     .table-and-comment {
@@ -204,12 +197,13 @@
         display: flex;
         align-items: center;
         text-decoration: none;
-        margin-bottom: 18px;
+        margin-bottom: 10px;
     }
     
     .bck img {
         width: 50px;
         height: 50px;
+        margin-top: 9vh;
         transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
     }
     
@@ -251,6 +245,56 @@
         animation-play-state: paused;
         transform: scale(1.2); 
     }
+
+    .home {
+       display: flex;
+       top: 20vh;
+    }
+     
+    .home img {
+        width: 40px;
+        height: 40px;
+        
+      
+        position: relative;
+        margin-left: .5vh;
+        top: -5vh;
+    }
+    
+    
+    @keyframes beat{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+     
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2); 
+    }
+
+    .center-text {
+        text-align: center;
+    }
+    
+    .table thead th[rowspan='2'] {
+        vertical-align: middle;
+    }
+
+    .ctu_logo {
+    position: absolute;
+    left: 26px;
+    top: -51px;
+    width: 100px;
+    height: 100px;
+    margin: 0 3px;
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -260,11 +304,11 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px; margin-top: -0.2vh"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
-    <div class="cdlanding">
+    <div class="home">
         <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'images/home.png' %}" alt="cdlanding">
+            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
         </a>
     </div>
     <script>
@@ -278,34 +322,31 @@
     }
     </script>
     <div class="row">
-        <div class="col-md-1 mb-0">
-          <div class="bck">
-            <a href="{% url 'bac_home' %}">
-              <img src="{% static 'images/back-button.gif' %}" alt="Previous">
-            </a>
-          </div>
+        <div class="col-md-1 mb-3"> 
+            <div class="bck">
+                <a href="{% url 'bac_home' %}">
+                    <img src="{% static 'images/back2.png' %}" alt="Previous">
+                </a>
+            </div>
         </div>
-      </div>
-    <div class="table-responsive">
+    </div>    
 
+    <div class="table-responsive" style="margin-top: -15vh;">
         <form action="{% url 'bac_ppmp' pr_id=pr_id %}" method="post" id ="form_id">
-
             {% csrf_token %}
 
 
         <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
-                <tr>
-                <tr>
-                    <th rowspan='2'>Item Name</th>
-                    <th rowspan='2'> Brand / Description</th>
-                    <th rowspan='2'>Unit</th>
-                    <th rowspan='2'>Estimated Budget</th>
-                    <th colspan="12">Monthly Quantity Requirement</th>
-                    <th rowspan='2'>Unit Price</th>
-
-                </tr>
-                <tr>
+            <tr>
+            <th rowspan='2' class="center-text">Item Name</th>
+            <th rowspan='2' class="center-text">Brand / Description</th>
+            <th rowspan='2' class="center-text">Unit</th>
+            <th rowspan='2' class="center-text">Estimated Budget</th>
+            <th colspan="12" class="center-text">Monthly Quantity Requirement</th>
+            <th rowspan='2' class="center-text">Unit Price</th>
+            
+        </tr>
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -318,14 +359,12 @@
                     <th>Oct</th>
                     <th>Nov</th>
                     <th>Dec</th>
-                </tr>
-                </tr>
+
             </thead>
             <tbody>
                 {% for p in checkout_items %}
 
                 <tr class="item-row" id="{{ p.id }}">
-
                     <td>
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
@@ -361,8 +400,6 @@
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-
-
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -396,12 +433,6 @@
         <input id="new_status_id" type="hidden" name="new_status">
     </div>
 </footer>
-
-
 </form>
-
-
-
-
 
     {% endblock %}

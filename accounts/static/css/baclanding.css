@@ -27,6 +27,7 @@ body {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-size: 25px;
         text-align: center;
+        padding-right: 165px;
     }
   
     .head {
@@ -34,6 +35,7 @@ body {
         font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
         margin-top: 5%;
         font-size: 48px;
+        padding-right: 165px;
     } 
   
     .ctu_logo {
@@ -43,11 +45,10 @@ body {
         margin-top: 5%;
         z-index: 1;
     }
-  
-    .welcome{
-        background-color: #f59a23e7!important;
+    .welcome {
+        background-color: #f59a23e7 !important;
         color: #003566;
-        text-align: center !important;
+        text-align: right !important; /* Align text to the left */
         margin: 0%;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-size: 24px;
@@ -63,13 +64,20 @@ body {
         height: 50px;
         margin-left: 5%;
         width: 100%;
+        text-indent: -170px; /* Adjust the text indent to move the text slightly to the right */
     }
+    
 
     .box-container {
         display: flex;
-        justify-content: center;
+        margin-top: 10%;
+      
+        height: 100vh;
         align-items: center;
         height: 100vh;
+        justify-content: flex-start;
+        align-content: center;
+        flex-wrap: nowrap;
         flex-direction: column;
     }
     
@@ -181,3 +189,10 @@ body {
         color: #003566;
         text-decoration: none;
       }
+
+    .button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    } 

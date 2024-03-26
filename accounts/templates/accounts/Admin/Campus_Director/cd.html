@@ -69,27 +69,25 @@
                   <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
                 </a>
               </div>
-              <div class="profile-container">
-                <a href="{% url 'prof' %}">
-                <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-                {% comment %} <p1 class="account_type">C.D.</p1> {% endcomment %}
-            </div>
             </div>
           </div>
         </div>
-        <style>
-          #sidebar-wrapper .list-group-item.logout-link {
-            position: absolute;
-            top: 75vh;
-        }
-          .d-flex {
-            height: 85vh;
-            margin-bottom: 1;
+
+<style>
+#sidebar-wrapper .list-group-item.logout-link {
+position: absolute;
+top: 75vh;
 }
-          #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 70px;
+
+ .d-flex {
+height: 85vh;
+margin-bottom: 1;
+}
+
+#sidebar {
+transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
+overflow: hidden;
+width: 70px;
 }
 
 #sidebar.show-names {
@@ -124,20 +122,20 @@
 
 .logout-link {
     margin-bottom: 1%;
-    margin-left: -10px;
+    margin-left: 1px;
     width: 240px;
 }
 .about-link {
-  margin-left: -10px;
+  margin-left: 3px;
   width: 240px;
 
 }
 .resolution-link {
-  margin-left: -10px;
+  margin-left: 3px;
   width: 245px;
 }
 .purchase-requests-link {
-  margin-left: -10px;
+  margin-left: 3px;
   width: 245px;
 }
 .home-link {
@@ -212,9 +210,8 @@
     opacity: 1;
     visibility: visible;
 }
+</style>      
 
-
-        </style>      
         <script>
           function showNames() {
             const sidebar = document.getElementById('sidebar');
