@@ -24,6 +24,13 @@ urlpatterns = [
     path('bac_about', views.bac_about, name='bac_about'),
     path('upload_file', views.upload_file, name='upload_file'),
     path('add_new_item', views.add_new_item, name='add_new_item'),
+    path('delete/<int:item>', views.delete, name='delete'),
+    path('bolanding', views.bolanding, name='bolanding'),
+    path('bohome', views.bohome, name='bohome'),
+    path('boabout', views.boabout, name='boabout'),
+    path('preqform_bo/<str:pr_id>/', views.preqform_bo, name='preqform_bo'),
+    path('boppmp', views.boppmp, name='boppmp'),
+    
     
     
 ]

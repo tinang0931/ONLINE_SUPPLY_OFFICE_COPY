@@ -420,25 +420,23 @@
                         <td><input type="number" style="width: 38px;" name="dec" value="0"></td>
 
                         <td>
-                            <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                            <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
+                            {{ p.price }}
+                            <input type="hidden" name="price" value="{{ p.price }}">
                         </td>
 
 
 
                         <td>
-                            <div class="item-actions" style="margin-left: 17px;">
+                    
                                 
                                 
-                                {% if p.id%}
-                                <a href="{% url 'delete' p.id %}" class="delete-icon">
+                               
+                                <a href="" class="delete-icon">
                                     <i class="fas fa-trash text-danger"></i>
                                 </a>
-                                {% endif %}
+                               
                                 
 
-                            </div>
                         </td>
 
 
@@ -506,7 +504,7 @@
 
     </form>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 
 <script>
@@ -516,56 +514,7 @@
         newRow.style.display = newRow.style.display === 'none' ? 'table-row' : 'none';
     }
 
-    function editItem(itemId) {
-        // Assuming each row has a unique identifier, you can use it to target specific elements
-        var row = document.getElementById(itemId);
-
-        // Toggle visibility of elements
-        var editIcon = row.querySelector('.edit-icon');
-        var saveButton = row.querySelector('.save-icon');
-        var cancelButton = row.querySelector('.cancel-icon');
-        var editInputs = row.querySelectorAll('.edit-input');
-        var editableSpans = row.querySelectorAll('.editable');
-
-        // Show/hide elements
-        editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
-
-        // Show input fields for editing
-        editInputs.forEach(function (input) {
-            input.style.display = 'block';  // Adjust display style based on your styling
-        });
-
-        // Hide the spans displaying current values
-        editableSpans.forEach(function (span) {
-            span.style.display = 'none';  // Adjust display style based on your styling
-        });
-
-        // Add event listener to the cancel button
-        cancelButton.addEventListener('click', function () {
-            // Reset the form to its initial state
-            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
-            saveButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-            editInputs.forEach(function (input) {
-                input.style.display = 'none';
-            });
-            editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  // Adjust display style based on your styling
-            });
-        });
-
-        // Trigger the form submission
-        saveButton.addEventListener('click', function () {
-            // Assuming you have a form element in the row
-            var form = row.querySelector('form');
-            form.submit();
-        });
-    }
-
-    $(document).ready(function () {
-
+    
         function updateEstimateBudgetForRow(row) {
 
             var unitPrice = parseFloat(row.find('[name="price"]').val());
@@ -599,8 +548,7 @@
             var row = $(this).closest('tr.item-row');
             updateEstimateBudgetForRow(row);
         });
-    });
-
+  
     function updateTotalForAllItems() {
         var totalValue = 0;
 

@@ -102,7 +102,7 @@
   </div>
   
   <div class="bck">
-    <a href="{% url 'budget-landing' %}">
+    <a href="{% url 'bolanding' %}">
         <img src="{% static 'images/back2.png' %}" alt="Previous">
     </a>
 </div>
@@ -120,8 +120,8 @@
       </tr>
     </thead>
     <tbody>
-      {% if checkouts %}
-      {% for checkout in checkouts %}
+      {% if items %}
+      {% for checkout in items %}
       <tr>
         <td class="text-center">
           {{ checkout.submission_date }}
@@ -133,11 +133,16 @@
          
         </td>
  
-        <td class="text-center">
-          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}"><strong>{{ checkout.pr_id }}</strong></a>
-         
        
-        </td>
+            <td class="text-center">
+                <a href="{% url 'preqform_bo' item.pr_id %}">
+                    <strong>{{ checkout.pr_id }}</strong>
+                </a>
+            </td>
+           
+     
+     
+      
  
         <td class="text-center">
           {% if checkout.bo_status == 'approved' %}

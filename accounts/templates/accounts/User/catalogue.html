@@ -1,6 +1,6 @@
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
  
-{% extends }
+
  
  
 {% load static %}
@@ -149,9 +149,6 @@ opacity: 1;
     margin-top: -37px;
 }
 
-
-
-
 </style>
  
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -184,157 +181,79 @@ opacity: 1;
         </div>
         <div class="table-responsive">
             <table class="table table-bordered custom-table">
+                
                 <thead>
                     <tr>
-                    <tr>
-                        <th >Item Name</th>
-                        <th > Brand / Description</th>
-                        <th >Unit</th>
-                       
-                        <th >Unit Price</th>
-                        <th > Select </th>
-                    </tr>   
-                    </tr>
-                </thead>
-                <tbody>
- 
+                
                     {% for category, category_items in items_by_category.items %}
-                        <tr class="category-row">
-                            <th colspan="20">{{ category }}</th>
+                    
+                        <th class="text-center" colspan="5">{{ category }}</th>
+                    
+
+                    </tr>
+                    
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Brand / Description</th>
+                            <th>Unit</th>
+                            <th>Unit Price</th>
+                            <th>Select</th>
                         </tr>
+                </thead>
+                    {% for item in category_items %}
+                    {% for p in item.items %}
+                    <form id="yourFormId-{{ p.item_id }}" action="{% url 'catalogue' %}" method="post">
+                        {% csrf_token %}
+                        <tr class="item-row" id="{{ p.item_id }}">
+                            <td class="text-left">{{ p.item }}
+                                <input type="hidden" name="item" value="{{ p.item }}">
+                            </td>
+                            <td class="text-left">{{ p.item_brand_description }}
+                                <input type="hidden" name="item_brand" value="{{ p.item_brand_description }}">
+                            </td>
+                            <td>{{ p.unit }}
+                                <input type="hidden" name="unit" value="{{ p.unit }}">
+                            </td>
+                            <td>{{ p.price }}
+                                <input type="hidden" name="price" value="{{ p.price }}">
+                            </td>
+                            <td>
+                                <button type="submit"  class="submit-button">
+                                    <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                </button>
+                                
+                            </td>
+                        </tr>
+                        
+                    </form>
+                 
+                    {% endfor %}
+                    {% endfor %}
+                    
+                    {% endfor %}
                    
-                        {% for item in category_items %}
-                        {% for p in item.items %}
-                   
-                        <form id="yourFormId" action="{% url 'catalogue' %}" method="post">
-                            {% csrf_token %}
-                            <tr class="item-row" id="{{ p.item_id }}">
-                                <td class="text-left">{{ p.item }}
-                                    <input type="hidden" name="item" value="{{ p.item }}">
-                                </td>
-                                <td class="text-left">{{ p.item_brand_description }}
-                                    <input type="hidden" name="item_brand" value="{{ p.item_brand_description }}">
-                                </td>
-                                <td>{{ p.unit }}
-                                    <input type="hidden" name="unit" value="{{ p.unit }}">
-                                </td>
-                                <td>{{ p.price }}
-                                    <input type="hidden" name="price" value="{{ p.price }}">
-                                </td>
-                                <td>
-                                    
-                                 
 
-
-                                    <button type="submit" onclick="submitFormAndHideRow(this, '{{ p.item_id }}')" class="custom-button">
-                                        <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
-                                    </button> 
-                                    
-                                 
-                                    <script>
-                                        var popupDisplayed = false; // Variable to track popup display status
-                                    
-                                        function showPopup() {
-                                            if (!popupDisplayed) {
-                                                var popupContainer = document.getElementById("popup-container");
-                                                if (popupContainer) {
-                                                    popupContainer.style.display = "block";
-                                                    setTimeout(function() {
-                                                        popupContainer.style.display = "none";
-                                                        popupDisplayed = true; // Update variable to mark popup displayed
-                                                    }, 4000);
-                                                }
-                                            }
-                                        }
-                                    
-                                        function hidePopup() {
-                                            var popupContainer = document.getElementById("popup-container");
-                                            if (popupContainer) {
-                                                popupContainer.style.display = "none";
-                                            }
-                                        }
-                                    
-                                        function submitFormAndHideRow() {
-                                            // Add your form submission logic here
-                                            // This function will be called when the user submits the form from the popup
-                                        }
-                                    
-                                        window.onload = function() {
-                                            showPopup();
-                                        };
-                                    </script>
-                                    
-                                    
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        </form>
-
-                     {% endfor %}
-                        {% endfor %}
-                        {% endfor %}
-                    </tbody>
+                </tbody>
+                
             </table>
- 
- 
- 
         </div>
- 
+        
  
     </div>
 
+
+   
     
     
-    <style>
-        button {
-  padding: 5px 10px; /* Adjusted padding */
-border: unset;
-border-radius: 15px;
-color: #212121;
-z-index: 1;
-background: #e8e8e8;
-position: relative;
-font-weight: 1000;
- font-size: 14px; /* Adjusted font size */
--webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-transition: all 250ms;
-overflow: hidden;
-}
- 
-button::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-height: 100%;
-width: 0;
-border-radius: 15px;
-background-color: #1c96c5;
-z-index: -1;
--webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-transition: all 250ms;
-}
- 
-button:hover {
-  color: #e8e8e8; /* Change color to white when hovered */
-}
- 
-button:hover::before {
-width: 100%;
-}
-    </style>
- 
- 
- 
- 
- 
- 
- 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
     <script>
+       
+
+
+
+        
         $(document).ready(function () {
  
             function updateEstimateBudgetForRow(row) {
@@ -397,42 +316,7 @@ width: 100%;
             });
         });
  
-        const categoryFilter = document.getElementById('category_filter');
-        const productTables = document.querySelectorAll('.table table');
- 
-        categoryFilter.addEventListener('change', (event) => {
-            const selectedCategory = event.target.value;
-            const filteredProducts = {};
- 
-            if (selectedCategory !== 'all') {
-                for (const productTable of productTables) {
-                    const categoryName = productTable.querySelector('h3').textContent;
-                    if (categoryName === selectedCategory) {
-                        const products = productTable.querySelectorAll('tbody tr');
-                        for (const product of products) {
-                            const itemName = product.querySelector('td:nth-child(2)').textContent;
-                            const itemDescription = product.querySelector('td:nth-child(3)').textContent;
-                            const unit = product.querySelector('td:nth-child(4)').textContent;
-                            const price = product.querySelector('td:nth-child(5)').textContent;
- 
-                            if (!filteredProducts[categoryName]) {
-                                filteredProducts[categoryName] = [];
-                            }
- 
-                            filteredProducts[categoryName].push({
-                                itemName,
-                                itemDescription,
-                                unit,
-                                price
-                            });
-                        }
-                    }
-                }
-            }
- 
-            // Update the displayed items based on the filtered products
-            updateProductTables(filteredProducts);
-        });
+        
  
  
         function updateProductTables(filteredProducts) {
@@ -507,7 +391,8 @@ width: 100%;
             }
         }
     </script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
  

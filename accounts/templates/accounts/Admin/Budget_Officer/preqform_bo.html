@@ -297,13 +297,13 @@
     </div>
     
     <div class="left-button-container">
-        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link"> 
+        <a href="" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
 
     <div class="home">
-        <a href="{% url 'budget-landing' %}">
+        <a href="{% url 'bolanding' %}">
             <img src="{% static 'svg/home5.svg' %}" alt="budget-landing">
         </a>
     </div>
@@ -352,7 +352,7 @@
                 </tr>
                 </tr>
             </thead>
-            {% for p in checkout_item%}
+            {% for p in items%}
             <tbody>
                
 
@@ -389,8 +389,8 @@
                     <td>{{ p.nov }}</td>
                     <td>{{ p.dec }}</td>
                     <td>
-                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                        <span class="editable" data-field="Price">{{ p.price }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.price }}"
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
