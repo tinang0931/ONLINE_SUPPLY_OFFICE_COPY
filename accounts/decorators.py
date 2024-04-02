@@ -27,8 +27,6 @@ def authenticated_user(view_func):
     
     return wrapper_func
 
-
-
 def user_type_required(user_type):
     def decorator(view_func):
         @wraps(view_func)

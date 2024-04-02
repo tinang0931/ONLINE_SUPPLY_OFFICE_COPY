@@ -27,7 +27,6 @@
         <form id="login-form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
             
-           
                 {% for message in messages %}
                     <div class="alert alert-danger " style="text-align: center;"  role="alert">
                         {{ message }}

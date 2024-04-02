@@ -556,15 +556,14 @@
                     <a href="#" title="Download" class="icon-link" onclick="downloadPDF()" >
                         <button type="button" onclick="downloadPDF(true)" class="download-btn">DOWNLOAD</button>
                     </a>
-                    <a href="#" title="Select" class="icon-link">
-                        <button type="button" onclick="toggleSelect(true)" class="select-btn">SELECT</button>
-                    </select>
-                        <select id="paperSize" onchange="changePaperSize()" style="margin-left: 22vh">
-                            <option value="a4">A4</option>
-                            <option value="legal">Legal</option>
-                        </select>
-                    </a>
+                  <div class="Select">
+                    <button class="button"
+                onlick="changePaperSize()">Select</button>
                 </div>
+                <select id="paperSize" onchange="changePaperSize()">
+                    <option value="a4">A4</option>
+                    <option value="legal">Legal</option>
+                </select>
             </div>                  
     </div>
     <div class="page-break">  
@@ -594,8 +593,6 @@
         footer.style.display = 'block'; // Display the footer again after printing
     }
 </script>
-
-
 
 <script>
     let selectedPaperSize = 'a4';
@@ -639,7 +636,6 @@
     }
     
 </script>
-
 
         </div>
     </div>
