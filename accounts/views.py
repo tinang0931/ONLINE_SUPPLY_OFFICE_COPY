@@ -33,14 +33,51 @@ def register(request):
     return render(request, 'accounts/User/register.html')
 
 def ppmp101(request):
+    dynamodb = boto3.resource('dynamodb')
+    checkout_table = dynamodb.Table('Checkout')
+    
+    response = checkout_table.scan(
+        FilterExpression='bo_status = :bo_approved AND cd_status = :cd_approved',
+        ExpressionAttributeValues={
+            ':bo_approved': 'approved',
+            ':cd_approved': 'approved'
+        }
+        
+    )
+    
+    items = response['Items']
     
     context = {
-      
+        'items': items,
         'CAMPUS_NAME': CAMPUS_NAME,
         'SITE_TITLE': SITE_TITLE
     }
     return render(request, 'accounts/User/ppmp101.html', context)
+    
+def myppmp(request, pr_id, year):
+    dynamodb = boto3.resource('dynamodb')
+    checkout_table = dynamodb.Table('Checkout')
+    
+    response = checkout_table.query(
+        IndexName='year_index',  # Assuming you have an index on the 'year' attribute
+        KeyConditionExpression='year = :year',
+        FilterExpression='pr_id = :pr_id',
+        ExpressionAttributeValues={
+            ':year': year,
+            ':pr_id': pr_id
+        }
+    )
+    items = response['Items']
 
+    context = {
+        'items': items,
+        'pr_id': pr_id,
+        'year': year,
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    
+    return render(request, 'accounts/User/myppmp.html', context)
 def purchase (request):
     context = {
         'CAMPUS_NAME': CAMPUS_NAME,
@@ -364,8 +401,8 @@ def delete(request, item):
 
 def bolanding(request):
     context = {
-        'CAMPUS_NAME': CAMPUS_NAME,
-        'SITE_TITLE': SITE_TITLE
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT
     }
     return render(request, 'accounts/Admin/Budget_Officer/bolanding.html', context)
 
@@ -380,29 +417,59 @@ def bohome(request):
         'CAMPUS_NAME': CAMPUS_NAME,
         'SITE_TITLE': SITE_TITLE
     }
+    
+   
     return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
 
 def preqform_bo(request, pr_id):
-    # Connect to DynamoDB
-    dynamodb = boto3.resource('dynamodb')
-    checkout_items_table = dynamodb.Table('CheckoutItems')
+    if request.method == 'POST':
+     
+        dynamodb = boto3.resource('dynamodb')
+        checkout_table = dynamodb.Table('Checkout')
+        
+        bo_status = request.POST.get('new_status')
+        bo_contents = request.POST.get('content')
+        
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        
+        checkout_table.update_item(
+            Key={
+                'pr_id': pr_id
+            },
+            UpdateExpression='SET bo_status = :status, bo_contents = :content, update_date = :date',
+            ExpressionAttributeValues={
+                ':status': bo_status,
+                ':content': bo_contents,
+                ':date': current_date
+            }
+        )
+        return redirect('bohome')
     
-    # Query items associated with the PR ID
-    response = checkout_items_table.query(
-        KeyConditionExpression='pr_id = :pr_id',
-        ExpressionAttributeValues={
-            ':pr_id': pr_id
-        }
-    )
-    items = response['Items']
-    
-    # Pass the items and PR ID to the template
-    context = {
-        'items': items,
-        'pr_id': pr_id
-    }
+    else:
+       
+        dynamodb = boto3.resource('dynamodb')
+        checkout_items_table = dynamodb.Table('CheckoutItems')
+        
+        response = checkout_items_table.query(
+            KeyConditionExpression='pr_id = :pr_id',
+            ExpressionAttributeValues={
+                ':pr_id': pr_id
+            }
+        )
+        items = response['Items']
 
-    return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+        context = {
+            'items': items,
+            'pr_id': pr_id,
+            'CAMPUS_NAME': CAMPUS_NAME,  
+            'SITE_TITLE': SITE_TITLE   
+        }
+
+        return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
+    
+          
+
+            
 def boabout(request):
     context = {
         'CAMPUS_NAME': CAMPUS_NAME,
@@ -416,3 +483,100 @@ def boppmp(request):
         'SITE_TITLE': SITE_TITLE
     }
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
+
+def cdlanding(request):
+    
+    context = {
+        'HEADING_TEXT': HEADING_TEXT,
+        'SUBHEADING_TEXT': SUBHEADING_TEXT
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
+
+def cdppmp(request):
+    
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('Checkout')
+    
+    response = table.scan()
+    items = response.get('Items', [])
+    context = {
+        'items': items,
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', context)
+
+def cdppmp_approval(request, pr_id):
+    if request.method == 'POST':
+     
+        dynamodb = boto3.resource('dynamodb')
+        checkout_table = dynamodb.Table('Checkout')
+        
+        cd_status = request.POST.get('new_status')
+        cd_contents = request.POST.get('content')
+        
+        
+        
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        
+        checkout_table.update_item(
+            Key={
+                'pr_id': pr_id
+            },
+            UpdateExpression='SET cd_status = :status, cd_contents = :content, update_date = :date',
+            ExpressionAttributeValues={
+                ':status': cd_status,
+                ':content': cd_contents,
+                ':date': current_date
+            }
+        )
+        return redirect('cdppmp')
+    
+    else:
+       
+        dynamodb = boto3.resource('dynamodb')
+        checkout_items_table = dynamodb.Table('CheckoutItems')
+        
+        response = checkout_items_table.query(
+            KeyConditionExpression='pr_id = :pr_id',
+            ExpressionAttributeValues={
+                ':pr_id': pr_id
+            }
+        )
+        items = response['Items']
+
+        context = {
+            'items': items,
+            'pr_id': pr_id,
+            'CAMPUS_NAME': CAMPUS_NAME,  
+            'SITE_TITLE': SITE_TITLE   
+        }
+    return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
+
+def cdhistory(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdhistory.html', context)
+
+def cdabout(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdabout.html', context)
+
+def cdpurchase(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
+
+def cdresolution(request):
+    context = {
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'SITE_TITLE': SITE_TITLE
+    }
+    return render(request, 'accounts/Admin/Campus_Director/cdresolution.html', context)

@@ -133,17 +133,14 @@
          
         </td>
  
-       
-            <td class="text-center">
-                <a href="{% url 'preqform_bo' item.pr_id %}">
-                    <strong>{{ checkout.pr_id }}</strong>
-                </a>
-            </td>
-           
-     
-     
-      
- 
+        <td class="text-center">
+         
+              <a href="{% url 'preqform_bo' checkout.pr_id %}">
+                  <strong>{{ checkout.pr_id }}</strong>
+              </a>
+         
+      </td>
+
         <td class="text-center">
           {% if checkout.bo_status == 'approved' %}
               <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
@@ -169,15 +166,15 @@
     <td style="cursor: pointer;" onclick="toggleComments(this)">
       <div class="commentsBlock">
           <p>
-              {% if checkout.bo_comment %}
-                  <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
+              {% if checkout.bo_contents %}
+                  <strong>Budget Officer :</strong>  {{ checkout.bo_contents }}
               {% else %}
                   <strong>Budget Officer :</strong> No comment
               {% endif %}
           </p>
           <p class="campusDirectorComment" style="display: none;">
-              {% if checkout.cd_comment %}
-                  <strong>Campus Director:</strong> {{ checkout.cd_comment }}
+              {% if checkout.cd_contents %}
+                  <strong>Campus Director:</strong> {{ checkout.cd_contents }}
               {% else %}
                   <strong>Campus Director:</strong> No comment
               {% endif %}

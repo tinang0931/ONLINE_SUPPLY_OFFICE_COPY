@@ -286,7 +286,7 @@
     </div>
 
     <div class="left-button-container">
-        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
+        <a href="" class="icon-link"> 
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
@@ -342,7 +342,7 @@
             </thead>
             
             <tbody>
-                {% for p in checkout_items %}
+                {% for p in items %}
 
                 <tr class="item-row" id="{{ p.id }}">
 
@@ -377,8 +377,8 @@
                     <td>{{ p.nov }}</td>
                     <td>{{ p.dec }}</td>
                     <td>
-                        <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
+                        <span class="editable" data-field="Price">{{ p.price }}</span>
+                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.price }}"
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
@@ -404,7 +404,7 @@
 <footer class="footer">
     <div class="icons-container">
         <div class="input-box">
-            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
+            <input placeholder="Type your comment" name="content" id="comment_input" required>
         </div>
         <input id="new_status_id" type="hidden" name="new_status">
         
