@@ -37,7 +37,7 @@ urlpatterns = [
     path('cdpurchase/', views.cdpurchase, name='cdpurchase'),
     path('cdresolution/', views.cdresolution, name='cdresolution'),
     path('cdppmp_approval/<str:pr_id>/', views.cdppmp_approval, name='cdppmp_approval'),
-    path('myppmp/<str:pr_id>/', views.myppmp, name='myppmp'),
+    path('myppmp/<str:pr_id>/<str:year>/', views.myppmp, name='myppmp'),
     
     
     

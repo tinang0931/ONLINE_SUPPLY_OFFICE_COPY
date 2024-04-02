@@ -1,5 +1,5 @@
 import boto3
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Attr, Key
 from botocore.exceptions import ClientError
 import csv
 from django.shortcuts import render, redirect
@@ -56,28 +56,49 @@ def ppmp101(request):
     
 def myppmp(request, pr_id, year):
     dynamodb = boto3.resource('dynamodb')
+    checkout_items_table = dynamodb.Table('CheckoutItems')
     checkout_table = dynamodb.Table('Checkout')
-    
-    response = checkout_table.query(
-        IndexName='year_index',  # Assuming you have an index on the 'year' attribute
-        KeyConditionExpression='year = :year',
-        FilterExpression='pr_id = :pr_id',
-        ExpressionAttributeValues={
-            ':year': year,
-            ':pr_id': pr_id
-        }
-    )
-    items = response['Items']
 
+    # Query CheckoutItems table
+    response_items = checkout_items_table.query(
+        KeyConditionExpression='pr_id = :pr_id' ,
+        ExpressionAttributeValues={':pr_id': str(pr_id)} 
+    )
+    items = response_items['Items']
+
+    # Fetch the 'year' value from the first item
+    if items:
+        year = items[0].get('year')
+
+    # Query Checkout table without using 'year' attribute
+    response_checkout = checkout_table.scan(
+        FilterExpression=Attr('pr_id').eq(str(pr_id))
+    )
+    checkout_data = response_checkout.get('Items', [])
+
+    if checkout_data:
+        # Assuming there is only one matching item, you can retrieve its content
+        checkout_item = checkout_data[0]
+        bo_contents = checkout_item.get('bo_contents')
+        cd_contents = checkout_item.get('cd_contents')
+    else:
+        # Handle case where no matching item is found
+        bo_contents = None
+        cd_contents = None
+    
     context = {
         'items': items,
-        'pr_id': pr_id,
-        'year': year,
+        'bo_contents': bo_contents,
+        'cd_contents': cd_contents,
+        'year': year,  # Add year to context
         'CAMPUS_NAME': CAMPUS_NAME,
         'SITE_TITLE': SITE_TITLE
     }
-    
+
     return render(request, 'accounts/User/myppmp.html', context)
+
+
+    
 def purchase (request):
     context = {
         'CAMPUS_NAME': CAMPUS_NAME,
@@ -106,12 +127,10 @@ def about(request):
     }
     return render(request, 'accounts/User/about.html', context)
 
-import boto3
-from django.shortcuts import redirect
 
 def ppmp(request):
     if request.method == 'POST':
-        year = request.POST.get('selectedYear')
+        years = request.POST.get('year')
         
     
         items = request.POST.getlist('item')
@@ -143,7 +162,7 @@ def ppmp(request):
         checkout_table.put_item(
             Item={
                 'pr_id': pr_id,
-                'year': year,
+                'year': years,
                 'submission_date': submission_date
             }
         )
@@ -157,6 +176,7 @@ def ppmp(request):
                     'item_brand_description': item_brand,
                     'unit': unit,
                     'price': price,
+                   
                     'jan': jan,
                     'feb': feb,
                     'mar': mar,
@@ -282,11 +302,46 @@ def user_add_new_item(request):
     return render(request, 'accounts/User/ppmp.html')
 
 def approved_ppmp(request):
+    dynamodb = boto3.resource('dynamodb')
+    checkout_table = dynamodb.Table('Checkout')
+    checkout_items_table = dynamodb.Table('CheckoutItems')
+
+    bo_status = 'approved'
+    cd_status = 'approved'
+
+    # Retrieve items from the Checkout table
+    response_checkout = checkout_table.scan()
+    checkout_items = response_checkout['Items']
+
+    # Filter items based on status
+    filtered_items = [
+        item for item in checkout_items 
+        if item.get('bo_status') == bo_status and item.get('cd_status') == cd_status
+    ]
+
+    # Find the latest year
+    latest_year = max(item.get('year') for item in filtered_items)
+
+    # Retrieve items from CheckoutItems table corresponding to the latest year
+    checkout_items_latest_year = []
+    for item in filtered_items:
+        pr_id = item.get('pr_id')
+        response = checkout_items_table.query(
+            KeyConditionExpression=Key('pr_id').eq(pr_id)
+        )
+        checkout_items_latest_year.extend(response['Items'])
+
     context = {
+        'latest_year': latest_year,
+        'checkout_items_latest_year': checkout_items_latest_year,  # Passing the items from CheckoutItems table
         'CAMPUS_NAME': CAMPUS_NAME,
         'SITE_TITLE': SITE_TITLE
     }
+    
     return render(request, 'accounts/User/approved_ppmp.html', context)
+
+
+
 
 def baclanding(request):
     context = {
