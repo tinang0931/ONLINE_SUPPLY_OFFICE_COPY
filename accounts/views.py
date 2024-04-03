@@ -99,12 +99,77 @@ def myppmp(request, pr_id, year):
 
 
     
-def purchase (request):
-    context = {
-        'CAMPUS_NAME': CAMPUS_NAME,
-        'SITE_TITLE': SITE_TITLE
-    }
-    return render(request, 'accounts/User/purchase.html', context)
+def purchase(request):
+    if request.method == 'POST':
+        items = request.POST.getlist('item')
+        item_brands = request.POST.getlist('item_brand')
+        units = request.POST.getlist('unit')
+        prices = request.POST.getlist('price')
+        quantities = request.POST.getlist('quantity')
+        purpose = request.POST.get('purpose')
+
+        dynamodb = boto3.resource('dynamodb')
+        checkout_table = dynamodb.Table('PurchaseID')
+        checkout_items_table = dynamodb.Table('Purchase')
+        items_table = dynamodb.Table('Items')
+
+        submission_date = datetime.now().strftime("%Y-%m-%d")
+
+        pr_id = generate_unique_pr_id()
+
+        checkout_table.put_item(
+            Item={
+                'pr_id': pr_id,
+                'purpose': purpose,
+                'submission_date': submission_date
+            }
+        )
+
+        for item, item_brand, unit, price, quantity in zip(items, item_brands, units, prices, quantities):
+            checkout_items_table.put_item(
+                Item={
+                    'pr_id': pr_id,
+                    'item': item,
+                    'item_brand_description': item_brand,
+                    'unit': unit,
+                    'price': price,
+                    'quantity': quantity
+                }
+            )
+            
+            
+            items_table.delete_item(
+                Key={
+                    'item': item 
+                }
+            )
+        
+        return redirect('purchasetracker')
+    else: 
+    
+        dynamodb = boto3.resource('dynamodb')
+        table = dynamodb.Table('Items')
+        
+        response = table.scan()
+        items = response.get('Items', [])
+        context = {
+            'items': items,
+            'CAMPUS_NAME': CAMPUS_NAME,
+            'SITE_TITLE': SITE_TITLE
+        }
+        return render(request, 'accounts/User/purchase.html', context)
+
+def generate_unique_pr_id():
+    
+    timestamp = int(time.time())
+    
+   
+    random_number = random.randint(100, 999)
+    
+   
+    pr_id = f"{timestamp}{random_number}"
+    
+    return pr_id
 
 def tracker(request):
     context = {
@@ -302,43 +367,60 @@ def user_add_new_item(request):
     return render(request, 'accounts/User/ppmp.html')
 
 def approved_ppmp(request):
-    dynamodb = boto3.resource('dynamodb')
-    checkout_table = dynamodb.Table('Checkout')
-    checkout_items_table = dynamodb.Table('CheckoutItems')
-
-    bo_status = 'approved'
-    cd_status = 'approved'
-
-    # Retrieve items from the Checkout table
-    response_checkout = checkout_table.scan()
-    checkout_items = response_checkout['Items']
-
-    # Filter items based on status
-    filtered_items = [
-        item for item in checkout_items 
-        if item.get('bo_status') == bo_status and item.get('cd_status') == cd_status
-    ]
-
-    # Find the latest year
-    latest_year = max(item.get('year') for item in filtered_items)
-
-    # Retrieve items from CheckoutItems table corresponding to the latest year
-    checkout_items_latest_year = []
-    for item in filtered_items:
-        pr_id = item.get('pr_id')
-        response = checkout_items_table.query(
-            KeyConditionExpression=Key('pr_id').eq(pr_id)
+    if request.method == 'POST':
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+        
+        table = boto3.resource('dynamodb').Table('Items')
+        table.put_item(
+            Item={
+                'item': item,
+                'item_brand_description': item_brand,
+                'unit': unit,
+                'price': price
+            }
         )
-        checkout_items_latest_year.extend(response['Items'])
+        return redirect('approved_ppmp')
+    else:
+        dynamodb = boto3.resource('dynamodb')
+        checkout_table = dynamodb.Table('Checkout')
+        checkout_items_table = dynamodb.Table('CheckoutItems')
 
-    context = {
-        'latest_year': latest_year,
-        'checkout_items_latest_year': checkout_items_latest_year,  # Passing the items from CheckoutItems table
-        'CAMPUS_NAME': CAMPUS_NAME,
-        'SITE_TITLE': SITE_TITLE
-    }
+        business_office_status = 'approved'
+        campus_director_status = 'approved'
+
+        response_checkout = checkout_table.scan()
+        checkout_items = response_checkout['Items']
+
+        filtered_items = [
+            item for item in checkout_items 
+            if item.get('bo_status') == business_office_status and item.get('cd_status') == campus_director_status
+        ]
+
+        if filtered_items:
+            latest_year = max(item.get('year') for item in filtered_items)
+        else:
+            latest_year = None
+
+        checkout_items_latest_year = []
+        for item in filtered_items:
+            pr_id = item.get('pr_id')
+            response = checkout_items_table.query(
+                KeyConditionExpression=Key('pr_id').eq(pr_id)
+            )
+            checkout_items_latest_year.extend(response['Items'])
+
+        context = {
+            'latest_year': latest_year,
+            'checkout_items_latest_year': checkout_items_latest_year,  
+            'CAMPUS_NAME': CAMPUS_NAME,
+            'SITE_TITLE': SITE_TITLE
+        }
     
     return render(request, 'accounts/User/approved_ppmp.html', context)
+
 
 
 
