@@ -363,7 +363,7 @@ width: 100%;
  
                 var estimateBudget = totalValue * unitPrice;
  
- 
+  
                 row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2));
             }
  
@@ -382,13 +382,13 @@ width: 100%;
             });
         });
  
- 
+                
         function scrollToCategory() {
             var selectedCategory = document.getElementById('dropdownMenuSelect').value;
             var table = document.getElementById(selectedCategory);
             if (table) {
                 table.scrollIntoView({ behavior: 'smooth' });
-            }
+            }   
         }
 
     
@@ -401,7 +401,7 @@ width: 100%;
    
         $(document).ready(function () {
             // Add click event to checkboxes
-            $('.row-checkbox').on('click', function () {
+            $('.row-checkbox').on('click', function () {  
                 // Find the closest tr and toggle the 'selected' class
                 $(this).closest('tr').toggleClass('selected');
             });
