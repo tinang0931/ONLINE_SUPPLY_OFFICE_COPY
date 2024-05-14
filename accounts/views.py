@@ -294,9 +294,6 @@ def about(request):
 
 
 
-
-
-
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.filter(user=request.user)
