@@ -22,11 +22,9 @@
 
     .modal-content {
         background-color: #ffffff;
-        /* White background */
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        /* Adjust the width as needed */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         position: relative;
     }
@@ -54,8 +52,6 @@
         margin-bottom: 20px;
 
     }
-
-
 
     .input-box input {
         font-family: 'Poppins', sans-serif;
@@ -85,7 +81,6 @@
         display: flex;
         align-items: center;
         margin-right: 15px;
-        /* Add margin between checkboxes */
     }
 
     .checkbox-box {
@@ -93,21 +88,37 @@
 
     }
 
-
-
-    /* Style for the submit button */
     .btn-primary {
-        background-color: #28a745;
+        background-color: #f38c06;
         width: 80%;
-        color: white;
+        color: #003566;
+        font-size: 1.2rem;
+        font-weight: 50;
+        font-family: sans-serif; 
         padding: 10px 20px;
         border: none;
         border-radius: 20px;
-        cursor: pointer;
+       
         margin-left: 50px;
     }
-</style>
 
+    .btn-primary:hover {
+        background-color: #f38c06; 
+        color: black;
+        transition: background-color 0.5s , transform 0.5s , box-shadow 0.5s ;
+    }
+    
+    .modal-title {
+        text-align: center;
+        font-size: 2.6rem; 
+        font-weight: 700; 
+        margin: 0; 
+        padding: 10px 0; 
+        color: #003566; 
+        font-family: sans-serif; 
+    }
+
+</style>
 
 
 
@@ -282,10 +293,6 @@
                     <button type="submit" value="submit" class="btn btn-primary">Register</button>
                 </div>
             </form>
-
-
-
-
         </div>
 
 
@@ -305,7 +312,6 @@
                 form_input = document.getElementById('form_' + id);
                 form_input.value = input.value;
             }
-
 
             function editRow(userId) {
                 var row = document.getElementById(userId);
