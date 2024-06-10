@@ -50,28 +50,34 @@
     }
 
     .input-box {
-        margin-bottom: 5px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
     }
 
-    .input-box {
+
+
+    .input-box input {
+        font-family: 'Poppins', sans-serif;
         width: 100%;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background-color: #f9f9f9;
-        /* Light gray background */
-        color: #333;
-        /* Dark gray text color */
+        height: 2vw;
+        border: none;
+        outline: none;
+        border-radius: 20px;
+        border-bottom: 2px solid;
+        font-size: 95%;
+        padding: 20px;
+        box-shadow: 0 1px 3px;
+        transition: all 0.5s ease;
+        border-color: transparent;
+        font-weight: normal;
     }
 
     .register-details {
         display: fixed;
         flex-direction: row;
-        /* Align checkboxes horizontally */
         justify-content: space-between;
-        /* Adjust as needed */
         align-items: center;
-        /* Center checkboxes vertically */
         margin-bottom: 15px;
     }
 
@@ -83,27 +89,22 @@
     }
 
     .checkbox-box {
-        margin-left: 5px;
-        color: #007bff;
-        /* Blue color for checkbox label */
+        margin-left: 10px;
+
     }
 
-    .modal-footer {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 15px;
-    }
+
 
     /* Style for the submit button */
     .btn-primary {
         background-color: #28a745;
-        /* Green background */
+        width: 80%;
         color: white;
         padding: 10px 20px;
         border: none;
-        border-radius: 4px;
+        border-radius: 20px;
         cursor: pointer;
+        margin-left: 50px;
     }
 </style>
 
@@ -217,117 +218,70 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-
-            <h5 class="modal-title">Add User</h5>
-
-            <form action="{% url 'register_user' %}" method="post">
+            <h5 class="modal-title" style="text-align: center;">Add User</h5>
+            <form action="{% url 'register_user' %}" method="post" onsubmit="return validateForm()">
                 {% csrf_token %}
-
                 <div class="user-details">
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="username" placeholder="CTU ID:" required
+
+                        <input type="number" id="username" name="username" placeholder="CTU ID:" required
                             oninput="maxLengthCheck(this, 11)">
                     </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="email" name="email" placeholder="Email:" required>
+
+                        <input type="email" id="email" name="email" placeholder="Email:" required>
                     </div>
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="fname" placeholder="First Name:" required>
+
+                        <input type="text" id="fname" name="fname" placeholder="First Name:" required>
                     </div>
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="lname" placeholder="Last Name:" required>
+
+                        <input type="text" id="lname" name="lname" placeholder="Last Name:" required>
                     </div>
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="contact1" placeholder="Contact No. 1:" required
+
+                        <input type="number" id="contact1" name="contact1" placeholder="Contact No.:" required
                             oninput="maxLengthCheck(this, 12)">
                     </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass1" placeholder="Password:" required
+
+                        <input type="password" id="pass1" name="pass1" placeholder="Password:" required
                             oninput="maxLengthCheck(this, 15)">
                     </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
                     <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass2" placeholder="Confirm Password:" required
+
+                        <input type="password" id="pass2" name="pass2" placeholder="Confirm Password:" required
                             oninput="maxLengthCheck(this, 15)">
                     </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="register-details">
-                        <span class="details">Type of user</span>
-
-                        <div class="input-box">
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
-                                <div class="checkbox-box">Admin</div>
-                            </label>
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
-                                <div class="checkbox-box">BAC Secretariat</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
-                                <div class="checkbox-box">Campus Director</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
-                                <div class="checkbox-box">Budget Officer</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
-                                <div class="checkbox-box">Regular User</div>
-                            </label>
-
-
-                        </div>
-
-
-
-                        <div class="modal-footer ">
-                            <button type="submit" value="submit" class="btn btn-primary">Register</button>
-
+                </div>
+                <div class="register-details">
+                    <span class="details">Type of user</span>
+                    <div class="details">
+                        <label class="checkbox-label" for="adminCheckbox">
+                            <input type="radio" name="user_type" id="adminCheckbox" value="admin">
+                            <div class="checkbox-box">Admin</div>
+                        </label>
+                        <label class="checkbox-label" for="bacCheckbox">
+                            <input type="radio" name="user_type" id="bacCheckbox" value="bac">
+                            <div class="checkbox-box">BAC Secretariat</div>
+                        </label>
+                        <label class="checkbox-label" for="cdCheckbox">
+                            <input type="radio" name="user_type" id="cdCheckbox" value="cd">
+                            <div class="checkbox-box">Campus Director</div>
+                        </label>
+                        <label class="checkbox-label" for="budgetCheckbox">
+                            <input type="radio" name="user_type" id="budgetCheckbox" value="budget">
+                            <div class="checkbox-box">Budget Officer</div>
+                        </label>
+                        <label class="checkbox-label" for="regularCheckbox">
+                            <input type="radio" name="user_type" id="regularCheckbox" value="regular">
+                            <div class="checkbox-box">Regular User</div>
+                        </label>
+                    </div>
+                    <button type="submit" value="submit" class="btn btn-primary">Register</button>
+                </div>
             </form>
-
 
 
 
@@ -336,6 +290,15 @@
 
 
         <script>
+
+            function filterTable() {
+                const searchTerm = document.getElementById('search_bar_request').value.toLowerCase();
+                const tableRows = document.querySelectorAll('#myTable tbody tr');
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+                });
+            }
 
             function change_val(id) {
                 input = document.getElementById(id);
@@ -444,6 +407,4 @@
 
 
 
-        {% endblock %}
-        {% block admin_home %}
         {% endblock %}
