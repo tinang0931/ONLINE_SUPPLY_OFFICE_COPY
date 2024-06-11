@@ -187,8 +187,7 @@
 
                     <td>
                         <div style="display: flex; justify-content: center; gap: 20px;">
-                            <a href="#" class="edit-icon" style="text-align: center;" onclick="editRow('{{ user.id }}')"
-                                id="edit_icon_{{ user.id }}">
+                            <a href="#" class="edit-icon" style="text-align: center;" onclick="editRow('{{ user.id }}')" id="edit_icon_{{ user.id }}">
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
 
@@ -300,89 +299,6 @@
                 });
             }
 
-            function change_val(id) {
-                input = document.getElementById(id);
-                form_input = document.getElementById('form_' + id);
-                form_input.value = input.value;
-            }
-
-
-            function editRow(userId) {
-                var row = document.getElementById(userId);
-
-                var editIcon = row.querySelector('.edit-icon');
-                var saveButton = row.querySelector('.save-icon');
-                var cancelButton = row.querySelector('.cancel-icon');
-                var editInputs = row.querySelectorAll('.edit-input');
-                var editableSpans = row.querySelectorAll('.editable');
-
-                editIcon.style.display = 'none';
-                cancelButton.style.display = 'inline-block';
-
-                // Show input fields for editing
-                editInputs.forEach(input => {
-                    input.style.display = 'block';
-                });
-
-                // Hide the spans displaying current values
-                editableSpans.forEach(span => {
-                    span.style.display = 'none';
-                });
-
-                // Add event listener to the cancel button
-                cancelButton.addEventListener('click', () => {
-                    // Reset the form to its initial state
-                    editIcon.style.display = 'inline-block';
-                    saveButton.style.display = 'none';
-                    cancelButton.style.display = 'none';
-                    editInputs.forEach(input => {
-                        input.style.display = 'none';
-                    });
-                    editableSpans.forEach(span => {
-                        span.style.display = 'inline-block';
-                    });
-                });
-
-                saveButton.addEventListener('click', () => {
-                    var form = row.querySelector('form');
-                    form.submit();
-                });
-
-            }
-
-
-            function cancelEdit(userId) {
-                // Show the edit icon
-                document.querySelector(`#edit_icon_${userId}`).style.display = 'inline-block';
-
-                // Hide the save and cancel icons
-                document.querySelector(`#save_icon_${userId}`).style.display = 'none';
-                document.querySelector(`#cancel_icon_${userId}`).style.display = 'none';
-
-                // Hide the input fields for editing
-                const editInputs = document.querySelectorAll(`.edit-input-${userId}`);
-                editInputs.forEach(input => {
-                    input.style.display = 'none';
-                });
-
-                // Show the span elements
-                const spanElements = document.querySelectorAll(`.editable-${userId}`);
-                spanElements.forEach(span => {
-                    span.style.display = 'inline-block';
-                });
-            }
-
-            function saveEdit(userId) {
-                // Perform the logic to save the edited data, for example, sending an AJAX request
-
-                // After saving, update the display
-                cancelEdit(userId);
-            }
-        </script>
-
-
-
-        <script>
             // Get the modal element
             const modal = document.getElementById('myModal');
 

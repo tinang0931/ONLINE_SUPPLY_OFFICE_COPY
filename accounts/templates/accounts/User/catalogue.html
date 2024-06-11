@@ -286,51 +286,7 @@
             </table>
         </div>
     
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const forms = document.querySelectorAll('.ajax-form');
-                forms.forEach(form => {
-                    form.addEventListener('submit', function(event) {
-                        event.preventDefault(); // Prevent the default form submission
-    
-                        const formData = new FormData(form);
-                        const csrfTokenElement = form.querySelector('[name=csrfmiddlewaretoken]');
-                        const csrfToken = csrfTokenElement ? csrfTokenElement.value : '';
-                        const scrollPosition = window.scrollY; // Store the current scroll position
-    
-                        if (!csrfToken) {
-                            console.error('CSRF token not found. Form:', form); // Debug statement
-                            alert('CSRF token not found. Please refresh the page and try again.');
-                            return;
-                        }
-    
-                        fetch(form.action, {
-                            method: form.method,
-                            headers: {
-                                'X-CSRFToken': csrfToken // Include CSRF token in the headers
-                            },
-                            body: formData
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                // Handle success (e.g., hide the submitted row)
-                                form.closest('.item-row').style.display = 'none';
-                            } else {
-                                // Handle error
-                                alert('An error occurred. Please try again.');
-                            }
-                        })
-                        .catch(error => {
-                            // Handle network errors
-                            alert('An error occurred. Please try again.');
-                        });
-    
-                        // Restore the scroll position
-                        window.scrollTo(0, scrollPosition);
-                    });
-                });
-            });
-        </script>
+       
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
