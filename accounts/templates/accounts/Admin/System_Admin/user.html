@@ -1,11 +1,9 @@
 {% extends "accounts/Admin/System_Admin/admin_home.html" %}
-
-
+ 
 {% load static %}
-
+ 
 {% block user %}
-
-
+ 
 <style>
     /* Modal styles */
     .modal {
@@ -22,11 +20,9 @@
 
     .modal-content {
         background-color: #ffffff;
-        /* White background */
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        /* Adjust the width as needed */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         position: relative;
     }
@@ -54,8 +50,6 @@
         margin-bottom: 20px;
 
     }
-
-
 
     .input-box input {
         font-family: 'Poppins', sans-serif;
@@ -85,7 +79,6 @@
         display: flex;
         align-items: center;
         margin-right: 15px;
-        /* Add margin between checkboxes */
     }
 
     .checkbox-box {
@@ -93,25 +86,37 @@
 
     }
 
-
-
-    /* Style for the submit button */
     .btn-primary {
-        background-color: #28a745;
+        background-color: #f38c06;
         width: 80%;
-        color: white;
+        color: #003566;
+        font-size: 1.2rem;
+        font-weight: 50;
+        font-family: sans-serif; 
         padding: 10px 20px;
         border: none;
         border-radius: 20px;
-        cursor: pointer;
+       
         margin-left: 50px;
     }
+
+    .btn-primary:hover {
+        background-color: #f38c06; 
+        color: black;
+        transition: background-color 0.5s , transform 0.5s , box-shadow 0.5s ;
+    }
+    
+    .modal-title {
+        text-align: center;
+        font-size: 2.6rem; 
+        font-weight: 700; 
+        margin: 0; 
+        padding: 10px 0; 
+        color: #003566; 
+        font-family: sans-serif; 
+    }
 </style>
-
-
-
-
-
+ 
 <div class="container-fluid" style="height: 68vh;">
     <div class="container">
         <i class="fas fa-user-friends two-user-icon"></i>
@@ -123,19 +128,16 @@
         <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request"
             oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
     </div>
-
+ 
     <button class="adduser" onclick="openModal()"
         style="background-color: #28a745; color: white; font-size: 16px; margin-left: 2px;">
         <span class="bi bi-person-plus"></span> Add User
     </button>
-
-
-
+ 
     <div class="usertable table-responsive">
-
+ 
         <table id="myTable" class="usertable">
             <thead>
-
                 <tr>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">CTU ID</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">FIRST NAME</th>
@@ -145,75 +147,67 @@
                     <th class="text-center text-nowrap" style="min-width: 13rem;">ROLE</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">ACTION</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-
                 {% for user in users %}
-                <tr id="{{ user.id }}">
+                <tr id="row_{{ user.id }}">
                     <td>
-                        <span class="editable" data-field="username">{{ user.username }}</span>
+                        <span class="editable">{{ user.username }}</span>
                         <input id="username_{{ user.id }}" type="text" value="{{ user.username }}"
-                            oninput="change_val('username_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="first_name">{{ user.first_name }}</span>
+                        <span class="editable">{{ user.first_name }}</span>
                         <input id="first_name_{{ user.id }}" type="text" value="{{ user.first_name }}"
-                            oninput="change_val('first_name_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="last_name">{{ user.last_name }}</span>
+                        <span class="editable">{{ user.last_name }}</span>
                         <input id="last_name_{{ user.id }}" type="text" value="{{ user.last_name }}"
-                            oninput="change_val('last_name_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="email">{{ user.email }}</span>
+                        <span class="editable">{{ user.email }}</span>
                         <input id="email_{{ user.id }}" type="text" value="{{ user.email }}"
-                            oninput="change_val('email_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="contact1">{{ user.contact1 }}</span>
+                        <span class="editable">{{ user.contact1 }}</span>
                         <input id="contact1_{{ user.id }}" type="text" value="{{ user.contact1 }}"
-                            oninput="change_val('contact1_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
-
                     <td>
-                        <span class="editable" data-field="user_type">{{ user.user_type }}</span>
+                        <span class="editable">{{ user.user_type }}</span>
                         <input id="user_type_{{ user.id }}" type="text" value="{{ user.user_type }}"
-                            oninput="change_val('user_type_{{ user.id }}')" class="edit-input" style="display: none">
+                            class="edit-input" style="display: none">
                     </td>
-
                     <td>
                         <div style="display: flex; justify-content: center; gap: 20px;">
-                            <a href="#" class="edit-icon" style="text-align: center;" onclick="editRow('{{ user.id }}')" id="edit_icon_{{ user.id }}">
+                            <a href="#" class="edit-icon" onclick="editRow('{{ user.id }}')"
+                                id="edit_icon_{{ user.id }}">
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
-
+                            <a href="#" class="save-icon" onclick="saveEdit('{{ user.id }}')"
+                                id="save_icon_{{ user.id }}" style="display: none;">
+                                <i class="fas fa-save text-success"></i>
+                            </a>
+                            <a href="#" class="cancel-icon" onclick="cancelEdit('{{ user.id }}')"
+                                id="cancel_icon_{{ user.id }}" style="display: none;">
+                                <i class="fas fa-times text-danger"></i>
+                            </a>
                             {% if user.username %}
-
                             <a href="{% url 'delete_user' user.username %}" style="text-align: center;">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                             {% endif %}
-
                         </div>
                     </td>
-
-
-
                 </tr>
-
-
                 {% endfor %}
-
             </tbody>
-
-
         </table>
     </div>
-
+ 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -222,34 +216,27 @@
                 {% csrf_token %}
                 <div class="user-details">
                     <div class="input-box">
-
                         <input type="number" id="username" name="username" placeholder="CTU ID:" required
                             oninput="maxLengthCheck(this, 11)">
                     </div>
                     <div class="input-box">
-
                         <input type="email" id="email" name="email" placeholder="Email:" required>
                     </div>
                     <div class="input-box">
-
                         <input type="text" id="fname" name="fname" placeholder="First Name:" required>
                     </div>
                     <div class="input-box">
-
                         <input type="text" id="lname" name="lname" placeholder="Last Name:" required>
                     </div>
                     <div class="input-box">
-
                         <input type="number" id="contact1" name="contact1" placeholder="Contact No.:" required
                             oninput="maxLengthCheck(this, 12)">
                     </div>
                     <div class="input-box">
-
                         <input type="password" id="pass1" name="pass1" placeholder="Password:" required
                             oninput="maxLengthCheck(this, 15)">
                     </div>
                     <div class="input-box">
-
                         <input type="password" id="pass2" name="pass2" placeholder="Confirm Password:" required
                             oninput="maxLengthCheck(this, 15)">
                     </div>
@@ -281,46 +268,138 @@
                     <button type="submit" value="submit" class="btn btn-primary">Register</button>
                 </div>
             </form>
-
-
-
-
         </div>
-
-
-        <script>
-
-            function filterTable() {
-                const searchTerm = document.getElementById('search_bar_request').value.toLowerCase();
-                const tableRows = document.querySelectorAll('#myTable tbody tr');
-                tableRows.forEach(row => {
-                    const rowText = row.textContent.toLowerCase();
-                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
-                });
-            }
-
-            // Get the modal element
+    </div>
+ 
+    <script>
+        function filterTable() {
+            const searchTerm = document.getElementById('search_bar_request').value.toLowerCase();
+            const tableRows = document.querySelectorAll('#myTable tbody tr');
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+            });
+        }
+   
+        function editRow(userId) {
+            const row = document.getElementById(`row_${userId}`);
+            const editIcon = row.querySelector(`#edit_icon_${userId}`);
+            const saveIcon = row.querySelector(`#save_icon_${userId}`);
+            const cancelIcon = row.querySelector(`#cancel_icon_${userId}`);
+            const editInputs = row.querySelectorAll('.edit-input');
+            const editableSpans = row.querySelectorAll('.editable');
+   
+            editIcon.style.display = 'none';
+            saveIcon.style.display = 'inline-block';
+            cancelIcon.style.display = 'inline-block';
+   
+            editInputs.forEach(input => {
+                input.style.display = 'inline-block';
+            });
+   
+            editableSpans.forEach(span => {
+                span.style.display = 'none';
+            });
+        }
+   
+        function cancelEdit(userId) {
+            const row = document.getElementById(`row_${userId}`);
+            const editIcon = row.querySelector(`#edit_icon_${userId}`);
+            const saveIcon = row.querySelector(`#save_icon_${userId}`);
+            const cancelIcon = row.querySelector(`#cancel_icon_${userId}`);
+            const editInputs = row.querySelectorAll('.edit-input');
+            const editableSpans = row.querySelectorAll('.editable');
+   
+            editIcon.style.display = 'inline-block';
+            saveIcon.style.display = 'none';
+            cancelIcon.style.display = 'none';
+   
+            editInputs.forEach(input => {
+                input.style.display = 'none';
+            });
+   
+            editableSpans.forEach(span => {
+                span.style.display = 'inline-block';
+            });
+        }
+   
+        function saveEdit(userId) {
+            const row = document.getElementById(`row_${userId}`);
+            const editInputs = row.querySelectorAll('.edit-input');
+            const data = {};
+       
+            editInputs.forEach(input => {
+                const field = input.id.split('_')[0];
+                data[field] = input.value;
+            });
+       
+            fetch(`/update_user/${userId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(responseData => {
+                if (responseData.success) {
+                    // Update the displayed user data with the edited values
+                    editInputs.forEach(input => {
+                        const field = input.id.split('_')[0];
+                        const span = row.querySelector(`span.editable.${field}`);
+                        span.textContent = input.value;
+                    });
+                    // Hide edit inputs and show editable spans
+                    editInputs.forEach(input => {
+                        input.style.display = 'none';
+                    });
+                    const editableSpans = row.querySelectorAll('.editable');
+                    editableSpans.forEach(span => {
+                        span.style.display = 'inline-block';
+                    });
+                    // Hide save and cancel icons, show edit icon
+                    const editIcon = row.querySelector(`#edit_icon_${userId}`);
+                    const saveIcon = row.querySelector(`#save_icon_${userId}`);
+                    const cancelIcon = row.querySelector(`#cancel_icon_${userId}`);
+                    editIcon.style.display = 'inline-block';
+                    saveIcon.style.display = 'none';
+                    cancelIcon.style.display = 'none';
+                    // Inform the user that changes have been saved
+                    alert('Changes saved successfully.');
+                } else {
+                    console.error('Error updating user:', responseData.error);
+                    alert('Error updating user. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Error updating user. Please try again.');
+            });
+        }
+       
+ 
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+   
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+   
+        window.onclick = function(event) {
             const modal = document.getElementById('myModal');
-
-            // Function to open the modal
-            function openModal() {
-                modal.style.display = 'block';
-            }
-
-            // Function to close the modal
-            function closeModal() {
+            if (event.target === modal) {
                 modal.style.display = 'none';
             }
-
-            // Close the modal if the user clicks outside the modal content
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            }
-        </script>
-
-
-
-
-        {% endblock %}
+        }
+    </script>
+   
+ 
+{% endblock %}
+ 
