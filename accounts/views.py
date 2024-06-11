@@ -292,11 +292,6 @@ def about(request):
 
     return render(request, 'accounts/User/about.html', context)
 
-
-
-
-
-
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.filter(user=request.user)
