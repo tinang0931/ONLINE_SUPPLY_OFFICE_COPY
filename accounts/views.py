@@ -785,6 +785,7 @@ def delete_user(request, username):
     user.delete()
     return redirect('user')
 
+
 @authenticated_user
 def addItem(request):
     if request.method == 'POST':
