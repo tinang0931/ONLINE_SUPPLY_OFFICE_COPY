@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+                                            
 from pathlib import Path
 import os
 
@@ -168,3 +168,4 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 MEDIA_DIR = BASE_DIR / 'media'
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+ 
