@@ -436,11 +436,13 @@
                             <div class="item-actions" style="margin-left: 17px;">
                                 
                                 
-                                {% if p.id%}
-                                <a href="{% url 'delete' p.id %}" class="delete-icon">
+                                {% if p.id %}
+                                <a href="{% url 'delete' p.id %}" class="delete-icon delete-item" data-id="{{ p.id }}">
                                     <i class="fas fa-trash text-danger"></i>
                                 </a>
                                 {% endif %}
+                                
+                                
                                 
 
                             </div>
