@@ -13,8 +13,10 @@
     }
 
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #003566;
+        color: white; 
     }
+
 
     .ctu_logo {
         margin-top: -13%;
@@ -25,7 +27,7 @@
         justify-content: center;
     }
 
-    .bck a  {
+    /* .bck a  {
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -57,8 +59,10 @@
     height: 40px;
     position: relative;
     margin-left: .5vh;
-}
-
+} */
+   .table-responsive{
+    margin-top: -6vh;
+   }
 
 @keyframes beat{
     0%{
@@ -93,21 +97,23 @@
     <div class="container">
         <h1 style="margin-left: 35%; "> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
-    <div class="home">
+    <!-- <div class="home">
         <a href="{% url 'userlanding' %}">
             <img src="{% static 'svg/home5.svg' %}" alt="Home">
         </a>
     </div>
     <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/back2.png' %}"></a>
-    </div>
+    </div> -->
     <div class="row"> 
-        <div class="col-md-4">
-            <div class="search" style="position: relative; text-align: right; margin-top: 2vh">
-                <span class="icon" style="position: absolute; right: -90px; top: 2vh; transform: translateY(-50%); width: 40px;">
-                    <i class="fas fa-search" style="font-size: 20px;"></i>
+        <div class="row" style="width: 100%;">
+            <div class="search" style="position: relative; text-align: right; margin-top: -3vh; display: inline-block; width: 100%;">
+                <span class="icon"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; right: 28px; top: 22%;">
+                    <i class="fas fa-search" style="font-size: 20px;" ></i>
                 </span>
-                <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+                <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request"
+                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; width: 300px; display: inline-block;"
+                    oninput="handleSearch()">
             </div>
         </div>
         <div class="table-responsive">

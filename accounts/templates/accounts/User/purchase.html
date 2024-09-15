@@ -1,14 +1,14 @@
 {% extends "accounts/User/main.html" %}
 
-
 {% load static %}
-
 
 {% block purchase %}
 
 <style>
-
-
+     body {
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  
   .table-bordered th {
     background-color: #1c96c5;
   }
@@ -17,113 +17,185 @@
     display: none;
   }
 
-  tr:hover .item-actions {
+  /* tr:hover .item-actions {
     display: flex;
-  }
+  } */
 
-  .table-bordered th {
-    background-color: #1c96c5;
-  }
-  .pp_mp button {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
+/* Button style for 2024 PPMP */
+.pp_mp button {
+    background-color: #003566; 
+    color: #ffc107;
+    border: none;
     padding: 10px 20px;
-    border-radius: 10px;
-    transition: background-color 0.3s, color 0.3s;
-    margin-bottom: 10px;
-    width: 150%;
-  }
-
-  .pp_mp button a {
-    color: inherit;
-    text-decoration: none;
+    border-radius: 10px; 
+    font-weight: bold; 
+    width: 150px; 
+    cursor: pointer; 
 }
 
-  .pp_mp button:hover {
+/* Remove hover effect for the button */
+.pp_mp button:hover {
+    background-color: #003566; 
+    color: #ffc107; 
+}
+
+/* Remove hover effect from the link within the button */
+.pp_mp button a {
+    text-decoration: none;
+    color: inherit;
+}
+
+  /* Removed hover effect */
+  /* .pp_mp button:hover {
     background-color: #1c96c5;
     color: white;
-  }
+  } */
 
-textarea.form-control {
-    width: 100%;
-    padding: 15px;
-    margin-top: 5px;
-    margin-right: 850px;
-    resize: vertical;
-    box-sizing: border-box; 
-    border: 2px solid #1c96c5; 
-    border-radius: 3%;
-  }
+    textarea.form-control {
+        width: 100%;
+        padding: 15px;
+        margin-top: 5px;
+        margin-right: 850px;
+        resize: vertical;
+        box-sizing: border-box; 
+        border: 2px solid #1c96c5; 
+        border-radius: 3%;
+      }
 
-  .col-md-4 .text-right button.btn.btn-primary {
-    border-radius: 8%;
-    background-color: #28a745;
-    border-color: #007bff;
-    height: 50px; 
-    width: 120px;
-  }
+      .col-md-4 .text-right button.btn.btn-primary {
+        border-radius: 8%;
+        background-color: #28a745;
+        border-color: #007bff;
+        height: 50px; 
+        width: 120px;
+      }
 
-  .bck a {
+  /* .bck a {
+    text-decoration: none;
+  }
   
-        text-decoration: none;
-    }
-    
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
-    }
-    
-    .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
-    footer {
-    position: absolute;
-    margin-left: -3vh;
-    bottom: 0;
-    width: 50vh;
-    height: 17vh;
-    background-color: rgba(1, 33, 67, 0.9);
-    color: #ffffff;
-    padding: 10px 0;
+  .bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
   }
+
+  .bck:hover img {
+    transform: scale(1.2);
+  } */
+
+    .table {
+      width: 100%;
+      border-collapse: collapse; 
+      margin: 20px 0; 
+      font-family: Arial, sans-serif; 
+  }
+
+    .table thead th {
+        background-color: #003566; 
+        color: #ffffff;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid #ddd; 
+    }
+
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9; 
+    }
+
+    .table tbody tr:hover {
+        background-color: #e6f7ff; 
+    }
+
+    .table tbody td {
+        padding: 5px; 
+        border-bottom: 1px solid #ddd; 
+        color: #555; 
+    }
+
+    .table-bordered {
+        border: 1px solid #ddd; 
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #ddd;
+    }
+
+    footer {
+        position: absolute;
+        margin-left: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto; 
+        background-color: transparent; 
+        color: #000000; 
+        padding: 10px 0;
+    }
+
+    body {
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15%;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        input[type="submit"] {
+            background-color: #1a4a7e;
+            color: #FFA500;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #004488;
+        }
         
 </style>
-
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
 <div class="container-fluid" style=" height: 74vh; overflow-y: auto; overflow-x: hidden;">
 
   <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-    <h1 class="pr text-center pt-4"><strong>CREATE PURCHASE REQUEST</strong></h1>
-
     
     <div class="bck">
       <div class="col-md-1 mb-0">
-      <a href="{% url 'userlanding' %}">
-        <img src="{% static 'images/back2.png' %}" alt="Previous">
-      </a>
-    </div>
-  </div>
-    <div class="row mt-3">
-      <div class="col-md-1 mb-0">
-        <div class="pp_mp">
-          <a href="{% url 'approved_ppmp'  %}" style="text-decoration: none;">
-            <button class="btn btn-primary">
-              PPMP
-            </button>
-          </a>
-          
-        </div>
       </div>
     </div>
+    
+    <div class="row mt-3">
+      <div class="col-md-12 text-left">
+          <div class="pp_mp">
+              <button class="btn btn-primary">
+                  <a href="{% url 'approved_ppmp' %}" style="text-decoration: none; color: inherit;">
+                      2024 PPMP
+                  </a>
+              </button>
+          </div>
+      </div>
+  </div>
+  
 
-  <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data">
+  <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     {% csrf_token %}
 
     <table class="table table-bordered">
@@ -153,7 +225,6 @@ textarea.form-control {
                 <input type="number" value="0" name="quantity[]" style="width: 40px;">
           </td>
             
-            
           <td>
             <div class="file-attachment">
               <label for="fileInput{{ item.id }}" style="cursor: pointer;">
@@ -165,35 +236,20 @@ textarea.form-control {
         </tr>
         {% endfor %}
       </tbody>
-
-
-   <footer class="p-2" style="overflow-y: auto; overflow-x: hidden; background-color: rgba(1, 33, 67, 0.9); position: fixed; bottom: 0; width: 100%;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="purpose" style="color:#FFFFFF">Purpose:</label>
-                    <textarea class="form-control" id="purpose" placeholder="Ex. FOR HR DEPARTMENT" name="purpose" contenteditable="true" style="resize: vertical;" required></textarea>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-right" style="color:#FFFFFF">
-                    <span >Total Amount: ₱<span id="total_amount" name="total_amount">0.00</span></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-right" >
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </div> 
-     </div>
-    </footer>
-
     </table>
-  </form>
-</div>
-</div>
+
+    <!-- Moved the form-container below the table -->
+    <div class="form-container">
+      <label for="purpose">Purpose:</label>
+      <input type="text" id="purpose" name="purpose" required>
+
+      <label for="total-amount">Total Amount:</label>
+      <input type="number" id="total-amount" name="total-amount" required>
+
+      <input type="submit" value="Submit">
+    </div>
+
+</form>
 
 
 <script>
@@ -284,9 +340,4 @@ textarea.form-control {
 </script>
 
 
-
 {% endblock %}
-
-
-
-  
