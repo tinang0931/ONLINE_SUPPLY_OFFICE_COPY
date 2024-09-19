@@ -10,7 +10,8 @@
 
 <style>
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #144472;
+        color: white;
 
     }
 
@@ -20,56 +21,6 @@
 
     .welcome {
         margin-left: 0;
-    }
-
-    .bckbtn {
-        position: fixed;
-        bottom: 50px;
-        /* Adjust the top position as needed */
-        left: 20px;
-        /* Adjust the left position as needed */
-        z-index: 1000;
-        /* Ensure it stays on top of other elements */
-    }
-
-    .bckbtn a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    .bckbtn img {
-        width: 30px;
-        /* Adjust the width of the image as needed */
-        height: 30px;
-        /* Adjust the height of the image as needed */
-        transition: all 0.3s ease-in-out;
-    }
-
-    .bckbtn:hover img {
-        transform: translateX(-5px);
-        filter: brightness(1.2);
-        /* Adjust the brightness for a highlight effect */
-    }
-
-    .bckbtn::before {
-        content: "";
-        position: absolute;
-        top: -5px;
-        /* Adjust the position higher or lower based on your preference */
-        bottom: -5px;
-        /* Adjust the bottom position as needed */
-        left: 0;
-
-        border-radius: 20px;
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    .bckbtn:hover::before {
-        opacity: 1;
-
     }
 
     .table-bordered {
@@ -89,45 +40,6 @@
         margin-top: -6vh;
     }
 
-    .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        position: relative;
-        top: -8.5vh;
-
-
-    }
-
-    .bck:hover img {
-        transform: scale(1.2);
-        /* Scale the image to 1.2 times its original size on hover */
-    }
-
-    .home {
-        position: relative;
-        top: -10vh;
-    }
-
-    .home img {
-        width: 40px;
-        height: 40px;
-        position: relative;
-        margin-left: .5vh;
-    }
-
-
-
-    .home:hover img {
-        animation-play-state: paused;
-        transform: scale(1.2);
-    }
 
     .popup-container {
         display: none;
@@ -191,7 +103,7 @@
         height: 100%;
         width: 0;
         border-radius: 15px;
-        background-color: #1c96c5;
+        background-color:  #FFA500;
         z-index: -1;
         -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
         box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
@@ -206,6 +118,9 @@
     button:hover::before {
         width: 100%;
     }
+    .row {
+    margin-top: 70px;
+}
 </style>
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
@@ -214,31 +129,28 @@
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 45%; margin-top: 5vh"> <strong> CATALOGUE </strong></h1>
+        <h1 style="margin-left: 45%; margin-top: 5vh"></h1>
     </div>
     <div class="home">
-        <a href="{% url 'userlanding' %}">
-            <img src="{% static 'svg/home5.svg' %}" alt="Home">
-        </a>
     </div> 
     <div class="bck">
-        <a href="{% url 'ppmp' %}">
-            <img src="{% static 'images/back2.png' %}" alt="Previous">
-        </a>
     </div>
 
-    <div class="row">
-        <div class="search" style="position: relative; text-align: right; margin-top: -8vh">
+    <div class="row" style="width: 100%;">
+        <div class="search" style="position: relative; text-align: right; margin-top: -3vh; display: inline-block; width: 100%; top: -11px">
             <span class="icon"
-                style="position: absolute; right: -10vh; top: 2vh; transform: translateY(-50%); width: 40px; ">
-                <i class="fas fa-search" style="font-size: 20px;"></i>
+                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; right: 28px;
+    top: 22%;">
+                <i class="fas fa-search" style="font-size: 20px;" ></i>
             </span>
             <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" 
-                style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;"
+                style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; width: 300px; display: inline-block;"
                 oninput="handleSearch()">
         </div>
+    </div>
+    
         <div class="table-responsive">
-            <table class="table table-bordered custom-table">
+            <table class="table table-bordered custom-table">       
                 <thead>
                     <tr>
                         <th>Item Name</th>

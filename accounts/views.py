@@ -137,6 +137,30 @@ def ppmp101(request):
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
+@authenticated_user
+def ppmp2(request):
+  
+    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'year': checkout.year,
+            'pr_id': checkout.pr_id,
+            'user': checkout.user,
+            'submission_date': checkout.submission_date,
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user,
+        'SITE_TITLE' : SITE_TITLE,
+        'CAMPUS_NAME' : CAMPUS_NAME
+    }
+
+    return render(request, 'accounts/User/ppmp2.html', context)
 
 
 
