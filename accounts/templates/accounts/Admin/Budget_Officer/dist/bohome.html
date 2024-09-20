@@ -1,0 +1,233 @@
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
+ 
+{% load static %}
+ 
+{% block bohome %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
+ 
+ 
+<style>
+
+ 
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+ 
+  .bg-success {
+    background-color: #b5e550;
+    color: white;
+  }
+ 
+  .no-comment {
+    background-color: lightgray;
+    color: black;
+ 
+  }
+ 
+  .table th {
+    background-color: #254b6e;
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+ 
+  .form-control {
+    width: 18%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    border-radius: 20px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1300px;
+    border: 2px solid #05708BD2;
+  }
+ 
+  .form-control:focus {
+    border-color: #87CEEB;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+ 
+  .form-control::selection {
+    background-color: #05708BD2;
+    color: #fff;
+  }
+ 
+  .search-form {
+    justify-content: flex-end;
+  }
+ 
+  .pr-heading {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+    padding: 10px;
+  }
+   
+  .bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+ 
+.bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -7vh;
+    }
+ 
+.bck:hover img {
+    transform: scale(1.2); 
+}
+
+.table-responsive{
+  margin-top: -6vh;
+}
+</style>
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden; margin-top: 1px;">
+  <h1 class="pr-heading text-center pt-4"></h1>
+ 
+ 
+  <div class="search" style="position: relative; text-align: right;">
+    <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"oninput="filterTable()"style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+    <i class="fas fa-search"style="position: absolute; top: 40%; right: 15px; transform: translateY(-50%); color: #05708BD2;"></i>
+  </div>
+  
+  <div class="bck">
+    <a href="{% url 'budget-landing' %}">
+        <img src="{% static 'images/back2.png' %}" alt="Previous">
+    </a>
+</div>
+
+<div class="table-responsive"></div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Date Requested</th>
+        <th class="text-center">Requests for Approval</th>
+        <th class="text-center">PPMP ID</th>
+        <th class="text-center">Budget Officer Status</th>
+        <th class="text-center">Campus Director Status</th>
+        <th class="text-center">Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if checkouts %}
+      {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center">
+          {{ checkout.submission_date }}
+        </td>
+        <td>
+         
+            {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase
+            request on {{ checkout.submission_date }}
+         
+        </td>
+ 
+        <td class="text-center">
+          <a href="{% url 'preqform_bo' pr_id=checkout.pr_id %}"><strong>{{ checkout.pr_id }}</strong></a>
+         
+       
+        </td>
+ 
+        <td class="text-center">
+          {% if checkout.bo_status == 'approved' %}
+              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+          {% elif checkout.bo_status == 'declined' %}
+              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+          {% else %}
+              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+          {% endif %}
+      </td>
+      
+
+      <td class="text-center">
+        {% if checkout.cd_status == 'approved' %}
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+        {% elif checkout.cd_status == 'declined' %}
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+        {% else %}
+            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+        {% endif %}
+    </td>
+    
+ 
+    <td style="cursor: pointer;" onclick="toggleComments(this)">
+      <div class="commentsBlock">
+          <p>
+              {% if checkout.bo_comment %}
+                  <strong>Budget Officer :</strong>  {{ checkout.bo_comment }}
+              {% else %}
+                  <strong>Budget Officer :</strong> No comment
+              {% endif %}
+          </p>
+          <p class="campusDirectorComment" style="display: none;">
+              {% if checkout.cd_comment %}
+                  <strong>Campus Director:</strong> {{ checkout.cd_comment }}
+              {% else %}
+                  <strong>Campus Director:</strong> No comment
+              {% endif %}
+          </p>
+      </div>
+  
+      <script>
+          function toggleComments(element) {
+              var commentsBlock = element.querySelector('.commentsBlock');
+              var campusDirectorComment = element.querySelector('.campusDirectorComment');
+  
+              // Toggle the visibility of the second <p> element
+              if (campusDirectorComment.style.display === 'none' || campusDirectorComment.style.display === '') {
+                  campusDirectorComment.style.display = 'block';
+              } else {
+                  campusDirectorComment.style.display = 'none';
+              }
+          }
+      </script>
+  </td>
+        </td>
+        <script>
+          function filterTable() {
+            // Get input value
+            var searchText = $('#search_bar_request').val().toLowerCase();
+ 
+            // Iterate through table rows
+            $('.table tbody tr').each(function () {
+              var rowText = $(this).text().toLowerCase();
+ 
+              // Check if the row contains the search text
+              if (rowText.indexOf(searchText) === -1) {
+                // Hide the row if it doesn't match the search text
+                $(this).hide();
+              } else {
+                // Show the row if it matches the search text
+                $(this).show();
+              }
+            });
+          }
+        </script>
+      </tr>
+      {% endfor %}
+ 
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center"><strong>No PPMP Request Yet.</strong></td>
+      </tr>
+      {% endif %}
+ 
+    </tbody>
+ 
+ 
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
+{% endblock %}

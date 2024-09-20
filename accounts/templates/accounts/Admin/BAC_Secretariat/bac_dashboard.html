@@ -22,6 +22,7 @@
       display: flex;
       align-items: center;
       text-decoration: none;
+      pointer-events: none;
     }
 
     .bck img {
@@ -30,8 +31,7 @@
       transition: transform 0.3s ease-in-out;
       position: relative;
       top: -4.5vh;
-
-
+      pointer-events: none;
     }
 
     .bck:hover img {
@@ -45,6 +45,8 @@
       position: relative;
       overflow: hidden;
       display: inline-block;
+      height: 50px;
+      margin-top: -1vh;
     }
 
     /* Style for the custom button */
@@ -59,7 +61,7 @@
       /* Rounded corners */
       cursor: pointer;
       /* Cursor style */
-      margin-top: 30px;
+   
     }
 
     /* Style for the hidden file input */
@@ -84,19 +86,21 @@
       /* Green border color */
       padding: 10px 20px;
       /* Padding */
-      border-radius: 4px;
+      border-radius: 5px;
       /* Rounded corners */
       cursor: pointer;
       /* Cursor style */
-      margin-top: -5.5vh;
+      margin-top: -1vh;
       position: relative;
       overflow: hidden;
       display: inline-block;
+      width: 8%;
     }
+    
   </style>
 
   <div class="container-fluid">
-    <h1 class="pr text-center pt-4" style="margin-left: -34px; margin-top: 20px;"><strong>AVAILABLE ITEMS</strong></h1>
+    <h1 class="pr text-center pt-4" style="margin-left: -34px; margin-top: 20px;"></h1>
     <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="bck">
@@ -107,7 +111,7 @@
           <label for="file" class="file-upload-button">Choose CSV file</label>
           <input type="file" name="file" id="file" class="hidden-input" accept=".csv" required>
         </div>
-        <button class="btn btn-success" type="submit" style="margin-left: 2px;">
+        <button class="btn btn-success" type="submit" style="margin-left: 2px; height: 45px; position: absolute;">
           <i class="fas fa-file-upload"></i> Upload
         </button>
     </form>
@@ -116,7 +120,7 @@
     <div class="row">
       <div class="col-md-4 offset-md-4 ml-8">
         <div class="dropdown" style="width: 90%; border: 2px;">
-          <div style="display: flex; align-items: center; justify-content: center; margin-top: -1vh;">
+          <div style="display: flex; align-items: center; justify-content: center; margin-top: -5vh;">
             <div class="container" onmouseover="changeBackgroundColor('rgba(5, 90, 129, 0.952)')"
               onmouseout="restoreBackgroundColor()" onclick="showOptions()"
               style="user-select: none; background-color: rgba(5, 90, 129, 0.822); color: white; border-radius: 5px; margin:1px; width: 100%; max-height: 307px; transition: background-color 0.3s;">
@@ -125,9 +129,11 @@
         </div>
       </div>
     </div>
+    <div class="new-border-div" style="border: 0.5px solid #080808; margin-top: 1vh;"></div>
+
     <div id="options" class="d-none position-absolute z-1 bg-white"
-      style="user-select: none; width: 85%; max-height: 307px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); margin-top:-100px;">
-      <div class="option" onclick="selectCategory('all')">ALL CATEGORIES</div>
+      style="user-select: none; width: 27.5%; max-height: 300px; overflow-y: auto; text-align: center; background-color: rgba(5, 90, 129, 0.822); margin-left: 65vh; position: absolute; ">
+      <div class="option" onclick="selectCategory('all')" >ALL CATEGORIES</div>
       {% for category, items in grouped_data.items %}
       <div class="option" onclick="selectCategory('{{ category }}')">{{ category }}</div>
       {% endfor %}
@@ -269,7 +275,7 @@
   </script>
 
 
-  </tr>
+
   <tr>
     <th></th>
     <th class="text-center" style="width: 20%;">Item Name</th>
@@ -277,7 +283,7 @@
     <th class="text-center" style="width: 11%;">Unit</th>
     <th class="text-center" style="width: 11%;">Price</th>
     <th class="text-center">Action</th>
-  </tr>
+    </tr>
   </thead>
   <form>
     {% for item in items %}
@@ -318,15 +324,12 @@
           <input id="form_price_{{ item.id }}" type="number" style="display: none;" name="price_{{ item.id }}"
             value="{{ item.Price }}">
 
-          <button type="submit" class="save-icon" style="display: none;"><i
+          <button type="submit" class="save-icon" onclick="saveItem('{{ item.id }}')" style="display: none;"><i
               class="fas fa-check text-success"></i></button>
-          <button type="button" class="cancel-icon" style="display: none;"><i
+          <button type="button" class="cancel-icon" onclick="cancelEdit('{{ item.id }}')" style="display: none;"><i
               class="fas fa-times text-danger"></i></button>
 
           
-
-
-
           {% if item.id %}
           <a href="{% url 'delete_item' item.id %}" class="delete-icon"><i class="fas fa-trash-alt text-danger"></i></a>
           {% endif %}
@@ -353,11 +356,11 @@
           <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
         </td>
         <td>
-          <input type="text" name="new_item_price" placeholder="New Item Price" required>
+          <input type="number" name="new_item_price" placeholder="New Item Price" required>
         </td>
         <td>
           <button type="submit" class="save-btn btn-success"
-            style="padding: 10px 20px; border-radius: 4px; font-size: 16px; margin-top: 5px;">
+            style="padding: 10px 20px; border-radius: 4px; font-size: 16px; margin-top: 4px; width: 30%;">
             Save
           </button>
         </td>
@@ -438,8 +441,6 @@
       });
     }
     
-
-
   </script>
 
 

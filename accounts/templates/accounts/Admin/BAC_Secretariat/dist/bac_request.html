@@ -1,0 +1,213 @@
+{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+
+{% load static %}
+
+{% block bac_request %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+
+  table a {
+
+    text-decoration: none;
+    color: #000;
+  }
+
+
+  .bg-success {
+    background-color: #9ee800;
+    color: white;
+  }
+
+  .form-control {
+    display: block;
+    width: 13.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1400.15px;
+    background-color: transparent; 
+    box-shadow: none; 
+    margin-top: -5vh;
+  }
+
+
+
+  .btn-outline-success {
+    color: #ffffff;
+    background-color: #2d83da;
+    border-color: #000;
+    margin-left: 1680px;
+    height: 35px;
+  }
+
+
+
+
+  element.style {
+    width: 95%;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: green;
+  }
+
+  .table th {
+    background-color: rgba(5, 90, 129, 0.822);
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -5.5vh;
+  
+    
+}
+
+
+.bck:hover img {
+    transform: scale(1.2); 
+}
+
+
+</style>
+
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr text-center pt-4"></h1>
+  <div class="search" style="position: relative; text-align: right; top: 1vh;">
+    <span class="icon" style="position: absolute; right: 20px; top: 1vh; transform: translateY(-50%); width: 40px;">
+        <i class="fas fa-search" style="font-size: 20px;"></i>
+    </span>
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 0px; display: inline-block;">
+</div>
+
+
+  <div class="bck">
+    <a href="{% url 'baclanding' %}">
+        <img src="{% static 'images/back2.png' %}" alt="Previous">
+    </a>
+</div>
+  <table class="table table-bordered" style="margin-top: -5vh">
+    <thead>
+      <tr>
+        <th class="text-center" >User ID</th>
+        <th class="text-center" >PR ID</th>
+        <th class="text-center" >Username</th>
+        <th class="text-center" >Date Requested</th>
+        <th class="text-center">Purpose</th>
+        <th class="text-center">Campus Director Status</th>
+        <th class="text-center">View Attachments</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if tracker %}
+      {% for checkout in tracker %}
+
+      <tr>
+
+        <td style="text-align: center;">{{checkout.user_id}}</td>
+
+        <td style="text-align: center;"> <a href="{% url 'bac_purchaserequest' pr_id=checkout.pr_id %}"> <strong>{{checkout.pr_id}}</strong></a> </td>
+
+        <td style="text-align: center;">{{checkout.user.first_name}} {{checkout.user.last_name}}</td>
+
+        <td style="text-align: center;">{{checkout.submission_date}}</td>
+
+
+        <td style="text-align: center;">  {{checkout.purpose}}</td>
+
+       
+
+        <td class="text-center">
+          {% if checkout.status == 'approved' %}
+              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+          {% elif checkout.status == 'declined' %}
+              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+          {% else %}
+              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+          {% endif %}
+      </td>
+      
+
+        <td>
+         
+
+        </td>
+
+      </tr>
+
+      {% endfor %}
+
+      {% else %}
+      <tr>
+        <td colspan="7" >
+          <span>NO PURCHASE REQUESTS YET</span>
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+
+  </table>
+  <script>
+    function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search_bar_request");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+
+<script>
+  function filterTable() {
+    // Get input value
+    var searchText = $('#search_bar_request').val().toLowerCase();
+
+    // Iterate through table rows
+    $('.table tbody tr').each(function () {
+      var rowText = $(this).text().toLowerCase();
+
+      // Check if the row contains the search text
+      if (rowText.indexOf(searchText) === -1) {
+        // Hide the row if it doesn't match the search text
+        $(this).hide();
+      } else {
+        // Show the row if it matches the search text
+        $(this).show();
+      }
+    });
+  }
+</script>
+  {% endblock %}

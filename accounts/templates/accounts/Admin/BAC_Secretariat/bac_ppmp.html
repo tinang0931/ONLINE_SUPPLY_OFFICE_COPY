@@ -1,9 +1,8 @@
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
-
+{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
 
 {% load static %}
 
-{% block bac_ppmp %}
+{% block bac_home %}
 
 <style>
     .table-bordered th {
@@ -203,7 +202,7 @@
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 9vh;
+        margin-top: 16vh;
         transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
     }
     
@@ -246,19 +245,13 @@
         transform: scale(1.2); 
     }
 
-    .home {
-       display: flex;
-       top: 20vh;
-    }
      
     .home img {
         width: 40px;
         height: 40px;
-        
-      
         position: relative;
         margin-left: .5vh;
-        top: -5vh;
+        top: 1vh;
     }
     
     
@@ -288,14 +281,12 @@
     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px; margin-top: -0.2vh"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
     </div>
     <div class="home">
         <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
