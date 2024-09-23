@@ -1,9 +1,9 @@
-{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
 
 {% load static %}
 
 
-{% block cdppmp_approval %}
+{% block cdppmp %}
 
 
 <style>
@@ -199,7 +199,9 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -2.5vh;
+        top: -1vh;
+      
+        
     }
     
     .bck:hover img {
@@ -217,7 +219,7 @@
         transition: transform 0.3s ease-in-out;
         position: relative;
         margin-left: 0.5vh;
-        top: 0vh;
+        top: -0vh;
     }
     
     @keyframes beat{
@@ -255,6 +257,11 @@
         background: #ffffff;
         border-radius: 4px;
         font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        margin-top: -30vh;
+        margin-left: -2vh;
+        
     }
     
     .get:hover {
@@ -272,14 +279,13 @@
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 629px; font-size: 3rem;"> <strong>PPMP REQUEST FOR APPROVAL</strong> </h1>
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"></h1>
     </div>
 
     <div class="left-button-container">
@@ -288,21 +294,8 @@
         </a>
     </div>
 
-    <div class="home">
-        <a href="{% url 'cdlanding' %}">
-            <img src="{% static 'svg/home5.svg' %}" alt="budget-landing">
-        </a>
-    </div>
-    <div class="row">
-        <div class="col-md-1 mb-0">
-          <div class="bck">
-            <a href="{% url 'cdppmp' %}">
-              <img src="{% static 'images/back2.png' %}" alt="Previous">
-            </a>
-          </div>
-        </div>
-      </div>
-    <div class="table-responsive">
+    
+    <div class="table-responsive" style= "margin-top: 7vh;">
 
         <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
 

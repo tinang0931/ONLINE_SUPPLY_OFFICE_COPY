@@ -121,7 +121,6 @@
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 8px;
         transition: transform 0.3s ease-in-out;
     }
 
@@ -235,27 +234,6 @@
 
 <div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 50px;">
     <div class="container" style="margin-right: 17%;">
-        <h1 class="pr text-center pt-4"><strong>CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</strong></h1>
-    </div>
-    <div class="home">
-        <a href="{% url 'userlanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'svg/home5.svg' %}" alt="Home">
-        </a>
-    </div>
-    <script>
-        function toggleAnimation() {
-            var img = document.getElementById('homeImg');
-            if (img.style.animationPlayState === 'paused') {
-                img.style.animationPlayState = 'running'; // Resume animation
-            } else {
-                img.style.animationPlayState = 'paused'; // Pause animation
-            }
-        }
-    </script>
-    <div class="bck">
-        <a href="{% url 'ppmp101' %}">
-            <img src="{% static 'images/back2.png' %}" alt="Previous">
-        </a>
     </div>
 
     <div class="row">

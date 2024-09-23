@@ -1,9 +1,9 @@
-{% extends "accounts/Admin/Campus_Director/nav_cd.html" %}
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
 
 {% load static %}
 
 
-{% block cdpurchase_approval %}
+{% block cdpurchase %}
 
 
 <style>
@@ -273,8 +273,7 @@
 
 
     .table-responsive {
-        margin-top: 3vh;
-        /* Adjust the value as needed to move the table down */
+        margin-top: 10vh; /* Adjust the value as needed to move the table down */
     }
 
 
@@ -302,10 +301,10 @@
         font-weight: 500;
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        text-decoration: none;
-        /* Remove underline when the button is focused or active */
-        transition: background 0.3s ease;
-        /* Add transition for smoother hover effect */
+        text-decoration: none;  /* Remove underline when the button is focused or active */
+        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+        margin-top: -30vh;
+        margin-left: -1vh;
     }
 
     .get:hover {
@@ -322,26 +321,14 @@
     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-    <h1 class="pr text-center pt-6" style="text-align: center; margin-top: 3vh; font-size: 3rem;">
-        <strong>PURCHASE REQUEST FOR APPROVAL</strong>
-    </h1>
-    <div class="home">
-        <a href="{% url 'cdlanding' %}">
-            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
-        </a>
-    </div>
-
-    <div class="bck">
-        <a href="{% url 'cdpurchase' %}">
-            <img src="{% static 'images/back2.png' %}" alt="Previous">
-        </a>
-    </div>
+   
+    
+   
 
     <div class="left-button-container">
         <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link">

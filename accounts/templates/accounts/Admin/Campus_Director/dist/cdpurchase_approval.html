@@ -1,13 +1,42 @@
-{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
 
 {% load static %}
 
 
-{% block bac_home %}
+{% block cdpurchase %}
+
 
 <style>
     .table-bordered th {
         background-color: #1c96c5;
+    }
+
+    .bck img {
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+    }
+
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .bck:hover::before {
+        opacity: 1;
     }
 
 
@@ -169,11 +198,10 @@
         height: auto; /* Maintain the aspect ratio */
         margin-right: 15px
     }
-    
-    /* Additional styles for buttons if necessary */
 
     .bck a  {
-       
+        display: flex;
+        align-items: center;
         text-decoration: none;
     }
     
@@ -182,53 +210,110 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: 2vh;
-        
+        top: 2.5vh;
     }
     
     .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
-    .home {
-        position: fixed;
-        top: 17vh;
-    }
-     
-    .home img {
-        width: 40px;
-        height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
-        position: relative;
-        margin-left: .5vh;
-    }
-    
-    
-    @keyframes beat{
-        0%{
-            transform: scale(1);
-        }
-        50%{
-            transform: scale(1.2);
-        }
-        100%{
-            transform: scale(1);
-        }
-    }
-     
-    .home:hover img {
-        animation-play-state: paused;
         transform: scale(1.2); 
     }
     
-    .ctu_logo {
-    position: absolute;
-    left: 40px;
-    top: -47px;
-    width: 100px;
-    height: 100px;
-    margin: 0 3px;
-} 
+        .status-circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    
+        .text-green {
+            color: green;
+        }
+    
+        .text-orange {
+            color: orange;
+        }
+    
+        .text-red {
+            color: red;
+        }
+
+        .home {
+            position: fixed;
+            top: 20vh;
+
+        }
+         
+        .home img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease-in-out;
+            margin-left: 0.5vh;
+            margin-top: 4vh;
+        }
+        
+        
+        @keyframes beat{
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.2);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+         
+        .home:hover img {
+            animation-play-state: paused;
+            transform: scale(1.2); 
+        }
+    
+    
+
+    .table-responsive {
+        margin-top: 10vh; /* Adjust the value as needed to move the table down */
+    }
+
+
+    .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: 300px; /* Adjust this value as needed */
+        transform: translateY(-50%);
+    }
+    
+    .get {
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        text-decoration: none;  /* Remove underline when the button is focused or active */
+        transition: background 0.3s ease; /* Add transition for smoother hover effect */
+        margin-top: -30vh;
+        margin-left: -1vh;
+    }
+    
+    .get:hover {
+        background:#ffa125e3; /* Change background color on hover */
+        outline: 1px solid transparent; /* Optional: remove outline on hover */
+    }
+    
+    .get:focus, .get:active {
+        text-decoration: none;  /* Remove underline when the button is focused or active */
+    }
+     
+ 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -236,32 +321,24 @@
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-        <h1 style="text-align: center; margin-top: 50px"> </h1>
+   
+    
+   
 
-        <div class="home">
-            <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-                <img src="{% static 'svg/home5.svg' %}" alt="baclanding">
-            </a>
-        </div>
-        <script>
-        function toggleAnimation() {
-            var img = document.getElementById('homeImg');
-            if (img.style.animationPlayState === 'paused') {
-                img.style.animationPlayState = 'running'; // Resume animation
-            } else {
-                img.style.animationPlayState = 'paused'; // Pause animation
-            }
-        }
-        </script>
-        <div class="bck">
-            <a href="{% url 'bac_request' %}">
-                <img src="{% static 'images/back2.png' %}" alt="Previous">
-            </a>
-        </div>
-
+    <div class="left-button-container">
+        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link"> 
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
+        </a>
+    </div>
+    
     <div class="table-responsive">
 
-        <table class="table table-bordered" style="margin-top:3vh;">
+        <form action="{% url 'cdpurchase_approval' pr_id=pr_id %}" method="post" id ="form_id">
+
+            {% csrf_token %}
+
+
+        <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
                 <tr>
                 <tr>
@@ -269,28 +346,26 @@
                     <th rowspan='2'> Brand / Description</th>
                     <th rowspan='2'>Unit</th>
                     <th rowspan='2'>Unit Price</th>
+                    <th rowspan='2'>Quantity </th>
 
                 </tr>
-                
-
             </thead>
             <tbody>
                 {% for p in checkout_items %}
 
                 <tr class="item-row" id="{{ p.id }}">
 
-                    <td>
+                    <td class="text-left">
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                             oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
-                    <td>
+                    <td class="text-left">
                         <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
                         <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
-
                     <td>
                         <span class="editable" data-field="Unit">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
@@ -301,19 +376,44 @@
                         <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
                     </td>
 
-                    
-
-
+                    <td>{{p.quantity}}</td>
 
                 </tr>
 
                 {% endfor %}
-
             </tbody>
-
         </table>
     </div>
 </div>
 
+<footer class="footer">
+    <div class="icons-container">
+        <div class="input-box">
+            <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
+        </div>
+        <input id="new_status_id" type="hidden" name="new_status">
+
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
+    </div>
+</footer>
+
+</form>
+
+<script>
+    function btn_click(approve) {
+      
+        var newStatusInput = document.getElementById('new_status_id');
+
+       
+        newStatusInput.value = approve ? 'approved' : 'declined';
+
+   
+        var form = document.getElementById('form_id');
+        form.submit();
+    }
+</script>
 
 {% endblock %}

@@ -27,17 +27,19 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="row w-100 m-auto">
                     <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-                        <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+                        <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO" style="margin-top: 0; position: relative; top: 0;">
                     </div>
-                    <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
-                        <h1 class="head">{{SITE_TITLE}}</h1>
-                    </div>
-                   
+                    <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
+                        <h1 class="head">{{title}} 
+                            <img src="{% static 'images/notification.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 160vh; position: relative; top: -4vh;">
+                            <img src="{% static 'images/account.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 168vh; position: relative; top: -10vh;">
+                        </h1> <!-- Image icon added here -->
+                    </div>                     
             </nav>
         </div>
-        <h1 class="welcome">Welcome to Cebu Technological University - {{CAMPUS_NAME}} Campus Online Supply System </h1>
-        <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
- 
+        <h1 class="welcome" style="height: 0.5vh"></h1>
+        <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px; ">
+
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
           <div class="d-flex flex-wrap align-content-between h-100">
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
