@@ -63,7 +63,6 @@
 
 
 
-
     .icon-link {
         margin-left: 20px;
         text-decoration: none;
@@ -81,7 +80,7 @@
 
     .input-box input {
         width: 100%;
-        height: 40px;
+        height: 50px;
         padding: 10px;
         box-sizing: border-box;
         border: none;
@@ -108,7 +107,7 @@
     }
 
     .footer {
-        background-color: rgba(10, 99, 158, 0.637);
+        background-color: rgba(1, 33, 67, 0.9);
         text-align: center;
         width: 100%;
         height: 100px;
@@ -122,7 +121,6 @@
     .p {
         size: 12px;
     }
-
 
 
 
@@ -160,7 +158,7 @@
         margin-right: 5px;
         margin-left: 5px;
         margin-top: 5px;
-        margin-bottom: 11px;
+        margin-bottom: 7px;
         color: #ffa125e3;
         background-color: rgba(9, 87, 139, 0.616);
         padding: 10px 12px;
@@ -176,100 +174,103 @@
         background-color: #000000e3;
     }
 
-    
+
     .footer {
         display: left;
         justify-content: space-between;
-        align-items: center;  /* Vertically center the content */
+        align-items: center;
+        /* Vertically center the content */
     }
-    
+
     .icons-container {
         display: flex;
         align-items: center;
     }
-    
+
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the gap between buttons as needed */
+        gap: 10px;
+        /* Adjust the gap between buttons as needed */
     }
-    
+
     .slip-icon {
-        width: 50px; /* Adjust the width as needed */
-        height: auto; /* Maintain the aspect ratio */
+        width: 50px;
+        /* Adjust the width as needed */
+        height: auto;
+        /* Maintain the aspect ratio */
         margin-right: 15px
     }
 
-    .bck a  {
-        display: flex;
-        align-items: center;
+    .bck a {
+       
         text-decoration: none;
     }
-    
+
     .bck img {
         width: 50px;
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: 2.5vh;
+        top: 0.5vh;
     }
-    
+
     .bck:hover img {
-        transform: scale(1.2); 
+        transform: scale(1.2);
     }
-    
-        .status-circle {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-    
-        .text-green {
-            color: green;
-        }
-    
-        .text-orange {
-            color: orange;
-        }
-    
-        .text-red {
-            color: red;
+
+    .status-circle {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .text-green {
+        color: green;
+    }
+
+    .text-orange {
+        color: orange;
+    }
+
+    .text-red {
+        color: red;
+    }
+
+    .home {
+        position: fixed;
+        top: 20vh;
+
+    }
+
+    .home img {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        margin-left: 0.5vh;
+        margin-top: 0vh;
+    }
+
+    @keyframes beat {
+        0% {
+            transform: scale(1);
         }
 
-        .home {
-            position: fixed;
-            top: 20vh;
+        50% {
+            transform: scale(1.2);
+        }
 
+        100% {
+            transform: scale(1);
         }
-         
-        .home img {
-            width: 40px;
-            height: 40px;
-            transition: transform 0.3s ease-in-out;
-            margin-left: 0.5vh;
-            margin-top: 4vh;
-        }
-        
-        
-        @keyframes beat{
-            0%{
-                transform: scale(1);
-            }
-            50%{
-                transform: scale(1.2);
-            }
-            100%{
-                transform: scale(1);
-            }
-        }
-         
-        .home:hover img {
-            animation-play-state: paused;
-            transform: scale(1.2); 
-        }
-    
-    
+    }
+
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2);
+    }
+
 
     .table-responsive {
         margin-top: 10vh; /* Adjust the value as needed to move the table down */
@@ -278,11 +279,13 @@
 
     .left-button-container {
         position: absolute;
-        left: 184vh; /* Adjust this value as needed */
-        top: 300px; /* Adjust this value as needed */
+        left: 184vh;
+        /* Adjust this value as needed */
+        top: 300px;
+        /* Adjust this value as needed */
         transform: translateY(-50%);
     }
-    
+
     .get {
         display: inline-block;
         outline: 0;
@@ -303,17 +306,19 @@
         margin-top: -30vh;
         margin-left: -1vh;
     }
-    
+
     .get:hover {
-        background:#ffa125e3; /* Change background color on hover */
-        outline: 1px solid transparent; /* Optional: remove outline on hover */
+        background: #ffa125e3;
+        /* Change background color on hover */
+        outline: 1px solid transparent;
+        /* Optional: remove outline on hover */
     }
-    
-    .get:focus, .get:active {
-        text-decoration: none;  /* Remove underline when the button is focused or active */
+
+    .get:focus,
+    .get:active {
+        text-decoration: none;
+        /* Remove underline when the button is focused or active */
     }
-     
- 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -326,63 +331,62 @@
    
 
     <div class="left-button-container">
-        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link"> 
+        <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link">
             <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
-    
     <div class="table-responsive">
 
-        <form action="{% url 'cdpurchase_approval' pr_id=pr_id %}" method="post" id ="form_id">
+        <form action="{% url 'cdpurchase_approval' pr_id=pr_id %}" method="post" id="form_id">
 
             {% csrf_token %}
 
 
-        <table class="table table-bordered" style="margin-top: 1px;">
-            <thead>
-                <tr>
-                <tr>
-                    <th rowspan='2'>Item Name</th>
-                    <th rowspan='2'> Brand / Description</th>
-                    <th rowspan='2'>Unit</th>
-                    <th rowspan='2'>Unit Price</th>
-                    <th rowspan='2'>Quantity </th>
+            <table class="table table-bordered" style="margin-top: 1px;">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th rowspan='2'>Item Name</th>
+                        <th rowspan='2'> Brand / Description</th>
+                        <th rowspan='2'>Unit</th>
+                        <th rowspan='2'>Unit Price</th>
+                        <th rowspan='2'>Quantity </th>
 
-                </tr>
-            </thead>
-            <tbody>
-                {% for p in checkout_items %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in checkout_items %}
 
-                <tr class="item-row" id="{{ p.id }}">
+                    <tr class="item-row" id="{{ p.id }}">
 
-                    <td class="text-left">
-                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                            oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                    </td>
-                    <td class="text-left">
-                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
-                            class="edit-input" style="display: none">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                            oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                    </td>
+                        <td class="text-left">
+                            <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                            <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
+                                oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
+                        <td class="text-left">
+                            <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                            <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
+                                value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
+                                class="edit-input" style="display: none">
+                        </td>
+                        <td>
+                            <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                            <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
+                                oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
+                        </td>
 
-                    <td>
-                        <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
-                    </td>
+                        <td>
+                            <span class="editable" data-field="Unit_price">{{ p.unit_cost }}</span>
+                        </td>
 
-                    <td>{{p.quantity}}</td>
+                        <td>{{p.quantity}}</td>
 
-                </tr>
+                    </tr>
 
-                {% endfor %}
-            </tbody>
-        </table>
+                    {% endfor %}
+                </tbody>
+            </table>
     </div>
 </div>
 
@@ -404,13 +408,12 @@
 
 <script>
     function btn_click(approve) {
-      
         var newStatusInput = document.getElementById('new_status_id');
 
-       
+
         newStatusInput.value = approve ? 'approved' : 'declined';
 
-   
+
         var form = document.getElementById('form_id');
         form.submit();
     }

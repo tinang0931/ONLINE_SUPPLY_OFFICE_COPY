@@ -39,13 +39,11 @@
         opacity: 1;
     }
 
-
     .table-and-comment {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
 
     .icons-container {
         display: flex;
@@ -59,7 +57,6 @@
         margin-top: 16px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
 
 
@@ -69,13 +66,10 @@
         margin-left: 20px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
-
 
     .input-box {
         width: 30%;
-
         margin-top: 1px;
         margin-left: 16px;
         margin-right: 20px;
@@ -83,7 +77,7 @@
 
     .input-box input {
         width: 100%;
-        height: 40px;
+        height: 50px;
         padding: 10px;
         box-sizing: border-box;
         border: none;
@@ -125,9 +119,6 @@
         size: 12px;
     }
 
-
-
-
     .subpage {
         padding: 1cm;
         border: 5px red solid;
@@ -140,16 +131,15 @@
         margin: 0;
     }
 
-
     @media print {
-        .footer {
-            display: none;
-        }
+    .footer {
+    display: none;
+    }
 
-        .input-box,
-        .icons-container {
-            display: none;
-        }
+    .input-box,
+    .icons-container {
+    display: none;
+    }
     }
 
     .container {
@@ -162,7 +152,7 @@
         margin-right: 5px;
         margin-left: 5px;
         margin-top: 5px;
-        margin-bottom: 11px;
+        margin-bottom: 7px;
         color: #ffa125e3;
         background-color: rgba(9, 87, 139, 0.616);
         padding: 10px 12px;
@@ -171,18 +161,16 @@
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
 
-
     .aprv:hover,
     .disaprv:hover {
         color: #ffa125e3;
         background-color: #000000e3;
     }
 
-
     .footer {
         display: left;
         justify-content: space-between;
-        align-items: center;  /* Vertically center the content */
+        align-items: center; 
     }
     
     .icons-container {
@@ -192,18 +180,17 @@
     
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the gap between buttons as needed */
+        gap: 10px;
     }
     
     .slip-icon {
-        width: 50px; /* Adjust the width as needed */
-        height: auto; /* Maintain the aspect ratio */
+        width: 50px; 
+        height: auto; 
         margin-right: 15px
     }
 
     .bck a  {
-        display: flex;
-        align-items: center;
+     
         text-decoration: none;
     }
     
@@ -235,7 +222,6 @@
         top: -0vh;
     }
     
-    
     @keyframes beat{
         0%{
             transform: scale(1);
@@ -254,13 +240,12 @@
 
     .left-button-container {
         position: absolute;
-        left: 184vh; /* Adjust this value as needed */
-        top: 300px; /* Adjust this value as needed */
+        left: 180vh;
+        top: 300px;
         transform: translateY(-50%);
     }
 
     .get {
-     
         outline: 0;
         cursor: pointer;
         text-align: center;
@@ -280,13 +265,17 @@
     }
     
     .get:hover {
-        background: #ffa125e3; /* Change background color on hover */
-        outline: 0px; /* Optional: remove outline on hover */
+        background: #ffa125e3; 
+        outline: 0px;
     }
     
     .table thead th[rowspan='2'] {
-    vertical-align: middle;
-}
+        vertical-align: middle;
+    }
+
+   .table-responsive{
+        margin-top: -1vh;
+   }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -323,9 +312,9 @@
                     <th rowspan='2'>Estimated Budget</th>
                     <th colspan="12">Monthly Quantity Requirement</th>
                     <th rowspan='2'>Unit Price</th>
-
                 </tr>
                 <tr>
+
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -341,6 +330,7 @@
                 </tr>
                 </tr>
             </thead>
+            
             <tbody>
                 {% for p in checkout_items %}
 

@@ -1,0 +1,337 @@
+{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+
+{% extends }
+
+
+{% load static %}
+
+
+{% block request %}
+
+<style>
+    .table-bordered th {
+        background-color: #1c96c5;
+
+    }
+
+    .ctu_logo {
+        margin-top: -13%;
+    }
+
+    .welcome {
+        margin-left: 0;
+    }
+
+    .bckbtn {
+        position: fixed;
+        bottom: 50px;
+        /* Adjust the top position as needed */
+        left: 20px;
+        /* Adjust the left position as needed */
+        z-index: 1000;
+        /* Ensure it stays on top of other elements */
+    }
+
+    .bckbtn a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .bckbtn img {
+        width: 30px;
+        /* Adjust the width of the image as needed */
+        height: 30px;
+        /* Adjust the height of the image as needed */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .bckbtn:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+        /* Adjust the brightness for a highlight effect */
+    }
+
+    .bckbtn::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        /* Adjust the position higher or lower based on your preference */
+        bottom: -5px;
+        /* Adjust the bottom position as needed */
+        left: 0;
+
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .bckbtn:hover::before {
+        opacity: 1;
+
+    }
+
+    .table-bordered {
+        max-height: 700px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+
+    @media only screen and (max-width: 768px) {
+        .table-bordered {
+            max-height: 400px;
+        }
+    }
+
+    .table-responsive {
+        margin-top: -6vh;
+    }
+
+    .bck a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .bck img {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -8.5vh;
+
+
+    }
+
+    .bck:hover img {
+        transform: scale(1.2);
+        /* Scale the image to 1.2 times its original size on hover */
+    }
+
+    .home {
+        position: relative;
+        top: -10vh;
+    }
+
+    .home img {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin-left: .5vh;
+    }
+
+
+
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2);
+    }
+
+    .popup-container {
+        display: none;
+        position: fixed;
+        top: 40%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 1px solid #888;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        /* Ensure the box is above other elements */
+        color: white;
+    }
+
+    .popup-container::before {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        /* Adjust arrow's position */
+        left: calc(60% - -55px);
+        /* Adjust arrow's horizontal position */
+        border-width: 10px;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+    }
+
+    .ml-3,
+    .mx-3 {
+        margin-left: 1rem !important;
+        margin-top: -37px;
+    }
+
+
+    button {
+        padding: 5px 10px;
+        /* Adjusted padding */
+        border: unset;
+        border-radius: 15px;
+        color: #212121;
+        z-index: 1;
+        background: #e8e8e8;
+        position: relative;
+        font-weight: 1000;
+        font-size: 14px;
+        /* Adjusted font size */
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+        transition: all 250ms;
+        overflow: hidden;
+    }
+
+    button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        border-radius: 15px;
+        background-color: #1c96c5;
+        z-index: -1;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+        transition: all 250ms;
+    }
+
+    button:hover {
+        color: #e8e8e8;
+        /* Change color to white when hovered */
+    }
+
+    button:hover::before {
+        width: 100%;
+    }
+</style>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+
+
+<div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div class="container">
+        <h1 style="margin-left: 45%; margin-top: 5vh"> <strong>  </strong></h1>
+    </div>
+    <div class="home">
+        <a href="{% url 'userlanding' %}">
+            <img src="{% static 'svg/home5.svg' %}" alt="Home">
+        </a>
+    </div>
+    <div class="bck">
+        <a href="{% url 'ppmp' %}">
+            <img src="{% static 'images/back2.png' %}" alt="Previous">
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="search" style="position: relative; text-align: right; margin-top: -8vh">
+            <span class="icon"
+                style="position: absolute; right: -10vh; top: 2vh; transform: translateY(-50%); width: 40px; ">
+                <i class="fas fa-search" style="font-size: 20px;"></i>
+            </span>
+            <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request"
+                style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;"
+                oninput="handleSearch()">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered custom-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Brand / Description</th>
+                        <th>Unit</th>
+                        <th>Unit Price</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, items in grouped_data.items %}
+                    <tr class="category-row">
+                        <th colspan="20">{{ category }}</th>
+                    </tr>
+                    {% for p in items %}
+                    <tr class="item-row" id="{{ p.item_id }}">
+                        <form class="ajax-form" method="post" action="{% url 'catalogue' %}">
+                            {% csrf_token %}
+                            <td class="text-left">
+                                {{ p.Item_name }}
+                                <input type="hidden" name="item" value="{{ p.Item_name }}">
+                            </td>
+                            <td class="text-left">
+                                {{ p.Item_Brand }}
+                                <input type="hidden" name="item_brand" value="{{ p.Item_Brand }}">
+                            </td>
+                            <td>
+                                {{ p.Unit }}
+                                <input type="hidden" name="unit" value="{{ p.Unit }}">
+                            </td>
+                            <td>
+                                {{ p.Price }}
+                                <input type="hidden" name="price" value="{{ p.Price }}">
+                            </td>
+                            <td>
+                                <button type="submit" class="button" style="border-radius: 15px;">
+                                    <img src="{% static 'images/submit(3).png' %}" alt="Cart Icon">
+                                </button>
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+       
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+
+
+        function scrollToCategory() {
+            var selectedCategory = document.getElementById('dropdownMenuSelect').value;
+            var table = document.getElementById(selectedCategory);
+            if (table) {
+                table.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function handleSearch() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search_bar_request");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table-bordered"); // Change to your specific table class
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Modify this index based on the column you want to search
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+
+    {% endblock %}
