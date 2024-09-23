@@ -1,42 +1,49 @@
-{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+{% extends "accounts/Admin/Campus_Director/cd.html" %}
 
 {% load static %}
 
-{% block bac_home %}
+
+{% block cdppmp %}
+
 
 <style>
     .table-bordered th {
         background-color: #1c96c5;
     }
 
-    .bck a  {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
     .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        position: relative;
-        top: -15vh;
-      
-        
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
     }
-    
-    .bck:hover img {
-        transform: scale(1.2); 
-    }
-        
 
+    .bck:hover img {
+        transform: translateX(-5px);
+        filter: brightness(1.2);
+    }
+
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .bck:hover::before {
+        opacity: 1;
+    }
 
     .table-and-comment {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
 
     .icons-container {
         display: flex;
@@ -50,7 +57,6 @@
         margin-top: 16px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
 
 
@@ -60,13 +66,10 @@
         margin-left: 20px;
         text-decoration: none;
         color: white;
-        /* Adjust the color as needed */
     }
-
 
     .input-box {
         width: 30%;
-
         margin-top: 1px;
         margin-left: 16px;
         margin-right: 20px;
@@ -74,7 +77,7 @@
 
     .input-box input {
         width: 100%;
-        height: 40px;
+        height: 50px;
         padding: 10px;
         box-sizing: border-box;
         border: none;
@@ -116,9 +119,6 @@
         size: 12px;
     }
 
-
-
-
     .subpage {
         padding: 1cm;
         border: 5px red solid;
@@ -131,16 +131,15 @@
         margin: 0;
     }
 
-
     @media print {
-        .footer {
-            display: none;
-        }
+    .footer {
+    display: none;
+    }
 
-        .input-box,
-        .icons-container {
-            display: none;
-        }
+    .input-box,
+    .icons-container {
+    display: none;
+    }
     }
 
     .container {
@@ -153,7 +152,7 @@
         margin-right: 5px;
         margin-left: 5px;
         margin-top: 5px;
-        margin-bottom: 11px;
+        margin-bottom: 7px;
         color: #ffa125e3;
         background-color: rgba(9, 87, 139, 0.616);
         padding: 10px 12px;
@@ -162,18 +161,16 @@
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
 
-
     .aprv:hover,
     .disaprv:hover {
         color: #ffa125e3;
         background-color: #000000e3;
     }
 
-
     .footer {
         display: left;
         justify-content: space-between;
-        align-items: center;  /* Vertically center the content */
+        align-items: center; 
     }
     
     .icons-container {
@@ -183,77 +180,47 @@
     
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the gap between buttons as needed */
+        gap: 10px;
     }
     
     .slip-icon {
-        width: 50px; /* Adjust the width as needed */
-        height: auto; /* Maintain the aspect ratio */
+        width: 50px; 
+        height: auto; 
         margin-right: 15px
     }
 
-    .bck a {
-        display: flex;
-        align-items: center;
+    .bck a  {
+     
         text-decoration: none;
-        margin-bottom: 10px;
     }
     
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 16vh;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -1vh;
+      
+        
     }
     
     .bck:hover img {
-        transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
-    }
-    .cdlanding a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    
-    
-    }
-     
-    .cdlanding img {
-        margin-bottom: 8px;
-        width: 40px;
-        height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
-      
-        margin-left: .5vh;
-    }
-    
-    
-    @keyframes beat{
-        0%{
-            transform: scale(1);
-        }
-        50%{
-            transform: scale(1.2);
-        }
-        100%{
-            transform: scale(1);
-        }
-    }
-     
-    .cdlanding:hover img {
-        animation-play-state: paused;
         transform: scale(1.2); 
     }
-
+    
+    .home {
+        position: fixed;
+        top: 20vh;
+    }
      
     .home img {
         width: 40px;
         height: 40px;
+        transition: transform 0.3s ease-in-out;
         position: relative;
-        margin-left: .5vh;
-        top: 1vh;
+        margin-left: 0.5vh;
+        top: -0vh;
     }
-    
     
     @keyframes beat{
         0%{
@@ -268,26 +235,48 @@
     }
      
     .home:hover img {
-        animation-play-state: paused;
         transform: scale(1.2); 
     }
 
-    .center-text {
+    .left-button-container {
+        position: absolute;
+        left: 180vh;
+        top: 300px;
+        transform: translateY(-50%);
+    }
+
+    .get {
+        outline: 0;
+        cursor: pointer;
         text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        margin-top: -30vh;
+        margin-left: -2vh;
+        
+    }
+    
+    .get:hover {
+        background: #ffa125e3; 
+        outline: 0px;
     }
     
     .table thead th[rowspan='2'] {
         vertical-align: middle;
     }
 
-    .ctu_logo {
-    position: absolute;
-    left: 40px;
-    top: -47px;
-    width: 100px;
-    height: 100px;
-    margin: 0 3px;
-}
+   .table-responsive{
+        margin-top: -1vh;
+   }
+    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -296,48 +285,36 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"></h1>
     </div>
-    <div class="home">
-        <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
+
+    <div class="left-button-container">
+        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
     </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('cdlandingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
-    <div class="row">
-        <div class="col-md-1 mb-3"> 
-            <div class="bck">
-                <a href="{% url 'bac_home' %}">
-                    <img src="{% static 'images/back2.png' %}" alt="Previous">
-                </a>
-            </div>
-        </div>
-    </div>    
 
-    <div class="table-responsive" style="margin-top: -15vh;">
-        <form action="{% url 'bac_ppmp' pr_id=pr_id %}" method="post" id ="form_id">
+    
+    <div class="table-responsive" style= "margin-top: 7vh;">
+
+        <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
+
             {% csrf_token %}
 
 
         <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
-            <tr>
-            <th rowspan='2' class="center-text">Item Name</th>
-            <th rowspan='2' class="center-text">Brand / Description</th>
-            <th rowspan='2' class="center-text">Unit</th>
-            <th rowspan='2' class="center-text">Estimated Budget</th>
-            <th colspan="12" class="center-text">Monthly Quantity Requirement</th>
-            <th rowspan='2' class="center-text">Unit Price</th>
-            
-        </tr>
+                <tr>
+                <tr>
+                    <th rowspan='2'>Item Name</th>
+                    <th rowspan='2'> Brand / Description</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+                </tr>
+                <tr>
+
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -350,12 +327,15 @@
                     <th>Oct</th>
                     <th>Nov</th>
                     <th>Dec</th>
-
+                </tr>
+                </tr>
             </thead>
+            
             <tbody>
                 {% for p in checkout_items %}
 
                 <tr class="item-row" id="{{ p.id }}">
+
                     <td>
                         <span class="editable" data-field="Item_name">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
@@ -391,6 +371,7 @@
                         <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
                             oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
+
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
                     <input type="hidden" name="feb" value="{{ p.feb }}">
@@ -410,20 +391,39 @@
         </table>
     </div>
 </div>
-<style>
-
-</style>
 <footer class="footer">
     <div class="icons-container">
         <div class="input-box">
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
-        <button type="submit"  style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px; position: relative;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
         <input id="new_status_id" type="hidden" name="new_status">
+        
+  
+
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
     </div>
 </footer>
+
 </form>
 
-    {% endblock %}
+<script>
+    function btn_click(approve) {
+        // Get the hidden input element by its ID
+        var newStatusInput = document.getElementById('new_status_id');
+
+        // Set the value based on the 'approve' parameter
+        newStatusInput.value = approve ? 'approved' : 'declined';
+
+        // Submit the form programmatically
+        var form = document.getElementById('form_id');
+        form.submit();
+    }
+</script>
+
+
+
+
+{% endblock %}

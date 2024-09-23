@@ -1,10 +1,9 @@
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
 
 {% load static %}
 
 
-{% block bac_purchaserequest %}
-
+{% block bac_home %}
 
 <style>
     .table-bordered th {
@@ -183,8 +182,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -4.0vh;
-      
+        top: 2vh;
         
     }
     
@@ -193,7 +191,7 @@
     }
     .home {
         position: fixed;
-        top: 20vh;
+        top: 17vh;
     }
      
     .home img {
@@ -233,14 +231,12 @@
 } 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-        <h1 style="text-align: center; margin-top: 50px"> <strong>PURCHASE REQUEST ITEMS
-        </strong> </h1>
+        <h1 style="text-align: center; margin-top: 50px"> </h1>
 
         <div class="home">
             <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
@@ -265,7 +261,7 @@
 
     <div class="table-responsive">
 
-        <table class="table table-bordered" style="margin-top: 1px;">
+        <table class="table table-bordered" style="margin-top:3vh;">
             <thead>
                 <tr>
                 <tr>

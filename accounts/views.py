@@ -85,7 +85,7 @@ def bac_request(request):
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
         'tracker': tracker,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUESTS',
         'CAMPUS_NAME': CAMPUS_NAME,
   
     }
@@ -131,7 +131,7 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
+        'title' : 'DASHBOARD',
         'CAMPUS_NAME' : CAMPUS_NAME
     }
 
@@ -258,7 +258,7 @@ def login(request):
                 return redirect('baclanding')
             else:
                 
-                return redirect('userlanding') 
+                return redirect('ppmp101') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
@@ -277,6 +277,21 @@ def logout_user(request):
 
 def bac(request):
     return render(request, 'accounts/User/bac.html')
+
+
+
+@bac_required
+def bac_request(request):
+
+    tracker = Pr_identifier.objects.select_related('user').all()
+    context = {
+        'tracker': tracker,
+        'title': 'PURCHASE REQUESTS',
+        'CAMPUS_NAME': CAMPUS_NAME,
+  
+    }
+        
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
 
 def ppmpform(request, year, pr_id):
@@ -310,7 +325,7 @@ def landing(request):
 @authenticated_user
 def about(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title':'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
 
@@ -342,7 +357,7 @@ def tracker(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title': "PPMP REQUEST STATUS",
         'CAMPUS_NAME': CAMPUS_NAME,
         
         
@@ -361,7 +376,7 @@ def profile(request):
 @bac_required
 def bac_about(request):
     context = {
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html', context)
@@ -409,7 +424,7 @@ def cdpurchase_approval(request, pr_id):
             'user': request.user,
             'pr_id': pr_id,
             'status': checkouts.status,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PURCHASE REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
     }
  
@@ -466,7 +481,7 @@ def bac_home(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title':'PPMP OF THE USERS',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
 
@@ -481,7 +496,7 @@ def bac_purchaserequest(request, pr_id):
         'user': request.user,
         'pr_id': pr_id,
         'status': checkouts.status,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUEST ITEMS',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
         
@@ -496,7 +511,7 @@ def bac_ppmp(request, pr_id):
             
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST',
             'CAMPUS_NAME': CAMPUS_NAME,
     }
 
@@ -562,7 +577,7 @@ def bac_ppmp(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST',
             'CAMPUS_NAME': CAMPUS_NAME,
      }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
@@ -654,7 +669,7 @@ def bo(request):
 @authenticated_user
 def boabout(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html', context)
@@ -675,7 +690,7 @@ def cd(request):
 @authenticated_user
 def cdabout(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html', context)
@@ -704,7 +719,7 @@ def cdppmp(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title':'PPMP REQUEST',
         'CAMPUS_NAME': CAMPUS_NAME,   
     }
     return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', context)
@@ -713,7 +728,7 @@ def cdppmp(request):
 @authenticated_user
 def cdresolution(request):
     context ={
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'RESOLUTION',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html', context)
@@ -861,7 +876,7 @@ def catalogue (request):
 
     context = {
         'grouped_data' : grouped_data,
-        'SITE_TITLE' : SITE_TITLE,
+        'title' : 'CATALOGUE',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
     return render(request, 'accounts/User/catalogue.html', context)
@@ -886,9 +901,9 @@ def myppmp(request):
 
 
 @authenticated_user
-def ppmp(request):
+def ppmp(request):    
     context = {
-        'SITE_TITLE' : SITE_TITLE,
+        'title' : 'CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
     if request.method == 'POST':
@@ -967,9 +982,9 @@ from django.core.files.base import ContentFile
 @authenticated_user
 def purchase(request):
     context = {
-        'SITE_TITLE': SITE_TITLE,
-        'CAMPUS_NAME': CAMPUS_NAME,
-    }
+                'title': 'CREATE PURCHASE REQUEST',
+                'CAMPUS_NAME': CAMPUS_NAME,
+                }
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
         items = request.POST.getlist('items[]')
@@ -1059,7 +1074,7 @@ def approved_ppmp(request):
         context = {
             'checkout_items': checkout_items,
             'latest_year': latest_year,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'APPROVED PPMP',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
@@ -1128,7 +1143,7 @@ def bac_dashboard(request):
 
         context = {
             'grouped_data': grouped_data,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'AVIALABLE ITEMS',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         
@@ -1246,7 +1261,7 @@ def bohome(request):
 
     context = {
         'checkouts': checkout_data,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PPMP REQUEST',
         'CAMPUS_NAME':CAMPUS_NAME,
     }
 
@@ -1316,7 +1331,7 @@ def preqform_bo(request, pr_id):
             'checkouts': checkouts,
             'checkout_item': checkout_item,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         
@@ -1386,7 +1401,7 @@ def cdppmp_approval(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'SITE_TITLE':SITE_TITLE,
+            'title':'PPMP REQUEST APPROVAL',
             'CAMPUS_NAME':CAMPUS_NAME,
      }
 
@@ -1415,7 +1430,7 @@ def cdpurchase(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUESTS',
         'CAMPUS_NAME': CAMPUS_NAME,     
     }
 
@@ -1511,7 +1526,7 @@ def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
         'tracker': tracker,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUEST TRACKER',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
 
@@ -1587,4 +1602,3 @@ def boppmp(request, pr_id):
 
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
-  

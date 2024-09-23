@@ -1,5 +1,3 @@
-
-
 {% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
 
 
@@ -28,13 +26,11 @@
     }
 
     .table-bordered th {
-        background-color: #22507A;
+        background-color: #1c96c5;
         color: #fff;
     }
 
-    .table-bordered th{
-        color:white;
-    }
+    .table-bordered th,
     .table-bordered td {
         color: #000;
 
@@ -94,27 +90,24 @@
         left: 2px;
         /* You may adjust this value too */
         z-index: 999;
-        background: #22507A;
-        color: rgb(249, 149, 35);
+        background: #fff;
+        color: black;
         border: 1px solid black;
         padding: 10px 20px;
         border-radius: 20px;
         transition: background-color 0.3s, color 0.3s;
-        height: 65px; width: 200px;
+        width: 100%;
         color: inherit;
         text-decoration: none;
     }
 
     .catalogue:hover {
 
-        background: #22507A;
-        color: #FFA500;
+        background: #1c96c5;
+        color: white;
         transform: scale(1.1);
-        border: 2px solid #FFFFFF;
-    box-shadow: 10px 10px 4px #9a9a9a;
- 
-}
-    
+    }
+
 
     .catalogue:active {
 
@@ -181,19 +174,17 @@
 
     .budget-container strong {
         position: fixed;
-        margin-left: -48vh;
+        margin-left: -57vh;
       
     }
 
     #budgetInput {
        
         padding: 5px;
-        border: 1px solid black;
-        margin-left: 36vh;
-        border-radius: 8px;
+        border: 2px solid black;
+        margin-left: 80vh;
        
     }
-    
 
     .home {
         display: flex;
@@ -217,11 +208,11 @@
     }
 
     .budget-container strong {
-        font-weight: revert-layer;
-        font-size: 19px;
+        font-weight: bold;
+        font-size: 18px;
         position: relative;
         top: -0.5vh;
-        left: 10vh;
+        left: 13vh;
 
     }
 
@@ -234,53 +225,6 @@
     margin-left: 1rem !important;
     margin-top: -37px;
 }
-.total-submit-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px; /* Provides space between Total Amount and Submit */
-    width: 100%; /* Ensures container takes full width */
-}
-
-.total {
-    display: flex;
-    align-items: center;
-}
-
-.total label {
-    margin-right: 10px;
-}
-
-.total input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 150px;
-    text-align: right;
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-}
-
-#submitBtn {
-    color: #da8c05;
-    background-color: #22507A;
-    border-color: #007bff;
-    height: 40px;
-    width: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#submitBtn i {
-    margin-right: 5px;
-}
-
-
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -288,45 +232,24 @@
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 
 
-<div class="container-fluid">
-    <div class="container;">
+<div class="container-fluid" style="height: 82vh; overflow-y: auto; overflow-x: hidden; margin-bottom: 50px;">
+    <div class="container" style="margin-right: 17%;">
     </div>
-    
-    <script>
-        function toggleAnimation() {
-            var img = document.getElementById('homeImg');
-            if (img.style.animationPlayState === 'paused') {
-                img.style.animationPlayState = 'running'; // Resume animation
-            } else {e
-                img.style.animationPlayState = 'paused'; // Pause animation
-            }
-        }
-    </script>
 
-    
-<div class="row">
-    <div class="col-md-1 mb-0">
-        <a href="{% url 'catalogue' %}" style="color: #FFA500; text-decoration: none; position: relative; display: flex; gap: 5px; margin-bottom: 10px;">
-            <button class="catalogue"><strong>CATALOGUE</strong></button>
-            <button class="catalogue"><strong>2020 PPMP</strong></button>
-            <button class="catalogue"><strong>2021 PPMP</strong></button>
-            <button class="catalogue"><strong>2022 PMMP</strong></button>
-            <button class="catalogue"><strong>2023 PPMP</strong></button>
-            <button class="catalogue"><strong>2024 PPMP</strong></button>
-        </a>
-    </div>
     <div class="row">
         <div class="col-md-1 mb-0">
-            
+            <a href="{% url 'catalogue' %}" style="color: black; text-decoration: none; position: relative; ">
+                <button class="catalogue">Catalogue</button>
+            </a>
         </div>
 
-     
-        <div class="col-md-4 mb-0" style=" top: 40px;">
+        
+        <div class="col-md-3 mb-0" style=" top: 38px;">
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="position: relative; z-index: 999; ">
+                <div style="position: relative; z-index: 999;">
                     <select id="yearDropdown"
-                        style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 18px; ">
+                        style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 15px; ">
                         <option selected>Select Year</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -343,23 +266,22 @@
                     </script>
                 </div>
                 
+        
         </div>
     </div>
-    
 
     <div class="row">
         <div class="row">
             <div class=" col-md-5 text-left">
 
                 <div class="budget-container">
-                    <input type="text" id="budgetInput" value="1 500 000 . 00" disabled placeholder="Enter budget amount"
-                        onkeypress="return isNumberKey(event)"><strong>Total Allocated Budget:
+                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount"
+                        onkeypress="return isNumberKey(event)"><strong>TOTAL ALLOCATED BUDGET:
                     </strong>
                 </div>
             </div>
 
             <script>
-
                 function isNumberKey(evt) {
                     var charCode = (evt.which) ? evt.which : evt.keyCode;
                     if (charCode === 13) { // Check if Enter key is pressed
@@ -375,7 +297,7 @@
                 function displayBudget() {
                     var inputElement = document.getElementById("budgetInput");
                     var currentValue = inputElement.value;
-                    console.log("Entered budget:", ); // You can modify this to display the value wherever you need
+                    console.log("Entered budget:", currentValue); // You can modify this to display the value wherever you need
                     localStorage.setItem("allocatedBudget", currentValue); // Store in local storage
                     return false; // Prevent form submission
                 }
@@ -388,8 +310,21 @@
                     }
                 };
             </script>
-    </div>
-    </div>
+            <div class="total" style="position: relative; margin-top: -5vh; left: 120vh; ">
+                <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
+                <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+            </div>
+        </div>
+        <div id="ppmpFormContainer" class="button-container"
+            style="display: flex; justify-content: flex-end; margin-top: -7vh;">
+
+            <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2"
+                style="color: #fff; background-color: #28a745; border-color: #007bff; height: 50px; width: 130px;">
+                <i class="fas fa-check-circle"></i> Submit
+            </button>
+
+        </div>
+
 
 
         <div class="table-responsive">
@@ -408,7 +343,7 @@
                     </tr>
                     <tr>
                         <th>Jan</th>
-                        <th>Feb</th>    
+                        <th>Feb</th>
                         <th>Mar</th>
                         <th>April</th>
                         <th>May</th>
@@ -421,7 +356,7 @@
                         <th>Dec</th>
                     </tr>
                 </thead>
-                <tbody>                                      
+                <tbody>
              
                     {% for p in items %}
 
@@ -547,22 +482,6 @@
             </button>
 
         </div>
-        <div class="total" style="position: relative; margin-top: 0.1vh; left: 150vh; ">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-        </div>
-    </div>
-    <div id="ppmpFormContainer" class="button-container"
-        style="display: flex; justify-content: flex-end; margin-top: -5.8vh;">
-</div> 
-        <div>
-        <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2"
-            style="color: #FFA500; background-color: #22507A; border-color: #007bff; height: 43px; width: 130px;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
-    </div>
-    </div>
-    
     </div>
 
     </form>
@@ -679,7 +598,7 @@
             totalValue += rowTotal;
         });
 
-        var allocatedBudget = 10000000 ; // Set your allocated budget here
+        var allocatedBudget = 10000000; // Set your allocated budget here
 
         if (totalValue >= allocatedBudget) {
             alert('Budget limit reached! Further input is disabled.');
