@@ -1,34 +1,43 @@
-{% extends "accounts/Admin/BAC_Secretariat/bac.html" %}
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
 
 {% load static %}
 
-{% block bac_home %}
+
+{% block bohome %}
 
 <style>
     .table-bordered th {
         background-color: #1c96c5;
     }
 
-    .bck a  {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-    
     .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        position: relative;
-        top: -15vh;
-      
-        
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease-in-out;
+
     }
-    
+
     .bck:hover img {
-        transform: scale(1.2); 
+        transform: translateX(-5px);
+        filter: brightness(1.2);
     }
-        
+
+    .bck::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 0;
+        bottom: -5px;
+        left: 0;
+        border-radius: 20px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .bck:hover::before {
+        opacity: 1;
+    }
 
 
     .table-and-comment {
@@ -192,66 +201,36 @@
         margin-right: 15px
     }
 
-    .bck a {
+    .bck a  {
         display: flex;
         align-items: center;
         text-decoration: none;
-        margin-bottom: 10px;
     }
     
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 16vh;
-        transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+        top: -0.5vh;
+      
+        
     }
     
     .bck:hover img {
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
-    .cdlanding a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    
-    
+    .home {
+        position: fixed;
+        top: 20vh;
     }
-     
-    .cdlanding img {
-        margin-bottom: 8px;
-        width: 40px;
-        height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
-      
-        margin-left: .5vh;
-    }
-    
-    
-    @keyframes beat{
-        0%{
-            transform: scale(1);
-        }
-        50%{
-            transform: scale(1.2);
-        }
-        100%{
-            transform: scale(1);
-        }
-    }
-     
-    .cdlanding:hover img {
-        animation-play-state: paused;
-        transform: scale(1.2); 
-    }
-
      
     .home img {
-        width: 40px;
-        height: 40px;
-        position: relative;
-        margin-left: .5vh;
-        top: 1vh;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: .5vh;
+    top: 2vh;
     }
     
     
@@ -272,22 +251,43 @@
         transform: scale(1.2); 
     }
 
-    .center-text {
-        text-align: center;
-    }
-    
-    .table thead th[rowspan='2'] {
-        vertical-align: middle;
+    .left-button-container {
+        position: absolute;
+        left: 184vh; /* Adjust this value as needed */
+        top: 300px; /* Adjust this value as needed */
+        transform: translateY(-50%);
     }
 
-    .ctu_logo {
-    position: absolute;
-    left: 40px;
-    top: -47px;
-    width: 100px;
-    height: 100px;
-    margin: 0 3px;
-}
+    .get {
+        margin-left: -5vh;
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 11px 24px;
+        min-height: 44px;
+        min-width: 44px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+        transition: background 0.2s ease 0s, box-shadow 0.2s ease 0s, color 0.2s ease 0s;
+        margin-top: -38vh;
+        margin-left: -.6vh;
+        
+    }
+    
+    .get:hover {
+        background: #ffa125e3; /* Change background color on hover */
+        outline: 0px; /* Optional: remove outline on hover */
+    }
+
+    .table thead th[rowspan='2'] {
+    vertical-align: middle;
+    }
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -296,48 +296,50 @@
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
+        <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;">  </h1>
     </div>
-    <div class="home">
-        <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
+    
+    <div class="left-button-container">
+        <a href="{% url 'boppmp' pr_id=pr_id %}" class="icon-link" target="_blank"> 
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
         </a>
-    </div>
-    <script>
-    function toggleAnimation() {
-        var img = document.getElementById('cdlandingImg');
-        if (img.style.animationPlayState === 'paused') {
-            img.style.animationPlayState = 'running'; // Resume animation
-        } else {
-            img.style.animationPlayState = 'paused'; // Pause animation
-        }
-    }
-    </script>
-    <div class="row">
-        <div class="col-md-1 mb-3"> 
-            <div class="bck">
-                <a href="{% url 'bac_home' %}">
-                    <img src="{% static 'images/back2.png' %}" alt="Previous">
-                </a>
-            </div>
-        </div>
     </div>    
 
-    <div class="table-responsive" style="margin-top: -15vh;">
-        <form action="{% url 'bac_ppmp' pr_id=pr_id %}" method="post" id ="form_id">
+    <div class="home">
+        <a href="{% url 'budget-landing' %}">
+            <img src="{% static 'images/home2.png' %}" alt="budget-landing">
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1 mb-0">
+          <div class="bck">
+            <a href="{% url 'bohome' %}">
+              <img src="{% static 'images/back2.png' %}" alt="Previous">
+            </a>
+          </div>
+        </div>
+      </div>
+    <div class="table-responsive" style="margin-top: 5vh;">
+
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id="form_id">
+
             {% csrf_token %}
 
 
         <table class="table table-bordered" style="margin-top: 1px;">
             <thead>
-            <tr>
-            <th rowspan='2' class="center-text">Item Name</th>
-            <th rowspan='2' class="center-text">Brand / Description</th>
-            <th rowspan='2' class="center-text">Unit</th>
-            <th rowspan='2' class="center-text">Estimated Budget</th>
-            <th colspan="12" class="center-text">Monthly Quantity Requirement</th>
-            <th rowspan='2' class="center-text">Unit Price</th>
-            
-        </tr>
+                <tr>
+                <tr>
+                    <th rowspan='2'>Item Name</th>
+                    <th rowspan='2'> Brand / Description</th>
+                    <th rowspan='2'>Unit</th>
+                    <th rowspan='2'>Estimated Budget</th>
+                    <th colspan="12">Monthly Quantity Requirement</th>
+                    <th rowspan='2'>Unit Price</th>
+
+                </tr>
+                <tr>
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -350,30 +352,32 @@
                     <th>Oct</th>
                     <th>Nov</th>
                     <th>Dec</th>
-
+                </tr>
+                </tr>
             </thead>
+            {% for p in checkout_item%}
             <tbody>
-                {% for p in checkout_items %}
-
+               
                 <tr class="item-row" id="{{ p.id }}">
+
                     <td>
-                        <span class="editable" data-field="Item_name">{{ p.item }}</span>
+                        <span class="editable" data-field="Item_name" style=" margin-left: -6.5vh;">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                             oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
+                        <span class="editable" data-field="Item_Brand" style=" margin-left: -5.5vh;">{{ p.item_brand_description }}</span>
                         <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Unit">{{ p.unit }}</span>
+                        <span class="editable" data-field="Unit"style=" margin-left: -3vh;">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
 
-                    <td>{{ p.estimate_budget }}</td>
+                    <td >{{ p.estimate_budget }} </td>
                     <td>{{ p.jan }}</td>
                     <td>{{ p.feb }}</td>
                     <td>{{ p.mar }}</td>
@@ -405,25 +409,45 @@
                     <input type="hidden" name="nov" value="{{ p.nov }}">
                     <input type="hidden" name="dec" value="{{ p.dec }}">
                 </tr>
-                {% endfor %}
             </tbody>
+            {% endfor %}
         </table>
     </div>
 </div>
-<style>
-
-</style>
 <footer class="footer">
     <div class="icons-container">
         <div class="input-box">
             <input placeholder="Type your comment" name="comment_content" id="comment_input" required>
         </div>
-        <button type="submit"  style="color: #fff; background-color: #28a745; border-color: #007bff; height: 40px; width: 120px; position: relative;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
         <input id="new_status_id" type="hidden" name="new_status">
+        
+        <div class="button-container">
+            <button type="button" onclick="btn_click(true)" class="aprv">Approve</button>
+            <button type="button" onclick="btn_click(false)" class="disaprv">Decline</button>
+        </div>
     </div>
 </footer>
+
 </form>
 
-    {% endblock %}
+<script>
+    function btn_click(approve) {
+        // Get the hidden input element by its ID
+        var newStatusInput = document.getElementById('new_status_id');
+
+        // Set the value based on the 'approve' parameter
+        newStatusInput.value = approve ? 'approved' : 'declined';
+
+        // Submit the form programmatically
+        var form = document.getElementById('form_id');
+        form.submit();
+    }
+</script>
+
+<script>
+    function openInNewTab(url) {
+        window.open( url, '_blank');
+    }
+</script>
+
+{% endblock %}{% url 'preqform_bo' pr_id=pr_id %}
