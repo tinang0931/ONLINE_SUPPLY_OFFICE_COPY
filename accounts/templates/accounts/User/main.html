@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,53 +7,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Supply System{% endblock %}</title>
-    
-    <!-- Fonts and Icons -->
+    <title>Requester</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    
-    {% block stylesheets %}
-    {% endblock %}
+
+
 </head>
 
 <body>
-    <div class="main-container">
-        <!-- Header block to be extended in other templates -->
-        {% block header %}
-        {% endblock %}
-        
-        <!-- Main content block -->
-        <div class="content-container">
-            {% block content %}
-            {% endblock %}
+    <main class="flex-shrink">
+        <div id="page-content-wrapper ">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="row w-100 m-auto">
+                    <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                        <a href="{% url 'userlanding' %}">
+                            <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+                        </a>
+                    </div>
+                    
+                    <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                        <h1 class="head">{{SITE_TITLE}}</h1>
+                    </div>
+                    
+            </nav>
         </div>
-    </div>
-    
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
-    {% block scripts %}{% endblock %}
+        <h1 class="welcome">Welcome to Cebu Technological University - {{CAMPUS_NAME}} Campus Online Supply System </h1>
+        <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
+
+
+            <div class="d-flex flex-wrap align-content-between h-100" style="width: 110px;">
+                <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+                    <div class="list-group w-100">
+                        <br><br>
+
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'ppmp101'%}">
+                            <i class="bi bi-grid"></i> <!-- Dashboard icon -->
+                            <div class="hidden-name">Dashboard</div>
+                        </a>
+            
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'ppmp101'%}">
+                            <i class="bi bi-file-earmark-medical"></i>
+                            <div class="hidden-name">My PPMP</div>
+                        </a>
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'purchase'%}">
+                            <i class="bi bi-bag-check"></i>
+                            <div class="hidden-name">Purchase Request</div>
+                        </a>
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'tracker'%}">
+                            <i class="bi bi-geo-alt"></i>
+                            <div class="hidden-name">PPMP Tracker</div>
+                        </a>
+            
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'purchasetracker'%}">
+                            <i class="bx bx-location-plus"></i>
+                            <div class="hidden-name">Purchase Tracker</div>
+                        </a>
+            
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'about'%}">
+                            <i class="bi bi-info-circle"></i>
+                            <div class="hidden-name">About</div>
+                        </a>
+                        
+                        <a class="list-group-item list-group-item-action p-3 border-0 text-center logout-link" href="{% url 'logout_user'%}">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <div class="hidden-name">Logout</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+
+            <style>
+                
+                .list-group-item-action:focus, .list-group-item-action:hover {
+                     z-index: 1;
+                     color: #0f78da;
+                     text-decoration: none;
+                     background-color: #f8f9fa;
+                     width: 106px;
+                    }
+
+               .list-group-item i {
+                  font-size: 20px; /* Adjust icon size */
+                  display: block;  /* Make icon block-level to ensure it's on its own line */
+                  margin: 0 auto;  /* Center the icon */
+                  
+                }
+
+                .hidden-name {
+                   font-size: 9px;  
+                   color: #f8f9fa;  
+                  font-weight: bold; 
+                  text-align: center; 
+                  margin-top: 0.5rem; 
+               
+                  
+                 margin-left: -10px;
+                  }
+
+               .list-group-item:hover .hidden-name {
+                      opacity: 1;  /* Make visible on hover */
+                 }
+
+
+                .logout-link {
+                    margin-top: -700px !important;
+                    width:75px;
+                    margin-left: 0px;
+                }
+
+               
+                .ctu_logo {
+                    position: relative;
+                    top: 3px;
+                    z-index: 1;
+                }
+
+               
+
+               
+
+            </style>
+
+           
+            {% block notification %}
+            {% endblock %}
+
+            {% block purchaserequest %}
+            {% endblock %}
+
+            {% block tracker %}
+            {% endblock %}
+
+            {% block purchasetracker %}
+            {% endblock %}
+
+            {% block history %}
+            {% endblock %}
+
+            {% block about %}
+            {% endblock %}
+
+
+            {% block myppmp %}
+            {% endblock %}
+
+            {% block purchase %}
+            {% endblock %}
+
+            {% block bac_home %}
+            {% endblock %}
+
+            {% block bac_request %}
+            {% endblock %}
+
+        {% block Procurement %}
+        {% endblock %}
+
+    </main>
+
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </html>
