@@ -1,74 +1,112 @@
 {% extends "accounts/User/main.html" %}
 
-
 {% load static %}
 
-{% block myppmp %}
+{% block dashboard %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+{% endblock extra_css %}
+  
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/ppmp101.css' %}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<body>
 
-<style>
-    .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        /* Apply transition to the transform property */
-    }
-
-    .bck:hover img {
-        transform: scale(1.2);
-       
-    }
-
-    .box1 {
-        transition: transform 0.3s ease-in-out; /* Adding smooth transition */
-        margin-right: 59%;
-    }
-
-    .box1:hover {
-        transform: scale(1.1); /* Zoom in by 10% on hover */
-    }
-</style>
-
-<div class="container-fluid main-content">
-
-    <div class="bck">
-        <a href="{% url 'userlanding' %}">
-        </a>
-      </div>
-
-    <div class="d-flex" id="wrapper">
-        <div class="box-container">
-
-            <a href="{% url 'ppmp' %}" class="box1 create">
-                <div style="color: black; text-decoration: none;">
-                    Create PPMP
-                </div>
-            </a>
-            
-
-            {% for checkout in checkouts|dictsortreversed:"year" %}
-            <div class="box ppmp" style="margin-left: -24vh; position: relative;">
-                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none; ">
-                    <span>{{ checkout.year }} PPMP</span>
-                </a>
+    <div class="right-container">
+        <div class="budget-section">
+            <div class="budget">
+                Php 100,000.00 
+                <div class="Annual">Annual Budget</div>
             </div>
-            {% endfor %}
-
         </div>
-
+    
+        <div class="title-section">
+            <div class="year">2024 PPMP</div>
+        </div>
+    
+        <div class="trackers-section">
+            <div class="tracker">
+                <h3>PPMP TRACKER</h3>
+                <ul>
+                    <h2>PPMP ID: 001122</h2>
+                    <li><span class="green"></span> PPMP Request Sent - 09/01/24</li>
+                    <li><span class="green"></span> Approved by BO - 09/02/24</li>
+                    <li><span class="orange"></span> Waiting for CD Response - 09/02/24</li>
+                </ul>
+            </div>
+    
+            <div class="tracker">
+                <h3>PR TRACKER</h3>
+                <ul>
+                    <h2>PR ID: 001122</h2>
+                    <li><span class="green"></span> PPMP Request Sent - 09/01/24</li>
+                    <li><span class="green"></span> Approved by BO - 09/02/24</li>
+                    <li><span class="orange"></span> Waiting for CD Response - 09/02/24</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-</div>
-
+    
+    <div class="left-container">
+        <div class="catalogue-section">
+            <h3>CATALOGUE</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Brand/Description</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">ANTISEPTICS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Alcohol</td>
+                        <td>ethyl alcohol</td>
+                        <td>bottle</td>
+                        <td>Php 50.00</td>
+                    </tr>
+                    <tr>
+                        <td>Chlorhexidine</td>
+                        <td>Corsodyl</td>
+                        <td>bottle</td>
+                        <td>Php 80.00</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">FURNITURE AND FURNISHINGS</th>
+                    </tr>
+                    <tr>
+                        <td>Chair</td>
+                        <td>monobloc, beige, with backrest, w/o armrest</td>
+                        <td>piece</td>
+                        <td>Php 1000.00</td>
+                    </tr>
+                    <tr>
+                        <td>TABLE</td>
+                        <td>monobloc, white, 889 X 889mm (356"x35")min</td>
+                        <td>unit</td>
+                        <td>Php 400.00</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">ELECTRICAL AND HARDWARE SUPPLIES</th>
+                    </tr>
+                    <tr>
+                        <td>BATTERY</td>
+                        <td>dry cell, D, 1.5 volts, alkaline</td>
+                        <td>pack</td>
+                        <td>Php 200.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
 
 {% endblock %}

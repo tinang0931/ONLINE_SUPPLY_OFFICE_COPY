@@ -131,7 +131,7 @@ def ppmp101(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'title' : 'PROJECT PROCUREMENT MANAGEMENT PLAN (PPMP)',
+        'title' : 'DASHBOARD',
         'CAMPUS_NAME' : CAMPUS_NAME
     }
 
@@ -234,7 +234,7 @@ def login(request):
                 return redirect('baclanding')
             else:
                 
-                return redirect('userlanding') 
+                return redirect('ppmp101') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
@@ -868,7 +868,7 @@ def myppmp(request):
 
 
 @authenticated_user
-def ppmp(request):
+def ppmp(request):    
     context = {
         'title' : 'CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)',
         'CAMPUS_NAME' : CAMPUS_NAME,
