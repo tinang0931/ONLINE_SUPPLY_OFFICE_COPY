@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -49,98 +48,198 @@
         <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
 
 
-            <div class="d-flex flex-wrap align-content-between h-100" style="width: 110px;">
-                <div class="bg-#6C757D w-100" id="sidebar-wrapper">
-                    <div class="list-group w-100">
-                        <br><br>
+            <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
+                <div class="d-flex flex-wrap align-content-between h-100">
+                    <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+                        <div class="list-group w-100">
+                            <br><br>
 
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'ppmp101'%}">
-                            <i class="bi bi-grid"></i> <!-- Dashboard icon -->
-                            <div class="hidden-name">Dashboard</div>
-                        </a>
-            
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'ppmp101'%}">
-                            <i class="bi bi-file-earmark-medical"></i>
-                            <div class="hidden-name">My PPMP</div>
-                        </a>
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'purchase'%}">
-                            <i class="bi bi-bag-check"></i>
-                            <div class="hidden-name">Purchase Request</div>
-                        </a>
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'tracker'%}">
-                            <i class="bi bi-geo-alt"></i>
-                            <div class="hidden-name">PPMP Tracker</div>
-                        </a>
-            
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'purchasetracker'%}">
-                            <i class="bx bx-location-plus"></i>
-                            <div class="hidden-name">Purchase Tracker</div>
-                        </a>
-            
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center" href="{% url 'about'%}">
-                            <i class="bi bi-info-circle"></i>
-                            <div class="hidden-name">About</div>
-                        </a>
-                        
-                        <a class="list-group-item list-group-item-action p-3 border-0 text-center logout-link" href="{% url 'logout_user'%}">
-                            <i class="bi bi-box-arrow-left"></i>
-                            <div class="hidden-name">Logout</div>
-                        </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp101' %}">
+                                <i class="bi bi-grid"></i> <span id="purchaseRequest" class="hidden-name">dashboard</span>
+                            </a>
+                            
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp101'%}">
+                                <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest" class="hidden-name">My PPMP</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase'%}">
+                                <i class="bi bi-bag-check"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker'%}">
+                                <i class="bi bi-geo-alt"></i> <span id="requestTracker"
+                                    class="hidden-name">PPMP Tracker</span>
+                            </a>
+
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchasetracker'%}">
+                                <i class='bx bx-location-plus'></i> <span id="requestTracker"
+                                    class="hidden-name">Purchase Tracker</span>
+                            </a>
+
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about'%}">
+                                <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
+                            </a>
+                            
+                            <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
+                                <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
+                            </a>
+                        </div>
+                        <div class="profile-container">
+                            <a href="{% url 'prof' %}">
+                                <img class="pro" id="profile-pic" src="{% static 'images/propayl.png' %}"
+                                    alt="Profile Picture"></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
 
             <style>
                 
-                .list-group-item-action:focus, .list-group-item-action:hover {
-                     z-index: 1;
-                     color: #0f78da;
-                     text-decoration: none;
-                     background-color: #f8f9fa;
-                     width: 106px;
-                    }
+                .d-flex {
+                    height: 100vh;
+                    margin-bottom: 0;
+        }/* Ensure that the sidebar stays at a fixed width */
+#sidebar {
+    width: 120px;
+    transition: width 0.5s ease-in-out;
+    overflow: hidden;
+}
 
-               .list-group-item i {
-                  font-size: 20px; /* Adjust icon size */
-                  display: block;  /* Make icon block-level to ensure it's on its own line */
-                  margin: 0 auto;  /* Center the icon */
-                  
+#sidebar.show-names {
+    width: 50px;
+    padding: 0;
+}
+
+.hidden-name {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+    position: absolute;
+    top: 35px; /* Adjust this value based on icon size */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9.5px;
+    white-space: nowrap;
+    font-style: normal;
+}
+
+/* Style for the icons in the sidebar */
+.list-group-item i {
+    transform: scale(1.4);
+    display: inline-block;
+    position: relative;
+}
+
+/* Make the name appear below the icon when hovering over the icon */
+.list-group-item:hover .hidden-name {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px); /* Adjust the vertical position of the name on hover */
+}
+
+/* Ensuring the hover effect is applied only to the icon */
+.list-group-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Adjust spacing */
+.list-group-item i {
+    margin-bottom: 20px; /* Provide space for the text that will appear below */
+}
+
+/* General layout adjustments */
+.d-flex {
+    height: 100vh;
+    margin-bottom: 0;
+}
+
+.list-group-item-action:hover {
+    background-color: #003566 !important;
+    border-radius: 5px !important;
+    color: #f2f2f2 !important;
+}
+
+.logout-link {
+      position: fixed;              
+    margin-top: -480px ;
+                   
                 }
 
-                .hidden-name {
-                   font-size: 9px;  
-                   color: #f8f9fa;  
-                  font-weight: bold; 
-                  text-align: center; 
-                  margin-top: 0.5rem; 
-               
-                  
-                 margin-left: -10px;
-                  }
 
-               .list-group-item:hover .hidden-name {
-                      opacity: 1;  /* Make visible on hover */
-                 }
-
-
-                .logout-link {
-                    margin-top: -700px !important;
-                    width:75px;
-                    margin-left: 0px;
+                .d-flex.flex-wrap.align-content-between.h-100 {
+                    background-color: #f2f2f2;
                 }
 
-               
+                .list-group-item-action:not(:hover) span {
+                    color: black !important;
+                }
+
                 .ctu_logo {
                     position: relative;
                     top: 3px;
                     z-index: 1;
                 }
 
-               
+                .pro {
+                    position: relative;
+                    top: 380px;
+                    z-index: 1;
+                    height: 45px;
+                    width: 45px;
+                    margin-left: 45%;
+                    transition: height 0.3s ease, width 0.3s ease;
+                    cursor: pointer;
+                    border-radius: 50px;
+                    border: 2px solid #000;
+                    display: none;
+                }
 
-               
+                .list-group-item i {
+                    transform: scale(1.4);
+                    display: inline-block;
+                }
 
+                .profile-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 90%;
+                    margin: 0;
+                }
+
+                .account_type {
+                    position: relative;
+                    top: 380px;
+                    /* Adjust the desired vertical position */
+                    left: 30px;
+                    /* Adjust the desired horizontal position */
+                    font-size: 20px;
+                    margin: 0;
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    opacity: 0;
+                    /* Set the initial opacity to hide the element */
+                    visibility: hidden;
+                    /* Set the initial visibility to hidden */
+                    transition: opacity 0.3s ease, visibility 0.3s ease;
+                    /* Add a transition effect */
+                    display: none
+                }
+
+                .sidebar:hover .account_type,
+                .pro:hover+.account_type {
+                    opacity: 1;
+                    /* Show the element when the sidebar or .pro is hovered */
+                    visibility: visible;
+                    /* Show the element when the sidebar or .pro is hovered */
+                }
+
+
+                .sidebar:hover .account_type {
+                    opacity: 1;
+                    /* Show the element when the sidebar is hovered */
+                    visibility: visible;
+                    /* Show the element when the sidebar is hovered */
+                }
             </style>
 
            
