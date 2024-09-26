@@ -176,7 +176,8 @@
       <th class="text-center">Date Requested</th>
       <th class="text-center">PR ID</th>
       <th class="text-center">Purchase Requests </th>
-      <th class="text-center">Status</th>
+      <th class="text-center">Budget Officer Status</th>
+      <th class="text-center">Campus Director Status</th>
       <th class="text-center">Comment</th> 
     </tr>
   </thead>
@@ -204,13 +205,23 @@
   
       <td class="text-center">
         {% if checkout.status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% elif checkout.status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% else %}
             <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
     </td>
+
+    <td class="text-center">
+      {% if checkout.status == 'approved' %}
+          <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% elif checkout.status == 'declined' %}
+          <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% else %}
+          <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+      {% endif %}
+  </td>
     
     
     <td class="text-center">

@@ -1,4 +1,6 @@
 from audioop import reverse
+from bson import Decimal128
+from decimal import Decimal
 import json
 from django.core.exceptions import ValidationError
 from pymongo import MongoClient
@@ -114,8 +116,17 @@ def userlanding(request):
 
 @authenticated_user
 def ppmp101(request):
+
+    budget = User.objects.all()
+
+
+   
+    data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
+
+
   
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+    
 
     checkout_data = []
 
@@ -127,15 +138,48 @@ def ppmp101(request):
             'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
+       
+
+    
+
+    grouped_data = {}  # Define grouped_data outside of if conditions
+    if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        price = request.POST.get(f'price')
+
+        
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+
+        return redirect('catalogue')
+
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all().order_by('Category')
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
 
     context = {
+        'budget': budget,
+        'data': data,
         'checkouts': checkout_data,
         'user': request.user,
+        'grouped_data' : grouped_data,
         'title' : 'DASHBOARD',
-        'CAMPUS_NAME' : CAMPUS_NAME
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
 
+
     return render(request, 'accounts/User/ppmp101.html', context)
+
+
+
 
 
 
@@ -153,51 +197,49 @@ def budget_landing(request):
     return render(request, 'accounts/Admin/Budget_Officer/bolanding.html', context)
 
 User = get_user_model()
+
 @unauthenticated_user
 def register(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        first_name = request.POST['fname']
-        last_name = request.POST['lname']
-        email = request.POST['email']
-        contact1 = request.POST['contact1']
-        password1 = request.POST['pass1']
-        password2 = request.POST['pass2']
-        
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        budget = request.POST.get('budget')
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/User/register.html')
-        
+            return redirect('register')
+
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/User/register.html')
+            messages.error(request, "Username already exists.")
+            return redirect('register')
 
-        user = User.objects.create_user(
-        first_name=first_name,
-        last_name=last_name,
-        username=username, 
-        email=email, 
-        password=password1, 
-        contact1=contact1,    
-        is_active=False)
+        user = User.objects.create_user(username=username, email=email, password=password1)
+        user.budget = budget
+        user.is_approved = False  # Set to unapproved by default
+        user.save()
+        
 
-        current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
-        message = render_to_string('accounts/User/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-        messages.success(request, "Waiting for Admin's Approval")
+        # Optionally, send an email to notify admin or log the registration
+        messages.success(request, "Registration successful. Waiting for Admin's Approval.")
         return redirect('login')
+
     return render(request, 'accounts/User/register.html')
+
+
+def approve_user(request):
+    user = User.objects.all()
+    
+    if request.method == 'POST':
+        budget = request.POST.get('budget')
+        user.is_approved = True
+        user.budget = budget  # Allocate budget
+        user.save()
+        messages.success(request, f"User {user.username} approved and budget allocated.")
+        return redirect('approval_success')  # Redirect to a success page
+    return render(request, 'accounts/User/approve.html', {'user': user})
+
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -289,6 +331,7 @@ def ppmpform(request, year, pr_id):
         'cd_comment': approved_checkouts.first().cd_comment, 
         'SITE_TITLE' : SITE_TITLE,
         'CAMPUS_NAME' : CAMPUS_NAME,
+        'title': 'APPROVED PPMP',
     }
    
 
@@ -1292,7 +1335,8 @@ def preqform_bo(request, pr_id):
         )
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
-            bo_comment=comment_content
+            bo_comment=comment_content,
+            bo_approved_date = timezone.now() 
         )
 
         return redirect('bohome')
@@ -1361,7 +1405,9 @@ def cdppmp_approval(request, pr_id):
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
-            cd_comment=comment_content
+            cd_comment=comment_content,
+            cd_approved_date = timezone.now() 
+            
         )
 
         return redirect('cdppmp')
@@ -1392,8 +1438,10 @@ def cdpurchase(request):
             'submission_date': checkout.submission_date,
             'user': checkout.user,
             'pr_id': checkout.pr_id,
-            'status': checkout.status,
-            'comment' : checkout.comment,
+            'cd_status': checkout.cd_status,  
+            'cd_comment': checkout.cd_comment,
+            'bo_status': checkout.bo_status,
+            'bo_comment': checkout.bo_comment
             
             
            
@@ -1459,7 +1507,8 @@ def preqform_cd(request, pr_id):
         )
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
-            cd_comment=comment_content
+            cd_comment=comment_content,
+            cd_approved_date= timezone.now()
         )
 
         return redirect('cdpurchase')
@@ -1558,7 +1607,8 @@ def boppmp(request, pr_id):
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
-            bo_comment=comment_content
+            bo_comment=comment_content,
+            bo_approved_date = timezone.now()
         )
 
         return redirect('bohome')
