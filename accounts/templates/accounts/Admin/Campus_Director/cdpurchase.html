@@ -9,12 +9,10 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-
- 
-    
-    .table-responsive {
+  .table-responsive {
     margin-top: -2vh; 
-    }
+  }
+
   .table a {
     text-decoration: none;
     color: black;
@@ -24,26 +22,31 @@
     background-color: lightgray; 
     color: black;
   }
-
   .form-control {
     display: block;
-    width: 13.5%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+    width: 13.4%;
     color: var(--bs-body-color);
     appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
-    background-color: transparent; 
-    box-shadow: none; 
-    margin-top: 5vh;
+  }
+
+
+  .form-control:focus {
+    border-color: #87CEEB; 
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+
+  .form-control::selection {
+    background-color: #05708BD2;
+    color: #fff; 
   }
 
   .search-form {
     justify-content: flex-end;
-  }
+  } 
 
   .table-container {
     width: 100%;
@@ -102,15 +105,19 @@
     top: 0;
     z-index: 2;
   }
+
   body{
     overflow:hidden;
   }
+
   html{
     overflow:hidden;
   }
+
   footer{
     height:30%;
   }
+
   .fa-check-circle,
   .fa-times-circle,
   .fa-hourglass-half {
@@ -121,30 +128,29 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-}
+  }
 
-.bck img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    top: -6.5vh;
+  .bck img {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s ease-in-out;
+      position: relative;
+      top: -8.5vh;
 
-}
+  }
 
-.bck:hover img {
-    transform: scale(1.2); 
-}
+  .bck:hover img {
+      transform: scale(1.2); 
+  }
     
     .table-responsive {
     margin-top: -6vh; 
     }
- 
 </style>
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
-  <h1 class="pr-heading text-center pt-4"> <strong>PURCHASE REQUESTS </strong> </h1>
-  <div class="search" style="position: relative; text-align: right;">
+  <h1 class="pr-heading text-center pt-4">  </h1>
+  <div class="search" style="position: relative; text-align: right; margin-top: -1vh;">
     <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
         <i class="fas fa-search" style="font-size: 20px;"></i>
     </span>
@@ -170,7 +176,8 @@
       <th class="text-center">Date Requested</th>
       <th class="text-center">PR ID</th>
       <th class="text-center">Purchase Requests </th>
-      <th class="text-center">Status</th>
+      <th class="text-center">Budget Officer Status</th>
+      <th class="text-center">Campus Director Status</th>
       <th class="text-center">Comment</th> 
     </tr>
   </thead>
@@ -198,13 +205,23 @@
   
       <td class="text-center">
         {% if checkout.status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% elif checkout.status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% else %}
             <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
     </td>
+
+    <td class="text-center">
+      {% if checkout.status == 'approved' %}
+          <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% elif checkout.status == 'declined' %}
+          <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% else %}
+          <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+      {% endif %}
+  </td>
     
     
     <td class="text-center">

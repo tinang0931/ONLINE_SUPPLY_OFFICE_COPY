@@ -1,77 +1,120 @@
 {% extends "accounts/User/main.html" %}
-
-
+ 
 {% load static %}
-
-{% block myppmp %}
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/ppmp101.css' %}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<style>
-    .bck a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
-
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-        /* Apply transition to the transform property */
-    }
-
-    .bck:hover img {
-        transform: scale(1.2);
-       
-    }
-
-    .box1 {
-        transition: transform 0.3s ease-in-out; /* Adding smooth transition */
-        margin-right: 59%;
-    }
-
-    .box1:hover {
-        transform: scale(1.1); /* Zoom in by 10% on hover */
-    }
-</style>
-
-<div class="container-fluid main-content">
-
-    <div class="container">
-        <h1 class="pr text-center pt-4">PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)</h1>
-    </div>
-
-    <div class="bck">
-        <a href="{% url 'userlanding' %}">
-          <img src="{% static 'images/back2.png' %}" alt="Previous">
-        </a>
-      </div>
-
-    <div class="d-flex" id="wrapper">
-        <div class="box-container">
-
-            <a href="{% url 'ppmp' %}" class="box1 create">
-                <div style="color: black; text-decoration: none;">
-                    Create PPMP
-                </div>
-            </a>
-            
+ 
+{% block dashboard %}
+ 
+{% block extra_css %}
+ 
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+ 
+{% endblock extra_css %}
+ 
+ 
+ 
+<body>
+ 
+    <div class="right-container">
+ 
+ 
+        <div class="budget-section">
+ 
+            <div class="budget">
+                Php 100,000.00
+                <div class="Annual">ANNUAL BUDGET</div>
+            </div>
+ 
+        </div>
+ 
+        {% if checkouts %}
+        <div class="title-section">
             {% for checkout in checkouts|dictsortreversed:"year" %}
-            <div class="box ppmp" style="margin-left: -24vh; position: relative;">
-                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}" style="color: white; text-decoration: none; ">
+            <div class="year">
+                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}"
+                    style="color: #FFA500; text-decoration: none;">
                     <span>{{ checkout.year }} PPMP</span>
                 </a>
             </div>
             {% endfor %}
-
         </div>
-
+        {% else %}
+        <div class="title-section">
+            <div class="year">
+                <span>NO APPROVED PPMP</span>
+            </div>
+        </div>
+        {% endif %}
+ 
+ 
+ 
+ 
+ 
+        <div class=" trackers-section">
+            {% for checkout in data %}
+            <div class="tracker">
+                <h3>PPMP TRACKER</h3>
+ 
+                <ul>
+                    <h2>PPMP ID: {{ checkout.pr_id }}</h2>
+                    <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
+                    <li><span class="green"></span> Approved by BO - {{ checkout.bo_approved_date|date:"F d Y" }}</li>
+                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y"
+                        }}</li>
+                </ul>
+ 
+            </div>
+            {% endfor %}
+ 
+            <div class="tracker">
+                <h3>PR TRACKER</h3>
+                <ul>
+                    <h2>PPMP ID: {{ checkout.pr_id }}</h2>
+                    <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
+                    <li><span class="green"></span> Approved by BO - {{ checkout.bo_approved_date|date:"F d Y" }}</li>
+                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y" }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-</div>
-
+ 
+    <div class="left-container">
+        <div class="catalogue-section">
+            <h3>CATALOGUE</h3>
+ 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Brand/Description</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, items in grouped_data.items %}
+                    <tr class="category-row">
+                        <th colspan="4">{{ category }}</th>
+                    </tr>
+ 
+                    {% for p in items %}
+                    <tr class="item-row" id="{{ p.item_id }}">
+                        <td>{{ p.Item_name }}</td>
+                        <td>{{ p.Item_Brand }}</td>
+                        <td>{{ p.Unit }}</td>
+                        <td>{{ p.Price }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+ 
+        </div>
+    </div>
+ 
+ 
+ 
+</body>
+ 
+</html>
+ 
 {% endblock %}

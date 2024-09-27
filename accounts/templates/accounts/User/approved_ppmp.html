@@ -13,7 +13,8 @@
     }
 
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #003566;
+        color: white;
     }
 
     .ctu_logo {
@@ -76,6 +77,10 @@
     animation-play-state: paused;
     transform: scale(1.2); 
 }
+.ml-3, .mx-3 {
+    margin-left: 1rem !important;
+    margin-top: -37px;
+}
 
 </style>
 
@@ -87,16 +92,13 @@
 <div class="container-fluid" style=" height: 88vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
-        <h1 style="margin-left: 35%; "> <strong>APPROVED PPMP {{latest_year}}</strong> </h1>
     </div>
     <div class="home">
-        <a href="{% url 'userlanding' %}">
-            <img src="{% static 'images/home2.png' %}" alt="Home">
         </a>
     </div>
-    <div class="bckbtn"><a href="{% url 'purchase' %}"><img src="{% static 'images/back2.png' %}"></a>
+    <div class="bckbtn"><a href="{% url 'purchase' %}"></a>
     </div>
-    <div class="row">
+    <div class="row"> 
         <div class="col-md-4">
             <div class="search" style="position: relative; text-align: right; margin-top: 2vh">
                 <span class="icon" style="position: absolute; right: -90px; top: 2vh; transform: translateY(-50%); width: 40px;">

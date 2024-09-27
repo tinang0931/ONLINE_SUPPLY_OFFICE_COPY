@@ -1,4 +1,6 @@
 from audioop import reverse
+from bson import Decimal128
+from decimal import Decimal
 import json
 from django.core.exceptions import ValidationError
 from pymongo import MongoClient
@@ -85,7 +87,7 @@ def bac_request(request):
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
         'tracker': tracker,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUESTS',
         'CAMPUS_NAME': CAMPUS_NAME,
   
     }
@@ -101,7 +103,7 @@ def cdlanding(request):
     return render(request, 'accounts/Admin/Campus_Director/cdlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def userlanding(request):
     context = {
         'HEADING_TEXT': HEADING_TEXT,
@@ -112,10 +114,19 @@ def userlanding(request):
     return render(request, 'accounts/User/userlanding.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def ppmp101(request):
+
+    budget = User.objects.all()
+
+
+   
+    data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
+
+
   
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+    
 
     checkout_data = []
 
@@ -127,36 +138,50 @@ def ppmp101(request):
             'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
+       
+
+    
+
+    grouped_data = {}  # Define grouped_data outside of if conditions
+    if request.method == 'POST':
+        item_name = request.POST.get(f'item')
+        item_brand = request.POST.get(f'item_brand')
+        unit = request.POST.get(f'unit')
+        price = request.POST.get(f'price')
+
+        
+        Item.objects.create(
+            user=request.user,
+            item=item_name,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price
+        )
+
+        return redirect('catalogue')
+
+    elif request.method == 'GET':
+        csv_data = CSV.objects.all().order_by('Category')
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = list(group)
 
     context = {
+        'budget': budget,
+        'data': data,
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
+        'grouped_data' : grouped_data,
+        'title' : 'DASHBOARD',
+        'CAMPUS_NAME' : CAMPUS_NAME,
     }
+
 
     return render(request, 'accounts/User/ppmp101.html', context)
 
-def ppmpform(request, year, pr_id):
- 
-    
-    approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user, year=year, pr_id=pr_id)
 
 
-    approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
 
 
-    context = {
-        'approved_items': approved_items,
-        'year': year,
-        'pr_id': pr_id,
-        'bo_comment': approved_checkouts.first().bo_comment,
-        'cd_comment': approved_checkouts.first().cd_comment,
-        'SITE_TITLE': SITE_TITLE,
-        'CAMPUS_NAME': CAMPUS_NAME,
-    }
-
-    return render(request, 'accounts/User/myppmp.html', context)
 
 
 def landing(request):
@@ -172,6 +197,7 @@ def budget_landing(request):
     return render(request, 'accounts/Admin/Budget_Officer/bolanding.html', context)
 
 User = get_user_model()
+
 @unauthenticated_user
 def register(request):
     if request.method == "POST":
@@ -182,26 +208,36 @@ def register(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
-
+        budget = request.POST.get('budget')  
+        
+        # Validate passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
-        
-        if User.objects.filter(username=username).exists():
+
+        # Check for existing username or email
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
+        # Create the user
         user = User.objects.create_user(
-        first_name=first_name,
-        last_name=last_name,
-        username=username, 
-        email=email, 
-        password=password1, 
-        contact1=contact1,    
-        is_active=False)
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password1,
+            contact1=contact1,
+            is_active=False,  # Inactive until email confirmation
+        )
+        user.budget = budget
+        user.user_type = 'regular'  # Automatically set as 'regular'
+        user.is_approved = False  # Requires admin approval after activation
+        user.save()
 
+        # Sending activation email
         current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
+        mail_subject = 'Activate your account'
         message = render_to_string('accounts/User/acc_active_email.html', {
             'user': user,
             'domain': current_site.domain,
@@ -209,13 +245,64 @@ def register(request):
             'token': account_activation_token.make_token(user),
         })
         to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
+        email = EmailMessage(mail_subject, message, to=[to_email])
         email.send()
-        messages.success(request, "Waiting for Admin's Approval")
+
+        messages.success(request, "Registration successful. Please check your email to activate your account.")
         return redirect('login')
+
     return render(request, 'accounts/User/register.html')
+
+def activate(request, uidb64, token):
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+
+
+def bobudget(request):
+    all_users = User.objects.all()
+    unapproved_users = []
+    
+    for user in all_users:
+        if not user.is_approved:
+            if user.is_regular:  
+                unapproved_users.append(user)
+            else:
+                user.is_approved = True
+                user.budget = 0  
+                user.save()
+                messages.success(request, f"Non-regular user {user.username} automatically approved.")
+
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')  # Ensure 'user_id' is obtained from form
+        budget = request.POST.get('budget')
+        
+        for user in unapproved_users:
+            if str(user.id) == user_id:
+                user.is_approved = True
+                user.budget = budget  
+                user.save()
+                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
+                return redirect('approval_success') 
+        
+        messages.error(request, "User does not exist or is already approved.")
+        print(unapproved_users)
+    
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
+
+
+
+
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -232,33 +319,75 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
+
+def approve_user(request):
+   
+    all_users = User.objects.all()
+    
+   
+    unapproved_users = []
+    for user in all_users:
+        if not user.is_approved:
+            if user.is_regular: 
+                unapproved_users.append(user)
+            else:
+               
+                user.is_approved = True
+                user.budget = 0 
+                messages.success(request, f"Non-regular user {user.username} automatically approved.")
+
+    
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id') 
+        budget = request.POST.get('budget')
+        
+       
+        for user in unapproved_users:
+            if str(user.id) == user_id:
+                user.is_approved = True
+                user.budget = budget 
+                user.save()
+                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
+                return redirect('approval_success') 
+        messages.error(request, "User does not exist or is already approved.")
+    
+    return render(request, 'accounts/User/approve.html', {'users': unapproved_users})
+
+
+
+
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
         
         user = authenticate(request, username=username, password=pass1)
-        if user is not None and user.is_active:
-            auth_login(request, user)
-            
-            if user.user_type == 'admin':
-                return redirect('user')  
-            elif user.user_type == 'regular':
-                return redirect('userlanding')
-            elif user.user_type == 'cd':
-                return redirect('cdlanding')
-            elif user.user_type == 'budget':
-                return redirect('budget-landing')
-            elif user.user_type == 'bac':
-                return redirect('baclanding')
-            else:
+        
+        if user is not None:
+            # Check if the user's account is approved
+            if user.is_active:
+                auth_login(request, user)
                 
-                return redirect('login') 
+                # Redirect based on user_type
+                if user.user_type == 'admin':
+                    return redirect('user') 
+                elif user.user_type == 'cd':
+                    return redirect('cdlanding')
+                elif user.user_type == 'budget':
+                    return redirect('budget-landing')
+                elif user.user_type == 'bac':
+                    return redirect('baclanding')
+                else:
+                    return redirect('ppmp101')  # Regular user
+                
+            else:
+                messages.error(request, "Your account is not approved yet. Please wait for admin approval.")
+                return redirect('login')
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
-    return render(request, 'accounts/User/login.html') 
-
+    return render(request, 'accounts/User/login.html')
 
 
 
@@ -280,39 +409,14 @@ def bac_request(request):
 
     tracker = Pr_identifier.objects.select_related('user').all()
     context = {
-        'tracker': tracker
-
+        'tracker': tracker,
+        'title': 'PURCHASE REQUESTS',
+        'CAMPUS_NAME': CAMPUS_NAME,
+  
     }
+        
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
 
-
-
-
-
-@regular_user_required
-def ppmp101(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
-    }
-
-    return render(request, 'accounts/User/ppmp101.html', context)
 
 def ppmpform(request, year, pr_id):
  
@@ -333,6 +437,7 @@ def ppmpform(request, year, pr_id):
         'cd_comment': approved_checkouts.first().cd_comment, 
         'SITE_TITLE' : SITE_TITLE,
         'CAMPUS_NAME' : CAMPUS_NAME,
+        'title': 'APPROVED PPMP',
     }
    
 
@@ -345,24 +450,12 @@ def landing(request):
 @authenticated_user
 def about(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title':'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
 
     return render(request, 'accounts/User/about.html', context)
 
-@regular_user_required
-@authenticated_user
-def registration(request):
-    return render(request, 'accounts/User/registration.html')
-
-@regular_user_required
-def regular_user_only_view(request):
-    return render(request, 'accounts/User/request.html')
-
-
-
-@regular_user_required
 @authenticated_user
 def tracker(request):
     checkouts = Checkout.objects.filter(user=request.user)
@@ -387,7 +480,7 @@ def tracker(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title': "PPMP REQUEST STATUS",
         'CAMPUS_NAME': CAMPUS_NAME,
         
         
@@ -395,56 +488,56 @@ def tracker(request):
     return render(request, 'accounts/User/tracker.html', context)
 
 @authenticated_user
-@regular_user_required
 def prof(request):
     return render(request, 'accounts/User/prof.html')
 
 
 @authenticated_user
-@regular_user_required
 def profile(request):
     return render(request, 'accounts/User/profile.html')
 
 @bac_required
 def bac_about(request):
     context = {
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html', context)
 
 
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Pr_identifier, PR
+
 def cdpurchase_approval(request, pr_id):
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
-
+ 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('price')
-        
 
+ 
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
-
+ 
         PR.objects.filter(pr_identifier=checkout).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
             unit_cost=price,
-       
-            
+
         )
-
-
+ 
+ 
         Pr_identifier.objects.filter(pr_id=pr_id).update(
             status=new_status,
             comment=comment_content
         )
-
+ 
         return redirect('cdpurchase')
-
+ 
     elif request.method == 'GET':
         checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
         checkout_items = PR.objects.filter(pr_identifier=checkouts)
@@ -454,13 +547,23 @@ def cdpurchase_approval(request, pr_id):
             'user': request.user,
             'pr_id': pr_id,
             'status': checkouts.status,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PURCHASE REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
     }
-
-
-
+ 
+ 
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
+ 
+ 
+def purchase_cd(request, pr_id):
+    pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
+    checkout_items = PR.objects.filter(pr_identifier__pr_id=pr_id)
+    context = {
+        'checkout_items': checkout_items,
+        'pr_id': pr_id,
+        'purpose': pr_identifier.purpose,
+    }
+    return render(request, 'accounts/Admin/Campus_Director/purchase_cd.html', context)
 
 
 def purchase_cd(request, pr_id):
@@ -501,7 +604,7 @@ def bac_home(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title':'PPMP OF THE USERS',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
 
@@ -516,14 +619,14 @@ def bac_purchaserequest(request, pr_id):
         'user': request.user,
         'pr_id': pr_id,
         'status': checkouts.status,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUEST ITEMS',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
         
     
-
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_purchaserequest.html', context)
 
+@bac_required
 def bac_ppmp(request, pr_id):
     checkouts = get_object_or_404(Checkout, pr_id=pr_id)
     checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
@@ -531,7 +634,7 @@ def bac_ppmp(request, pr_id):
             
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST',
             'CAMPUS_NAME': CAMPUS_NAME,
     }
 
@@ -597,7 +700,7 @@ def bac_ppmp(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST',
             'CAMPUS_NAME': CAMPUS_NAME,
      }
     return render(request, 'accounts/Admin/BAC_Secretariat/bac_ppmp.html', context)
@@ -689,7 +792,7 @@ def bo(request):
 @authenticated_user
 def boabout(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Budget_Officer/boabout.html', context)
@@ -698,8 +801,6 @@ def boabout(request):
 
 @budget_required
 @authenticated_user
-def bohistory(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
 
 @cd_required
 @authenticated_user
@@ -710,7 +811,7 @@ def cd(request):
 @authenticated_user
 def cdabout(request):
     context = {
-    'SITE_TITLE': SITE_TITLE,
+    'title': 'CTU-AC SUPPLY OFFICE REQUEST MONITORING SYSTEM',
     'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Campus_Director/cdabout.html', context)
@@ -739,7 +840,7 @@ def cdppmp(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title':'PPMP REQUEST',
         'CAMPUS_NAME': CAMPUS_NAME,   
     }
     return render(request, 'accounts/Admin/Campus_Director/cdppmp.html', context)
@@ -748,7 +849,7 @@ def cdppmp(request):
 @authenticated_user
 def cdresolution(request):
     context ={
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'RESOLUTION',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
     return render(request, 'accounts/Admin/Campus_Director/cdresolution.html', context)
@@ -776,67 +877,9 @@ def user(request):
     users = User.objects.all()
     return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
 
-
-def register_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        first_name = request.POST['fname']
-        last_name = request.POST['lname']
-        email = request.POST['email']
-        contact1 = request.POST['contact1']
-        password1 = request.POST['pass1']
-        password2 = request.POST['pass2']
-        user_type = request.POST['user_type']
-
-        if password1 != password2:
-            messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/Admin/System_Admin/user.html')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/Admin/System_Admin/user.html')
-            
-
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-
-        current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
-        message = render_to_string('accounts/User/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-        return redirect('user')
-    return render(request, 'accounts/Admin/System_Admin/user.html')
-
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
-    
 def requests(request):
     return render(request, 'accounts/Admin/System_Admin/requests.html')
 
-  
-   
 
    
 def delete_user(request, username):
@@ -844,7 +887,7 @@ def delete_user(request, username):
     user.delete()
     return redirect('user')
 
-
+@authenticated_user
 def addItem(request):
     if request.method == 'POST':
         item_data = request.POST.get('item')
@@ -868,7 +911,7 @@ def addItem(request):
     return render(request, 'accounts/User/ppmp.html')
 
 
-@regular_user_required
+@authenticated_user
 def catalogue (request):
     grouped_data = {}  # Define grouped_data outside of if conditions
     if request.method == 'POST':
@@ -895,13 +938,13 @@ def catalogue (request):
 
     context = {
         'grouped_data' : grouped_data,
-        'SITE_TITLE' : SITE_TITLE,
+        'title' : 'CATALOGUE',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
     return render(request, 'accounts/User/catalogue.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def myppmp(request):
     
     approved_checkouts = Checkout.objects.filter(bo_status='approved', cd_status = 'approved')
@@ -919,10 +962,10 @@ def myppmp(request):
 
 
 
-@regular_user_required
-def ppmp(request):
+@authenticated_user
+def ppmp(request):    
     context = {
-        'SITE_TITLE' : SITE_TITLE,
+        'title' : 'CREATE PROJECT PROCUREMENT MANAGEMENT PLAN(PPMP)',
         'CAMPUS_NAME' : CAMPUS_NAME,
     }
     if request.method == 'POST':
@@ -935,6 +978,7 @@ def ppmp(request):
         )
         
         items = request.POST.getlist('item')
+        
         item_brands = request.POST.getlist('item_brand')
         units = request.POST.getlist('unit')
         estimate_budgets = request.POST.getlist('estimate_budget')
@@ -990,16 +1034,17 @@ def ppmp(request):
     
         items = Item.objects.all()
         context['items'] = items
+        
         return render(request, 'accounts/User/ppmp.html', context)
 
 
 
 
 from django.core.files.base import ContentFile
-@regular_user_required
+@authenticated_user
 def purchase(request):
     context = {
-                'SITE_TITLE': SITE_TITLE,
+                'title': 'CREATE PURCHASE REQUEST',
                 'CAMPUS_NAME': CAMPUS_NAME,
                 }
     if request.method == 'POST':
@@ -1008,7 +1053,6 @@ def purchase(request):
         item_brands = request.POST.getlist('item_brands[]')
         units = request.POST.getlist('units[]')
         prices = request.POST.getlist('prices[]')
-        print(prices)
         quantity = request.POST.getlist('quantity[]')
         total = request.POST.get('total_amount')
 
@@ -1036,15 +1080,17 @@ def purchase(request):
                 total_cost=total
             )
             
+            # Remove the following line, it is not necessary
             PR_Items.objects.all().delete()
 
-            return redirect('purchasetracker')
+        # Move the redirect statement outside the loop
+        return redirect('purchasetracker')
 
     elif request.method == 'GET':
-       
         items = PR_Items.objects.all()
         context['items'] = items  # Add 'items' to the context dictionary
         return render(request, 'accounts/User/purchase.html', context)
+
 
 from bson import ObjectId
 
@@ -1053,6 +1099,8 @@ def generate_auto_pr_id():
     pr_id = str(ObjectId())
     return pr_id
 
+
+@authenticated_user
 def approved_ppmp(request):
     if request.method == 'POST':
         item = request.POST.get('item')
@@ -1088,7 +1136,7 @@ def approved_ppmp(request):
         context = {
             'checkout_items': checkout_items,
             'latest_year': latest_year,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'APPROVED PPMP',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         return render(request, 'accounts/User/approved_ppmp.html', context)
@@ -1099,7 +1147,7 @@ def item_list(request):
     return render(request, 'item_list.html', {'items': items})
 
 
-@authenticated_user
+@bac_required
 def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
@@ -1157,7 +1205,7 @@ def bac_dashboard(request):
 
         context = {
             'grouped_data': grouped_data,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'AVIALABLE ITEMS',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         
@@ -1275,7 +1323,7 @@ def bohome(request):
 
     context = {
         'checkouts': checkout_data,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PPMP REQUEST',
         'CAMPUS_NAME':CAMPUS_NAME,
     }
 
@@ -1287,9 +1335,9 @@ def preqform_bo(request, pr_id):
 
     if request.method == 'POST':
         new_status = request.POST.get('new_status')
-        print(new_status)
+ 
         comment_content = request.POST.get('comment_content')
-        print(comment_content)
+
 
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
@@ -1333,21 +1381,23 @@ def preqform_bo(request, pr_id):
         )
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
-            bo_comment=comment_content
+            bo_comment=comment_content,
+            bo_approved_date = timezone.now() 
         )
 
         return redirect('bohome')
        
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+        checkout_item = CheckoutItems.objects.filter(checkout=checkouts)
         context = {
             'checkouts': checkouts,
-            'checkout_items': checkout_items,
+            'checkout_item': checkout_item,
             'pr_id': pr_id,
-            'SITE_TITLE': SITE_TITLE,
+            'title': 'PPMP REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
+        
         return render(request, 'accounts/Admin/Budget_Officer/preqform_bo.html', context)
 
         
@@ -1401,7 +1451,9 @@ def cdppmp_approval(request, pr_id):
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
-            cd_comment=comment_content
+            cd_comment=comment_content,
+            cd_approved_date = timezone.now() 
+            
         )
 
         return redirect('cdppmp')
@@ -1414,7 +1466,7 @@ def cdppmp_approval(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'SITE_TITLE':SITE_TITLE,
+            'title':'PPMP REQUEST APPROVAL',
             'CAMPUS_NAME':CAMPUS_NAME,
      }
 
@@ -1432,8 +1484,10 @@ def cdpurchase(request):
             'submission_date': checkout.submission_date,
             'user': checkout.user,
             'pr_id': checkout.pr_id,
-            'status': checkout.status,
-            'comment' : checkout.comment,
+            'cd_status': checkout.cd_status,  
+            'cd_comment': checkout.cd_comment,
+            'bo_status': checkout.bo_status,
+            'bo_comment': checkout.bo_comment
             
             
            
@@ -1443,7 +1497,7 @@ def cdpurchase(request):
     context = {
         'checkouts': checkout_data,
         'user': request.user,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUESTS',
         'CAMPUS_NAME': CAMPUS_NAME,     
     }
 
@@ -1499,7 +1553,8 @@ def preqform_cd(request, pr_id):
         )
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
-            cd_comment=comment_content
+            cd_comment=comment_content,
+            cd_approved_date= timezone.now()
         )
 
         return redirect('cdpurchase')
@@ -1534,12 +1589,12 @@ def checkout_items_view(request):
     return render(request, 'attachment/checkout_items.html', context)
 
 
-@regular_user_required
+@authenticated_user
 def purchasetracker(request):
     tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
     context = {
         'tracker': tracker,
-        'SITE_TITLE': SITE_TITLE,
+        'title': 'PURCHASE REQUEST TRACKER',
         'CAMPUS_NAME': CAMPUS_NAME,
     }
 
@@ -1598,7 +1653,8 @@ def boppmp(request, pr_id):
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
             bo_status=new_status,
-            bo_comment=comment_content
+            bo_comment=comment_content,
+            bo_approved_date = timezone.now()
         )
 
         return redirect('bohome')
@@ -1615,4 +1671,6 @@ def boppmp(request, pr_id):
 
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
-  
+
+def new_ppmp(request):
+    return render(request, 'accounts/User/new_ppmp.html')

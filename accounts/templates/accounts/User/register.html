@@ -164,6 +164,9 @@
             margin-bottom: 15px;
             width: calc(100% / 1.2 - 20px);
         }
+
+      
+            
     </style>
 
 </head>
@@ -172,13 +175,7 @@
     <div class="upper">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
 
     <div class="container">
-        {% if messages %}
-
-        {% for message in messages %}
-        {{ message }}
-        {% endfor %}
-
-        {% endif %}
+      
 
 
         <div class="title">Register</div>
@@ -194,60 +191,48 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="username" placeholder="CTU ID" required
-                        oninput="maxLengthCheck(this, 11)">
+                    <input type="number" name="username" placeholder="CTU ID" required oninput="maxLengthCheck(this, 11)">
                 </div>
-                <script>
-                    function maxLengthCheck(object, maxLength) {
-                        if (object.value.length > maxLength)
-                            object.value = object.value.slice(0, maxLength);
-                    }
-                </script>
-
+                
                 <div class="input-box">
                     <span class="details"></span>
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
-
+                
                 <div class="input-box">
                     <span class="details"></span>
                     <input type="text" name="fname" placeholder="First Name" required>
                 </div>
-
+                
                 <div class="input-box">
                     <span class="details"></span>
                     <input type="text" name="lname" placeholder="Last Name" required>
                 </div>
-
+                
                 <div class="input-box">
                     <span class="details"></span>
-                    <input type="number" name="contact1" placeholder="Contact No." required
-                        oninput="maxLengthCheck(this, 12)">
+                    <input type="number" name="contact1" placeholder="Contact No." required oninput="maxLengthCheck(this, 12)">
                 </div>
+                
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" name="pass1" placeholder="Password" required oninput="maxLengthCheck(this, 15)">
+                </div>
+                
+                <div class="input-box">
+                    <span class="details"></span>
+                    <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+                </div>
+                
+               
+                
                 <script>
                     function maxLengthCheck(object, maxLength) {
                         if (object.value.length > maxLength)
                             object.value = object.value.slice(0, maxLength);
                     }
                 </script>
-
-                <div class="input-box">
-                    <span class="details"></span>
-                    <input type="password" name="pass1" placeholder="Password" required
-                        oninput="maxLengthCheck(this, 15)">
-                </div>
-                <script>
-                    function maxLengthCheck(object, maxLength) {
-                        if (object.value.length > maxLength)
-                            object.value = object.value.slice(0, maxLength);
-                    }
-                </script>
-
-                <div class="input-box">
-                    <span class="details"></span>
-                    <input type="password" name="pass2" placeholder="Confirm Password:" required
-                        oninput="maxLengthCheck(this, 15)">
-                </div>
+                
                 <script>
                     function maxLengthCheck(object, maxLength) {
                         if (object.value.length > maxLength)

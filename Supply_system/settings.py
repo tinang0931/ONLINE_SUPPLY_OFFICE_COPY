@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+                                            
 from pathlib import Path
 import os
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$0$us08g%r@266))x3tyr5_hg0c1&k6u9ak#2zaj=(!!i-d^r+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','172.28.52.134','172.28.20.119', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -93,7 +93,6 @@ DATABASES = {
     },
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -127,6 +126,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
@@ -159,9 +160,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rlphtzn@gmail.com'  
-EMAIL_HOST_PASSWORD = 'ofaxjigazohzueet'  
+EMAIL_HOST_PASSWORD = 'tsgpspouovkxlwyx'  
 AUTH_USER_MODEL = 'accounts.User'
+
+
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
+
 MEDIA_DIR = BASE_DIR / 'media'
+
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-BASE_URL = 'http://127.0.0.1:8000'
+ 

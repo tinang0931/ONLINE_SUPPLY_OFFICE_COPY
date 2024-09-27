@@ -1,10 +1,7 @@
 {% extends "accounts/Admin/System_Admin/admin_home.html" %}
-
-
 {% load static %}
 
 {% block user %}
-
 
 <style>
     /* Modal styles */
@@ -22,11 +19,9 @@
 
     .modal-content {
         background-color: #ffffff;
-        /* White background */
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        /* Adjust the width as needed */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         position: relative;
     }
@@ -38,89 +33,62 @@
         font-size: 20px;
         cursor: pointer;
         color: #333;
-        /* Dark gray color for close icon */
-    }
-
-    .user-details {
-        margin-bottom: 20px;
-    }
-
-    .input {
-        padding: none;
     }
 
     .input-box {
-        margin-bottom: 5px;
+        margin: 20px 0;
     }
 
-    .input-box {
+    .input-box input {
         width: 100%;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background-color: #f9f9f9;
-        /* Light gray background */
-        color: #333;
-        /* Dark gray text color */
+        height: 2vw;
+        border: none;
+        outline: none;
+        border-radius: 20px;
+        border-bottom: 2px solid transparent;
+        font-size: 95%;
+        padding: 20px;
+        box-shadow: 0 1px 3px;
+        transition: all 0.5s ease;
     }
 
-    .register-details {
-        display: fixed;
-        flex-direction: row;
-        /* Align checkboxes horizontally */
-        justify-content: space-between;
-        /* Adjust as needed */
-        align-items: center;
-        /* Center checkboxes vertically */
-        margin-bottom: 15px;
-    }
-
-    .checkbox-label {
-        display: flex;
-        align-items: center;
-        margin-right: 15px;
-        /* Add margin between checkboxes */
-    }
-
-    .checkbox-box {
-        margin-left: 5px;
-        color: #007bff;
-        /* Blue color for checkbox label */
-    }
-
-    .modal-footer {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 15px;
-    }
-
-    /* Style for the submit button */
     .btn-primary {
-        background-color: #28a745;
-        /* Green background */
-        color: white;
+        background-color: #f38c06;
+        width: 80%;
+        color: #003566;
+        font-size: 1.2rem;
         padding: 10px 20px;
         border: none;
-        border-radius: 4px;
+        border-radius: 20px;
+        margin-left: 50px;
         cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        color: black;
+        transition: background-color 0.5s, transform 0.5s, box-shadow 0.5s;
+    }
+
+    .modal-title {
+        text-align: center;
+        font-size: 2.6rem;
+        font-weight: 700;
+        margin: 0;
+        padding: 10px 0;
+        color: #003566;
     }
 </style>
 
-
-
-
-
 <div class="container-fluid" style="height: 68vh;">
     <div class="container">
-        <i class="fas fa-user-friends two-user-icon"></i>
+        <i class="fas fa-user-friends"></i>
         <h1 class="user">USERS</h1>
     </div>
     <div class="search">
         <i class="fas fa-search"
             style="position: absolute; top: 40%; transform: translateY(-50%); left: 85%; color: #05708BD2;"></i>
-        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search " id="search_bar_request"
-            oninput="filterTable()" style="border: 2px solid  #254b6e; border-radius: 25px;">
+        <input class="form-control mb-3 pr-5 pl-5" type="text" placeholder="Search" id="search_bar_request"
+            oninput="filterTable()" style="border: 2px solid #254b6e; border-radius: 25px;">
     </div>
 
     <button class="adduser" onclick="openModal()"
@@ -128,348 +96,209 @@
         <span class="bi bi-person-plus"></span> Add User
     </button>
 
-
-
     <div class="usertable table-responsive">
-
         <table id="myTable" class="usertable">
             <thead>
-
                 <tr>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">CTU ID</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">FIRST NAME</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">LAST NAME</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">EMAIL</th>
-                    <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO. </th>
+                    <th class="text-center text-nowrap" style="min-width: 13rem;">CONTACT NO.</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">ROLE</th>
                     <th class="text-center text-nowrap" style="min-width: 13rem;">ACTION</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-
                 {% for user in users %}
-                <tr id="{{ user.id }}">
-                    <td>
-                        <span class="editable" data-field="username">{{ user.username }}</span>
-                        <input id="username_{{ user.id }}" type="text" value="{{ user.username }}"
-                            oninput="change_val('username_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="first_name">{{ user.first_name }}</span>
-                        <input id="first_name_{{ user.id }}" type="text" value="{{ user.first_name }}"
-                            oninput="change_val('first_name_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="last_name">{{ user.last_name }}</span>
-                        <input id="last_name_{{ user.id }}" type="text" value="{{ user.last_name }}"
-                            oninput="change_val('last_name_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="email">{{ user.email }}</span>
-                        <input id="email_{{ user.id }}" type="text" value="{{ user.email }}"
-                            oninput="change_val('email_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-                    <td>
-                        <span class="editable" data-field="contact1">{{ user.contact1 }}</span>
-                        <input id="contact1_{{ user.id }}" type="text" value="{{ user.contact1 }}"
-                            oninput="change_val('contact1_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-
-                    <td>
-                        <span class="editable" data-field="user_type">{{ user.user_type }}</span>
-                        <input id="user_type_{{ user.id }}" type="text" value="{{ user.user_type }}"
-                            oninput="change_val('user_type_{{ user.id }}')" class="edit-input" style="display: none">
-                    </td>
-
+                <tr id="user_{{ user.id }}">
+                    <td><span>{{ user.username }}</span><input class="edit-input" type="text"
+                            value="{{ user.username }}" style="display: none;"></td>
+                    <td><span>{{ user.first_name }}</span><input class="edit-input" type="text"
+                            value="{{ user.first_name }}" style="display: none;"></td>
+                    <td><span>{{ user.last_name }}</span><input class="edit-input" type="text"
+                            value="{{ user.last_name }}" style="display: none;"></td>
+                    <td><span>{{ user.email }}</span><input class="edit-input" type="email" value="{{ user.email }}"
+                            style="display: none;"></td>
+                    <td><span>{{ user.contact1 }}</span><input class="edit-input" type="text"
+                            value="{{ user.contact1 }}" style="display: none;"></td>
+                    <td><span>{{ user.user_type }}</span><input class="edit-input" type="text"
+                            value="{{ user.user_type }}" style="display: none;"></td>
                     <td>
                         <div style="display: flex; justify-content: center; gap: 20px;">
-                            <a href="#" class="edit-icon" style="text-align: center;" onclick="editRow('{{ user.id }}')"
+                            <a href="#" class="edit-icon" onclick="editRow(event, 'user_{{ user.id }}')"
                                 id="edit_icon_{{ user.id }}">
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
-
-
-
-
+                            {% csrf_token %}
                             <input id="form_username_{{ user.id }}" type="hidden" name="username_{{ user.id }}"
                                 value="{{ user.username }}">
                             <input id="form_first_name_{{ user.id }}" type="hidden" name="first_name_{{ user.id }}"
                                 value="{{ user.first_name }}">
                             <input id="form_last_name_{{ user.id }}" type="hidden" name="last_name_{{ user.id }}"
                                 value="{{ user.last_name }}">
-                            <input id="form_email_{{ user.id }}" type="number" style="display: none;"
-                                name="email_{{ user.id }}" value="{{ user.email }}">
-                            <input id="form_contact1_{{ user.id }}" type="number" style="display: none;"
-                                name="contact1_{{ user.id }}" value="{{ user.contact1 }}">
+                            <input id="form_email_{{ user.id }}" type="hidden" name="email_{{ user.id }}"
+                                value="{{ user.email }}">
+                            <input id="form_contact1_{{ user.id }}" type="hidden" name="contact1_{{ user.id }}"
+                                value="{{ user.contact1 }}">
                             <input id="form_user_type_{{ user.id }}" type="hidden" name="user_type_{{ user.id }}"
                                 value="{{ user.user_type }}">
-
-                            <button type="submit" class="save-icon" style="display: none;"
-                                onclick="saveEdit('{{ user.id }}')" id="save_icon_{{ user.id }}"><i
-                                    class="fas fa-check text-success"></i></button>
-                            <button type="button" class="cancel-icon" style="display: none;"
-                                onclick="cancelEdit('{{ user.id }}')" id="cancel_icon_{{ user.id }}"><i
-                                    class="fas fa-times text-danger"></i></button>
-
-
-
-
+                            <button type="submit" class="save-icon" onclick="saveItem(event, 'user_{{ user.id }}')"
+                                style="display: none;">
+                                <i class="fas fa-check text-success"></i>
+                            </button>
+                            <button type="button" class="cancel-icon" onclick="cancelEdit(event, 'user_{{ user.id }}')"
+                                style="display: none;">
+                                <i class="fas fa-times text-danger"></i>
+                            </button>
                             {% if user.username %}
-
                             <a href="{% url 'delete_user' user.username %}" style="text-align: center;">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                             {% endif %}
-
                         </div>
                     </td>
-
-
-
                 </tr>
-
-
                 {% endfor %}
-
             </tbody>
-
-
         </table>
     </div>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-
             <h5 class="modal-title">Add User</h5>
-
-            <form action="{% url 'register_user' %}" method="post">
+            <form action="{% url 'register_user' %}" method="post" onsubmit="return validateForm()">
                 {% csrf_token %}
-
-                <div class="user-details">
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="username" placeholder="CTU ID:" required
-                            oninput="maxLengthCheck(this, 11)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="email" name="email" placeholder="Email:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="fname" placeholder="First Name:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="text" name="lname" placeholder="Last Name:" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="number" name="contact1" placeholder="Contact No. 1:" required
-                            oninput="maxLengthCheck(this, 12)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass1" placeholder="Password:" required
-                            oninput="maxLengthCheck(this, 15)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="input-box">
-                        <span class="details"></span>
-                        <input type="password" name="pass2" placeholder="Confirm Password:" required
-                            oninput="maxLengthCheck(this, 15)">
-                    </div>
-                    <script>
-                        function maxLengthCheck(object, maxLength) {
-                            if (object.value.length > maxLength)
-                                object.value = object.value.slice(0, maxLength);
-                        }
-                    </script>
-
-                    <div class="register-details">
-                        <span class="details">Type of user</span>
-
-                        <div class="input-box">
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="admin">
-                                <div class="checkbox-box">Admin</div>
-                            </label>
-
-                            <label class="checkbox-label" for="bacCheckbox">
-                                <input type="checkbox" name="user_type" id="bacCheckbox" value="bac">
-                                <div class="checkbox-box">BAC Secretariat</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="cdCheckbox" value="cd">
-                                <div class="checkbox-box">Campus Director</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="budgetCheckbox" value="budget">
-                                <div class="checkbox-box">Budget Officer</div>
-                            </label>
-
-                            <label class="checkbox-label" for="regularCheckbox">
-                                <input type="checkbox" name="user_type" id="regularCheckbox" value="regular">
-                                <div class="checkbox-box">Regular User</div>
-                            </label>
-
-
-                        </div>
-
-
-
-                        <div class="modal-footer ">
-                            <button type="submit" value="submit" class="btn btn-primary">Register</button>
-
+                <div class="input-box">
+                    <input type="number" id="username" name="username" placeholder="CTU ID:" required>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="email" name="email" placeholder="Email:" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="fname" name="fname" placeholder="First Name:" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="lname" name="lname" placeholder="Last Name:" required>
+                </div>
+                <div class="input-box">
+                    <input type="number" id="contact1" name="contact1" placeholder="Contact No.:" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="pass1" name="pass1" placeholder="Password:" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="pass2" name="pass2" placeholder="Confirm Password:" required>
+                </div>
+                <div>
+                    <span>Type of user</span>
+                    <label for="adminCheckbox">
+                        <input type="radio" name="user_type" id="adminCheckbox" value="admin"> Admin
+                    </label>
+                    <label for="bacCheckbox">
+                        <input type="radio" name="user_type" id="bacCheckbox" value="bac"> BAC Secretariat
+                    </label>
+                    <label for="cdCheckbox">
+                        <input type="radio" name="user_type" id="cdCheckbox" value="cd"> Campus Director
+                    </label>
+                    <label for="budgetCheckbox">
+                        <input type="radio" name="user_type" id="budgetCheckbox" value="budget"> Budget Officer
+                    </label>
+                    <label for="regularCheckbox">
+                        <input type="radio" name="user_type" id="regularCheckbox" value="regular"> Regular User
+                    </label>
+                    <button type="submit" class="btn-primary">Register</button>
+                </div>
             </form>
-
-
-
-
-
         </div>
+    </div>
 
+    <script>
+        function filterTable() {
+            const searchTerm = document.getElementById('search_bar_request').value.toLowerCase();
+            const tableRows = document.querySelectorAll('#myTable tbody tr');
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+            });
+        }
 
-        <script>
-
-            function change_val(id) {
-                input = document.getElementById(id);
-                form_input = document.getElementById('form_' + id);
-                form_input.value = input.value;
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('edit-icon')) {
+                editRow(event);
             }
-
-
-            function editRow(userId) {
-                var row = document.getElementById(userId);
-
-                var editIcon = row.querySelector('.edit-icon');
-                var saveButton = row.querySelector('.save-icon');
-                var cancelButton = row.querySelector('.cancel-icon');
-                var editInputs = row.querySelectorAll('.edit-input');
-                var editableSpans = row.querySelectorAll('.editable');
-
-                editIcon.style.display = 'none';
-                cancelButton.style.display = 'inline-block';
-
-                // Show input fields for editing
-                editInputs.forEach(input => {
-                    input.style.display = 'block';
-                });
-
-                // Hide the spans displaying current values
-                editableSpans.forEach(span => {
-                    span.style.display = 'none';
-                });
-
-                // Add event listener to the cancel button
-                cancelButton.addEventListener('click', () => {
-                    // Reset the form to its initial state
-                    editIcon.style.display = 'inline-block';
-                    saveButton.style.display = 'none';
-                    cancelButton.style.display = 'none';
-                    editInputs.forEach(input => {
-                        input.style.display = 'none';
-                    });
-                    editableSpans.forEach(span => {
-                        span.style.display = 'inline-block';
-                    });
-                });
-
-                saveButton.addEventListener('click', () => {
-                    var form = row.querySelector('form');
-                    form.submit();
-                });
-
+            if (event.target.classList.contains('save-icon')) {
+                saveItem(event);
             }
-
-
-            function cancelEdit(userId) {
-                // Show the edit icon
-                document.querySelector(`#edit_icon_${userId}`).style.display = 'inline-block';
-
-                // Hide the save and cancel icons
-                document.querySelector(`#save_icon_${userId}`).style.display = 'none';
-                document.querySelector(`#cancel_icon_${userId}`).style.display = 'none';
-
-                // Hide the input fields for editing
-                const editInputs = document.querySelectorAll(`.edit-input-${userId}`);
-                editInputs.forEach(input => {
-                    input.style.display = 'none';
-                });
-
-                // Show the span elements
-                const spanElements = document.querySelectorAll(`.editable-${userId}`);
-                spanElements.forEach(span => {
-                    span.style.display = 'inline-block';
-                });
+            if (event.target.classList.contains('cancel-icon')) {
+                cancelEdit(event);
             }
+        });
 
-            function saveEdit(userId) {
-                // Perform the logic to save the edited data, for example, sending an AJAX request
+        function editRow(event) {
+            const row = event.target.closest('tr');
+            row.querySelectorAll('.edit-icon, .fas.fa-trash-alt').forEach(icon => {
+                icon.style.display = 'none';
+            });
+            row.querySelectorAll('.edit-input').forEach(input => {
+                input.style.display = 'inline-block';
+                input.previousElementSibling.style.display = 'none';
+            });
+            row.querySelector('.save-icon').style.display = 'inline-block';
+            row.querySelector('.cancel-icon').style.display = 'inline-block';
+        }
 
-                // After saving, update the display
-                cancelEdit(userId);
-            }
-        </script>
+
+        function saveItem(event) {
+            const row = event.target.closest('tr');
+            row.querySelectorAll('.edit-input').forEach(input => {
+                const value = input.value;
+                const name = input.getAttribute('name');
+                row.querySelector(`span[data-name="${name}"]`).innerText = value;
+                input.previousElementSibling.innerText = value;
+                input.style.display = 'none';
+            });
+            row.querySelectorAll('.editable').forEach(span => {
+                span.style.display = 'inline-block';
+            });
+            row.querySelector('.save-icon').style.display = 'none';
+            row.querySelector('.cancel-icon').style.display = 'none';
+        }
+
+        function cancelEdit(event) {
+            const row = event.target.closest('tr');
+            row.querySelectorAll('.edit-input').forEach(input => {
+                const originalValue = input.previousElementSibling.innerText;
+                input.value = originalValue; // Reset input value to original
+                input.style.display = 'none';
+                input.previousElementSibling.style.display = 'inline-block'; // Make previous content visible
+            });
+            row.querySelectorAll('.editable').forEach(span => {
+                span.style.display = 'inline-block';
+            });
+            row.querySelectorAll('.edit-icon, .fas.fa-trash-alt').forEach(icon => {
+                icon.style.display = 'inline-block'; // Display edit and delete icons
+            });
+            row.querySelector('.save-icon').style.display = 'none';
+            row.querySelector('.cancel-icon').style.display = 'none';
+        }
 
 
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
 
-        <script>
-            // Get the modal element
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
             const modal = document.getElementById('myModal');
-
-            // Function to open the modal
-            function openModal() {
-                modal.style.display = 'block';
-            }
-
-            // Function to close the modal
-            function closeModal() {
+            if (event.target === modal) {
                 modal.style.display = 'none';
             }
+        }
+    </script>
 
-            // Close the modal if the user clicks outside the modal content
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            }
-        </script>
-
-
-
-
-        {% endblock %}
-        {% block admin_home %}
-        {% endblock %}
+    {% endblock %}
