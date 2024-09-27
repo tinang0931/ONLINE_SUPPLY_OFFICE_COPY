@@ -168,53 +168,87 @@
       box-shadow: 10px 10px 4px #00438a;
     }
 
-    /* Catalogue Section */
     .catalogue-section {
       background-color: #F0F0F0;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border: groove;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border: 1px groove #003566;
+      transition: box-shadow 0.3s ease, border 0.3s ease;
     }
-
+    
     .catalogue-section h3 {
       background-color: #003363;
       color: #FFA500;
       padding: 10px;
       border-radius: 5px;
       text-align: center;
-      font-size: 1rem;
-      font-weight: bold;
       font-size: 2rem;
+      font-weight: bold;
       margin: 0;
     }
     
-    .catalogue-section:hover{
-    border: 2px solid #FFFFFF;
-    box-shadow: 10px 10px 4px #00438a;
+    .catalogue-section:hover {
+      border: 2px solid #FFFFFF;
+      box-shadow: 10px 10px 10px rgba(0, 67, 138, 0.8);
+    }
+    
+    .table-container {
+      width: 100%;
+      overflow-y: auto;
+      max-height: 300px; /* Limit the table's height */
+      margin-top: 20px;
     }
     
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
     }
-
-    th, td {
+    
+    thead th, tbody td {
       padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ddd;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #003566;
     }
-
-    th {
+    
+    thead th {
       background-color: #003566;
       color: #F0F0F0;
+      font-weight: bold;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0; /* Keeps the header at the top while scrolling */
     }
-
+    
+    tbody td {
+      background-color: #FAFAFA;
+    }
+    
+    .category-row th {
+      text-align: center;
+      background-color: #00438a;
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      padding: 15px 10px;
+    }
+    
+    .category-row th:hover {
+      background-color: #FFA500;
+    }
+    
+    .item-row:hover {
+      background-color: #f2f2f2;
+    }
+    
     .category-heading {
-    text-align: center;
-    font-weight: bold;
-    color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #003566;
+      padding: 10px;
+      font-size: 1.5rem;
+      border-radius: 5px;
     }
+    

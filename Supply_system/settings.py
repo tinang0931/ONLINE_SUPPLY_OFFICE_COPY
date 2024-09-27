@@ -163,6 +163,7 @@ EMAIL_HOST_USER = 'rlphtzn@gmail.com'
 EMAIL_HOST_PASSWORD = 'tsgpspouovkxlwyx'  
 AUTH_USER_MODEL = 'accounts.User'
 
+
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  
 
 MEDIA_DIR = BASE_DIR / 'media'
