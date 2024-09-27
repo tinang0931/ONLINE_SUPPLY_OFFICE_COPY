@@ -17,7 +17,8 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
     email = models.EmailField(unique=True)
-
+    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    
     USER_TYPES = [
         ('admin', 'Admin'),
         ('regular', 'Regular User'),
@@ -33,6 +34,7 @@ class User(AbstractUser):
     is_cd = models.BooleanField(default=False)  
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
 
 
 
@@ -41,16 +43,19 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-    
+        # Automatically update the is_<type> fields based on user_type
         self.is_admin = self.user_type == 'admin'
         self.is_regular = self.user_type == 'regular'
         self.is_cd = self.user_type == 'cd'
         self.is_budget = self.user_type == 'budget'
         self.is_bac = self.user_type == 'bac'
-
+        
         super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username
+
+
 
 
 class Item(models.Model):
@@ -144,8 +149,12 @@ class Pr_identifier(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=20)
-    comment = models.TextField(blank=True, null=True)
+    bo_status = models.CharField(max_length=20 )
+    bo_comment = models.TextField(blank=True, null=True)
+    bo_approved_date = models.DateTimeField(null=True, blank=True) 
+    cd_status = models.CharField(max_length=20)
+    cd_comment = models.TextField(blank=True, null=True)
+    cd_approved_date = models.DateTimeField(null=True, blank=True) 
 
     def generate_pr_id(self):
         pr_id = str(uuid.uuid4().int)[:8]
@@ -161,8 +170,10 @@ class Checkout(models.Model):
     bac_status = models.CharField(max_length=20)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
+    bo_approved_date = models.DateTimeField(null=True, blank=True) 
     cd_status = models.CharField(max_length=20)
     cd_comment = models.TextField(blank=True, null=True)
+    cd_approved_date = models.DateTimeField(null=True, blank=True) 
     last_updated = models.DateTimeField(auto_now=True)
 
     @property
