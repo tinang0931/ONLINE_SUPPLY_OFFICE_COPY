@@ -321,36 +321,34 @@ def activate(request, uidb64, token):
 
 
 def approve_user(request):
-    # Get all users
+   
     all_users = User.objects.all()
     
-    # Manually filter users who are not approved using a loop
+   
     unapproved_users = []
     for user in all_users:
         if not user.is_approved:
-            if user.is_regular:  # Assuming there's an 'is_regular' field
+            if user.is_regular: 
                 unapproved_users.append(user)
             else:
-                # Automatically approve non-regular users
+               
                 user.is_approved = True
-                user.budget = 0  # Set a default budget or handle budget logic for non-regular users
-                user.save()
+                user.budget = 0 
                 messages.success(request, f"Non-regular user {user.username} automatically approved.")
 
-    # If a regular user is being approved via the form submission
+    
     if request.method == 'POST':
-        user_id = request.POST.get('user_id')  # Assuming you're passing a user ID from the form
+        user_id = request.POST.get('user_id') 
         budget = request.POST.get('budget')
         
-        # Find the specific user in the list of unapproved regular users
+       
         for user in unapproved_users:
             if str(user.id) == user_id:
                 user.is_approved = True
-                user.budget = budget  # Allocate budget
+                user.budget = budget 
                 user.save()
                 messages.success(request, f"Regular user {user.username} approved and budget allocated.")
-                return redirect('approval_success')  # Redirect to a success page
-        
+                return redirect('approval_success') 
         messages.error(request, "User does not exist or is already approved.")
     
     return render(request, 'accounts/User/approve.html', {'users': unapproved_users})

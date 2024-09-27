@@ -16,7 +16,7 @@ urlpatterns = [
     path('bac/', views.bac, name='bac'),
     path('baclanding/', views.baclanding, name='baclanding'),
     path('userlanding/', views.userlanding, name='userlanding'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    path('ppmp101/', views.ppmp101, name='ppmp101'),
     path('login/', views.login, name='login'),
     path('item/<int:pk>/list/', views.item_list, name='item_list'),
     path('register/', views.register, name='register'),
@@ -86,4 +86,5 @@ urlpatterns = [
     path('bac_purchaserequest/<str:pr_id>/', views.bac_purchaserequest, name='bac_purchaserequest'),
     path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
     path('approve/', views.approve_user, name='approve_user'),
+    path('new_ppmp/', views.new_ppmp, name='new_ppmp'),
 ]
