@@ -117,10 +117,7 @@ def userlanding(request):
 @authenticated_user
 def ppmp101(request):
 
-    budget = User.objects.all()
 
-
-   
     data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
 
 
@@ -142,7 +139,7 @@ def ppmp101(request):
 
     
 
-    grouped_data = {}  # Define grouped_data outside of if conditions
+    grouped_data = {}  
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
         item_brand = request.POST.get(f'item_brand')
@@ -210,17 +207,14 @@ def register(request):
         password2 = request.POST['pass2']
         budget = request.POST.get('budget')  
         
-        # Validate passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/User/register.html')
 
-        # Check for existing username or email
         if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/User/register.html')
 
-        # Create the user
         user = User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
@@ -228,14 +222,13 @@ def register(request):
             email=email,
             password=password1,
             contact1=contact1,
-            is_active=False,  # Inactive until email confirmation
+            is_active=False, 
         )
         user.budget = budget
-        user.user_type = 'regular'  # Automatically set as 'regular'
-        user.is_approved = False  # Requires admin approval after activation
+        user.user_type = 'regular'
+        user.is_approved = False
         user.save()
 
-        # Sending activation email
         current_site = get_current_site(request)
         mail_subject = 'Activate your account'
         message = render_to_string('accounts/User/acc_active_email.html', {
@@ -267,93 +260,37 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
-
-
-def bobudget(request):
-    all_users = User.objects.all()
-    unapproved_users = []
-    
-    for user in all_users:
-        if not user.is_approved:
-            if user.is_regular:  
-                unapproved_users.append(user)
-            else:
-                user.is_approved = True
-                user.budget = 0  
-                user.save()
-                messages.success(request, f"Non-regular user {user.username} automatically approved.")
-
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')  # Ensure 'user_id' is obtained from form
-        budget = request.POST.get('budget')
-        
-        for user in unapproved_users:
-            if str(user.id) == user_id:
-                user.is_approved = True
-                user.budget = budget  
-                user.save()
-                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
-                return redirect('approval_success') 
-        
-        messages.error(request, "User does not exist or is already approved.")
-        print(unapproved_users)
-    
-    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
-
-
-
-
-
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
-
-
-
 def approve_user(request):
-   
     all_users = User.objects.all()
-    
-   
+
+    # Get all unapproved regular users
     unapproved_users = []
     for user in all_users:
         if not user.is_approved:
-            if user.is_regular: 
+            if user.is_regular:  # Regular users need manual approval
                 unapproved_users.append(user)
-            else:
-               
+            else:  # Non-regular users are automatically approved
                 user.is_approved = True
-                user.budget = 0 
+                user.budget = 0  # Set budget to 0 for non-regular users
+                user.save()  # Make sure to save changes to the user
                 messages.success(request, f"Non-regular user {user.username} automatically approved.")
 
-    
     if request.method == 'POST':
-        user_id = request.POST.get('user_id') 
+        username = request.POST.get('user_id')  # Fetch the username from the form
         budget = request.POST.get('budget')
-        
-       
-        for user in unapproved_users:
-            if str(user.id) == user_id:
-                user.is_approved = True
-                user.budget = budget 
-                user.save()
-                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
-                return redirect('approval_success') 
-        messages.error(request, "User does not exist or is already approved.")
-    
-    return render(request, 'accounts/User/approve.html', {'users': unapproved_users})
 
+        try:
+            # Find the user using the username (primary key)
+            user = User.objects.get(username=username, is_approved=False, is_regular=True)
+            user.is_approved = True
+            user.budget = float(budget)  # Ensure budget is saved as a float/decimal
+            user.save()  # Save changes to the user
+            messages.success(request, f"Regular user {user.username} approved and budget allocated.")
+            return redirect('approval_success')  # Redirect to a success page
+        except User.DoesNotExist:
+            messages.error(request, "User does not exist or is already approved.")
 
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
 
 
 

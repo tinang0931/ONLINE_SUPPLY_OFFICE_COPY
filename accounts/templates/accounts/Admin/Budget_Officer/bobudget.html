@@ -32,19 +32,19 @@
       <tbody>
         {% for user in users %}
         <tr>
-          
-            {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}"> <!-- Add hidden user_id field -->
-            <td class="text-center">{{ user.username }}</td>
-            <td class="text-center">
-              <label for="budget_{{ user.id }}">Enter Budget:</label>
-              <input type="number" name="budget" id="budget_{{ user.id }}" placeholder="Enter budget" required>
-            </td>
-            <td class="text-center">
-              <button type="submit" class="btn btn-success">Approve Budget</button>
-            </td>
-         
-        </tr>
+          <form method="POST" action="{% url 'approve_user' %}">
+              {% csrf_token %}
+              <input type="hidden" name="user_id" value="{{ user.username }}">  
+              <td class="text-center">{{ user.username }}</td>
+              <td class="text-center">
+                  <label for="budget_{{ user.username }}">Enter Budget:</label>
+                  <input type="number" name="budget" id="budget_{{ user.username }}" placeholder="Enter budget" required>
+              </td>
+              <td class="text-center">
+                  <button type="submit" class="btn btn-success">Approve Budget</button>
+              </td>
+          </form>
+      </tr>
         {% empty %}
         <tr>
           <td colspan="3" class="text-center">No unapproved regular users available</td>

@@ -43,7 +43,6 @@ urlpatterns = [
     path('abstract/', views.abstract, name='abstract'),
     path('bo/', views.bo, name='bo'),
     path('boabout/', views.boabout, name='boabout'),
-    path('bobudget/', views.bobudget, name='bobudget'),
     path('cd/', views.cd, name='cd'),
     path('cdlanding/', views.cdlanding, name='cdlanding'),
     path('cdabout/', views.cdabout, name='cdabout'),
