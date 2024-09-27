@@ -18,8 +18,7 @@ class User(AbstractUser):
     contact1 = models.PositiveIntegerField()
     email = models.EmailField(unique=True)
     budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    is_approved = models.BooleanField(default=False)
-
+    
     USER_TYPES = [
         ('admin', 'Admin'),
         ('regular', 'Regular User'),
@@ -35,6 +34,8 @@ class User(AbstractUser):
     is_cd = models.BooleanField(default=False)  
     is_budget = models.BooleanField(default=False)
     is_bac = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+
 
 
     @property

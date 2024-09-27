@@ -1,0 +1,139 @@
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
+
+{% load static %}
+
+{% block bohome %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-success {
+    background-color: #b5e550;
+    color: white;
+  }
+
+  .no-comment {
+    background-color: lightgray;
+    color: black;
+  }
+
+  .table th {
+    background-color: #254b6e;
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .form-control {
+    width: 18%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    border-radius: 20px;
+    margin-left: auto;
+    border: 2px solid #05708BD2;
+    display: inline-block;
+  }
+
+  .form-control:focus {
+    border-color: #87CEEB;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  .form-control::selection {
+    background-color: #05708BD2;
+    color: #fff;
+  }
+
+  .pr-heading {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+    padding: 10px;
+  }
+
+  .bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    top: -5vh;
+  }
+
+  .bck:hover img {
+    transform: scale(1.2);
+  }
+
+  .table-responsive {
+    margin-top: -4vh;
+  }
+
+  .container-fluid {
+    height: 85vh;
+    overflow-y: auto;
+    margin-top: 1px;
+  }
+</style>
+
+<div class="container-fluid">
+  <h1 class="pr-heading text-center pt-4">Budget Approval</h1>
+
+  <div class="bck">
+    <a href="{% url 'budget-landing' %}">
+      <img src="{% static 'images/back2.png' %}" alt="Previous">
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">USER</th>
+          <th class="text-center">BUDGET</th>
+          <th class="text-center">APPROVE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}"> <!-- Add hidden user_id field -->
+            <td class="text-center">{{ user.username }}</td>
+            <td class="text-center">
+              <label for="budget_{{ user.id }}">Enter Budget:</label>
+              <input type="number" name="budget" id="budget_{{ user.id }}" placeholder="Enter budget" required>
+            </td>
+            <td class="text-center">
+              <button type="submit" class="btn btn-success">Approve User</button>
+            </td>
+         
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="text-center">No unapproved regular users available</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+{% endblock %}

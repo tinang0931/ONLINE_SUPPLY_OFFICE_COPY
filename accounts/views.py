@@ -200,45 +200,108 @@ User = get_user_model()
 
 @unauthenticated_user
 def register(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        budget = request.POST.get('budget')
-
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        budget = request.POST.get('budget')  
+        
+        # Validate passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return redirect('register')
+            return render(request, 'accounts/User/register.html')
 
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists.")
-            return redirect('register')
+        # Check for existing username or email
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/User/register.html')
 
-        user = User.objects.create_user(username=username, email=email, password=password1)
+        # Create the user
+        user = User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password1,
+            contact1=contact1,
+            is_active=False,  # Inactive until email confirmation
+        )
         user.budget = budget
-        user.is_approved = False  # Set to unapproved by default
+        user.user_type = 'regular'  # Automatically set as 'regular'
+        user.is_approved = False  # Requires admin approval after activation
         user.save()
-        
 
-        # Optionally, send an email to notify admin or log the registration
-        messages.success(request, "Registration successful. Waiting for Admin's Approval.")
+        # Sending activation email
+        current_site = get_current_site(request)
+        mail_subject = 'Activate your account'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+
+        messages.success(request, "Registration successful. Please check your email to activate your account.")
         return redirect('login')
 
     return render(request, 'accounts/User/register.html')
 
+def activate(request, uidb64, token):
 
-def approve_user(request):
-    user = User.objects.all()
-    
-    if request.method == 'POST':
-        budget = request.POST.get('budget')
-        user.is_approved = True
-        user.budget = budget  # Allocate budget
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
         user.save()
-        messages.success(request, f"User {user.username} approved and budget allocated.")
-        return redirect('approval_success')  # Redirect to a success page
-    return render(request, 'accounts/User/approve.html', {'user': user})
+        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+
+
+def bobudget(request):
+    all_users = User.objects.all()
+    unapproved_users = []
+    
+    for user in all_users:
+        if not user.is_approved:
+            if user.is_regular:  
+                unapproved_users.append(user)
+            else:
+                user.is_approved = True
+                user.budget = 0  
+                user.save()
+                messages.success(request, f"Non-regular user {user.username} automatically approved.")
+
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')  # Ensure 'user_id' is obtained from form
+        budget = request.POST.get('budget')
+        
+        for user in unapproved_users:
+            if str(user.id) == user_id:
+                user.is_approved = True
+                user.budget = budget  
+                user.save()
+                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
+                return redirect('approval_success') 
+        
+        messages.error(request, "User does not exist or is already approved.")
+        print(unapproved_users)
+    
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
+
+
+
 
 
 def activate(request, uidb64, token):
@@ -256,32 +319,77 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
+
+def approve_user(request):
+    # Get all users
+    all_users = User.objects.all()
+    
+    # Manually filter users who are not approved using a loop
+    unapproved_users = []
+    for user in all_users:
+        if not user.is_approved:
+            if user.is_regular:  # Assuming there's an 'is_regular' field
+                unapproved_users.append(user)
+            else:
+                # Automatically approve non-regular users
+                user.is_approved = True
+                user.budget = 0  # Set a default budget or handle budget logic for non-regular users
+                user.save()
+                messages.success(request, f"Non-regular user {user.username} automatically approved.")
+
+    # If a regular user is being approved via the form submission
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')  # Assuming you're passing a user ID from the form
+        budget = request.POST.get('budget')
+        
+        # Find the specific user in the list of unapproved regular users
+        for user in unapproved_users:
+            if str(user.id) == user_id:
+                user.is_approved = True
+                user.budget = budget  # Allocate budget
+                user.save()
+                messages.success(request, f"Regular user {user.username} approved and budget allocated.")
+                return redirect('approval_success')  # Redirect to a success page
+        
+        messages.error(request, "User does not exist or is already approved.")
+    
+    return render(request, 'accounts/User/approve.html', {'users': unapproved_users})
+
+
+
+
+
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
         
         user = authenticate(request, username=username, password=pass1)
-        if user is not None and user.is_active:
-            auth_login(request, user)
-            
-            
-            if user.user_type == 'admin':
-                return redirect('user') 
-            elif user.user_type == 'cd':
-                return redirect('cdlanding')
-            elif user.user_type == 'budget':
-                return redirect('budget-landing')
-            elif user.user_type == 'bac':
-                return redirect('baclanding')
-            else:
+        
+        if user is not None:
+            # Check if the user's account is approved
+            if user.is_active:
+                auth_login(request, user)
                 
-                return redirect('ppmp101') 
+                # Redirect based on user_type
+                if user.user_type == 'admin':
+                    return redirect('user') 
+                elif user.user_type == 'cd':
+                    return redirect('cdlanding')
+                elif user.user_type == 'budget':
+                    return redirect('budget-landing')
+                elif user.user_type == 'bac':
+                    return redirect('baclanding')
+                else:
+                    return redirect('ppmp101')  # Regular user
+                
+            else:
+                messages.error(request, "Your account is not approved yet. Please wait for admin approval.")
+                return redirect('login')
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
-    return render(request, 'accounts/User/login.html') 
-
+    return render(request, 'accounts/User/login.html')
 
 
 
@@ -695,8 +803,7 @@ def boabout(request):
 
 @budget_required
 @authenticated_user
-def bohistory(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
+
 
 @cd_required
 @authenticated_user
@@ -773,67 +880,9 @@ def user(request):
     users = User.objects.all()
     return render (request, 'accounts/Admin/System_Admin/user.html',{'users': users})
 
-
-def register_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        first_name = request.POST['fname']
-        last_name = request.POST['lname']
-        email = request.POST['email']
-        contact1 = request.POST['contact1']
-        password1 = request.POST['pass1']
-        password2 = request.POST['pass2']
-        user_type = request.POST['user_type']
-
-        if password1 != password2:
-            messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/Admin/System_Admin/user.html')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/Admin/System_Admin/user.html')
-            
-
-        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-
-        current_site = get_current_site(request)
-        mail_subject = 'Activation link has been sent to your email id'
-        message = render_to_string('accounts/User/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        to_email = email
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-        return redirect('user')
-    return render(request, 'accounts/Admin/System_Admin/user.html')
-
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
-    
 def requests(request):
     return render(request, 'accounts/Admin/System_Admin/requests.html')
 
-  
-   
 
    
 def delete_user(request, username):

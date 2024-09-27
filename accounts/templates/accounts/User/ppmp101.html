@@ -17,17 +17,15 @@
     <div class="right-container">
 
 
-        {% for checkout in budget %}
         <div class="budget-section">
 
             <div class="budget">
-                
-                <div class="Annual">{{ checkout.annual_budget }}</div>
+                Php 100,000.00
+                <div class="Annual">ANNUAL BUDGET</div>
             </div>
 
         </div>
 
-        {% endfor %}
         {% if checkouts %}
         <div class="title-section">
             {% for checkout in checkouts|dictsortreversed:"year" %}
