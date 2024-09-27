@@ -11,16 +11,6 @@
     color: black;
   }
 
-  .bg-success {
-    background-color: #b5e550;
-    color: white;
-  }
-
-  .no-comment {
-    background-color: lightgray;
-    color: black;
-  }
-
   .table th {
     background-color: #254b6e;
     color: white;
@@ -28,6 +18,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
+
   }
 
   .form-control {
@@ -61,28 +52,6 @@
     padding: 10px;
   }
 
-  .bck a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .bck img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    top: -5vh;
-  }
-
-  .bck:hover img {
-    transform: scale(1.2);
-  }
-
-  .table-responsive {
-    margin-top: -4vh;
-  }
-
   .container-fluid {
     height: 85vh;
     overflow-y: auto;
@@ -92,12 +61,8 @@
 
 <div class="container-fluid">
   <h1 class="pr-heading text-center pt-4">Budget Approval</h1>
-
-  <div class="bck">
-    <a href="{% url 'budget-landing' %}">
-      <img src="{% static 'images/back2.png' %}" alt="Previous">
-    </a>
-  </div>
+  <link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"rel="stylesheet">
 
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -111,27 +76,27 @@
       <tbody>
         {% for user in users %}
         <tr>
-          
-            {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}"> <!-- Add hidden user_id field -->
-            <td class="text-center">{{ user.username }}</td>
-            <td class="text-center">
-              <label for="budget_{{ user.id }}">Enter Budget:</label>
-              <input type="number" name="budget" id="budget_{{ user.id }}" placeholder="Enter budget" required>
-            </td>
-            <td class="text-center">
-              <button type="submit" class="btn btn-success">Approve User</button>
-            </td>
-         
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" class="text-center">No unapproved regular users available</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{ user.id }}"> 
+          <td class="text-center">{{ user.username }}</td>
+          <td class="text-center">
+            <label for="budget_{{ user.id }}">Enter Budget:</label>
+            <input type="number" name="budget" id="budget_{{ user.id }}" placeholder="Enter budget" required>
+          </td>
+          <td class="text-center">
+            <button type="submit" class="btn btn-success">Approve User</button>
+          </td>
+       
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="text-center">No unapproved regular users available</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
