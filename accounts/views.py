@@ -163,7 +163,6 @@ def ppmp101(request):
             grouped_data[key] = list(group)
 
     context = {
-        'budget': budget,
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
@@ -286,7 +285,7 @@ def approve_user(request):
             user.budget = float(budget)  # Ensure budget is saved as a float/decimal
             user.save()  # Save changes to the user
             messages.success(request, f"Regular user {user.username} approved and budget allocated.")
-            return redirect('approval_success')  # Redirect to a success page
+            return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
             messages.error(request, "User does not exist or is already approved.")
 
