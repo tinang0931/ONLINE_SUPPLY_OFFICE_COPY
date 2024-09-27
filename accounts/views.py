@@ -113,7 +113,7 @@ def userlanding(request):
 
 
 @authenticated_user
-def ppmp101(request):
+def dashboard(request):
   
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
 
@@ -135,7 +135,7 @@ def ppmp101(request):
         'CAMPUS_NAME' : CAMPUS_NAME
     }
 
-    return render(request, 'accounts/User/ppmp101.html', context)
+    return render(request, 'accounts/User/dashboard.html', context)
 
 
 
@@ -234,7 +234,7 @@ def login(request):
                 return redirect('baclanding')
             else:
                 
-                return redirect('ppmp101') 
+                return redirect('dashboard') 
         else:
             messages.error(request, "Invalid login credentials. Please try again.")
     
@@ -652,8 +652,8 @@ def boabout(request):
 
 @budget_required
 @authenticated_user
-def bohistory(request):
-    return render(request, 'accounts/Admin/Budget_Officer/bohistory.html')
+def borequest(request):
+    return render(request, 'accounts/Admin/Budget_Officer/borequest.html')
 
 @cd_required
 @authenticated_user
@@ -1575,3 +1575,6 @@ def boppmp(request, pr_id):
 
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
+
+def new_ppmp(request):
+    return render(request, 'accounts/User/new_ppmp.html')

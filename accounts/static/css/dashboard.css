@@ -37,7 +37,20 @@
       margin-left: 20px;
     }
 
-    /* Budget Section */
+    .right-container {
+    padding: 20px;
+}
+
+
+
+
+
+.budget-section {
+    margin-bottom: 20px;
+}
+
+
+
     .budget-section {
       text-align: center;
       background-color: #f5f6f7;
@@ -71,6 +84,9 @@
       margin: 0;
     }
 
+
+    
+
     /* Title Section */
     .title-section {
       text-align: center;
@@ -81,8 +97,10 @@
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 20px;
+      position: relative;
     }
 
+  
     .title-section:hover{
       border: 2px solid #FFFFFF;
       box-shadow: 10px 10px 4px #00438a;
