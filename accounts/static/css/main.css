@@ -338,7 +338,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   .ctu_logo {
     position: absolute;
     left: 26px; 
-    margin-top: -10vh;
+    top: -9px; 
     width: 100px;
     height: 100px;
     margin: 0 3px;

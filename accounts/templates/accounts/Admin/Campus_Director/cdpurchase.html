@@ -98,12 +98,13 @@
   }
 
   .table th {
-    background-color: rgba(5, 112, 139, 0.822);
+    background-color: #003566DE;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
+    font-family: 'Poppins', sans-serif;
   }
 
   body{
@@ -146,7 +147,53 @@
     .table-responsive {
     margin-top: -6vh; 
     }
+
+    
+/* Example animations for icons */
+.animate-icon {
+  transition: transform 0.3s;
+}
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  font-size: 3vh;
+}
+
+.fa-times {
+  animation: shake 0.5s infinite;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4">  </h1>
@@ -185,16 +232,16 @@
   <tbody>
     {% for checkout in checkouts %}
     <tr>
-      <td class="text-center">
+      <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         {{ checkout.submission_date }}
       </td>
 
-      <td class="text-center">
+      <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         <a href="{% url 'cdpurchase_approval' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a>
        
       </td> 
 
-      <td>
+      <td style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         
          {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase  request .
         
@@ -224,7 +271,7 @@
   </td>
     
     
-    <td class="text-center">
+    <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
       {% if checkout.comment %}
           <p> {{ checkout.comment }}</p>
       {% else %}
