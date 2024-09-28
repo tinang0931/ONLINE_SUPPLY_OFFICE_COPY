@@ -116,15 +116,14 @@ def userlanding(request):
 
 @authenticated_user
 def ppmp101(request):
+    # Retrieve the current user's budget
+    user_budget = request.user.budget
 
-
+    # Existing logic for retrieving checkout data
     data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
 
-
-  
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
     
-
     checkout_data = []
 
     for checkout in checkouts:
@@ -135,18 +134,17 @@ def ppmp101(request):
             'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
-       
 
+    grouped_data = {}  # This will hold CSV data grouped by category
     
-
-    grouped_data = {}  
+    # Handle POST request (for adding a new item)
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
         price = request.POST.get(f'price')
 
-        
+        # Create the new Item object
         Item.objects.create(
             user=request.user,
             item=item_name,
@@ -155,23 +153,27 @@ def ppmp101(request):
             unit_cost=price
         )
 
+        # Redirect after saving the item
         return redirect('catalogue')
 
+    # Handle GET request (for loading the CSV data)
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
 
+    # Context data to pass to the template
     context = {
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
-        'grouped_data' : grouped_data,
-        'title' : 'DASHBOARD',
-        'CAMPUS_NAME' : CAMPUS_NAME,
+        'user_budget': user_budget,  # Include the logged-in user's budget
+        'grouped_data': grouped_data,
+        'title': 'DASHBOARD',
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
-
+    # Render the template with the updated context
     return render(request, 'accounts/User/ppmp101.html', context)
 
 @authenticated_user
@@ -268,6 +270,52 @@ def register(request):
         return redirect('login')
 
     return render(request, 'accounts/User/register.html')
+
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST.get('user_type')
+ 
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+
+        user = User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password1,
+            contact1=contact1,
+            is_active=False, 
+        )
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activate your account'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+
+        messages.success(request, "Registration successful. Please check your email to activate your account.")
+        return redirect('login')
+
+    return render(request, 'accounts/Admin/System_Admin/user.html')
 
 def activate(request, uidb64, token):
 
