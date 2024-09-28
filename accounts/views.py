@@ -280,28 +280,24 @@ def register_user(request):
         contact1 = request.POST['contact1']
         password1 = request.POST['pass1']
         password2 = request.POST['pass2']
-        user_type = request.POST.get('user_type')
- 
+        user_type = request.POST['user_type']
+
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'accounts/Admin/System_Admin/user.html')
 
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username or email is already in use.")
             return render(request, 'accounts/Admin/System_Admin/user.html')
+            
 
-        user = User.objects.create_user(
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            email=email,
-            password=password1,
-            contact1=contact1,
-            is_active=False, 
-        )
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
 
         current_site = get_current_site(request)
-        mail_subject = 'Activate your account'
+        mail_subject = 'Activation link has been sent to your email id'
         message = render_to_string('accounts/User/acc_active_email.html', {
             'user': user,
             'domain': current_site.domain,
@@ -309,16 +305,15 @@ def register_user(request):
             'token': account_activation_token.make_token(user),
         })
         to_email = email
-        email = EmailMessage(mail_subject, message, to=[to_email])
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
         email.send()
-
-        messages.success(request, "Registration successful. Please check your email to activate your account.")
-        return redirect('login')
-
+        return redirect('user')
     return render(request, 'accounts/Admin/System_Admin/user.html')
 
 def activate(request, uidb64, token):
-
+    User = get_user_model()
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
@@ -330,6 +325,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+    
 
 def approve_user(request):
     all_users = User.objects.all()
