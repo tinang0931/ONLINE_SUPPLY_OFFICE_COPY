@@ -53,13 +53,13 @@
   }
 
   .btn-success {
-    background-color: #FFA500;  /* Green background */
-    color: #003566;               /* White text */
+    background-color: #003566;  /* Green background */
+    color: #FFA500;               /* White text */
     border: none;               /* Remove default border */
     padding: 10px 20px;         /* Padding inside the button */
     font-size: 14px;            /* Font size */
     font-weight: bold;          /* Bold text */
-    border-radius: 5px;         /* Rounded corners */
+    border-radius: 8px;         /* Rounded corners */
     cursor: pointer;            /* Change cursor to pointer when hovering */
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
