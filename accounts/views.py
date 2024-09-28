@@ -302,6 +302,7 @@ def approve_user(request):
         username = request.POST.get('user_id')  # Fetch the username from the form
         budget = request.POST.get('budget')
 
+
         try:
             # Find the user using the username (primary key)
             user = User.objects.get(username=username, is_approved=False, is_regular=True)
@@ -312,6 +313,7 @@ def approve_user(request):
             return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
             messages.error(request, "User does not exist or is already approved.")
+        
 
     return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
 

@@ -9,6 +9,7 @@
   }
 
   .table th {
+    font-family: Poppins;
     background-color: #254b6e;
     color: white;
     cursor: pointer;
@@ -19,8 +20,13 @@
  
   td{
     font-weight: bold;
+    font-family: Poppins;
   }
   
+  th{
+    font-weight: bold;
+  }
+
   .form-control {
     width: 18%;
     padding: .375rem .75rem;
@@ -102,3 +108,5 @@
     overflow-y: auto;
     margin-top: 1px;
   } */
+
+  
