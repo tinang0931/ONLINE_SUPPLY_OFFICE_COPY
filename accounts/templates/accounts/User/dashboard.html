@@ -1,31 +1,31 @@
 {% extends "accounts/User/main.html" %}
- 
+
 {% load static %}
- 
+
 {% block dashboard %}
- 
+
 {% block extra_css %}
- 
+
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
- 
+
 {% endblock extra_css %}
- 
- 
- 
+
+
+
 <body>
- 
+
     <div class="right-container">
- 
- 
+
+
         <div class="budget-section">
- 
+
             <div class="budget">
                 Php 100,000.00
                 <div class="Annual">ANNUAL BUDGET</div>
             </div>
- 
+
         </div>
- 
+
         {% if checkouts %}
         <div class="title-section">
             {% for checkout in checkouts|dictsortreversed:"year" %}
@@ -44,16 +44,16 @@
             </div>
         </div>
         {% endif %}
- 
- 
- 
- 
- 
+
+
+
+
+
         <div class=" trackers-section">
             {% for checkout in data %}
             <div class="tracker">
                 <h3>PPMP TRACKER</h3>
- 
+
                 <ul>
                     <h2>PPMP ID: {{ checkout.pr_id }}</h2>
                     <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
@@ -61,26 +61,26 @@
                     <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y"
                         }}</li>
                 </ul>
- 
+
             </div>
             {% endfor %}
- 
+
             <div class="tracker">
                 <h3>PR TRACKER</h3>
                 <ul>
                     <h2>PPMP ID: {{ checkout.pr_id }}</h2>
                     <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
                     <li><span class="green"></span> Approved by BO - {{ checkout.bo_approved_date|date:"F d Y" }}</li>
-                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y" }}</li>
+                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y"
+                        }}</li>
                 </ul>
             </div>
         </div>
     </div>
- 
     <div class="left-container">
         <div class="catalogue-section">
             <h3>CATALOGUE</h3>
- 
+
             <table>
                 <thead>
                     <tr>
@@ -95,7 +95,7 @@
                     <tr class="category-row">
                         <th colspan="4">{{ category }}</th>
                     </tr>
- 
+
                     {% for p in items %}
                     <tr class="item-row" id="{{ p.item_id }}">
                         <td>{{ p.Item_name }}</td>
@@ -107,14 +107,14 @@
                     {% endfor %}
                 </tbody>
             </table>
- 
+
         </div>
     </div>
- 
- 
- 
+
+
+
 </body>
- 
+
 </html>
- 
+
 {% endblock %}

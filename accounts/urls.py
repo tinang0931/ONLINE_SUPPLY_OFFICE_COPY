@@ -43,7 +43,6 @@ urlpatterns = [
     path('abstract/', views.abstract, name='abstract'),
     path('bo/', views.bo, name='bo'),
     path('boabout/', views.boabout, name='boabout'),
-    path('bobudget/', views.bobudget, name='bobudget'),
     path('cd/', views.cd, name='cd'),
     path('cdlanding/', views.cdlanding, name='cdlanding'),
     path('cdabout/', views.cdabout, name='cdabout'),
@@ -86,4 +85,5 @@ urlpatterns = [
     path('bac_purchaserequest/<str:pr_id>/', views.bac_purchaserequest, name='bac_purchaserequest'),
     path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
     path('approve/', views.approve_user, name='approve_user'),
+    path('new_ppmp/', views.new_ppmp, name='new_ppmp'),
 ]
