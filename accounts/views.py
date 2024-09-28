@@ -163,7 +163,7 @@ def ppmp101(request):
             grouped_data[key] = list(group)
 
     context = {
-        'budget': budget,
+        'budget': budget_required,
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
