@@ -1,0 +1,80 @@
+{% extends "accounts/User/main.html" %}  <!-- Extend the global layout -->
+
+{% load static %}
+
+{% block header %}
+    {% include "accounts/User/header.html" %}  <!-- Include the header here -->
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Right Container (Budget, Title, and Trackers Section) -->
+        <div class="col-md-8 right-container">
+            <!-- Budget Section -->
+            <div class="budget-section">
+                <div class="budget">
+                    Php 100,000.00
+                    <div class="Annual"> Annual Budget</div>
+                </div>
+            </div>
+
+            <!-- Title Section -->
+            <div class="title-section">
+                <div class="year">2024 PPMP</div>
+            </div>
+
+            <!-- Trackers Section -->
+            <div class="trackers-section">
+                <!-- PPMP Tracker -->
+                <div class="tracker">
+                    <h3>PPMP TRACKER</h3>
+                    <ul>
+                        <li><span class="green"></span> PPMP Request Sent - 09/01/24</li>
+                        <li><span class="green"></span> Approved by BO - 09/02/24</li>
+                        <li><span class="orange"></span> Waiting for CD Response - 09/02/24</li>
+                    </ul>
+                </div>
+
+                <!-- PR Tracker -->
+                <div class="tracker">
+                    <h3>PR TRACKER</h3>
+                    <ul>
+                        <li><span class="green"></span> PPMP Request Sent - 09/01/24</li>
+                        <li><span class="green"></span> Approved by BO - 09/02/24</li>
+                        <li><span class="orange"></span> Waiting for CD Response - 09/02/24</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Container -->
+        <div class="col-md-4 left-container">
+            <div class="catalogue-section">
+                <h3>CATALOGUE</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Brand/Description</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alcohol</td>
+                            <td>ethyl alcohol</td>
+                            <td>bottle</td>
+                            <td>Php 50.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

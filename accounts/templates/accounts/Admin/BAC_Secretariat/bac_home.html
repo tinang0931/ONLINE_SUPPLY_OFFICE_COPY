@@ -51,12 +51,13 @@
   }
 
   .table th {
-    background-color: rgba(5, 90, 129, 0.822);
+    background-color:  #003566DE;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
+    font-family: 'Poppins', sans-serif;
   }
 
   .bck a  {
@@ -81,7 +82,53 @@
 .table thead th[rowspan='2'] {
   vertical-align: middle;
 }
+
+
+/* Example animations for icons */
+.animate-icon {
+  transition: transform 0.3s;
+}
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  font-size: 3vh;
+}
+
+.fa-times {
+  animation: shake 0.5s infinite;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
+  
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"><strong></strong></h1>
@@ -115,33 +162,33 @@
       </tr>
     </thead>
 
-    <tbody>
+    <tbody">
       {% if checkouts %}
       {% for checkout in checkouts %}
-      <tr>
-        <td style="text-align: center;">{{ checkout.user }}</td>
-        <td style="text-align: center;"> <a href="{% url 'bac_ppmp' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a> </td>
-        <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
-        <td style="text-align: center;">{{ checkout.submission_date }}</td>
-        <td class="text-center">
+      <tr style="color:#003566DE;  font-family: 'Poppins', sans-serif; ">
+        <td style="text-align: center; color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ checkout.user }}</td>
+        <td style="text-align: center; color:#003566DE;  font-family: 'Poppins', sans-serif;"> <a href="{% url 'bac_ppmp' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a> </td>
+        <td style="text-align: center; color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
+        <td style="text-align: center; color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ checkout.submission_date }}</td>
+        <td class="text-center" >
           {% if checkout.bo_status == 'approved' %}
-              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-          {% elif checkout.bo_status == 'declined' %}
-              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-          {% else %}
-              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-          {% endif %}
+          <i class="fas fa-check text-success fa-2x animate-icon"></i>
+              {% elif checkout.bo_status == 'declined' %}
+              <i class="	fas fa-times"></i>
+               {% else %}
+               <i class="fa fa-spinner fa-spin"></i>     
+                  {% endif %}
       </td>
       <td class="text-center">
         {% if checkout.cd_status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-        {% elif checkout.cd_status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-        {% else %}
-            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-        {% endif %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+          {% elif checkout.cd_status == 'declined' %}
+          <i class="	fas fa-times"></i>
+               {% else %}
+               <i class="fa fa-spinner fa-spin"></i>
+                   {% endif %}
     </td>
-      <td style="cursor: pointer;" onclick="toggleComments(this)">
+      <td style="cursor: pointer; color:#003566DE;  font-family: 'Poppins', sans-serif;" onclick="toggleComments(this)" >
         <div class="commentsBlock">
             <p>
                 {% if checkout.bo_comment %}

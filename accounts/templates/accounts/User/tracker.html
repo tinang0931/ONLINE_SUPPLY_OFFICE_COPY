@@ -31,7 +31,9 @@
   }
 
   .table-bordered th {
-    background-color: #1c96c5;
+    background-color:  #003566DE;
+    font-family: 'Poppins', sans-serif;
+    color: #ffff;
   }
 
   /* Modal styles */
@@ -154,8 +156,53 @@
     transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
   }
 
+/* Example animations for icons */
+.animate-icon {
+  transition: transform 0.3s;
+}
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  animation: pulse 2s infinite;
+}
+
+.fa-times {
+  font-size: 3vh;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 </style>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   
@@ -186,38 +233,35 @@
         <tbody>
 
           {% for p in checkouts %}
-          <tr>
-            <td class="text-center">{{ p.submission_date }}</td>
-              <td class="text-center">{{ p.pr_id }}</td>
-              
-              <td class="text-center">
-                {% if p.bo_status == 'approved' %}
-                    <span class="badge badge-success text-uppercase" style="font-size: 18px;">{{ p.bo_status }}</span>
-                {% elif p.bo_status == 'declined' %}
-                    <span class="badge badge-warning text-uppercase" style="font-size: 18px;">{{ p.bo_status }}</span>
-                {% else %}
-                    <span class="badge badge-danger text-uppercase" style="font-size: 18px;">Pending</span>
-                {% endif %}
-            </td>
-            
-            
-                
+          <tr >
+            <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ p.submission_date }}</td>
+              <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ p.pr_id }}</td>
               
               
-            <td class="text-center">
-              {% if p.cd_status == 'approved' %}
-                  <span class="badge badge-success text-uppercase" style="font-size: 18px;">{{ p.cd_status }}</span>
-              {% elif p.cd_status == 'declined' %}
-                  <span class="badge badge-warning text-uppercase" style="font-size: 18px;">{{ p.cd_status }}</span>
-              {% else %}
-                  <span class="badge badge-danger text-uppercase" style="font-size: 18px;">Pending</span>
-              {% endif %}
-          </td>
+    <td class="text-center">
+      {% if p.bo_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+      {% elif p.bo_status == 'declined' %}
+        <i class="	fas fa-times"></i>
+      {% else %}
+        <i class="fa fa-spinner fa-spin"></i>
+      {% endif %}
+    </td>
+
+    <td class="text-center">
+      {% if p.cd_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+      {% elif p.cd_status == 'declined' %}
+        <i class="	fas fa-times"></i>
+      {% else %}
+        <i class="fa fa-spinner fa-spin"></i>
+      {% endif %}
+    </td>
             
               
 
               <td style="cursor: pointer;" onclick="toggleComments(this)">
-                <div class="commentsBlock">
+                <div class="commentsBlock" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
                     <p>
                         {% if p.bo_comment %}
                             <strong>Budget Officer :</strong>  {{ p.bo_comment }}
@@ -225,7 +269,7 @@
                             <strong>Budget Officer :</strong> No comment
                         {% endif %}
                     </p>
-                    <p class="campusDirectorComment" style="display: none;">
+                    <p class="campusDirectorComment" style="display: none; color:#003566DE;  font-family: 'Poppins', sans-serif;">
                         {% if p.cd_comment %}
                             <strong>Campus Director:</strong> {{ p.cd_comment }}
                         {% else %}
@@ -254,7 +298,7 @@
             
             
               
-              <td style="text-align: center">{{ p.last_updated }}</td>
+              <td style="text-align: center; color:#003566DE;  font-family: 'Poppins', sans-serif;">{{ p.last_updated }}</td>
           </tr>
       {% endfor %}
 
