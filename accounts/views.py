@@ -176,36 +176,6 @@ def ppmp101(request):
     # Render the template with the updated context
     return render(request, 'accounts/User/ppmp101.html', context)
 
-@authenticated_user
-def ppmp2(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
-    }
-
-    return render(request, 'accounts/User/ppmp2.html', context)
-
-
-
-
-
-
 def landing(request):
     return render(request, 'accounts/User/landing.html')
 
@@ -329,6 +299,7 @@ def activate(request, uidb64, token):
 
 def approve_user(request):
     all_users = User.objects.all()
+    
 
     # Get all unapproved regular users
     unapproved_users = []
@@ -356,6 +327,8 @@ def approve_user(request):
             return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
             messages.error(request, "User does not exist or is already approved.")
+            
+            
 
     return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
 
@@ -370,7 +343,7 @@ def login(request):
         
         if user is not None:
             # Check if the user's account is approved
-            if user.is_active:
+            if user.is_approved:
                 auth_login(request, user)
                 
                 # Redirect based on user_type
@@ -1676,8 +1649,5 @@ def boppmp(request, pr_id):
             'pr_id': pr_id,
      }
 
-
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
 
-def new_ppmp(request):
-    return render(request, 'accounts/User/new_ppmp.html')

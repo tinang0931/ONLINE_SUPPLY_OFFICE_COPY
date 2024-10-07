@@ -98,12 +98,13 @@
   }
 
   .table th {
-    background-color: rgba(5, 112, 139, 0.822);
+    background-color: #003566DE;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
+    font-family: 'Poppins', sans-serif;
   }
 
   body{
@@ -135,7 +136,7 @@
       height: 50px;
       transition: transform 0.3s ease-in-out;
       position: relative;
-      top: -8.5vh;
+      top: -7vh;
 
   }
 
@@ -146,12 +147,58 @@
     .table-responsive {
     margin-top: -6vh; 
     }
+
+    
+/* Example animations for icons */
+.animate-icon {
+  transition: transform 0.3s;
+}
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  font-size: 3vh;
+}
+
+.fa-times {
+  animation: shake 0.5s infinite;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4">  </h1>
   <div class="search" style="position: relative; text-align: right; margin-top: -1vh;">
-    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
+    <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
         <i class="fas fa-search" style="font-size: 20px;"></i>
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
@@ -176,7 +223,8 @@
       <th class="text-center">Date Requested</th>
       <th class="text-center">PR ID</th>
       <th class="text-center">Purchase Requests </th>
-      <th class="text-center">Status</th>
+      <th class="text-center">Budget Officer Status</th>
+      <th class="text-center">Campus Director Status</th>
       <th class="text-center">Comment</th> 
     </tr>
   </thead>
@@ -184,16 +232,16 @@
   <tbody>
     {% for checkout in checkouts %}
     <tr>
-      <td class="text-center">
+      <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         {{ checkout.submission_date }}
       </td>
 
-      <td class="text-center">
+      <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         <a href="{% url 'cdpurchase_approval' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a>
        
       </td> 
 
-      <td>
+      <td style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
         
          {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase  request .
         
@@ -204,16 +252,26 @@
   
       <td class="text-center">
         {% if checkout.status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% elif checkout.status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
         {% else %}
             <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
         {% endif %}
     </td>
-    
-    
+
     <td class="text-center">
+      {% if checkout.status == 'approved' %}
+          <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% elif checkout.status == 'declined' %}
+          <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+      {% else %}
+          <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+      {% endif %}
+  </td>
+    
+    
+    <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
       {% if checkout.comment %}
           <p> {{ checkout.comment }}</p>
       {% else %}
