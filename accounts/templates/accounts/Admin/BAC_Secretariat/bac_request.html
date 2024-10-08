@@ -58,7 +58,7 @@
   }
 
   .table th {
-    background-color: rgba(5, 90, 129, 0.822);
+    background-color:#003566DE;
     color: white;
     cursor: pointer;
     position: sticky;
@@ -92,7 +92,7 @@
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"></h1>
-  <div class="search" style="position: relative; text-align: right; top: 1vh;">
+  <div class="search" style="position: relative; text-align: right; top: 0vh;">
     <span class="icon" style="position: absolute; right: 20px; top: 1vh; transform: translateY(-50%); width: 40px;">
         <i class="fas fa-search" style="font-size: 20px;"></i>
     </span>
@@ -101,12 +101,8 @@
 </div>
 
 
-  <div class="bck">
-    <a href="{% url 'baclanding' %}">
-        <img src="{% static 'images/back2.png' %}" alt="Previous">
-    </a>
-</div>
-  <table class="table table-bordered" style="margin-top: -5vh">
+  
+  <table class="table table-bordered" style="margin-top: -1vh">
     <thead>
       <tr>
         <th class="text-center" >User ID</th>
