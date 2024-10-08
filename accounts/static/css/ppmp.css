@@ -101,3 +101,29 @@
     top: 0;
     left: 0;
 }
+
+.bck {
+    position: relative; /* Ensures the .bck element respects z-index */
+    z-index: 100; /* Default stacking context */
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 500; /* Higher than .bck */
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 5vh;
+    z-index: 999; /* Highest stacking context for the image */
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+    z-index: 1000; /* Ensure the image comes forward when hovered */
+}
