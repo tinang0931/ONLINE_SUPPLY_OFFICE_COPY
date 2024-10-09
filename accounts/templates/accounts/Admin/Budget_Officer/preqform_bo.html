@@ -7,7 +7,9 @@
 
 <style>
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #254b6e;
+        color: white;
+        font-family: 'Poppins';
     }
 
     .bck img {
@@ -211,7 +213,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -0.5vh;
+        top: 0vh;
       
         
     }
@@ -219,7 +221,7 @@
     .bck:hover img {
         transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
     }
-    .home {
+    /* .home {
         position: fixed;
         top: 20vh;
     }
@@ -230,7 +232,7 @@
     position: relative;
     margin-left: .5vh;
     top: 2vh;
-    }
+    } */
     
     
     @keyframes beat{
@@ -245,10 +247,10 @@
         }
     }
      
-    .home:hover img {
+    /* .home:hover img {
         animation-play-state: paused;
         transform: scale(1.2); 
-    }
+    } */
 
     .left-button-container {
         position: absolute;
@@ -273,8 +275,8 @@
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
         transition: background 0.2s ease 0s, box-shadow 0.2s ease 0s, color 0.2s ease 0s;
-        margin-top: -38vh;
-        margin-left: -.6vh;
+        margin-top: -50vh;
+        margin-left: -2vh;
         
     }
     
@@ -285,6 +287,7 @@
 
     .table thead th[rowspan='2'] {
     vertical-align: middle;
+    font-family: 'Poppins';
     }
 
 </style>
@@ -304,11 +307,11 @@
         </a>
     </div>    
 
-    <div class="home">
+    <!-- <div class="home">
         <a href="{% url 'budget-landing' %}">
             <img src="{% static 'svg/home5.svg' %}" alt="budget-landing">
         </a>
-    </div>
+    </div> -->
     
     <div class="row">
         <div class="col-md-1 mb-0">
@@ -319,7 +322,7 @@
           </div>
         </div>
       </div>
-    <div class="table-responsive" style="margin-top: 5vh;">
+    <div class="table-responsive" style="margin-top: 2vh;">
 
         <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id="form_id">
 
@@ -360,18 +363,18 @@
                 <tr class="item-row" id="{{ p.id }}">
 
                     <td>
-                        <span class="editable" data-field="Item_name" style=" margin-left: -6.5vh;">{{ p.item }}</span>
+                        <span class="editable" data-field="Item_name" style=" margin-left: -0.5vh;">{{ p.item }}</span>
                         <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
                             oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Item_Brand" style=" margin-left: -5.5vh;">{{ p.item_brand_description }}</span>
+                        <span class="editable" data-field="Item_Brand" style=" margin-left: -0.5vh;">{{ p.item_brand_description }}</span>
                         <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
                             value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
                             class="edit-input" style="display: none">
                     </td>
                     <td>
-                        <span class="editable" data-field="Unit"style=" margin-left: -3vh;">{{ p.unit }}</span>
+                        <span class="editable" data-field="Unit"style=" margin-left: 0vh;">{{ p.unit }}</span>
                         <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
                             oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
                     </td>
