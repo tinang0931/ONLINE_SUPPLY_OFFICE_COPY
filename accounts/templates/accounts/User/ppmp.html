@@ -20,6 +20,170 @@
     </a>
   </div>
 
+
+
+    #yearDropdown {
+    padding: 10px 2vw; /* Use vw (viewport width) for padding */
+    font-size: 1.6vw; /* Use vw for font size */
+    margin-left: -65vw; /* Use vw for margin */
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('your_custom_arrow_icon.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 2vw; /* Use vw for padding */
+    justify-content: center;
+    overflow-y: auto;
+    position: relative;
+    top: 3vh;
+}
+
+#yearDropdown option {
+    font-size: 16px;
+    padding: 1vw; /* Use vw for padding */
+    
+}
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .budget-container {
+       
+        display: flex;
+        align-items: center;
+    }
+
+    .budget-container strong {
+        position: fixed;
+        margin-left: -46vh;
+      
+    }
+
+    #budgetInput {
+       
+        padding: 5px;
+        border: 1px solid black;
+        margin-left: 39vh;
+        border-radius: 8px;
+       
+    }
+    
+
+    .home {
+        display: flex;
+        margin-top: -61px;
+    }
+
+    .home img {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease-in-out;
+        animation: beat 2s infinite;
+        margin-left: .5vh;
+        pointer-events: none;
+    }
+
+
+
+    .home:hover img {
+        animation-play-state: paused;
+        transform: scale(1.2);
+    }
+
+    .budget-container strong {
+        font-weight: revert-layer;
+        font-size: 19px;
+        position: relative;
+        top: -0.5vh;
+        left: 10vh;
+
+    }
+
+    #homeImg {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .ml-3, .mx-3 {
+    margin-left: 1rem !important;
+    margin-top: -37px;
+}
+.total-submit-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px; /* Provides space between Total Amount and Submit */
+    width: 100%; /* Ensures container takes full width */
+}
+
+.total {
+    display: flex;
+    align-items: center;
+}
+
+.total label {
+    margin-right: 15px;
+}
+
+.total input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    text-align: right;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#submitBtn {
+    color: #da8c05;
+    background-color: #22507A;
+    border-color: #007bff;
+    height: 40px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#submitBtn i {
+    margin-right: 5px;
+}
+
+
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/request.css' %}">
+
+
+<div class="container-fluid">
+    <div class="container;">
+    </div>
+    
+    <script>
+        function toggleAnimation() {
+            var img = document.getElementById('homeImg');
+            if (img.style.animationPlayState === 'paused') {
+                img.style.animationPlayState = 'running'; // Resume animation
+            } else {e
+                img.style.animationPlayState = 'paused'; // Pause animation
+            }
+        }
+    </script>
+
+    
 <div class="row">
     <div class="col-md-1 mb-0">
         <a href="{% url 'catalogue' %}" style="color: #FFA500; text-decoration: none; position: relative; display: flex; gap: 5px; margin-bottom: 10px;">
@@ -77,8 +241,12 @@
             color: #fff;
         }
 
-    </style>
-        <div class="table-responsive" style="margin: 0 auto; margin-top: 5vh;" >
+                <div class="budget-container">
+                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount">
+                        <onkeypress="return isNumberKey(event)><strong>TOTAL ALLOCATED BUDGET:
+                    </strong>
+                </div>
+            </div>
 
             <table class="table table-bordered text-center mt-4" >
                 <thead>
@@ -221,7 +389,7 @@
                         </form>
 
                     </tr>
-
+                
 
                 </tbody>
             </table>

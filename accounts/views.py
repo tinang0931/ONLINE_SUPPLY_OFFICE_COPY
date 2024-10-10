@@ -164,6 +164,7 @@ def ppmp101(request):
 
     # Context data to pass to the template
     context = {
+        'budget': budget_required,
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
