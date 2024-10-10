@@ -37,10 +37,62 @@
                     
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
                         <h1 class="head">{{title}} 
-                          <img src="{% static 'images/notification.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 160vh; position: relative; top: -4vh;">
-                          <img src="{% static 'images/account.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 168vh; position: relative; top: -10vh;">
-                      </h1> <!-- Image icon added here -->
-                      </div>
+                            <!-- Notification Icon -->
+                            <a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;">
+                                <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 45px; height: 45px;">
+                            </a>
+                    
+                            <!-- Profile Icon -->
+                            <a href="#" id="profileIcon" style="position: relative; top: -10vh; margin-left: 168vh;">
+                                <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 45px; height: 45px;">
+                            </a>
+                        </h1>
+                    </div>
+                    
+                    <!-- File input for Profile upload (hidden) -->
+                    <input type="file" id="profileUpload" style="display: none;" accept="image/*" />
+
+                    
+                     <div id="notificationDropdown" style="display: none; position: absolute; top: 10vh; right: 5vh; background-color: white; border: 1px solid #ddd; padding: 10px;">
+                     <ul>
+                       <li>No new notifications</li>
+                         <!-- Add notifications dynamically here -->
+                    </ul>
+                    
+
+                    <script>
+                        document.getElementById('profileIcon').addEventListener('click', function() {
+                  // Trigger the file input click
+                       document.getElementById('profileUpload').click();
+                  });
+
+document.getElementById('profileUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Get the uploaded file
+    if (file) {
+        const reader = new FileReader(); // Create a new FileReader object
+
+        reader.onload = function(e) {
+            // Set the profile image source to the uploaded file's data URL
+            document.getElementById('profileImage').src = e.target.result;
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('notificationIcon').addEventListener('click', function() {
+    // Toggle notification dropdown visibility
+    const dropdown = document.getElementById('notificationDropdown');
+    if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';
+    } else {
+        dropdown.style.display = 'none';
+    }
+});
+
+
+                        </script>
                     
             </nav>
         </div>
@@ -240,6 +292,103 @@
                     visibility: visible;
                     /* Show the element when the sidebar is hovered */
                 }
+
+                /* Container for the notification icon and dropdown */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the notification icon */
+#notificationIcon img {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* Hover effect for the icon */
+#notificationIcon img:hover {
+    transform: scale(1.1); /* Slightly enlarge the icon when hovered */
+}
+
+/* Dropdown for notifications */
+#notificationDropdown {
+    display: none; /* Initially hidden */
+    position: absolute;
+    right: 20%;
+    top: px; /* Adjust based on your layout */
+    background-color: white;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 100;
+}
+
+/* The arrow for the dropdown */
+#notificationDropdown::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent white transparent; /* Creates the triangle pointing upwards */
+   
+}
+
+/* List items inside the notification dropdown */
+#notificationDropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#notificationDropdown ul li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Change background on hover */
+#notificationDropdown ul li:hover {
+    background-color: #f7f7f7;
+}
+
+/* Last item without a bottom border */
+#notificationDropdown ul li:last-child {
+    border-bottom: none;
+}
+.row>* {
+    flex-shrink: 0;
+    width: 28%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)* .5);
+    padding-left: calc(var(--bs-gutter-x)* .5);
+    margin-top: var(--bs-gutter-y);
+   
+
+/* If there are no notifications */
+#notificationDropdown ul li.no-notifications {
+    text-align: center;
+    color: #888;
+    padding: 15px;
+}
+
+/* Notification indicator (number of new notifications) */
+.notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
             </style>
 
            
@@ -290,7 +439,7 @@
     </main>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></scrip>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
