@@ -119,7 +119,7 @@
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: fixed;
-    top: 5vh;
+    top: 15vh;
     z-index: 999; /* Highest stacking context for the image */
 }
 
