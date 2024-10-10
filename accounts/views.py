@@ -116,15 +116,14 @@ def userlanding(request):
 
 @authenticated_user
 def ppmp101(request):
+    # Retrieve the current user's budget
+    user_budget = request.user.budget
 
-
+    # Existing logic for retrieving checkout data
     data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
 
-
-  
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
     
-
     checkout_data = []
 
     for checkout in checkouts:
@@ -135,18 +134,17 @@ def ppmp101(request):
             'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
-       
 
+    grouped_data = {}  # This will hold CSV data grouped by category
     
-
-    grouped_data = {}  
+    # Handle POST request (for adding a new item)
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
         price = request.POST.get(f'price')
 
-        
+        # Create the new Item object
         Item.objects.create(
             user=request.user,
             item=item_name,
@@ -155,54 +153,28 @@ def ppmp101(request):
             unit_cost=price
         )
 
+        # Redirect after saving the item
         return redirect('catalogue')
 
+    # Handle GET request (for loading the CSV data)
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
 
+    # Context data to pass to the template
     context = {
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
-        'grouped_data' : grouped_data,
-        'title' : 'DASHBOARD',
-        'CAMPUS_NAME' : CAMPUS_NAME,
+        'user_budget': user_budget,  # Include the logged-in user's budget
+        'grouped_data': grouped_data,
+        'title': 'DASHBOARD',
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
-
+    # Render the template with the updated context
     return render(request, 'accounts/User/ppmp101.html', context)
-
-@authenticated_user
-def ppmp2(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
-    }
-
-    return render(request, 'accounts/User/ppmp2.html', context)
-
-
-
-
-
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -269,8 +241,49 @@ def register(request):
 
     return render(request, 'accounts/User/register.html')
 
-def activate(request, uidb64, token):
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
 
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+            
+
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        return redirect('user')
+    return render(request, 'accounts/Admin/System_Admin/user.html')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
@@ -282,9 +295,11 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+    
 
 def approve_user(request):
     all_users = User.objects.all()
+    
 
     # Get all unapproved regular users
     unapproved_users = []
@@ -312,6 +327,8 @@ def approve_user(request):
             return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
             messages.error(request, "User does not exist or is already approved.")
+            
+            
 
     return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
 
@@ -326,7 +343,7 @@ def login(request):
         
         if user is not None:
             # Check if the user's account is approved
-            if user.is_active:
+            if user.is_approved:
                 auth_login(request, user)
                 
                 # Redirect based on user_type
@@ -1632,8 +1649,5 @@ def boppmp(request, pr_id):
             'pr_id': pr_id,
      }
 
-
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
 
-def new_ppmp(request):
-    return render(request, 'accounts/User/new_ppmp.html')

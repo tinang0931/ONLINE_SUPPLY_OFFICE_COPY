@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/User/sidebar.html" %}
  
 {% load static %}
  
@@ -10,17 +10,27 @@
  
 {% endblock extra_css %}
  
- 
+
  
 <body>
  
     <div class="right-container">
- 
- 
+
+        <div class="ppmp-section">
+            
+            <div class="ppmp">
+                <button>
+                <a href="{% url 'ppmp'%}"
+                    style="color: #FFA500; text-decoration: none;">
+                    <span>CREATE PPMP</span>
+                </a>
+                </button>
+            </div>
+           
+        </div>
         <div class="budget-section">
- 
             <div class="budget">
-                Php 100,000.00
+               PHP {{ user_budget }}
                 <div class="Annual">ANNUAL BUDGET</div>
             </div>
  
@@ -44,9 +54,6 @@
             </div>
         </div>
         {% endif %}
- 
- 
- 
  
  
         <div class=" trackers-section">
@@ -80,7 +87,6 @@
     <div class="left-container">
         <div class="catalogue-section">
             <h3>CATALOGUE</h3>
- 
             <table>
                 <thead>
                     <tr>
@@ -89,32 +95,53 @@
                         <th>Unit</th>
                         <th>Price</th>
                     </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">ANTISEPTICS</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    {% for category, items in grouped_data.items %}
-                    <tr class="category-row">
-                        <th colspan="4">{{ category }}</th>
+                    <tr>
+                        <td>Alcohol</td>
+                        <td>ethyl alcohol</td>
+                        <td>bottle</td>
+                        <td>Php 50.00</td>
                     </tr>
- 
-                    {% for p in items %}
-                    <tr class="item-row" id="{{ p.item_id }}">
-                        <td>{{ p.Item_name }}</td>
-                        <td>{{ p.Item_Brand }}</td>
-                        <td>{{ p.Unit }}</td>
-                        <td>{{ p.Price }}</td>
+                    <tr>
+                        <td>Chlorhexidine</td>
+                        <td>Corsodyl</td>
+                        <td>bottle</td>
+                        <td>Php 80.00</td>
                     </tr>
-                    {% endfor %}
-                    {% endfor %}
+                    <tr>
+                        <th colspan="4" class="category-heading">FURNITURE AND FURNISHINGS</th>
+                    </tr>
+                    <tr>
+                        <td>Chair</td>
+                        <td>monobloc, beige, with backrest, w/o armrest</td>
+                        <td>piece</td>
+                        <td>Php 1000.00</td>
+                    </tr>
+                    <tr>
+                        <td>TABLE</td>
+                        <td>monobloc, white, 889 X 889mm (356"x35")min</td>
+                        <td>unit</td>
+                        <td>Php 400.00</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">ELECTRICAL AND HARDWARE SUPPLIES</th>
+                    </tr>
+                    <tr>
+                        <td>BATTERY</td>
+                        <td>dry cell, D, 1.5 volts, alkaline</td>
+                        <td>pack</td>
+                        <td>Php 200.00</td>
+                    </tr>
                 </tbody>
             </table>
- 
         </div>
     </div>
- 
- 
- 
+    
 </body>
- 
 </html>
- 
+
 {% endblock %}

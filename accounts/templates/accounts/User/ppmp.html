@@ -1,309 +1,25 @@
 
 
-{% extends "accounts/Admin/BAC_Secretariat/nav.html" %}
+{% extends "accounts/User/main.html" %}
 
 
 {% load static %}
 
 {% block ppmp %}
 
-
-<style>
-    .head {
-        margin-left: -56%;
-    }
-
-    h1 {
-        color: #333;
-        font-size: 24px;
-        margin: 20px 0;
-    }
-
-    .container-fluid {
-        margin-bottom: 0;
-    }
-
-    .ctu_logo {
-        margin-top: -13%;
-    }
-
-    .table-bordered th {
-        background-color: #22507A;
-        color: #fff;
-    }
-
-    .table-bordered th{
-        color:white;
-    }
-    .table-bordered td {
-        color: #000;
-
-    }
-
-    .table-container {
-        margin-top: 20vh;
-    }
-
-    .item-actions {
-        display: none;
-    }
-
-    tr:hover .item-actions {
-        display: flex;
-    }
-
-    .btn {
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 1vh;
-        background: #144472;
-        font-family: "Montserrat", sans-serif;
-        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        cursor: pointer;
-        border: none;
-        margin-left: -107%;
-        margin-top: 15%;
-        padding: 10px 20px;
-        font-size: 16px;
-        float: right;
-        z-index: 999;
-    }
-
-    .btn.btn-success {
-        transition: transform 0.3s ease;
-    }
-
-    .btn.btn-success:hover {
-        transform: scale(1.1);
-        /* Scale the button to 1.1 times its original size on hover */
-    }
-
-    .btn.btn-success:active {
-        transform: translate(0em, 0.14em);
-    }
-
-
-
-    .catalogue {
-        position: relative;
-        /* Change from fixed to relative */
-        top: 7vh;
-        left: 2px;
-        /* You may adjust this value too */
-        z-index: 999;
-        background: #22507A;
-        color: rgb(249, 149, 35);
-        border: 1px solid black;
-        padding: 10px 20px;
-        border-radius: 20px;
-        transition: background-color 0.3s, color 0.3s;
-        height: 65px; width: 200px;
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .catalogue:hover {
-
-        background: #22507A;
-        color: #FFA500;
-        transform: scale(1.1);
-        border: 2px solid #FFFFFF;
-    box-shadow: 10px 10px 4px #9a9a9a;
+{% block extra_css %}
  
-}
-    
-
-    .catalogue:active {
-
-        transform: translate(0em, 0.17em);
-    }
-
-    .bck a {
-        text-decoration: none;
-    }
-
-    .bck img {
-        width: 50px;
-        height: 50px;
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .bck:hover img {
-        transform: scale(1.2);
-    }
+<link rel="stylesheet" href="{% static 'css/ppmp.css' %}">
+ 
+{% endblock extra_css %}
 
 
-    .table-responsive {
-        margin-top: -1vh;
-    }
+<div  class="bck">
+    <a href="{% url 'ppmp101' %}">
+      <img src="{% static 'images/back2.png' %}" alt="Previous">
+    </a>
+  </div>
 
-
-
-    #yearDropdown {
-    padding: 10px 2vw; /* Use vw (viewport width) for padding */
-    font-size: 1.6vw; /* Use vw for font size */
-    margin-left: -65vw; /* Use vw for margin */
-    border: 1px solid black;
-    border-radius: 4px;
-    cursor: pointer;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('your_custom_arrow_icon.png');
-    background-repeat: no-repeat;
-    background-position: right center;
-    padding-right: 2vw; /* Use vw for padding */
-    justify-content: center;
-    overflow-y: auto;
-    position: relative;
-    top: 3vh;
-}
-
-#yearDropdown option {
-    font-size: 16px;
-    padding: 1vw; /* Use vw for padding */
-    
-}
-    .row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .budget-container {
-       
-        display: flex;
-        align-items: center;
-    }
-
-    .budget-container strong {
-        position: fixed;
-        margin-left: -48vh;
-      
-    }
-
-    #budgetInput {
-       
-        padding: 5px;
-        border: 1px solid black;
-        margin-left: 36vh;
-        border-radius: 8px;
-       
-    }
-    
-
-    .home {
-        display: flex;
-        margin-top: -61px;
-    }
-
-    .home img {
-        width: 40px;
-        height: 40px;
-        transition: transform 0.3s ease-in-out;
-        animation: beat 2s infinite;
-        margin-left: .5vh;
-        pointer-events: none;
-    }
-
-
-
-    .home:hover img {
-        animation-play-state: paused;
-        transform: scale(1.2);
-    }
-
-    .budget-container strong {
-        font-weight: revert-layer;
-        font-size: 19px;
-        position: relative;
-        top: -0.5vh;
-        left: 10vh;
-
-    }
-
-    #homeImg {
-        position: fixed;
-        top: 0;
-        left: 0;
-    }
-    .ml-3, .mx-3 {
-    margin-left: 1rem !important;
-    margin-top: -37px;
-}
-.total-submit-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px; /* Provides space between Total Amount and Submit */
-    width: 100%; /* Ensures container takes full width */
-}
-
-.total {
-    display: flex;
-    align-items: center;
-}
-
-.total label {
-    margin-right: 10px;
-}
-
-.total input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 150px;
-    text-align: right;
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-}
-
-#submitBtn {
-    color: #da8c05;
-    background-color: #22507A;
-    border-color: #007bff;
-    height: 40px;
-    width: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#submitBtn i {
-    margin-right: 5px;
-}
-
-
-</style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'css/request.css' %}">
-
-
-<div class="container-fluid">
-    <div class="container;">
-    </div>
-    
-    <script>
-        function toggleAnimation() {
-            var img = document.getElementById('homeImg');
-            if (img.style.animationPlayState === 'paused') {
-                img.style.animationPlayState = 'running'; // Resume animation
-            } else {e
-                img.style.animationPlayState = 'paused'; // Pause animation
-            }
-        }
-    </script>
-
-    
 <div class="row">
     <div class="col-md-1 mb-0">
         <a href="{% url 'catalogue' %}" style="color: #FFA500; text-decoration: none; position: relative; display: flex; gap: 5px; margin-bottom: 10px;">
@@ -315,18 +31,12 @@
             <button class="catalogue"><strong>2024 PPMP</strong></button>
         </a>
     </div>
-    <div class="row">
-        <div class="col-md-1 mb-0">
-            
-        </div>
-
-     
-        <div class="col-md-4 mb-0" style=" top: 40px;">
+    <div class="row mt-4">
+        <div class="col-md-4 mb-0" >
             <form id="ppmpForm" action="{% url 'ppmp' %}" method="post">
                 {% csrf_token %}
-                <div style="position: relative; z-index: 999; ">
-                    <select id="yearDropdown"
-                        style="font-size: 16px; padding: 10px; width: 130px; text-align: center; border-radius: 18px; ">
+                <div style="position: relative; z-index: 999;">
+                    <select id="yearDropdown" >
                         <option selected>Select Year</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -342,61 +52,37 @@
                         });
                     </script>
                 </div>
+            </form>
+        </div>
+    
+        <div class="col-md-5 mb-0 text-left" style="top: 50px;">
+            <div class="budget-container">
                 
+                <strong>Total Allocated Budget:</strong>
+                <span id="total_allocated_budget">
+                    <b>₱ 15000.00</b>
+                </span>
+            </div>
         </div>
     </div>
-    
 
-    <div class="row">
-        <div class="row">
-            <div class=" col-md-5 text-left">
+    <style>
+        .table-bordered th {
+            background-color: #22507A;
+            color: #fff;
+        }
+        
+        .table-bordered th {
+            background-color: #22507A;
+            color: #fff;
+        }
 
-                <div class="budget-container">
-                    <input type="text" id="budgetInput" value="" placeholder="Enter budget amount">
-                        onkeypress="return isNumberKey(event)"><strong>TOTAL ALLOCATED BUDGET:
-                    </strong>
-                </div>
-            </div>
+    </style>
+        <div class="table-responsive" style="margin: 0 auto; margin-top: 5vh;" >
 
-            <script>
-
-                function isNumberKey(evt) {
-                    var charCode = (evt.which) ? evt.which : evt.keyCode;
-                    if (charCode === 13) { // Check if Enter key is pressed
-                        displayBudget();
-                        return false; // Prevent form submission
-                    }
-                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                        return false;
-                    }
-                    return true;
-                }
-
-                function displayBudget() {
-                    var inputElement = document.getElementById("budgetInput");
-                    var currentValue = inputElement.value;
-                    console.log("Entered budget:", ); // You can modify this to display the value wherever you need
-                    localStorage.setItem("allocatedBudget", currentValue); // Store in local storage
-                    return false; // Prevent form submission
-                }
-
-                // Retrieve budget value from local storage on page load (optional)
-                window.onload = function () {
-                    var storedValue = localStorage.getItem("allocatedBudget");
-                    if (storedValue) {
-                        document.getElementById("budgetInput").value = storedValue;
-                    }
-                };
-            </script>
-    </div>
-    </div>
-
-
-        <div class="table-responsive">
-
-            <table class="table table-bordered text-center mt-4">
+            <table class="table table-bordered text-center mt-4" >
                 <thead>
-                    <tr>
+                    
                         <th rowspan='2' class="text-center"></th>
                         <th rowspan='2' class="text-center">Item Name</th>
                         <th rowspan='2' class="text-center">Brand / Description</th>
@@ -485,8 +171,6 @@
 
                             </div>
                         </td>
-
-
                     </tr>
                     {% endfor %}
 
@@ -547,26 +231,29 @@
             </button>
 
         </div>
-        <div class="total" style="position: relative; margin-top: 0.1vh; left: 150vh; ">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+        <div class="row">
+            <div class="total" style="margin-top: 0.1vh; display: flex; align-items: center;">
+                <label for="estimate_budget" style="margin-right: 10px;"><strong>TOTAL AMOUNT :</strong></label>
+                <input type="number" name="estimate_budget" id="estimate_budget" readonly >
+                <div id="ppmpFormContainer" class="button-container ">
+                    <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2"
+                        style="color: #FFA500; background-color: #22507A; border-color: #007bff; height: 43px; width: 130px;">
+                        <i class="fas fa-check-circle"></i> Submit
+                    </button>
+                </div>
+            </div>
+            
+            
         </div>
-    </div>
-    <div id="ppmpFormContainer" class="button-container"
-        style="display: flex; justify-content: flex-end; margin-top: -5.8vh;">
-</div> 
-        <div>
-        <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2"
-            style="color: #FFA500; background-color: #22507A; border-color: #007bff; height: 43px; width: 130px;">
-            <i class="fas fa-check-circle"></i> Submit
-        </button>
-    </div>
-    </div>
+
+        
+  
     
     </div>
 
     </form>
 </div>
+</div
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
@@ -578,48 +265,45 @@
     }
 
     function editItem(itemId) {
-        // Assuming each row has a unique identifier, you can use it to target specific elements
+       
         var row = document.getElementById(itemId);
 
-        // Toggle visibility of elements
+       
         var editIcon = row.querySelector('.edit-icon');
         var saveButton = row.querySelector('.save-icon');
         var cancelButton = row.querySelector('.cancel-icon');
         var editInputs = row.querySelectorAll('.edit-input');
         var editableSpans = row.querySelectorAll('.editable');
 
-        // Show/hide elements
+       
         editIcon.style.display = 'none';
-        saveButton.style.display = 'inline-block';  // Adjust display style based on your styling
-        cancelButton.style.display = 'inline-block';  // Adjust display style based on your styling
+        saveButton.style.display = 'inline-block';  
+        cancelButton.style.display = 'inline-block';  
 
-        // Show input fields for editing
+     
         editInputs.forEach(function (input) {
-            input.style.display = 'block';  // Adjust display style based on your styling
+            input.style.display = 'block';  
         });
 
-        // Hide the spans displaying current values
         editableSpans.forEach(function (span) {
-            span.style.display = 'none';  // Adjust display style based on your styling
+            span.style.display = 'none';  
         });
 
-        // Add event listener to the cancel button
+     
         cancelButton.addEventListener('click', function () {
-            // Reset the form to its initial state
-            editIcon.style.display = 'inline-block';  // Adjust display style based on your styling
+         
+            editIcon.style.display = 'inline-block';  
             saveButton.style.display = 'none';
             cancelButton.style.display = 'none';
             editInputs.forEach(function (input) {
                 input.style.display = 'none';
             });
             editableSpans.forEach(function (span) {
-                span.style.display = 'inline-block';  // Adjust display style based on your styling
-            });
+                span.style.display = 'inline-block';  
         });
 
-        // Trigger the form submission
         saveButton.addEventListener('click', function () {
-            // Assuming you have a form element in the row
+           
             var form = row.querySelector('form');
             form.submit();
         });
@@ -679,7 +363,7 @@
             totalValue += rowTotal;
         });
 
-        var allocatedBudget = 10000000 ; // Set your allocated budget here
+        var allocatedBudget = 10000000 ; 
 
         if (totalValue >= allocatedBudget) {
             alert('Budget limit reached! Further input is disabled.');
@@ -729,6 +413,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+        
+
 
 
 {% endblock %}
