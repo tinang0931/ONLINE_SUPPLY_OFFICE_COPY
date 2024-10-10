@@ -136,11 +136,11 @@
 
         <td class="text-center">
           {% if checkout.status == 'approved' %}
-              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+              <i class="fas fa-check text-success fa-2x animate-icon" style="font-size: 16px;">{{ checkout.status }}</i>
           {% elif checkout.status == 'declined' %}
-              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
+              <i class="fas fa-times text-warning fa-2x animate-icon" style="font-size: 16px;">{{ checkout.status }}</span>
           {% else %}
-              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+              <i class="fa fa-spinner fa-spin" style="font-size: 16px;"></i>
           {% endif %}
       </td>
       
