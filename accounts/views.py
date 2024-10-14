@@ -59,6 +59,8 @@ from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
 
+
+
 def main(request):
     context = {
         'SITE_TITLE': SITE_TITLE,
@@ -1659,4 +1661,7 @@ def boppmp(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
+
+def new_ppmp(request):
+    return render(request, 'accounts/User/new_ppmp.html')
 
