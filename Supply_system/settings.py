@@ -101,8 +101,8 @@ DATABASES = {
         'NAME': 'inventory',  # Replace with your MongoDB database name
         'ENFORCE_SCHEMA': False,        # Optional: Enforce schema validation
         'CLIENT': {
-            'host': 'mongodb://jduhig:jduhig123@172.28.48.51:27017/?authSource=inventory',
-            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin',
+            'host': 'mongodb://duhig:duhig123@localhost:27017/inventory?authSource=inventory',
+            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin', 
             # Replace <username>, <password>, <host>, <port>, <database> with your MongoDB details
             #'username': 'duhig',    # Optional if included in the URI
             #'password': 'duhig123',    # Optional if included in the URI

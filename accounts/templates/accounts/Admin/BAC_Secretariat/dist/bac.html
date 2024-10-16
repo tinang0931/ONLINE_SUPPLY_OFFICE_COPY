@@ -17,69 +17,66 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-    {% block extra_css %}
-    {% endblock extra_css %}
- 
- 
-  </head>
- 
-  <body>
+</head>
+
+<body>
     <main class="flex-shrink">
         <div id="page-content-wrapper ">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="row w-100 m-auto">
                     <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-                        <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO" style="margin-top: 0; position: relative; top: 0;">
+                      <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO" style="margin-top: 0; position: relative; top: -0vh;">
                     </div>
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
-                        <h1 class="head">{{title}} 
-                            <img src="{% static 'images/notification.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 160vh; position: relative; top: -4vh;">
-                            <img src="{% static 'images/account.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 168vh; position: relative; top: -10vh;">
-                        </h1> <!-- Image icon added here -->
-                    </div>                     
+                      <h1 class="head">{{title}}</h1> 
+                        <img src="{% static 'images/notification.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 160vh; position: relative; top: -5vh;">
+                        <img src="{% static 'images/account.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 168vh; position: relative; top: -10vh;">
+                    </h1> <!-- Image icon added here -->
             </nav>
         </div>
+        
         <h1 class="welcome" style="height: 0.5vh"></h1>
         <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px; ">
 
+
+        <!-- Sidebar-->
         <div class="sidebar" id="sidebar" onmouseover="showNames()" onmouseout="hideNames()">
           <div class="d-flex flex-wrap align-content-between h-100">
             <div class="bg-#6C757D w-100" id="sidebar-wrapper">
               <div class="list-group w-100">
                 <br><br>
- 
-                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bohome'%}">
-                  <i class="bi bi-file-earmark-medical"></i> <span id="about" class="hidden-name">PPMP</span>
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bac_home'%}">
+                  <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest" class="hidden-name">PPMP</span>
+                </a>
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bac_request'%}">
+                  <i class="bi bi-bag"></i> <span id="purchaseRequest" class="hidden-name">Purchase Request</span>
                 </a>
 
-                <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'approve_user'%}">
-                  <i class="fa fa-file-text-o"></i> <span id="about" class="hidden-name">BUDGET REQUEST</span>
+                <a class="list-group-item list-group-item-action p-3 border-0 dashboard-link" href="{% url 'bac_dashboard'%}">
+                  <i class="bi bi-grid"></i> <span id="dashboard" class="hidden-name">Stocks</span>
                 </a>
- 
-                <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
+                
+                <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'bac_about'%}">
                   <i class="bi bi-info-circle"></i> <span id="about" class="hidden-name">About</span>
                 </a>
- 
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
-                  <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
+                  <i class="bi bi-box-arrow-left"></i> <span id="logout" class="hidden-name">Logout</span>
                 </a>
+                 <div class="profile-container">
+                 <a href="{% url 'bac_prof' %}">
+                  <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a> 
+             <p1 class="account_type">BAC</p1> 
+                </div>
               </div>
-              <div class="profile-container">
-                <a href="{% url 'prof' %}">
-                <img class="pro" id="profile-pic"  src="{% static 'images/propayl.png' %}" alt="Profile Picture"></a>
-                <p1 class="account_type">B.O.</p1>
-            </div>
             </div>
           </div>
         </div>
- 
         <style>
                 
           .d-flex {
-              height: 120vh;
+              height: 100vh;
               margin-bottom: 0;
   }/* Ensure that the sidebar stays at a fixed width */
 #sidebar {
@@ -146,14 +143,13 @@ color: #f2f2f2 !important;
 
 .logout-link {
 position: fixed;              
-margin-top: 2px ;
+margin-top: -140px ;
              
           }
 
 
           .d-flex.flex-wrap.align-content-between.h-100 {
               background-color: #f2f2f2;
-              
           }
 
           .list-group-item-action:not(:hover) span {
@@ -229,27 +225,28 @@ margin-top: 2px ;
       </style>
 
        
-        {% block boabout %}
+        
+        {% block bac_about %}
         {% endblock %}
- 
-        {% block bohistory %}
+
+        {% block bac_history %}
         {% endblock %}
-       
-       
-        {% block buppmp %}
+
+        {% block bac_home %}
         {% endblock %}
- 
- 
-        {% block bohome %}
+
+        {% block bac_dashboard %}
         {% endblock %}
- 
-        {% block bodashboard %}
+
+        {% block bac_request %}
         {% endblock %}
- 
-        {% block borequest %}
+
+        {% block bac_ppmp %}
         {% endblock %}
- 
+
+        
+
     </main>
   </body>
- 
+  
 </html>

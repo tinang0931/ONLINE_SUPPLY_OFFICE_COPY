@@ -25,9 +25,9 @@ body {
 
 .title {
     position: absolute;
-    font-family: Verdana;
     top: 6%;
     left: 1.5%;
+    font-family: Verdana;
     font-size: 3vw;
     font-weight: bold; 
     color: white;
@@ -45,16 +45,11 @@ body {
     color: rgba(0, 0, 0, 0.815);
     padding: 3vw;
     border-radius: 15px;
-    border-style: solid;
-    border-width: 2px;
-    overflow-y: auto; 
+    border: 2px solid;
+    overflow-y: hidden; 
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     transition: scrollbar-color 0.5s ease;
-}
-
-.wrapper {
-    overflow-y: hidden; 
 }
 
 .wrapper:hover {
@@ -71,48 +66,11 @@ body {
     border-radius: 5px;
 }
 
-.wrapper.scrolled {
-    scrollbar-color: #888 rgba(255, 255, 255, 0.815);
-}
-
-.wrapper:hover::-webkit-scrollbar {
-    width: 2px;
-}
-
-.wrapper:hover .scrolled {
-    scrollbar-color: #888 rgba(255, 255, 255, 0.815);
-}
-
 @media screen and (max-width: 30%) {
     .wrapper {
         width: 80%;
         max-width: 100%;
         padding: 10px;
-    }
-
-    .wrapper h1 {
-        font-size: 1.5em;
-        margin-bottom: 1vw;
-    }
-
-    .input-box input {
-        height: 3vw;
-        font-size: 1.2vw;
-        padding: 0.5vw;
-    }
-
-    .wrapper .btn {
-        height: 2.5vw;
-        font-size: 1.2vw; 
-        margin-top: 1vw;
-    }
-
-    .register-link {
-        margin-top: 1vw;
-    }
-
-    .register-link p a {
-        font-size: 1.2vw;
     }
 }
 

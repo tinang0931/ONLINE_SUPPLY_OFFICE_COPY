@@ -1,0 +1,145 @@
+
+.catalogue {
+    background-color: #22507A; 
+    border: none; 
+    color: #FFA500; 
+    height: 60px;
+    width: 115px;
+    padding: 25px; 
+    cursor: pointer; 
+    margin: 0; 
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3vh; 
+    margin-right: 0;
+    margin-top: 9vh;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.catalogue:hover {
+    background-color: #22507A; 
+    color: #FFA500; 
+    transform: scale(1.1);
+    border: 2px solid #FFFFFF;
+    box-shadow: 5px 5px 4px #FFA500;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 95%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: block;
+    position: relative;
+    top: -6vh;
+    left: 0; 
+    right: 0; 
+    padding: 0; 
+ 
+}
+
+
+#yearDropdown {
+    font-size: 16px;
+    padding: 15px;
+    width: 140px;
+    text-align: center;
+    border-radius: 7px;
+    margin-left: 3vh;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    margin-top: -7vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.budget-container {
+    display: flex;                 
+    align-items: center;       
+    padding: 10px;   
+    margin-left: 5vh;
+    margin-top: -5vh;
+    margin-right: 0;
+    margin-bottom: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: black;
+}
+
+.budget-container strong {
+    position: fixed;
+    margin-left: -48vh;
+}
+
+#total_allocated_budget {
+    font-size: 1em; 
+    font-weight: bold; 
+    color: black; 
+    padding-left: 10px; 
+    margin-left: -30vh;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.bck {
+    position: relative; /* Ensures the .bck element respects z-index */
+    z-index: 100; /* Default stacking context */
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 500; /* Higher than .bck */
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 15vh;
+    z-index: 999; /* Highest stacking context for the image */
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+    z-index: 1000; /* Ensure the image comes forward when hovered */
+}
+.total-submit-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px; /* Provides space between Total Amount and Submit */
+    width: 100%; /* Ensures container takes full width */
+}
+ 
+.submitBtn{
+    margin-top: -10vh;
+  
+}
+
+
+ 

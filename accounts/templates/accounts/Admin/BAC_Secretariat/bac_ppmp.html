@@ -6,7 +6,8 @@
 
 <style>
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #003566DE;
+        color: white
     }
 
     .bck a  {
@@ -202,7 +203,7 @@
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 16vh;
+        margin-top: 18vh;
         transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
     }
     
@@ -297,11 +298,7 @@
 
     <div class="container">
     </div>
-    <div class="home">
-        <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
-        </a>
-    </div>
+  
     <script>
     function toggleAnimation() {
         var img = document.getElementById('cdlandingImg');

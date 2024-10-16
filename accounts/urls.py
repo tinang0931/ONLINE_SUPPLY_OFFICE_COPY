@@ -17,7 +17,6 @@ urlpatterns = [
     path('baclanding/', views.baclanding, name='baclanding'),
     path('userlanding/', views.userlanding, name='userlanding'),
     path('ppmp101/', views.ppmp101, name='ppmp101'),
-    path('ppmp2/', views.ppmp2, name='ppmp2'),
     path('login/', views.login, name='login'),
     path('item/<int:pk>/list/', views.item_list, name='item_list'),
     path('register/', views.register, name='register'),
@@ -87,4 +86,5 @@ urlpatterns = [
     path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
     path('approve/', views.approve_user, name='approve_user'),
     path('new_ppmp/', views.new_ppmp, name='new_ppmp'),
+     
 ]
