@@ -59,6 +59,8 @@ from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
 
+
+
 def main(request):
     context = {
         'SITE_TITLE': SITE_TITLE,
@@ -164,6 +166,7 @@ def ppmp101(request):
 
     # Context data to pass to the template
     context = {
+        'budget': budget_required,
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
@@ -310,7 +313,7 @@ def approve_user(request):
             else:  # Non-regular users are automatically approved
                 user.is_approved = True
                 user.budget = 0  # Set budget to 0 for non-regular users
-                user.save()  # Make sure to save changes to the user
+                user.save()  # Save changes to the user
                 messages.success(request, f"Non-regular user {user.username} automatically approved.")
 
     if request.method == 'POST':
@@ -330,7 +333,15 @@ def approve_user(request):
             
             
 
-    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
+    # Update the context to include additional data
+    context = {
+        'tracker': tracker,
+        'title': 'BUDGET APPROVAL',
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'users': unapproved_users  # Pass unapproved users to the context
+    }
+
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', context)
 
 
 
@@ -1650,4 +1661,7 @@ def boppmp(request, pr_id):
      }
 
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
+
+def new_ppmp(request):
+    return render(request, 'accounts/User/new_ppmp.html')
 

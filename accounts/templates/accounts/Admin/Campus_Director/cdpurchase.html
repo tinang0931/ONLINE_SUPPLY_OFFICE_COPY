@@ -145,7 +145,7 @@
   }
     
     .table-responsive {
-    margin-top: -6vh; 
+    margin-top: 0vh; 
     }
 
     
@@ -197,8 +197,8 @@
 
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4">  </h1>
-  <div class="search" style="position: relative; text-align: right; margin-top: -1vh;">
-    <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
+  <div class="search" style="position: relative; text-align: right; margin-top: 1vh;">
+    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px; top:2vh;">
         <i class="fas fa-search" style="font-size: 20px;"></i>
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
@@ -206,15 +206,6 @@
 </div>
 
 
-<div class="row">
-  <div class="col-md-1 mb-0">
-    <div class="bck">
-      <a href="{% url 'cdlanding' %}">
-          <img src="{% static 'images/back2.png' %}" alt="Previous">
-      </a>
-  </div>
-  </div>
-</div>
 
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -250,23 +241,23 @@
     
 
   
-      <td class="text-center">
+      <td class="text-center">             
         {% if checkout.status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+            <i class="fas fa-check text-success fa-2x animate-icon" style="font-size: 16px;">{{ checkout.bo_status }}</i>
         {% elif checkout.status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
+            <i class="fas fa-times text-warning fa-2x animate-icon" style="font-size: 16px;">{{ checkout.bo_status }}</i>
         {% else %}
-            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+            <i class="fa fa-spinner fa-spin" style="font-size: 16px;"></i>
         {% endif %}
-    </td>
+    </td> 
 
     <td class="text-center">
       {% if checkout.status == 'approved' %}
-          <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+          <i class="fas fa-check text-success fa-2x animate-icon" style="font-size: 16px;">{{ checkout.cd_status }}</i>
       {% elif checkout.status == 'declined' %}
-          <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
+          <i class="fas fa-times text-warning fa-2x animate-icon" style="font-size: 16px;">{{ checkout.cd_status }}</i>
       {% else %}
-          <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
+          <i class="fa fa-spinner fa-spin" style="font-size: 16px;"></span>
       {% endif %}
   </td>
     

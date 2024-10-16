@@ -127,3 +127,19 @@
     transform: scale(1.2);
     z-index: 1000; /* Ensure the image comes forward when hovered */
 }
+.total-submit-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px; /* Provides space between Total Amount and Submit */
+    width: 100%; /* Ensures container takes full width */
+}
+ 
+.submitBtn{
+    margin-top: -10vh;
+  
+}
+
+
+ 

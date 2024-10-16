@@ -84,14 +84,33 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # defaultdb
 
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'djongo',
+#        'NAME': 'inventory',
+#        'CLIENT': {
+#            'host': 'mongodb://192.168.0.27:27017',
+#    },
+#}
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'inventory',
-        'HOST': 'localhost',
-        'PORT': 27017,
-    },
+        'NAME': 'inventory',  # Replace with your MongoDB database name
+        'ENFORCE_SCHEMA': False,        # Optional: Enforce schema validation
+        'CLIENT': {
+            'host': 'mongodb://duhig:duhig123@localhost:27017/inventory?authSource=inventory',
+            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin', 
+            # Replace <username>, <password>, <host>, <port>, <database> with your MongoDB details
+            #'username': 'duhig',    # Optional if included in the URI
+            #'password': 'duhig123',    # Optional if included in the URI
+            #'authSource': 'admin',          # Authentication database (usually 'admin')
+            'authMechanism': 'SCRAM-SHA-1'  # Optional: Authentication mechanism
+        }
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
