@@ -78,7 +78,7 @@
         }
 
     </style>
-        <div class="table-responsive" style="margin: 0 auto; margin-top: 5vh; ;" >
+        <div class="table-responsive" style="margin: 0 auto; margin-top: 5vh;" >
 
             <table class="table table-bordered text-center mt-4" >
                 <thead>
@@ -221,38 +221,34 @@
                         </form>
 
                     </tr>
+                    <tbody>
+                    </tbody>
+                    </table>
+                    
+                    <!-- Add Item Button -->
+                    <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2"
+                            id="add-btn-{{ category }}"
+                            onclick="toggleNewItemRow('{{ category }}')">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                    
+                    <button id="submitBtn" type="button" class="btn btn-success btn-sm m-2"
+                    style="color: #FFA500; background-color: #22507A; border-color: #007bff; 
+                           height: 43px; width: 130px; position: fixed; top: 85vh; right: 20px;"
+                    onclick="submitForm()"> <!-- Added the onclick attribute to trigger the function -->
+                    <i class="fas fa-check-circle"></i> Submit
+                </button>
 
-
-                </tbody>
-            </table>
-            <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2" id="add-btn-{{ category }}"
-                onclick="toggleNewItemRow('{{ category }}')">
-                <i class="fas fa-plus-circle"></i>
-            </button>
-
-        </div>
-        <div class="total" style="position: relative; top: 70vh;">
-            <label for="estimate_budget"><strong>TOTAL AMOUNT :</strong></label>
-            <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-        </div>
-    </div>
-        <div>
-            <button id="submitBtn" type="submit" class="btn btn-success btn-sm m-2"
-            style="color: #FFA500; background-color: #22507A; border-color: #007bff; height: 43px; width: 130px; position: relative; top: 70vh;">
-            <i class="fas fa-check-circle"></i> Submit
-    </button>
-    </div>
-    </div>
-        </div>
-
-        
-  
-    
-    </div>
-
-    </form>
+                    <!-- Total Amount -->
+                    <div class="total" style="position: absolute; top: 50vh; left: 150vh; transform: translateX(-50%); display: flex; align-items: center;">
+                       <label for="estimate_budget" style="margin-right: 10px;">
+                             <strong>TOTAL AMOUNT :</strong>
+                         </label>
+                                  <input type="number" name="estimate_budget" id="estimate_budget" readonly>
 </div>
-</div
+
+
+                    
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
@@ -385,6 +381,8 @@
     });
 
     updateTotalForAllItems();
+
+
 </script>
 
 <script>
@@ -392,18 +390,15 @@
     function submitForm() {
         // Perform any validation or additional logic here if needed
 
-        // Submit the form
-        document.getElementById('ppmpForm').submit();
-    }
-
-    // Attach event listener to the container
-    document.getElementById('ppmpFormContainer').addEventListener('click', function (event) {
-        // Check if the click target is the container
-        if (event.target === this) {
-            // If yes, trigger the submit function
-            submitForm();
+        // Find the form by its ID (Make sure the form has an id, e.g., 'ppmpForm')
+        var form = document.getElementById('ppmpForm');
+        if (form) {
+            // Submit the form
+            form.submit();
+        } else {
+            console.error("Form not found!");
         }
-    });
+    }
 </script>
 
 
