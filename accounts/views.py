@@ -522,7 +522,8 @@ def cdpurchase_approval(request, pr_id):
  
  
         Pr_identifier.objects.filter(pr_id=pr_id).update(
-            status=new_status,
+            checkout_items=item,
+            cd_status=new_status,
             comment=comment_content
         )
  
@@ -536,7 +537,7 @@ def cdpurchase_approval(request, pr_id):
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'status': checkouts.status,
+            'status': checkouts.cd_status,
             'title': 'PURCHASE REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
     }
@@ -1418,7 +1419,7 @@ def cdppmp_approval(request, pr_id):
 
         checkout = Checkout.objects.get(pr_id=pr_id)
 
-        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
+        CheckoutItems.objects.filter(checkout_item=checkout, item=item).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
@@ -1443,7 +1444,9 @@ def cdppmp_approval(request, pr_id):
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
             cd_comment=comment_content,
+     
             cd_approved_date = timezone.now() 
+            
             
         )
 
@@ -1452,6 +1455,7 @@ def cdppmp_approval(request, pr_id):
     elif request.method == 'GET':
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
