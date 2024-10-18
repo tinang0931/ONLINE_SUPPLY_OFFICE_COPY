@@ -386,6 +386,83 @@
 </script>
 
 <script>
+    // Function to calculate the total for each row
+    function updateEstimateBudgetForRow(row) {
+        var unitPrice = parseFloat(row.find('[name="price"]').val()) || 0; // Unit price
+        var totalValue = 0;
+
+        // Sum the monthly values
+        row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+            var monthValue = parseFloat($(this).val()) || 0; // Get the value of each month field
+            totalValue += monthValue;
+        });
+
+        // Calculate the estimated budget for the row
+        var estimateBudget = totalValue * unitPrice;
+        row.find('[name="estimate_budget"]').val(estimateBudget.toFixed(2)); // Set the estimate budget
+    }
+
+    // Function to update the total for all items
+    function updateTotalForAllItems() {
+        var totalValue = 0;
+
+        // Iterate through each row and calculate the total value
+        $('tr.item-row').each(function () {
+            var row = $(this);
+            var unitPrice = parseFloat(row.find('[name="price"]').val()) || 0;
+            var rowTotalValue = 0;
+
+            row.find('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').each(function () {
+                var monthValue = parseFloat($(this).val()) || 0; // Get the value for the month
+                rowTotalValue += monthValue; // Add up the monthly values
+            });
+
+            // Calculate row total (monthly total * unit price)
+            var rowTotal = rowTotalValue * unitPrice;
+            totalValue += rowTotal; // Add to the overall total
+        });
+
+        // Update the total amount displayed in the "Total Amount" field
+        $('#estimate_budget').val(totalValue.toFixed(2));
+
+        // Get the allocated budget value
+        var allocatedBudget = parseFloat($('#total_allocated_budget b').text().replace(/[^0-9.-]+/g, "")); // Strip non-numeric characters
+
+        // Check if the total exceeds the allocated budget
+        if (totalValue > allocatedBudget) {
+            alert('Warning: Budget limit exceeded!');
+            
+            // Disable the fields if budget is exceeded
+            $('input[name^="jan"], input[name^="feb"], input[name^="mar"], input[name^="apr"], input[name^="may"], input[name^="jun"], input[name^="jul"], input[name^="aug"], input[name^="sep"], input[name^="oct"], input[name^="nov"], input[name^="dec"], input[name="price"]').prop('disabled', true);
+        } else {
+            // Enable the fields if the total is within the budget
+            $('input[name^="jan"], input[name^="feb"], input[name^="mar"], input[name^="apr"], input[name^="may"], input[name^="jun"], input[name^="jul"], input[name^="aug"], input[name^="sep"], input[name^="oct"], input[name^="nov"], input[name^="dec"], input[name="price"]').prop('disabled', false);
+        }
+    }
+
+    // Event listener for input changes on monthly quantity fields
+    $(document).ready(function () {
+        $('[name^="jan"], [name^="feb"], [name^="mar"], [name^="apr"], [name^="may"], [name^="jun"], [name^="jul"], [name^="aug"], [name^="sep"], [name^="oct"], [name^="nov"], [name^="dec"]').on('input', function () {
+            var row = $(this).closest('tr.item-row');
+            updateEstimateBudgetForRow(row); // Update the estimate budget for this row
+            updateTotalForAllItems(); // Update the overall total
+        });
+
+        // Event listener for unit price changes
+        $('[name="price"]').on('input', function () {
+            var row = $(this).closest('tr.item-row');
+            updateEstimateBudgetForRow(row); // Update the estimate budget for this row
+            updateTotalForAllItems(); // Update the overall total
+        });
+    });
+
+    // Initialize the total when the page loads
+    updateTotalForAllItems(); // Ensure total is updated on page load
+</script>
+
+
+
+<script>
     // Function to handle form submission
     function submitForm() {
         // Perform any validation or additional logic here if needed
