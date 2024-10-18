@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # defaultdb
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'djongo',
 #        'NAME': 'inventory',
@@ -94,15 +94,16 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 #            'host': 'mongodb://172.28.48.51:27017/',  # Replace <your_mongo_host> with the IP or hostname of your MongoDB server
 #        }
 #    },
-#}
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'inventory',  # Replace with your MongoDB database name
         'ENFORCE_SCHEMA': False,        # Optional: Enforce schema validation
         'CLIENT': {
-            'host': 'mongodb://duhig:duhig123@localhost:27017/inventory?authSource=inventory',
-            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin', 
+            'host': 'mongodb://duhig:duhig123@172.28.48.51:27017/inventory?authSource=inventory',
+            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin',
             # Replace <username>, <password>, <host>, <port>, <database> with your MongoDB details
             #'username': 'duhig',    # Optional if included in the URI
             #'password': 'duhig123',    # Optional if included in the URI
@@ -111,8 +112,6 @@ DATABASES = {
         }
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
