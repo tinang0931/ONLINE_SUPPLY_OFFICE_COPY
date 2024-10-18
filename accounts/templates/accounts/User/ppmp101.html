@@ -1,4 +1,4 @@
-{% extends "accounts/User/sidebar.html" %}
+{% extends "accounts/User/main.html" %}
  
 {% load static %}
  
@@ -57,28 +57,25 @@
  
  
         <div class=" trackers-section">
-            {% for checkout in data %}
             <div class="tracker">
                 <h3>PPMP TRACKER</h3>
- 
+            
                 <ul>
-                    <h2>PPMP ID: {{ checkout.pr_id }}</h2>
-                    <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
-                    <li><span class="green"></span> Approved by BO - {{ checkout.bo_approved_date|date:"F d Y" }}</li>
-                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y"
-                        }}</li>
+                    <h2>PPMP ID: {{ data.pr_id }}</h2>
+                    <li><span class="green"></span> PPMP Request Sent - {{ data.submission_date }}</li>
+                    <li><span class="green"></span> Approved by BO - {{ data.bo_approved_date|date:"F d Y" }}</li>
+                    <li><span class="orange"></span> Waiting for CD Response - {{ data.cd_approved_date|date:"F d Y" }}</li>
                 </ul>
- 
             </div>
-            {% endfor %}
+            
  
             <div class="tracker">
                 <h3>PR TRACKER</h3>
                 <ul>
-                    <h2>PPMP ID: {{ checkout.pr_id }}</h2>
-                    <li><span class="green"></span> PPMP Request Sent - {{ checkout.submission_date }}</li>
-                    <li><span class="green"></span> Approved by BO - {{ checkout.bo_approved_date|date:"F d Y" }}</li>
-                    <li><span class="orange"></span> Waiting for CD Response - {{ checkout.cd_approved_date|date:"F d Y" }}</li>
+                    <h2>PPMP ID: {{ i.pr_id }}</h2>
+                    <li><span class="green"></span> PPMP Request Sent - {{ i.submission_date }}</li>
+                    <li><span class="green"></span> Approved by BO - {{ i.bo_approved_date|date:"F d Y" }}</li>
+                    <li><span class="orange"></span> Waiting for CD Response - {{ i.cd_approved_date|date:"F d Y" }}</li>
                 </ul>
             </div>
         </div>

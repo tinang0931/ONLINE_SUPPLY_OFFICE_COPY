@@ -33,10 +33,121 @@
                   </div>
                   <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
                     <h1 class="head">{{title}} 
-                      <img src="{% static 'images/notification.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 160vh; position: relative; top: -4vh;">
-                      <img src="{% static 'images/account.png' %}" alt="Icon" style="width: 45px; height: 45px; margin-left: 168vh; position: relative; top: -10vh;">
-                  </h1> <!-- Image icon added here -->
+                                            
+<!-- Notification Icon -->
+<a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;" onclick="toggleNotifications()">
+  <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 35px; height: 35px;">
+  <!-- Notification Badge -->
+  <span id="notificationCount" style="
+     position: absolute;
+        top: 5px;
+        right: 0px;
+        background-color: red;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-size: 14px;
+        display: none;">
+        0
+  </span>
+</a>
+
+<!-- Notification Dropdown (Hidden by default) -->
+<div id="notificationDropdown" style="
+  display: none;
+  position: absolute;
+  top: 75px;
+  right: -45%;
+  width: 200px; /* Adjusted width */
+  background-color: #003566;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 5px; /* Reduced padding */
+  z-index: 1000;">
+  <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
+  <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
+      <!-- Example Notification Items -->
+      <li style="padding: 8px; border-bottom: 1px solid #ccc;">You have a new message</li>
+      <li style="padding: 8px; border-bottom: 1px solid #ccc;">Your order has been shipped</li>
+      <li style="padding: 8px; border-bottom: 1px solid #ccc;">New comment on your post</li>
+  </ul>
+</div>
+
+                          <!-- Profile Icon --> 
+                          <a href="#" id="profileIcon" style="position: relative; top: -10vh; margin-left: 168vh;">
+                              <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 60px; height: 60px; ">
+                          </a>
+                      </h1>
                   </div>
+                  
+                  <!-- File input for Profile upload (hidden) -->
+                  <input type="file" id="profileUpload" style="display: none;" accept="image/*" />
+
+                  
+                 
+                  
+
+                  <script>
+                        // JavaScript part
+  // When the user clicks the profile icon, trigger file input click
+  document.getElementById('profileIcon').addEventListener('click', function() {
+      document.getElementById('profileUpload').click();
+  });
+
+  // When a new file is uploaded
+  document.getElementById('profileUpload').addEventListener('change', function(event) {
+      const file = event.target.files[0]; // Get the uploaded file
+      if (file) {
+          const reader = new FileReader(); // Create a new FileReader object
+
+          reader.onload = function(e) {
+              const profileImageUrl = e.target.result;
+
+              // Set the profile image source to the uploaded file's data URL
+              document.getElementById('profileImage').src = profileImageUrl;
+
+              // Store the image data URL in localStorage to persist across refreshes
+              localStorage.setItem('profileImage', profileImageUrl);
+          };
+
+          // Read the file as a data URL
+          reader.readAsDataURL(file);
+      }
+  });
+
+  // Check if there's a stored profile image in localStorage on page load
+  window.addEventListener('load', function() {
+      const storedProfileImage = localStorage.getItem('profileImage');
+      if (storedProfileImage) {
+          // If a profile image is found in localStorage, set it as the src
+          document.getElementById('profileImage').src = storedProfileImage;
+      }
+  });
+
+
+
+function toggleNotifications() {
+      const dropdown = document.getElementById('notificationDropdown');
+      dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
+  }
+
+  // Function to update the notification count
+  function updateNotificationCount(count) {
+      const notificationCountElement = document.getElementById('notificationCount');
+      
+      if (count > 0) {
+          notificationCountElement.textContent = count;
+          notificationCountElement.style.display = 'inline-block';
+      } else {
+          notificationCountElement.style.display = 'none';
+      }
+  }
+
+  // Example usage to update notification count and list (replace with real data)
+  updateNotificationCount(3); // Update with the number of unread notifications
+
+
+                      </script>
           </nav>
           <h1 class="welcome" style="height: 0.5vh"></h1>
           <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px; ">  
@@ -77,154 +188,171 @@
           </div>
         </div>
         <style>
-          #sidebar-wrapper .list-group-item.logout-link {
-            position: absolute;
-            top: 75vh;
-        }
+                
           .d-flex {
-            height: 85vh;
-            margin-bottom: 1;
-}
-          #sidebar {
-    transition: width 0.5s ease-in-out, padding 0.5s ease-in-out 0s !important;
-    overflow: hidden;
-    width: 70px;
+              height: 100vh;
+              margin-bottom: 0;
+  }/* Ensure that the sidebar stays at a fixed width */
+#sidebar {
+width: 120px;
+transition: width 0.5s ease-in-out;
+overflow: hidden;
 }
 
 #sidebar.show-names {
-    width: 300px;
-    padding: 0 30px;
+width: 50px;
+padding: 0;
 }
 
 .hidden-name {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+opacity: 0;
+transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+position: absolute;
+top: 35px; /* Adjust this value based on icon size */
+left: 50%;
+transform: translateX(-50%);
+font-size: 9.5px;
+white-space: nowrap;
+font-style: normal;
 }
 
-#sidebar.show-names .hidden-name {
-    opacity: 1;
+/* Style for the icons in the sidebar */
+.list-group-item i {
+transform: scale(1.4);
+display: inline-block;
+position: relative;
+left: 20px;
 }
 
-.list-group-item-action {
-    transition: background-color 0.5s ease-in-out, border-radius 0.5s ease-in-out, color 0.5s ease-in-out;
+/* Make the name appear below the icon when hovering over the icon */
+.list-group-item:hover .hidden-name {
+opacity: 1;
+transform: translateX(-50%) translateY(10px); /* Adjust the vertical position of the name on hover */
+}
+
+/* Ensuring the hover effect is applied only to the icon */
+.list-group-item {
+position: relative;
+display: fixed;
+justify-content: center;
+align-items: center;
+
+}
+
+/* Adjust spacing */
+.list-group-item i {
+margin-bottom: 20px; /* Provide space for the text that will appear below */
+}
+
+/* General layout adjustments */
+.d-flex {
+height: 100vh;
+margin-bottom: 0;
 }
 
 .list-group-item-action:hover {
-    background-color: #093a68 !important;
-    border-radius: 5px !important;
-    color: #f2f2f2 !important;
-}
-
-
-#sidebar:hover {
-    width: 300px;
-    padding: 0 6px;
+background-color: #003566 !important;
+border-radius: 5px !important;
+color: #f2f2f2 !important;
 }
 
 .logout-link {
-    margin-bottom: 1%;
-    margin-left: 1px;
-    width: 240px;
-}
-.about-link {
-  margin-left: 3px;
-  width: 240px;
-
-}
-.resolution-link {
-  margin-left: 3px;
-  width: 245px;
-}
-.purchase-requests-link {
-  margin-left: 3px;
-  width: 245px;
-}
-.home-link {
-  margin-left: -10px;
-  width: 245px;
-}
-
-.d-flex.flex-wrap.align-content-between.h-100 {
-  background-color: #f2f2f2;
-  overflow: hidden;
-}
-
-.list-group-item-action:not(:hover) span {
-    color: black !important;
-}
-
-.ctu_logo {
-    position: relative;
-    top: 3px;
-    z-index: 1;
-}
-
-.pro {
-  position: relative;
-  top: 359px;
-  z-index: 1;
-  height: 45px;
-  width: 45px;
-  margin-left: 6%;
-  transition: height 0.3s ease, width 0.3s ease;
-  cursor: pointer;
-  border-radius: 50px;
-  border: 2px solid #000;
-  margin-top: 20px;
-  display:none;
-}
-.list-group-item i {
-    transform: scale(1.4);
-    display: inline-block;
-}
-
-.profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    margin: 0;
-    margin-left: 0px;
-    display: none;
-}
-
-.account_type {
-    position: relative;
-    top: 200px;
-    left: 30px;
-    font-size: 20px;
-    margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    margin-top: 20px;
-}
-
-.sidebar:hover .account_type,
-.pro:hover + .account_type {
-    opacity: 1;
-    visibility: visible;
-}
-
-.sidebar:hover .account_type {
-    opacity: 1;
-    visibility: visible;
-}
-
-
-        </style>      
-        <script>
-          function showNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.add('show-names');
+position: fixed;              
+margin-top: -140px ;
+             
           }
-        
-          function hideNames() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('show-names');
+
+
+          .d-flex.flex-wrap.align-content-between.h-100 {
+              background-color: #f2f2f2;
           }
-        </script>
+
+          .list-group-item-action:not(:hover) span {
+              color: black !important;
+          }
+
+          .ctu_logo {
+              position: relative;
+              top: 3px;
+              z-index: 1;
+          }
+
+          .pro {
+              position: relative;
+              top: 380px;
+              z-index: 1;
+              height: 45px;
+              width: 45px;
+              margin-left: 45%;
+              transition: height 0.3s ease, width 0.3s ease;
+              cursor: pointer;
+              border-radius: 50px;
+              border: 2px solid #000;
+              display: none;
+          }
+
+          .list-group-item i {
+              transform: scale(1.4);
+              display: inline-block;
+          }
+
+          .profile-container {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 90%;
+              margin: 0;
+          }
+
+          .account_type {
+              position: relative;
+              top: 380px;
+              /* Adjust the desired vertical position */
+              left: 30px;
+              /* Adjust the desired horizontal position */
+              font-size: 20px;
+              margin: 0;
+              font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+              opacity: 0;
+              /* Set the initial opacity to hide the element */
+              visibility: hidden;
+              /* Set the initial visibility to hidden */
+              transition: opacity 0.3s ease, visibility 0.3s ease;
+              /* Add a transition effect */
+              display: none
+          }
+
+          .sidebar:hover .account_type,
+          .pro:hover+.account_type {
+              opacity: 1;
+              /* Show the element when the sidebar or .pro is hovered */
+              visibility: visible;
+              /* Show the element when the sidebar or .pro is hovered */
+          }
+
+
+          .sidebar:hover .account_type {
+              opacity: 1;
+              /* Show the element when the sidebar is hovered */
+              visibility: visible;
+              /* Show the element when the sidebar is hovered */
+          }
+
+          
+#profileIcon {
+    position: relative;
+    top: 15vh; /* Adjust as needed */
+    margin-left: 168vh; /* Adjust as needed */
+}
+
+#profileImage {
+    width: 45px;
+    height: 45px;
+    cursor: pointer; /* To show it's clickable */
+    border-radius: 50%;
+}
+      </style>
+
 
         {% block cdabout %}
         {% endblock %}
@@ -243,7 +371,7 @@
 
         {% block cdpurchaseapproval %}
         {% endblock %}
-
+        
     </main>
   </body>
 </html>
