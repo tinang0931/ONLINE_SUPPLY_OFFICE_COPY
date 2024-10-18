@@ -121,8 +121,8 @@ def ppmp101(request):
     # Retrieve the current user's budget
     user_budget = request.user.budget
 
-    # Existing logic for retrieving checkout data
-    data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
+   
+    data = Checkout.objects.filter(user=request.user).order_by('-submission_date').first()
 
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
     
