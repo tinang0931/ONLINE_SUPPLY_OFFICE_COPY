@@ -341,7 +341,7 @@ def login(request):
                     return redirect('budget-landing')
                 elif user.user_type == 'bac':
                     return redirect('baclanding')
-                else:
+                else: 
                     return redirect('ppmp101')  # Regular user
                 
             else:
