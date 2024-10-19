@@ -1144,8 +1144,6 @@ def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
-
-
 def add_new_item(request):
     if request.method == 'POST':
         category = request.POST.get('category')
@@ -1349,7 +1347,7 @@ def preqform_bo(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
-        checkout = Checkout.objects.get(pr_id=pr_id)
+        checkout = Checkout.objects.get(pr_id=pr_id)    
 
         CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
@@ -1442,9 +1440,9 @@ def cdppmp_approval(request, pr_id):
 
         # Update Checkout model
         Checkout.objects.filter(pr_id=pr_id).update(
+            checkout_items=checkout_items,
             cd_status=new_status,
             cd_comment=comment_content,
-     
             cd_approved_date = timezone.now() 
             
             
@@ -1501,8 +1499,11 @@ def cdpurchase(request):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
 def preqform_cd(request, pr_id):
+    # Fetch the Checkout object based on the pr_id
     checkout = get_object_or_404(Checkout, pr_id=pr_id)
+    
     if request.method == 'POST':
+        # Handle POST data as before
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
 
@@ -1524,8 +1525,7 @@ def preqform_cd(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
-        checkout = Checkout.objects.get(pr_id=pr_id)
-
+        # Update the CheckoutItems
         CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
             item_brand_description=item_brand,
@@ -1544,33 +1544,24 @@ def preqform_cd(request, pr_id):
             oct=oct,
             nov=nov,
             dec=dec,
-            
         )
-        Checkout.objects.filter(pr_id=pr_id).update(
-            cd_status=new_status,
-            cd_comment=comment_content,
-            cd_approved_date= timezone.now()
-        )
+
+        # Update the Checkout object
+        checkout.cd_status = new_status
+        checkout.cd_comment = comment_content
+        checkout.cd_approved_date = timezone.now()
+        checkout.save()
 
         return redirect('cdpurchase')
 
-    elif request.method == 'GET':
-        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+    else:  # GET request
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
         context = {
-            'checkouts': checkouts,
+            'checkouts': checkout,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-    }
-    checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-    context = {
-                'checkouts': checkout,
-                'checkout_items': checkout_items,
-                'pr_id': pr_id,
-            }
-    
-    print("pr_id:", pr_id)
-    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+        }
+        return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_items(request, id):
