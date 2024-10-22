@@ -319,7 +319,7 @@
       </div> 
     <div class="table-responsive" style="margin-top: 2vh;">
 
-        <form action="{% url 'preqform_bo' pr_id=checkout.pr_id %}" method="post" id="form_id">
+        <form action="{% url 'preqform_bo' pr_id=pr_id %}" method="post" id="form_id">
 
             {% csrf_token %}
 

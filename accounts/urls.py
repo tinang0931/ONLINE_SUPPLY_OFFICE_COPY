@@ -86,5 +86,5 @@ urlpatterns = [
     path('boppmp/<str:pr_id>/', views.boppmp, name='boppmp'),
     path('approve/', views.approve_user, name='approve_user'),
     path('new_ppmp/', views.new_ppmp, name='new_ppmp'),
-     
+    path('get_tracker_updates/', get_tracker_updates, name='get_tracker_updates'),
 ]

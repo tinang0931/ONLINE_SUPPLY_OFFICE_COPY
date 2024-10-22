@@ -1394,9 +1394,11 @@ def preqform_bo(request, pr_id):
 
 def cdppmp_approval(request, pr_id):
     if request.method == 'POST':
+        # Get the form data from the POST request
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
 
+        # Item details
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
@@ -1415,9 +1417,11 @@ def cdppmp_approval(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
+        # Get the Checkout object using pr_id
         checkout = Checkout.objects.get(pr_id=pr_id)
 
-        CheckoutItems.objects.filter(checkout_item=checkout, item=item).update(
+        # Update the CheckoutItems related to the specific checkout and item
+        CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
@@ -1432,38 +1436,37 @@ def cdppmp_approval(request, pr_id):
             jul=jul,
             aug=aug,
             sep=sep,
-            oct=oct,   
+            oct=oct,
             nov=nov,
             dec=dec,
-            
         )
 
-        # Update Checkout model
+        # Update the Checkout model with the new status and comments
         Checkout.objects.filter(pr_id=pr_id).update(
-            checkout_items=checkout_items,
             cd_status=new_status,
             cd_comment=comment_content,
-            cd_approved_date = timezone.now() 
-            
-            
+            cd_approved_date=timezone.now()
         )
 
+        # Redirect to the CD PPMP page after approval
         return redirect('cdppmp')
 
     elif request.method == 'GET':
+        # Get the checkout object and related items
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
 
+        # Prepare the context for rendering the page
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'title':'PPMP REQUEST APPROVAL',
-            'CAMPUS_NAME':CAMPUS_NAME,
-     }
+            'title': 'PPMP REQUEST APPROVAL',
+            'CAMPUS_NAME': CAMPUS_NAME,  # Ensure CAMPUS_NAME is defined somewhere in the view
+        }
 
-    return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
+        return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
 @cd_required
 def cdpurchase(request):
 
@@ -1660,3 +1663,18 @@ def boppmp(request, pr_id):
 def new_ppmp(request):
     return render(request, 'accounts/User/new_ppmp.html')
 
+def get_tracker_updates(request):
+    updates = []
+    # Fetch the latest tracker items (replace with your query)
+    checkouts = Checkout.objects.all()  
+    for p in checkouts:
+        update = {
+            'pr_id': p.pr_id,
+            'bo_status': p.bo_status,
+            'cd_status': p.cd_status,
+            'bo_comment': p.bo_comment or 'No comment',
+            'cd_comment': p.cd_comment or 'No comment',
+        }
+        updates.append(update)
+    
+    return JsonResponse(updates, safe=False)
