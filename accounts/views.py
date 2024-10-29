@@ -1397,7 +1397,6 @@ def cdppmp_approval(request, pr_id):
         # Get the form data from the POST request
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
-
         # Item details
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
