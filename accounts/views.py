@@ -1663,31 +1663,48 @@ def new_ppmp(request):
     return render(request, 'accounts/User/new_ppmp.html')
 def get_tracker_updates(request):
     updates = []
-    checkouts = Checkout.objects.all()  
-    for p in checkouts:
+    checkouts = Checkout.objects.all()
+    for checkout in checkouts:
         update = {
-            'pr_id': p.pr_id,
-            'bo_status': p.bo_status,
-            'cd_status': p.cd_status,
-            'bo_comment': p.bo_comment or 'No comment',
-            'cd_comment': p.cd_comment or 'No comment',
+            'pr_id': checkout.pr_id,
+            'bo_status': checkout.bo_status,
+            'bo_comment': checkout.bo_comment or 'No comment',
         }
         updates.append(update)
+
     
     return JsonResponse(updates, safe=False)
-
-def approve_checkout(request, checkout_id):
-    # Get the specific checkout item and update its status
+def checkout_action(request, checkout_id):
+    # Get the specific checkout item
     checkout = get_object_or_404(Checkout, id=checkout_id)
-    checkout.bo_status = 'approved'  # Update status as needed
+
+    # Action could be 'approve' or 'disapprove'
+    action = request.POST.get('action')
+    comment = request.POST.get('comment', '')
+
+    # Initialize message and update the status
+    if action == 'approve':
+        checkout.bo_status = 'approved'
+        message = f'PPMP No. {checkout.pr_id} has been approved.'
+    elif action == 'disapprove':
+        checkout.bo_status = 'disapproved'
+        message = f'PPMP No. {checkout.pr_id} has been disapproved.'
+    else:
+        return JsonResponse({'error': 'Invalid action'}, status=400)
+
+    # Update the comment if provided
+    if action == 'disapprove':
+        checkout.bo_comment = comment or 'No additional comments provided.'
+
+    # Save the updated status and comment
     checkout.save()
 
-    # Notify the users
+    # Prepare the notification message
     notification = {
         'pr_id': checkout.pr_id,
-        'message': f'PPMP No. {checkout.pr_id} has a new status: Approved',
+        'message': message,
+        'comment': checkout.bo_comment,
     }
 
-    # You may want to implement a more robust notification system
-    # For now, we'll return the notification as part of the response
+    # Return the notification as part of the response
     return JsonResponse(notification)

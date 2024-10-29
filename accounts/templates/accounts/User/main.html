@@ -73,68 +73,94 @@
         <!-- Notifications will be populated here -->
     </ul>
 </div>
-
 <script>
     // Function to toggle the visibility of notifications
     function toggleNotifications() {
         const dropdown = document.getElementById('notificationDropdown');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
-
-    // Function to fetch updates from the server
+  
     async function fetchUpdates() {
         try {
-            const response = await fetch('/get_tracker_updates/'); // Fetch updates from this endpoint
+            const response = await fetch('/get_tracker_updates/');
             const updates = await response.json();
+            console.log("Received updates:", updates); // Debugging log
             processUpdates(updates);
         } catch (error) {
             console.error('Error fetching updates:', error);
         }
     }
-
-    // Function to process updates and populate notifications
+  
+    let unreadCount = 0; // Initialize unread count
+    const viewedNotifications = new Set(JSON.parse(localStorage.getItem('viewedNotifications')) || []); // Load viewed notifications from localStorage
+  
     function processUpdates(updates) {
         const notifications = [];
         const notificationCount = document.getElementById('notificationCount');
         const notificationList = document.getElementById('notificationList');
         notificationList.innerHTML = ''; // Clear previous notifications
-
+  
         updates.forEach(item => {
-            if (item.bo_status === 'approved' || item.cd_status === 'approved') {
-                let notificationSummary = `PPMP No. ${item.checkout_id} has a new status: Approved`;
-                notifications.push({ summary: notificationSummary, checkout_id: item.checkout_id });
+            const checkoutId = item.pr_id; // Use pr_id to identify each checkout
+  
+            // Check for approved and declined statuses
+            if ((item.bo_status === 'approved' || item.bo_status === 'declined') && !viewedNotifications.has(checkoutId)) {
+                notifications.push(`PPMP No. ${checkoutId} has a new status: ${item.bo_status.charAt(0).toUpperCase() + item.bo_status.slice(1)}`);
+                unreadCount++; // Increment unread count for new notifications
             }
         });
-
-        if (notifications.length > 0) {
-            notificationCount.innerText = notifications.length;
-            notificationCount.style.display = 'block';
-            notifications.forEach(note => {
-                const listItem = document.createElement('li');
-                listItem.style.padding = '8px';
-                listItem.style.borderBottom = '1px solid #ccc';
-                listItem.innerText = note.summary;
-                // Redirect to the tracker page when clicked
-                listItem.onclick = () => window.location.href = `/tracker/`;
-                notificationList.appendChild(listItem);
-            });
-        } else {
-            notificationCount.style.display = 'none'; // Hide count if no notifications
+  
+        // Update notification count and display
+        notificationCount.innerText = unreadCount; // Show unread count
+        notificationCount.style.display = unreadCount > 0 ? 'block' : 'none';
+  
+        notifications.forEach(note => {
+            const listItem = document.createElement('li');
+            listItem.style.padding = '8px';
+            listItem.style.borderBottom = '1px solid #ccc';
+            listItem.innerText = note;
+  
+            // Mark as viewed and decrement unread count on click
+            listItem.onclick = () => {
+                const checkoutId = note.match(/PPMP No. (\d+)/)[1]; // Extract the ID from the notification
+                viewedNotifications.add(checkoutId); // Add to viewed set
+                localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications))); // Save to localStorage
+                unreadCount--; // Decrement unread count
+                notificationCount.innerText = unreadCount; // Update display
+                if (unreadCount === 0) notificationCount.style.display = 'none'; // Hide count if zero
+                // Optionally, navigate to the tracker page
+                window.location.href = `/tracker/`;
+            };
+  
+            notificationList.appendChild(listItem);
+        });
+  
+        // Show 'No notifications' if none
+        if (notifications.length === 0) {
             const noNotificationItem = document.createElement('li');
             noNotificationItem.style.padding = '8px';
             noNotificationItem.innerText = 'No notifications';
             notificationList.appendChild(noNotificationItem);
         }
-    }
-
-    // Fetch updates periodically
-    setInterval(fetchUpdates, 5000);
-    window.onload = fetchUpdates; // Initial fetch
-
-   
-</script>
-
-
+  
+        // Add "Mark all as read" button
+      const markAllReadButton = document.createElement('button');
+      markAllReadButton.innerText = 'Mark all as read';
+      markAllReadButton.onclick = () => {
+          viewedNotifications.clear(); // Reset viewed notifications
+          localStorage.removeItem('viewedNotifications'); // Clear from localStorage
+          unreadCount = 0; // Reset unread count
+          notificationCount.innerText = unreadCount; // Update display
+          notificationCount.style.display = 'none'; // Hide count
+          markAllReadButton.style.display = 'none'; // Hide the button after clicking
+      };
+      notificationList.appendChild(markAllReadButton);
+  }
+    window.onload = () => {
+        fetchUpdates(); // Initial fetch
+    };
+  </script>
+  
 
                             <!-- Profile Icon --> 
                             <a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
