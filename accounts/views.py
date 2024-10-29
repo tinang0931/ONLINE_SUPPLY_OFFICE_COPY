@@ -1661,10 +1661,8 @@ def boppmp(request, pr_id):
 
 def new_ppmp(request):
     return render(request, 'accounts/User/new_ppmp.html')
-
 def get_tracker_updates(request):
     updates = []
-    # Fetch the latest tracker items (replace with your query)
     checkouts = Checkout.objects.all()  
     for p in checkouts:
         update = {
@@ -1677,3 +1675,19 @@ def get_tracker_updates(request):
         updates.append(update)
     
     return JsonResponse(updates, safe=False)
+
+def approve_checkout(request, checkout_id):
+    # Get the specific checkout item and update its status
+    checkout = get_object_or_404(Checkout, id=checkout_id)
+    checkout.bo_status = 'approved'  # Update status as needed
+    checkout.save()
+
+    # Notify the users
+    notification = {
+        'pr_id': checkout.pr_id,
+        'message': f'PPMP No. {checkout.pr_id} has a new status: Approved',
+    }
+
+    # You may want to implement a more robust notification system
+    # For now, we'll return the notification as part of the response
+    return JsonResponse(notification)
