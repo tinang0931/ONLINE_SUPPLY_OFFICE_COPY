@@ -125,6 +125,7 @@ def ppmp101(request):
     data = Checkout.objects.filter(user=request.user).order_by('-submission_date').first()
 
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+   
     
     checkout_data = []
 
