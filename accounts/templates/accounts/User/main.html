@@ -56,26 +56,109 @@
     </span>
 </a>
 
-<!-- Notification Dropdown (Hidden by default) -->
+<!-- Notification Dropdown -->
 <div id="notificationDropdown" style="
     display: none;
     position: absolute;
     top: 75px;
     right: -45%;
-    width: 200px; /* Adjusted width */
+    width: 250px; /* Adjusted width */
     background-color: #003566;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding: 5px; /* Reduced padding */
+    padding: 5px;
     z-index: 1000;">
     <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
     <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
-        <!-- Example Notification Items -->
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">You have a new message</li>
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">Your order has been shipped</li>
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">New comment on your post</li>
+        <!-- Notifications will be populated here -->
     </ul>
 </div>
+
+<script>
+    
+    function toggleNotifications() {
+        const dropdown = document.getElementById('notificationDropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    async function fetchUpdates() {
+        try {
+            const response = await fetch('/get_tracker_updates/');
+            const updates = await response.json();
+            processUpdates(updates);
+        } catch (error) {
+            console.error('Error fetching updates:', error);
+        }
+    }
+
+    function processUpdates(updates) {
+        const notifications = [];
+        const notificationCount = document.getElementById('notificationCount');
+        const notificationList = document.getElementById('notificationList');
+        notificationList.innerHTML = ''; // Clear previous notifications
+
+        updates.forEach(item => {
+            let notificationSummary = `${item.username} - PPMP No. ${item.pr_id} has new status`;
+            const details = {
+                status: [],
+                comments: []
+            };
+
+            // Check statuses
+            if (item.bo_status === 'approved') {
+                details.status.push("Budget Officer: Approved");
+            } else if (item.bo_status === 'declined') {
+                details.status.push("Budget Officer: Declined");
+            }
+
+            if (item.cd_status === 'approved') {
+                details.status.push("Campus Director: Approved");
+            } else if (item.cd_status === 'declined') {
+                details.status.push("Campus Director: Declined");
+            }
+
+            // Check comments
+            if (item.bo_comment) {
+                details.comments.push(`Budget Officer Comment: ${item.bo_comment}`);
+            }
+            if (item.cd_comment) {
+                details.comments.push(`Campus Director Comment: ${item.cd_comment}`);
+            }
+
+            notifications.push({ summary: notificationSummary, details });
+        });
+
+        if (notifications.length > 0) {
+            notificationCount.innerText = notifications.length;
+            notificationCount.style.display = 'block';
+            notifications.forEach(note => {
+                const listItem = document.createElement('li');
+                listItem.style.padding = '8px';
+                listItem.style.borderBottom = '1px solid #ccc';
+                listItem.innerText = note.summary;
+                listItem.onclick = () => showDetails(note.details);
+                notificationList.appendChild(listItem);
+            });
+        } else {
+            notificationCount.style.display = 'none'; // Hide count if no notifications
+            const noNotificationItem = document.createElement('li');
+            noNotificationItem.style.padding = '8px';
+            noNotificationItem.innerText = 'No notifications';
+            notificationList.appendChild(noNotificationItem);
+        }
+    }
+    
+
+    function showDetails(details) {
+        let detailMessage = "Status:\n" + details.status.join('\n') + "\n\nComments:\n" + (details.comments.length ? details.comments.join('\n') : "No comments");
+        alert(detailMessage); // Display the detailed status and comments
+    }
+
+    // Fetch updates periodically
+    setInterval(fetchUpdates, 5000);
+    window.onload = fetchUpdates; // Initial fetch
+</script>
+
 
                             <!-- Profile Icon --> 
                             <a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
@@ -130,27 +213,6 @@
 
 
 
-function toggleNotifications() {
-        const dropdown = document.getElementById('notificationDropdown');
-        dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
-    }
-
-    // Function to update the notification count
-    function updateNotificationCount(count) {
-        const notificationCountElement = document.getElementById('notificationCount');
-        
-        if (count > 0) {
-            notificationCountElement.textContent = count;
-            notificationCountElement.style.display = 'inline-block';
-        } else {
-            notificationCountElement.style.display = 'none';
-        }
-    }
-
-    // Example usage to update notification count and list (replace with real data)
-    updateNotificationCount(3); // Update with the number of unread notifications
-
-
                         </script>
                     
             </nav>
@@ -166,7 +228,7 @@ function toggleNotifications() {
                             <br><br>
 
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp101' %}">
-                                <i class="bi bi-grid"></i> <span id="purchaseRequest" class="hidden-name">dashboard</span>
+                                <i class="bi bi-grid"></i> <span id="purchaseRequest" class="hidden-name">Dashboard</span>
                             </a>
                             
                             <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp101'%}">
