@@ -1037,9 +1037,10 @@ from django.core.files.base import ContentFile
 @authenticated_user
 def purchase(request):
     context = {
-                'title': 'CREATE PURCHASE REQUEST',
-                'CAMPUS_NAME': CAMPUS_NAME,
-                }
+        'title': 'CREATE PURCHASE REQUEST',
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+
     if request.method == 'POST':
         files = request.FILES.getlist('files[]')
         items = request.POST.getlist('items[]')
@@ -1048,11 +1049,14 @@ def purchase(request):
         prices = request.POST.getlist('prices[]')
         quantity = request.POST.getlist('quantity[]')
         total = request.POST.get('total_amount')
-
-        pr_id = generate_auto_pr_id()
-        user = request.user
         purpose = request.POST.get('purpose')
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose,)
+
+        # Create the pr_identifier instance
+        pr_identifier = Pr_identifier(user=request.user, purpose=purpose)
+
+        # Generate the pr_id
+        pr_identifier.generate_pr_id()  # Call the instance method
+        pr_identifier.save()  # Save the instance to the database
 
         for i in range(len(items)):
             uploaded_file = files[i] if i < len(files) else None  
@@ -1063,7 +1067,7 @@ def purchase(request):
 
             PR.objects.create(
                 metadata=metadata,
-                file=metadata.file if uploaded_file else None, 
+                file=metadata.file if uploaded_file else None,
                 pr_identifier=pr_identifier,
                 item=items[i],
                 item_brand_description=item_brands[i],
@@ -1072,17 +1076,14 @@ def purchase(request):
                 quantity=quantity[i],
                 total_cost=total
             )
-            
-            # Remove the following line, it is not necessary
-            PR_Items.objects.all().delete()
 
-        # Move the redirect statement outside the loop
         return redirect('purchasetracker')
 
     elif request.method == 'GET':
         items = PR_Items.objects.all()
         context['items'] = items  # Add 'items' to the context dictionary
         return render(request, 'accounts/User/purchase.html', context)
+
 
 
 from bson import ObjectId
