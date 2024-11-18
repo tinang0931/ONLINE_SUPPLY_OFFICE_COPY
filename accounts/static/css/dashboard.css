@@ -22,13 +22,40 @@
     }
 
       /* Left Container */
-    .left-container {
-      width: 60%;
-      margin-top: 9vh;
-      margin-left: 20px;
-      margin-right: 20px;
+      .left-container {
+        width: 60%;
+        margin-top: 9vh;
+        margin-left: 20px;
+        margin-right: 20px;
+  
+        overflow-y: auto;
+               
+      }
+    
+    /* For WebKit browsers (Chrome, Safari) */
+    .left-container::-webkit-scrollbar {
+        width: 12px; 
     }
-
+    
+    .left-container::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    .left-container::-webkit-scrollbar-thumb {
+        background: #888; 
+        border-radius: 6px; 
+    }
+    
+    .left-container::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+    
+  
+    .left-container {
+        scrollbar-width: thin; 
+        scrollbar-color: #888 #f1f1f1;
+    }
+    
     /* Right Container */
     .right-container {
       width: 40%;
@@ -42,14 +69,9 @@
 }
 
 
-
-
-
 .budget-section {
     margin-bottom: 20px;
 }
-
-
 
     .budget-section {
       text-align: center;
