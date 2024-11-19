@@ -87,8 +87,9 @@ urlpatterns = [
     path('approve/', views.approve_user, name='approve_user'),
     path('new_ppmp/', views.new_ppmp, name='new_ppmp'),
     path('get_tracker_updates/', get_tracker_updates, name='get_tracker_updates'),
-  
-
+    path('get_purchasetracker_updates/', get_purchasetracker_updates, name='get_purchasetracker_updates'),
     path('tracker/<int:checkout_id>/', views.tracker, name='tracker'),
     path('approve_checkout/<int:checkout_id>/', views.checkout_action, name='approve_checkout'),
+    path('approve_tracker/<int:checkout_id>/', views.tracker_action, name='approve_tracker'),
+    path('sidebar1/', views.sidebar1, name='sidebar1'),
 ]
