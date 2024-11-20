@@ -241,25 +241,25 @@
     
 
   
-      <td class="text-center">             
-        {% if checkout.status == 'approved' %}
-            <i class="fas fa-check text-success fa-2x animate-icon" style="font-size: 16px;">{{ checkout.bo_status }}</i>
-        {% elif checkout.status == 'declined' %}
-            <i class="fas fa-times text-warning fa-2x animate-icon" style="font-size: 16px;">{{ checkout.bo_status }}</i>
-        {% else %}
-            <i class="fa fa-spinner fa-spin" style="font-size: 16px;"></i>
-        {% endif %}
-    </td> 
+      <td class="text-center">
+        {% if checkout.bo_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+          {% elif checkout.bo_status == 'declined' %}
+          <i class="fas fa-times text-warning fa-2x animate-icon"></i>
+           {% else %}
+           <i class="fa fa-spinner fa-spin"></i> 
+              {% endif %}
+      </td>
 
-    <td class="text-center">
-      {% if checkout.status == 'approved' %}
-          <i class="fas fa-check text-success fa-2x animate-icon" style="font-size: 16px;">{{ checkout.cd_status }}</i>
-      {% elif checkout.status == 'declined' %}
-          <i class="fas fa-times text-warning fa-2x animate-icon" style="font-size: 16px;">{{ checkout.cd_status }}</i>
-      {% else %}
-          <i class="fa fa-spinner fa-spin" style="font-size: 16px;"></span>
-      {% endif %}
-  </td>
+      <td class="text-center">
+        {% if checkout.cd_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+           {% elif checkout.cd_status == 'declined' %}
+           <i class="	fas fa-times"></i>
+             {% else %}
+             <i class="fa fa-spinner fa-spin"></i>
+                {% endif %}
+      </td>
     
     
     <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">

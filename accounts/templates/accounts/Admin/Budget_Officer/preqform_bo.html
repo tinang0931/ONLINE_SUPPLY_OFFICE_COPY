@@ -358,19 +358,15 @@
 
                     <td>
                         <span class="editable" data-field="Item_name" style=" margin-left: -0.5vh;">{{ p.item }}</span>
-                        <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                            oninput="change_val('item_{{ p.id }}')" class="edit-input"">
+                        
                     </td>
                     <td>
                         <span class="editable" data-field="Item_Brand" style=" margin-left: -0.5vh;">{{ p.item_brand_description }}</span>
-                        <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                            value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
-                            class="edit-input" ">
+                        
                     </td>
                     <td>
                         <span class="editable" data-field="Unit"style=" margin-left: 0vh;">{{ p.unit }}</span>
-                        <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                            oninput="change_val('unit_{{ p.id }}')" class="edit-input">
+                       
                     </td>
 
                     <td >{{ p.estimate_budget }} </td>
@@ -388,8 +384,7 @@
                     <td>{{ p.dec }}</td>
                     <td>
                         <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                        <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                            oninput="change_val('price_{{ p.id }}')" class="edit-input" ">
+                        
                     </td>
                     <input type="hidden" name="estimate_budget" value="{{ p.estimate_budget }}">
                     <input type="hidden" name="jan" value="{{ p.jan }}">
