@@ -1,4 +1,4 @@
-{% extends "accounts/User/main.html" %}
+{% extends "accounts/User/sidebar.html" %}
 {% load static %}
 
 {% block purchase %}
@@ -76,21 +76,23 @@
       display: flex;
       flex: 1;
       align-items: center;
+     
       
     }
 
     .form-group input, .form-group textarea {
+    
       resize: vertical;
       width: 50%;
       padding: 10px;
       border: 1px solid #1c5d90;
       border-radius: 8px;
       font-size: 14px;
+     
+   
     }
 
-    .form-group textarea {
-      resize: vertical;
-    }
+  
 
     .total-amount {
       flex: 0.5;
@@ -125,6 +127,20 @@
       font-size: 16px;
       font-weight: bold;
     }
+
+    .ctu_logo {
+      position: relative;
+      top: 3px;
+      z-index: 1;
+      left: -40px;
+  }
+
+  .head {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    margin-left: -3%;
+    font-size: 48px;
+}
 
 </style>
 
@@ -168,7 +184,7 @@
           <td>{{ item.unit_cost }} <input type="text" name="prices[]" value="{{ item.unit_cost }}" style="display:none;" id="unit_cost_{{ item.id }}"></td>
           <td style="text-align: center;"><input type="number" value="0" name="quantity[]" style="width: 40px;"></td>
           <td>
-            <div class="file-attachment">
+            <div class="file-attachment" style="margin-left: 10vh; ">
               <label for="fileInput{{ item.id }}" style="cursor: pointer;">
                 <img src="{% static 'images/link.png' %}" alt="Attach File">
               </label>
@@ -188,9 +204,9 @@
   </div>
 
   <!-- Total Amount and Submit Button aligned side by side -->
-  <div class="right-side-container" style="display: flex; align-items: center;">
+  <div class="right-side-container" style="display: flex; align-items: center; margin-top: 10px;">
     <!-- Total Amount Field -->
-    <div class="total-amount" style="margin-right: 20px;">
+    <div class="total-amount" style="margin-right: 20px; ">
       <label for="totalAmount">Total Amount:</label>
       <input type="text" id="totalAmount" name="totalAmount" readonly value="₱0.00">
     </div>

@@ -6,7 +6,7 @@ from decimal import Decimal
 import uuid
 import random
 from bson import ObjectId
-from bson import ObjectId
+
 
 
 
@@ -43,7 +43,7 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-        # Automatically update the is_<type> fields based on user_type
+  
         self.is_admin = self.user_type == 'admin'
         self.is_regular = self.user_type == 'regular'
         self.is_cd = self.user_type == 'cd'
@@ -190,6 +190,7 @@ class Checkout(models.Model):
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
+   
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
@@ -260,6 +261,4 @@ class History(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
-    
-    
     

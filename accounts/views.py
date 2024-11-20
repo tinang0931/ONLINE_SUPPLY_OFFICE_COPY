@@ -59,6 +59,8 @@ from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
 
+
+
 def main(request):
     context = {
         'SITE_TITLE': SITE_TITLE,
@@ -116,15 +118,14 @@ def userlanding(request):
 
 @authenticated_user
 def ppmp101(request):
+    # Retrieve the current user's budget
+    user_budget = request.user.budget
 
+   
+    data = Checkout.objects.filter(user=request.user).order_by('-submission_date').first()
 
-    data = Checkout.objects.filter(user=request.user).order_by('-submission_date')
-
-
-  
     checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
     
-
     checkout_data = []
 
     for checkout in checkouts:
@@ -135,18 +136,17 @@ def ppmp101(request):
             'submission_date': checkout.submission_date,
         }
         checkout_data.append(checkout_dict)
-       
 
+    grouped_data = {}  # This will hold CSV data grouped by category
     
-
-    grouped_data = {}  
+    # Handle POST request (for adding a new item)
     if request.method == 'POST':
         item_name = request.POST.get(f'item')
         item_brand = request.POST.get(f'item_brand')
         unit = request.POST.get(f'unit')
         price = request.POST.get(f'price')
 
-        
+        # Create the new Item object
         Item.objects.create(
             user=request.user,
             item=item_name,
@@ -155,54 +155,29 @@ def ppmp101(request):
             unit_cost=price
         )
 
+        # Redirect after saving the item
         return redirect('catalogue')
 
+    # Handle GET request (for loading the CSV data)
     elif request.method == 'GET':
         csv_data = CSV.objects.all().order_by('Category')
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = list(group)
 
+    # Context data to pass to the template
     context = {
+        'budget': budget_required,
         'data': data,
         'checkouts': checkout_data,
         'user': request.user,
-        'grouped_data' : grouped_data,
-        'title' : 'DASHBOARD',
-        'CAMPUS_NAME' : CAMPUS_NAME,
+        'user_budget': user_budget,  # Include the logged-in user's budget
+        'grouped_data': grouped_data,
+        'title': 'DASHBOARD',
+        'CAMPUS_NAME': CAMPUS_NAME,
     }
 
-
+    # Render the template with the updated context
     return render(request, 'accounts/User/ppmp101.html', context)
-
-@authenticated_user
-def ppmp2(request):
-  
-    checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
-
-    checkout_data = []
-
-    for checkout in checkouts:
-        checkout_dict = {
-            'year': checkout.year,
-            'pr_id': checkout.pr_id,
-            'user': checkout.user,
-            'submission_date': checkout.submission_date,
-        }
-        checkout_data.append(checkout_dict)
-
-    context = {
-        'checkouts': checkout_data,
-        'user': request.user,
-        'SITE_TITLE' : SITE_TITLE,
-        'CAMPUS_NAME' : CAMPUS_NAME
-    }
-
-    return render(request, 'accounts/User/ppmp2.html', context)
-
-
-
-
-
 
 def landing(request):
     return render(request, 'accounts/User/landing.html')
@@ -269,8 +244,49 @@ def register(request):
 
     return render(request, 'accounts/User/register.html')
 
-def activate(request, uidb64, token):
+def register_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        email = request.POST['email']
+        contact1 = request.POST['contact1']
+        password1 = request.POST['pass1']
+        password2 = request.POST['pass2']
+        user_type = request.POST['user_type']
 
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username or email is already in use.")
+            return render(request, 'accounts/Admin/System_Admin/user.html')
+            
+
+        user = User.objects.create_user(username=username, email=email, password=password1, contact1=contact1, user_type=user_type, is_active=False)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        current_site = get_current_site(request)
+        mail_subject = 'Activation link has been sent to your email id'
+        message = render_to_string('accounts/User/acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        to_email = email
+        email = EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+        email.send()
+        return redirect('user')
+    return render(request, 'accounts/Admin/System_Admin/user.html')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
@@ -282,9 +298,11 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can log in to your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+    
 
 def approve_user(request):
     all_users = User.objects.all()
+    
 
     # Get all unapproved regular users
     unapproved_users = []
@@ -295,7 +313,7 @@ def approve_user(request):
             else:  # Non-regular users are automatically approved
                 user.is_approved = True
                 user.budget = 0  # Set budget to 0 for non-regular users
-                user.save()  # Make sure to save changes to the user
+                user.save()  # Save changes to the user
                 messages.success(request, f"Non-regular user {user.username} automatically approved.")
 
     if request.method == 'POST':
@@ -312,8 +330,18 @@ def approve_user(request):
             return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
             messages.error(request, "User does not exist or is already approved.")
+            
+            
 
-    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', {'users': unapproved_users})
+    # Update the context to include additional data
+    context = {
+        'tracker': tracker,
+        'title': 'BUDGET APPROVAL',
+        'CAMPUS_NAME': CAMPUS_NAME,
+        'users': unapproved_users  # Pass unapproved users to the context
+    }
+
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', context)
 
 
 
@@ -326,7 +354,7 @@ def login(request):
         
         if user is not None:
             # Check if the user's account is approved
-            if user.is_active:
+            if user.is_approved:
                 auth_login(request, user)
                 
                 # Redirect based on user_type
@@ -392,7 +420,6 @@ def ppmpform(request, year, pr_id):
         'year': year,
         'pr_id': pr_id,
         'bac_status': approved_checkouts.first().bac_status,
-        
         'bo_comment': approved_checkouts.first().bo_comment,
         'cd_comment': approved_checkouts.first().cd_comment, 
         'SITE_TITLE' : SITE_TITLE,
@@ -471,51 +498,60 @@ def bac_about(request):
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Pr_identifier, PR
 
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Pr_identifier, PR
+
 def cdpurchase_approval(request, pr_id):
     if request.method == 'POST':
+        # Get the new status and comment from the POST data
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
- 
+        
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
         price = request.POST.get('price')
 
- 
+        # Get the PR identifier based on the pr_id
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
- 
+
+        # Update the PR object related to the current Pr_identifier
         PR.objects.filter(pr_identifier=checkout).update(
             item=item,
             item_brand_description=item_brand,
             unit=unit,
             unit_cost=price,
+        )
 
-        )
- 
- 
+        # Update the Pr_identifier with the new status and comment
         Pr_identifier.objects.filter(pr_id=pr_id).update(
-            status=new_status,
-            comment=comment_content
+            cd_status=new_status,
+            cd_comment=comment_content
         )
- 
+
         return redirect('cdpurchase')
- 
+    
     elif request.method == 'GET':
+        # Retrieve the Pr_identifier and PR objects
         checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
         checkout_items = PR.objects.filter(pr_identifier=checkouts)
+        
+        # Add comment content to context, if it exists
+        comment_content = checkouts.cd_comment  # Get the comment content
+
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'status': checkouts.status,
+            'status': checkouts.cd_status,
+            'comment_content': comment_content,  # Add the comment to the context
             'title': 'PURCHASE REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
-    }
- 
- 
-    return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
- 
+        }
+
+        return render(request, 'accounts/Admin/Campus_Director/cdpurchase_approval.html', context)
+
  
 def purchase_cd(request, pr_id):
     pr_identifier = get_object_or_404(Pr_identifier, pr_id=pr_id)
@@ -1115,8 +1151,6 @@ def bac_history(request):
    request = Item.objects.all()
    return render(request,  'accounts/Admin/BAC_Secretariat/bac_history.html', {'request': request})
 
-
-
 def add_new_item(request):
     if request.method == 'POST':
         category = request.POST.get('category')
@@ -1320,7 +1354,7 @@ def preqform_bo(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
-        checkout = Checkout.objects.get(pr_id=pr_id)
+        checkout = Checkout.objects.get(pr_id=pr_id)    
 
         CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
@@ -1367,9 +1401,10 @@ def preqform_bo(request, pr_id):
 
 def cdppmp_approval(request, pr_id):
     if request.method == 'POST':
+        # Get the form data from the POST request
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
-
+        # Item details
         item = request.POST.get('item')
         item_brand = request.POST.get('item_brand')
         unit = request.POST.get('unit')
@@ -1388,8 +1423,10 @@ def cdppmp_approval(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
+        # Get the Checkout object using pr_id
         checkout = Checkout.objects.get(pr_id=pr_id)
 
+        # Update the CheckoutItems related to the specific checkout and item
         CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
             item_brand_description=item_brand,
@@ -1405,35 +1442,37 @@ def cdppmp_approval(request, pr_id):
             jul=jul,
             aug=aug,
             sep=sep,
-            oct=oct,   
+            oct=oct,
             nov=nov,
             dec=dec,
-            
         )
 
-        # Update Checkout model
+        # Update the Checkout model with the new status and comments
         Checkout.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
             cd_comment=comment_content,
-            cd_approved_date = timezone.now() 
-            
+            cd_approved_date=timezone.now()
         )
 
+        # Redirect to the CD PPMP page after approval
         return redirect('cdppmp')
 
     elif request.method == 'GET':
+        # Get the checkout object and related items
         checkouts = get_object_or_404(Checkout, pr_id=pr_id)
         checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+
+        # Prepare the context for rendering the page
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'title':'PPMP REQUEST APPROVAL',
-            'CAMPUS_NAME':CAMPUS_NAME,
-     }
+            'title': 'PPMP REQUEST APPROVAL',
+            'CAMPUS_NAME': CAMPUS_NAME,  # Ensure CAMPUS_NAME is defined somewhere in the view
+        }
 
-    return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
+        return render(request, 'accounts/Admin/Campus_Director/cdppmp_approval.html', context)
 @cd_required
 def cdpurchase(request):
 
@@ -1469,8 +1508,11 @@ def cdpurchase(request):
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
 def preqform_cd(request, pr_id):
+    # Fetch the Checkout object based on the pr_id
     checkout = get_object_or_404(Checkout, pr_id=pr_id)
+    
     if request.method == 'POST':
+        # Handle POST data as before
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
 
@@ -1492,8 +1534,7 @@ def preqform_cd(request, pr_id):
         nov = request.POST.get('nov')
         dec = request.POST.get('dec')
 
-        checkout = Checkout.objects.get(pr_id=pr_id)
-
+        # Update the CheckoutItems
         CheckoutItems.objects.filter(checkout=checkout, item=item).update(
             item=item,
             item_brand_description=item_brand,
@@ -1512,33 +1553,24 @@ def preqform_cd(request, pr_id):
             oct=oct,
             nov=nov,
             dec=dec,
-            
         )
-        Checkout.objects.filter(pr_id=pr_id).update(
-            cd_status=new_status,
-            cd_comment=comment_content,
-            cd_approved_date= timezone.now()
-        )
+
+        # Update the Checkout object
+        checkout.cd_status = new_status
+        checkout.cd_comment = comment_content
+        checkout.cd_approved_date = timezone.now()
+        checkout.save()
 
         return redirect('cdpurchase')
 
-    elif request.method == 'GET':
-        checkouts = get_object_or_404(Checkout, pr_id=pr_id)
-        checkout_items = CheckoutItems.objects.filter(checkout=checkouts)
+    else:  # GET request
+        checkout_items = CheckoutItems.objects.filter(checkout=checkout)
         context = {
-            'checkouts': checkouts,
+            'checkouts': checkout,
             'checkout_items': checkout_items,
             'pr_id': pr_id,
-    }
-    checkout_items = CheckoutItems.objects.filter(checkout=checkout)
-    context = {
-                'checkouts': checkout,
-                'checkout_items': checkout_items,
-                'pr_id': pr_id,
-            }
-    
-    print("pr_id:", pr_id)
-    return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
+        }
+        return render(request, 'accounts/Admin/Campus_Director/preqform_cd.html', context)
 
 @authenticated_user              
 def delete_items(request, id):
@@ -1632,8 +1664,163 @@ def boppmp(request, pr_id):
             'pr_id': pr_id,
      }
 
-
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
 
 def new_ppmp(request):
     return render(request, 'accounts/User/new_ppmp.html')
+
+
+
+
+
+
+def get_tracker_updates(request):
+    updates = []
+    checkouts = Checkout.objects.all()
+
+    for checkout in checkouts:
+        update = {
+            'pr_id': checkout.pr_id,
+            'bo_status': checkout.bo_status,  # Business Office status
+            'bo_comment': checkout.bo_comment or 'No comment',
+            'cd_status': checkout.cd_status,  # CD status
+            'cd_comment': checkout.cd_comment or 'No comment',  # CD comment
+        }
+        updates.append(update)
+
+    return JsonResponse(updates, safe=False)
+
+
+def checkout_action(request, checkout_id):
+    # Get the specific checkout item
+    checkout = get_object_or_404(Checkout, id=checkout_id)
+
+    # Action could be 'approve' or 'disapprove' for Business Office or Purchasing
+    action = request.POST.get('action')
+    comment = request.POST.get('comment', '')
+
+    # Check whether the action is for Business Office or Purchasing
+    status_type = request.POST.get('status_type')  # 'bo' for Business Office or 'cd' for Purchasing
+
+    # Initialize message and update the status
+    if status_type == 'bo':
+        if action == 'approve':
+            checkout.bo_status = 'approved'
+            message = f'PPMP No. {checkout.pr_id} has been approved by Business Office.'
+        elif action == 'disapprove':
+            checkout.bo_status = 'disapproved'
+            message = f'PPMP No. {checkout.pr_id} has been disapproved by Business Office.'
+        else:
+            return JsonResponse({'error': 'Invalid action for BO'}, status=400)
+
+        # Update the comment if provided
+        if action == 'disapprove':
+            checkout.bo_comment = comment or 'No additional comments provided.'
+
+    elif status_type == 'cd':
+        if action == 'approve':
+            checkout.cd_status = 'approved'
+            message = f'PPMP No. {checkout.pr_id} has been approved by Purchasing.'
+        elif action == 'disapprove':
+            checkout.cd_status = 'disapproved'
+            message = f'PPMP No. {checkout.pr_id} has been disapproved by Purchasing.'
+        else:
+            return JsonResponse({'error': 'Invalid action for CD'}, status=400)
+
+        # Update the comment if provided
+        if action == 'disapprove':
+            checkout.cd_comment = comment or 'No additional comments provided.'
+
+    else:
+        return JsonResponse({'error': 'Invalid status type'}, status=400)
+
+    # Save the updated status and comment
+    checkout.save()
+
+    # Prepare the notification message
+    notification = {
+        'pr_id': checkout.pr_id,
+        'message': message,
+        'comment': checkout.bo_comment if status_type == 'bo' else checkout.cd_comment,
+    }
+
+    # Return the notification as part of the response
+    return JsonResponse(notification)
+
+
+
+def get_purchasetracker_updates(request):
+    updates = []
+    tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
+
+    for pr in tracker:
+        update = {
+            'pr_id': pr.pr_id,
+            'bo_status': pr.bo_status,  # Business Office status
+            'bo_comment': pr.bo_comment or 'No comment',
+            'cd_status': pr.cd_status,  # CD status
+            'cd_comment': pr.cd_comment or 'No comment',  # CD comment
+        }
+        updates.append(update)
+
+    return JsonResponse(updates, safe=False)
+
+
+def tracker_action(request, pr_id):  # Use pr_id instead of checkout_id
+    # Get the specific purchase request tracker item
+    tracker = get_object_or_404(Pr_identifier, pr_id=pr_id)
+
+    # Get the action (approve/disapprove) and comment from the POST request
+    action = request.POST.get('action')
+    comment = request.POST.get('comment', '')
+
+    # Get the status type (either 'bo' for Business Office or 'cd' for Purchasing)
+    status_type = request.POST.get('status_type')
+
+    # Initialize message and update the status based on status_type
+    if status_type == 'bo':
+        if action == 'approve':
+            tracker.bo_status = 'approved'
+            message = f'pr_id {tracker.pr_id} has been approved by Business Office.'
+        elif action == 'disapprove':
+            tracker.bo_status = 'disapproved'
+            message = f'pr_id {tracker.pr_id} has been disapproved by Business Office.'
+        else:
+            return JsonResponse({'error': 'Invalid action for BO'}, status=400)
+
+        # Update the comment if disapproved
+        if action == 'disapprove':
+            tracker.bo_comment = comment or 'No additional comments provided.'
+
+    elif status_type == 'cd':
+        if action == 'approve':
+            tracker.cd_status = 'approved'
+            message = f'pr_id {tracker.pr_id} has been approved by Purchasing.'
+        elif action == 'disapprove':
+            tracker.cd_status = 'disapproved'
+            message = f'pr_id {tracker.pr_id} has been disapproved by Purchasing.'
+        else:
+            return JsonResponse({'error': 'Invalid action for CD'}, status=400)
+
+        # Update the comment if disapproved
+        if action == 'disapprove':
+            tracker.cd_comment = comment or 'No additional comments provided.'
+
+    else:
+        return JsonResponse({'error': 'Invalid status type'}, status=400)
+
+    # Save the updated status and comment
+    tracker.save()
+
+    # Prepare the notification message
+    notification = {
+        'pr_id': tracker.pr_id,
+        'message': message,
+        'comment': tracker.bo_comment if status_type == 'bo' else tracker.cd_comment,
+    }
+
+    # Return the notification as part of the response
+    return JsonResponse(notification)
+
+def sidebar1(request):
+    return render(request, 'accounts/User/sidebar1.html')

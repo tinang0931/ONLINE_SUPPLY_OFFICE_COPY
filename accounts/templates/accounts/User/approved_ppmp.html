@@ -82,6 +82,38 @@
     margin-top: -37px;
 }
 
+.bck {
+    position: relative; /* Ensures the .bck element respects z-index */
+    z-index: 100; /* Default stacking context */
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 500; /* Higher than .bck */
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 15vh;
+    z-index: 999; /* Highest stacking context for the image */
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+    z-index: 1000; /* Ensure the image comes forward when hovered */
+}
+
+.head {
+    color: white;
+    font-style: bold;
+    margin-left: -16%;
+    font-size: 48px;
+}
 </style>
 
 
@@ -96,6 +128,13 @@
     <div class="home">
         </a>
     </div>
+
+    <div  class="bck">
+        <a href="{% url 'purchase' %}">
+          <img src="{% static 'images/back2.png' %}" alt="Previous">
+        </a>
+      </div>
+
     <div class="bckbtn"><a href="{% url 'purchase' %}"></a>
     </div>
     <div class="row"> 
