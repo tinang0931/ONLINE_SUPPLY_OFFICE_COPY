@@ -208,11 +208,11 @@ def register(request):
         
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/User/register.html')
+            return render(request, 'accounts/User/login.html')
 
         if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
             messages.error(request, "Username or email is already in use.")
-            return render(request, 'accounts/User/register.html')
+            return render(request, 'accounts/User/login.html')
 
         user = User.objects.create_user(
             first_name=first_name,
@@ -243,7 +243,7 @@ def register(request):
         messages.success(request, "Registration successful. Please check your email to activate your account.")
         return redirect('login')
 
-    return render(request, 'accounts/User/register.html')
+    return render(request, 'accounts/User/login.html')
 
 def register_user(request):
     if request.method == "POST":
