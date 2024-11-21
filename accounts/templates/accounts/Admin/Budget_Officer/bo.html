@@ -167,7 +167,7 @@ function toggleNotifications() {
                 </a>
 
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'approve_user'%}">
-                  <i class="fa fa-file-text-o"></i> <span id="about" class="hidden-name">BUDGET REQUEST</span>
+                  <i class="fa fa-file-text-o"></i> <span id="about" class="hidden-name">Budget Request</span>
                 </a>
  
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'boabout'%}">
@@ -227,15 +227,21 @@ left: 20px;
 /* Make the name appear below the icon when hovering over the icon */
 .list-group-item:hover .hidden-name {
 opacity: 1;
-transform: translateX(-50%) translateY(10px); /* Adjust the vertical position of the name on hover */
+transform: translateX(-50%) translateY(10px); 
 }
 
-/* Ensuring the hover effect is applied only to the icon */
-.list-group-item {
-position: relative;
-display: fixed;
-justify-content: center;
-align-items: center;
+
+  .list-group-item {
+  position: relative;
+  display: fixed;
+  justify-content: center;
+  align-items: center;
+  padding: 15px; 
+  margin-bottom: 10px; 
+  border: none;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 /* Adjust spacing */
@@ -257,7 +263,7 @@ color: #f2f2f2 !important;
 
 .logout-link {
 position: fixed;              
-margin-top: 2px ;
+margin-top: -40px ;
              
           }
 

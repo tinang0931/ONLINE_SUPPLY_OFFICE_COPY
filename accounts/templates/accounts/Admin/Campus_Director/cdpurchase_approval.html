@@ -223,7 +223,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: 0.5vh;
+        top: 3vh;
     }
 
     .bck:hover img {
@@ -285,7 +285,7 @@
 
 
     .table-responsive {
-        margin-top: 10vh; /* Adjust the value as needed to move the table down */
+        margin-top: 5vh; /* Adjust the value as needed to move the table down */
     }
 
 
@@ -338,9 +338,11 @@
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
-   
-    
-   
+    <div  class="bck">
+        <a href="{% url 'cdpurchase' %}">
+          <img src="{% static 'images/back2.png' %}" alt="Previous">
+        </a>
+      </div>
 
     <div class="left-button-container">
         <a href="{% url 'purchase_cd' pr_id=pr_id %}" class="icon-link">
