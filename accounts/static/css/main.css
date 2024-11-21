@@ -90,10 +90,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  
- 
-  /* Background */
-  background-image: url("/static/images/ctu_loogo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -3395,5 +3391,5 @@ button {
 
 .alert li {
   margin-bottom: 5px;
-
+}
   
