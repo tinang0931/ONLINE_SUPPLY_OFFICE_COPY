@@ -26,57 +26,94 @@
         justify-content: center;
     }
 
-    .table-responsive {
-    margin-top: -6vh; 
-    }
-
-
-    @keyframes beat{
-        0%{
-            transform: scale(1);
-        }
-        50%{
-            transform: scale(1.2);
-        }
-        100%{
-            transform: scale(1);
-        }
-    }
-    
-    .home:hover img {
-        animation-play-state: paused;
-        transform: scale(1.2); 
-    }
-    .ml-3, .mx-3 {
-        margin-left: 1rem !important;
-        margin-top: -37px;
-    }
-
-    .bck {
-        position: relative; /* Ensures the .bck element respects z-index */
-        z-index: 100; /* Default stacking context */
-    }
-
-    .bck a {
+    .bck a  {
         display: flex;
         align-items: center;
         text-decoration: none;
-        z-index: 500; /* Higher than .bck */
     }
-
+    
     .bck img {
         width: 50px;
         height: 50px;
         transition: transform 0.3s ease-in-out;
-        position: fixed;
-        top: 18vh;
-        z-index: 999; /* Highest stacking context for the image */
+        position: relative;
+        top: -15vh;
     }
-
+    
     .bck:hover img {
-        transform: scale(1.2);
-        z-index: 1000; /* Ensure the image comes forward when hovered */
+        transform: scale(1.2); 
     }
+        
+        .table-responsive {
+        margin-top: -6vh; 
+        }
+
+.home {
+    position: fixed;
+    top: 20vh;
+}
+ 
+.home img {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: .5vh;
+}
+
+
+@keyframes beat{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+ 
+.home:hover img {
+    animation-play-state: paused;
+    transform: scale(1.2); 
+}
+.ml-3, .mx-3 {
+    margin-left: 1rem !important;
+    margin-top: -37px;
+}
+
+.bck {
+    position: relative; /* Ensures the .bck element respects z-index */
+    z-index: 100; /* Default stacking context */
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 500; /* Higher than .bck */
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 15vh;
+    z-index: 999; /* Highest stacking context for the image */
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+    z-index: 1000; /* Ensure the image comes forward when hovered */
+}
+
+.head {
+    color: white;
+    font-style: bold;
+    margin-left: -16%;
+    font-size: 48px;
+}
 </style>
 
 
@@ -103,11 +140,11 @@
     <div class="row"> 
         <div class="col-md-4">
             <div class="search" style="position: relative; text-align: right; margin-top: 2vh">
-                <span class="icon" style="position: absolute; margin-left: 915%; top: 2vh; transform: translateY(-50%); width: 40px;">
+                <span class="icon" style="position: absolute; right: -90px; top: 2vh; transform: translateY(-50%); width: 40px;">
                     <i class="fas fa-search" style="font-size: 20px;"></i>
                 </span>
                 <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block; margin-left: 790%;">
+                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
             </div>
         </div>
         <div class="table-responsive">

@@ -17,8 +17,6 @@ body {
   font-weight: var(--bs-body-font-weight);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
- 
-  background-image: url("/static/images/logo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;

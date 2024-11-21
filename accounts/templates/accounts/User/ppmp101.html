@@ -38,22 +38,23 @@
  
         {% if checkouts %}
         <div class="title-section">
-            {% for checkout in checkouts|dictsortreversed:"year" %}
-            <div class="year">
-                <a href="{% url 'ppmpform' year=checkout.year pr_id=checkout.pr_id %}"
-                    style="color: #FFA500; text-decoration: none;">
-                    <span>{{ checkout.year }} PPMP</span>
-                </a>
-            </div>
-            {% endfor %}
+            {% with checkouts|dictsortreversed:"year" as sorted_checkouts %}
+                <div class="year">
+                    <a href="{% url 'ppmpform' year=sorted_checkouts.0.year pr_id=sorted_checkouts.0.pr_id %}" 
+                       style="color: #FFA500; text-decoration: none;">
+                        <span>{{ sorted_checkouts.0.year }} PPMP</span>
+                    </a>
+                </div>
+            {% endwith %}
         </div>
-        {% else %}
+    {% else %}
         <div class="title-section">
             <div class="year">
                 <span>NO APPROVED PPMP</span>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
+    
  
  
         <div class=" trackers-section">
@@ -81,7 +82,7 @@
         </div>
     </div>
  
-    <div class="left-container">
+    <div class="left-container" style="overflow-y: auto; height: 600px; width: 60%;">
         <div class="catalogue-section">
             <h3>CATALOGUE</h3>
             <table>
@@ -92,10 +93,10 @@
                         <th>Unit</th>
                         <th>Price</th>
                     </tr>
+                </thead>
                     <tr>
                         <th colspan="4" class="category-heading">ANTISEPTICS</th>
                     </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>Alcohol</td>
@@ -132,6 +133,102 @@
                         <td>dry cell, D, 1.5 volts, alkaline</td>
                         <td>pack</td>
                         <td>Php 200.00</td>
+                    </tr>
+                    <tr>
+                        <td>BATTERY</td>
+                        <td>dry cell, AAA, 2 pieces, per blister pack</td>
+                        <td>pack</td>
+                        <td>Php 1500.00</td>
+                    </tr>
+                    <tr>
+                        <td>BATTERY</td>
+                        <td>dry cell, AA, 2 pieces per blister pack</td>
+                        <td>pack</td>
+                        <td>Php 100.00</td>
+                    </tr>
+                    <tr>
+                        <td>EXTENSION WIRE</td>
+                        <td>3 gang, 10m wire, heavy duty</td>
+                        <td>set</td>
+                        <td>Php 600.00</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</th>
+                    </tr>
+                    <tr>
+                        <td>EXTERNAL HARD DRIVE,</td>
+                        <td>1TB, 2.5"HDD, USB 3.0</td>
+                        <td>piece</td>
+                        <td>Php 3000.00</td>
+                    </tr>
+                    <tr>
+                        <td>FLASH DRIVE</td>
+                        <td>16 GB capacity</td>
+                        <td>piece</td>
+                        <td>Php	250.00</td>
+                    </tr>
+                    <tr>
+                        <td>MULTIMEDIA PROJECTOR</td>
+                        <td>3500 MIN ANSI Lumens</td>
+                        <td>unit</td>
+                        <td>Php	25000.00</td>
+                    </tr>
+                    <tr>
+                        <td>WIRELESS MOUSE</td>
+                        <td>USB</td>
+                        <td>unit</td>
+                        <td>Php	500.00</td>
+                    </tr>
+                    <tr>
+                        <td>PRINTER</td>
+                        <td>CANON PIXMA G2420(Print, Scan, Copy)</td>
+                        <td>unit</td>
+                        <td>Php	10000.00</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="category-heading">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</th>
+                    </tr>
+                    <tr>
+                        <td>BACKFOLD CLIP</td>
+                        <td>all metal, clamping: 25mm (-1mm)</td>
+                        <td>box</td>
+                        <td>Php 20.00</td>
+                    </tr>
+                    <tr>
+                        <td>BACKFOLD CLIP</td>
+                        <td>all metal, clamping: 32mm (-1mm)</td>
+                        <td>box</td>
+                        <td>Php 45.00</td>
+                    </tr>
+                    <tr>
+                        <td>BACKFOLD CLIP</td>
+                        <td>all metal, clamping: 50mm (-1mm)</td>
+                        <td>box</td>
+                        <td>Php 80.00</td>
+                    </tr>
+                    <tr>
+                        <td>BROWN ENVELOPE</td>
+                        <td>for legal size document</td>
+                        <td>piece</td>
+                        <td>Php 15.00</td>
+                    </tr>
+                    <tr>
+                        <td>BROWN ENVELOPE</td>
+                        <td>for short size document</td>
+                        <td>piece</td>
+                        <td>Php 10.00</td>
+                    </tr>
+                    <tr>
+                        <td>CHALK</td>
+                        <td>molded, white, dustless, length: 78mm min</td>
+                        <td>box</td>
+                        <td>Php 100.00</td>
+                    </tr>
+                    <tr>
+                        <td>CLEARBOOK</td>
+                        <td>20 transparent pockets, for A4 size</td>
+                        <td>piece</td>
+                        <td>Php 100.00</td>
                     </tr>
                 </tbody>
             </table>

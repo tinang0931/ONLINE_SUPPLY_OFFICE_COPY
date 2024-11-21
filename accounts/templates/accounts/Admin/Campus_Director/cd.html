@@ -67,12 +67,13 @@
   <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
   <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
       <!-- Example Notification Items -->
-      <li style="padding: 8px; border-bottom: 1px solid #ccc;">You have a new message</li>
-      <li style="padding: 8px; border-bottom: 1px solid #ccc;">Your order has been shipped</li>
-      <li style="padding: 8px; border-bottom: 1px solid #ccc;">New comment on your post</li>
+      
   </ul>
 </div>
 
+
+
+  
                           <!-- Profile Icon --> 
                           <a href="#" id="profileIcon" style="position: relative; top: -10vh; margin-left: 168vh;">
                               <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 60px; height: 60px; ">
@@ -87,67 +88,7 @@
                  
                   
 
-                  <script>
-                        // JavaScript part
-  // When the user clicks the profile icon, trigger file input click
-  document.getElementById('profileIcon').addEventListener('click', function() {
-      document.getElementById('profileUpload').click();
-  });
-
-  // When a new file is uploaded
-  document.getElementById('profileUpload').addEventListener('change', function(event) {
-      const file = event.target.files[0]; // Get the uploaded file
-      if (file) {
-          const reader = new FileReader(); // Create a new FileReader object
-
-          reader.onload = function(e) {
-              const profileImageUrl = e.target.result;
-
-              // Set the profile image source to the uploaded file's data URL
-              document.getElementById('profileImage').src = profileImageUrl;
-
-              // Store the image data URL in localStorage to persist across refreshes
-              localStorage.setItem('profileImage', profileImageUrl);
-          };
-
-          // Read the file as a data URL
-          reader.readAsDataURL(file);
-      }
-  });
-
-  // Check if there's a stored profile image in localStorage on page load
-  window.addEventListener('load', function() {
-      const storedProfileImage = localStorage.getItem('profileImage');
-      if (storedProfileImage) {
-          // If a profile image is found in localStorage, set it as the src
-          document.getElementById('profileImage').src = storedProfileImage;
-      }
-  });
-
-
-
-function toggleNotifications() {
-      const dropdown = document.getElementById('notificationDropdown');
-      dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
-  }
-
-  // Function to update the notification count
-  function updateNotificationCount(count) {
-      const notificationCountElement = document.getElementById('notificationCount');
-      
-      if (count > 0) {
-          notificationCountElement.textContent = count;
-          notificationCountElement.style.display = 'inline-block';
-      } else {
-          notificationCountElement.style.display = 'none';
-      }
-  }
-
-  // Example usage to update notification count and list (replace with real data)
-  updateNotificationCount(3); // Update with the number of unread notifications
-
-
-                      </script>
+         
           </nav>
           <h1 class="welcome" style="height: 0.5vh"></h1>
           <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px; ">  

@@ -37,7 +37,7 @@
                     
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
                         <h1 class="head">{{title}} 
-                          <!-- Notification Icon -->
+                       <!-- Notification Icon -->
 <a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;" onclick="toggleNotifications()">
     <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 35px; height: 35px;">
     <!-- Notification Badge -->
@@ -55,26 +55,170 @@
     </span>
 </a>
 
-<!-- Notification Dropdown (Hidden by default) -->
+<!-- Notification Dropdown -->
 <div id="notificationDropdown" style="
     display: none;
     position: absolute;
     top: 75px;
     right: -45%;
-    width: 200px; /* Adjusted width */
+    width: 250px; /* Adjusted width */
     background-color: #003566;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding: 5px; /* Reduced padding */
+    padding: 5px;
     z-index: 1000;">
     <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
     <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
-        <!-- Example Notification Items -->
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">You have a new message</li>
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">Your order has been shipped</li>
-        <li style="padding: 8px; border-bottom: 1px solid #ccc;">New comment on your post</li>
+        <!-- Notifications will be populated here -->
     </ul>
 </div>
+<script>
+    // Function to toggle the visibility of notifications
+   function toggleNotifications() {
+       const dropdown = document.getElementById('notificationDropdown');
+       dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+   }
+   
+   async function fetchUpdates() {
+       try {
+           // Fetch updates for both Tracker and Purchase Tracker           
+           const trackerUpdatesPromise = fetch('/get_tracker_updates/').then(response => response.json());
+           const purchaseTrackerUpdatesPromise = fetch('/get_purchasetracker_updates/').then(response => response.json());
+   
+           // Wait for both updates to be fetched
+           const [trackerUpdates, purchaseTrackerUpdates] = await Promise.all([trackerUpdatesPromise, purchaseTrackerUpdatesPromise]);
+   
+           console.log('Tracker Updates:', trackerUpdates);
+           console.log('Purchase Tracker Updates:', purchaseTrackerUpdates);
+   
+           // Combine both updates and pass to processUpdates
+           processUpdates(trackerUpdates, purchaseTrackerUpdates);
+       } catch (error) {
+           console.error('Error fetching updates:', error);
+       }
+   }
+   
+   function processUpdates(trackerUpdates, purchaseTrackerUpdates) {
+       const notifications = [];
+       const notificationCount = document.getElementById('notificationCount');
+       const notificationList = document.getElementById('notificationList');
+       notificationList.innerHTML = ''; // Clear previous notifications
+   
+       let unreadCount = 0;
+       const viewedNotifications = new Set(JSON.parse(localStorage.getItem('viewedNotifications') || '[]'));
+   
+       // Process Tracker Updates
+       trackerUpdates.forEach(item => {
+           const prId = item.pr_id;
+           // Only add if not already viewed
+           if (!viewedNotifications.has(prId)) {
+               const message = `Your PPMP No. ${prId} has been updated. Click here for details.`;
+               notifications.push({
+                   message,
+                   prId,
+                   isPurchaseTracker: false
+               });
+               unreadCount++;
+           }
+       });
+   
+       // Process Purchase Tracker Updates
+       purchaseTrackerUpdates.forEach(item => {
+           const prId = item.pr_id;
+           // Only add if not already viewed
+           if (!viewedNotifications.has(prId)) {
+               const message = `Your PR No. ${prId} has new update. Click here for details.`;
+               notifications.push({
+                   message,
+                   prId,
+                   isPurchaseTracker: true
+               });
+               unreadCount++;
+           }
+       });
+   
+       // Update localStorage with the viewed notifications
+       localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications)));
+   
+       // Update notification count
+       notificationCount.innerText = unreadCount;
+       notificationCount.style.display = unreadCount > 0 ? 'block' : 'none';
+   
+       // Process each notification and add it to the list
+       notifications.forEach(note => {
+           const listItem = document.createElement('li');
+           listItem.style.padding = '8px';
+           listItem.style.borderBottom = '1px solid #ccc';
+           listItem.innerText = note.message;
+   
+           // If notification has already been clicked (i.e. viewed), we hide it on load
+           if (viewedNotifications.has(note.prId)) {
+               listItem.style.display = 'none';  // Hide it if it was already viewed
+           }
+   
+           // Mark the notification as viewed when clicked
+           listItem.onclick = (event) => {
+               // Mark the clicked notification as viewed
+               viewedNotifications.add(note.prId); // Add to the set
+               localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications))); // Save to localStorage
+   
+               // Decrease unread count and update notification count
+               unreadCount--;
+               notificationCount.innerText = unreadCount; // Update display
+               if (unreadCount === 0) notificationCount.style.display = 'none'; // Hide count if zero
+   
+               // Hide only the clicked notification from the list
+               listItem.style.display = 'none';
+   
+               // Prevent default action and navigate to the appropriate page
+               event.preventDefault();
+               if (note.isPurchaseTracker) {
+                   // Redirect to the Purchase Tracker page
+                   window.location.href = '/purchasetracker/';
+               } else {
+                   // Redirect to the Tracker page
+                   window.location.href = '/tracker/';
+               }
+           };
+   
+           notificationList.appendChild(listItem);
+       });
+   
+       // Add "No notifications" message if none to display
+       if (notifications.length === 0) {
+           const noNotificationItem = document.createElement('li');
+           noNotificationItem.style.padding = '8px';
+           noNotificationItem.innerText = 'No notifications';
+           notificationList.appendChild(noNotificationItem);
+       }
+   
+       // Add "Mark all as read" button (optional)
+       const markAllReadButton = document.createElement('button');
+       markAllReadButton.innerText = 'Mark all as read';
+       markAllReadButton.onclick = () => {
+           // Clear all notifications from localStorage
+           viewedNotifications.clear(); // Reset viewed notifications
+           localStorage.removeItem('viewedNotifications'); // Clear from localStorage
+           unreadCount = 0; // Reset unread count
+           notificationCount.innerText = unreadCount; // Update display
+           notificationCount.style.display = 'none'; // Hide count
+           markAllReadButton.style.display = 'none'; // Hide the button after clicking
+   
+           // Hide all notifications from the list (if they are marked as viewed)
+           Array.from(notificationList.children).forEach(item => {
+               item.style.display = 'none';
+           });
+       };
+       notificationList.appendChild(markAllReadButton);
+   }
+   
+   // Initial load
+   window.onload = () => {
+       fetchUpdates(); // Fetch both Tracker and Purchase Tracker updates
+   };
+   </script>
+   
+
 
                             <!-- Profile Icon --> 
                             <a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
