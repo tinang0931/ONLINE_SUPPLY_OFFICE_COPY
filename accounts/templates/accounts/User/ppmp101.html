@@ -9,10 +9,9 @@
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
  
 {% endblock extra_css %}
- 
 
  
-<body>
+<body style="overflow:hidden">
  
     <div class="right-container" style="margin-top: -0vh;">
 
@@ -33,7 +32,6 @@
                PHP {{ user_budget }}
                 <div class="Annual">ANNUAL BUDGET</div>
             </div>
- 
         </div>
  
         {% if checkouts %}
@@ -82,7 +80,8 @@
         </div>
     </div>
  
-    <div class="left-container" style="overflow-y: auto; height: 729px; width: 60%; margin-top: 36px;">
+    <div class="left-container" style="overflow-y: auto; height: 745px; width: 60%; margin-top: 20px;
+    padding: 10px;">
         <div class="catalogue-section">
             <h3 style="border-radius: 0px;">CATALOGUE</h3>
             <table>

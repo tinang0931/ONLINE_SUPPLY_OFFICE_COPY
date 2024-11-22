@@ -88,7 +88,7 @@
 
 .budget-container strong {
     position: fixed;
-    margin-left: -48vh;
+    margin-left: -45vh;
 }
 
 #total_allocated_budget {
@@ -96,7 +96,7 @@
     font-weight: bold; 
     color: black; 
     padding-left: 10px; 
-    margin-left: -30vh;
+    margin-left: -26vh;
     position: relative;
     top: 0;
     left: 0;
