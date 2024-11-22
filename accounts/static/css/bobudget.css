@@ -8,15 +8,15 @@
     color: black;
   }
 
-  .table th {
+  /* .table th {
     font-family: Poppins;
-    background-color: #254b6e;
+    background-color: #003566;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
-  }
+  } */
  
   td{
     font-weight: bold;
