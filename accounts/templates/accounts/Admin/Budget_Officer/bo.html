@@ -166,6 +166,10 @@ function toggleNotifications() {
                   <i class="bi bi-file-earmark-medical"></i> <span id="about" class="hidden-name">PPMP</span>
                 </a>
 
+                <a class="list-group-item list-group-item-action p-3 border-0 home-link" href="{% url 'bopurchase'%}">
+                  <i class="bi bi-bag"></i> <span id="about" class="hidden-name">PR</span>
+                </a>
+
                 <a class="list-group-item list-group-item-action p-3 border-0 about-link" href="{% url 'approve_user'%}">
                   <i class="fa fa-file-text-o"></i> <span id="about" class="hidden-name">Budget Request</span>
                 </a>
@@ -177,6 +181,7 @@ function toggleNotifications() {
                 <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user'%}">
                   <i class="bi bi-box-arrow-left"></i><span id="logout" class="hidden-name">Logout</span>
                 </a>
+                
               </div>
               <div class="profile-container">
                 <a href="{% url 'prof' %}">
@@ -244,7 +249,7 @@ margin-bottom: 0;
 
 .logout-link {
 position: fixed;              
-margin-top: 2px ;
+margin-top: -13vh ;
              
           }
 
@@ -335,7 +340,13 @@ margin-top: 2px ;
         {% block buppmp %}
         {% endblock %}
  
+        {% block bopurchase_approval  %}
+        {% endblock %}
  
+          
+        {% block bopurchase  %}
+        {% endblock %} 
+        
         {% block bohome %}
         {% endblock %}
  

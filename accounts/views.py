@@ -461,7 +461,7 @@ def tracker(request):
             'cd_status': checkout.cd_status,  
             'cd_comment': checkout.cd_comment,
             'bo_status': checkout.bo_status,
-            'bo_comment': checkout.bo_comment
+            'bo_comment': checkout.bo_comment,
             
         }
         checkout_data.append(checkout_dict)
@@ -503,7 +503,7 @@ from .models import Pr_identifier, PR
 
 def cdpurchase_approval(request, pr_id):
     if request.method == 'POST':
-        # Get the new status and comment from the POST data
+    
         new_status = request.POST.get('new_status')
         comment_content = request.POST.get('comment_content')
         
@@ -512,10 +512,8 @@ def cdpurchase_approval(request, pr_id):
         unit = request.POST.get('unit')
         price = request.POST.get('price')
 
-        # Get the PR identifier based on the pr_id
         checkout = Pr_identifier.objects.get(pr_id=pr_id)
 
-        # Update the PR object related to the current Pr_identifier
         PR.objects.filter(pr_identifier=checkout).update(
             item=item,
             item_brand_description=item_brand,
@@ -523,29 +521,25 @@ def cdpurchase_approval(request, pr_id):
             unit_cost=price,
         )
 
-        # Update the Pr_identifier with the new status and comment
+       
         Pr_identifier.objects.filter(pr_id=pr_id).update(
             cd_status=new_status,
-            cd_comment=comment_content
+            cd_comment=comment_content,
+            cd_approved_date=timezone.now(),
         )
 
         return redirect('cdpurchase')
     
     elif request.method == 'GET':
-        # Retrieve the Pr_identifier and PR objects
+    
         checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
         checkout_items = PR.objects.filter(pr_identifier=checkouts)
-        
-        # Add comment content to context, if it exists
-        comment_content = checkouts.cd_comment  # Get the comment content
 
         context = {
             'checkout': checkouts,
             'checkout_items': checkout_items,
             'user': request.user,
             'pr_id': pr_id,
-            'status': checkouts.cd_status,
-            'comment_content': comment_content,  # Add the comment to the context
             'title': 'PURCHASE REQUEST FOR APPROVAL',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
@@ -1040,7 +1034,7 @@ def ppmp(request):
 
 
 from django.core.files.base import ContentFile
-@authenticated_user
+
 def purchase(request):
     context = {
                 'title': 'CREATE PURCHASE REQUEST',
@@ -1055,10 +1049,10 @@ def purchase(request):
         quantity = request.POST.getlist('quantity[]')
         total = request.POST.get('total_amount')
 
-        pr_id = generate_auto_pr_id()
-        user = request.user
+        
+       
         purpose = request.POST.get('purpose')
-        pr_identifier = Pr_identifier.objects.create(user=user, pr_id=pr_id, purpose=purpose,)
+        new_pr_identifier = Pr_identifier.objects.create(user=request.user, purpose=purpose,)
 
         for i in range(len(items)):
             uploaded_file = files[i] if i < len(files) else None  
@@ -1070,7 +1064,7 @@ def purchase(request):
             PR.objects.create(
                 metadata=metadata,
                 file=metadata.file if uploaded_file else None, 
-                pr_identifier=pr_identifier,
+                pr_identifier=new_pr_identifier,
                 item=items[i],
                 item_brand_description=item_brands[i],
                 unit=units[i],
@@ -1079,7 +1073,8 @@ def purchase(request):
                 total_cost=total
             )
             
-            # Remove the following line, it is not necessary
+          
+
             PR_Items.objects.all().delete()
 
         # Move the redirect statement outside the loop
@@ -1230,12 +1225,13 @@ def handle_uploaded_file(file):
     csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
     next(csv_data)
     for row in csv_data:
+        price = int(row[4])
         CSV.objects.create(
             Category=row[0],
             Item_name=row[1],
             Item_Brand=row[2],
             Unit=row[3],   
-            Price=row[4]
+            Price=price
         )
 
 def delete_item(request, id):
@@ -1824,3 +1820,79 @@ def tracker_action(request, pr_id):  # Use pr_id instead of checkout_id
 
 def sidebar1(request):
     return render(request, 'accounts/User/sidebar1.html')
+
+
+def bopurchase(request):
+    checkouts = Pr_identifier.objects.select_related('user').all()
+
+    checkout_data = []
+
+    for checkout in checkouts:
+        checkout_dict = {
+            'submission_date': checkout.submission_date,
+            'user': checkout.user,
+            'pr_id': checkout.pr_id,
+            'cd_status': checkout.cd_status,
+            'cd_comment': checkout.cd_comment,
+            'bo_status': checkout.bo_status,  # Added bo_status
+            'bo_comment': checkout.bo_comment  # Added bo_comment
+        }
+        checkout_data.append(checkout_dict)
+
+    context = {
+        'checkouts': checkout_data,
+        'user': request.user,
+        'title': 'PURCHASE REQUESTS',
+        'CAMPUS_NAME': CAMPUS_NAME,
+    }
+
+    return render(request, 'accounts/Admin/Budget_Officer/bopurchase.html', context)
+
+
+def bopurchase_approval(request, pr_id):
+    if request.method == 'POST':
+        # Get the new status and the comment content
+        new_status = request.POST.get('new_status')  # 'approved' or 'declined'
+        comment_content = request.POST.get('comment_content')
+
+        # Get the item details (optional based on your form fields)
+        item = request.POST.get('item')
+        item_brand = request.POST.get('item_brand')
+        unit = request.POST.get('unit')
+        price = request.POST.get('price')
+
+        # Retrieve the Pr_identifier object
+        checkout = Pr_identifier.objects.get(pr_id=pr_id)
+
+        # Update the PR items if item details are provided
+        PR.objects.filter(pr_identifier=checkout).update(
+            item=item,
+            item_brand_description=item_brand,
+            unit=unit,
+            unit_cost=price,
+        )
+
+        # Update the 'bo_status' and 'bo_comment' in the Pr_identifier object
+        Pr_identifier.objects.filter(pr_id=pr_id).update(
+            bo_status=new_status,  # Budget Officer status (approve/disapprove)
+            bo_comment=comment_content,
+            bo_approved_date=timezone.now(),
+        )
+
+        return redirect('bopurchase')  # Redirect to the purchase list page
+    
+    elif request.method == 'GET':
+        # Get the checkout object based on pr_id
+        checkouts = get_object_or_404(Pr_identifier, pr_id=pr_id)
+        checkout_items = PR.objects.filter(pr_identifier=checkouts)
+
+        context = {
+            'checkout': checkouts,
+            'checkout_items': checkout_items,
+            'user': request.user,
+            'pr_id': pr_id,
+            'title': 'PURCHASE REQUEST FOR APPROVAL',
+            'CAMPUS_NAME': CAMPUS_NAME,
+        }
+
+        return render(request, 'accounts/Admin/Budget_Officer/bopurchase_approval.html', context)
