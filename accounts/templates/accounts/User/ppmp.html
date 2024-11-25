@@ -10,7 +10,14 @@
 <link rel="stylesheet" href="{% static 'css/ppmp.css' %}">
  
 {% endblock extra_css %}
-
+<style>
+    .navbar.bg-light {
+    background-color: #003566 !important;
+}
+</style>
+<div id="page-content-wrapper ">
+    <nav class=" bg-light"></nav>
+</div>
 <div  class="bck">
     <a href="{% url 'ppmp101' %}">
       <img src="{% static 'images/back2.png' %}" alt="Previous">
@@ -63,8 +70,11 @@
     
     <style>
         .table-bordered th {
-            background-color: #22507A;
+            background-color: #003566;
             color: #fff;
+        }
+        .catalogue{
+            background-color: #003566;
         }
         .catalogue:hover {
          box-shadow: 10px 10px 4px #003566;
@@ -178,7 +188,7 @@
                         <td>
                             <button type="submit" class="save-btn btn-success" style="background: none; border: none;"
                                 title="Save" onclick="saveFunction()">
-                                <i class="fas fa-save" style="color: #28a745;"></i>
+                                <i class="fas fa-save" style="color: #28a745; background-color: #003566;"></i>
                             </button>
                         </td>
                     </form>

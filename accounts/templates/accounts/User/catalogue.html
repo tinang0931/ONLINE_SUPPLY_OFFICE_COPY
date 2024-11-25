@@ -10,7 +10,7 @@
 
 <style>
     .table-bordered th {
-        background-color: #144472;
+        background-color: #003566;
         color: white;
 
     }
@@ -122,6 +122,10 @@
     .row {
     margin-top: 70px;
 }
+
+.navbar.bg-light {
+    background-color: #003566 !important;
+}
 </style>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -131,6 +135,10 @@
 
 
 <div class="container-fluid" style=" height: 82vh; overflow-y: auto; overflow-x: hidden;">
+
+    <div id="page-content-wrapper ">
+        <nav class=" bg-light"></nav>
+    </div>
 
     <div class="container">
         <h1 style="margin-left: 45%; margin-top: 5vh"></h1>
@@ -147,12 +155,11 @@
     <div class="row" style="width: 100%;">
         <div class="search" style="position: relative; text-align: right; margin-top: -3vh; display: inline-block; width: 100%; top: -11px">
             <span class="icon"
-                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; right: 28px;
-    top: 22%;">
-                <i class="fas fa-search" style="font-size: 20px;" ></i>
+                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; right: 28px; top: 22%;">
+                <!-- <i class="fas fa-search" style="font-size: 20px;" ></i> -->
             </span>
             <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" 
-                style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; width: 300px; display: inline-block;"
+                style="border: 2px solid #003566; border-radius: 25px; padding-right: 40px; width: 300px; display: inline-block;"
                 oninput="handleSearch()">
         </div>
     </div>

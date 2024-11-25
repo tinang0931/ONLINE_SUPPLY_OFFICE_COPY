@@ -30,7 +30,7 @@
   }
 
   .table-bordered th {
-    background-color: #003566DE;
+    background-color: #003566;
     font-family: 'Poppins', sans-serif;
     color: #ffff;
   }
@@ -105,11 +105,17 @@
   margin-top: -4vh;
 } 
   */
+  .navbar.bg-light {
+    background-color: #003566 !important;
+}
 </style>
 
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
 
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
   <div class="container">
@@ -117,7 +123,12 @@
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
   </div>
- 
+  <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+    <div class="search" style="position: relative; text-align: right; margin-top: 5vh; width:15%; margin-left: 85%;">
+      <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;"> </span>
+      <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+        style="border: 2px solid #254b6e; border-radius: 25px; padding: 10px 40px 10px 20px; display: inline-block; outline: none;">
+    </div>
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
       <!-- <div class="table-responsive"></div> -->
