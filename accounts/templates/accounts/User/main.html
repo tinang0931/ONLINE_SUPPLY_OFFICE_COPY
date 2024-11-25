@@ -306,6 +306,8 @@ window.onload = () => {
                 <div class="d-flex flex-wrap align-content-between h-100">
                   <div class="bg-#6C757D w-100" id="sidebar-wrapper">
                     <div class="list-group w-100">
+                        <br>
+
                       <a class="list-group-item list-group-item-action p-3 border-0 " href="{% url 'ppmp101' %}">
                         <i class="bi bi-grid"></i> <span id="purchaseRequest">Dashboard</span>
                       </a>
@@ -344,22 +346,23 @@ window.onload = () => {
               </div>
 
             <style>
-
+.list-group {
+    padding: 1px;
+}
 /* Initial background color and text/icon color */
 .sidebar .list-group-item {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease;
     padding: 12px 20px;
-    border-radius: 5px; /* Rounded corners for list items */
-    margin-bottom: 8px; /* Spacing between items */
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: 14px;
 }
 
 
-
 .list-group-item-action:hover {
     background-color: #003566 !important;  /* Background color on hover */
-    border-radius: 5px !important;  /* Rounded corners */
+    border-radius: 3px !important;  /* Rounded corners */
     color: #f2f2f2 !important;  /* White text on hover */
     z-index: 1;  /* Ensure text appears above background */
 }
@@ -393,31 +396,31 @@ window.onload = () => {
 }
   
             
-                .d-flex {
-                    height: 100vh;
-                    margin-bottom: 0;
-        }/* Ensure that the sidebar stays at a fixed width */
+.d-flex {
+    height: 100vh;
+    margin-bottom: 0;
+}
 .logout-link {
-      position: fixed;              
-    margin-top: -480px ;
+    position: fixed;              
+    margin-top: -350px ;
                    
-                }
+}
 
 
-                .d-flex.flex-wrap.align-content-between.h-100 {
-                    background-color: #f2f2f2;
-                }
+.d-flex.flex-wrap.align-content-between.h-100 { 
+    background-color: #f2f2f2;
+}
 
-                .list-group-item-action:not(:hover) span {
-                    color: black !important;
-                }
+.list-group-item-action:not(:hover) span {
+    color: black !important;
+}
 
-                .ctu_logo {
-                    position: relative;
-                    top: 3px;
-                    z-index: 1;
-                    left: -40px;
-                }
+.ctu_logo {
+     position: relative;
+     top: 3px;
+     z-index: 1;
+     left: -40px;
+}
 
                 .pro {
                     position: relative;

@@ -306,6 +306,7 @@ function toggleNotifications() {
                 <div class="d-flex flex-wrap align-content-between h-100">
                   <div class="bg-#6C757D w-100" id="sidebar-wrapper">
                     <div class="list-group w-100">
+                        <br>
                       <a class="list-group-item list-group-item-action p-3 border-0 " href="{% url 'ppmp101' %}">
                         <i class="bi bi-grid"></i> <span id="purchaseRequest">Dashboard</span>
                       </a>
@@ -345,40 +346,50 @@ function toggleNotifications() {
 
             <style>
 
+.list-group {
+    padding: 1px;
+}
 /* Initial background color and text/icon color */
 .sidebar .list-group-item {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease;
     padding: 12px 20px;
-    border-radius: 5px; /* Rounded corners for list items */
-    margin-bottom: 8px; /* Spacing between items */
-    font-family:"Lato", sans-serif;
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 14px;
 }
 
-/* Hover effect */
-.sidebar .list-group-item:hover {
-    background-color: #007bff;
-    color: #003566;
-    transform: translateX(5px); 
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); 
+
+.list-group-item-action:hover {
+    background-color: #003566 !important;  /* Background color on hover */
+    border-radius: 3px !important;  /* Rounded corners */
+    color: #f2f2f2 !important;  /* White text on hover */
+    z-index: 1;  /* Ensure text appears above background */
 }
 
-
-.sidebar .list-group-item:hover i {
-    color: #003566; 
-    transform: scale(1.2); 
+/* Make sure text color is white */
+.list-group-item-action:hover span {
+    color: white !important;
 }
 
-/* Optionally, bolden text on hover */
+/* Make sure icon color is white */
+.list-group-item-action:hover i {
+    color: white !important;
+}
+
+.sidebar .list-group-item i {
+    margin-right: 10px; /* Adjust this value as needed */
+}
+
 .sidebar .list-group-item:hover span {
-    font-weight: bold; /* Make text bold when hovered */
+    font-weight: bold;
     color: #003566;
 }
 
-/* Active state styling for the currently active link (if any) */
+
 .sidebar .list-group-item.active {
     background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 86, 179, 0.4); 
+    box-shadow: 1 4px 8px rgba(0, 86, 179, 0.4); 
 }
 
  
@@ -392,7 +403,7 @@ function toggleNotifications() {
 
 .logout-link {
       position: fixed;              
-    margin-top: -280px ;
+    margin-top: -325px ;
                    
                 }
 
