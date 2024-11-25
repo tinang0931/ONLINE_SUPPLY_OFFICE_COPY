@@ -129,73 +129,60 @@
           </div>
         </div>
         <style>
-                
-          .d-flex {
-              height: 100vh;
-              margin-bottom: 0;
-  }/* Ensure that the sidebar stays at a fixed width */
-#sidebar {
-width: 120px;
-transition: width 0.5s ease-in-out;
-overflow: hidden;
+.sidebar .list-group-item {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease;
+    padding: 12px 20px;
+    border-radius: 5px; /* Rounded corners for list items */
+    margin-bottom: 10px; /* Spacing between items */
+    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 14px;
 }
 
-#sidebar.show-names {
-width: 50px;
-padding: 0;
+.list-group {
+    padding: 1px;
 }
 
-.hidden-name {
-opacity: 0;
-transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
-position: absolute;
-top: 35px; /* Adjust this value based on icon size */
-left: 50%;
-transform: translateX(-50%);
-font-size: 9.5px;
-white-space: nowrap;
-font-style: normal;
+.list-group-item-action:hover {
+    background-color: #003566 !important;  /* Background color on hover */
+    border-radius: 5px !important;  /* Rounded corners */
+    color: #f2f2f2 !important;  /* White text on hover */
+    z-index: 1;  /* Ensure text appears above background */
 }
 
-/* Style for the icons in the sidebar */
-.list-group-item i {
-transform: scale(1.4);
-display: inline-block;
-position: relative;
-left: 20px;
+/* Make sure text color is white */
+.list-group-item-action:hover span {
+    color: white !important;
 }
 
-/* Make the name appear below the icon when hovering over the icon */
-.list-group-item:hover .hidden-name {
-opacity: 1;
-transform: translateX(-50%) translateY(10px); /* Adjust the vertical position of the name on hover */
+/* Make sure icon color is white */
+.list-group-item-action:hover i {
+    color: white !important;
 }
 
-/* Ensuring the hover effect is applied only to the icon */
-.list-group-item {
-position: relative;
-display: fixed;
-justify-content: center;
-align-items: center;
-
+.sidebar .list-group-item i {
+    margin-right: 10px; /* Adjust this value as needed */
 }
 
-/* Adjust spacing */
-.list-group-item i {
-margin-bottom: 20px; /* Provide space for the text that will appear below */
+.sidebar .list-group-item:hover span {
+    font-weight: bold;
+    color: #003566;
 }
 
+
+.sidebar .list-group-item.active {
+    background-color: #0056b3;
+    box-shadow: 1 4px 8px rgba(0, 86, 179, 0.4); 
+}
+#sidebar-wrapper .list-group-item.logout-link {
+  top: 255%; 
+}
+  
 /* General layout adjustments */
 .d-flex {
 height: 100vh;
 margin-bottom: 0;
 }
 
-.list-group-item-action:hover {
-background-color: #003566 !important;
-border-radius: 5px !important;
-color: #f2f2f2 !important;
-}
 
 .logout-link {
 position: fixed;              
@@ -261,22 +248,6 @@ margin-top: -140px ;
               transition: opacity 0.3s ease, visibility 0.3s ease;
               /* Add a transition effect */
               display: none
-          }
-
-          .sidebar:hover .account_type,
-          .pro:hover+.account_type {
-              opacity: 1;
-              /* Show the element when the sidebar or .pro is hovered */
-              visibility: visible;
-              /* Show the element when the sidebar or .pro is hovered */
-          }
-
-
-          .sidebar:hover .account_type {
-              opacity: 1;
-              /* Show the element when the sidebar is hovered */
-              visibility: visible;
-              /* Show the element when the sidebar is hovered */
           }
 
           

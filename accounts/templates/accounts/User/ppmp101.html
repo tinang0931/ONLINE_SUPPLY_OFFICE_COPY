@@ -1,29 +1,21 @@
 {% extends "accounts/User/main.html" %}
- 
+
 {% load static %}
- 
+
 {% block dashboard %}
- 
+
 {% block extra_css %}
- 
+
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
- 
+
 {% endblock extra_css %}
 
-<style>
-     .bg-light {
-    --bs-bg-opacity: 1;
-      background: #003566 !important;
-  }
-</style>
 
- 
 <body>
- 
+
     <div class="right-container" style="margin-top: -0vh;">
 
         <div class="ppmp-section">
-            
             <div class="ppmp">
                 <a href="{% url 'ppmp' %}" style="display: block; text-decoration: none;">
                     <button style="background-color: #00346b; border: none; padding: 10px; width: 100%; text-align: center;">
@@ -31,17 +23,15 @@
                     </button>
                 </a>
             </div>
-            
-           
         </div>
+
         <div class="budget-section">
             <div class="budget">
                PHP {{ user_budget }}
                 <div class="Annual">ANNUAL BUDGET</div>
             </div>
- 
         </div>
- 
+
         {% if checkouts %}
         <div class="title-section">
             {% with checkouts|dictsortreversed:"year" as sorted_checkouts %}
@@ -60,187 +50,59 @@
             </div>
         </div>
     {% endif %}
-    
- 
- 
-        <div class=" trackers-section">
-            <div class="tracker">
-                <h3>PPMP TRACKER</h3>
-            
-                <ul>
-                    <h2>PPMP ID: {{ data.pr_id }}</h2>
-                    <li><span class="green"></span> PPMP Request Sent - {{ data.submission_date }}</li>
-                    <li><span class="green"></span> Approved by BO - {{ data.bo_approved_date|date:"F d Y" }}</li>
-                    <li><span class="orange"></span> Waiting for CD Response - {{ data.cd_approved_date|date:"F d Y" }}</li>
-                </ul>
-            </div>
-            
- 
-            <div class="tracker">
-                <h3>PR TRACKER</h3>
-                <ul>
-                    <h2>PPMP ID: {{ i.pr_id }}</h2>
-                    <li><span class="green"></span> PPMP Request Sent - {{ i.submission_date }}</li>
-                    <li><span class="green"></span> Approved by BO - {{ i.bo_approved_date|date:"F d Y" }}</li>
-                    <li><span class="orange"></span> Waiting for CD Response - {{ i.cd_approved_date|date:"F d Y" }}</li>
-                </ul>
-            </div>
+
+    <div class="trackers-section">
+        <div class="tracker">
+            <h3>PPMP TRACKER</h3>
+
+            <ul>
+                <h2>PPMP ID: {{ data.pr_id }}</h2>
+                <li><span class="green"></span> PPMP Request Sent - {{ data.submission_date }}</li>
+                <li><span class="green"></span> Approved by BO - {{ data.bo_approved_date|date:"F d Y" }}</li>
+                <li><span class="orange"></span> Waiting for CD Response - {{ data.cd_approved_date|date:"F d Y" }}</li>
+            </ul>
+        </div>
+
+        <div class="tracker">
+            <h3>PR TRACKER</h3>
+            <ul>
+                <h2>PPMP ID: {{ i.pr_id }}</h2>
+                <li><span class="green"></span> PPMP Request Sent - {{ i.submission_date }}</li>
+                <li><span class="green"></span> Approved by BO - {{ i.bo_approved_date|date:"F d Y" }}</li>
+                <li><span class="orange"></span> Waiting for CD Response - {{ i.cd_approved_date|date:"F d Y" }}</li>
+            </ul>
         </div>
     </div>
- 
-    <div class="left-container" style="overflow-y: auto; height: 600px; width: 60%;">
-        <div class="catalogue-section">
-            <h3>CATALOGUE</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Brand/Description</th>
-                        <th>Unit</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                    <tr>
-                        <th colspan="4" class="category-heading">ANTISEPTICS</th>
-                    </tr>
-                <tbody>
-                    <tr>
-                        <td>Alcohol</td>
-                        <td>ethyl alcohol</td>
-                        <td>bottle</td>
-                        <td>Php 50.00</td>
-                    </tr>
-                    <tr>
-                        <td>Chlorhexidine</td>
-                        <td>Corsodyl</td>
-                        <td>bottle</td>
-                        <td>Php 80.00</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="category-heading">FURNITURE AND FURNISHINGS</th>
-                    </tr>
-                    <tr>
-                        <td>Chair</td>
-                        <td>monobloc, beige, with backrest, w/o armrest</td>
-                        <td>piece</td>
-                        <td>Php 1000.00</td>
-                    </tr>
-                    <tr>
-                        <td>TABLE</td>
-                        <td>monobloc, white, 889 X 889mm (356"x35")min</td>
-                        <td>unit</td>
-                        <td>Php 400.00</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="category-heading">ELECTRICAL AND HARDWARE SUPPLIES</th>
-                    </tr>
-                    <tr>
-                        <td>BATTERY</td>
-                        <td>dry cell, D, 1.5 volts, alkaline</td>
-                        <td>pack</td>
-                        <td>Php 200.00</td>
-                    </tr>
-                    <tr>
-                        <td>BATTERY</td>
-                        <td>dry cell, AAA, 2 pieces, per blister pack</td>
-                        <td>pack</td>
-                        <td>Php 1500.00</td>
-                    </tr>
-                    <tr>
-                        <td>BATTERY</td>
-                        <td>dry cell, AA, 2 pieces per blister pack</td>
-                        <td>pack</td>
-                        <td>Php 100.00</td>
-                    </tr>
-                    <tr>
-                        <td>EXTENSION WIRE</td>
-                        <td>3 gang, 10m wire, heavy duty</td>
-                        <td>set</td>
-                        <td>Php 600.00</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="category-heading">INFORMATION AND COMMUNICATION TECHNOLOGY (ICT) EQUIPMENT AND DEVICES AND ACCESSORIES</th>
-                    </tr>
-                    <tr>
-                        <td>EXTERNAL HARD DRIVE,</td>
-                        <td>1TB, 2.5"HDD, USB 3.0</td>
-                        <td>piece</td>
-                        <td>Php 3000.00</td>
-                    </tr>
-                    <tr>
-                        <td>FLASH DRIVE</td>
-                        <td>16 GB capacity</td>
-                        <td>piece</td>
-                        <td>Php	250.00</td>
-                    </tr>
-                    <tr>
-                        <td>MULTIMEDIA PROJECTOR</td>
-                        <td>3500 MIN ANSI Lumens</td>
-                        <td>unit</td>
-                        <td>Php	25000.00</td>
-                    </tr>
-                    <tr>
-                        <td>WIRELESS MOUSE</td>
-                        <td>USB</td>
-                        <td>unit</td>
-                        <td>Php	500.00</td>
-                    </tr>
-                    <tr>
-                        <td>PRINTER</td>
-                        <td>CANON PIXMA G2420(Print, Scan, Copy)</td>
-                        <td>unit</td>
-                        <td>Php	10000.00</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="category-heading">OFFICE EQUIPMENT AND ACCESSORIES AND SUPPLIES</th>
-                    </tr>
-                    <tr>
-                        <td>BACKFOLD CLIP</td>
-                        <td>all metal, clamping: 25mm (-1mm)</td>
-                        <td>box</td>
-                        <td>Php 20.00</td>
-                    </tr>
-                    <tr>
-                        <td>BACKFOLD CLIP</td>
-                        <td>all metal, clamping: 32mm (-1mm)</td>
-                        <td>box</td>
-                        <td>Php 45.00</td>
-                    </tr>
-                    <tr>
-                        <td>BACKFOLD CLIP</td>
-                        <td>all metal, clamping: 50mm (-1mm)</td>
-                        <td>box</td>
-                        <td>Php 80.00</td>
-                    </tr>
-                    <tr>
-                        <td>BROWN ENVELOPE</td>
-                        <td>for legal size document</td>
-                        <td>piece</td>
-                        <td>Php 15.00</td>
-                    </tr>
-                    <tr>
-                        <td>BROWN ENVELOPE</td>
-                        <td>for short size document</td>
-                        <td>piece</td>
-                        <td>Php 10.00</td>
-                    </tr>
-                    <tr>
-                        <td>CHALK</td>
-                        <td>molded, white, dustless, length: 78mm min</td>
-                        <td>box</td>
-                        <td>Php 100.00</td>
-                    </tr>
-                    <tr>
-                        <td>CLEARBOOK</td>
-                        <td>20 transparent pockets, for A4 size</td>
-                        <td>piece</td>
-                        <td>Php 100.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+</div>
+
+<div class="left-container" style="overflow-y: auto; height: 600px; width: 60%;">
+    <div class="catalogue-section">
+        <h3>CATALOGUE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="4" class="category-heading">ANTISEPTICS</th>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td>ethyl alcohol</td>
+                    <td>bottle</td>
+                    <td>Php 50.00</td>
+                </tr>
+               
+            </tbody>
+        </table>
     </div>
-    
+</div>
+
 </body>
 </html>
 

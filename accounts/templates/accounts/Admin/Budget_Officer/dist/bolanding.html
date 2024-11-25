@@ -1,0 +1,89 @@
+{% load static %}
+ 
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bolanding.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://fonts.google.com/icons"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+ 
+    <title>Budget Officer Landing Page</title>
+</head>
+ 
+<body>
+    <main class="flex-shrink">
+        <div id="page-content-wrapper">
+ 
+            <div class="row w-100 m-auto">
+              <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
+                <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
+              </div>
+              <div class="col-7 col-sm-9 col-md-6 col-lg-7  text-center d-grid align-content-center">
+                <h1 class="head">{{HEADING_TEXT}}</h1>
+                <h1 class="p1">{{SUBHEADING_TEXT}}</h1>
+              </div>
+              <div class="col-5 col-sm-3 col-md-3 col-lg-2 text-center d-grid align-content-center">
+             
+              </div>
+            </div>
+          </nav>
+        </div>
+        <h1 class="welcome">Welcome! You are signed in as a Budget Officer.</h1>
+        <div class="d-flex" id="wrapper">
+          <div class="box-container">
+              <a href="{% url 'bohome'%}"style = "text-decoration: none;">
+                  <div class="box ppmp" style=" margin-left: 20%; margin-top: 5vh;">
+                    <i class="bi bi-file-earmark-medical" style=" margin-left: 5%;"></i>
+                      <span id="bohome" class="hidden-name">PPMP</span>  
+                  </div>
+              </a>
+              
+              <div class="d-flex" id="wrapper">
+                <div class="box-container">
+                    <a href="{% url 'bopurchase'%}"style = "text-decoration: none;">
+                        <div class="box ppmp" style=" margin-left: 20%; margin-top: 10vh;">
+                          <i class="bi bi-bag" style=" margin-left: 5%;"></i>
+                            <span id="bohome" class="hidden-name">PR</span>  
+                        </div>
+                    </a>
+      
+              <a href="{% url 'approve_user' %}" style="text-decoration: none;">
+                <div class="box approve_user" style="margin-left: 20%; margin-top: 10vh;">
+                    <i class="fa fa-file-text-o" style="margin-left: 5%;"></i>
+                    <span id="about" class="hidden-name">BUDGET REQUEST</span>
+                </div>
+            </a>
+    
+              <a href="{% url 'boabout'%}"style = "text-decoration: none;">
+                  <div class="box about" style=" margin-left: 20%; margin-top: 10vh;">
+                      <i class="bi bi-info-circle" style=" margin-left: 5%;"></i>
+                      <span id="boabout" class="hidden-name">ABOUT</span>
+                  </div>
+              </a>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <a href="{% url 'logout_user'%}"style = "text-decoration: none;">
+                  <div class="box logout" style=" margin-left: 24%;">
+                      <span id="logout" class="hidden-name">LOG OUT</span>
+                  </div>
+              </a>
+          </div>
+       
+      </div>
+  </main>

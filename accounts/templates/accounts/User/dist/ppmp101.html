@@ -1,0 +1,109 @@
+{% extends "accounts/User/main.html" %}
+
+{% load static %}
+
+{% block dashboard %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+{% endblock extra_css %}
+
+
+<body>
+
+    <div class="right-container" style="margin-top: -0vh;">
+
+        <div class="ppmp-section">
+            <div class="ppmp">
+                <a href="{% url 'ppmp' %}" style="display: block; text-decoration: none;">
+                    <button style="background-color: #00346b; border: none; padding: 10px; width: 100%; text-align: center;">
+                        <span style="color: #FFA500; font-weight: bold;">CREATE PPMP</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="budget-section">
+            <div class="budget">
+               PHP {{ user_budget }}
+                <div class="Annual">ANNUAL BUDGET</div>
+            </div>
+        </div>
+
+        {% if checkouts %}
+        <div class="title-section">
+            {% with checkouts|dictsortreversed:"year" as sorted_checkouts %}
+                <div class="year">
+                    <a href="{% url 'ppmpform' year=sorted_checkouts.0.year pr_id=sorted_checkouts.0.pr_id %}" 
+                       style="color: #FFA500; text-decoration: none;">
+                        <span>{{ sorted_checkouts.0.year }} PPMP</span>
+                    </a>
+                </div>
+            {% endwith %}
+        </div>
+    {% else %}
+        <div class="title-section">
+            <div class="year">
+                <span>NO APPROVED PPMP</span>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="trackers-section">
+        <div class="tracker">
+            <h3>PPMP TRACKER</h3>
+
+            <ul>
+                <h2>PPMP ID: {{ data.pr_id }}</h2>
+                <li><span class="green"></span> PPMP Request Sent - {{ data.submission_date }}</li>
+                <li><span class="green"></span> Approved by BO - {{ data.bo_approved_date|date:"F d Y" }}</li>
+                <li><span class="orange"></span> Waiting for CD Response - {{ data.cd_approved_date|date:"F d Y" }}</li>
+            </ul>
+        </div>
+
+        <div class="tracker">
+            <h3>PR TRACKER</h3>
+            <ul>
+                <h2>PPMP ID: {{ i.pr_id }}</h2>
+                <li><span class="green"></span> PPMP Request Sent - {{ i.submission_date }}</li>
+                <li><span class="green"></span> Approved by BO - {{ i.bo_approved_date|date:"F d Y" }}</li>
+                <li><span class="orange"></span> Waiting for CD Response - {{ i.cd_approved_date|date:"F d Y" }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="left-container" style="overflow-y: auto; height: 600px; width: 60%;">
+    <div class="catalogue-section">
+        <h3>CATALOGUE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Brand/Description</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="4" class="category-heading">ANTISEPTICS</th>
+                </tr>
+                <tr>
+                    <td>Alcohol</td>
+                    <td>ethyl alcohol</td>
+                    <td>bottle</td>
+                    <td>Php 50.00</td>
+                </tr>
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

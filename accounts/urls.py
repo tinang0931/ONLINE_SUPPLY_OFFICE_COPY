@@ -92,4 +92,6 @@ urlpatterns = [
     path('approve_checkout/<int:checkout_id>/', views.checkout_action, name='approve_checkout'),
     path('approve_tracker/<int:checkout_id>/', views.tracker_action, name='approve_tracker'),
     path('sidebar1/', views.sidebar1, name='sidebar1'),
+    path('bopurchase/', views.bopurchase, name='bopurchase'),
+    path('bopurchase_approval/<str:pr_id>/', views.bopurchase_approval, name='bopurchase_approval'),
 ]

@@ -27,7 +27,7 @@
     color: #FFA500; 
     transform: scale(1.1);
     border: 2px solid #FFFFFF;
-    box-shadow: 5px 5px 4px #FFA500;
+    box-shadow: 10px 10px 4px #003566;
 }
 
 .table-responsive {
@@ -88,7 +88,7 @@
 
 .budget-container strong {
     position: fixed;
-    margin-left: -48vh;
+    margin-left: -45vh;
 }
 
 #total_allocated_budget {
@@ -96,7 +96,7 @@
     font-weight: bold; 
     color: black; 
     padding-left: 10px; 
-    margin-left: -30vh;
+    margin-left: -26vh;
     position: relative;
     top: 0;
     left: 0;
