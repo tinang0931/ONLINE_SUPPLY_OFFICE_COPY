@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.template',
     'accounts',
     'djongo',
-    'corsheaders',
+    
    
 ]
  
