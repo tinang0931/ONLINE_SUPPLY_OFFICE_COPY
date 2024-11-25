@@ -30,7 +30,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="row w-100 m-auto">
                     <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-                        <a href="{% url 'userlanding' %}">
+        
                             <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
                         </a>
                     </div>
@@ -221,62 +221,135 @@ window.onload = () => {
 </script>
 
 
+<!-- Profile Icon Section -->
+<a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
+    <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 65px; height: 65px;">
+</a>
 
+<!-- File input for Profile upload (hidden) -->
+<input type="file" id="profileUpload" style="display: none;" accept="image/*" />
 
-                 <!-- Profile Icon --> 
-                            <a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
-                                <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 65px; height: 65px; ">
-                            </a>
-                        </h1>
-                    </div>
-                    
-                    <!-- File input for Profile upload (hidden) -->
-                    <input type="file" id="profileUpload" style="display: none;" accept="image/*" />
+<!-- Profile Modal Section (Hidden by default) -->
+<div id="profileModal" style="display: none;">
+    <div class="modal-content">
+        <!-- Profile Header -->
+        <h2>Update Profile</h2>
+        
+        <!-- Profile Picture Section -->
+        <div id="profilePicContainer">
+            <img id="profileImageModal" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 150px; height: 150px;">
+            <button id="changeProfilePic">Change Profile Picture</button>
+        </div>
 
-                    
-                   
-                    
+        <!-- User's Name Section -->
+        <div id="userNameSection">
+            <label for="userName">Name: </label>
+            <input type="text" id="userName" value="John Doe">
+        </div>
+
+        <!-- Photo Gallery Section -->
+        <h3>Uploaded Photos</h3>
+        <div id="gallery" class="gallery">
+            <!-- Gallery items will appear here -->
+        </div>
+
+        <!-- Close Button -->
+        <button id="closeModal">Close</button>
+    </div>
+</div>
+   
 
                     <script>
-                          // JavaScript part
-    // When the user clicks the profile icon, trigger file input click
-    document.getElementById('profileIcon').addEventListener('click', function() {
-        document.getElementById('profileUpload').click();
+                        // JavaScript part
+
+// When the user clicks the profile icon, open the profile modal
+document.getElementById('profileIcon').addEventListener('click', function() {
+    document.getElementById('profileModal').style.display = 'flex';
+    loadProfileData(); // Load profile image and name when modal opens
+});
+
+// When the user clicks the "Change Profile Picture" button
+document.getElementById('changeProfilePic').addEventListener('click', function() {
+    document.getElementById('profileUpload').click();
+});
+
+// When the file is selected (new profile image)
+document.getElementById('profileUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const profileImageUrl = e.target.result;
+            // Set the profile image in the modal and save to localStorage
+            document.getElementById('profileImageModal').src = profileImageUrl;
+            document.getElementById('profileImage').src = profileImageUrl;
+            localStorage.setItem('profileImage', profileImageUrl);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Load profile image and name from localStorage
+function loadProfileData() {
+    const storedProfileImage = localStorage.getItem('profileImage');
+    const storedName = localStorage.getItem('userName');
+
+    if (storedProfileImage) {
+        document.getElementById('profileImageModal').src = storedProfileImage;
+        document.getElementById('profileImage').src = storedProfileImage;
+    }
+
+    if (storedName) {
+        document.getElementById('userName').value = storedName;
+    }
+
+    loadGallery(); // Load uploaded photos when the modal opens
+}
+
+// Save the user's name to localStorage when it's changed
+document.getElementById('userName').addEventListener('change', function(event) {
+    const userName = event.target.value;
+    localStorage.setItem('userName', userName);
+});
+
+// Close the profile modal
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('profileModal').style.display = 'none';
+});
+
+// Load the user's photo gallery from localStorage (if any)
+function loadGallery() {
+    const galleryContainer = document.getElementById('gallery');
+    const storedPhotos = JSON.parse(localStorage.getItem('uploadedPhotos')) || [];
+
+    galleryContainer.innerHTML = ''; // Clear the gallery first
+
+    storedPhotos.forEach(photo => {
+        const img = document.createElement('img');
+        img.src = photo;
+        img.alt = 'Uploaded Photo';
+        
+        galleryContainer.appendChild(img);
     });
+}
 
-    // When a new file is uploaded
-    document.getElementById('profileUpload').addEventListener('change', function(event) {
-        const file = event.target.files[0]; // Get the uploaded file
-        if (file) {
-            const reader = new FileReader(); // Create a new FileReader object
+// Update the gallery with new uploaded photos
+document.getElementById('profileUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const photoUrl = e.target.result;
+            const storedPhotos = JSON.parse(localStorage.getItem('uploadedPhotos')) || [];
+            storedPhotos.push(photoUrl);
+            localStorage.setItem('uploadedPhotos', JSON.stringify(storedPhotos));
+            loadGallery(); // Update gallery
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
-            reader.onload = function(e) {
-                const profileImageUrl = e.target.result;
-
-                // Set the profile image source to the uploaded file's data URL
-                document.getElementById('profileImage').src = profileImageUrl;
-
-                // Store the image data URL in localStorage to persist across refreshes
-                localStorage.setItem('profileImage', profileImageUrl);
-            };
-
-            // Read the file as a data URL
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Check if there's a stored profile image in localStorage on page load
-    window.addEventListener('load', function() {
-        const storedProfileImage = localStorage.getItem('profileImage');
-        if (storedProfileImage) {
-            // If a profile image is found in localStorage, set it as the src
-            document.getElementById('profileImage').src = storedProfileImage;
-        }
-    });
-
-
-
-                        </script>
+</script>
                     
             </nav>
         </div>
@@ -481,18 +554,160 @@ window.onload = () => {
 
               
 
-
+/* Profile Icon styling */
 #profileIcon {
     position: relative;
-    top: 15vh; /* Adjust as needed */
-    margin-left: 168vh; /* Adjust as needed */
+    top: 15vh;
+    margin-left: 168vh;
 }
 
 #profileImage {
     width: 45px;
     height: 45px;
-    cursor: pointer; /* To show it's clickable */
+    cursor: pointer;
     border-radius: 50%;
+}
+
+/* Modal Styling */
+#profileModal {
+    position: fixed;
+    top: 0;
+    left: 38%;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's on top of other content */
+}
+
+/* Modal content styling */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow-y: auto;
+}
+
+/* Title of the modal */
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Profile picture container */
+#profilePicContainer {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Profile picture in modal */
+#profileImageModal {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+/* Change profile picture button */
+#changeProfilePic {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+#changeProfilePic:hover {
+    background-color: #00408f;
+}
+
+/* User name section */
+#userNameSection {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#userNameSection label {
+    font-size: 16px;
+    color: #333;
+}
+
+#userNameSection input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Input focus effect */
+#userNameSection input:focus {
+    border-color: #0056b3;
+}
+
+/* Gallery section */
+h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#gallery img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for gallery images */
+#gallery img:hover {
+    transform: scale(1.1);
+}
+
+/* Close button */
+#closeModal {
+    background-color: #ff3d3d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+/* Close button hover effect */
+#closeModal:hover {
+    background-color: #e60000;
 }
 
             </style>
