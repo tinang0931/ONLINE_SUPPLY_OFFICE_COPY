@@ -9,16 +9,25 @@
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
 {% endblock extra_css %}
-
+<style>
+       .navbar.bg-light {
+        background-color: #003566 !important;
+}
+</style>
 
 <body style="justify-content: flex-start;">
 
+<body>
+    <div id="page-content-wrapper ">
+        <nav class=" bg-light"></nav>
+    </div>
+    
     <div class="right-container" style="margin-top: -0vh;">
 
         <div class="ppmp-section">
             <div class="ppmp">
                 <a href="{% url 'ppmp' %}" style="display: block; text-decoration: none;">
-                    <button style="background-color: #00346b; border: none; padding: 10px; width: 100%; text-align: center;">
+                    <button style="background-color: #003566; border: none; padding: 10px; width: 100%; text-align: center;">
                         <span style="color: #FFA500; font-weight: bold;">CREATE PPMP</span>
                     </button>
                 </a>

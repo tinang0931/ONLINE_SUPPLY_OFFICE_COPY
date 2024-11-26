@@ -19,7 +19,7 @@
   }
 
   .table-bordered th {
-    background-color: #1c96c5;
+    background-color: #003566;
   }
 
   .item-actions {
@@ -31,7 +31,7 @@
   }
 
   .table-bordered th {
-    background-color:  #003566DE;
+    background-color:  #003566;
     font-family: 'Poppins', sans-serif;
     color: #ffff;
   }
@@ -197,32 +197,43 @@
   100% { transform: rotate(360deg); }
 }
 
+.table-responsive{
+  margin-top: -4vh;
+} 
+.navbar.bg-light {
+    background-color: #003566 !important;
+}
 </style>
 
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-
-
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
+  <div class="search" style="position: relative; text-align: right; margin-top: 4vh; width:15%; margin-left: 85%;">
   
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+      style="border: 2px solid #254b6e; border-radius: 25px; padding: 10px 40px 10px 20px; display: inline-block; outline: none;">
+  </div>
   <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
     <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
   </div>
-      
+
   <div class="custom-f row w-100 m-auto border text-start text-dark">
     <div class="pad col">
+      <div class="table-responsive"></div>
       <table class="table table-bordered" style="margin: 0px!important;">
         <thead>
           <tr>
-            <th  class="text-center"> DATE REQUESTED </th>
-            <th  class="text-center">PPMP NO.</th>
-            <th  class="text-center">BUDGET OFFICER STATUS</th>
+            <th class="text-center">DATE REQUESTED</th>
+            <th class="text-center">PPMP NO.</th>
+            <th class="text-center">BUDGET OFFICER STATUS</th>
             <th class="text-center">CAMPUS DIRECTOR STATUS</th>
-            <th  class="text-center">COMMENT</th>
+            <th class="text-center">COMMENT</th>
             <th class="text-center">LAST UPDATED</th>
-        </tr>
-       
+          </tr>
         
           
         </thead>
