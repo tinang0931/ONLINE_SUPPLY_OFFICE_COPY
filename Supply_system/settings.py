@@ -194,10 +194,10 @@ MEDIA_DIR = BASE_DIR / 'media'
  
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://172.28.48.51:8000",  # Frontend domain or IP address
-    "http://localhost:8000",          # For local development (if using React/Angular)
-]
+# # CORS_ALLOWED_ORIGINS = [
+# #     "http://172.28.48.51:8000",  # Frontend domain or IP address
+# #     "http://localhost:8000",          # For local development (if using React/Angular)
+# # ]
