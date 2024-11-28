@@ -58,6 +58,319 @@ from .config import HEADING_TEXT, SUBHEADING_TEXT
 
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import status
+from .models import Checkout, CSV, Item
+from .serializers import *
+import itertools
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+    
+        token['username'] = user.username
+        token['email'] = user.email
+
+        return token
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+
+class PPMP101APIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user_budget = request.user.budget
+            data = Checkout.objects.filter(user=request.user).order_by('-submission_date').first()
+            checkouts = Checkout.objects.filter(bo_status='approved', cd_status='approved', user=request.user)
+            checkout_serializer = CheckoutSerializer(checkouts, many=True)
+
+            csv_data = CSV.objects.all().order_by('Category')
+            grouped_data = {}
+            for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+                grouped_data[key] = CSVSerializer(list(group), many=True).data
+
+            response_data = {
+                'user_budget': user_budget,
+                'latest_checkout': CheckoutSerializer(data).data if data else None,
+                'checkouts': checkout_serializer.data,
+                'grouped_data': grouped_data,
+                'title': 'DASHBOARD',
+            }
+
+       
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {'error': 'Failed to fetch PPMP101 data', 'details': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class PurchaseTrackerAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Get tracker data for the authenticated user
+            tracker = Pr_identifier.objects.filter(user=request.user).order_by('-submission_date')
+
+            # Serialize the tracker data
+            serializer = PrIdentifierSerializer(tracker, many=True)
+
+            # Create the response data
+            response_data = {
+                "tracker": serializer.data,
+                "title": "PURCHASE REQUEST TRACKER",
+                "CAMPUS_NAME": "Your Campus Name"  # Replace with your campus name or dynamic value
+            }
+
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            # Handle unexpected errors
+            return Response(
+                {"error": "Failed to fetch purchase tracker data", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class PPMPTrackerAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Get tracker data for the authenticated user
+            tracker = Checkout.objects.filter(user=request.user).order_by('-submission_date')
+
+            # Serialize the tracker data
+            serializer = CheckoutSerializer(tracker, many=True)
+
+            # Create the response data
+            response_data = {
+                "checkouts": serializer.data,
+                "title": "PURCHASE REQUEST TRACKER",
+                "CAMPUS_NAME": "Your Campus Name"  # Replace with your campus name or dynamic value
+            }
+
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            # Handle unexpected errors
+            return Response(
+                {"error": "Failed to fetch purchase tracker data", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        
+class ApprovedPPMPAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Filter approved PPMPs for the user
+            approved_ppmp = Checkout.objects.filter(
+                user=request.user, 
+                cd_status='approved', 
+                bo_status='approved'
+            )
+
+            if approved_ppmp.exists():
+                # Filter CheckoutItems related to the approved PPMPs
+                checkout_items = CheckoutItems.objects.filter(checkout__in=approved_ppmp)
+
+                # Get the latest year from the approved PPMPs
+                latest_year = approved_ppmp.order_by('-year').first().year
+
+                # Response payload
+                response_data = {
+                    "latest_year": latest_year,
+                    "checkouts": CheckoutItemsSerializer(checkout_items, many=True).data
+                }
+                return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                return Response(
+                    {"error": "No approved PPMP found for the user."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+        except Exception as e:
+            # Handle unexpected errors
+            return Response(
+                {"error": "Failed to fetch approved PPMP data", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+    def post(self, request):
+        try:
+            # Validate and extract data from request
+            item = request.data.get('item')
+            item_brand_description = request.data.get('item_brand_description')
+            unit = request.data.get('unit')
+            unit_cost = request.data.get('unit_cost')
+
+            if not all([item, item_brand_description, unit, unit_cost]):
+                return Response(
+                    {"error": "All fields (item, item_brand_description, unit, unit_cost) are required."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # Convert unit_cost to Decimal
+            from decimal import Decimal
+            try:
+                unit_cost = Decimal(unit_cost)
+            except Exception as e:
+                return Response(
+                    {"error": f"Invalid unit_cost: {str(e)}"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # Create a new CheckoutItem
+            checkout_item = PR_Items.objects.create(
+                user=request.user,
+                item=item,
+                item_brand_description=item_brand_description,
+                unit=unit,
+                unit_cost=unit_cost,
+            )
+
+            return Response(
+                {"message": "Item added successfully!", "item": PRItemsSerializer(checkout_item).data},
+                status=status.HTTP_201_CREATED,
+            )
+        except Exception as e:
+            # Handle unexpected errors
+            return Response(
+                {"error": "Failed to add item", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+import random
+
+def generate_unique_pr_id():
+    
+    while True:
+        # Generate a random 8-digit pr_id
+        pr_id = random.randint(10000000, 99999999)
+        
+        # Check if this pr_id already exists in the database
+        if not Pr_identifier.objects.filter(pr_id=pr_id).exists():
+            return pr_id  # Return the unique pr_id when found
+
+class PurchaseRequestAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            
+            purchase_requests = PR_Items.objects.filter(user=request.user)
+
+            if purchase_requests.exists():
+                # Serialize the purchase request data
+                serializer = PRItemsSerializer(purchase_requests, many=True)
+                return Response(
+                    {"purchase": serializer.data},
+                    status=status.HTTP_200_OK
+                )
+            else:
+                return Response(
+                    {"purchase": [], "message": "No purchase data available"},
+                    status=status.HTTP_200_OK
+                )
+        except Exception as e:
+            # Handle unexpected errors
+            return Response(
+                {"error": "Failed to fetch purchase data", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    def post(self, request):
+        
+        # Extract data from the request
+        items = request.data.get('items', [])
+        item_brands = request.data.get('item_brands', [])
+        units = request.data.get('units', [])
+        prices = request.data.get('prices', [])
+        quantities = request.data.get('quantities', [])
+        total_amount = request.data.get('total_amount')
+        purpose = request.data.get('purpose')
+
+        # Validate data lengths
+        if not (len(items) == len(item_brands) == len(units) == len(prices) == len(quantities)):
+            return Response(
+                {"error": "All item-related fields must have the same length."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Generate a new PR ID
+        pr_id = generate_unique_pr_id()
+        user = request.user
+
+        # Create PR Identifier
+        pr_identifier = Pr_identifier.objects.create(
+            user=user, pr_id=pr_id, purpose=purpose
+        )
+
+        # Create PR items
+        for i in range(len(items)):
+            PR.objects.create(
+                pr_identifier=pr_identifier,
+                item=items[i],
+                item_brand_description=item_brands[i],
+                unit=units[i],
+                unit_cost=prices[i],
+                quantity=quantities[i],
+                total_cost=total_amount,
+            )
+
+        # Create a new purchase request
+        PR_Items.objects.all().delete()
+           
+        # Response payload
+        response_data = {
+            "message": "Purchase request created successfully",
+            "pr_identifier": PrIdentifierSerializer(pr_identifier).data,
+        }
+        return Response(response_data, status=status.HTTP_201_CREATED)
+
+        
+class PPMPView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def get(self, request):
+        user_budget = request.user.budget
+
+        purchase = Item.objects.all()
+
+        return Response({
+            'purchase': purchase,
+            'budget': user_budget
+        }, status=200)
+
+class CatalogueAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+
+        csv_data = CSV.objects.all().order_by('Category')
+        grouped_data = {}
+        for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
+            grouped_data[key] = CSVSerializer(list(group), many=True).data
+
+            response_data = {
+                
+                'grouped_data': grouped_data,
+                'title': 'DASHBOARD',
+            }
+
+        return Response({
+            response_data
+        })
+
 
 
 

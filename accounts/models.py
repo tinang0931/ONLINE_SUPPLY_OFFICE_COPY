@@ -12,7 +12,8 @@ from bson import ObjectId
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=12, unique=True, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=12, unique=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
@@ -147,7 +148,7 @@ class Pr_identifier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    pr_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    pr_id = models.CharField(max_length=8, blank=True, null=True)
     purpose = models.TextField(blank=True, null=True)
     bo_status = models.CharField(max_length=20 )
     bo_comment = models.TextField(blank=True, null=True)
@@ -156,10 +157,28 @@ class Pr_identifier(models.Model):
     cd_comment = models.TextField(blank=True, null=True)
     cd_approved_date = models.DateTimeField(null=True, blank=True) 
 
+    @property
+    def combined_id(self):
+        """Generates a combined ID with the `pr_id` and a random number"""
+        random_number = str(random.randint(10000000, 99999999))  # Generate a random 8-digit number
+        return f"{self.pr_id}{random_number}"
+ 
     def generate_pr_id(self):
-        pr_id = str(uuid.uuid4().int)[:8]
-        self.pr_id = pr_id
-        self.save()
+        """Generate a unique pr_id if it is not already set"""
+        if not self.pr_id:
+            # Generate a random 8-digit number for pr_id
+            self.pr_id = str(random.randint(10000000, 99999999))  # 8-digit number
+ 
+    def save(self, *args, **kwargs):
+        """Override save method to ensure pr_id is generated before saving"""
+        self.generate_pr_id()  # Ensure pr_id is set before saving
+        super(Pr_identifier, self).save(*args, **kwargs)  # Call the original save method
+ 
+    def __str__(self):
+        """Return the string representation of the object"""
+        return f"{self.user} - {self.pr_id}"
+    class Meta:
+        unique_together = ('user', 'pr_id')
     
 
 class Checkout(models.Model):

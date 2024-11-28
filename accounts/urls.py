@@ -4,6 +4,8 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from . import views
 from .views import *
+from .views import CustomTokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('', views.landing, name='landing'),
@@ -92,4 +94,16 @@ urlpatterns = [
     path('approve_checkout/<int:checkout_id>/', views.checkout_action, name='approve_checkout'),
     path('approve_tracker/<int:checkout_id>/', views.tracker_action, name='approve_tracker'),
     path('sidebar1/', views.sidebar1, name='sidebar1'),
+
+    
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/ppmp101/', PPMP101APIView.as_view(), name='ppmp101'),
+    path('api/purchasetracker/', PurchaseTrackerAPIView.as_view(), name='purchasetracker'),
+    path('api/tracker/', PPMPTrackerAPIView.as_view(), name='tracker'),
+    path('api/approved_ppmp/', ApprovedPPMPAPIView.as_view(), name='approved-ppmp'),
+    path('api/purchase_request/', PurchaseRequestAPIView.as_view(), name='purchase_request'),
+    path('api/ppmp/', PPMPView.as_view(), name='ppmp'),
+    path('api/catalogue/', CatalogueAPIView.as_view, name='catalogue'),
+
 ]

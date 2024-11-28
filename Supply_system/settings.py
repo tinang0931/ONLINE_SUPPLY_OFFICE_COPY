@@ -52,7 +52,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+
+   
+  
+   
+    
  
 ]
  
@@ -102,7 +106,7 @@ DATABASES = {
         'NAME': 'inventory', 
         'ENFORCE_SCHEMA': False,       
         'CLIENT': {
-            'host': 'mongodb://duhig:duhig123@172.28.48.51:27017/inventory?authSource=inventory',
+            'host': 'mongodb://duhig:duhig123@172.28.48.54:27017/inventory?authSource=inventory',
             'authMechanism': 'SCRAM-SHA-1' 
         }
     }
@@ -184,3 +188,12 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 MEDIA_DIR = BASE_DIR / 'media'
  
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
