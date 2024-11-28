@@ -224,7 +224,6 @@
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
-      margin: 0;
     }
     
     .catalogue-section:hover {
@@ -271,6 +270,7 @@
       color: #FFFFFF;
       font-size: 1.2rem;
       padding: 15px 10px;
+      margin-top: 2vh;
     }
     
     .category-row th:hover {
