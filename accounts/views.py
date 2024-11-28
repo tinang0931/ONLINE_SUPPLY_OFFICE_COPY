@@ -344,33 +344,167 @@ class PPMPView(APIView):
     def get(self, request):
         user_budget = request.user.budget
 
-        purchase = Item.objects.all()
+        purchase_requests = Item.objects.filter(user=request.user)
 
-        return Response({
-            'purchase': purchase,
-            'budget': user_budget
-        }, status=200)
+        serializer = ItemSerializer(purchase_requests, many=True)
+        response_data = {
+            "budget": user_budget,
+            "purchase": serializer.data
+        }
+        print(response_data)
 
+        return Response(response_data, status=status.HTTP_200_OK)
 class CatalogueAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-
         csv_data = CSV.objects.all().order_by('Category')
         grouped_data = {}
         for key, group in itertools.groupby(csv_data, key=lambda x: x.Category):
             grouped_data[key] = CSVSerializer(list(group), many=True).data
 
-            response_data = {
-                
-                'grouped_data': grouped_data,
-                'title': 'DASHBOARD',
+        response_data = {
+            'grouped_data': grouped_data,
+        }
+
+        return Response(response_data)
+    
+
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        
+        profile = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(profile)
+        response_data = {
+            "profile": serializer.data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+class AddToCartAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            # Get data from request body
+            item_data = request.data
+            item_name = item_data.get('item')
+            item_brand_description = item_data.get('item_brand_description')
+            unit = item_data.get('unit')
+            unit_cost = item_data.get('unit_cost')
+
+            # Validate data
+            if not all([item_name, item_brand_description, unit, unit_cost]):
+                return Response({"error": "Missing required fields."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Add item to the cart
+            cart_item = Item.objects.create(
+                user=request.user,
+                item=item_name,
+                item_brand_description=item_brand_description,
+                unit=unit,
+                unit_cost=unit_cost,
+            )
+
+            # Return the added item details
+            serializer = ItemSerializer(cart_item)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+class CheckoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            # Retrieve the selected year from the request
+            selected_year = request.data.get('selectedYear')
+            if not selected_year:
+                return JsonResponse({'error': 'Selected year is required'}, status=400)
+
+            # Create the checkout record
+            new_checkout = Checkout.objects.create(
+                user=request.user,
+                year=selected_year,
+                pr_id=generate_unique_pr_id()
+            )
+
+            # Retrieve the item lists and other details from the request
+            items = request.data.getlist('item[]')
+            item_brands = request.data.getlist('item_brand_description[]')
+            units = request.data.getlist('unit[]')
+            unit_costs = request.data.getlist('unit_cost[]')
+
+            # Log to see the data being received
+            print("Items:", items)
+            print("Item Brands:", item_brands)
+            print("Units:", units)
+            print("Unit Costs:", unit_costs)
+
+            months_data = {
+                'jan': request.data.getlist('jan[]'),
+                'feb': request.data.getlist('feb[]'),
+                'mar': request.data.getlist('mar[]'),
+                'apr': request.data.getlist('apr[]'),
+                'may': request.data.getlist('may[]'),
+                'jun': request.data.getlist('jun[]'),
+                'jul': request.data.getlist('jul[]'),
+                'aug': request.data.getlist('aug[]'),
+                'sep': request.data.getlist('sep[]'),
+                'oct': request.data.getlist('oct[]'),
+                'nov': request.data.getlist('nov[]'),
+                'dec': request.data.getlist('dec[]'),
             }
 
-        return Response({
-            response_data
-        })
+            # Ensure that data lengths match to avoid index errors
+            for i in range(len(items)):
+                try:
+                    unit_cost_value = float(unit_costs[i])
+                    if unit_cost_value <= 0:
+                        raise ValueError(f"Invalid unit cost: {unit_cost_value} at index {i}")
+                except (ValueError, IndexError):
+                    print(f"Skipping item {i} due to invalid or non-numeric unit cost.")
+                    continue
 
+                # Skip empty or incomplete items
+                if not items[i] or not item_brands[i] or not units[i] or not unit_cost_value:
+                    print(f"Skipping item {i} due to missing data.")
+                    continue
+
+                # Create CheckoutItems entries
+                CheckoutItems.objects.create(
+                    checkout=new_checkout,
+                    item=items[i],
+                    item_brand_description=item_brands[i],
+                    unit=units[i],
+                    unit_cost=unit_cost_value,
+                    jan=months_data['jan'][i] if len(months_data['jan']) > i else '',
+                    feb=months_data['feb'][i] if len(months_data['feb']) > i else '',
+                    mar=months_data['mar'][i] if len(months_data['mar']) > i else '',
+                    apr=months_data['apr'][i] if len(months_data['apr']) > i else '',
+                    may=months_data['may'][i] if len(months_data['may']) > i else '',
+                    jun=months_data['jun'][i] if len(months_data['jun']) > i else '',
+                    jul=months_data['jul'][i] if len(months_data['jul']) > i else '',
+                    aug=months_data['aug'][i] if len(months_data['aug']) > i else '',
+                    sep=months_data['sep'][i] if len(months_data['sep']) > i else '',
+                    oct=months_data['oct'][i] if len(months_data['oct']) > i else '',
+                    nov=months_data['nov'][i] if len(months_data['nov']) > i else '',
+                    dec=months_data['dec'][i] if len(months_data['dec']) > i else '',
+                )
+
+            # Optionally, delete items from the Item model if needed
+            Item.objects.filter(user=request.user).delete()
+
+            return JsonResponse({'message': 'Checkout data submitted successfully'}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
 
 

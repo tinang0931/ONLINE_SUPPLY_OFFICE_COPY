@@ -104,6 +104,8 @@ urlpatterns = [
     path('api/approved_ppmp/', ApprovedPPMPAPIView.as_view(), name='approved-ppmp'),
     path('api/purchase_request/', PurchaseRequestAPIView.as_view(), name='purchase_request'),
     path('api/ppmp/', PPMPView.as_view(), name='ppmp'),
-    path('api/catalogue/', CatalogueAPIView.as_view, name='catalogue'),
-
+    path('api/catalogue/', CatalogueAPIView.as_view(), name='catalogue'),
+    path('api/additems/', AddToCartAPIView.as_view(), name='add_to_cart'),
+    path('api/checkout/', CheckoutAPIView.as_view(), name='checkout'),
+    path('api/profile/', ProfileView.as_view(), name='profile'),
 ]
