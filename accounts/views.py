@@ -414,7 +414,6 @@ def ppmpform(request, year, pr_id):
 
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
 
-
     context = {
         'approved_items': approved_items,
         'year': year,
@@ -1197,7 +1196,7 @@ def bac_dashboard(request):
 
         context = {
             'grouped_data': grouped_data,
-            'title': 'AVIALABLE ITEMS',
+            'title': 'AVAILABLE ITEMS',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         

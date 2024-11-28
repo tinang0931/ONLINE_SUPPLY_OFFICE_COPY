@@ -18,7 +18,7 @@
     }
 
     .ctu_logo {
-        margin-top: -13%;
+        margin-top: -16%;
     }
 
     .welcome {
@@ -99,7 +99,7 @@
     height: 50px;
     transition: transform 0.3s ease-in-out;
     position: fixed;
-    top: 15vh;
+    top: 16vh;
     z-index: 999; /* Highest stacking context for the image */
 }
 
@@ -117,6 +117,57 @@
 .navbar.bg-light {
     background-color: #003566 !important;
 }
+
+.search {
+    display: flex;
+    justify-content: flex-start; /* Aligns the search box and button to the left */
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.search input {
+    width: 300px;
+    border-radius: 20px;
+    padding-right: 40px;
+    border: 2px solid #003566;
+    margin-right: 10px; /* Adds space between the input and the button */
+}
+
+.search button {
+    background-color: #003566;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search button:hover {
+    background-color: #00509d;
+}
+
+
+.ctu_logo {
+      position: relative;
+      top: 10px;
+      z-index: 1;
+      left: -23px;
+  }
+
+  element.style {
+    margin-top: -9vh;
+    position: relative;
+    top: 34px;
+    margin-right: 10vh;
+}
+.head {
+             color: white;
+             font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+             margin-left: -20%;
+            font-size: 48px;
+            }
 </style>
 
 
@@ -146,13 +197,13 @@
     </div>
     <div class="row"> 
         <div class="col-md-4">
-            <div class="search" style="position: relative; text-align: right; margin-top: 2vh;">
-                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" 
-                       oninput="filterTable()" 
-                       style="border: 2px solid #003566; border-radius: 25px; padding-right: 40px; width: 200px; display: inline-block;">
-                <span class="icon" style="position: relative; margin-left: 10px; cursor: pointer; color: #003566;"></span>
+
+            <div class="search" style="margin-left: 180vh;">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
             </div>
             
+        </div>
+
             
         </div>
         <div class="table-responsive">
