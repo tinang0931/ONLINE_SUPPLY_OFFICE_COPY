@@ -383,7 +383,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
-.footer {
+/* .footer {
   background-color:#6C757D;
   text-align: center;
   width: 100%;
@@ -392,7 +392,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   -webkit-user-modify: read-only;
   position: fixed;
   z-index: 2;
-}
+} */
 
 .form-group{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

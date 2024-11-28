@@ -33,56 +33,9 @@
                   </div>
                   <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -32vh; margin-top: 2vh;">
                     <h1 class="head">{{title}} 
-                                            
-<!-- Notification Icon -->
-<a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;" onclick="toggleNotifications()">
-  <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 35px; height: 35px;">
-  <!-- Notification Badge -->
-  <span id="notificationCount" style="
-     position: absolute;
-        top: 5px;
-        right: 0px;
-        background-color: red;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 50%;
-        font-size: 14px;
-        display: none;">
-        0
-  </span>
-</a>
-
-<!-- Notification Dropdown (Hidden by default) -->
-<div id="notificationDropdown" style="
-  display: none;
-  position: absolute;
-  top: 75px;
-  right: -45%;
-  width: 200px; /* Adjusted width */
-  background-color: #003566;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 5px; /* Reduced padding */
-  z-index: 1000;">
-  <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
-  <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
-      <!-- Example Notification Items -->
-      
-  </ul>
-</div>
-
-
-
   
-                          <!-- Profile Icon --> 
-                          <a href="#" id="profileIcon" style="position: relative; top: -10vh; margin-left: 168vh;">
-                              <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 60px; height: 60px; ">
-                          </a>
-                      </h1>
-                  </div>
-                  
-                  <!-- File input for Profile upload (hidden) -->
-                  <input type="file" id="profileUpload" style="display: none;" accept="image/*" />
+
+
 
                   
                  
@@ -204,6 +157,17 @@ margin-top: -140px ;
               top: 3px;
               z-index: 1;
           }
+            
+          .ml-3, .mx-3 {
+              margin-left: 0rem !important;
+           }
+
+           .head {
+             color: white;
+             font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+             margin-left: -3%;
+            font-size: 48px;
+            }
 
           .pro {
               position: relative;
