@@ -50,7 +50,7 @@
   }
 
   .table th {
-    background-color:#003566DE;
+    background-color:#003566;
     color: white;
     cursor: pointer;
     position: sticky;
@@ -92,20 +92,28 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .navbar.bg-light {
+    background-color: #003566 !important;
+}
 </style>
 
+
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"></h1>
   
   <div class="search" style="position: relative; text-align: right; top: 0vh;">
     <span class="icon" style="position: absolute; right: 20px; top: 1vh; transform: translateY(-50%); width: 40px;">
-        <i class="fas fa-search" style="font-size: 20px;"></i>
+        
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 0px; display: inline-block;">
+        style="border: 2px solid #003566; border-radius: 25px; padding-right: 0px; display: inline-block;">
   </div>
 
-  <table class="table table-bordered" style="margin-top: 1vh">
+  <table class="table table-bordered" style="margin-top: -1vh">
     <thead>
       <tr>
         <th class="text-center">User ID</th>

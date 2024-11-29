@@ -43,13 +43,14 @@
   }
 
   .table th {
-    background-color: #003566DE;
+    background-color: #003566;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
     font-family: 'Poppins', sans-serif;
+   
   }
 
   .bck a {
@@ -69,7 +70,7 @@
   }
 
   .table-responsive {
-    margin-top: 3vh;
+    margin-top: 2vh;
   }
 
   /* Example animations for icons */
@@ -102,15 +103,14 @@
   100% { transform: scale(1); }
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25%, 75% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-}
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.bg-light {
+  --bs-bg-opacity: 1;
+  background: #003566 !important;
 }
 
 </style>
@@ -123,9 +123,9 @@
 <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
  
 
-  <div class="search" style="position: relative; display: flex; text-align: right; justify-content: flex-end; top:3vh;">
+  <div class="search" style="position: relative; display: flex; text-align: right; justify-content: flex-end; top:2vh;">
     <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
-        <i class="fas fa-search" style="font-size: 20px;"></i>
+        <!-- <i class="fas fa-search" style="font-size: 20px;"></i> -->
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
         style=" top: 6vh; border: 2px solid #254b6e; border-radius: 25px; padding-right: 10px 40px 10px 20px; display: inline-block; outline: none;">

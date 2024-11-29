@@ -10,12 +10,37 @@
 <link rel="stylesheet" href="{% static 'css/ppmp.css' %}">
  
 {% endblock extra_css %}
+<style>
+    .navbar.bg-light {
+    background-color: #003566 !important;
+}
+.catalogue {
+    background-color: #003566; 
+    border: none; 
+    color: #FFA500; 
+    height: 60px;
+    width: 115px;
+    padding: 25px; 
+    cursor: pointer; 
+    margin: 0; 
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3vh; 
+    margin-right: 0;
+    margin-top: 4vh;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    top: 0;
+    left: 0;
+}
 
-<div  class="bck">
-    <a href="{% url 'ppmp101' %}">
-      <img src="{% static 'images/back2.png' %}" alt="Previous">
-    </a>
-  </div>
+</style>
+<div id="page-content-wrapper ">
+    <nav class=" bg-light"></nav>
+</div>
 
 <div class="row">
     <div class="col-md-1 mb-0">
@@ -63,8 +88,11 @@
     
     <style>
         .table-bordered th {
-            background-color: #22507A;
+            background-color: #003566;
             color: #fff;
+        }
+        .catalogue{
+            background-color: #003566;
         }
         .catalogue:hover {
          box-shadow: 10px 10px 4px #003566;
@@ -178,7 +206,7 @@
                         <td>
                             <button type="submit" class="save-btn btn-success" style="background: none; border: none;"
                                 title="Save" onclick="saveFunction()">
-                                <i class="fas fa-save" style="color: #28a745;"></i>
+                                <i class="fas fa-save" style="color: #28a745; background-color: #003566;"></i>
                             </button>
                         </td>
                     </form>
@@ -198,7 +226,7 @@
             <i class="fas fa-check-circle"></i> Submit
         </button>
     
-        <div class="total" style="position: absolute; top: 50vh; left: 135vh; transform: translateX(-50%); display: flex; align-items: center;">
+        <div class="total" style="position: absolute; top: 55vh; left: 135vh; transform: translateX(-50%); display: flex; align-items: center;">
             <label for="estimate_budget" style="margin-right: 10px;">
                 <strong>TOTAL AMOUNT :</strong>
             </label>

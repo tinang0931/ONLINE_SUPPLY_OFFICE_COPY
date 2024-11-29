@@ -321,11 +321,11 @@ def approve_user(request):
         budget = request.POST.get('budget')
 
         try:
-            # Find the user using the username (primary key)
+        
             user = User.objects.get(username=username, is_approved=False, is_regular=True)
             user.is_approved = True
-            user.budget = float(budget)  # Ensure budget is saved as a float/decimal
-            user.save()  # Save changes to the user
+            user.budget = budget
+            user.save()  
             messages.success(request, f"Regular user {user.username} approved and budget allocated.")
             return redirect('approve_user')  # Redirect to a success page
         except User.DoesNotExist:
@@ -413,7 +413,6 @@ def ppmpform(request, year, pr_id):
 
 
     approved_items = CheckoutItems.objects.filter(checkout__in=approved_checkouts)
-
 
     context = {
         'approved_items': approved_items,
@@ -1197,7 +1196,7 @@ def bac_dashboard(request):
 
         context = {
             'grouped_data': grouped_data,
-            'title': 'AVIALABLE ITEMS',
+            'title': 'AVAILABLE ITEMS',
             'CAMPUS_NAME': CAMPUS_NAME,
         }
         
