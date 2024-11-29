@@ -96,6 +96,7 @@ body {
   background-size: 100vh;
   background-color: #6C757D!important;
   content-visibility: auto;
+  justify-content: flex-end;
 }
 
 
