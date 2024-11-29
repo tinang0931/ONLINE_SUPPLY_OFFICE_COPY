@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.template',
     'accounts',
     'djongo',
+    'corsheaders'
+
     
    
 ]
@@ -53,8 +55,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+
+
+
+
+
+   
  
 ]
  
@@ -98,23 +105,28 @@ WSGI_APPLICATION = 'Supply_system.wsgi.application'
 #    },
 # }
  
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'inventory',  # Replace with your MongoDB database name
+#         'ENFORCE_SCHEMA': False,        # Optional: Enforce schema validation
+#         'CLIENT': {
+#             'host': 'mongodb://duhig:duhig123@172.28.48.54:27017/inventory?authSource=inventory',
+#             #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin',
+#             # Replace <username>, <password>, <host>, <port>, <database> with your MongoDB details
+#             #'username': 'duhig',    # Optional if included in the URI
+#             #'password': 'duhig123',    # Optional if included in the URI
+#             #'authSource': 'admin',          # Authentication database (usually 'admin')
+#             'authMechanism': 'SCRAM-SHA-1'  # Optional: Authentication mechanism
+#         }
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'inventory',  # Replace with your MongoDB database name
-        'ENFORCE_SCHEMA': False,        # Optional: Enforce schema validation
-        'CLIENT': {
-            'host': 'mongodb://duhig:duhig123@172.28.48.54:27017/inventory?authSource=inventory',
-            #'host': 'mongodb://duhig:duhig123@localhost:27107/inventory?authSource=admin',
-            # Replace <username>, <password>, <host>, <port>, <database> with your MongoDB details
-            #'username': 'duhig',    # Optional if included in the URI
-            #'password': 'duhig123',    # Optional if included in the URI
-            #'authSource': 'admin',          # Authentication database (usually 'admin')
-            'authMechanism': 'SCRAM-SHA-1'  # Optional: Authentication mechanism
-        }
+        'ENGINE': 'django.db.backends.dummy',
     }
 }
-
 
 
 # Password validation
@@ -194,10 +206,5 @@ MEDIA_DIR = BASE_DIR / 'media'
  
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-# CORS_ALLOW_ALL_ORIGINS = True
 
-
-# # CORS_ALLOWED_ORIGINS = [
-# #     "http://172.28.48.51:8000",  # Frontend domain or IP address
-# #     "http://localhost:8000",          # For local development (if using React/Angular)
-# # ]
+CORS_ALLOW_ALL_ORIGINS = True 
