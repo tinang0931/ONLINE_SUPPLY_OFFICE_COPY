@@ -168,7 +168,7 @@
 }
 
 .form-group {
-  padding-left: 30px; 
+  padding-left: 50px; 
 }
 
 .form-group label,
@@ -178,8 +178,9 @@
 }
 
 .form-group label {
-  font-weight: bold; /* Bold label text */
-  margin-bottom: 5px; /* Space below the label */
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-right: 11px;
 }
 
 .form-group input {
@@ -191,6 +192,7 @@
   background: #f9f9f9; /* Light background for contrast */
   outline: none; /* Removes default focus outline */
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth focus effect */
+  margin-bottom: -11px;
 }
 
 
@@ -216,6 +218,7 @@
   margin-right: 8px; /* Space between label and input */
   font-size: 14px; /* Adjust font size */
   font-weight: bold; /* Makes label stand out */
+  margin-left: 47px;
 }
 
 .total-amount input {
@@ -232,40 +235,37 @@
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth focus effect */
 }
 
-/* Submit Button Styling */
-.submit-button {
-  margin-left: 50px; /* Adds space between the button and previous elements */
-}
 
-.footer-submit-btn {
+/* Submit Button Styling */
+.submit-btn {
   background: none; /* Removes background */
   color: #003566; /* Primary blue for text */
-  padding:7px 20px; /* Smaller padding for compact size */
-  border: 1px solid #003566; /* Adds a border matching the text color */
+  padding: 7px 20px; /* Adjust padding for compact size */
+  border: 1px solid #003566; /* Border matches text color */
   border-radius: 3px; /* Slightly less rounded corners */
-  font-size: 14px; /* Reduced font size */
-  font-weight: bold; /* Emphasized text */
+  font-size: 14px; /* Comfortable font size */
+  font-weight: bold; /* Makes text stand out */
   cursor: pointer; /* Pointer cursor on hover */
   transition: color 0.3s, border-color 0.3s, transform 0.2s; /* Smooth hover effect */
+  margin-left: 47px;
 }
 
-.footer-submit-btn:hover {
-  color: #0056b3; /* Darker blue for hover effect */
-  border-color: #0056b3; /* Darker border color on hover */
+.submit-btn:hover {
+  color: #0056b3; /* Darker blue on hover */
+  border-color: #0056b3; /* Darker border on hover */
   transform: scale(1.05); /* Slight zoom-in effect */
 }
 
-.footer-submit-btn:active {
-  color: #003f7f; /* Even darker blue when clicked */
-  border-color: #003f7f; /* Matches the text color */
-  transform: scale(1); /* Removes zoom on click */
+.submit-btn:active {
+  color: #003f7f; /* Darker blue when clicked */
+  border-color: #003f7f; /* Matches text color */
+  transform: scale(1); /* Removes zoom effect */
 }
 
-.footer-submit-btn:focus {
+.submit-btn:focus {
   outline: none; /* Removes default focus outline */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a blue glow for focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle blue glow */
 }
-
 
 </style>
 
@@ -339,7 +339,7 @@
     </div>
   
     <div class="submit-button">
-      <button type="submit" class="footer-submit-btn">Submit</button>
+      <button type="submit" class="submit-btn">Submit</button>
     </div>
   </footer>
   
