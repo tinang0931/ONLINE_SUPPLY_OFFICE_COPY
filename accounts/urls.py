@@ -20,6 +20,8 @@ urlpatterns = [
     path('cdpurchase/', views.cdpurchase, name='cdpurchase'),
     path('cdresolution/', views.cdresolution, name='cdresolution'),
     path('cdabout/', views.cdabout, name='cdabout'),
+    path('catalogue/', views.catalogue, name='catalogue'),
+    path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
     
    
 ]

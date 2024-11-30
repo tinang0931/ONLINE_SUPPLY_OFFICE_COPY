@@ -12,10 +12,16 @@ def register(request):
     return render(request,  'accounts/User/register.html')
 
 def ppmp101(request):
-    return render(request,  'accounts/User/ppmp101.html')
+    context = {
+        'title': 'DASHBOARD',
+    }
+    return render(request,  'accounts/User/ppmp101.html', context)
 
 def ppmp(request):
-    return render(request,  'accounts/User/ppmp.html')
+    context = {
+        'title': 'Create PPMP',
+    }
+    return render(request,  'accounts/User/ppmp.html', context)
 
 def purchase(request):
     return render(request,  'accounts/User/purchase.html')
@@ -64,6 +70,17 @@ def cdabout(request):
     }
     return render(request, 'accounts/Admin/Campus_Director/cdpurchase.html', context)
 
+def catalogue(request):
+    context = {
+        'title': 'CATALOGUE',
+    }
+    return render(request, 'accounts/User/catalogue.html', context)
+
+def user_add_new_item(request):
+    context = {
+        'title': 'CATALOGUE',
+    }
+    return render(request, 'accounts/User/user_add_new_item.html', context)
 
 
 

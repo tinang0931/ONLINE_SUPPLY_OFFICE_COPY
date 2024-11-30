@@ -122,6 +122,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.access && data.refresh) {
+                            // Store the access token in localStorage
+                            localStorage.setItem('accessToken', data.access);
+                
                             // Decode the access token to extract user information
                             const tokenPayload = JSON.parse(atob(data.access.split('.')[1]));
                 

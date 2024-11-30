@@ -1,0 +1,376 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: 7rem;
+    /* justify-content: space-between; */
+    background-color: #003566;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.ctu_logo {
+    width: 7rem;
+    height: auto;
+}
+
+.title {
+    font-size: 3rem;
+    margin-left: 2rem;
+    color: #FFA500;
+    font-weight: 600;
+  
+}
+
+
+.header-icon {
+    display: flex; /* Use flexbox to align icons in a row */
+    align-items: center; /* Vertically center the icons */
+    gap: 1rem; /* Space between the icons */
+}
+
+.header-icon i {
+    font-size: 2rem; 
+    color: #fff; /* Set the icon color to white */
+    cursor: pointer; /* Add a pointer cursor when hovering over icons */
+    transition: transform 0.3s ease; /* Add a smooth transition for hover effects */
+}
+
+.header-icon i:hover {
+    transform: scale(1.1); /* Slightly increase the icon size on hover */
+}
+
+.sidebar {
+    position: fixed;
+    top: 7rem;
+    left: 0;
+    width: 15rem;
+    height: 100%;
+    background-color: #fff;
+    color: #fff;
+    overflow-y: auto;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+  
+    
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    height:  auto;
+    
+}
+
+.sidebar-list li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    gap: 1rem;
+    font-size: 23px;
+   
+}
+
+.sidebar-list li a {
+    text-decoration: none;
+    color: #003566;
+}
+
+.sidebar-list li:hover {
+    background-color: #003566;
+  
+}
+
+.sidebar-list li:hover a {
+    color: #fff;
+}
+
+.dashboard {
+    margin-top: 9rem;
+    margin-left: 17rem;
+    height: auto;
+}
+
+.budget-section {
+    text-align: center;
+    background-color: #e2e8ee;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* color: #F0F0F0; */
+    /* border: groove; */
+    width: 37rem;
+}
+  
+
+.budget-amount {
+    font-size: 2.2rem;
+    color: #00438a;
+    padding-top:0.5rem;
+  }
+  
+.budget-text {
+    color: #FFA500;
+    background-color: #003566;
+    /* padding: 10px; */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    height: 3rem;
+    margin-left: 0;
+}
+
+.ppmp-section {
+    margin-top: 2rem;
+    background-color: #003566;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 3rem;
+    color: #FFA500;
+    width: 37rem;
+    height: 7rem;
+    padding-top: 1rem;
+    padding-left: 10rem;
+}
+
+.ppmp-trackers-section {
+    margin-top: 2rem;
+    background-color: #e2e8ee;
+    border-radius: 5px;
+    width: 18rem;
+    height: 31rem;
+    
+}
+
+.ppmp-trackers-section h3 {
+    background-color: #003566;
+    color: #FFA500;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 3rem;
+    text-align: center;
+    padding-top: 0.5rem;
+
+}
+
+
+.ppmp-trackers-section li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    
+}
+
+.pr-trackers-section {
+    margin-top: -31rem;
+    margin-left: 19rem;
+    background-color: #e2e8ee;
+    border-radius: 5px;
+    width: 18rem;
+    height: 31rem;
+    
+
+}
+
+.pr-trackers-section h3 {
+    background-color: #003566;
+    color: #FFA500;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 3rem;
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+.pr-trackers-section li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    
+}
+
+.catalogue-section {
+    margin-top: -49.6rem;
+    margin-left: 40rem;
+    background-color: #e2e8ee;
+    border-radius: 5px;
+    width: 61rem;
+    height: 49rem;
+}
+
+.catalogue-section h3 {
+    background-color: #003566;
+    color: #FFA500;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 3rem;
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+.catalogue-section th {
+    background-color: #003566;
+    color: #fff;
+    /* border-top-left-radius: 5px; */
+    /* border-top-right-radius: 5px; */
+    height: 3rem;
+    width: 16rem;
+    text-align: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #fff;
+}
+
+.catalogue-section tbody {
+    text-align: center;
+}
+
+.catalogue-section tr {
+    /* background-color: #fff; */
+    color: #003566;
+    /* border-top-left-radius: 5px; */
+    /* border-top-right-radius: 5px; */
+    height: 3rem;
+    width: 16rem;
+    text-align: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #003566;
+}
+
+/* create ppmp */
+.ppmp {
+    margin-top: 9rem;
+    margin-left: 17rem;
+    height: auto;
+}
+
+.ppmp-button{
+
+}
+
+.ppmp-button ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.ppmp-button li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    gap: 1rem;
+    font-size: 23px;
+    list-style: none;
+    background-color: #003566;
+}
+
+.ppmp-button li a {
+    text-decoration: none; 
+    color: #FFA500;
+    font-weight: bold;
+}
+
+.ppmp-form{
+    margin-top: 2rem;
+    padding:0;
+}
+
+.form-row {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.form-row select {
+    border-radius: 5px;
+    border: 1px solid #003566;
+    font-size: 1.2rem;
+    width: 9rem;
+    color: #003566;
+    font-weight: 500;
+    height: 2.5rem;
+    padding-left: 0.5rem;
+    margin-bottom: 0;
+}
+
+.form-row select option {
+    background-color: #fff;
+    color: #000;
+    padding: 0.5rem;
+}
+
+.form-row select option:hover {
+    background-color: #003566;
+    color: #fff;
+}
+
+.ppmp-budget {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+.ppmp-budget h2 {
+    font-size: 1.5rem;
+    color: #003566;
+    font-weight: 500;
+}
+
+
+.ppmp-budget-amount {
+    
+    border-bottom: 1px solid #003566;
+    font-size: 1.2rem;
+    width: 10rem;
+    color: #003566;
+    font-weight: 500;
+    height: 2.5rem;
+    padding-left: 0.5rem;
+   
+   
+}
+
+.ppmp-table-responsive{
+    overflow-x: auto;
+    margin: 0;
+}
+
+.ppmp-table {
+    width: 98%;
+}
+
+.ppmp-table thead {
+    background-color: #03427e;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 3rem;
+    text-align: center;
+    padding-top: 0.5rem;
+    width: 100%;
+}
+
+.ppmp-table th {
+    text-align: center;
+    padding-top: 0.5rem;
+    border: 1px solid #fff;
+}
