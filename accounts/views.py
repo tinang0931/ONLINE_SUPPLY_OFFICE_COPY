@@ -113,11 +113,16 @@ def bopurchase(request):
     }
     return render(request, 'accounts/Admin/Budget_Officer/bopurchase.html', context)
 
+def bobudget(request):
+    context = {
+        'title': 'PPMP REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', context)
 def approve_user(request):
     context = {
         'title': 'PPMP REQUESTS',
     }
-    return render(request, 'accounts/Admin/Budget_Officer/approve_user.html', context)
+    return render(request, 'accounts/Admin/Budget_Officer/bobudget.html', context)
 
 def boabout(request):
     context = {
@@ -130,7 +135,46 @@ def boppmp(request):
     }
     return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
 
+def baclanding(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/baclanding.html', context)
 
+
+def bac_home(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_home.html', context)
+
+def bac_request(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_request.html', context)
+
+def bac_dashboard(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_dashboard.html', context)
+def bac_about(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_about.html', context)
+
+def bac_prof(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/bac_prof.html', context)
+def upload_file(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/BAC_Secretariat/upload_file.html', context)
 
 
 

@@ -22,15 +22,22 @@ urlpatterns = [
     path('cdabout/', views.cdabout, name='cdabout'),
     path('catalogue/', views.catalogue, name='catalogue'),
     path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
-     path('delete/', views.delete, name='delete'),
-    
+    path('delete/', views.delete, name='delete'),
+    path('approve', views.approve_user, name='approve_user'),
     path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
     path('bolanding/', views.bolanding, name='bolanding'),
     path('bohome/', views.bohome, name='bohome'),
     path('bopurchase/', views.bopurchase, name='bopurchase'),
-    path('approve_user/', views.approve_user, name='approve_user'),
+    path('bobudget/', views.bobudget, name='bobudget'),
     path('boabout/', views.boabout, name='boabout'),
-     path('boppmp/', views.boppmp, name='boppmp'),
+    path('boppmp/', views.boppmp, name='boppmp'),
+    path('baclanding/', views.baclanding, name='baclanding'),
+    path('bac_home/', views.bac_home, name='bac_home'),
+    path('bac_request/', views.bac_request, name='bac_request'),
+    path('bac_dashboard/', views.bac_dashboard, name='bac_dashboard'),
+    path('bac_about/', views.bac_about, name='bac_about'),
+     path('bac_prof/', views.bac_prof, name='bac_prof'),
+       path('upload_file/', views.upload_file, name='upload_file'),
    
 ]
 
