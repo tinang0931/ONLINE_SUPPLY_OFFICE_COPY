@@ -8,407 +8,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Requester</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    {% block extra_css %}
-    {% endblock extra_css %}
+    <style>
+        .navbar.bg-light {
+            background-color: #003566 !important;
+        }
+    </style>
 </head>
-<style>
-       .navbar.bg-light {
-        background-color: #003566 !important;
-    }
-    
-</style>
+
 <body>
     <main class="flex-shrink">
-        <div id="page-content-wrapper ">
+        <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="row w-100 m-auto">
                     <div class="col-md-3 col-lg-3 d-none d-sm-none d-md-block d-lg-block">
-        
-                            <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
-                        </a>
+                        <img class="ctu_logo mx-3" src="{% static 'images/ctu_loogo.png' %}" alt="CTU LOGO">
                     </div>
-                    
                     <div class="col-7 col-sm-9 col-md-6 col-lg-7 d-grid align-content-center" style="text-align: left; margin-left: -37vh; margin-top: 2vh; font-weight: bold;">
-                        <h1 class="head">{{title}} 
-                        
-<!-- Notification Icon -->
-<a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;" onclick="toggleNotifications()">
-    <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 35px; height: 35px;">
-    <!-- Notification Badge -->
-    <span id="notificationCount" style="
-        position: absolute;
-        top: 5px;
-        right: 0px;
-        background-color: red;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 50%;
-        font-size: 14px;
-        display: none;">
-        0
-    </span>
-</a>
-
-<!-- Notification Dropdown -->
-<div id="notificationDropdown" style="
-    display: none;
-    position: absolute;
-    top: 75px;
-    right: -45%;
-    width: 250px; /* Adjusted width */
-    background-color: #003566;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 5px;
-    z-index: 1000;">
-    <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
-    <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;">
-        <!-- Notifications will be populated here -->
-    </ul>
-</div>
-
-<script>
- // Function to toggle the visibility of notifications
-function toggleNotifications() {
-    const dropdown = document.getElementById('notificationDropdown');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-}
-
-async function fetchUpdates() {
-    try {
-        // Fetch updates for both Tracker and Purchase Tracker           
-        const trackerUpdatesPromise = fetch('/get_tracker_updates/').then(response => response.json());
-        const purchaseTrackerUpdatesPromise = fetch('/get_purchasetracker_updates/').then(response => response.json());
-
-        // Wait for both updates to be fetched
-        const [trackerUpdates, purchaseTrackerUpdates] = await Promise.all([trackerUpdatesPromise, purchaseTrackerUpdatesPromise]);
-
-        console.log('Tracker Updates:', trackerUpdates);
-        console.log('Purchase Tracker Updates:', purchaseTrackerUpdates);
-
-        // Combine both updates and pass to processUpdates
-        processUpdates(trackerUpdates, purchaseTrackerUpdates);
-    } catch (error) {
-        console.error('Error fetching updates:', error);
-    }
-}
-
-function processUpdates(trackerUpdates, purchaseTrackerUpdates) {
-    const notifications = [];
-    const notificationCount = document.getElementById('notificationCount');
-    const notificationList = document.getElementById('notificationList');
-    notificationList.innerHTML = ''; // Clear previous notifications
-
-    let unreadCount = 0;
-    const viewedNotifications = new Set(JSON.parse(localStorage.getItem('viewedNotifications') || '[]'));
-
-    // Process Tracker Updates
-    trackerUpdates.forEach(item => {
-        const prId = item.pr_id;
-        // Only add if not already viewed
-        if (!viewedNotifications.has(prId)) {
-            const message = `Your PPMP No. ${prId} has been updated. Click here for details.`;
-            notifications.push({
-                message,
-                prId,
-                isPurchaseTracker: false
-            });
-            unreadCount++;
-        }
-    });
-
-    // Process Purchase Tracker Updates
-    purchaseTrackerUpdates.forEach(item => {
-        const prId = item.pr_id;
-        // Only add if not already viewed
-        if (!viewedNotifications.has(prId)) {
-            const message = `Your PR No. ${prId} has new update. Click here for details.`;
-            notifications.push({
-                message,
-                prId,
-                isPurchaseTracker: true
-            });
-            unreadCount++;
-        }
-    });
-
-    // Update localStorage with the viewed notifications
-    localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications)));
-
-    // Update notification count
-    notificationCount.innerText = unreadCount;
-    notificationCount.style.display = unreadCount > 0 ? 'block' : 'none';
-
-    // Process each notification and add it to the list
-    notifications.forEach(note => {
-        const listItem = document.createElement('li');
-        listItem.style.padding = '8px';
-        listItem.style.borderBottom = '1px solid #ccc';
-        listItem.innerText = note.message;
-
-        // If notification has already been clicked (i.e. viewed), we hide it on load
-        if (viewedNotifications.has(note.prId)) {
-            listItem.style.display = 'none';  // Hide it if it was already viewed
-        }
-
-        // Mark the notification as viewed when clicked
-        listItem.onclick = (event) => {
-            // Mark the clicked notification as viewed
-            viewedNotifications.add(note.prId); // Add to the set
-            localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications))); // Save to localStorage
-
-            // Decrease unread count and update notification count
-            unreadCount--;
-            notificationCount.innerText = unreadCount; // Update display
-            if (unreadCount === 0) notificationCount.style.display = 'none'; // Hide count if zero
-
-            // Hide only the clicked notification from the list
-            listItem.style.display = 'none';
-
-            // Prevent default action and navigate to the appropriate page
-            event.preventDefault();
-            if (note.isPurchaseTracker) {
-                // Redirect to the Purchase Tracker page
-                window.location.href = '/purchasetracker/';
-            } else {
-                // Redirect to the Tracker page
-                window.location.href = '/tracker/';
-            }
-        };
-
-        notificationList.appendChild(listItem);
-    });
-
-    // Add "No notifications" message if none to display
-    if (notifications.length === 0) {
-        const noNotificationItem = document.createElement('li');
-        noNotificationItem.style.padding = '8px';
-        noNotificationItem.innerText = 'No notifications';
-        notificationList.appendChild(noNotificationItem);
-    }
-
-    // Add "Mark all as read" button (optional)
-    const markAllReadButton = document.createElement('button');
-    markAllReadButton.innerText = 'Mark all as read';
-    markAllReadButton.onclick = () => {
-        // Clear all notifications from localStorage
-        viewedNotifications.clear(); // Reset viewed notifications
-        localStorage.removeItem('viewedNotifications'); // Clear from localStorage
-        unreadCount = 0; // Reset unread count
-        notificationCount.innerText = unreadCount; // Update display
-        notificationCount.style.display = 'none'; // Hide count
-        markAllReadButton.style.display = 'none'; // Hide the button after clicking
-
-        // Hide all notifications from the list (if they are marked as viewed)
-        Array.from(notificationList.children).forEach(item => {
-            item.style.display = 'none';
-        });
-    };
-    notificationList.appendChild(markAllReadButton);
-}
-
-// Initial load
-window.onload = () => {
-    fetchUpdates(); // Fetch both Tracker and Purchase Tracker updates
-
-};
-
-</script>
-
-
-<!-- Profile Icon Section -->
-<a href="#" id="profileIcon" style="position: relative; top: -11vh; margin-left: 168vh;">
-    <img id="profileImage" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 65px; height: 65px;">
-</a>
-
-<!-- File input for Profile upload (hidden) -->
-<input type="file" id="profileUpload" style="display: none;" accept="image/*" />
-
-<!-- Profile Modal Section (Hidden by default) -->
-<div id="profileModal" style="display: none;">
-    <div class="modal-content">
-        <!-- Profile Header -->
-        <h2>Update Profile</h2>
-        
-        <!-- Profile Picture Section -->
-        <div id="profilePicContainer">
-            <img id="profileImageModal" src="{% static 'images/account.png' %}" alt="Profile Icon" style="width: 150px; height: 150px;">
-            <button id="changeProfilePic">Change Profile Picture</button>
-        </div>
-
-        <!-- User's Name Section -->
-        <div id="userNameSection">
-            <label for="userName">Name: </label>
-            <input type="text" id="userName" value="John Doe">
-        </div>
-
-        <!-- Photo Gallery Section -->
-        <h3>Uploaded Photos</h3>
-        <div id="gallery" class="gallery">
-            <!-- Gallery items will appear here -->
-        </div>
-
-        <!-- Close Button -->
-        <button id="closeModal">Close</button>
-    </div>
-</div>
-   
-
-                    <script>
-                        // JavaScript part
-
-// When the user clicks the profile icon, open the profile modal
-document.getElementById('profileIcon').addEventListener('click', function() {
-    document.getElementById('profileModal').style.display = 'flex';
-    loadProfileData(); // Load profile image and name when modal opens
-});
-
-// When the user clicks the "Change Profile Picture" button
-document.getElementById('changeProfilePic').addEventListener('click', function() {
-    document.getElementById('profileUpload').click();
-});
-
-// When the file is selected (new profile image)
-document.getElementById('profileUpload').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const profileImageUrl = e.target.result;
-            // Set the profile image in the modal and save to localStorage
-            document.getElementById('profileImageModal').src = profileImageUrl;
-            document.getElementById('profileImage').src = profileImageUrl;
-            localStorage.setItem('profileImage', profileImageUrl);
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Load profile image and name from localStorage
-function loadProfileData() {
-    const storedProfileImage = localStorage.getItem('profileImage');
-    const storedName = localStorage.getItem('userName');
-
-    if (storedProfileImage) {
-        document.getElementById('profileImageModal').src = storedProfileImage;
-        document.getElementById('profileImage').src = storedProfileImage;
-    }
-
-    if (storedName) {
-        document.getElementById('userName').value = storedName;
-    }
-
-    loadGallery(); // Load uploaded photos when the modal opens
-}
-
-// Save the user's name to localStorage when it's changed
-document.getElementById('userName').addEventListener('change', function(event) {
-    const userName = event.target.value;
-    localStorage.setItem('userName', userName);
-});
-
-// Close the profile modal
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('profileModal').style.display = 'none';
-});
-
-// Load the user's photo gallery from localStorage (if any)
-function loadGallery() {
-    const galleryContainer = document.getElementById('gallery');
-    const storedPhotos = JSON.parse(localStorage.getItem('uploadedPhotos')) || [];
-
-    galleryContainer.innerHTML = ''; // Clear the gallery first
-
-    storedPhotos.forEach(photo => {
-        const img = document.createElement('img');
-        img.src = photo;
-        img.alt = 'Uploaded Photo';
-        
-        galleryContainer.appendChild(img);
-    });
-}
-
-// Update the gallery with new uploaded photos
-document.getElementById('profileUpload').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const photoUrl = e.target.result;
-            const storedPhotos = JSON.parse(localStorage.getItem('uploadedPhotos')) || [];
-            storedPhotos.push(photoUrl);
-            localStorage.setItem('uploadedPhotos', JSON.stringify(storedPhotos));
-            loadGallery(); // Update gallery
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-</script>
-                    
+                        <h1 class="head">{{title}}</h1>
+                        <a href="#" id="notificationIcon" style="position: relative; top: -4vh; margin-left: 160vh;" onclick="toggleNotifications()">
+                            <img src="{% static 'images/notification.png' %}" alt="Notification Icon" style="width: 35px; height: 35px;">
+                            <span id="notificationCount" style="position: absolute; top: 5px; right: 0px; background-color: red; color: white; padding: 2px 6px; border-radius: 50%; font-size: 14px; display: none;">0</span>
+                        </a>
+                        <div id="notificationDropdown" style="display: none; position: absolute; top: 75px; right: -45%; width: 250px; background-color: #003566; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; padding: 5px; z-index: 1000;">
+                            <h4 style="margin: 0; padding: 5px 0; font-size: 14px; border-bottom: 1px solid #ccc;">Notifications</h4>
+                            <ul id="notificationList" style="list-style-type: none; padding: 5px 0; margin: 0; font-size: 12px;"></ul>
+                        </div>
+                    </div>
+                </div>
             </nav>
         </div>
-        <!-- <h1 class="welcome" style="height: 0.5vh"></h1> -->
+
         <div class="d-flex" id="wrapper" style="height: 83vh; margin-top: 0px;">
-
-
-            
             <div class="sidebar" id="sidebar" onmouseover="showNames()">
                 <div class="d-flex flex-wrap align-content-between h-100">
-                  <div class="bg-#6C757D w-100" id="sidebar-wrapper">
-                    <div class="list-group w-100">
-                        <br>
-
-                      <a class="list-group-item list-group-item-action p-3 border-0 " href="{% url 'ppmp101' %}">
-                        <i class="bi bi-grid"></i> <span id="purchaseRequest">Dashboard</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp' %}">
-                        <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest">My PPMP</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase' %}">
-                        <i class="bi bi-bag-check"></i> <span id="purchaseRequest">Purchase Request</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker' %}">
-                        <i class="bi bi-geo-alt"></i> <span id="requestTracker">PPMP Tracker</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchasetracker' %}">
-                        <i class='bx bx-location-plus'></i> <span id="requestTracker">Purchase Tracker</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about' %}">
-                        <i class="bi bi-info-circle"></i> <span id="about">About</span>
-                      </a>
-              
-                      <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user' %}">
-                        <i class="bi bi-box-arrow-left"></i><span id="logout">Logout</span>
-                      </a>
+                    <div class="bg-#6C757D w-100" id="sidebar-wrapper">
+                        <div class="list-group w-100">
+                            <br>
+                            <a class="list-group-item list-group-item-action p-3 border-0 " href="{% url 'ppmp101' %}">
+                                <i class="bi bi-grid"></i> <span id="purchaseRequest">Dashboard</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'ppmp' %}">
+                                <i class="bi bi-file-earmark-medical"></i> <span id="purchaseRequest">My PPMP</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchase' %}">
+                                <i class="bi bi-bag-check"></i> <span id="purchaseRequest">Purchase Request</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'tracker' %}">
+                                <i class="bi bi-geo-alt"></i> <span id="requestTracker">PPMP Tracker</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'purchasetracker' %}">
+                                <i class='bx bx-location-plus'></i> <span id="requestTracker">Purchase Tracker</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0" href="{% url 'about' %}">
+                                <i class="bi bi-info-circle"></i> <span id="about">About</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action p-3 border-0 logout-link" href="{% url 'logout_user' %}">
+                                <i class="bi bi-box-arrow-left"></i><span id="logout">Logout</span>
+                            </a>
+                        </div>
+                        <div class="profile-container">
+                            <a href="{% url 'prof' %}">
+                                <img class="pro" id="profile-pic" src="{% static 'images/propayl.png' %}" alt="Profile Picture">
+                            </a>
+                        </div>
                     </div>
-                    <div class="profile-container">
-                      <a href="{% url 'prof' %}">
-                        <img class="pro" id="profile-pic" src="{% static 'images/propayl.png' %}" alt="Profile Picture">
-                      </a>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+        </div>
 
-            <style>
+        <script>
+            function toggleNotifications() {
+                const dropdown = document.getElementById('notificationDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+
+            async function fetchUpdates() {
+                try {
+                    const trackerUpdatesPromise = fetch('/get_tracker_updates/').then(response => response.json());
+                    const purchaseTrackerUpdatesPromise = fetch('/get_purchasetracker_updates/').then(response => response.json());
+                    const [trackerUpdates, purchaseTrackerUpdates] = await Promise.all([trackerUpdatesPromise, purchaseTrackerUpdatesPromise]);
+                    processUpdates(trackerUpdates, purchaseTrackerUpdates);
+                } catch (error) {
+                    console.error('Error fetching updates:', error);
+                }
+            }
+
+            function processUpdates(trackerUpdates, purchaseTrackerUpdates) {
+                const notifications = [];
+                const notificationCount = document.getElementById('notificationCount');
+                const notificationList = document.getElementById('notificationList');
+                notificationList.innerHTML = '';
+                let unreadCount = 0;
+                const viewedNotifications = new Set(JSON.parse(localStorage.getItem('viewedNotifications') || '[]'));
+
+                trackerUpdates.forEach(item => {
+                    const prId = item.pr_id;
+                    if (!viewedNotifications.has(prId)) {
+                        const message = `Your PPMP No. ${prId} has been updated. Click here for details.`;
+                        notifications.push({ message, prId, isPurchaseTracker: false });
+                        unreadCount++;
+                    }
+                });
+
+                purchaseTrackerUpdates.forEach(item => {
+                    const prId = item.pr_id;
+                    if (!viewedNotifications.has(prId)) {
+                        const message = `Your PR No. ${prId} has new update. Click here for details.`;
+                        notifications.push({ message, prId, isPurchaseTracker: true });
+                        unreadCount++;
+                    }
+                });
+
+                localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications)));
+                notificationCount.innerText = unreadCount;
+                notificationCount.style.display = unreadCount > 0 ? 'block' : 'none';
+
+                notifications.forEach(note => {
+                    const listItem = document.createElement('li');
+                    listItem.style.padding = '8px';
+                    listItem.style.borderBottom = '1px solid #ccc';
+                    listItem.innerText = note.message;
+
+                    if (viewedNotifications.has(note.prId)) {
+                        listItem.style.display = 'none';
+                    }
+
+                    listItem.onclick = (event) => {
+                        viewedNotifications.add(note.prId);
+                        localStorage.setItem('viewedNotifications', JSON.stringify(Array.from(viewedNotifications)));
+                        unreadCount--;
+                        notificationCount.innerText = unreadCount;
+                        if (unreadCount === 0) notificationCount.style.display = 'none';
+                        listItem.style.display = 'none';
+                        event.preventDefault();
+                        window.location.href = note.isPurchaseTracker ? '/purchasetracker/' : '/tracker/';
+                    };
+
+                    notificationList.appendChild(listItem);
+                });
+
+                if (notifications.length === 0) {
+                    const noNotificationMessage = document.createElement('li');
+                    noNotificationMessage.style.padding = '8px';
+                    noNotificationMessage.innerText = 'No new notifications.';
+                    notificationList.appendChild(noNotificationMessage);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', fetchUpdates);
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0d9oXvcNr8+zrmneXfBCnuD3r68x64qdy6k0C7nInjsc4BqO3" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+<style>
 .list-group {
     padding: 1px;
 }
@@ -703,6 +462,9 @@ h3 {
             {% block purchasetracker %}
             {% endblock %}
 
+            {% block dashboard %}
+            {% endblock %}
+
             {% block history %}
             {% endblock %}
 
@@ -725,8 +487,6 @@ h3 {
             {% block Procurement %}
             {% endblock %}
 
-            {% block dashboard %}
-            {% endblock %}
 
             {% block new_ppmp %}
             {% endblock %}
