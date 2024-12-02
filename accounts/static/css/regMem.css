@@ -36,6 +36,7 @@ header {
     display: flex; /* Use flexbox to align icons in a row */
     align-items: center; /* Vertically center the icons */
     gap: 1rem; /* Space between the icons */
+
 }
 
 .header-icon i {
@@ -58,7 +59,7 @@ header {
     background-color: #fff;
     color: #fff;
     overflow-y: auto;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
     height: 100vh;
     
 }
@@ -73,6 +74,7 @@ header {
     height:  auto;
     font-family: 'Poppins' sans-serif;
     font-weight: bold;
+    font-size: 23px;
 }
 
 .sidebar-list li {
@@ -83,6 +85,13 @@ header {
     gap: 1rem;
     font-size: 20px;
    
+}
+.sidebar a span {
+    font-size: 17px; 
+}
+
+.sidebar a {
+    font-size: 17px; 
 }
 
 .sidebar-list li a {
@@ -286,6 +295,7 @@ header {
     text-decoration: none; 
     color: #FFA500;
     font-weight: bold;
+    font-size: 21px;
 }
 
 .ppmp-form{
@@ -679,7 +689,7 @@ textarea:disabled {
       position: relative;
       top: 3px;
       z-index: 1;
-      left: -23px;
+      left: 4px;
   }
 
   .head {

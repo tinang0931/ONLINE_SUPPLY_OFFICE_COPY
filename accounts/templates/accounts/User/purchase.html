@@ -9,7 +9,7 @@
   <div class="row mt-3">
     <div class="col-md-1 mb-0">
       <div class="pp_mp">
-        <a href="{% url 'approved_ppmp' %}" style="text-decoration: none;">
+        <a href="{% url 'approved_ppmp' %}" style="text-decoration: none; margin-left: -14px;">
           <button class="btn btn-primary">
           2024 PPMP
           </button>
@@ -22,7 +22,7 @@
   <form action="{% url 'purchase' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="margin-left: -13px;">
       <thead>
         <tr>
           <th>Item Name</th>
