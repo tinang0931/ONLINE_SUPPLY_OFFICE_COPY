@@ -52,14 +52,14 @@ header {
 .sidebar {
     position: fixed;
     top: 7rem;
-    left: 0;
+    left: -15px;
     width: 15rem;
     height: 100%;
     background-color: #fff;
     color: #fff;
     overflow-y: auto;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-  
+    height: 100vh;
     
 }
 
@@ -71,7 +71,8 @@ header {
     display: flex;
     flex-direction: column;
     height:  auto;
-    
+    font-family: 'Poppins' sans-serif;
+    font-weight: bold;
 }
 
 .sidebar-list li {
@@ -80,7 +81,7 @@ header {
     transition: background-color 0.3s ease;
     border-radius: 5px;
     gap: 1rem;
-    font-size: 23px;
+    font-size: 20px;
    
 }
 
@@ -97,6 +98,11 @@ header {
 .sidebar-list li:hover a {
     color: #fff;
 }
+
+.logout-link {
+    margin-top: 40vh; /* Push logout to the bottom */
+}
+
 
 .dashboard {
     margin-top: 9rem;

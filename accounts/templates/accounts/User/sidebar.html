@@ -1,13 +1,47 @@
 {% load static %}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+</head>
 
 <aside class="sidebar">
-    <ul class="sidebar-list">
-        <li><a href="{% url 'ppmp101' %}">Dashboard</a></li>
-        <li><a href="{% url 'ppmp' %}">PPMP</a></li>
-        <li><a href="{% url 'purchase' %}">Purchase Request</a></li>
-        <li><a href="{% url 'tracker' %}">PPMP Tracker</a></li>
-        <li><a href="{% url 'purchasetracker' %}">PR Tracker</a></li>
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'logout_user' %}">Logout</a></li>
-    </ul>   
+    <ul class="sidebar-list list-group">
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'ppmp101' %}">
+                <i class="bi bi-grid"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'ppmp' %}">
+                <i class="bi bi-file-earmark-medical"></i> <span>PPMP</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'purchase' %}">
+                <i class="bi bi-bag-check"></i> <span>Purchase Request</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'tracker' %}">
+                <i class="bi bi-geo-alt"></i> <span>PPMP Tracker</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'purchasetracker' %}">
+                <i class="bx bx-location-plus"></i> <span>Purchase Tracker</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0">
+            <a href="{% url 'about' %}">
+                <i class="bi bi-info-circle"></i> <span>About</span>
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action p-3 border-0 logout-link">
+            <a href="{% url 'logout_user' %}">
+                <i class="bi bi-box-arrow-left"></i> <span>Logout</span>
+            </a>
+        </li>
+    </ul>
 </aside>
+
