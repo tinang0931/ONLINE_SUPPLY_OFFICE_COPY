@@ -517,6 +517,217 @@ textarea:disabled {
     background-color: #f2f2f2; /* Optional: stripe effect for better readability */
 }
 
-  
+  .custom-f {
+    display: flex;
+    justify-content: center;
+  }
 
+  .item-received {
+    margin: 20px auto;
+  }
+
+  .item-actions {
+    display: none;
+  }
+
+  tr:hover .item-actions {
+    display: flex;
+  }
+
+  .table-bordered th {
+    background-color:  #003566;
+    font-family: 'Poppins', sans-serif;
+    color: #ffff;
+    margin-right: 20px;
+  }
+
+   .custom-f {
+    margin-top: 20px;
+   }
+
+    body{
+      margin-top:0px;
+      background-color:#e9ebee;
+  }
+  
+  .be-comment-block {
+      margin-bottom: 50px !important;
+      border: 1px solid #edeff2;
+      border-radius: 2px;
+      padding: 50px 70px;
+      border:1px solid #ffffff;
+  }
+  
+  .comments-title {
+      font-size: 16px;
+      color: #262626;
+      margin-bottom: 15px;
+      font-family: 'Conv_helveticaneuecyr-bold';
+  }
+  
+  .be-img-comment {
+      width: 60px;
+      height: 60px;
+      float: left;
+      margin-bottom: 15px;
+  }
+  
+  .be-ava-comment {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+  }
+  
+  .be-comment-content {
+      margin-left: 80px;
+  }
+  
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-name {
+      font-size: 13px;
+      font-family: 'Conv_helveticaneuecyr-bold';
+  }
+  
+  .be-comment-content a {
+      color: #383b43;
+  }
+  
+  .be-comment-content span {
+      display: inline-block;
+      width: 15%;
+      margin-bottom: 15px;
+  }
+  
+  .be-comment-time {
+      text-align: right;
+  }
+  
+  .be-comment-time {
+      font-size: 11px;
+      color: #b4b7c1;
+  }
+  
+  .be-comment-text {
+      width: 30%;
+      font-size: 13px;
+      line-height: 18px;
+      color: #7a8192;
+      display: block;
+      background: #f6f6f7;
+      border: 1px solid #edeff2;
+      padding: 15px 20px 20px 20px;
+  }
+  .btn-primary {
+      margin-left: 0%;
+      color: #fff;
+      background-color: #1c96c5;
+      border-color: #1c96c5;
+  }
+
+.animate-icon {
+  transition: transform 0.3s;
 }
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  animation: pulse 2s infinite;
+}
+
+.fa-times {
+  font-size: 3vh;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.search{
+    position: relative;
+    text-align: right;
+    margin-top: 15vh;
+    width: 15%;
+    margin-left: 84%;
+}
+
+.container-fluid{
+    height: 68vh; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+.form-control{
+    border: 2px solid #254b6e; 
+    border-radius: 25px; 
+    padding: 10px 40px 10px 20px; 
+    display: inline-block; 
+    outline: none;
+}
+
+.table {
+    width: 100%; /* Ensures the table takes full width of its container */
+    margin-left: -27px;
+    border-collapse: collapse; /* Removes the gaps between table cells */
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+    font-size: 14px; /* Appropriate font size for readability */
+  }
+  
+  .table-bordered {
+    border: 1px solid #dee2e6; /* Light border around the table */
+  }
+  
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #dee2e6; /* Borders for each cell */
+    padding: 10px 15px; /* Adds padding inside cells for a neat look */
+    text-align: center; /* Centers content in all cells */
+  }
+  
+  .table-bordered th {
+    background-color: #003566; /* Dark blue background for headers */
+    color: #ffffff; /* White text for headers */
+    text-transform: uppercase; /* Uppercase text for headers */
+    font-weight: bold; /* Bold header text for emphasis */
+    font-size: 15px; /* Slightly larger text for headers */
+  }
+  
+  .table-bordered td {
+    color: #003566; /* Dark blue text for table data */
+  }
+  
+  .table-bordered tbody tr:nth-child(odd) {
+    background-color: #f8f9fa; /* Light gray background for alternate rows */
+  }
+  
+  .table-bordered tbody tr:hover {
+    background-color: #e9ecef; /* Slightly darker gray on hover */
+    cursor: pointer; /* Pointer cursor on hover for better UX */
+  }
+  
