@@ -86,6 +86,42 @@ def user_add_new_item(request):
 def delete(request):
      
      return redirect('ppmp')
+def approved_ppmp(request):
+    context = {
+        'title': 'CATALOGUE',
+    }
+    return render(request, 'accounts/User/approved_ppmp.html', context)
+
+
+
+def bohome(request):
+    context = {
+        'title': 'PPMP REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/bohome.html', context)
+
+def bopurchase(request):
+    context = {
+        'title': 'PPMP REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/bopurchase.html', context)
+
+def approve_user(request):
+    context = {
+        'title': 'PPMP REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/approve_user.html', context)
+
+def boabout(request):
+    context = {
+        'title': 'ABOUT',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/boabout.html', context)
+def boppmp(request):
+    context = {
+        'title': 'PPMP REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/boppmp.html', context)
 
 
 

@@ -24,6 +24,13 @@ urlpatterns = [
     path('user_add_new_item/', user_add_new_item, name='user_add_new_item'),
      path('delete/', views.delete, name='delete'),
     
+    path('approved_ppmp/', views.approved_ppmp, name='approved_ppmp'),
+   
+    path('bohome/', views.bohome, name='bohome'),
+    path('bopurchase/', views.bopurchase, name='bopurchase'),
+    path('approve_user/', views.approve_user, name='approve_user'),
+    path('boabout/', views.boabout, name='boabout'),
+     path('boppmp/', views.boppmp, name='boppmp'),
    
 ]
 
