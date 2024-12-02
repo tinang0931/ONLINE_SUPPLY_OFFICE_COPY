@@ -556,7 +556,7 @@ textarea:disabled {
 
 
   .pp_mp {
-    padding: 5px;
+    padding: 3px;
     border-radius: 8px;
     text-align: center;
   }
@@ -640,7 +640,7 @@ textarea:disabled {
     font-size: 1.2em;
     font-weight: bold;
  
-
+}
     .total-amount {
       flex: 0.5;
       display: flex;
@@ -725,11 +725,10 @@ textarea:disabled {
 }
 
 .submit-button {
-
     margin-right: 5px;
   }
 
-  .submit-button button {
+.submit-button button {
     background-color: #1c5d90;
     color: white;
     padding: 10px 20px;
