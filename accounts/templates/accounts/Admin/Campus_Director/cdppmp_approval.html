@@ -8,7 +8,8 @@
 
 <style>
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #003566;
+        color: white;
     }
 
     .bck img {
@@ -70,10 +71,11 @@
 
     .input-box {
         width: 30%;
-        margin-top: 1px;
-        margin-left: 16px;
-        margin-right: 20px;
+        margin: 1px 20px 0 16px; /* Combines margins for better readability */
+        border: 1px solid black; /* Ensures a black border is applied */
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
     }
+    
 
     .input-box input {
         width: 100%;
@@ -81,7 +83,7 @@
         padding: 10px;
         box-sizing: border-box;
         border: none;
-        border-radius: 5px;
+        border-radius: 7px;
     }
 
     .send-icon {
@@ -104,7 +106,7 @@
     }
 
     .footer {
-        background-color: rgba(1, 33, 67, 0.9);
+        background-color: white;
         text-align: center;
         width: 100%;
         height: 100px;
@@ -112,8 +114,10 @@
         -webkit-user-modify: read-only;
         position: fixed;
         z-index: 2;
-        position: fixed;
+        margin-left: 10%;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adds a shadow border */
     }
+
 
     .p {
         size: 12px;
@@ -138,7 +142,7 @@
 
     .input-box,
     .icons-container {
-    display: none;
+        display: none;
     }
     }
 
@@ -148,24 +152,26 @@
 
     .aprv,
     .disaprv {
+        font-weight: bold;
         font-size: 15px;
         margin-right: 5px;
         margin-left: 5px;
         margin-top: 5px;
         margin-bottom: 7px;
-        color: #ffa125e3;
-        background-color: rgba(9, 87, 139, 0.616);
+        color: #fff;
+        background-color: #28a745;
         padding: 10px 12px;
         border-radius: 8px;
-        border: 1px solid rgba(9, 87, 139, 0.616);
+        border: 2px solid #007bff;
         transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     }
 
-    .aprv:hover,
+
+     .aprv:hover,
     .disaprv:hover {
-        color: #ffa125e3;
-        background-color: #000000e3;
-    }
+        color: #fff;
+        background-color: #28a745;
+    }  
 
     .footer {
         display: left;
@@ -255,7 +261,7 @@
         font-weight: 500;
         font-size: 14px;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-        margin-top: -30vh;
+        margin-top: -50vh;
         margin-left: -2vh;
         
     }
@@ -272,26 +278,39 @@
    .table-responsive{
         margin-top: -1vh;
    }
-    
+
+   .navbar.bg-light {
+    background-color: #003566 !important;
+}
+
 </style>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
+<div id="page-content-wrapper ">
+    <nav class=" bg-light"></nav>
+</div>
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
+    
     <div class="container">
         <h1 class="pr pt-4 text-center mx-auto" style="max-width: 570px;"></h1>
     </div>
-
-    <div class="left-button-container">
-        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
-            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
+    <div class="bck">
+        <a href="{% url 'cdppmp' %}">
+            <img src="{% static 'images/back2.png' %}" alt="Previous">
         </a>
     </div>
 
+     <div class="left-button-container">
+        <a href="{% url 'preqform_cd' pr_id=pr_id %}" class="icon-link"> 
+            <button type="button" onclick="btn_click(true)" class="get"><b>GET COPY</b></button>
+        </a>
+    </div> 
+
     
-    <div class="table-responsive" style= "margin-top: 7vh;">
+    <div class="table-responsive" style= "margin-top: 2vh;">
 
         <form action="{% url 'cdppmp_approval' pr_id=pr_id %}" method="post" id ="form_id">
 
@@ -327,8 +346,8 @@
                 </tr>
             </thead>
             
-            <tbody>
-                {% for p in checkout_items %}
+            <tbody> 
+                {% for p in  checkout_items %}
 
                 <tr class="item-row" id="{{ p.id }}">
 

@@ -5,16 +5,20 @@
 {% block bac_request %}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
+  /* Import Poppins Font */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  /* Apply Poppins to the entire block */
+  body, table, input, button, h1, .badge {
+    font-family: 'Poppins', sans-serif;
+  }
 
   table a {
-
     text-decoration: none;
     color: #000;
   }
-
 
   .bg-success {
     background-color: #9ee800;
@@ -32,12 +36,10 @@
     appearance: none;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-left: 1400.15px;
-    background-color: transparent; 
-    box-shadow: none; 
+    background-color: transparent;
+    box-shadow: none;
     margin-top: -5vh;
   }
-
-
 
   .btn-outline-success {
     color: #ffffff;
@@ -47,18 +49,8 @@
     height: 35px;
   }
 
-
-
-
-  element.style {
-    width: 95%;
-    margin-top: 5px;
-    margin-left: 5px;
-    color: green;
-  }
-
   .table th {
-    background-color: rgba(5, 90, 129, 0.822);
+    background-color:#003566;
     color: white;
     cursor: pointer;
     position: sticky;
@@ -66,148 +58,127 @@
     z-index: 2;
   }
 
-  .bck a  {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+  /* Example animations for icons */
+  .animate-icon {
+    transition: transform 0.3s;
+  }
+
+  .animate-icon:hover {
+    transform: scale(1.2);
+  }
+
+  /* Add specific animations based on status */
+  .fa-check {
+    animation: pulse 2s infinite;
+  }
+
+  .fa-times {
+    font-size: 3vh;
+    color: crimson;
+  }
+
+  .fa-hourglass {
+    animation: spin 2s infinite;
+  }
+
+  /* Keyframes for animation */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .navbar.bg-light {
+    background-color: #003566 !important;
 }
-
-.bck img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    top: -5.5vh;
-  
-    
-}
-
-
-.bck:hover img {
-    transform: scale(1.2); 
-}
-
-
 </style>
 
+
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr text-center pt-4"></h1>
-  <div class="search" style="position: relative; text-align: right; top: 1vh;">
+  
+  <div class="search" style="position: relative; text-align: right; top: 0vh;">
     <span class="icon" style="position: absolute; right: 20px; top: 1vh; transform: translateY(-50%); width: 40px;">
-        <i class="fas fa-search" style="font-size: 20px;"></i>
+        
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 0px; display: inline-block;">
-</div>
+        style="border: 2px solid #003566; border-radius: 25px; padding-right: 0px; display: inline-block;">
+  </div>
 
-
-  <div class="bck">
-    <a href="{% url 'baclanding' %}">
-        <img src="{% static 'images/back2.png' %}" alt="Previous">
-    </a>
-</div>
-  <table class="table table-bordered" style="margin-top: -5vh">
+  <table class="table table-bordered" style="margin-top: -1vh">
     <thead>
       <tr>
-        <th class="text-center" >User ID</th>
-        <th class="text-center" >PR ID</th>
-        <th class="text-center" >Username</th>
-        <th class="text-center" >Date Requested</th>
+        <th class="text-center">User ID</th>
+        <th class="text-center">PR ID</th>
+        <th class="text-center">Username</th>
+        <th class="text-center">Date Requested</th>
         <th class="text-center">Purpose</th>
         <th class="text-center">Campus Director Status</th>
         <th class="text-center">View Attachments</th>
       </tr>
     </thead>
-
     <tbody>
-      {% if tracker %}
-      {% for checkout in tracker %}
-
-      <tr>
-
-        <td style="text-align: center;">{{checkout.user_id}}</td>
-
-        <td style="text-align: center;"> <a href="{% url 'bac_purchaserequest' pr_id=checkout.pr_id %}"> <strong>{{checkout.pr_id}}</strong></a> </td>
-
-        <td style="text-align: center;">{{checkout.user.first_name}} {{checkout.user.last_name}}</td>
-
-        <td style="text-align: center;">{{checkout.submission_date}}</td>
-
-
-        <td style="text-align: center;">  {{checkout.purpose}}</td>
-
-       
-
-        <td class="text-center">
-          {% if checkout.status == 'approved' %}
-              <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
-          {% elif checkout.status == 'declined' %}
-              <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.status }}</span>
-          {% else %}
-              <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-          {% endif %}
-      </td>
-      
-
-        <td>
-         
-
-        </td>
-
-      </tr>
-
+      {% for checkout in checkouts %}
+        <tr>
+          <td style="text-align: center;">{{ checkout.user_id }}</td>
+          <td style="text-align: center;">
+            <a href="{% url 'bac_purchaserequest' pr_id=checkout.pr_id %}">
+              <strong>{{ checkout.pr_id }}</strong>
+            </a>
+          </td>
+          <td style="text-align: center;">{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
+          <td style="text-align: center;">{{ checkout.submission_date }}</td>
+          <td style="text-align: center;">{{ checkout.purpose }}</td>
+          <td class="text-center">
+            {% if checkout.status == 'approved' %}
+              <i class="fas fa-check text-success fa-2x animate-icon"></i>
+            {% elif checkout.status == 'declined' %}
+              <i class="fas fa-times text-warning fa-2x animate-icon"></i>
+            {% else %}
+              <i class="fa fa-spinner fa-spin fa-2x"></i>
+            {% endif %}
+          </td>
+          <td style="text-align: center;">
+            <a href="{% url 'bac_attachments' pr_id=checkout.pr_id %}">View</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center">NO PURCHASE REQUESTS YET</td>
+        </tr>
       {% endfor %}
-
-      {% else %}
-      <tr>
-        <td colspan="7" >
-          <span>NO PURCHASE REQUESTS YET</span>
-        </td>
-      </tr>
-      {% endif %}
     </tbody>
-
   </table>
-  <script>
-    function filterTable() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search_bar_request");
-      filter = input.value.toUpperCase();
-      table = document.querySelector(".table");
-      tr = table.getElementsByTagName("tr");
-
-      for (i = 1; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-  </script>
+</div>
 
 <script>
   function filterTable() {
-    // Get input value
-    var searchText = $('#search_bar_request').val().toLowerCase();
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search_bar_request");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".table");
+    tr = table.getElementsByTagName("tr");
 
-    // Iterate through table rows
-    $('.table tbody tr').each(function () {
-      var rowText = $(this).text().toLowerCase();
-
-      // Check if the row contains the search text
-      if (rowText.indexOf(searchText) === -1) {
-        // Hide the row if it doesn't match the search text
-        $(this).hide();
-      } else {
-        // Show the row if it matches the search text
-        $(this).show();
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
       }
-    });
+    }
   }
 </script>
-  {% endblock %}
+
+{% endblock %}

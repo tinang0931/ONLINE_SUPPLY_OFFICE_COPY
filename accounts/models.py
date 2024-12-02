@@ -6,13 +6,14 @@ from decimal import Decimal
 import uuid
 import random
 from bson import ObjectId
-from bson import ObjectId
+
 
 
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=12, unique=True, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
+    username = models.CharField(max_length=12, unique=True)
     first_name = models.CharField(max_length=12)
     last_name = models.CharField(max_length=12)
     contact1 = models.PositiveIntegerField()
@@ -43,7 +44,7 @@ class User(AbstractUser):
         return dict(self.USER_TYPES).get(self.user_type, 'Unknown')
 
     def save(self, *args, **kwargs):
-        # Automatically update the is_<type> fields based on user_type
+  
         self.is_admin = self.user_type == 'admin'
         self.is_regular = self.user_type == 'regular'
         self.is_cd = self.user_type == 'cd'
@@ -156,10 +157,32 @@ class Pr_identifier(models.Model):
     cd_comment = models.TextField(blank=True, null=True)
     cd_approved_date = models.DateTimeField(null=True, blank=True) 
 
+    @property
+    def combined_id(self):
+        """Generates a combined ID with the `pr_id` and a random number"""
+        random_number = str(random.randint(10000000, 99999999))  # Generate a random 8-digit number
+        return f"{self.pr_id}{random_number}"
+
     def generate_pr_id(self):
-        pr_id = str(uuid.uuid4().int)[:8]
-        self.pr_id = pr_id
-        self.save()
+        """Generate a unique pr_id if it is not already set"""
+        if not self.pr_id:
+            # Generate a random 8-digit number for pr_id
+            self.pr_id = str(random.randint(10000000, 99999999))  # 8-digit number
+
+    def save(self, *args, **kwargs):
+        """Override save method to ensure pr_id is generated before saving"""
+        self.generate_pr_id()  # Ensure pr_id is set before saving
+        super(Pr_identifier, self).save(*args, **kwargs)  # Call the original save method
+
+    def __str__(self):
+        """Return the string representation of the object"""
+        return f"{self.user} - {self.pr_id}"
+
+    class Meta:
+        unique_together = ('user',)
+        
+        
+        
     
 
 class Checkout(models.Model):
@@ -190,6 +213,7 @@ class Checkout(models.Model):
 class CheckoutItems(models.Model):
     checkout = models.ForeignKey('Checkout', on_delete=models.CASCADE)
     item = models.CharField(max_length=255, blank=True, null=True)
+   
     item_brand_description = models.CharField(max_length=255, blank=True, null=True)
     unit = models.CharField(max_length=50, blank=True, null=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
@@ -260,6 +284,4 @@ class History(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
         return f'{self.user.username} - {self.timestamp}'
-    
-    
     

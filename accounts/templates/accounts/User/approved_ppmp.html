@@ -18,7 +18,7 @@
     }
 
     .ctu_logo {
-        margin-top: -13%;
+        margin-top: -16%;
     }
 
     .welcome {
@@ -82,12 +82,102 @@
     margin-top: -37px;
 }
 
+.bck {
+    position: relative; /* Ensures the .bck element respects z-index */
+    z-index: 100; /* Default stacking context */
+}
+
+.bck a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 500; /* Higher than .bck */
+}
+
+.bck img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 16vh;
+    z-index: 999; /* Highest stacking context for the image */
+}
+
+.bck:hover img {
+    transform: scale(1.2);
+    z-index: 1000; /* Ensure the image comes forward when hovered */
+}
+
+.head {
+    color: white;
+    font-style: bold;
+    margin-left: -16%;
+    font-size: 48px;
+}
+.navbar.bg-light {
+    background-color: #003566 !important;
+}
+
+.search {
+    display: flex;
+    justify-content: flex-start; /* Aligns the search box and button to the left */
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.search input {
+    width: 300px;
+    border-radius: 20px;
+    padding-right: 40px;
+    border: 2px solid #003566;
+    margin-right: 10px; /* Adds space between the input and the button */
+}
+
+.search button {
+    background-color: #003566;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search button:hover {
+    background-color: #00509d;
+}
+
+
+.ctu_logo {
+      position: relative;
+      top: 10px;
+      z-index: 1;
+      left: -23px;
+  }
+
+  element.style {
+    margin-top: -9vh;
+    position: relative;
+    top: 34px;
+    margin-right: 10vh;
+}
+.head {
+             color: white;
+             font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+             margin-left: -20%;
+            font-size: 48px;
+            }
 </style>
 
 
 
 <link rel="stylesheet" href="{% static 'css/request.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div id="page-content-wrapper ">
+    <nav class=" bg-light"></nav>
+</div>
 
 <div class="container-fluid" style=" height: 88vh; overflow-y: auto; overflow-x: hidden;">
 
@@ -96,17 +186,25 @@
     <div class="home">
         </a>
     </div>
+
+    <div  class="bck">
+        <a href="{% url 'purchase' %}">
+          <img src="{% static 'images/back2.png' %}" alt="Previous">
+        </a>
+      </div>
+
     <div class="bckbtn"><a href="{% url 'purchase' %}"></a>
     </div>
     <div class="row"> 
         <div class="col-md-4">
-            <div class="search" style="position: relative; text-align: right; margin-top: 2vh">
-                <span class="icon" style="position: absolute; right: -90px; top: 2vh; transform: translateY(-50%); width: 40px;">
-                    <i class="fas fa-search" style="font-size: 20px;"></i>
-                </span>
-                <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-                    style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+
+            <div class="search" style="margin-left: 180vh;">
+                <input class="form-control mb-3" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
             </div>
+            
+        </div>
+
+            
         </div>
         <div class="table-responsive">
         <div>

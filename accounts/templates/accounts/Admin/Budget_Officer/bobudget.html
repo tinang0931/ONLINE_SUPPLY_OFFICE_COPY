@@ -10,15 +10,36 @@
  
 {% endblock extra_css %}
 
+<style>
+  .navbar.bg-light {
+    background-color: #003566 !important;
+}
+.table th {
+    font-family: Poppins;
+    background-color: #003566;
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+</style>
 
 <div class="container-fluid">
-  <h1 class="pr-heading text-center pt-4">Budget Approval</h1>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"rel="stylesheet">
 
-  <div class="bck">
-    <a href="{% url 'budget-landing' %}">
-      <img src="{% static 'images/back2.png' %}" alt="Previous">
-    </a>
-  </div>
+  
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
+
+  <div class="search" style="position: relative; text-align: right; margin-top: 3vh;">
+    <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;">
+       
+    </span>
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+        style="border: 2px solid #003566; border-radius: 25px; padding-right: 10px 40px 10px 20px; display: inline-block; outline: none;">
+    </div>
 
   <div class="table-responsive">
     <table class="table table-bordered">

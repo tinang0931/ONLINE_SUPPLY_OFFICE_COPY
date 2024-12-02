@@ -98,7 +98,7 @@
   }
 
   .table th {
-    background-color: #003566DE;
+    background-color: #003566;
     color: white;
     cursor: pointer;
     position: sticky;
@@ -136,7 +136,7 @@
       height: 50px;
       transition: transform 0.3s ease-in-out;
       position: relative;
-      top: -8.5vh;
+      top: -7vh;
 
   }
 
@@ -145,7 +145,7 @@
   }
     
     .table-responsive {
-    margin-top: -6vh; 
+    margin-top: 0vh; 
     }
 
     
@@ -179,11 +179,11 @@
   100% { transform: scale(1); }
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25%, 75% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
+.bg-light {
+  --bs-bg-opacity: 1;
+  background: #003566 !important;
 }
+
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -198,23 +198,13 @@
 <div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
   <h1 class="pr-heading text-center pt-4">  </h1>
   <div class="search" style="position: relative; text-align: right; margin-top: -1vh;">
-    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px;">
-        <i class="fas fa-search" style="font-size: 20px;"></i>
+    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px; top: 3vh;">
     </span>
     <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
         style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
 </div>
 
 
-<div class="row">
-  <div class="col-md-1 mb-0">
-    <div class="bck">
-      <a href="{% url 'cdlanding' %}">
-          <img src="{% static 'images/back2.png' %}" alt="Previous">
-      </a>
-  </div>
-  </div>
-</div>
 
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -237,7 +227,9 @@
       </td>
 
       <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
-        <a href="{% url 'cdpurchase_approval' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a>
+        <a href="{% url 'cdpurchase_approval' pr_id=checkout.pr_id %}"> 
+          <strong>{{ checkout.pr_id }}</strong>
+         </a>
        
       </td> 
 
@@ -251,24 +243,24 @@
 
   
       <td class="text-center">
-        {% if checkout.status == 'approved' %}
-            <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-        {% elif checkout.status == 'declined' %}
-            <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.bo_status }}</span>
-        {% else %}
-            <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-        {% endif %}
-    </td>
+        {% if checkout.bo_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+          {% elif checkout.bo_status == 'declined' %}
+          <i class="fas fa-times text-warning fa-2x animate-icon"></i>
+           {% else %}
+           <i class="fa fa-spinner fa-spin"></i> 
+              {% endif %}
+      </td>
 
-    <td class="text-center">
-      {% if checkout.status == 'approved' %}
-          <span class="badge badge-success text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-      {% elif checkout.status == 'declined' %}
-          <span class="badge badge-warning text-uppercase" style="font-size: 16px;">{{ checkout.cd_status }}</span>
-      {% else %}
-          <span class="badge badge-danger text-uppercase" style="font-size: 16px;">Pending</span>
-      {% endif %}
-  </td>
+      <td class="text-center">
+        {% if checkout.cd_status == 'approved' %}
+        <i class="fas fa-check text-success fa-2x animate-icon"></i>
+           {% elif checkout.cd_status == 'declined' %}
+           <i class="	fas fa-times"></i>
+             {% else %}
+             <i class="fa fa-spinner fa-spin"></i>
+                {% endif %}
+      </td>
     
     
     <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">

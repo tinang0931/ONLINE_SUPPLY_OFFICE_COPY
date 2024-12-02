@@ -1,0 +1,300 @@
+{% extends "accounts/Admin/Budget_Officer/bo.html" %}
+
+
+{% load static %}
+
+{% block bopurchase  %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  .table-responsive {
+    margin-top: -2vh; 
+  }
+
+  .table a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .no-comment {
+    background-color: lightgray; 
+    color: black;
+  }
+  .form-control {
+    display: block;
+    width: 13.4%;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: rgb(13 110 253 / 8%);
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 1400.15px;
+  }
+
+
+  .form-control:focus {
+    border-color: #87CEEB; 
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+
+  .form-control::selection {
+    background-color: #05708BD2;
+    color: #fff; 
+  }
+
+  .search-form {
+    justify-content: flex-end;
+  } 
+
+  .table-container {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .table {
+    width: 100%;
+    margin: auto;
+    table-layout: fixed;
+    position: relative;
+  }
+
+  .table th,
+  .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    width: 10%;
+  }
+
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 10%;
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 30%;
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 10%;
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 10%;
+  }
+
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    width: 10%;
+  }
+
+  .table th {
+    background-color: #003566;
+    color: white;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body{
+    overflow:hidden;
+  }
+
+  html{
+    overflow:hidden;
+  }
+
+  footer{
+    height:30%;
+  }
+
+  .fa-check-circle,
+  .fa-times-circle,
+  .fa-hourglass-half {
+    cursor: help;
+  }
+  
+  .bck a  {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .bck img {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s ease-in-out;
+      position: relative;
+      top: -7vh;
+
+  }
+
+  .bck:hover img {
+      transform: scale(1.2); 
+  }
+    
+    .table-responsive {
+    margin-top: 0vh; 
+    }
+
+    
+/* Example animations for icons */
+.animate-icon {
+  transition: transform 0.3s;
+}
+
+.animate-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Add specific animations based on status */
+.fa-check {
+  font-size: 3vh;
+}
+
+.fa-times {
+  animation: shake 0.5s infinite;
+  color: crimson;
+}
+
+.fa-hourglass {
+  animation: spin 2s infinite;
+}
+
+/* Keyframes for animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.navbar.bg-light {
+    background-color: #003566 !important;
+    }
+</style>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div id="page-content-wrapper ">
+  <nav class=" bg-light"></nav>
+</div>
+<div class="container-fluid" style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+  <h1 class="pr-heading text-center pt-4">  </h1>
+  <div class="search" style="position: relative; text-align: right; margin-top: 1vh;">
+    <span class="icon" style="position: absolute; right: 10px; top: 7vh; transform: translateY(-50%); width: 40px; top:2vh;">
+        <i class="fas fa-search" style="font-size: 20px;"></i>
+    </span>
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
+        style="border: 2px solid #254b6e; border-radius: 25px; padding-right: 40px; display: inline-block;">
+</div>
+
+
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">Date Requested</th>
+      <th class="text-center">PR ID</th>
+      <th class="text-center">Purchase Requests </th>
+      <th class="text-center">Budget Officer Status</th>
+      <th class="text-center">Campus Director Status</th>
+      <th class="text-center">Comment</th> 
+    </tr>
+  </thead>
+  <tbody>
+    {% for checkout in checkouts %}
+      <tr>
+        <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
+          {{ checkout.submission_date }}
+        </td>
+  
+        <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
+          <a href="{% url 'bopurchase_approval' pr_id=checkout.pr_id %}"> <strong>{{ checkout.pr_id }}</strong> </a>
+        </td> 
+  
+        <td style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
+          {{ checkout.user.first_name }} {{ checkout.user.last_name }} submitted a new purchase request.
+        </td>
+  
+        <td class="text-center">
+          {% if checkout.bo_status == 'approved' %}
+          <i class="fas fa-check text-success fa-2x animate-icon"></i>
+          {% elif checkout.bo_status == 'declined' %}
+          <i class="fas fa-times text-warning fa-2x animate-icon"></i>
+          {% else %}
+          <i class="fa fa-spinner fa-spin"></i> 
+          {% endif %}
+        </td>
+  
+        <td class="text-center">
+          {% if checkout.cd_status == 'approved' %}
+          <i class="fas fa-check text-success fa-2x animate-icon"></i>
+          {% elif checkout.cd_status == 'declined' %}
+          <i class="	fas fa-times"></i>
+          {% else %}
+          <i class="fa fa-spinner fa-spin"></i>
+          {% endif %}
+        </td>
+  
+        <td class="text-center" style="color:#003566DE;  font-family: 'Poppins', sans-serif;">
+          {% if checkout.comment %}
+            <p>{{ checkout.comment }}</p>
+          {% else %}
+            No comment yet
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  
+  </table>
+</div>
+</div>
+
+<script>
+  function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search_bar_request");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".table");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+{% endblock %}

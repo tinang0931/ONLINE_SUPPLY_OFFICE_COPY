@@ -6,7 +6,8 @@
 
 <style>
     .table-bordered th {
-        background-color: #1c96c5;
+        background-color: #003566;
+        color: white
     }
 
     .bck a  {
@@ -20,7 +21,7 @@
         height: 50px;
         transition: transform 0.3s ease-in-out;
         position: relative;
-        top: -15vh;
+        top: -16vh;
       
         
     }
@@ -63,22 +64,24 @@
         /* Adjust the color as needed */
     }
 
-
     .input-box {
         width: 30%;
 
         margin-top: 1px;
         margin-left: 16px;
         margin-right: 20px;
+        border: 1px solid black;
+        box-sizing: border-box;
     }
+    
 
     .input-box input {
         width: 100%;
-        height: 40px;
+        height: 50px;
         padding: 10px;
         box-sizing: border-box;
         border: none;
-        border-radius: 5px;
+        border-radius: none;
     }
 
     .send-icon {
@@ -101,7 +104,7 @@
     }
 
     .footer {
-        background-color: rgba(1, 33, 67, 0.9);
+        background-color: white;
         text-align: center;
         width: 100%;
         height: 100px;
@@ -109,7 +112,8 @@
         -webkit-user-modify: read-only;
         position: fixed;
         z-index: 2;
-        position: fixed;
+        margin-left: 10%;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adds a shadow border */
     }
 
     .p {
@@ -202,7 +206,7 @@
     .bck img {
         width: 50px;
         height: 50px;
-        margin-top: 16vh;
+        margin-top: 18vh;
         transition: transform 0.3s ease-in-out; /* Apply transition to the transform property */
     }
     
@@ -282,26 +286,31 @@
 
     .ctu_logo {
     position: absolute;
-    left: 40px;
+    left: -20px;
     top: -47px;
     width: 100px;
     height: 100px;
     margin: 0 3px;
 }
+
+.navbar.bg-light {
+    background-color: #003566 !important;
+}
 </style>
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<div id="page-content-wrapper ">
+    <nav class=" bg-light"></nav>
+</div>
 
 <div class="container-fluid main-content" style="height: 82vh; overflow-y: auto; overflow-x: hidden;">
 
     <div class="container">
     </div>
-    <div class="home">
-        <a href="{% url 'baclanding' %}" onclick="toggleAnimation()">
-            <img src="{% static 'svg/home5.svg' %}" alt="cdlanding">
-        </a>
-    </div>
+  
     <script>
     function toggleAnimation() {
         var img = document.getElementById('cdlandingImg');
@@ -322,7 +331,7 @@
         </div>
     </div>    
 
-    <div class="table-responsive" style="margin-top: -15vh;">
+    <div class="table-responsive" style="margin-top: -18vh;">
         <form action="{% url 'bac_ppmp' pr_id=pr_id %}" method="post" id ="form_id">
             {% csrf_token %}
 

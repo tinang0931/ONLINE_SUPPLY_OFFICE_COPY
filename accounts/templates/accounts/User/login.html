@@ -7,64 +7,164 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://fonts.google.com/icons"></script>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://boxicons.com/?query=exit&fbclid=IwAR22yDHvLp_n1ychuVbHpb9TxF8U85lSVnq2vj-pAtauuOijtfBOEMopLLU">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Sign in || Sign up from</title>
 
-    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 
 <body>
-    <div class="title">CTU-AC SUPPLY OFFICE REQUESTS MONITORING SYSTEM</div>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
     
-    <div class="wrapper">
-        <form id="login-form" action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            
-           
                 {% for message in messages %}
-                    <div class="alert alert-danger " style="text-align: center;"  role="alert">
-                        {{ message }}
-                    </div>
+                <div class="alert alert-danger " style="text-align: center;" role="alert">
+                    {{ message }}
+                </div>
                 {% endfor %}
-            
+                <h1>Create Account</h1>
+                <div class="infield">
+                    <input type="number" name="username" placeholder="CTU ID" required oninput="maxLengthCheck(this, 11)">
 
+                </div>
+                <div class="infield">
+                    <input type="email" name="email" placeholder="Email" required>
+
+                </div>
+                <div class="infield">
+                    <input type="text" name="fname" placeholder="First Name" required>
+
+                </div>
+                <div class="infield">
+                    <input type="text" name="lname" placeholder="Last Name" required>
+
+                </div>
+                <div class="infield">
+                    <input type="number" name="contact1" placeholder="Contact No." required oninput="maxLengthCheck(this, 12)">
+                </div>
+                <div class="infield">
+                    <input type="password" name="pass1" placeholder="Password" required oninput="maxLengthCheck(this, 15)">
+
+                </div>
+                <div class="infield">
+                    <input type="password" name="pass2" placeholder="Confirm Password:" required oninput="maxLengthCheck(this, 15)">
+
+                </div>
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <div class="container" id="container">
+            <div class="form-container sign-in-container">
+            <form id="login-form" onsubmit="event.preventDefault(); handleLogin();">
             <h1>Sign In</h1>
-
-            <div class="input-box">
-                <input type="number" id="username" name="username" placeholder="CTU ID" required class="ctu_id">
-            </div>
-
-            <div class="input-box">
-                <input type="password" id="pass1" name="pass1" placeholder="Password" required>
+             
+                        {% for message in messages %}
+            <div class="alert alert-danger" style="text-align: center;" role="alert">
+            
+                            {{ message }}
             </div>
             
-            <div class="forgot">
-                <a href="{% url 'reset_password' %}">Forgot Password?</a>
+                        {% endfor %}
+             
+                        <div class="social-container">
+            <a href="https://www.facebook.com" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.google.com" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="https://www.linkedin.com" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
-
-            <div>
-                <button type="submit" class="btn">Log In</button>
+            <span>or use your account</span>
+            <div class="infield">
+            <input type="number" placeholder="CTU ID" id="username" required />
             </div>
-
-            <div class="register-link">
-                <p>Don't have an Account? <a href="{% url 'register' %}">Register</a></p>
+            <div class="infield">
+            <input type="password" placeholder="Password" id="password" required />
             </div>
-        </form>
-    </div>
-
-    <script>
-        document.getElementById("pass1").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("login-form").submit();
-            }
-        });
-    </script>
+            <a href="#" class="forgot">Forgot your password?</a>
+            <button type="submit">Sign In</button>
+            </form>
+            </div>
+             
+                <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+            <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us, please login with your personal info</p>
+            <button>Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start your journey with us</p>
+            <button>Sign Up</button>
+            </div>
+            </div>
+            <button id="overlayBtn"></button>
+            </div>
+            </div>
+             
+            <script>
+            
+                const handleLogin = () => {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const formData = new FormData();
+                    formData.append('username', username);
+                    formData.append('password', password);
+                
+                    fetch('http://172.28.48.53:8000/api/token/', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.access && data.refresh) {
+                            // Store the access token in localStorage
+                            localStorage.setItem('accessToken', data.access);
+                
+                            // Decode the access token to extract user information
+                            const tokenPayload = JSON.parse(atob(data.access.split('.')[1]));
+                
+                            // Assuming `user_type` is included in the token payload
+                            const userType = tokenPayload.user_type;
+                
+                            // Redirect based on user_type
+                            switch (userType) {
+                                case 'regular':
+                                    window.location.href = '/ppmp101';
+                                    break;
+                                case 'admin':
+                                    window.location.href = '/admin';
+                                    break;
+                                case 'bac':
+                                    window.location.href = '/baclanding';
+                                    break;
+                                case 'budget':
+                                    window.location.href = '/bo_landing';
+                                    break;
+                                case 'cd':
+                                    window.location.href = '/cdlanding';
+                                    break;
+                                default:
+                                    alert('Unknown user type. Please contact support.');
+                            }
+                        } else {
+                            alert('Login failed: ' + (data.detail || 'Unknown error'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                };
+                
+            </script>
+            
+             
+            
+        
 </body>
+
 </html>

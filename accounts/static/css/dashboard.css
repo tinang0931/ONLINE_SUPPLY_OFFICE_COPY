@@ -5,7 +5,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       height: 100vh;
     }
@@ -22,13 +22,40 @@
     }
 
       /* Left Container */
-    .left-container {
-      width: 60%;
-      margin-top: 10vh;
-      margin-left: 20px;
-      margin-right: 20px;
+      .left-container {
+        width: 60%;
+        margin-top: 9vh;
+        margin-left: 20px;
+        margin-right: 20px;
+  
+        overflow-y: auto;
+               
+      }
+    
+    /* For WebKit browsers (Chrome, Safari) */
+    .left-container::-webkit-scrollbar {
+        width: 12px; 
     }
-
+    
+    .left-container::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    .left-container::-webkit-scrollbar-thumb {
+        background: #888; 
+        border-radius: 6px; 
+    }
+    
+    .left-container::-webkit-scrollbar-thumb:hover {
+        background: #555555; 
+    }
+    
+  
+    .left-container {
+        scrollbar-width: thin; 
+        scrollbar-color: #888 #f1f1f1;
+    }
+    
     /* Right Container */
     .right-container {
       width: 40%;
@@ -41,15 +68,9 @@
     padding: 20px;
 }
 
-
-
-
-
 .budget-section {
     margin-bottom: 20px;
 }
-
-
 
     .budget-section {
       text-align: center;
@@ -83,6 +104,24 @@
       font-weight: bold;
       margin: 0;
     }
+
+    .ppmp-section {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      background-color: #003566;
+      color: #FFA500;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .ppmp-section:hover{
+      border: 2px solid #FFFFFF;
+      box-shadow: 10px 10px 4px #00438a;
+    }
+
 
 
     
@@ -181,11 +220,10 @@
       background-color: #003363;
       color: #FFA500;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 0px;
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
-      margin: 0;
     }
     
     .catalogue-section:hover {
@@ -232,6 +270,7 @@
       color: #FFFFFF;
       font-size: 1.2rem;
       padding: 15px 10px;
+      margin-top: 2vh;
     }
     
     .category-row th:hover {
@@ -251,4 +290,5 @@
       font-size: 1.5rem;
       border-radius: 5px;
     }
+    
     

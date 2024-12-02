@@ -3,23 +3,28 @@
     color: black;
   }
 
-  .bg-success {
-    background-color: #b5e550;
-    color: white;
-  }
-
   .no-comment {
     background-color: lightgray;
     color: black;
   }
 
-  .table th {
-    background-color: #254b6e;
+  /* .table th {
+    font-family: Poppins;
+    background-color: #003566;
     color: white;
     cursor: pointer;
     position: sticky;
     top: 0;
     z-index: 2;
+  } */
+ 
+  td{
+    font-weight: bold;
+    font-family: Poppins;
+  }
+  
+  th{
+    font-weight: bold;
   }
 
   .form-control {
@@ -53,7 +58,34 @@
     padding: 10px;
   }
 
-  .bck a {
+  .btn-success {
+    background-color: #003566;  /* Green background */
+    color: #FFA500;               /* White text */
+    border: none;               /* Remove default border */
+    padding: 10px 20px;         /* Padding inside the button */
+    font-size: 14px;            /* Font size */
+    font-weight: bold;          /* Bold text */
+    border-radius: 8px;         /* Rounded corners */
+    cursor: pointer;            /* Change cursor to pointer when hovering */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.btn-success:hover {
+    background-color: #254b6e;  /* Darker green when hovered */
+}
+
+.btn-success:focus {
+    outline: none;              /* Remove outline on focus */
+}
+
+.btn-success:active {
+    background-color: #1e7e34;  /* Even darker green when clicked */
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Add shadow when clicked */
+}
+
+
+
+  /* .bck a {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -71,12 +103,10 @@
     transform: scale(1.2);
   }
 
-  .table-responsive {
-    margin-top: -4vh;
-  }
-
   .container-fluid {
     height: 85vh;
     overflow-y: auto;
     margin-top: 1px;
-  }
+  } */
+
+  
