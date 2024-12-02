@@ -28,10 +28,10 @@ def purchase(request):
     return render(request,  'accounts/User/purchase.html')
 
 def tracker(request):
-    return render(request,  'accounts/User/purchase.html')
+    return render(request,  'accounts/User/tracker.html')
 
 def purchasetracker(request):
-    return render(request,  'accounts/User/purchase.html')
+    return render(request,  'accounts/User/purchasetracker.html')
 
 def about(request):
     return render(request,  'accounts/User/about.html')
