@@ -373,8 +373,47 @@ header {
     border: 1px solid #fff;
 }
 
+.scroll-container {
+    max-height: 726px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    border: 1px solid #ddd; /* Optional: adds a border to indicate scrollable area */
+}
 
+.dashboard ul {
+    max-height: 150px; /* Adjust the height of trackers list */
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
+.dashboard ul li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.scroll-container table {
+    width: 100%; /* Ensures the table takes up the full width */
+    border-collapse: collapse; /* Ensures a clean layout */
+}
+
+.scroll-container table thead th {
+    position: sticky; /* Keeps the headers fixed */
+    top: 0; /* Ensures the headers stay at the top */
+    background: #003566; /* Background color for the headers */
+    z-index: 1; /* Ensures headers stay above the content */
+}
+
+.scroll-container table th, 
+.scroll-container table td {
+    padding: 8px; /* Adds padding for better readability */
+    border: 1px solid #ccc; /* Optional: borders for cells */
+    text-align: left;
+}
+
+.scroll-container table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Optional: stripe effect for better readability */
+}
 
   
 
