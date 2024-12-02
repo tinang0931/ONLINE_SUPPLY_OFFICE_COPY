@@ -88,7 +88,11 @@ def approved_ppmp(request):
     }
     return render(request, 'accounts/User/approved_ppmp.html', context)
 
-
+def bolanding(request):
+    context = {
+        'title': 'PURCHASE REQUESTS',
+    }
+    return render(request, 'accounts/Admin/Budget_Officer/bolanding.html', context)
 
 def bohome(request):
     context = {
