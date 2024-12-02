@@ -28,10 +28,12 @@
                 <div class="ppmp-budget">
                     <h2>Total Allocated Budget:</h2>
                     <span id="total_allocated_budget">
-                        <h2 class="ppmp-budget-amount">₱ 15000.00</h2>
+                        <input  name="estimate_budget" id="estimate_budget" readonly>
                     </span>
                 </div>
             </div>
+
+           
     
             <div class="table-responsive">
                 <table class="ppmp-table">
@@ -73,8 +75,10 @@
         <label for="estimate_budget" style="margin-right: 10px;">
             <strong>TOTAL BUDGET :</strong>
         </label>
-        <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+        <input type="number"  readonly>
+        <div class="submit-button">
         <button type="button" id="submitBtn">Submit</button>
+        </div>
     </div>
 
 
@@ -111,7 +115,15 @@
 
             // Get the user's budget
             const userBudget = data.budget;
-            document.getElementById('estimate_budget').value = userBudget; // Display budget in the input field
+
+            // Format the number as Philippine Peso (₱) with commas as thousands separators
+            const formattedBudget = new Intl.NumberFormat('en-PH', {
+                style: 'currency',
+                currency: 'PHP'
+            }).format(userBudget);
+            
+            document.getElementById('estimate_budget').value = formattedBudget; // Display formatted budget
+            
 
             // Get the table body element where data will be inserted
             const tableBody = document.getElementById('items-table-body');
@@ -181,13 +193,14 @@
     document.getElementById('submitBtn').addEventListener('click', async function() {
         const selectedYear = document.getElementById('yearDropdown').value;
         const totalBudget = document.getElementById('estimate_budget').value;
-
+    
+        // Check if the selected year is empty
         if (!selectedYear) {
             alert("Please select a year.");
             return;
         }
-
-        // Gather item data
+    
+        // Initialize arrays to store form data
         const items = [];
         const itemBrands = [];
         const units = [];
@@ -196,14 +209,21 @@
             'jan': [], 'feb': [], 'mar': [], 'apr': [], 'may': [], 'jun': [],
             'jul': [], 'aug': [], 'sep': [], 'oct': [], 'nov': [], 'dec': []
         };
-
+    
+        // Gather data from each row in the table
         const rows = document.querySelectorAll('.item-row');
         rows.forEach(row => {
-            const itemName = row.querySelector('input[name="item"]').value;
-            const itemBrand = row.querySelector('input[name="item_brand"]').value;
-            const unit = row.querySelector('input[name="unit"]').value;
-            const unitCost = row.querySelector('input[name="price"]').value;
-
+            const itemName = row.querySelector('input[name="item"]').value.trim();
+            const itemBrand = row.querySelector('input[name="item_brand"]').value.trim();
+            const unit = row.querySelector('input[name="unit"]').value.trim();
+            const unitCost = row.querySelector('input[name="price"]').value.trim();
+    
+            if (!itemName || !itemBrand || !unit || !unitCost) {
+                alert("All fields must be filled out.");
+                return;
+            }
+    
+            // Create an object with the monthly quantities
             const monthValues = {
                 'jan': row.querySelector('input[name="jan"]').value,
                 'feb': row.querySelector('input[name="feb"]').value,
@@ -218,21 +238,50 @@
                 'nov': row.querySelector('input[name="nov"]').value,
                 'dec': row.querySelector('input[name="dec"]').value
             };
-
+    
+            // Push the item data into respective arrays
             items.push(itemName);
             itemBrands.push(itemBrand);
             units.push(unit);
             unitCosts.push(unitCost);
-
+    
+            // Add monthly values to the months object
             for (const month in months) {
-                months[month].push(monthValues[month]);
+                months[month].push(monthValues[month] || '');  // Use empty string for missing values
             }
         });
+    
+        // Ensure there is at least one valid row
+        if (items.length === 0) {
+            alert("Please add at least one item.");
+            return;
+        }
+    
+        // Prepare the payload
+        const data = {
+            selectedYear,
+            item: items,
+            item_brand_description: itemBrands,
+            unit: units,
+            unit_cost: unitCosts,
+            jan: months.jan,
+            feb: months.feb,
+            mar: months.mar,
+            apr: months.apr,
+            may: months.may,
+            jun: months.jun,
+            jul: months.jul,
+            aug: months.aug,
+            sep: months.sep,
+            oct: months.oct,
+            nov: months.nov,
+            dec: months.dec
+        };
+    
 
-        // Submit the data to the backend
         const token = localStorage.getItem('accessToken');
-        const apiUrl = 'http://172.28.48.53:8000/api/checkout/';
-
+        const apiUrl = 'http://172.28.48.53:8000/api/newcheckout/';
+    
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -240,39 +289,24 @@
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    selectedYear,
-                    item: items,
-                    item_brand_description: itemBrands,
-                    unit: units,
-                    unit_cost: unitCosts,
-                    jan: months.jan,
-                    feb: months.feb,
-                    mar: months.mar,
-                    apr: months.apr,
-                    may: months.may,
-                    jun: months.jun,
-                    jul: months.jul,
-                    aug: months.aug,
-                    sep: months.sep,
-                    oct: months.oct,
-                    nov: months.nov,
-                    dec: months.dec,
-                })
+                body: JSON.stringify(data)
             });
-
+    
             const result = await response.json();
+    
+            // Handle the response from the API
             if (response.ok) {
                 alert("Data submitted successfully!");
-                location.reload(); // Optionally reload the page
+                location.reload(); // Reload the page to reset form (optional)
             } else {
-                alert(`Error: ${result.error}`);
+                alert(`Error: ${result.error || 'Something went wrong.'}`);
             }
         } catch (error) {
             console.error('Error submitting data:', error);
             alert('Failed to submit the data.');
         }
     });
+    
 </script>
 
 

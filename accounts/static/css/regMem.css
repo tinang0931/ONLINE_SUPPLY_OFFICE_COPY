@@ -517,6 +517,54 @@ textarea:disabled {
     background-color: #f2f2f2; /* Optional: stripe effect for better readability */
 }
 
-  
+#total_allocated_budget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+ 
 
 }
+
+#estimate_budget {
+    padding: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    width: 200px;
+    color: #007bff;
+    cursor: not-allowed;  /* Shows the non-editable cursor */
+    transition: all 0.3s ease;
+   
+}
+
+#estimate_budget:focus {
+    outline: none;
+    border-color: #0056b3;  /* Darker border when focused */
+    background-color: #e6f0ff;  /* Light blue background when focused */
+}
+
+#estimate_budget[readonly] {
+    background-color: #f0f0f0;  /* Disabled background */
+    border-color: #ccc;  /* Gray border */
+    color: #555;  /* Dark text color for readability */
+}
+
+.submit-button {
+
+    margin-right: 5px;
+  }
+
+  .submit-button button {
+    background-color: #1c5d90;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
