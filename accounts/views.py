@@ -14,7 +14,7 @@ def register(request):
 
 def ppmp101(request):
     context = {
-        'title': 'DASHBOARD',
+        'title': 'Dashboard',
     }
     return render(request,  'accounts/User/ppmp101.html', context)
 
@@ -31,13 +31,22 @@ def purchase(request):
     return render(request,  'accounts/User/purchase.html', context)
 
 def tracker(request):
-    return render(request,  'accounts/User/tracker.html')
+    context = {
+        'title': 'PPMP Tracker',
+    }
+    return render(request,  'accounts/User/tracker.html', context)
 
 def purchasetracker(request):
-    return render(request,  'accounts/User/purchasetracker.html')
+    context = {
+        'title': 'Purchase Request Tracker',
+    }
+    return render(request,  'accounts/User/purchasetracker.html', context)
 
 def about(request):
-    return render(request,  'accounts/User/about.html')
+    context = {
+        'title': 'About',
+    }
+    return render(request,  'accounts/User/about.html', context)
 
 
 def logout_user(request):
