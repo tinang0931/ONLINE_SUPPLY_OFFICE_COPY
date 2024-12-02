@@ -468,6 +468,32 @@ textarea:disabled {
     width: 150px; 
 }
 
+.totalfooter {
+    position: fixed; /* Fix the footer at the bottom */
+    bottom: 0; /* Stick it to the bottom of the screen */
+    left: 0;
+    right: 0;
+    background-color: #f8f9fa; /* Light background color */
+    padding: 10px 20px; /* Padding around content */
+    display: flex;
+    justify-content: flex-end; /* Align content to the right */
+    align-items: center; /* Center items vertically */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Optional: subtle shadow for separation */
+    margin-left: 226px;
+    height: 100px;
+    gap : 100px;
+    padding-right: 100px;
+}
+
+.totalfooter label {
+    margin-right: 20px;
+}
+
+.totalfooter input {
+    width: 150px; 
+}
+
+
 .ppmp {
     margin-bottom: 70px; /* Provide space for the footer */
 }
@@ -517,6 +543,150 @@ textarea:disabled {
     background-color: #f2f2f2; /* Optional: stripe effect for better readability */
 }
 
+ 
+.table-bordered th {
+    background-color: #003566;
+    color: white;
+    border-collapse: collapse;
+  }
+
+  .item-actions {
+    display: none;
+  }
+
+
+  .pp_mp {
+    padding: 5px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .pp_mp button {
+    background-color: #003566;
+    color: #FFA500;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 10px;
+    width: 150%;
+  }
+
+  .pp_mp button a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  textarea.form-control {
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    margin-right: 850px;
+    resize: vertical;
+    box-sizing: border-box;
+    border: 2px solid #1c96c5;
+    border-radius: 3%;
+  }
+
+  /* Submit Button Style */
+  .col-md-4 .text-right button.btn.btn-primary {
+    border-radius: 8%;
+    background-color: #003566;
+    border-color: #003566;
+    height: 50px;
+    width: 120px;
+  }
+
+ 
+  .form-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 250px;
+    }
+
+    .form-container label {
+      font-weight: bold;
+      margin-right: 10px;
+      color: #1c5d90;
+    }
+
+    .form-group {
+      display: flex;
+      flex: 1;
+      align-items: center;
+     
+      
+    }
+
+    .form-group input, .form-group textarea {
+    
+      resize: vertical;
+      width: 50%;
+      padding: 10px;
+      border: 1px solid #1c5d90;
+      border-radius: 8px;
+      font-size: 14px;
+     
+   
+    }
+
   
 
+    .total-amount {
+      flex: 0.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .total-amount input {
+      padding: 10px;
+      border: 1px solid #1c5d90;
+      border-radius: 8px;
+      width: 100px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .submit-button {
+      flex: 0.5;
+      display: flex;
+      margin-right: 5px;
+    }
+
+    .submit-button button {
+      background-color: #1c5d90;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ctu_logo {
+      position: relative;
+      top: 3px;
+      z-index: 1;
+      left: -23px;
+  }
+
+  .head {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    margin-left: -3%;
+    font-size: 48px;
+}
+.d-flex.flex-wrap.align-content-between.h-100 {
+    background-color: #f3f4f5;
+}
+#sidebar-wrapper .list-group-item.logout-link {
+  top: 230%; 
+}
+.navbar.bg-light {
+    background-color: #003566 !important;
 }

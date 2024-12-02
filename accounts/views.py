@@ -25,7 +25,10 @@ def ppmp(request):
     return render(request,  'accounts/User/ppmp.html', context)
 
 def purchase(request):
-    return render(request,  'accounts/User/purchase.html')
+    context = {
+        'title': 'Purchase Request',
+    }
+    return render(request,  'accounts/User/purchase.html', context)
 
 def tracker(request):
     return render(request,  'accounts/User/tracker.html')
