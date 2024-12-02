@@ -1,4 +1,3 @@
-
 {% extends "accounts/User/main2.html" %}
 
 {% load static %}
@@ -32,16 +31,12 @@
                         <h2 class="ppmp-budget-amount">₱ 15000.00</h2>
                     </span>
                 </div>
-    
-                
-
             </div>
 
             <div class="table-responsive">
                 <table class="ppmp-table">
                     <thead>
                         <tr>
-                           
                             <th rowspan='2' class="text-center">Item Name</th>
                             <th rowspan='2' class="text-center">Brand / Description</th>
                             <th rowspan='2' class="text-center">Unit</th>
@@ -65,117 +60,164 @@
                             <th>Dec</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for p in items %}
-                        <tr class="item-row" id="{{ p.id }}">
-                            <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="text-left">
-                                <span class="editable" data-field="Item_name">{{ p.item }}</span>
-                                <input id="item_{{ p.id }}" name="item" type="text" value="{{ p.item }}"
-                                    oninput="change_val('item_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td class="text-left">
-                                <span class="editable" data-field="Item_Brand">{{ p.item_brand_description }}</span>
-                                <input id="item_brand_{{ p.id }}" name="item_brand" type="text"
-                                    value="{{ p.item_brand_description }}" oninput="change_val('item_brand_{{ p.id }}')"
-                                    class="edit-input" style="display: none">
-                            </td>
-                            <td class="text-left">
-                                <span class="editable" data-field="Unit">{{ p.unit }}</span>
-                                <input id="unit_{{ p.id }}" name="unit" type="text" value="{{ p.unit }}"
-                                    oninput="change_val('unit_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td><input type="number" name="estimate_budget"></td>
-                            <td><input type="number" style="width: 38px;" name="jan" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="feb" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="mar" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="apr" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="may" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="jun" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="jul" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="aug" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="sep" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="oct" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="nov" value="0"></td>
-                            <td><input type="number" style="width: 38px;" name="dec" value="0"></td>
-                            <td>
-                                <span class="editable" data-field="Price">{{ p.unit_cost }}</span>
-                                <input id="price_{{ p.id }}" name="price" type="number" value="{{ p.unit_cost }}"
-                                    oninput="change_val('price_{{ p.id }}')" class="edit-input" style="display: none">
-                            </td>
-                            <td>
-                                <div class="item-actions" style="margin-left: 17px;">
-                                    {% if p.id %}
-                                    <a href="{% url 'delete' p.id %}" class="delete-icon delete-item" data-id="{{ p.id }}">
-                                        <i class="fas fa-trash text-danger"></i>
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        <tr id="new-item-row-{{ category }}" style="display: none;">
-                            <td class="text-center"></td>
-                            <form method="post" action="{% url 'user_add_new_item' %}">
-                                {% csrf_token %}
-                                <td>
-                                    <input type="text" name="new_item_name" placeholder="New Item Name" required>
-                                </td>
-                                <td>
-                                    <input type="text" name="new_item_brand" placeholder="New Item Brand/Description" required>
-                                </td>
-                                <td>
-                                    <input type="text" name="new_item_unit" placeholder="New Item Unit" required>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <input type="number" name="item_unit_price" placeholder="Item Unit Price">
-                                </td>
-                                <td>
-                                    <button type="submit" class="save-btn btn-success" style="background: none; border: none;"
-                                        title="Save" onclick="saveFunction()">
-                                        <i class="fas fa-save" style="color: #28a745; background-color: #003566;"></i>
-                                    </button>
-                                </td>
-                            </form>
-                        </tr>
+                    <tbody id="items-table-body">
+                        <!-- Data will be inserted dynamically here -->
                     </tbody>
                 </table>
-            
-                <button type="button" class="add-btn btn-primary btn-sm float-left mt-2 mb-2"
-                        id="add-btn-{{ category }}" onclick="toggleNewItemRow('{{ category }}')">
-                    <i class="fas fa-plus-circle"></i>
-                </button>
-            
-                <button id="submitBtn" type="button" class="btn btn-success btn-sm m-2"
-                        style="color: #FFA500; background-color: #22507A; border-color: #007bff; 
-                               height: 43px; width: 130px; position: fixed; top: 85vh; right: 20px;"
-                        onclick="submitForm()"> 
-                    <i class="fas fa-check-circle"></i> Submit
-                </button>
-            
-                <div class="total" style="position: absolute; top: 55vh; left: 135vh; transform: translateX(-50%); display: flex; align-items: center;">
-                    <label for="estimate_budget" style="margin-right: 10px;">
-                        <strong>TOTAL AMOUNT :</strong>
-                    </label>
-                    <input type="number" name="estimate_budget" id="estimate_budget" readonly>
-                </div>
-                </form>
-        
-
+            </div>
         </form>
-    <div>
+    </div>
 </div>
+
+<!-- Fixed Footer -->
+<div class="total-footer">
+    <label for="estimate_budget" style="margin-right: 10px;">
+        <strong>TOTAL BUDGET :</strong>
+    </label>
+    <input type="number" name="estimate_budget" id="estimate_budget" readonly>
+    <button type="submit">Submit</button>
+</div>
+
+<style>
+
+    .button {
+        
+    }
+  
+    .total-footer {
+        position: fixed; /* Fix the footer at the bottom */
+        bottom: 0; /* Stick it to the bottom of the screen */
+        left: 0;
+        right: 0;
+        background-color: #f8f9fa; /* Light background color */
+        padding: 10px 20px; /* Padding around content */
+        display: flex;
+        justify-content: flex-end; /* Align content to the right */
+        align-items: center; /* Center items vertically */
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Optional: subtle shadow for separation */
+        margin-left: 241px;
+        height: 100px;
+        gap : 100px;
+        padding-right: 100px;
+    }
+
+    .total-footer label {
+        margin-right: 20px;
+    }
+
+    .total-footer input {
+        width: 150px; 
+    }
+
+    .ppmp {
+        margin-bottom: 70px; /* Provide space for the footer */
+    }
+
+    .ppmp-form {
+        padding-bottom: 70px; /* Ensure enough space is given to the content */
+    }
+</style>
+
+<script>
+    // Function to fetch data from the PPMPView API and populate the table
+    async function fetchDataAndPopulateTable() {
+        try {
+            const token = localStorage.getItem('accessToken'); // Get the token for authentication
+
+            if (!token) {
+                alert("User is not logged in. Please log in.");
+                return;
+            }
+
+            // Replace with your actual API URL for PPMPView
+            const apiUrl = 'http://172.28.48.53:8000/api/ppmp/';
+
+            // Fetch the data from the API
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            // Check if the response is OK (status 200)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Parse the JSON data returned from the API
+            const data = await response.json();
+
+            // Get the user's budget
+            const userBudget = data.budget;
+            document.getElementById('estimate_budget').value = userBudget; // Display budget in the input field
+
+            // Get the table body element where data will be inserted
+            const tableBody = document.getElementById('items-table-body');
+
+            // Clear any existing rows before adding new ones
+            tableBody.innerHTML = '';
+
+            // Loop through the purchase items and create table rows dynamically
+            data.purchase.forEach(item => {
+                const row = document.createElement('tr');
+                row.classList.add('item-row');
+                row.id = `item-${item.id}`;
+
+                // Create and populate table cells with item data
+                row.innerHTML = `
+                   
+                    <td class="text-left">
+                        <span class="editable" data-field="Item_name">${item.item}</span>
+                        <input id="item_${item.id}" name="item" type="text" value="${item.item}" oninput="change_val('item_${item.id}')" class="edit-input" style="display: none">
+                    </td>
+                    <td class="text-left">
+                        <span class="editable" data-field="Item_Brand">${item.item_brand_description}</span>
+                        <input id="item_brand_${item.id}" name="item_brand" type="text" value="${item.item_brand_description}" oninput="change_val('item_brand_${item.id}')" class="edit-input" style="display: none">
+                    </td>
+                    <td class="text-left">
+                        <span class="editable" data-field="Unit">${item.unit}</span>
+                        <input id="unit_${item.id}" name="unit" type="text" value="${item.unit}" oninput="change_val('unit_${item.id}')" class="edit-input" style="display: none">
+                    </td>
+                    <td><input type="number" name="estimate_budget" value="${item.estimate_budget || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="jan" value="${item.jan || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="feb" value="${item.feb || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="mar" value="${item.mar || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="apr" value="${item.apr || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="may" value="${item.may || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="jun" value="${item.jun || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="jul" value="${item.jul || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="aug" value="${item.aug || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="sep" value="${item.sep || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="oct" value="${item.oct || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="nov" value="${item.nov || 0}"></td>
+                    <td><input type="number" style="width: 38px;" name="dec" value="${item.dec || 0}"></td>
+                    <td>
+                        <span class="editable" data-field="Price">${item.unit_cost}</span>
+                        <input id="price_${item.id}" name="price" type="number" value="${item.unit_cost}" oninput="change_val('price_${item.id}')" class="edit-input" style="display: none">
+                    </td>
+                    <td>
+                        <div class="item-actions" style="margin-left: 17px;">
+                            <a href="#" class="delete-icon delete-item" data-id="${item.id}">
+                                <i class="fas fa-trash text-danger"></i>
+                            </a>
+                        </div>
+                    </td>
+                `;
+
+                // Append the newly created row to the table body
+                tableBody.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    // Call the function to fetch and display data when the page loads
+    document.addEventListener('DOMContentLoaded', fetchDataAndPopulateTable);
+</script>
 
 
 
