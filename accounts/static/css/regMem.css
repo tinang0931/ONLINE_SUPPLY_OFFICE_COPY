@@ -86,7 +86,7 @@ header {
     background-color: #fff;
     color: #fff;
     overflow-y: auto;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
     height: 100vh;
     
 }
@@ -101,6 +101,7 @@ header {
     height:  auto;
     font-family: 'Poppins' sans-serif;
     font-weight: bold;
+    font-size: 23px;
 }
 
 .sidebar-list li {
@@ -111,6 +112,13 @@ header {
     gap: 1rem;
     font-size: 20px;
    
+}
+.sidebar a span {
+    font-size: 17px; 
+}
+
+.sidebar a {
+    font-size: 17px; 
 }
 
 .sidebar-list li a {
@@ -314,6 +322,7 @@ header {
     text-decoration: none; 
     color: #FFA500;
     font-weight: bold;
+    font-size: 21px;
 }
 
 .ppmp-form{
@@ -441,8 +450,6 @@ textarea:disabled {
     font-weight: 500;
     height: 2.5rem;
     padding-left: 0.5rem;
-   
-   
 }
 
 .ppmp-table-responsive{
@@ -904,6 +911,13 @@ textarea:disabled {
       font-size: 16px;
       font-weight: bold;
     }
+
+    .ctu_logo {
+      position: relative;
+      top: 3px;
+      z-index: 1;
+      left: 4px;
+  }
 
   .head {
     color: white;
