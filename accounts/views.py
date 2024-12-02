@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 
 from .config import SITE_TITLE, CAMPUS_NAME
 from .config import HEADING_TEXT, SUBHEADING_TEXT
+from .models import *
 
 def login_view(request):
     return render(request,  'accounts/User/login.html')
@@ -82,6 +83,9 @@ def user_add_new_item(request):
     }
     return render(request, 'accounts/User/user_add_new_item.html', context)
 
+def delete(request):
+     
+     return redirect('ppmp')
 def approved_ppmp(request):
     context = {
         'title': 'CATALOGUE',
@@ -1229,10 +1233,7 @@ def landing(request):
 
 
 
-# def delete(request, id):
-#      item = Item.objects.get(id=id)
-#      item.delete()
-#      return redirect('ppmp')
+
 
 
 # def update_item(request, id):

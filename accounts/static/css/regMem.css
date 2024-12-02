@@ -256,8 +256,6 @@ header {
     height: auto;
 }
 
-
-
 .ppmp-button ul{
     list-style-type: none;
     margin: 0;
@@ -289,12 +287,33 @@ header {
     padding:0;
 }
 
+.ppmp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ppmp-table th,
+.ppmp-table td {
+    border: 1px solid #003566;
+    padding: 8px;
+    text-align: center;
+}
+
+.ppmp-table th {
+    background-color: #003566; 
+}
+
+.table-responsive {
+    overflow-x: auto; 
+}
+
 .form-row {
     margin-bottom: 1rem;
     display: flex;
     flex-direction: row;
     gap: 2rem;
 }
+
 .form-row select {
     border-radius: 5px;
     border: 1px solid #003566;
@@ -316,6 +335,51 @@ header {
 .form-row select option:hover {
     background-color: #003566;
     color: #fff;
+}
+
+button, 
+input, 
+optgroup, 
+select, 
+textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    border: 1px solid transparent;
+    outline: none;
+    text-align: center;
+    background-color: #f9f9f9; 
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+button:hover, 
+input:hover, 
+select:hover, 
+textarea:hover {
+    background-color: #e6e6e6;
+    border: 1px solid #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); 
+}
+
+button:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.4); 
+}
+
+button:disabled, 
+input:disabled, 
+select:disabled, 
+textarea:disabled {
+    background-color: #e9ecef;
+    color: #6c757d; 
+    cursor: not-allowed; 
+    opacity: 0.65; 
 }
 
 .ppmp-budget {
@@ -372,9 +436,3 @@ header {
     padding-top: 0.5rem;
     border: 1px solid #fff;
 }
-
-
-
-
-  
-
