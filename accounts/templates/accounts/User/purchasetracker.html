@@ -3,148 +3,27 @@
 {% load static %}
 
 {% block purchasetracker %}
-<style>
-  .custom-f {
-    display: flex;
-    justify-content: center;
-  }
-
-  .pad {
-    padding: 0px !important;
-  }
-
-  .item-received {
-    margin: 20px auto;
-  }
-
-  .table-bordered th {
-    background-color: #1c96c5;
-  }
-
-  .item-actions {
-    display: none;
-  }
-
-  tr:hover .item-actions {
-    display: flex;
-  }
-
-  .table-bordered th {
-    background-color: #003566;
-    font-family: 'Poppins', sans-serif;
-    color: #ffff;
-  }
-
-  .bck {
-    margin-bottom: 20px;
-  }
-
-  .custom-f {
-    margin-top: 20px;
-  }
-
-  .bck a {
-  
-    text-decoration: none;
-  }
-
-  .bck img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-    /* Apply transition to the transform property */
-  }
-
-  .bck:hover img {
-    transform: scale(1.2);
-    /* Scale the image to 1.2 times its original size on hover */
-  }
-
-/* Example animations for icons */
-.animate-icon {
-  transition: transform 0.3s;
-}
-
-.animate-icon:hover {
-  transform: scale(1.2);
-}
-
-/* Add specific animations based on status */
-.fa-check {
-  animation: pulse 2s infinite;
-}
-
-.fa-times {
-  font-size: 3vh;
-  color: crimson;
-}
-
-.fa-hourglass {
-  animation: spin 2s infinite;
-}
-
-/* Keyframes for animation */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25%, 75% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-  .table-responsicve{
-    margin-top: -4vh;
-  }
-  .navbar.bg-light {
-    background-color: #003566 !important;
-}
-</style>
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
-<div id="page-content-wrapper ">
-  <nav class=" bg-light"></nav>
-</div>
-
-<div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-  <div class="container">
+<div class="ppmp">
+  <div class="search">
+    <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()">
   </div>
-  <div class="container" style="display: inline-flex; margin: 3; flex-direction: column;">
-    <div style="display: flex; align-items: baseline; flex-wrap: nowrap;"></div>
-  </div>
-  <div class="container-fluid" style="height: 68vh; overflow-y: auto; overflow-x: hidden;">
-    <div class="search" style="position: relative; text-align: right; margin-top: 1vh; width:15%; margin-left: 85%;">
-      <span class="icon" style="position: absolute; right: 10px; top: 2vh; transform: translateY(-50%); width: 40px;"> </span>
-      <input class="form-control mb-3 pr-6 pl-6" type="text" placeholder="Search" id="search_bar_request" oninput="filterTable()"
-        style="border: 2px solid #254b6e; border-radius: 25px; padding: 10px 40px 10px 20px; display: inline-block; outline: none;">
-    </div>
+
   <div class="custom-f row w-100 m-auto border text-start text-dark">
-    <div class="pad col">
-      <div class="table-responsive"></div>
-      <table class="table table-bordered" style="margin: 0px!important;">
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th class="text-center">DATE REQUESTED</th>
-            <th class="text-center"> PR NO.</th>
-            <th class="text-center">BO STATUS</th>
-            <th class="text-center">CD STATUS</th>
+            <th class="text-center">PR NO.</th>
+            <th class="text-center">BUDGET OFFICER STATUS</th>
+            <th class="text-center">CAMPUS DIRECTOR STATUS</th>
             <th class="text-center">COMMENT</th>
             <th class="text-center">LAST UPDATED</th>
           </tr>
-
-
-        </thead> 
+        </thead>
         <tbody>
+
           {% if tracker %}
           {% for p in tracker %}
           <tr >
@@ -192,9 +71,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Purchase Request</strong></td>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;No Purchase Request</strong></td>
         </tr>
 
           {% endif %}
